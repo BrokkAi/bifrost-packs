@@ -1,0 +1,6 @@
+# Preserve copied bytes, including mixed upstream line endings and native shards.
+rules/** -text
+semantic-packs/** -text
+fixtures/** -text
+scripts/upstream/** -text
+licenses/** -text
