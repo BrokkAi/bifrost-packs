@@ -66,3 +66,11 @@ with cache write access: use trusted repository and cache boundaries. Publicatio
 must verify clean source, tag-to-commit binding, independent release version,
 qualified evidence and artifact hashes. Future v0.13 consumer integration remains
 in `docs/v013-transition.md`.
+
+The public source-release workflow stages on manual dispatch and publishes only
+on an explicit version tag. Premium retains its qualified policy ZIP workflow
+and stages the same metadata convention. No release or tag is created by this PR.
+Merge public PR first, then premium PR; the premium contract uses an immutable
+public commit and hashes. Later contract changes require an explicit premium pin
+update and renewed tests. Engine cutover and native release qualification remain
+separate.

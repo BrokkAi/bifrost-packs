@@ -44,6 +44,8 @@ def enumerate_candidates(repository, visibility, cache, offline=False):
     directory = Path(cache) / repository.replace('/', '--')
     index = directory / 'discovery.json'
     if offline:
+        if not index.is_file():
+            release.fail('unavailable-credentials/network', 'no cached discovery; explicit online refresh required')
         data, _ = release.load_json(index)
         if data['repository'] != repository or data['visibility'] != visibility:
             release.fail('invalid-manifest', 'cached discovery repository mismatch')
