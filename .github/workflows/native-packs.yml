@@ -1,0 +1,130 @@
+name: Generate native packs
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Independent pack release version (stages only)
+        required: true
+        default: '0.2.0'
+  pull_request:
+    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+  push:
+    tags: ['packs/v*.*.*']
+permissions:
+  contents: read
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+      - name: Verify repository content
+        run: |
+          python3 -B scripts/content.py verify
+          python3 -B -m unittest discover -s tests -p 'test_*.py'
+      - id: generator-pin
+        name: Read immutable generator build pins
+        run: |
+          echo "toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)" >> "$GITHUB_OUTPUT"
+          echo "source=$(jq -r .generator.asset_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
+          echo "lock=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        id: generator-cache
+        with:
+          path: ${{ runner.temp }}/generator-cache
+          key: native-generator-linux-${{ steps.generator-pin.outputs.source }}-${{ steps.generator-pin.outputs.lock }}-${{ steps.generator-pin.outputs.toolchain }}-v1
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
+        with:
+          toolchain: ${{ steps.generator-pin.outputs.toolchain }}
+      - name: Build generator from pinned public source
+        if: ${{ steps.generator-cache.outputs.cache-hit != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          repo=$(jq -r .generator.repository native-generation.json)
+          repo=${repo#https://github.com/}
+          commit=$(jq -r .generator.commit native-generation.json)
+          hash=$(jq -r .generator.asset_sha256 native-generation.json)
+          gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/source.tar.gz"
+          echo "$hash  $RUNNER_TEMP/source.tar.gz" | sha256sum -c -
+          mkdir "$RUNNER_TEMP/generator-source"
+          tar -xzf "$RUNNER_TEMP/source.tar.gz" -C "$RUNNER_TEMP/generator-source" --strip-components=1
+          lock_hash=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)
+          echo "$lock_hash  $RUNNER_TEMP/generator-source/Cargo.lock" | sha256sum -c -
+          toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)
+          cargo +"$toolchain" build --locked --release --features release-tooling \
+            --manifest-path "$RUNNER_TEMP/generator-source/Cargo.toml" \
+            -p brokk-bifrost-semantic-packs --bin bifrost-semantic-pack
+          binary="$RUNNER_TEMP/generator-source/target/release/bifrost-semantic-pack"
+          mkdir "$RUNNER_TEMP/generator-cache"
+          cp "$binary" "$RUNNER_TEMP/generator-cache/bifrost-semantic-pack"
+          python3 - "$binary" "$RUNNER_TEMP/generator-cache/build.json" <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+          generator = json.loads(Path('native-generation.json').read_text())['generator']
+          receipt = dict(schema_version=1, generator_commit=generator['commit'],
+                         source_archive_sha256=generator['asset_sha256'],
+                         cargo_lock_sha256=generator['build']['cargo_lock_sha256'],
+                         rust_toolchain=generator['build']['rust_toolchain'],
+                         binary_sha256=hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest())
+          Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2) + '\n')
+          PY
+      - name: Select pinned generated tool
+        run: echo "BIFROST_SEMANTIC_PACK_BIN=$RUNNER_TEMP/generator-cache/bifrost-semantic-pack" >> "$GITHUB_ENV"
+      - name: Generate twice, verify and compare native content
+        run: |
+          python3 -B release-contract/native_generation.py --root . \
+            --config native-generation.json --binary "$BIFROST_SEMANTIC_PACK_BIN" \
+            --build-receipt "$RUNNER_TEMP/generator-cache/build.json" --output "$RUNNER_TEMP/native"
+      - name: Index generated packs with independent compatibility requirements
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          version=${INPUT_VERSION:-0.2.0}
+          if [[ "$GITHUB_REF" == refs/tags/packs/* ]]; then
+            version=${GITHUB_REF_NAME#packs/v}
+            test "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" = "$GITHUB_SHA"
+          fi
+          python3 -B release-contract/native_release.py --root . \
+            --config release-config.packs.json --version "$version" \
+            --archive "$RUNNER_TEMP/native/native.tar.gz" \
+            --receipt "$RUNNER_TEMP/native/generation.json" --output "$RUNNER_TEMP/dist"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: generated-native-packs-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/dist/*
+          if-no-files-found: error
+          retention-days: 30
+  publish:
+    if: ${{ startsWith(github.ref, 'refs/tags/packs/') && github.repository == 'BrokkAi/bifrost-packs' }}
+    needs: generate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          name: generated-native-packs-${{ github.sha }}
+          path: dist
+      - name: Publish generated native packs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd dist
+          sha256sum -c *.sha256
+          flags=()
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 *.json \
+            --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
+            --notes "Independently generated packs from $GITHUB_SHA. Generator provenance and unchanged measurements included. Native content reproducibility verified; full consumer behavior qualification remains pending."

@@ -1,10 +1,10 @@
-name: Component release
+name: Rules release
 on:
   workflow_dispatch:
     inputs:
       component:
         type: choice
-        options: [rules, packs]
+        options: [rules]
         required: true
       version:
         type: string
@@ -13,7 +13,6 @@ on:
   push:
     tags:
       - 'rules/v*.*.*'
-      - 'packs/v*.*.*'
 permissions:
   contents: read
 jobs:
@@ -35,6 +34,10 @@ jobs:
         run: |
           set -euo pipefail
           component="$INPUT_COMPONENT"
+          if [[ "$component" == packs ]]; then
+            echo "Use Generate native packs for independently generated packs" >&2
+            exit 2
+          fi
           version="$INPUT_VERSION"
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             component="${GITHUB_REF_NAME%%/*}"

@@ -169,6 +169,10 @@ class StreamManifestTests(unittest.TestCase):
             "v2.4.1",
         )
         self.assertEqual(
+            release.expected_tag(manifest("bifrost.premium.packs")),
+            "packs/v2.4.1",
+        )
+        self.assertEqual(
             release.expected_tag(manifest("bifrost.premium")),
             "v2.4.1",
         )
