@@ -215,21 +215,48 @@ def verify_artifact(artifact, path):
     return artifact
 
 
+def resolve_release_set(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False, visiting=()):
+    candidate = resolve_candidate(paths, profile, pack_id, channel, version, commit, allow_unqualified)
+    manifest = candidate[2]
+    key = (pack_id, manifest['release_version'])
+    if key in visiting:
+        fail('invalid-manifest', 'cyclic release dependencies')
+    result = [candidate]
+    for dependency in manifest.get('release_dependencies', []):
+        if dependency['repository'] != manifest['pack']['repository']:
+            fail('no-compatible-release', 'dependency requires explicit discovery of another repository')
+        dependency_channel = 'stable' if semver(dependency['release_version'])[3] else 'prerelease'
+        result.extend(resolve_release_set(paths, profile, dependency['pack_id'], dependency_channel, dependency['release_version'], None, allow_unqualified, visiting + (key,)))
+    return result
+
+
 def select_release(paths, profile, pack_id, channel='stable', version=None, commit=None, cache_dir=None, allow_unqualified=False):
-    _, path, manifest, manifest_hash = resolve_candidate(paths, profile, pack_id, channel, version, commit, allow_unqualified)
+    candidates = resolve_release_set(paths, profile, pack_id, channel, version, commit, allow_unqualified)
+    _, path, manifest, manifest_hash = candidates[0]
+    dependencies = []
+    for _, dependency_path, dependency_manifest, dependency_hash in candidates[1:]:
+        for artifact in dependency_manifest['artifacts']:
+            parent = Path(cache_dir) / artifact['sha256'] if cache_dir else Path(dependency_path).parent
+            verify_artifact(artifact, parent / artifact['name'])
+        dependencies.append(dict(pack_id=dependency_manifest['pack']['id'], release_version=dependency_manifest['release_version'], source_commit=dependency_manifest['source']['commit'], manifest_sha256=dependency_hash, artifacts=dependency_manifest['artifacts']))
     artifacts = []
     for artifact in manifest['artifacts']:
         parent = Path(cache_dir) / artifact['sha256'] if cache_dir else Path(path).parent
         verify_artifact(artifact, parent / artifact['name'])
         artifacts.append(artifact)
-    return {'receipt_schema_version': 1, 'pack_id': pack_id, 'release_version': manifest['release_version'], 'source_commit': manifest['source']['commit'], 'manifest_sha256': manifest_hash, 'engine_profile': profile, 'qualification': manifest['qualification'], 'artifacts': artifacts}
+    return {'dependencies': dependencies, 'receipt_schema_version': 1, 'pack_id': pack_id, 'release_version': manifest['release_version'], 'source_commit': manifest['source']['commit'], 'manifest_sha256': manifest_hash, 'engine_profile': profile, 'qualification': manifest['qualification'], 'artifacts': artifacts}
 
 
 def empty_schemas():
     return {key: [] for key in SCHEMA_KEYS}
 
 
-def public_contents(root, lock):
+def expected_tag(manifest):
+    prefix = {'bifrost.public.rules': 'rules/', 'bifrost.public.packs': 'packs/'}.get(manifest['pack']['id'], '')
+    return prefix + 'v' + manifest['release_version']
+
+
+def public_contents(root, lock, component=None):
     entries = lock['files']
     expected = digest(''.join(f"{e['sha256']}  {e['path']}\n" for e in sorted(entries, key=lambda e: e['path'])).encode())
     if expected != lock['aggregate_sha256']:
@@ -264,6 +291,10 @@ def public_contents(root, lock):
             elif isinstance(native, dict) and {'pack_id', 'artifact', 'kind'} <= native.keys():
                 schemas = empty_schemas(); schemas['semantic_spec'] = [native['schema_version']]
                 contents.append(dict(kind='semantic-spec', identity=native['pack_id'], path=path, sha256=entry['sha256'], languages=[], dependencies=[json.dumps(native['artifact'], sort_keys=True, separators=(',', ':'))], schemas=schemas, required_capabilities=[], license=entry['license']))
+    if component is not None:
+        kinds = {'rules': {'policy', 'policy-pack'}, 'packs': {'semantic-model', 'semantic-spec'}}
+        if component not in kinds: fail('invalid-manifest', 'unknown release component')
+        contents = [item for item in contents if item['kind'] in kinds[component]]
     return sorted(contents, key=lambda row: (row['kind'], row['identity'], row['path']))
 
 
@@ -273,6 +304,8 @@ def make_manifest(config, commit, contents, archive, origin=None):
         for axis, values in item['schemas'].items():
             aggregate[axis] = sorted(set(aggregate[axis]) | set(values))
     manifest = dict(manifest_schema_version=1, pack=dict(id=config['pack_id'], repository=config['repository'], visibility=config['visibility']), release_version=config['release_version'], source=dict(repository=config['repository'], commit=commit, dirty=False), compatibility=dict(engine=dict(min_inclusive=config['engine_min_inclusive'], max_exclusive=config['engine_max_exclusive']), schemas=aggregate, capabilities=dict(contract_version=1, required=sorted({v for item in contents for v in item['required_capabilities']}), provided=[])), contents=contents, artifacts=[dict(name=archive.name, sha256=digest(archive.read_bytes()), size_bytes=archive.stat().st_size, format='tar.gz' if archive.name.endswith('.tar.gz') else 'zip', role=config['artifact_role'])], qualification=dict(status='pending', evidence=[]))
+    if config.get('release_dependencies'):
+        manifest['release_dependencies'] = config['release_dependencies']
     if origin:
         manifest['content_origin'] = origin
     return validate_manifest(manifest)
@@ -293,7 +326,7 @@ def main():
             if status.stdout.strip(): fail('invalid-manifest', 'release creation requires clean source checkout')
             commit = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
             origin = dict(repository=lock['source']['repository'], commit=lock['source']['revision'], lock_sha256=digest(raw))
-            result = make_manifest(config, commit, public_contents(root, lock), args.archive, origin)
+            result = make_manifest(config, commit, public_contents(root, lock, config.get('component')), args.archive, origin)
             args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
         elif args.command == 'select':
             profile, _ = load_json(args.engine_profile)

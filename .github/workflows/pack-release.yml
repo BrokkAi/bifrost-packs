@@ -1,9 +1,19 @@
-name: Pack source release
+name: Component release
 on:
   workflow_dispatch:
+    inputs:
+      component:
+        type: choice
+        options: [rules, packs]
+        required: true
+      version:
+        type: string
+        default: '0.1.0'
+        required: true
   push:
     tags:
-      - 'v*.*.*'
+      - 'rules/v*.*.*'
+      - 'packs/v*.*.*'
 permissions:
   contents: read
 jobs:
@@ -17,37 +27,72 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.12'
-      - name: Validate and stage independent content release
+      - name: Validate and build selected release stream
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_COMPONENT: ${{ inputs.component }}
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          version=0.1.0
+          component="$INPUT_COMPONENT"
+          version="$INPUT_VERSION"
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            version="${GITHUB_REF_NAME#v}"
+            component="${GITHUB_REF_NAME%%/*}"
+            version="${GITHUB_REF_NAME#*/v}"
             test "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" = "$GITHUB_SHA"
           fi
+          [[ "$component" == rules || "$component" == packs ]]
           python3 -B -m unittest discover -s tests -p 'test_*.py' -v
-          python3 scripts/content.py verify
-          python3 scripts/verify-native.py
-          archive="$RUNNER_TEMP/bifrost.public-${version}-source.tar.gz"
-          python3 scripts/content.py bundle --output "$archive"
-          python3 scripts/content.py bundle --output "$RUNNER_TEMP/repeated.tar.gz"
-          cmp "$archive" "$RUNNER_TEMP/repeated.tar.gz"
-          python3 release-contract/release.py create --archive "$archive" \
-            --version "$version" --output "$RUNNER_TEMP/pack-release.json" > "$RUNNER_TEMP/release-summary.json"
-          python3 release-contract/release.py verify-artifact \
-            --manifest "$RUNNER_TEMP/pack-release.json" --artifact "$archive"
-          cd "$RUNNER_TEMP"
-          sha256sum "${archive##*/}" > "${archive##*/}.sha256"
+          python3 -B scripts/content.py verify
+          python3 -B scripts/verify-native.py
+          args=()
+          if jq -e .baseline "release-config.${component}.json" >/dev/null; then
+            baseline=$(jq -r .baseline "release-config.${component}.json")
+            repo=$(jq -r .repository "$baseline")
+            repo="${repo#https://github.com/}"
+            commit=$(jq -r .commit "$baseline")
+            tag=$(jq -r .tag "$baseline")
+            actual=$(gh api "repos/$repo/git/ref/tags/$tag" --jq .object.sha)
+            test "$actual" = "$commit"
+            if [[ "$component" == rules ]]; then
+              gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/source.tar.gz"
+              args=(--source-archive "$RUNNER_TEMP/source.tar.gz")
+            else
+              asset=$(jq -r .native_asset "$baseline")
+              gh release download "$tag" --repo "$repo" --pattern "$asset" --dir "$RUNNER_TEMP"
+              args=(--native-archive "$RUNNER_TEMP/$asset")
+            fi
+          fi
+          python3 -B scripts/build-release.py --component "$component" --version "$version" \
+            --output "$RUNNER_TEMP/dist" "${args[@]}"
+          python3 -B scripts/build-release.py --component "$component" --version "$version" \
+            --output "$RUNNER_TEMP/repeat" "${args[@]}"
+          diff -r "$RUNNER_TEMP/dist" "$RUNNER_TEMP/repeat"
+          archive=$(find "$RUNNER_TEMP/dist" -name '*.tar.gz')
+          python3 -B release-contract/release.py verify-artifact \
+            --manifest "$RUNNER_TEMP/dist/pack-release.json" --artifact "$archive"
+      - name: Test released baseline rule with matching Bifrost binary
+        if: ${{ startsWith(github.ref_name, 'rules/') || inputs.component == 'rules' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release download v0.11.5 --repo BrokkAi/bifrost \
+            --pattern bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz --dir "$RUNNER_TEMP"
+          echo "2e3b11c0dde31643ffbac117c0db6a8711831a2a7c435f40dd0d45c98af73227  $RUNNER_TEMP/bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz" | sha256sum -c -
+          mkdir "$RUNNER_TEMP/engine" "$RUNNER_TEMP/rules"
+          tar -xzf "$RUNNER_TEMP/bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz" -C "$RUNNER_TEMP/engine"
+          tar -xzf "$RUNNER_TEMP"/dist/bifrost.public.rules-*-source.tar.gz -C "$RUNNER_TEMP/rules"
+          binary=$(find "$RUNNER_TEMP/engine" -type f -name bifrost)
+          python3 -B scripts/smoke.py --binary "$binary" --root "$RUNNER_TEMP/rules" --output "$RUNNER_TEMP/smoke"
+          cp "$RUNNER_TEMP/smoke/smoke.json" "$RUNNER_TEMP/dist/smoke.json"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
-          name: pack-release-${{ github.sha }}
-          path: |
-            ${{ runner.temp }}/bifrost.public-*-source.tar.gz
-            ${{ runner.temp }}/bifrost.public-*-source.tar.gz.sha256
-            ${{ runner.temp }}/pack-release.json
+          name: component-release-${{ github.sha }}
+          path: ${{ runner.temp }}/dist/*
           if-no-files-found: error
   publish:
-    if: ${{ startsWith(github.ref, 'refs/tags/v') && github.repository == 'BrokkAi/bifrost-packs' }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') && github.repository == 'BrokkAi/bifrost-packs' }}
     needs: package
     runs-on: ubuntu-latest
     permissions:
@@ -55,18 +100,19 @@ jobs:
     steps:
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
         with:
-          name: pack-release-${{ github.sha }}
+          name: component-release-${{ github.sha }}
           path: dist
-      - name: Publish explicitly tagged source release
+      - name: Publish tagged component release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           cd dist
-          sha256sum -c bifrost.public-*-source.tar.gz.sha256
+          sha256sum -c *.sha256
           flags=()
+          evidence=()
+          if [[ -f smoke.json ]]; then evidence+=(smoke.json); fi
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
-          gh release create "$GITHUB_REF_NAME" bifrost.public-*-source.tar.gz \
-            bifrost.public-*-source.tar.gz.sha256 pack-release.json \
+          gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 pack-release.json "${evidence[@]}" \
             --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
-            --notes "Source content from $GITHUB_SHA. Qualification pending; source artifacts are not enabled runtime packs."
+            --notes "Independent component release from $GITHUB_SHA. Initial content matches public Bifrost v0.11.5; stable pack identities and versions retained. Full behavioral qualification pending. Rules source artifacts require explicit consumer support; packs use the unchanged upstream native bundle."

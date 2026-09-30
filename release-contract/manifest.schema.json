@@ -207,6 +207,13 @@
           },
           "case_ids": {
             "$ref": "#/$defs/string-set"
+          },
+          "content_version": {
+            "$ref": "#/$defs/semver"
+          },
+          "completeness": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }
@@ -269,6 +276,31 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        }
+      }
+    },
+    "release_dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pack_id",
+          "release_version",
+          "repository"
+        ],
+        "properties": {
+          "pack_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "release_version": {
+            "$ref": "#/$defs/semver"
+          },
+          "repository": {
+            "type": "string",
+            "format": "uri"
           }
         }
       }

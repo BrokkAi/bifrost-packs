@@ -346,6 +346,7 @@ def run_smoke(binary: Path, output: Path, timeout: int = 120,
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=REPOSITORY_ROOT, help="extracted rules archive root")
     parser.add_argument("--binary", required=True, type=Path, help="Bifrost executable to exercise")
     parser.add_argument("--output", required=True, type=Path, help="empty directory for smoke evidence")
     parser.add_argument(
@@ -358,7 +359,7 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
-        result = run_smoke(args.binary, args.output, args.timeout)
+        result = run_smoke(args.binary, args.output, args.timeout, args.root)
     except SmokeError as error:
         print(f"smoke failed: {error}", file=sys.stderr)
         return 1
