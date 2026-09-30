@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "copy_integrity": {
+    "source_revision": "aa291b97e55e48efc931ea89a16068404c3aad3e",
+    "source_file_count": 293,
+    "locked_file_count": 297,
+    "aggregate_sha256": "de15461f6ba35bfc7f670cb48e518752ac021e57eb608a9b408119a9aef8e0dd",
+    "classification": {
+      "public": 2254,
+      "private": 4712,
+      "generated": 5,
+      "review": 0
+    }
+  },
+  "engine_qualification": {
+    "status": "unqualified",
+    "reason": "Full copied policy/model set has not been run against an exact intended v0.13 engine build; existing engine exposes no capability registry."
+  },
+  "focused_smoke": {
+    "scope": "One Python structural dynamic-evaluation policy only; no external API or security proof",
+    "binary_version": "0.11.4",
+    "binary_sha256": "a7109bc86ea5c2f79c88421fac68161de8d6d632c313bf4ae28f7fb6183e304a",
+    "model_set": "No explicit installed semantic pack selection; engine default activation; no model-sensitive claim",
+    "policy_path": "rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp",
+    "runs": [
+      {
+        "case": "positive",
+        "completion": {
+          "type": "complete"
+        },
+        "finding_count": 1,
+        "policy_hash": "455fca5f51f3291329d71adaa89b4c5e478df8a869272e633b6cd138afe54fb3",
+        "report_sha256": "3a53388fed4875ee5532688bde88c6e73dbe0e4c7e4739922f75228f88d566ad"
+      },
+      {
+        "case": "near-miss",
+        "completion": {
+          "type": "complete"
+        },
+        "finding_count": 0,
+        "policy_hash": "455fca5f51f3291329d71adaa89b4c5e478df8a869272e633b6cd138afe54fb3",
+        "report_sha256": "65b98f03110c040342517f1651b8b34a526b58af1c3e486e3f6fbdac776ab653"
+      }
+    ],
+    "reproduction_command": "python3 scripts/smoke.py --binary /path/to/bifrost --output /empty/evidence/directory",
+    "fixture_hashes": {
+      "near-miss": "da72f3d7ecd3b4fe7aeb9cccc5a961091a8b31b2e1993613ed2929e6324155c3",
+      "positive": "23f14bfe227d201bd369cf32712049424d7307ef80c248c02c76f3eac1e0f41b"
+    },
+    "evidence_binary_sha256": "a7109bc86ea5c2f79c88421fac68161de8d6d632c313bf4ae28f7fb6183e304a"
+  },
+  "native_regeneration": {
+    "status": "not-run",
+    "reason": "Preserved exact compiled bytes and pinned recipes; independent native regeneration/catalog installation not certified."
+  },
+  "csmi_interoperability": {
+    "status": "not-addressed",
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/3668"
+  },
+  "native_shard_integrity": {
+    "manifests": 42,
+    "shards": 48,
+    "status": "verified",
+    "semantic_qualification": false
+  }
+}

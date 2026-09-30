@@ -1,0 +1,2117 @@
+{
+  "schema_version": 1,
+  "content_version": "0.1.0",
+  "source": {
+    "repository": "https://github.com/BrokkAi/bifrost",
+    "revision": "aa291b97e55e48efc931ea89a16068404c3aad3e",
+    "tree": "a6cd88202e4fac378c60055a23153d710d3c4a79"
+  },
+  "engine": {
+    "first_default_version": "0.13.0",
+    "qualification_revision": "aa291b97e55e48efc931ea89a16068404c3aad3e",
+    "default_enabled": false,
+    "qualified_versions": []
+  },
+  "files": [
+    {
+      "path": "fixtures/policy/policies/dynamic-eval.rqlp",
+      "source_path": "crates/bifrost-policy/testdata/policies/dynamic-eval.rqlp",
+      "sha256": "97eea5ce88fb392ddd06b801e833be0349484b68238c8afa0a438297e5bdb013",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/policies/endpoints/http-request-parameter.rqlp",
+      "source_path": "crates/bifrost-policy/testdata/policies/endpoints/http-request-parameter.rqlp",
+      "sha256": "9a81a1dc4c6a35cf025286e8a864dd867e19cdf7a6f586d9e5ed5d8f58b3fd4e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/semantic/summary-corpora/codeql/java.lang.model.yml",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-corpora/codeql/java.lang.model.yml",
+      "sha256": "fdf0bd52fc64346507423fa7e148a5c4230e69b4fbf5c3bb103f68f0a9704a3b",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/semantic/summary-corpora/codeql/java.util.model.yml",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-corpora/codeql/java.util.model.yml",
+      "sha256": "521233c50df1eb93e084603a32624e35667854c734c85bc86ad14d2af2e11787",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/semantic/summary-corpora/codeql/org.springframework.web.util.model.yml",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-corpora/codeql/org.springframework.web.util.model.yml",
+      "sha256": "bab8af0354c7985d1e2f958657d540eb58471d2e33f686a60e9ab0c67e5acb30",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/semantic/summary-corpora/joern/DefaultSemantics.scala",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-corpora/joern/DefaultSemantics.scala",
+      "sha256": "8d91f04ec46f3021b6253524cabd7083644739e47d6d760e33352872703fb7e8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/semantic/summary-sources/temurin-jdk-21.0.8+9/PROVENANCE.md",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-sources/temurin-jdk-21.0.8+9/PROVENANCE.md",
+      "sha256": "927a4ea702f1c3b2a916c49ab76dabc17487726f965f805defdd8e693117c912",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0"
+    },
+    {
+      "path": "fixtures/semantic/summary-sources/temurin-jdk-21.0.8+9/java/lang/reflect/Array.java",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-sources/temurin-jdk-21.0.8+9/java/lang/reflect/Array.java",
+      "sha256": "6199b8e39382fa6001c057cb27a330e80a8e3fdcea614ff623b39bb019091df0",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0"
+    },
+    {
+      "path": "fixtures/semantic/summary-sources/temurin-jdk-21.0.8+9/java/util/Objects.java",
+      "source_path": "crates/bifrost-semantic-packs/testdata/summary-sources/temurin-jdk-21.0.8+9/java/util/Objects.java",
+      "sha256": "6b9a35c3578ba419906e7da9cf4d827b1dc052bd9a9a19b307adc527552e11c3",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0"
+    },
+    {
+      "path": "licenses/CodeQL-MIT.txt",
+      "source_path": "LICENSE",
+      "sha256": "66056d06b874e3eb6a22f5fff297e1676a23dc43e8c8b81279c1ef33a6a270df",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "c9142680f5b6409dbe0944350321c54e8c801e61",
+        "url": "https://raw.githubusercontent.com/github/codeql/c9142680f5b6409dbe0944350321c54e8c801e61/LICENSE"
+      }
+    },
+    {
+      "path": "licenses/OpenJDK-ADDITIONAL_LICENSE_INFO.txt",
+      "source_path": "ADDITIONAL_LICENSE_INFO",
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "external_source": {
+        "repository": "https://github.com/adoptium/jdk21u",
+        "revision": "18dfe1e4938d",
+        "url": "https://raw.githubusercontent.com/adoptium/jdk21u/18dfe1e4938d/ADDITIONAL_LICENSE_INFO"
+      }
+    },
+    {
+      "path": "licenses/OpenJDK-ASSEMBLY_EXCEPTION.txt",
+      "source_path": "ASSEMBLY_EXCEPTION",
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "external_source": {
+        "repository": "https://github.com/adoptium/jdk21u",
+        "revision": "18dfe1e4938d",
+        "url": "https://raw.githubusercontent.com/adoptium/jdk21u/18dfe1e4938d/ASSEMBLY_EXCEPTION"
+      }
+    },
+    {
+      "path": "licenses/OpenJDK-GPL-2.0-with-classpath.txt",
+      "source_path": "LICENSE",
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "external_source": {
+        "repository": "https://github.com/adoptium/jdk21u",
+        "revision": "18dfe1e4938d",
+        "url": "https://raw.githubusercontent.com/adoptium/jdk21u/18dfe1e4938d/LICENSE"
+      }
+    },
+    {
+      "path": "rules/bifrost.code-smells/manifest.json",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
+      "sha256": "2ddef810c020566e2f833a173e3764b43c824200dbd6f22e97d81002c989ac88",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/c-self-assignment.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/c-self-assignment.rqlp",
+      "sha256": "060548e0736be67cd0b25c6389fb87e033f042b7b292b68a234742fb244f673b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/contradictory-condition.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/contradictory-condition.rqlp",
+      "sha256": "e892f7cf6ef2c1621165904da361cf116bc9e17453b9d71bdedfa2f08455d646",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/database-call-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/database-call-in-loop.rqlp",
+      "sha256": "17421a526ebe236b7cee44bb8f4b3f7e202fdb83963b126b5423ae444c09006d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/discarded-pure-result.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/discarded-pure-result.rqlp",
+      "sha256": "8f543222504f5edd62321fab62d2bd360cf839b615611630a9707736f6f2812a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/dynamic-evaluation.rqlp",
+      "sha256": "5bd3488db5c0b0bc9997f9bc83faccee018c1675934478fbe26723565fa98f1b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/empty-failure-handler.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/empty-failure-handler.rqlp",
+      "sha256": "da2f47573caa108f1d8dae93015ea200874bc473ad96f2f1bc578eb6f0babdc8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp",
+      "sha256": "6e59a5290af21439ec6377b3876a785913b008300a3c46478f03bbd0ef4f3124",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/failed-swap.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/failed-swap.rqlp",
+      "sha256": "7d285bfb0de50fc7ae72e51c589e2c26d59a8187daa9ed15a4d878f348d5e912",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/file-read-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/file-read-in-loop.rqlp",
+      "sha256": "c7d49bf344b512d7cb631c6aa8fe7c20b53034a55c7709ecd063dc702f8ac611",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/go-data-race.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/go-data-race.rqlp",
+      "sha256": "2450793eba4c4589560730f4dbef12672a53f76b7dc32eea3d78febc09b53af6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/go-nil-dereference.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/go-nil-dereference.rqlp",
+      "sha256": "dc401af06bbf6c508443914de46f02c20e67e99812867e2e79dbbd85e8f3854c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/go-wrong-error-on-failure-path.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/go-wrong-error-on-failure-path.rqlp",
+      "sha256": "bde264a2c7b69112b6d9436d23f419dda6a7dfc57abf321ba991f06bc3534f64",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/identical-conditional-branches.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/identical-conditional-branches.rqlp",
+      "sha256": "ff7b347cd534bdf78a6aa4a671d758bc7ec27cd2ca4ac4f9f55698b95dd3eed8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/ignored-status-result.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/ignored-status-result.rqlp",
+      "sha256": "15184410d607541b1f7a3566663f61a4e95730519d014775637deccf3ace16ad",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/local-self-assignment.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/local-self-assignment.rqlp",
+      "sha256": "8fe2c8990177ed1ea63b0c97d4c17732d958a956616ef4ce598e996cdb29e6f2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/loop-body-never-repeats.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/loop-body-never-repeats.rqlp",
+      "sha256": "2eef675a7ee1f5998f5089e23084cde3367a251f470b1c0b0f338963cea5f525",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/loop-invariant-sort.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/loop-invariant-sort.rqlp",
+      "sha256": "a0b9b05066408d7285a7954d9cf839f33780d213c5a0baa8cf138cf57cbf7582",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/network-call-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/network-call-in-loop.rqlp",
+      "sha256": "c8a792d61b558439d1cc463281c39ed432c37db34d2995162b2539a282392d2c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/overwritten-unread-value.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/overwritten-unread-value.rqlp",
+      "sha256": "0d3c81d5cb299f515061902d7b1bff2cadd36dfe4c91ab9149443be30076c469",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/parsing-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/parsing-in-loop.rqlp",
+      "sha256": "2d6e2caf4c27f74c3361b2db61350d4b6e0920e4411e7e84728a127c4b498ac0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-absent-member.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/python-absent-member.rqlp",
+      "sha256": "82b61cb76c4df5892b01446841966c788771203650fda64e0072ceb803ae60f3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/rayon-in-blocking-lazy-init.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/rayon-in-blocking-lazy-init.rqlp",
+      "sha256": "85e28d6f6355e19a41afc825120838634be250c52089d72a5038ec96ede23ec9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/redundant-boolean-branches.rqlp",
+      "sha256": "7dc7947b9706df75ac2861554f7296a6c2267755325fcfa998cf0d4149edd4d8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/regex-compile-in-loop.rqlp",
+      "sha256": "ec609a11a0c3512d66bcb33bc4a9191424dcaaa7c2b86bc26228536c292204ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/repeated-branch-condition.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/repeated-branch-condition.rqlp",
+      "sha256": "590f4815afb38131e709fb1331559520247c522f9b76c2261caf83657f09dfc3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/serialization-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/serialization-in-loop.rqlp",
+      "sha256": "c1eab241a030ac3d6d59810f9483a5805b21f7f7901368543f40b91080b98220",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/sleep-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/sleep-in-loop.rqlp",
+      "sha256": "9b108fe8c8aa6db2b6a16fb0c022247e1aaef57b310e4cf6da45ca88f4159023",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/subprocess-in-loop.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/subprocess-in-loop.rqlp",
+      "sha256": "2dd875fe3995434be3d86cf1e051bde88729e300a71d297837353df9c66f9853",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/unreachable-statement.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/unreachable-statement.rqlp",
+      "sha256": "b47f1c89810119fc4800a22b8fad7eebc04a961583d4e1dae7ad11ae62c3d044",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/unsafe-deserialization.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/unsafe-deserialization.rqlp",
+      "sha256": "17afe6d2b443d24cbb0d6152dd4ea261b7340a18b909e6a84fd881aed4b3cdb6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.correctness/manifest.json",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.correctness/manifest.json",
+      "sha256": "54b4ed0ab7b4e4fd55c8fb0c4847776b0376ee46c71aff689da4faf57b1a3e52",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.correctness/policies/resource-lifecycle.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.correctness/policies/resource-lifecycle.rqlp",
+      "sha256": "f82711ec2437ee32ebca183620e161dfa81a7ace26a174c339db015ee947b067",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/manifest.json",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/manifest.json",
+      "sha256": "1e6ffb38ab84b6e1ee78b182feb318a40d487760d5d08e23a27722da9160328a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp",
+      "sha256": "d3fe33c90fe2776d28fc8744483c487686361d341b69edde957d103e254232db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp",
+      "sha256": "3b0915be4655ce70213b87c5c2728df15be6fabc8a2bdd39918f5b50a7e0e6e3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp",
+      "sha256": "1d5e38e0b4ea1463e230c98dad562842ade061337c8ff19a83ae2bbcb64b0a9b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp",
+      "sha256": "f0a7d628ccb9c8610cacb2c8938aa87d037c8d188d372026b33729acca6851b2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp",
+      "sha256": "58fe5931e1d2dfca44caf4bf55b3ab48d0fe80ac7f0c4a736934145af1262abc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp",
+      "sha256": "1a9a40514a756b5770408d8d0fc840ab885c378a214f1786b4078aea946279c1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp",
+      "sha256": "00372ab2aa8df449ea89a2cc15fe87b7650e26a1ff74dd3dc86f56b863dfad5f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp",
+      "sha256": "4e54c2c6063be382d44a44b789886d0eb30665e7571e9c45e9e3669400270e7c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp",
+      "sha256": "92c10c239ff198d8c947d8cee230e8bd89de750c4cf983734ba459807bf5af79",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
+      "sha256": "64d37abcb2e61250dc3153b1adf6d191e3cf2671582d87d128abf8a382cd26ae",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/manifest.json",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
+      "sha256": "185d9cf3274b0aa626590b82c09630c2643e55ee17315a0e88b8a405743b1607",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp",
+      "sha256": "8bcb66b67620d8ca393d7e8e9dd4b9a7c257603143a83cf37fbebcd51ec154b1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp",
+      "sha256": "e1a1a1d29572cf2525e270762a1e14905eed20c3cd0550a5e2fc04f577345e2f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/cpp-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/cpp-store-requires-validation.rqlp",
+      "sha256": "0fca71b2288e665cd003ec6de26f53f0ea01eaa9e86978a0b6c133fed5570dfd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/cpp-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/cpp-stored-request-to-sql.rqlp",
+      "sha256": "0a557867bd9679981a0c1ba5cad82de97f2450aeb40577b33004a07b1086f317",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/csharp-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/csharp-store-requires-validation.rqlp",
+      "sha256": "e6b5b83700492df0b0e842d1b5322d3b7baf6e5aa8acb9b98c6618d644288ed4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/csharp-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/csharp-stored-request-to-sql.rqlp",
+      "sha256": "82a879e92d2728d1621deb448ede6908dfd45d12d6446cc31392508e4918fde1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/go-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/go-store-requires-validation.rqlp",
+      "sha256": "e50dcffa8ae30177b100c193e2d8bbebb201b8b55efc18caa2c40150b661253d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/go-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/go-stored-request-to-sql.rqlp",
+      "sha256": "a82fcd163a2cc0d187d596b1a806678190aa9dde8cd4b32ff724b77f55c92b87",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/java-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/java-store-requires-validation.rqlp",
+      "sha256": "aaf5cddae7e6b56d2778cf9070a9d1921e7de9ebcec4d0dd7088906885e35d5a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/java-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/java-stored-request-to-sql.rqlp",
+      "sha256": "b07c700c6a135a46284a842a6481f2476c994968e7da06d5fc4027406386b78b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/javascript-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/javascript-store-requires-validation.rqlp",
+      "sha256": "abdcce89b0fe8d5d35cea8ed76f0270fdd852d2009bdd8a5a25d3e38404ff033",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/javascript-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/javascript-stored-request-to-sql.rqlp",
+      "sha256": "aea8f617ef2fb022cc446d34de9939bc0fbb563a40f0c16066f045f3c831a773",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/kotlin-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/kotlin-store-requires-validation.rqlp",
+      "sha256": "7f670f1c7b57e10c93788ec85797067af212199b3abe867dad382e811ef69043",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/kotlin-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/kotlin-stored-request-to-sql.rqlp",
+      "sha256": "a92e5e31e92dd8cb431591b1579eff309395e3ce3110bbe005bcbea5e21c21ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/php-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/php-store-requires-validation.rqlp",
+      "sha256": "ab69c81b133c9192b3fc9a68289ccff26f21dcfdce968cdb3a08668db54f26be",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/php-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/php-stored-request-to-sql.rqlp",
+      "sha256": "36671a0e9ca2f34275e6eb42f4675bac4905749180d3201e0a8ec7c848a16e75",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/python-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/python-store-requires-validation.rqlp",
+      "sha256": "e72fb3408766c07bd4c23e95b2125245fd9ce33326b75b1e634f2a44ae3808ea",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/python-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/python-stored-request-to-sql.rqlp",
+      "sha256": "5797e59c91c8ebdebc67ae043ca5014c7d5844e6ae7b5c82ae4d155fb6b3f932",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/ruby-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/ruby-store-requires-validation.rqlp",
+      "sha256": "3dc38e8afd3ebfa0bd4062e55f2b97edc330c36236d3e93fd9de07c3fe1d0c1c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/ruby-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/ruby-stored-request-to-sql.rqlp",
+      "sha256": "b654b81cef9cae9822204f335e5204563e7ccf888857faf91a5eedaa0d48ff77",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/rust-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/rust-store-requires-validation.rqlp",
+      "sha256": "a204923be72398d9bc8451fcb5d1d417dc59c3a78ba7e9cecf19dbea62a156f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/rust-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/rust-stored-request-to-sql.rqlp",
+      "sha256": "a78571ebea4920ce23da40b88650c3ce58170ff515d7145704efe38589a927b1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/scala-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/scala-store-requires-validation.rqlp",
+      "sha256": "0235ba6636af975550bf80973e56d5a42e40628b2121d8b0589ae0b744424371",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/scala-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/scala-stored-request-to-sql.rqlp",
+      "sha256": "0d380041ed47269282c0638b2551b9bcd7c3cee09b84e4030e18bbfe6fabb5f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp",
+      "sha256": "52b2ec87984b2929570d996d482dcbc8403b17bb04dd8412e56a6b724bb8fb23",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp",
+      "sha256": "f90f6cda083911e4f216afd394836278ac62085dbc4cd7e561f8f793d6f7a664",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp",
+      "sha256": "ed0bb56305f140ee203d6e6c5135d8d8943fc493eadc85a03f632a4cf1748f70",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp",
+      "sha256": "576d53fe2619e558eb64e64b4062a99ca745d28750ebc1a246c250f0688189dc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/process-input-to-os-system.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/python/process-input-to-os-system.rqlp",
+      "sha256": "f73b6d623ca7e15f2666c23e1f1c98a2faa33b8296f2151fefdd5521f419bd4e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/lib/semantic-pack-source.sh",
+      "source_path": "scripts/lib/semantic-pack-source.sh",
+      "sha256": "3b7701dd8888a4abef041e6b87b837152a289e293d47e6db3b5f5db1918696c4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/lib/semantic-pack-tool.sh",
+      "source_path": "scripts/lib/semantic-pack-tool.sh",
+      "sha256": "f71180c97f3fb6361ce96437355d784449e6871efe0f985d56872e49d422bfe7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/accept-offline-semantic-pack-install.sh",
+      "source_path": "scripts/public/accept-offline-semantic-pack-install.sh",
+      "sha256": "810c74201132bd5dc123d84d3d4867a26091f6c99eab237e86fe2efe3a0dea0d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/build-pinned-jvm-semantic-packs.sh",
+      "source_path": "scripts/public/build-pinned-jvm-semantic-packs.sh",
+      "sha256": "ba65731c0fce8a8ef306388a1ee4f3e8648c8404e8c70581aa0a31951b0a05a8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/build-pinned-php-semantic-packs.sh",
+      "source_path": "scripts/public/build-pinned-php-semantic-packs.sh",
+      "sha256": "2136153213f42e0542c71cb0417c355634ea0c4b5c6719dedf75e53ffd9e0bed",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/build-pinned-python-semantic-packs.sh",
+      "source_path": "scripts/public/build-pinned-python-semantic-packs.sh",
+      "sha256": "9b171581fc4d413fdde7a0698ffe24c00f36d165d48ec30ebc97069a84bfc909",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/build-pinned-rust-semantic-packs.sh",
+      "source_path": "scripts/public/build-pinned-rust-semantic-packs.sh",
+      "sha256": "d7446c0806a4250eed71a09e6ca03708de8fd31f76e26d777a096d35adf8c2ca",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/build-pinned-typescript-semantic-packs.sh",
+      "source_path": "scripts/public/build-pinned-typescript-semantic-packs.sh",
+      "sha256": "54ea7ffb0d75be7b866471de66c892a9eaf8e82a613e6e8fa108890e04932e86",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/fetch-pinned-summary-corpora.sh",
+      "source_path": "scripts/public/fetch-pinned-summary-corpora.sh",
+      "sha256": "6e5d9782d7d1034384d829c52a2536d5c9b056c70bfd7f8805d00c5785e15ae4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/public/generate-go-atomic-semantic-pack.mjs",
+      "source_path": "scripts/public/generate-go-atomic-semantic-pack.mjs",
+      "sha256": "1bfb8727cfa730471d294d7d123b3e9ebd822afb5c07aad3c2d59d01a61b3132",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/benchmarks/owasp-benchmark-java-v0.10.7-timeout.json",
+      "source_path": "semantic-packs/benchmarks/owasp-benchmark-java-v0.10.7-timeout.json",
+      "sha256": "1f103ce465c0bd964dab8deedb6f03c03a975c02167ee13f6fcf099b9d4af8e3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/benchmarks/owasp-benchmark-java-v2.json",
+      "source_path": "semantic-packs/benchmarks/owasp-benchmark-java-v2.json",
+      "sha256": "74dfab7ba187b531c215bda3e900f3492fef7041df028157793cb6e199751b41",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/benchmarks/owasp-benchmark-java.json",
+      "source_path": "semantic-packs/benchmarks/owasp-benchmark-java.json",
+      "sha256": "98a17dad88d077f69662aa1a0e3ad9c5f7018e5d9cd83532e8cde0075208429e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/getset-0.1.7/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/getset-0.1.7/manifest.json",
+      "sha256": "3bd3078a09b875f241cd5d9417e20e35299d7b03345e0bcbcb742ab5889cda79",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/getset-0.1.7/shards/rust.getset.generated-getter.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/getset-0.1.7/shards/rust.getset.generated-getter.deflate",
+      "sha256": "f3d8a07733538438883e0f02576a1f9fdb973bb85f6f9dd65378ca942a8774b7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/manifest.json",
+      "sha256": "8a3cc90015888f4c3bac7c6410b98f8280f3d4f3b7905bc34530da15e1dc5a12",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.errgroup.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.errgroup.declarations.deflate",
+      "sha256": "45d7e14df1d79202cb2525bee71aaf8079c7d0062ef2ac809cc808d814328225",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.sync.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.sync.declarations.deflate",
+      "sha256": "0c2ff270fc7bfe3ee7f3c8c1da24ae050dc3fbd84f19cfc01f252c944ecac930",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.time.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.time.declarations.deflate",
+      "sha256": "4c3a9af9917db6ffbb1af6bdc70cb31315b1f059e75ff4c6016142e9a06a7f4c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/manifest.json",
+      "sha256": "9754a3e12306b0324975284086bc64045b354d8a32cf9b650995b5d818e48283",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.errgroup.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.errgroup.deflate",
+      "sha256": "d7ef967fc23a251fbc585e4c49e18b6fdb1ae65c5d3ad21d820ad169644a302c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.sync.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.sync.deflate",
+      "sha256": "95eb30e18538160856115b9d83b87ad5ad43b7f5cd8a0ba8f2dd588374314b10",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.testing.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.testing.deflate",
+      "sha256": "0bc739638bb69fa9a0bba8125413942918df81aad09b64a6f923d3cc2aed1fb5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.time.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.time.deflate",
+      "sha256": "14ee01a5449aac3c540e7be17723b6d294cc185a9c7440ed8e983bbedf2b80c0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-bytes-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-bytes-declarations/manifest.json",
+      "sha256": "bf7e7905576bc098d9594049bc9e562ad614dfb9c77a0f044d52eb4bceabb5ca",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-bytes-declarations/shards/go.stdlib.bytes.declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-bytes-declarations/shards/go.stdlib.bytes.declarations.json",
+      "sha256": "14122f7c95955af813af5d6ca1c83389be6efc4dcde79b0087b26994d850aace",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-crypto-x509-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509-declarations/manifest.json",
+      "sha256": "3c2e2d9a4d715439366c604781c17d3fa5f596e6f8d3b7285b73f96d9a431db1",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-crypto-x509-declarations/shards/go.stdlib.crypto-x509.declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509-declarations/shards/go.stdlib.crypto-x509.declarations.json",
+      "sha256": "ca2ec7e8fbff595e7ca74ad928683268de883b5b9a00d1b1c52b11389e411d29",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-crypto-x509/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509/manifest.json",
+      "sha256": "b569b926a69c5c4f969d96218ff58fea6b8384ed15773f0f9011ed4d9915dbc8",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-crypto-x509/shards/go.stdlib.crypto-x509.parameter-preconditions.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509/shards/go.stdlib.crypto-x509.parameter-preconditions.json",
+      "sha256": "3192e3448290842726763ccfe53d188dcca9269ffdd1c6d6c0cb992bac6fbb2c",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-encoding-pem-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem-declarations/manifest.json",
+      "sha256": "bcae297a7b88e3131e96fecbffcf690922f31ee0824570707d761b53847ff02a",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-encoding-pem-declarations/shards/go.stdlib.encoding-pem.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem-declarations/shards/go.stdlib.encoding-pem.declarations.deflate",
+      "sha256": "569694f1f7f21c36a10e1913335e65d65bc369e3da332c5f3f7ccf8185d83309",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-encoding-pem/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem/manifest.json",
+      "sha256": "730a5c0a694d935bb305538e57e06c24d9e583209b57bb910e19e1bc18027f47",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-encoding-pem/shards/go.stdlib.encoding-pem.result-contracts.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem/shards/go.stdlib.encoding-pem.result-contracts.json",
+      "sha256": "3bab212537fdaad4111d06dd333bbcd7270b0aafb7115f0094b6e700f3e5289e",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-errors-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors-declarations/manifest.json",
+      "sha256": "0f3b21d99fa5fe9670062de1bcec76073025ff96b496e8f0e2fbfcde299aa224",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-errors-declarations/shards/go.stdlib.errors.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors-declarations/shards/go.stdlib.errors.declarations.deflate",
+      "sha256": "c2dc462c4bb2fcd8778caee690f78d38aba3c6a314aa89c89a4cda76f17a5e67",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-errors/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors/manifest.json",
+      "sha256": "2238a68556d3fa75eb80f621c0a59ac0ccd072929da13840964edd8bca6a7df2",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-errors/shards/go.stdlib.errors.conditional-result-refinements.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors/shards/go.stdlib.errors.conditional-result-refinements.json",
+      "sha256": "a40e4081431130afa898a351e43265456bef2ca27552125c1cb1451341853292",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-log-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log-declarations/manifest.json",
+      "sha256": "b728b7d71d7aec5e094d54b57aabca16edb3b6552c3a15c89efa49faee1c17fe",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-log-declarations/shards/go.stdlib.log.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log-declarations/shards/go.stdlib.log.declarations.deflate",
+      "sha256": "54cd679f212f5158553e4741edf8a70602b2c3ae27dc6003a355dbc6a8059931",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-log/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log/manifest.json",
+      "sha256": "4fc8db93e898fa66f0a36ccd2c52aadffb173612e3c91bfa583d8ee6d279e2ea",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-log/shards/go.stdlib.log.normal-continuation.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log/shards/go.stdlib.log.normal-continuation.deflate",
+      "sha256": "ebd10adedf3814f5de3c505fa4b92572728c87c17421bbbb9e51645869c4e8cc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-declarations/manifest.json",
+      "sha256": "446993db273b157196c389ee43385c3985dee0545ee5938eac779d018e669bb7",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-declarations/shards/go.stdlib.net.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-declarations/shards/go.stdlib.net.declarations.deflate",
+      "sha256": "e67e760576c6659a08d50c58b8e94aef3661ff0be969147f6d737dcc56c59677",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-http-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http-declarations/manifest.json",
+      "sha256": "ac227fbe78274ca42d062b67f37f790072669d3ebdca69cf6f75741ee220e4b8",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-http-declarations/shards/go.stdlib.net-http.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http-declarations/shards/go.stdlib.net-http.declarations.deflate",
+      "sha256": "f02eeb4241498d084ea8c4fbe21b1e8043feb5553e2ea693c6fe6a39a2d5e832",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-http/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http/manifest.json",
+      "sha256": "90ff3c1b976495761a9e4510ef65e61eaf28421e2bd7402e691d85703fbaedc9",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-http/shards/go.stdlib.net-http.handler-registration.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http/shards/go.stdlib.net-http.handler-registration.deflate",
+      "sha256": "20660acb01e8fcfdce2e6813db1df6afbe21f66441e91bfefdd07de497a44a58",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-url-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url-declarations/manifest.json",
+      "sha256": "ae1636052835ee61d08d16cdf87b6c37747cea347d245b587a1c03aa4dd52258",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-url-declarations/shards/go.stdlib.net-url.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url-declarations/shards/go.stdlib.net-url.declarations.deflate",
+      "sha256": "3862c120a6060da901bbe19f3d3ec788c7613d9c5a2b69f4e7a3fc6e34caed40",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-url/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url/manifest.json",
+      "sha256": "fb0d4f9b0ca3554d35df153d42098ca2e21d3ecd1dae27522b5f362152066dd7",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net-url/shards/go.stdlib.net-url.result-contracts.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url/shards/go.stdlib.net-url.result-contracts.json",
+      "sha256": "57f9cfbb3f5a71b62ca49595e0c39e001332e19bc3e5bcfe13deb8ce26fbb2e4",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net/manifest.json",
+      "sha256": "d65e54a579db44e7593499afb6fee841f7185c41e13d5586ebfa7abac29fbd7c",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-net/shards/go.stdlib.net.result-contracts.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net/shards/go.stdlib.net.result-contracts.deflate",
+      "sha256": "2ce709a4a11512e341ca86e25a91c3f7df4904bab74def210a3184e3b6b07dde",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-os-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os-declarations/manifest.json",
+      "sha256": "0c93c4cf73e9e819b576158cd5cc906e4f724bddd4a71e99a133aa4cf7b156ea",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-os-declarations/shards/go.stdlib.os.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os-declarations/shards/go.stdlib.os.declarations.deflate",
+      "sha256": "c577ce75bc300f190ce5856fb6670a2c69ff16c005bf7be0cb66c6ea7459ae7b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-os/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os/manifest.json",
+      "sha256": "7c26db118a2353070b3b76c3f238f54cc8e4eac7088dfeb761242dc06b93eb7d",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-os/shards/go.stdlib.os.result-contracts.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os/shards/go.stdlib.os.result-contracts.deflate",
+      "sha256": "c44422b122134fd2debbc0c3eaf9647e646c80b34f19eb1d201cf0a6aa77e6a0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-path-filepath/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-path-filepath/manifest.json",
+      "sha256": "610b2ea4d943a0120b8d781ff8227f76610d6a371847030245d5ad85eaeea1ce",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-path-filepath/shards/go.stdlib.path-filepath.declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-path-filepath/shards/go.stdlib.path-filepath.declarations.json",
+      "sha256": "47b3b1c5fb4a736b35a814691e12027a46ec20438ce98383cdd7fd34d48a5e7c",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-sync-atomic-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic-declarations/manifest.json",
+      "sha256": "74ee22ef6354b1fb6e1af3ba5cfa1489899dd01952f4af20e24b5454acfd7f2d",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-sync-atomic-declarations/shards/go.stdlib.sync-atomic.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic-declarations/shards/go.stdlib.sync-atomic.declarations.deflate",
+      "sha256": "07e2f8fe8dfdfe2d4c01b659f092e110d2d78af8672b971378cc7d9f19635102",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-sync-atomic/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic/manifest.json",
+      "sha256": "d0b197f6f7aebccbc728b07fc24d6a1964c0680d9894b0b85f3ae45520ff3ccf",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-sync-atomic/shards/go.stdlib.sync-atomic.concurrency.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic/shards/go.stdlib.sync-atomic.concurrency.deflate",
+      "sha256": "a38a490b27d6e3eac784c85fcea7322f0ef60b25c971b40acb0081a9305539bf",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-testing/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-testing/manifest.json",
+      "sha256": "bf781ba39338362e949c20e1b9bcd998555a794d7347a5162650315dd77500b1",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.concrete-receivers.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.concrete-receivers.deflate",
+      "sha256": "a540f36a47560c480f53741834be3a9144866b5b2d54ae3868260a815c093cd7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.normal-continuation.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.normal-continuation.deflate",
+      "sha256": "ce8118d456f2c9a5601b74603dc01fed558365375f8524556a72f7a518d34634",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-assert-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-assert-declarations/manifest.json",
+      "sha256": "1ceedcab0f39855fcd975c140aa354e1dc499c07ced174d039dce78142dca8fa",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-assert-declarations/shards/go.testify.assert.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-assert-declarations/shards/go.testify.assert.declarations.deflate",
+      "sha256": "007c6fc040d134108bab0f131dcfba7db6f0421c4986c76956918341b3b33b26",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-assert/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-assert/manifest.json",
+      "sha256": "2c81f850e7c0a0b971fae36e8ee9516a41876462c03f9d6a0afb77b9d78d4b0f",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-assert/shards/go.testify.assert.conditional-result-refinements.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-assert/shards/go.testify.assert.conditional-result-refinements.json",
+      "sha256": "2455a60948214aeb005791615a24f357739cc27dfdb79eb3dacdbe2fdd76687f",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-require-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-require-declarations/manifest.json",
+      "sha256": "73b4e46205444d21b1caabbe42f6fde9461c8960f6438c8897d023fa186782fa",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-require-declarations/shards/go.testify.require.declarations.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-require-declarations/shards/go.testify.require.declarations.deflate",
+      "sha256": "a7ec946adccea4fc55cf9c52ea10ca5c59c77b7fcd8b1c9bb4904d3a1be1aba0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-require/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-require/manifest.json",
+      "sha256": "47cccc1b90c5bb2ff1808750321da7ed8c7d0345a13fe767b964ae1bee27df05",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/go-testify-require/shards/go.testify.require.normal-return-refinements.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/go-testify-require/shards/go.testify.require.normal-return-refinements.json",
+      "sha256": "84a9f1e77025fb98181184629829c54cb9caa7f76c22296d83d292a06faedb0b",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/embedded/jdk21-result-use-obligations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/jdk21-result-use-obligations/manifest.json",
+      "sha256": "7061dbf8b5f5f80e35864584a2fc6905e4c8377dfe88a26933bfea0dd889fbde",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/jdk21-result-use-obligations/shards/jdk21.reviewed-result-use.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/jdk21-result-use-obligations/shards/jdk21.reviewed-result-use.deflate",
+      "sha256": "759ebd29ea18714bae26d9d82d3e0daceea29d61dc0a057a6a0bf275c50ed01c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/lombok-1.18.42/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/lombok-1.18.42/manifest.json",
+      "sha256": "df08481c898deb2928c8e1f22f76fdf2905ee8dbeff281444d2ab2ff39f13add",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/lombok-1.18.42/shards/java.lombok.generated-accessors.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/lombok-1.18.42/shards/java.lombok.generated-accessors.deflate",
+      "sha256": "1c2bcb1f1d9b51686922ca84c28ad2d00c982173cff34a2e59fad93d0a089713",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-buffer-javascript-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-buffer-javascript-declarations/manifest.json",
+      "sha256": "d22a368a89caaa59d5457e1d68182ab3a83c9036d0f933246df7a4e67b817d54",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-buffer-javascript-declarations/shards/declarations.buffer.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-buffer-javascript-declarations/shards/declarations.buffer.deflate",
+      "sha256": "1348f2a5896b5cc591f697eef8a52174d89ee303b8eba63aafd5c0b58d9a8b59",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-buffer-typescript-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-buffer-typescript-declarations/manifest.json",
+      "sha256": "91d6a9080650b691963b89bc89b4e35a27eb8eb681b0c778942b468f746add60",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-buffer-typescript-declarations/shards/declarations.buffer.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-buffer-typescript-declarations/shards/declarations.buffer.deflate",
+      "sha256": "d7b6d132632a9c6c0d69178fa51f590732643f1db5620eca66163081d32e1bde",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-javascript-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-javascript-declarations/manifest.json",
+      "sha256": "2980cc038b4f7ab9687d4d19971592808c542b6826d89bce892f27d8c40cafa9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-javascript-declarations/shards/declarations.child-process-exec-sync.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-javascript-declarations/shards/declarations.child-process-exec-sync.json",
+      "sha256": "6c2ca1673fccad5889f87fd3a0daa9ccf9d6608d56e87e9b3b8630948ffffe2e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-javascript-summaries/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-javascript-summaries/manifest.json",
+      "sha256": "99aa44f9e29b1011be9c329ea644560da07b50add10d637a6b26d41cf6e103c8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-javascript-summaries/shards/summaries.child-process-exec-sync.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-javascript-summaries/shards/summaries.child-process-exec-sync.json",
+      "sha256": "e79a35a69336f6f3a719bc89d1643449881d627d11a4d95aaff1cdf07f6ab5e0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-typescript-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-typescript-declarations/manifest.json",
+      "sha256": "b8872e35bdedd57187b32806c53fa2486244e9d9fbff1f1a46e6d9929741242c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-typescript-declarations/shards/declarations.child-process-exec-sync.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-typescript-declarations/shards/declarations.child-process-exec-sync.json",
+      "sha256": "9fd6649266be67717490d4882bb4ba99d71acdce038787db734a259df6ceaf35",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-typescript-summaries/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-typescript-summaries/manifest.json",
+      "sha256": "aa5d9dc2f888ac40d4f0391d3073450bd878d8a1cbbfdd284acc11d4d1483594",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-child-process-typescript-summaries/shards/summaries.child-process-exec-sync.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-child-process-typescript-summaries/shards/summaries.child-process-exec-sync.json",
+      "sha256": "ea80c76672d6c70d90e56925175133cf35899fcc2ece613e6fc859c086fe8d98",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-runtime-values-javascript/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-runtime-values-javascript/manifest.json",
+      "sha256": "d09d0e8ce79a2cbb6a69595593fdab63653097057fcc23c353a6e0490cffcd4f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-runtime-values-javascript/shards/runtime.node-process-values.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-runtime-values-javascript/shards/runtime.node-process-values.deflate",
+      "sha256": "c3a749b20da2b2af9ef57ef916efae4dfc8b3a54bc49522b132ab2dd284bc195",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-runtime-values-typescript/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-runtime-values-typescript/manifest.json",
+      "sha256": "23ab3e1c3da383b241f9be64ff2ffcdca247c8eb2d90a0af5da7a34331dedf1a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/node-runtime-values-typescript/shards/runtime.node-process-values.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/node-runtime-values-typescript/shards/runtime.node-process-values.deflate",
+      "sha256": "63c7394e1f5e6de82d0a467ad4a5de14c6c6c1f828c561180bbab8963f82d884",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/python-os-command-declarations/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-declarations/manifest.json",
+      "sha256": "c9d9084b49b670f556c10da09f282ecec6a67760ea7f0495ddb1759fa46b2dbb",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/python-os-command-declarations/shards/declarations.python-os-system.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-declarations/shards/declarations.python-os-system.json",
+      "sha256": "4d14f465a8453edd10148e14df49bbc77ef3a1c2184cf55fb78451f6f40d5df1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/python-os-command-summaries/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-summaries/manifest.json",
+      "sha256": "1720dd93d5098510a25635a8d5a717bf1322dabd1d99eb19672b572f9204358d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/python-os-command-summaries/shards/summaries.python-os-system.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-summaries/shards/summaries.python-os-system.json",
+      "sha256": "a34dcf58ffd2c617d2e4ee99afe183503416ec20e12844a4103af4ce00ec93c7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/python-process-inputs/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-process-inputs/manifest.json",
+      "sha256": "256600e30b3027e1d4e00a78944a32d7630032caa6724191551ed27ce13a0b05",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/python-process-inputs/shards/runtime.python-process-inputs.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-process-inputs/shards/runtime.python-process-inputs.deflate",
+      "sha256": "3ede4d5773f7d00858b49ce6dafa83b69ffc828c75d4ca247501ebc2d100817c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/scala-case-class/manifest.json",
+      "source_path": "crates/bifrost-semantic-packs/embedded/scala-case-class/manifest.json",
+      "sha256": "ed9f0c1e9a9a47d3649e8fbccc44b6ee263ee6295f29453666c172fe84bc6164",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/scala-case-class/shards/scala.case-class.generated-members.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/scala-case-class/shards/scala.case-class.generated-members.deflate",
+      "sha256": "26f615edaa0ce494ce14fe73b0e38656375d9b583fff104fbf4abacd95add439",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/framework-decls/bifrost.jdk-framework-decls.json",
+      "source_path": "semantic-packs/framework-decls/bifrost.jdk-framework-decls.json",
+      "sha256": "87f835777129ada208d47ed4525c4e12014de42fc02d1b3a5d74157adbee0655",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/framework-decls/rejects.json",
+      "source_path": "semantic-packs/framework-decls/rejects.json",
+      "sha256": "c3d5eb19507f333b9c900205d17ed7442a80bd2e18738ec3fb017559a380fef4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/framework-decls/staged/bifrost.javax.servlet-api-framework-decls.json",
+      "source_path": "semantic-packs/framework-decls/staged/bifrost.javax.servlet-api-framework-decls.json",
+      "sha256": "51c6ed1c5f8b8e8be111790cf671e75ac1c5f387ce663bf7cf00b9c116df7bcd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/framework-decls/staged/bifrost.javax.servlet-api-summaries.json",
+      "source_path": "semantic-packs/framework-decls/staged/bifrost.javax.servlet-api-summaries.json",
+      "sha256": "365dce05221bdb76763ce7751f1f84d2edda73b401ed1570fe34aa279f049132",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/framework-decls/staged/bifrost.jdk-framework-summaries.json",
+      "source_path": "semantic-packs/framework-decls/staged/bifrost.jdk-framework-summaries.json",
+      "sha256": "b73aafdd2e8135c40a793050a613921e9a46debe06ea4a07f9a30a2cc88862b9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/bifrost.jdk-golden-summaries.json",
+      "source_path": "semantic-packs/golden-core/bifrost.jdk-golden-summaries.json",
+      "sha256": "3e135bf54491863fa7d87ad36a2f251486c63f626604e9f7b5c46b9edcb6f036",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/cpython/bifrost.cpython-golden-summaries.json",
+      "source_path": "semantic-packs/golden-core/cpython/bifrost.cpython-golden-summaries.json",
+      "sha256": "0af0cefda24067f53eac36ea431fc08d2a65e6a2857ad286719903a1e611cc96",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/cpython/rejects.json",
+      "source_path": "semantic-packs/golden-core/cpython/rejects.json",
+      "sha256": "ea3ad8acb4b28df4fdeaf50ce7b7f2c50c7917cccc54ab6b5a0a12cee29b12a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/js-ts/javascript/bifrost.javascript-golden-summaries.json",
+      "source_path": "semantic-packs/golden-core/js-ts/javascript/bifrost.javascript-golden-summaries.json",
+      "sha256": "33b55c46f0831dda3a8ce2ec808d6dcf744bd60446d81a1cb0e48bc95bcae0f9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/js-ts/javascript/rejects.json",
+      "source_path": "semantic-packs/golden-core/js-ts/javascript/rejects.json",
+      "sha256": "851c46d2f75f85c9a999a9ad1bc59a50a725c798f39c55f24156069044755c05",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/js-ts/typescript/bifrost.typescript-golden-summaries.json",
+      "source_path": "semantic-packs/golden-core/js-ts/typescript/bifrost.typescript-golden-summaries.json",
+      "sha256": "30fbc4442e770805b1ca43c00e6a0a778e7da403c02cc278493d3c27c5f3f804",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/js-ts/typescript/rejects.json",
+      "source_path": "semantic-packs/golden-core/js-ts/typescript/rejects.json",
+      "sha256": "52fbe9b1a8f38a6c2ac44fdc2d808fe9357c533717b1440bb1d125181dae4021",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/rejects.json",
+      "source_path": "semantic-packs/golden-core/rejects.json",
+      "sha256": "a86f86edd32ab7f78b644e1c462274be1fa5d12b1c34bf97b295579fa7c7e153",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/rust/bifrost.rust-std-golden-summaries.json",
+      "source_path": "semantic-packs/golden-core/rust/bifrost.rust-std-golden-summaries.json",
+      "sha256": "cfcc072e38c505453eb02c071412ee7d64e78c4bcc5eaa7b9c7dea9deb675624",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/golden-core/rust/rejects.json",
+      "source_path": "semantic-packs/golden-core/rust/rejects.json",
+      "sha256": "3f759e89def369871900bdb30ba50d7f2b1f9ae613b0844899e5283b1712a2d4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/README.md",
+      "source_path": "semantic-packs/jvm/README.md",
+      "sha256": "0e84ee8b354e54956c2d85add8bae249d73556f29724d460d966e665db071bcd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/kotlin-stdlib-2.2.20.json",
+      "source_path": "semantic-packs/jvm/kotlin-stdlib-2.2.20.json",
+      "sha256": "d5697222f963d84f608bf706963cbd8d6479ea88a37f23cd7001bde41a8b28ac",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/notices/kotlin-stdlib-2.2.20.txt",
+      "source_path": "semantic-packs/jvm/notices/kotlin-stdlib-2.2.20.txt",
+      "sha256": "859496f5b71bae5b5c500c602f2b210aee2ac60ea71a3dcdc391c6854d04bb83",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/notices/scala-library-2.13.16.txt",
+      "source_path": "semantic-packs/jvm/notices/scala-library-2.13.16.txt",
+      "sha256": "a309f6bad4fe97675a057d06a8478eb0d928770193a3902ed8b2e9fa7f918315",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/notices/temurin-jdk-21.0.8+9.txt",
+      "source_path": "semantic-packs/jvm/notices/temurin-jdk-21.0.8+9.txt",
+      "sha256": "9dec2b8e9544f03fe8375e5e2e67ca9e0bc2f64204dfb446a20f5ab0217564c0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/scala-library-2.13.16.json",
+      "source_path": "semantic-packs/jvm/scala-library-2.13.16.json",
+      "sha256": "37180bcf0d00695d6790bddc89509a6bb4da4abb166075c5fbcc2d00ce2d2560",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/jvm/temurin-jdk-21.0.8+9.json",
+      "source_path": "semantic-packs/jvm/temurin-jdk-21.0.8+9.json",
+      "sha256": "930b4a4402ec806cc2f08efc4fe99bed2984c3b6d18f3d2d156afe40f1bc13a4",
+      "classification": "public",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0"
+    },
+    {
+      "path": "semantic-packs/models/getset-0.1.7.json",
+      "source_path": "crates/bifrost-semantic-packs/models/getset-0.1.7.json",
+      "sha256": "f663d36e3f1ab3df055854d599a24fa9e258f0b4ec6579159470fcd4c430a2d8",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/models/go-concurrency-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-concurrency-declarations.json",
+      "sha256": "a5b36b5093fabca4889b87a5ca1e2402fc483a08651c8070366666c62e8bf0ce",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-concurrency.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-concurrency.json",
+      "sha256": "bc4d6c81d192fa56ac54ed0269023c5c30839bd7633c1352aa2a2629c82800c3",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-bytes-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-bytes-declarations.json",
+      "sha256": "9d66094928cb0593566e0c16f23c0579c103acfca6a391886e1a596fce9ba74c",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-crypto-x509-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-crypto-x509-declarations.json",
+      "sha256": "79926dd52bffb921a17f812825f76284d3b0ba239c98b22068379fccae1f837f",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-crypto-x509.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-crypto-x509.json",
+      "sha256": "36e3cbb2b941eb1a160a19051de44599fc5fb264fb9e2b971d830a2d387fbc2f",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-encoding-pem-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-encoding-pem-declarations.json",
+      "sha256": "173fb9195c842179c82d1b8e81592070ee19aa9f54ed18de71d5433b094f5e45",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-encoding-pem.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-encoding-pem.json",
+      "sha256": "35e66d6b21998f99df7f94d69fda6c95821abe7d8728d1851799c35c8e6a2e73",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-errors-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-errors-declarations.json",
+      "sha256": "59bb687528238dd8347692bf833b784dc0ea764c0db34a8105291fd5f3641e14",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-errors.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-errors.json",
+      "sha256": "cd4e7fc4e76be9cde8dce81a2bceed805019bc0c0c9c08c3259b68f198ef0519",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-log-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-log-declarations.json",
+      "sha256": "1ff988019323445a90e2759f902877b70dfe8c1a44dec2e7a70e9607f50ac504",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-log.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-log.json",
+      "sha256": "4b7b17569761a820a836a21affbbe302a758e5e939f9c41b94a4f5b00abb25f4",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-net-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-declarations.json",
+      "sha256": "e4b91b768286c5dad34862ebd4479193a7d9b7b9ab6cbf1e76b8c51abf224216",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-net-http-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-http-declarations.json",
+      "sha256": "fb2e4050481efdb51d7ab01c9058af39b790b6b25f32436c57db6c39ffc32572",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-net-http.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-http.json",
+      "sha256": "de2d7faa8de46f14231528eed7ecba3ae8983e80bfec204740622f637517efdb",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-net-url-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-url-declarations.json",
+      "sha256": "92ebd20b18634b18540203313a43cd1404b18158765019fc35380cd217f0ae1c",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-net-url.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-url.json",
+      "sha256": "6de6ac0840b127d0f0a0684adc52b369c87c78db23653227d96023a76a8a81e7",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-net.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net.json",
+      "sha256": "c0ac5bb841e4817fed9946b168de0553de003fb1935394672289fb9c1a294df5",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-os-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-os-declarations.json",
+      "sha256": "1b56908d690f3c8f99eab99371e45b849dc484891ec0c3a55cf9c59a4c6e4bd5",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-os.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-os.json",
+      "sha256": "543acfbf79f8644bb0d1bee314e9bbe57c51a8b93d99d7e90697e4f17abfc04d",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-path-filepath.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-path-filepath.json",
+      "sha256": "3d99c5e173968fd4673218a823696e5bc64fb56b012f72582237300ed9d21849",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-sync-atomic-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-sync-atomic-declarations.json",
+      "sha256": "00acf0a02d38e21f57bad8635a53f577a560d98c4939d8a1db024f11873a3e68",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-sync-atomic.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-sync-atomic.json",
+      "sha256": "8abc41bcaa712034fea60b06ebb335fdc00502c12021b6c23ba016dd4d2f2796",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-stdlib-testing.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-testing.json",
+      "sha256": "c9c0402ba9641ee656f52ba971f1609b0d21021a7e1e1f807f150486e2f305f3",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-testify-assert-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-testify-assert-declarations.json",
+      "sha256": "47aea1c79006e513612ade98b35385d927638e424f30f2bc4d0cf9bbf3853df3",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/models/go-testify-assert.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-testify-assert.json",
+      "sha256": "7c70d134d3b57c608283ae2795b727ca63e9ead59fe0d591d8982b58aade600f",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/models/go-testify-require-declarations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-testify-require-declarations.json",
+      "sha256": "33532fcbd1aa3db74d8bdf9f368357566d9222b653fd9a3d938cba4a6e511d0d",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/models/go-testify-require.json",
+      "source_path": "crates/bifrost-semantic-packs/models/go-testify-require.json",
+      "sha256": "fc016ac27b5b38ddbe3d9c552ce41b24b6cff8416d39e0680db8b7de00fceb0d",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/models/jdk21-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/jdk21-result-use-obligations.json",
+      "sha256": "4c900ef4746148cefd4e63ceb6861f17b83eb241dc8f3d67090e6175a378b273",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/models/lombok-1.18.42.json",
+      "source_path": "crates/bifrost-semantic-packs/models/lombok-1.18.42.json",
+      "sha256": "3ed08b2b899afac9fae821bf4341a5534346fc66bcff5ab7c33191bc785d11f4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/models/scala-case-class.json",
+      "source_path": "crates/bifrost-semantic-packs/models/scala-case-class.json",
+      "sha256": "eacbcf17205787dd719ce380793f19d353af5e442063187b8e2a20161f9e2c5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/buffer/javascript/bifrost.node-buffer-declarations.json",
+      "source_path": "semantic-packs/node/buffer/javascript/bifrost.node-buffer-declarations.json",
+      "sha256": "4278856a0256309107dba1836924b0377f32c194806c292e14a49066d6ed95b5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/buffer/typescript/bifrost.node-buffer-declarations.json",
+      "source_path": "semantic-packs/node/buffer/typescript/bifrost.node-buffer-declarations.json",
+      "sha256": "277fde99a67ad52fb24af87b64ca203a6571203e4e8e86f4e51855b12a34c3a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/child-process/README.md",
+      "source_path": "semantic-packs/node/child-process/README.md",
+      "sha256": "cfe6025659935c244e393f9f6a14347a7da8dad9aa5c61d251e3bbda7a5585f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/child-process/javascript/bifrost.node-child-process-declarations.json",
+      "source_path": "semantic-packs/node/child-process/javascript/bifrost.node-child-process-declarations.json",
+      "sha256": "472509e1ec60cf0bee1766e6402aaec0691e5137576250149befb8e8abeb8d3e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/child-process/javascript/bifrost.node-child-process-summaries.json",
+      "source_path": "semantic-packs/node/child-process/javascript/bifrost.node-child-process-summaries.json",
+      "sha256": "331cfd16ae6f49002e3f209bc2419c264de0b5a9dfedbf006ab247e89525c6d8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/child-process/typescript/bifrost.node-child-process-declarations.json",
+      "source_path": "semantic-packs/node/child-process/typescript/bifrost.node-child-process-declarations.json",
+      "sha256": "9829c1f3525961088db1b191f4b29bd6c2d2dc9bded8e99988fd652790a4bf86",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/child-process/typescript/bifrost.node-child-process-summaries.json",
+      "source_path": "semantic-packs/node/child-process/typescript/bifrost.node-child-process-summaries.json",
+      "sha256": "eb58ba6b71c2a4938acfc5cdab7609fca4d24ac4bce66e2d9de086a1848bd187",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/runtime-values/README.md",
+      "source_path": "semantic-packs/node/runtime-values/README.md",
+      "sha256": "cba1caaed55bf30cdd94b5dface11270746e8f895f5b23acbd4f18ed9962efa1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/runtime-values/javascript/bifrost.node-runtime-values.json",
+      "source_path": "semantic-packs/node/runtime-values/javascript/bifrost.node-runtime-values.json",
+      "sha256": "27b8cc18970bbc75f4fc1368ba9bdac8e777096a9d0e24adee1abc56cf427cb3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/runtime-values/notices/node-v22.11.0.txt",
+      "source_path": "semantic-packs/node/runtime-values/notices/node-v22.11.0.txt",
+      "sha256": "f0cb1ad806ba5d681f378a8cc2e539fe4b54839290eda3c814ec8994af2b8422",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json",
+      "source_path": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json",
+      "sha256": "770a1cebdc74aad3a08516532f3b7cd5f082bdb1c34a20d06fb0fc02f3aa5312",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/php/README.md",
+      "source_path": "semantic-packs/php/README.md",
+      "sha256": "8bdfd117e5e33c5a093841db97dea29ab524df196ac138933a5be327651c12bd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/php/notices/phpstorm-stubs-2026.8.29.txt",
+      "source_path": "semantic-packs/php/notices/phpstorm-stubs-2026.8.29.txt",
+      "sha256": "1ad5836e18f4a3b061a956efc5c61357d7c85215a0c40e1cd6f05f8b83233052",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/php/phpstorm-stubs-2026.8.29.json",
+      "source_path": "semantic-packs/php/phpstorm-stubs-2026.8.29.json",
+      "sha256": "41472bbba3445417f2d0fe748d126861ae8192b6e9726cc8ade6c0528fde3dc1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/README-process-inputs.md",
+      "source_path": "semantic-packs/python/README-process-inputs.md",
+      "sha256": "d6af25f62ca09beba49ac7fbeabb515e42d1011fc5cbd748f0a617619d80e2d2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/README.md",
+      "source_path": "semantic-packs/python/README.md",
+      "sha256": "d96ab4364df510c617cdf4209c5a27678b6e38339964b6a1585331d49f1a6cce",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/notices/cpython-unittest-3.13.5.txt",
+      "source_path": "semantic-packs/python/notices/cpython-unittest-3.13.5.txt",
+      "sha256": "2593f3f6f67db7c1bc8369f7c02db214378866c779b47b2c9b573db3cc1bb714",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/notices/typeshed-stdlib-2026.8.31.txt",
+      "source_path": "semantic-packs/python/notices/typeshed-stdlib-2026.8.31.txt",
+      "sha256": "22346a2fbe4fa3e5d4c1aeede36f6da408b847c59f886632e50672c5b4506014",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
+      "source_path": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
+      "sha256": "68f1d150d2adf118a6882d3975cb1d6e0f85a5d0a009dfee9f423173a9689953",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/os-command/bifrost.python-os-command-summaries.json",
+      "source_path": "semantic-packs/python/os-command/bifrost.python-os-command-summaries.json",
+      "sha256": "65330b2c13a02d9eb38cfb0d631a46b439d07cf004f54accc770167bcf30808a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json",
+      "source_path": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json",
+      "sha256": "8a529461d24767829f9c7abb19efa6668b54968aba5ce259a138df9944c4cc9c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/typeshed-stdlib-2026.8.31.json",
+      "source_path": "semantic-packs/python/typeshed-stdlib-2026.8.31.json",
+      "sha256": "bbbd6a889a7ce41a7bb132825b8f62c8f7c1760e3d7d450627b31368dc64d587",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/unittest-assertions-2026.9.7.json",
+      "source_path": "semantic-packs/python/unittest-assertions-2026.9.7.json",
+      "sha256": "50697e170cecbe791773b0ddd33d6e4fc9f4d5494b2dd9b061bf6022fdc19e48",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/unittest-assertions-2026.9.7.spec.json",
+      "source_path": "semantic-packs/python/unittest-assertions-2026.9.7.spec.json",
+      "sha256": "d7cc128f169bed96d051edc1eb23561a6d00946d9f9ae0247e70c22b81937bb3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/rust/README.md",
+      "source_path": "semantic-packs/rust/README.md",
+      "sha256": "15ee3c1a8633fdf7132abda5fd54d146053f4bd7f62ba0c446b21bfd37349098",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/rust/notices/rust-stdlib-nightly-2026-08-24.txt",
+      "source_path": "semantic-packs/rust/notices/rust-stdlib-nightly-2026-08-24.txt",
+      "sha256": "5f60eca0dfb32734966759a12ed99384665bc3f7c904d33e8689ab8763ad4443",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json",
+      "source_path": "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json",
+      "sha256": "c150a8cc53b8891cd13cd4cc85fdb07274a54138a21a335f4c65cc01a052c264",
+      "classification": "public",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/README.md",
+      "source_path": "semantic-packs/sanitizers/README.md",
+      "sha256": "45011a01e878185adacc9f6171212e471512b1fdf9c2bb04c3b27236a454dcd1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/bifrost.esapi-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/bifrost.esapi-sanitizers.json",
+      "sha256": "a99b5825a491c06ba871ecb31ef596b5506ea8bcaf54e7be5bb11d221892d874",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/bifrost.java-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/bifrost.java-sanitizers.json",
+      "sha256": "344ed4c2db83a0784d21580e240b5e3f5702fec6487ca03910ca333bea7c37c3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/rejects.json",
+      "source_path": "semantic-packs/sanitizers/rejects.json",
+      "sha256": "28715b5b83fc8b95c959d666aa982fb8f338dab16963a88de221064cba291a0f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/staged/bifrost.commons-text-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/staged/bifrost.commons-text-sanitizers.json",
+      "sha256": "367da0e0da235ce2df2b74cb2da0bb6e4b6e4c6b1e4c6df57307f0d13e891b9b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/staged/bifrost.encoder-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/staged/bifrost.encoder-sanitizers.json",
+      "sha256": "c10e40a6987950ca30b803ae3158519b3692ef1484cdd415e8f40985623fc7ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/staged/bifrost.esapi-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/staged/bifrost.esapi-sanitizers.json",
+      "sha256": "9aeb1f88738ff7f03a0b489130ae212d3e8a847e3f2b9857067953ad50a963e3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/staged/bifrost.guava-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/staged/bifrost.guava-sanitizers.json",
+      "sha256": "115bfd12fdc7fa49320a9290ddf2e52808ef72a70dfd7a068876eee4d07b2ef0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/sanitizers/staged/bifrost.spring-web-sanitizers.json",
+      "source_path": "semantic-packs/sanitizers/staged/bifrost.spring-web-sanitizers.json",
+      "sha256": "637352e32e6e1a6ebdb195df2f067d4f8b6fdfd9e56cbb02ca22c01912f33175",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/summary-corpora/pins.json",
+      "source_path": "semantic-packs/summary-corpora/pins.json",
+      "sha256": "f2b449382ee01f1ab40c00f8dd4aa70e2cafa19c393c9e57d44cbad83411607d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/attacker-controlled-injection.require-model.rqlp",
+      "source_path": "semantic-packs/summary-foundry/attacker-controlled-injection.require-model.rqlp",
+      "sha256": "2f1bf4b84186b992b74f5f55a78f21ed965a6a191f5721b8005ccc44143513c9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/codeql-java-injection-models/PROVENANCE.md",
+      "source_path": "semantic-packs/summary-foundry/codeql-java-injection-models/PROVENANCE.md",
+      "sha256": "471742b1f0b21f73b992242b3af987ec903359d95953458b913ebc5497d61fe1",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/codeql-java-injection-models/java.lang.model.yml",
+      "source_path": "semantic-packs/summary-foundry/codeql-java-injection-models/java.lang.model.yml",
+      "sha256": "06c500eb9b5b04ca59715ec98ca954e0455a0a692039225fc2b6b4fa4b17eb13",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/codeql-java-injection-models/java.sql.model.yml",
+      "source_path": "semantic-packs/summary-foundry/codeql-java-injection-models/java.sql.model.yml",
+      "sha256": "897679a7d50c1e4654eadbc6706b9b0da05707a27a99c5c107b84ae393b012f9",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/codeql-java-injection-models/javax.servlet.http.model.yml",
+      "source_path": "semantic-packs/summary-foundry/codeql-java-injection-models/javax.servlet.http.model.yml",
+      "sha256": "3f37362262949d59c13353fff737af6638758604344383a91842ad58abe3ad0e",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/demand-sweep-java-realistic.json",
+      "source_path": "semantic-packs/summary-foundry/demand-sweep-java-realistic.json",
+      "sha256": "846c678eee7e7d551322512ee145b69e670f0c8ea5e3dbcc256f5e81c5b984d2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/summary-foundry/demand-sweep-java.json",
+      "source_path": "semantic-packs/summary-foundry/demand-sweep-java.json",
+      "sha256": "a86a361bbdff44ac41b5d1570705ab30c946d50ebef9b9421e63efc55b3df832",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/typescript/README.md",
+      "source_path": "semantic-packs/typescript/README.md",
+      "sha256": "ed75e8a62d3acb38844c11e850d96772862bcc5a8e2382fb0504e340c4aa1b06",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/typescript/notices/typescript-7.0.2.txt",
+      "source_path": "semantic-packs/typescript/notices/typescript-7.0.2.txt",
+      "sha256": "0a18afd7e903c46254e7227398afa71ad7b11d9296d780fd0db6b88a13439c9a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/typescript/typescript-7.0.2.json",
+      "source_path": "semantic-packs/typescript/typescript-7.0.2.json",
+      "sha256": "852f60da9903726228d1cb04e70c42a5fcf4efe1c390dce8d338ab49dcb8a1db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/csharp/bifrost.web-network-csharp.json",
+      "source_path": "semantic-packs/web-network/csharp/bifrost.web-network-csharp.json",
+      "sha256": "939ca9eaa6b751eec0d110ea25f71bddd6d7afd138abb85a441679be52fb4990",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/javascript/bifrost.web-network-javascript.json",
+      "source_path": "semantic-packs/web-network/javascript/bifrost.web-network-javascript.json",
+      "sha256": "0309f6698cd1cb70ce2e83a90f0b7561efa7e6563c4885e0943199283c2803fc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/jvm/bifrost.web-network-jvm.json",
+      "source_path": "semantic-packs/web-network/jvm/bifrost.web-network-jvm.json",
+      "sha256": "a40166046d04b6e2325fc9fa376e99997ad70388b79d5c384a05f40dd6972c4d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/python/bifrost.web-network-python.json",
+      "source_path": "semantic-packs/web-network/python/bifrost.web-network-python.json",
+      "sha256": "840d156445c069ca1e17b7953ab3d88ecfba1eafacf921d0afafe841b315bd0e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/ruby/bifrost.web-network-ruby.json",
+      "source_path": "semantic-packs/web-network/ruby/bifrost.web-network-ruby.json",
+      "sha256": "ddd6ac82150929aa3f24063301f82a8e8bff4b13d780bd14dbb8f5578385bf86",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/rust/bifrost.web-network-rust.json",
+      "source_path": "semantic-packs/web-network/rust/bifrost.web-network-rust.json",
+      "sha256": "89c52da20709c2fd7ffd13c22ca2739f2ce19b0f05b7e3dea0c91eb034e64327",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/web-network/typescript/bifrost.web-network-typescript.json",
+      "source_path": "semantic-packs/web-network/typescript/bifrost.web-network-typescript.json",
+      "sha256": "456de04e1b6826c7a25a3148cbcce286ed7dfdc1e098baf2a02c0c064baf7777",
+      "classification": "public",
+      "license": "Apache-2.0"
+    }
+  ],
+  "aggregate_sha256": "de15461f6ba35bfc7f670cb48e518752ac021e57eb608a9b408119a9aef8e0dd"
+}

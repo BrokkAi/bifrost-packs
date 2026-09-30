@@ -1,15 +1,37 @@
 # Bifrost packs
 
-Open-source policies and semantic packs for [Bifrost](https://github.com/BrokkAi/bifrost).
+Public policies and native semantic-pack content for
+[Bifrost](https://github.com/BrokkAi/bifrost), copied from reviewed public paths at
+canonical source `aa291b97e55e48efc931ea89a16068404c3aad3e`.
 
-This repository is initialized for the upcoming migration. No policies or
-semantic packs have been migrated yet.
+This is an additive copy. Bifrost still owns its existing built-in selection and
+release artifacts. v0.13.0 is the intended future consumer transition; it has
+not been implemented or qualified here. Pack versions are independent of engine
+versions.
 
-## Planned layout
+- `rules/`: four built-in policy packs, with unchanged IDs, authored/resolved
+  semantic hashes, queries and endpoint documents.
+- `semantic-packs/`: authored source/specifications/notices, `models/` inputs,
+  and `embedded/` native manifests/shards. Preserve completeness and safety fields.
+- `fixtures/`: reviewed public policy and upstream semantic fixtures.
+- `scripts/upstream/`: byte-identical engine-bound generation/install recipes;
+  consult [generation instructions](docs/generation.md) before running them.
+- `content-lock.json`: exact source path, classification, license and byte hashes.
+- `release-contract/`: shared public/premium release metadata and selection tools.
 
-- `rules/`: RQL policy documents and their supporting files.
-- `semantic-packs/`: dependency and library semantic models.
-- `tests/`: positive cases, realistic near misses, and validation manifests.
+Verify and create a reproducible **source** archive offline:
 
-Content is licensed under [Apache-2.0](LICENSE), unless explicitly documented
-otherwise. Migrations must preserve compatible upstream licensing and notices.
+```sh
+python3 scripts/content.py verify
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 scripts/content.py bundle --output /tmp/bifrost-packs-source.tar.gz
+```
+
+The source archive includes mixed-license fixtures. It is not the native
+`bifrost-semantic-packs` install bundle and must not be passed to its installer.
+No runtime download, scanner enablement or engine default change happens here.
+Compatibility declarations are separate from exact-build behavior qualification;
+see [validation](validation.json) and [transition sequencing](docs/v013-transition.md).
+
+Read [NOTICE.md](NOTICE.md) and preserved per-source notices. Apache-2.0 applies
+to Brokk public material; third-party licenses and exceptions remain in force.
