@@ -7,7 +7,7 @@ on:
         required: true
         default: '0.2.0'
   pull_request:
-    paths: ['native-generation.json', 'release-contract/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
   push:
     tags: ['packs/v*.*.*']
 permissions:
@@ -21,6 +21,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.12'
@@ -28,30 +29,46 @@ jobs:
         run: |
           python3 -B scripts/content.py verify
           python3 -B -m unittest discover -s tests -p 'test_*.py'
-      - name: Fetch pinned generator independently of consumer compatibility
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
+        with:
+          toolchain: '1.97.1'
+      - name: Build generator from pinned public source
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           repo=$(jq -r .generator.repository native-generation.json)
           repo=${repo#https://github.com/}
-          version=$(jq -r .generator.version native-generation.json)
           commit=$(jq -r .generator.commit native-generation.json)
-          test "$(gh api "repos/$repo/commits/v$version" --jq .sha)" = "$commit"
-          asset=$(jq -r .generator.asset native-generation.json)
           hash=$(jq -r .generator.asset_sha256 native-generation.json)
-          gh release download "v$version" --repo "$repo" --pattern "$asset" --dir "$RUNNER_TEMP"
-          echo "$hash  $RUNNER_TEMP/$asset" | sha256sum -c -
-          mkdir "$RUNNER_TEMP/generator"
-          tar -xzf "$RUNNER_TEMP/$asset" -C "$RUNNER_TEMP/generator"
-          binary=$(find "$RUNNER_TEMP/generator" -type f -name bifrost-semantic-pack)
-          test -x "$binary"
+          gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/source.tar.gz"
+          echo "$hash  $RUNNER_TEMP/source.tar.gz" | sha256sum -c -
+          mkdir "$RUNNER_TEMP/generator-source"
+          tar -xzf "$RUNNER_TEMP/source.tar.gz" -C "$RUNNER_TEMP/generator-source" --strip-components=1
+          lock_hash=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)
+          echo "$lock_hash  $RUNNER_TEMP/generator-source/Cargo.lock" | sha256sum -c -
+          toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)
+          cargo +"$toolchain" build --locked --release --features release-tooling \
+            --manifest-path "$RUNNER_TEMP/generator-source/Cargo.toml" \
+            -p brokk-bifrost-semantic-packs --bin bifrost-semantic-pack
+          binary="$RUNNER_TEMP/generator-source/target/release/bifrost-semantic-pack"
           echo "BIFROST_SEMANTIC_PACK_BIN=$binary" >> "$GITHUB_ENV"
+          python3 - "$binary" "$RUNNER_TEMP/generator-build.json" <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+          generator = json.loads(Path('native-generation.json').read_text())['generator']
+          receipt = dict(schema_version=1, generator_commit=generator['commit'],
+                         source_archive_sha256=generator['asset_sha256'],
+                         cargo_lock_sha256=generator['build']['cargo_lock_sha256'],
+                         rust_toolchain=generator['build']['rust_toolchain'],
+                         binary_sha256=hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest())
+          Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2) + '\n')
+          PY
       - name: Generate twice, verify and compare native content
         run: |
           python3 -B release-contract/native_generation.py --root . \
             --config native-generation.json --binary "$BIFROST_SEMANTIC_PACK_BIN" \
-            --output "$RUNNER_TEMP/native"
+            --build-receipt "$RUNNER_TEMP/generator-build.json" --output "$RUNNER_TEMP/native"
       - name: Index generated packs with independent compatibility requirements
         env:
           INPUT_VERSION: ${{ inputs.version }}

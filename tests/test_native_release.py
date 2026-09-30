@@ -90,6 +90,26 @@ class GeneratedReleaseTests(unittest.TestCase):
         for artifact in manifest['artifacts']:
             self.assertEqual(release.digest((self.output / artifact['name']).read_bytes()), artifact['sha256'])
 
+    def test_source_build_attestation_is_preserved_and_verified(self):
+        self.generator['binary_sha256'] = None
+        self.generator['build'] = dict(rust_toolchain='1.97.1', cargo_lock_sha256='e' * 64)
+        config_path = self.root / 'native-generation.json'
+        plan_config = json.loads(config_path.read_text())
+        plan_config['generator'] = self.generator
+        config_path.write_text(json.dumps(plan_config))
+        self.receipt['generator'] = self.generator
+        self.receipt['config_sha256'] = release.digest(config_path.read_bytes())
+        self.receipt['binary_sha256'] = 'f' * 64
+        self.receipt['generator_build'] = dict(schema_version=1, generator_commit=self.generator['commit'],
+                                             source_archive_sha256=self.generator['asset_sha256'],
+                                             cargo_lock_sha256='e' * 64, rust_toolchain='1.97.1', binary_sha256='f' * 64)
+        self.receipt_path.write_text(json.dumps(self.receipt))
+        self.assertEqual(self.build()['qualification']['status'], 'pending')
+        self.receipt['generator_build']['cargo_lock_sha256'] = '0' * 64
+        self.receipt_path.write_text(json.dumps(self.receipt))
+        with self.assertRaisesRegex(release.ReleaseError, 'source build'):
+            self.build()
+
     def test_wrong_source_commit_fails(self):
         self.receipt['source']['commit'] = 'd' * 40
         self.receipt_path.write_text(json.dumps(self.receipt))

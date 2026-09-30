@@ -47,6 +47,11 @@ GENERATOR_FIELDS = {
     "asset",
     "asset_sha256",
 }
+BUILD_FIELDS = {"rust_toolchain", "cargo_lock_sha256"}
+BUILD_RECEIPT_FIELDS = {
+    "schema_version", "generator_commit", "source_archive_sha256",
+    "cargo_lock_sha256", "rust_toolchain", "binary_sha256",
+}
 
 
 def _fail(message: str) -> None:
@@ -171,11 +176,21 @@ def _validate_config(root: Path, config_path: Path) -> tuple[dict[str, Any], byt
         _fail("unsupported native generation config schema_version (expected 1)")
 
     generator = config.get("generator")
-    if not isinstance(generator, dict) or set(generator) != GENERATOR_FIELDS:
-        _fail("generator must contain version, binary_sha256, repository, commit, asset, and asset_sha256")
+    if not isinstance(generator, dict) or set(generator) not in (GENERATOR_FIELDS, GENERATOR_FIELDS | {"build"}):
+        _fail("generator must contain the six generator pins and only optional build metadata")
     if not isinstance(generator["version"], str) or not SEMVER_RE.fullmatch(generator["version"]):
         _fail("generator.version must be a semantic version without a leading v")
-    _validate_sha(generator["binary_sha256"], "generator.binary_sha256")
+    if "build" in generator:
+        build = generator["build"]
+        if not isinstance(build, dict) or set(build) != BUILD_FIELDS:
+            _fail("generator.build must contain exactly rust_toolchain and cargo_lock_sha256")
+        if not isinstance(build["rust_toolchain"], str) or not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", build["rust_toolchain"]):
+            _fail("generator.build.rust_toolchain must be an exact numeric toolchain version")
+        _validate_sha(build["cargo_lock_sha256"], "generator.build.cargo_lock_sha256")
+    if generator["binary_sha256"] is not None:
+        _validate_sha(generator["binary_sha256"], "generator.binary_sha256")
+    elif "build" not in generator:
+        _fail("generator.binary_sha256 may be null only with validated build metadata")
     _validate_sha(generator["asset_sha256"], "generator.asset_sha256")
     if not isinstance(generator["repository"], str) or not generator["repository"].strip():
         _fail("generator.repository must be nonempty")
@@ -226,6 +241,29 @@ def _validate_config(root: Path, config_path: Path) -> tuple[dict[str, Any], byt
         recipes.append({"name": name, "script": row["script"], "script_path": script})
 
     return generator, config_bytes, jobs, recipes
+
+
+def _validate_build_attestation(
+    generator: dict[str, Any], attestation: Any, actual_binary_sha: str
+) -> dict[str, Any]:
+    """Bind a workflow build attestation to the configured source and executable."""
+    if "build" not in generator:
+        _fail("prebuilt generator does not permit a build receipt")
+    if not isinstance(attestation, dict) or set(attestation) != BUILD_RECEIPT_FIELDS:
+        _fail("build receipt must contain exactly the six build attestation fields")
+    if type(attestation["schema_version"]) is not int or attestation["schema_version"] != 1:
+        _fail("unsupported build receipt schema_version (expected 1)")
+    expected = {
+        "generator_commit": generator["commit"],
+        "source_archive_sha256": generator["asset_sha256"],
+        "cargo_lock_sha256": generator["build"]["cargo_lock_sha256"],
+        "rust_toolchain": generator["build"]["rust_toolchain"],
+        "binary_sha256": actual_binary_sha,
+    }
+    for field, value in expected.items():
+        if attestation[field] != value:
+            _fail(f"build receipt {field} mismatch")
+    return attestation
 
 
 def _input_plan_record(jobs: list[dict[str, Any]], recipes: list[dict[str, Any]]) -> dict[str, Any]:
@@ -450,7 +488,10 @@ def _write_deterministic_archive(bundle: Path, files: dict[str, Path], destinati
                         archive.addfile(info, content)
 
 
-def run(root: Path, config: Path, binary: Path, output: Path) -> dict[str, Any]:
+def run(
+    root: Path, config: Path, binary: Path, output: Path,
+    build_receipt: Path | None = None,
+) -> dict[str, Any]:
     """Run a two-pass native generation and publish archive plus receipt.
 
     ``output`` is a new directory outside ``root``. It receives native.tar.gz,
@@ -466,11 +507,28 @@ def run(root: Path, config: Path, binary: Path, output: Path) -> dict[str, Any]:
     if not binary_path.is_file() or not os.access(binary_path, os.X_OK):
         _fail("--binary must name an executable regular file")
     actual_binary_sha = _sha256_file(binary_path)
-    if actual_binary_sha != generator["binary_sha256"]:
+    if generator["binary_sha256"] is not None and actual_binary_sha != generator["binary_sha256"]:
         _fail(
             "native generator binary checksum mismatch: "
             f"expected {generator['binary_sha256']}, found {actual_binary_sha}"
         )
+
+    generator_build = None
+    build_receipt_path = None
+    build_receipt_sha = None
+    if "build" in generator:
+        if build_receipt is None:
+            _fail("source-built generator requires --build-receipt; no prebuilt fallback")
+        if build_receipt.is_symlink() or not build_receipt.is_file():
+            _fail("--build-receipt must name a regular file without a symlink")
+        build_receipt_path = build_receipt.resolve(strict=True)
+        build_receipt_bytes = build_receipt_path.read_bytes()
+        generator_build = _validate_build_attestation(
+            generator, _load_json(build_receipt_bytes, str(build_receipt_path)), actual_binary_sha
+        )
+        build_receipt_sha = _sha256_bytes(build_receipt_bytes)
+    elif build_receipt is not None:
+        _fail("prebuilt generator does not permit a build receipt")
 
     output_arg = output if output.is_absolute() else Path.cwd() / output
     if output_arg.name in ("", ".", ".."):
@@ -500,6 +558,8 @@ def run(root: Path, config: Path, binary: Path, output: Path) -> dict[str, Any]:
             _fail("generation config changed during execution")
         if _sha256_file(binary_path) != actual_binary_sha:
             _fail("native generator binary changed during execution")
+        if build_receipt_path is not None and _sha256_file(build_receipt_path) != build_receipt_sha:
+            _fail("generator build receipt changed during execution")
         current_plan = _input_plan_record(jobs, recipes)
         current_bytes = json.dumps(current_plan, sort_keys=True, separators=(",", ":")).encode()
         if _sha256_bytes(current_bytes) != plan_sha:
@@ -564,6 +624,7 @@ def run(root: Path, config: Path, binary: Path, output: Path) -> dict[str, Any]:
             "plan_sha256": plan_sha,
             "plan": initial_plan,
             "generator": generator,
+            "generator_build": generator_build,
             "binary_sha256": actual_binary_sha,
             "archive": {"path": "native.tar.gz", "sha256": archive_sha},
             "reproducibility": {
@@ -602,10 +663,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--binary", type=Path, required=True)
+    parser.add_argument("--build-receipt", type=Path, help="required attestation for a source-built generator")
     parser.add_argument("--output", type=Path, required=True, help="new output directory outside --root")
     args = parser.parse_args(argv)
     try:
-        result = run(args.root, args.config, args.binary, args.output)
+        result = run(args.root, args.config, args.binary, args.output, args.build_receipt)
     except (NativeGenerationError, OSError, subprocess.SubprocessError) as error:
         print(f"native generation failed: {error}", file=sys.stderr)
         return 1

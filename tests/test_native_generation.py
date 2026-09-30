@@ -112,7 +112,7 @@ class NativeGenerationTests(unittest.TestCase):
     def tearDown(self):
         self.temporary.cleanup()
 
-    def write_config(self, *, version="0.11.5", recipes=None, jobs=None):
+    def write_config(self, *, version="0.11.5", recipes=None, jobs=None, source_build=False):
         binary = self.root / "fake-native-tool"
         binary.write_text(FAKE_TOOL.replace("__VERSION__", repr(version)))
         binary.chmod(0o755)
@@ -133,6 +133,17 @@ class NativeGenerationTests(unittest.TestCase):
             "jobs": jobs,
             "recipes": recipes if recipes is not None else [],
         }
+        if source_build:
+            config["generator"].update({
+                "commit": "62fc36c09ddb96746e716c1c3456a99957521d91",
+                "binary_sha256": None,
+                "asset": "source.tar.gz",
+                "asset_sha256": "f493b9f994aaaf46525dd4e05c22e0cf95917245fea2d942f39125d633411c0b",
+                "build": {
+                    "rust_toolchain": "1.97.1",
+                    "cargo_lock_sha256": "a41ee93d487631314353cba4ab8d20a6d2546d9469ff5aaad4b33d1889f15590",
+                },
+            })
         config_path = self.root / "native-generation.json"
         config_path.write_text(json.dumps(config, indent=2, sort_keys=True) + "\n")
         subprocess.run(["git", "-C", str(self.root), "init", "-q"], check=True)
@@ -143,8 +154,23 @@ class NativeGenerationTests(unittest.TestCase):
         subprocess.run(["git", "-C", str(self.root), "commit", "-qm", "fixture"], check=True)
         return binary, config_path
 
-    def generate(self, binary, config_path, output=None):
-        return native_generation.run(self.root, config_path, binary, output or self.output)
+    def generate(self, binary, config_path, output=None, build_receipt=None):
+        return native_generation.run(self.root, config_path, binary, output or self.output, build_receipt)
+
+    def write_build_receipt(self, binary, config_path, **overrides):
+        generator = json.loads(config_path.read_text())["generator"]
+        attestation = {
+            "schema_version": 1,
+            "generator_commit": generator["commit"],
+            "source_archive_sha256": generator["asset_sha256"],
+            "cargo_lock_sha256": generator["build"]["cargo_lock_sha256"],
+            "rust_toolchain": generator["build"]["rust_toolchain"],
+            "binary_sha256": hashlib.sha256(binary.read_bytes()).hexdigest(),
+        }
+        attestation.update(overrides)
+        path = self.base / "build-receipt.json"
+        path.write_text(json.dumps(attestation))
+        return path
 
     def test_success_writes_archive_receipt_and_both_original_measurements(self):
         binary, config = self.write_config()
@@ -161,6 +187,7 @@ class NativeGenerationTests(unittest.TestCase):
         self.assertEqual(receipt["archive"]["sha256"], hashlib.sha256((self.output / "native.tar.gz").read_bytes()).hexdigest())
         self.assertEqual(receipt["reproducibility"]["status"], "byte-identical-native-content")
         self.assertEqual(receipt["qualification"]["status"], "pending")
+        self.assertIsNone(receipt["generator_build"])
         measurements = receipt["reproducibility"]["measurement_records"]
         for row in measurements:
             self.assertEqual(row["sha256"], hashlib.sha256((self.output / row["path"]).read_bytes()).hexdigest())
@@ -235,6 +262,71 @@ class NativeGenerationTests(unittest.TestCase):
 
         self.assertEqual(receipt["generator"]["version"], "0.12.0")
         self.assertEqual(receipt["qualification"]["status"], "pending")
+
+    def test_source_build_requires_receipt_without_fallback(self):
+        binary, config = self.write_config(version="0.12.0", source_build=True)
+        with self.assertRaisesRegex(native_generation.NativeGenerationError, "requires --build-receipt"):
+            self.generate(binary, config)
+        self.assertFalse(self.output.exists())
+
+    def test_source_build_rejects_wrong_source_archive(self):
+        binary, config = self.write_config(version="0.12.0", source_build=True)
+        attestation = self.write_build_receipt(binary, config, source_archive_sha256="0" * 64)
+        with self.assertRaisesRegex(native_generation.NativeGenerationError, "source_archive_sha256 mismatch"):
+            self.generate(binary, config, build_receipt=attestation)
+        self.assertFalse(self.output.exists())
+
+    def test_source_build_binds_each_build_pin_and_executable(self):
+        binary, config = self.write_config(version="0.12.0", source_build=True)
+        for field, value in (
+            ("generator_commit", "0" * 40),
+            ("cargo_lock_sha256", "0" * 64),
+            ("rust_toolchain", "1.97.2"),
+            ("binary_sha256", "0" * 64),
+            ("schema_version", True),
+        ):
+            with self.subTest(field=field):
+                attestation = self.write_build_receipt(binary, config, **{field: value})
+                with self.assertRaises(native_generation.NativeGenerationError):
+                    self.generate(binary, config, build_receipt=attestation)
+        self.assertFalse(self.output.exists())
+
+    def test_source_build_012_emits_exact_attestation_and_pending_receipt(self):
+        binary, config = self.write_config(version="0.12.0", source_build=True)
+        attestation = self.write_build_receipt(binary, config)
+        receipt = self.generate(binary, config, build_receipt=attestation)
+        self.assertEqual(receipt["generator_build"], json.loads(attestation.read_text()))
+        self.assertEqual(receipt["binary_sha256"], hashlib.sha256(binary.read_bytes()).hexdigest())
+        self.assertIsNone(receipt["generator"]["binary_sha256"])
+        self.assertEqual(receipt["generator"]["version"], "0.12.0")
+        self.assertEqual(receipt["qualification"]["status"], "pending")
+
+    def test_prebuilt_rejects_build_receipt(self):
+        binary, config = self.write_config()
+        attestation = self.base / "unexpected-receipt.json"
+        attestation.write_text("{}")
+        with self.assertRaisesRegex(native_generation.NativeGenerationError, "prebuilt generator"):
+            self.generate(binary, config, build_receipt=attestation)
+
+    def test_build_config_requires_exact_fields_and_prebuilt_hash(self):
+        binary, config_path = self.write_config()
+        original = json.loads(config_path.read_text())
+        invalid_generators = []
+        no_hash = dict(original["generator"], binary_sha256=None)
+        invalid_generators.append(no_hash)
+        for build in (
+            {"rust_toolchain": "1.97.1"},
+            {"rust_toolchain": "stable", "cargo_lock_sha256": "a" * 64},
+            {"rust_toolchain": "1.97.1", "cargo_lock_sha256": "not-a-hash"},
+            {"rust_toolchain": "1.97.1", "cargo_lock_sha256": "a" * 64, "extra": True},
+        ):
+            invalid_generators.append(dict(no_hash, build=build))
+        for generator in invalid_generators:
+            with self.subTest(generator=generator):
+                config = dict(original, generator=generator)
+                config_path.write_text(json.dumps(config))
+                with self.assertRaises(native_generation.NativeGenerationError):
+                    native_generation._validate_config(self.root.resolve(), config_path)
 
 
 if __name__ == "__main__":

@@ -88,9 +88,18 @@ def verify_receipt(root, config, archive, receipt_path, commit):
     if (receipt['config_sha256'] != release.digest(config_bytes)
             or receipt['plan'] != plan or receipt['plan_sha256'] != plan_hash
             or receipt['generator'] != generator
-            or receipt['binary_sha256'] != generator['binary_sha256']
             or receipt['archive']['sha256'] != release.digest(archive.read_bytes())):
         release.fail('integrity-error', 'generation inputs, tool or archive differ')
+    if generator.get('build'):
+        expected_build = dict(schema_version=1, generator_commit=generator['commit'],
+                              source_archive_sha256=generator['asset_sha256'],
+                              cargo_lock_sha256=generator['build']['cargo_lock_sha256'],
+                              rust_toolchain=generator['build']['rust_toolchain'],
+                              binary_sha256=receipt['binary_sha256'])
+        if receipt.get('generator_build') != expected_build:
+            release.fail('integrity-error', 'generator source build receipt differs')
+    elif receipt['binary_sha256'] != generator['binary_sha256']:
+        release.fail('integrity-error', 'generator executable differs')
     proof = receipt['reproducibility']
     if (proof['status'] != 'byte-identical-native-content'
             or proof['excluded_from_comparison'] != ['measurements.json']

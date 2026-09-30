@@ -2,16 +2,32 @@
   "schema_version": 1,
   "generator": {
     "repository": "https://github.com/BrokkAi/bifrost",
-    "commit": "4ec4489e850b809c9cc7750e4c450c7560c45de0",
-    "version": "0.11.5",
-    "asset": "bifrost-semantic-pack-v0.11.5-x86_64-unknown-linux-gnu.tar.gz",
-    "asset_sha256": "76016ab9d3ae72129bfc38dc6c035cc18b6fb7ebc3d00ebb29f8eda923df51bd",
-    "binary_sha256": "74665b583f5af406fb46222670c79f7bfef4e3610d2bd4f0cb5f45fd0e56c38f"
+    "commit": "62fc36c09ddb96746e716c1c3456a99957521d91",
+    "version": "0.12.0",
+    "asset": "source.tar.gz",
+    "asset_sha256": "f493b9f994aaaf46525dd4e05c22e0cf95917245fea2d942f39125d633411c0b",
+    "binary_sha256": null,
+    "build": {
+      "rust_toolchain": "1.97.1",
+      "cargo_lock_sha256": "a41ee93d487631314353cba4ab8d20a6d2546d9469ff5aaad4b33d1889f15590"
+    }
   },
   "recipes": [
-    {"name": "jvm", "script": "scripts/upstream/public/build-pinned-jvm-semantic-packs.sh"},
-    {"name": "python", "script": "scripts/upstream/public/build-pinned-python-semantic-packs.sh"},
-    {"name": "typescript", "script": "scripts/upstream/public/build-pinned-typescript-semantic-packs.sh"},
-    {"name": "rust", "script": "scripts/upstream/public/build-pinned-rust-semantic-packs.sh"}
+    {
+      "name": "jvm",
+      "script": "scripts/upstream/public/build-pinned-jvm-semantic-packs.sh"
+    },
+    {
+      "name": "python",
+      "script": "scripts/upstream/public/build-pinned-python-semantic-packs.sh"
+    },
+    {
+      "name": "typescript",
+      "script": "scripts/upstream/public/build-pinned-typescript-semantic-packs.sh"
+    },
+    {
+      "name": "rust",
+      "script": "scripts/upstream/public/build-pinned-rust-semantic-packs.sh"
+    }
   ]
 }

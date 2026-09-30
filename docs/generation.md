@@ -16,7 +16,7 @@ The PHP builder still requires the engine checkout. Inputs use pinned hashes;
 network is explicit during generation and can be replaced by verified cached inputs.
 Source packaging CI does not execute the recipes; the native generation workflow does.
 
-For a future independent native release: generate against the exact recorded
+For behavioral qualification beyond native generation: generate against the exact recorded
 engine build, retain upstream input hashes, run the native tool's `verify`, then
 record each generated manifest/shard hash and catalog installation result. Repeat
 the build with the same inputs and compare bytes before claiming reproducibility.
@@ -35,19 +35,21 @@ moving native data.
 ## Repository-owned native generation
 
 `Generate native packs` runs the JVM, Python, TypeScript and Rust recipes from
-this repository. It downloads the generator declared in `native-generation.json`,
-checks the release commit and archive checksum, and checks the executable checksum
-before executing it. It does not build or import private engine implementation.
+this repository. It builds the exact public generator source declared in
+`native-generation.json`, verifies the source archive and Cargo lockfile checksums,
+and records the compiler and executable hash before executing it. A prebuilt tool
+can instead be configured with an exact executable checksum. Private engine
+implementation is not imported.
 `workflow_dispatch` stages reviewable artifacts; `packs/vX.Y.Z` publishes the
 result only after generation and verification succeed. Rules retain their separate
 release workflow. The existing `packs/v0.1.0` baseline remains immutable.
 
-For a supplied trusted executable, use:
+For a source-built executable and its build receipt, use:
 
 ```sh
 python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
-  --output /absolute/scratch/native
+  --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
   --config release-config.packs.json --version 0.2.0 \
   --archive /absolute/scratch/native/native.tar.gz \
@@ -61,7 +63,10 @@ need not match. A 0.12 generator can produce content intended for 0.13 consumers
 when it emits the required schemas and capabilities. New format or compiler
 requirements can require a newer generator. Consumer selection still checks the
 actual consumer profile and the declared requirements; generation alone does not
-qualify behavior against a future engine. Current consumer bounds are preserved.
+qualify behavior against a future engine. Current consumer bounds are preserved. The v0.12 public source pin is required
+for the current JDK activation specification; the released v0.11.5 generator
+rejects that specification. This is a generator capability requirement, separate
+from consumer compatibility.
 
 Every language is generated in two fresh scratch roots, each partial bundle is
 verified, and the merged bundles are verified. Native content must match between
