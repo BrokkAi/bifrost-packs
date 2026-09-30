@@ -252,7 +252,7 @@ def empty_schemas():
 
 
 def expected_tag(manifest):
-    prefix = {'bifrost.public.rules': 'rules/', 'bifrost.public.packs': 'packs/'}.get(manifest['pack']['id'], '')
+    prefix = {'bifrost.public.rules': 'rules/', 'bifrost.public.packs': 'packs/', 'bifrost.premium.packs': 'packs/'}.get(manifest['pack']['id'], '')
     return prefix + 'v' + manifest['release_version']
 
 

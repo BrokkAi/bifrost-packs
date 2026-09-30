@@ -42,9 +42,11 @@ including `partial` completeness. It uses the native Bifrost format.
 `release-baseline.json` pins the public engine commit, each rules file, and the
 native archive checksum. `scripts/build-release.py` checks those inputs, the
 native checksum inventory, manifest descriptors, and shard payloads before
-creating release metadata. It never executes downloaded source. The workflow
-runs twice and compares outputs before publishing. Manual dispatch stages only;
-publishing requires a stream tag. Future authoring releases can remove the
+creating release metadata. It never executes downloaded source. The baseline workflow
+runs twice and compares outputs before publishing. New native releases use the
+separate `Generate native packs` workflow, which runs the repository recipes twice
+and compares native content while retaining original timing measurements. Manual
+dispatch stages only; publishing requires a stream tag. Future authoring releases can remove the
 `baseline` key from the selected component config to bundle that component's
 current locked source.
 

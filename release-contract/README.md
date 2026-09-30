@@ -76,3 +76,9 @@ Merge public PR first, then premium PR; the premium contract uses an immutable
 public commit and hashes. Later contract changes require an explicit premium pin
 update and renewed tests. Engine cutover and native release qualification remain
 separate.
+
+Native generation uses `native_generation.py` and `native_release.py` in either
+public or private repositories. Generator version/build/checksums are independent
+from release compatibility. The generation receipt and both original measurement
+records are indexed as checksum-verified sidecar artifacts; they do not qualify
+consumer behavior. `bifrost.premium.packs` uses `packs/vX.Y.Z` tags.

@@ -56,50 +56,7 @@ def rules_stage(root, source, baseline, stage):
     return lock
 
 
-def native_contents(archive, baseline):
-    if release.digest(archive.read_bytes()) != baseline['native_sha256']:
-        release.fail('integrity-error', 'published native archive checksum differs')
-    files = archive_files(archive); prefix = 'bifrost-semantic-packs/'
-    checksums = files[prefix + 'SHA256SUMS'].decode().splitlines()
-    claimed = set()
-    for line in checksums:
-        sha, name = line.split('  ', 1); release.safe_path(name)
-        path = prefix + name
-        if path in claimed or path not in files or release.digest(files[path]) != sha:
-            release.fail('integrity-error', 'native file checksum differs')
-        claimed.add(path)
-    if set(files) - claimed - {prefix + 'SHA256SUMS', prefix + 'measurements.json'}:
-        release.fail('integrity-error', 'unlisted native archive file')
-    index = json.loads(files[prefix + 'index.json'])
-    if index['schema_version'] != 3 or index['generator']['version'] != baseline['tag'][1:]:
-        release.fail('integrity-error', 'native release index version differs')
-    contents = []
-    for row in index['packs'] + index['generated_productions']:
-        descriptor = row['manifest']; path = prefix + descriptor['path']; data = files[path]
-        if release.digest(data) != descriptor['sha256'] or len(data) != descriptor['bytes']:
-            release.fail('integrity-error', 'native manifest descriptor differs')
-        manifest = json.loads(data)
-        if (manifest['pack_id'], manifest['version'], manifest['language']) != (row['pack_id'], row['pack_version'], row['language']):
-            release.fail('integrity-error', 'native identity differs')
-        for shard in row['shards']:
-            asset = shard['asset']; stored = files[prefix + asset['path']]
-            if len(stored) != asset['bytes'] or release.digest(stored) != asset['sha256']:
-                release.fail('integrity-error', 'native shard descriptor differs')
-            if shard['encoding'] == 'deflate':
-                decoder = zlib.decompressobj(-15)
-                raw = decoder.decompress(stored, shard['raw_bytes'] + 1)
-                if not decoder.eof or decoder.unused_data or decoder.unconsumed_tail:
-                    release.fail('integrity-error', 'native compressed shard malformed')
-            elif shard['encoding'] == 'raw':
-                raw = stored
-            else:
-                release.fail('incompatible-schema', 'unsupported native shard encoding')
-            if len(raw) != shard['raw_bytes']:
-                release.fail('integrity-error', 'native shard raw size differs')
-            json.loads(raw)
-        schemas = release.empty_schemas(); schemas['semantic_model_read'] = [manifest['schema_version']]; schemas['release_index'] = [3]
-        contents.append(dict(kind='semantic-model', identity=manifest['pack_id'], content_version=manifest['version'], completeness=manifest['completeness'], path=path, sha256=release.digest(data), languages=[manifest['language']], dependencies=[json.dumps(manifest['compatibility'], sort_keys=True)], schemas=schemas, required_capabilities=[], license=manifest['license']))
-    return contents
+from native_release import native_contents
 
 
 def build(root, component, version, output, source=None, native=None):
