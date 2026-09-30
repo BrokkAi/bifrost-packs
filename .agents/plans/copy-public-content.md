@@ -12,9 +12,9 @@ and releases remain intact. Future v0.13 cutover is documented separately.
 - [x] Inspected/fetched source and destination, created isolated source snapshot.
 - [x] Reviewed source license and baseline classification: public=2254, review=0.
 - [x] Copied 293 reviewed public content/fixture/recipe files byte for byte.
-- [ ] Verify reproducibility, schema compatibility, selection and typed failures.
-- [ ] Prepare premium packaging-only integration with immutable common contract pin.
-- [ ] Open ready PRs and inspect terminal exact-head CI.
+- [x] Verified reproducibility, schema compatibility, selection and typed failures (27 public tests).
+- [x] Prepared premium packaging-only integration with immutable common contract pin (14 local tests; CI 30 behavior cases).
+- [x] Opened public PR #1 and private PR #12; exact-head validation jobs terminal green, publication skipped.
 
 ## Surprises & Discoveries
 
@@ -38,4 +38,4 @@ existing engine sources and historical artifacts are untouched.
 
 ## Outcomes & Retrospective
 
-Implementation and exact-head CI evidence remain in progress.
+293 canonical source files and four upstream license texts are committed with exact hashes. Public PR #1 and premium PR #12 deliver the copy and shared metadata contract. Full public catalog/model qualification, native regeneration/installation, CSMI interoperability and v0.13 consumer changes remain explicitly pending. Engine source checkout is unchanged; no merge/tag/publication occurred. Merge public first, then premium; premium pins common code commit fcd05ac88436485d2277f8ccb459a7baf87b6c45.
