@@ -44,10 +44,10 @@ def native_contents(archive, baseline=None, generator_version=None):
     expected_version = baseline['tag'][1:] if baseline is not None else generator_version
     if index['schema_version'] != 3 or not expected_version or index['generator']['version'] != expected_version:
         release.fail('integrity-error', 'native release index version differs')
-    if not index['packs'] and not index['generated_productions']:
+    if not index['packs'] and not index.get('generated_productions', []):
         release.fail('invalid-manifest', 'native bundle has no packs')
     contents = []
-    for row in index['packs'] + index['generated_productions']:
+    for row in index['packs'] + index.get('generated_productions', []):
         descriptor = row['manifest']; path = prefix + descriptor['path']; data = files[path]
         if release.digest(data) != descriptor['sha256'] or len(data) != descriptor['bytes']:
             release.fail('integrity-error', 'native manifest descriptor differs')

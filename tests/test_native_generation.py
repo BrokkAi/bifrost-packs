@@ -64,6 +64,11 @@ if command == "generate":
     output, spec, artifact = args
     write_bundle(Path(output), spec, artifact)
 elif command == "verify":
+    if os.environ.get("FAKE_OMIT_PRODUCTIONS"):
+        index_path = Path(args[0]) / "index.json"
+        content = json.loads(index_path.read_text())
+        content.pop("generated_productions", None)
+        index_path.write_text(json.dumps(content, sort_keys=True) + "\n")
     bundle = Path(args[0])
     index = json.loads((bundle / "index.json").read_text())
     if index["schema_version"] != 3 or not (bundle / "measurements.json").is_file():
@@ -77,7 +82,7 @@ elif command == "merge":
     for number, input_root in enumerate(map(Path, inputs)):
         index = json.loads((input_root / "index.json").read_text())
         packs.extend(index["packs"])
-        generated.extend(index["generated_productions"])
+        generated.extend(index.get("generated_productions", []))
         for name in ("manifest.json", "payload.bin"):
             target = f"{number}-{name}"
             shutil.copyfile(input_root / name, output / target)
@@ -192,6 +197,12 @@ class NativeGenerationTests(unittest.TestCase):
         for row in measurements:
             self.assertEqual(row["sha256"], hashlib.sha256((self.output / row["path"]).read_bytes()).hexdigest())
         self.assertNotEqual(measurements[0]["sha256"], measurements[1]["sha256"])
+
+    def test_native_index_may_omit_empty_generated_productions(self):
+        binary, config_path = self.write_config()
+        with mock.patch.dict(os.environ, {"FAKE_OMIT_PRODUCTIONS": "1"}):
+            receipt = self.generate(binary, config_path)
+        self.assertEqual(receipt['qualification']['status'], 'pending')
 
     def test_binary_checksum_mismatch_fails_closed(self):
         binary, config_path = self.write_config()

@@ -334,7 +334,7 @@ def _inspect_bundle(bundle: Path, binary: Path, expected_version: str, *, cwd: P
         found = generator.get("version") if isinstance(generator, dict) else None
         _fail(f"native bundle generator version mismatch: expected {expected_version}, found {found}")
     packs = index.get("packs")
-    productions = index.get("generated_productions")
+    productions = index.get("generated_productions", [])
     if not isinstance(packs, list) or not isinstance(productions, list) or not (packs or productions):
         _fail(f"native bundle contains no packs or generated productions: {bundle}")
     measurements_path = files.get("measurements.json")
