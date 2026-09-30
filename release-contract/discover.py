@@ -81,7 +81,7 @@ def enumerate_candidates(repository, visibility, cache, offline=False):
             release.fail('invalid-manifest', 'invalid release manifest JSON')
         if manifest['pack']['repository'] != 'https://github.com/' + repository or manifest['pack']['visibility'] != visibility:
             release.fail('invalid-manifest', 'manifest repository/visibility mismatch')
-        if manifest['release_version'] != item['tag_name'].removeprefix('v') or (release.semver(manifest['release_version'])[3] == 0) != item['prerelease']:
+        if release.expected_tag(manifest) != item['tag_name'] or (release.semver(manifest['release_version'])[3] == 0) != item['prerelease']:
             release.fail('invalid-manifest', 'release tag/channel does not match manifest')
         commit = tag_commit(repository, item['tag_name'])
         if manifest['source']['commit'] != commit:
@@ -108,8 +108,8 @@ def main():
     try:
         paths, index = enumerate_candidates(args.repository, args.visibility, args.cache_dir, args.offline)
         profile, _ = release.load_json(args.engine_profile)
-        _, _, manifest, _ = release.resolve_candidate(paths, profile, args.pack_id, args.channel, args.version, args.commit, args.allow_unqualified)
-        for artifact in manifest['artifacts']:
+        candidates = release.resolve_release_set(paths, profile, args.pack_id, args.channel, args.version, args.commit, args.allow_unqualified)
+        for artifact in [a for _, _, manifest, _ in candidates for a in manifest['artifacts']]:
             destination = args.cache_dir / artifact['sha256'] / artifact['name']
             if not destination.is_file() and not args.offline:
                 raw = gh(['-H', 'Accept: application/octet-stream', f'repos/{args.repository}/releases/assets/{index["assets"][artifact["sha256"]]}'])

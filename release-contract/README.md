@@ -39,7 +39,7 @@ release version, source commit, manifest hash and artifact hashes; resolve once
 before a scan and retain that receipt throughout it.
 
 ```sh
-python3 release-contract/release.py select --pack-id bifrost.public \
+python3 release-contract/release.py select --pack-id bifrost.public.rules \
   --engine-profile /path/to/engine-profile.json --channel stable \
   --cache-dir /path/to/cache --receipt /path/to/scan-pack-receipt.json \
   /path/to/cached/pack-release.json
@@ -67,9 +67,11 @@ must verify clean source, tag-to-commit binding, independent release version,
 qualified evidence and artifact hashes. Future v0.13 consumer integration remains
 in `docs/v013-transition.md`.
 
-The public source-release workflow stages on manual dispatch and publishes only
-on an explicit version tag. Premium retains its qualified policy ZIP workflow
-and stages the same metadata convention. No release or tag is created by this PR.
+The public component workflow stages on manual dispatch and publishes only
+on explicit `rules/vX.Y.Z` or `packs/vX.Y.Z` tags. See
+[release streams](../docs/release-streams.md) for the pinned initial Bifrost
+release baseline and dependency resolution. Premium retains its qualified policy ZIP workflow
+and stages the same metadata convention. Initial public stream releases are published explicitly after green CI.
 Merge public PR first, then premium PR; the premium contract uses an immutable
 public commit and hashes. Later contract changes require an explicit premium pin
 update and renewed tests. Engine cutover and native release qualification remain

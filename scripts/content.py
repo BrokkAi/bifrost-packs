@@ -10,6 +10,7 @@ import json
 import os
 import re
 import stat
+import shutil
 import sys
 import tarfile
 import tempfile
@@ -305,10 +306,24 @@ def _bundle_inputs(repository_root: Path, lock: dict[str, Any]) -> list[tuple[st
     return sorted(inputs.items())
 
 
-def build_bundle(output: Path, repository_root: Path = REPOSITORY_ROOT) -> Path:
+def build_bundle(output: Path, repository_root: Path = REPOSITORY_ROOT, component: str | None = None) -> Path:
     """Write a deterministic gzip-compressed tar archive of verified source."""
     repository_root = Path(repository_root)
     lock = verify_content(repository_root)
+    if component is not None:
+        if component not in ('rules', 'packs'):
+            raise ContentError('component must be rules or packs')
+        prefixes = ('rules/', 'fixtures/policy/', 'licenses/') if component == 'rules' else ('semantic-packs/', 'fixtures/semantic/', 'scripts/upstream/', 'licenses/')
+        lock = dict(lock, files=[e for e in lock['files'] if e['path'].startswith(prefixes)])
+        lock['aggregate_sha256'] = hashlib.sha256(''.join(f"{e['sha256']}  {e['path']}\n" for e in sorted(lock['files'], key=lambda e: e['path'])).encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as directory:
+            stage = Path(directory)
+            for relative, source in _bundle_inputs(repository_root, lock):
+                target = stage / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, target)
+            (stage / LOCK_NAME).write_text(json.dumps(lock, indent=2) + '\n')
+            return build_bundle(Path(output).absolute(), stage)
     bundle_inputs = _bundle_inputs(repository_root, lock)
     output = Path(output).expanduser()
     if not output.is_absolute():
@@ -390,6 +405,7 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("verify", help="verify locked content and complete file coverage")
     bundle = commands.add_parser("bundle", help="write a reproducible source tar.gz bundle")
     bundle.add_argument("--output", required=True, type=Path, help="output .tar.gz path")
+    bundle.add_argument("--component", choices=("rules", "packs"))
     check = commands.add_parser("check", help="check content against an engine qualification")
     check.add_argument("--engine-version", required=True, help="exact engine semantic version")
     return parser
@@ -405,7 +421,7 @@ def main(argv: list[str] | None = None) -> int:
                 f"aggregate SHA-256 {lock['aggregate_sha256']}"
             )
         elif args.command == "bundle":
-            output = build_bundle(args.output)
+            output = build_bundle(args.output, component=args.component)
             print(f"created reproducible source bundle: {output}")
         else:
             lock = check_engine(args.engine_version)
