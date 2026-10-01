@@ -1,0 +1,11 @@
+{
+  "schema_version": "1",
+  "languages": ["c"],
+  "where": ["research/joern/prototypes/posix-credential-drop/fixtures/*.c"],
+  "match": {
+    "kind": "call",
+    "name": {"regex": "^(setgroups|setgid|setuid)$"}
+  },
+  "steps": [{"op": "dispatch_targets"}],
+  "result_detail": "full"
+}
