@@ -56,5 +56,8 @@ on that release. See [release streams](docs/release-streams.md) for the exact
 baseline and current gates, and [generation](docs/generation.md) for the pinned
 generator and behavioral evidence limits.
 
+For the standalone LSP engine/content tuple, use the
+[qualification and handoff procedure](docs/standalone-qualification.md).
+
 Read [NOTICE.md](NOTICE.md) and preserved per-source notices. Apache-2.0 applies
 to Brokk public material; third-party licenses and exceptions remain in force.

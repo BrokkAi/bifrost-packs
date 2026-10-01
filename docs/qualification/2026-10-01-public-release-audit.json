@@ -1,0 +1,245 @@
+{
+  "behavior": {
+    "status": "pending"
+  },
+  "engine": null,
+  "integrity": {
+    "evidence": [
+      "Artifact sizes and SHA-256 values match the downloaded descriptors and adjacent sidecars.",
+      "Rules content rows reconstructed from exact public locked bytes match all 74 descriptor entries.",
+      "Native index, manifest identities, raw/deflate shard hashes and sizes pass the repository verifier; all eight reconstructed content rows match the descriptor."
+    ],
+    "status": "verified"
+  },
+  "observed_date": "2026-10-01",
+  "releases": [
+    {
+      "artifacts": [
+        {
+          "format": "tar.gz",
+          "name": "bifrost.public.rules-0.1.1-source.tar.gz",
+          "role": "source",
+          "sha256": "7389ddcd556ca6d0e65a9149adfb8ce4af29cad63a1b411d52ac3975b3808792",
+          "size_bytes": 52225
+        }
+      ],
+      "content_count": 74,
+      "descriptor_qualification": {
+        "evidence": [
+          "Exact public Bifrost baseline bytes; archive and file integrity verified. Full behavior qualification pending."
+        ],
+        "status": "pending"
+      },
+      "engine_range": {
+        "max_exclusive": "0.12.1",
+        "min_inclusive": "0.12.0"
+      },
+      "manifest_sha256": "6f188826fe5b4918967100d8c0816c8b230a13d4a47300497d2294390a112388",
+      "native_contents": [],
+      "pack_id": "bifrost.public.rules",
+      "policy_count": 70,
+      "required_capabilities": {
+        "contract_version": 1,
+        "provided": [],
+        "required": [
+          "absent-member",
+          "actual-to-formal-binding",
+          "assignment-relations",
+          "branch-relations",
+          "call-argument-conversion",
+          "canonical-external-dispatch",
+          "canonical-workspace-dispatch",
+          "class-set-type-flow",
+          "concurrent-access-conflicts",
+          "conditional-result-contracts",
+          "declaration-bounded-containment",
+          "declared-store-boundary",
+          "descendant-match",
+          "endpoint-categories",
+          "endpoint-set-imports",
+          "exact-call-target",
+          "exact-result-use",
+          "exhaustive-effect-coverage",
+          "external-api-identity",
+          "failure-edge-control",
+          "failure-handler-state",
+          "flow",
+          "guard-dominance",
+          "heap-location-identity",
+          "interprocedural-transfer",
+          "lexical-environment",
+          "loop-relations",
+          "module-identity-declaration-selection",
+          "nilness-operations",
+          "normal-and-exceptional-exit",
+          "normalized-call",
+          "normalized-call-roles",
+          "normalized-concurrent-spawn",
+          "operation-precondition-contracts",
+          "origin-shape-assertion",
+          "prepared-c-syntax",
+          "prepared-syntax",
+          "procedure-local-scalar-refinement",
+          "python-declaration-models",
+          "reaching-binding-assertion",
+          "reaching-definitions",
+          "result-contract-failure-uses",
+          "result-contract-operation-uses",
+          "reviewed-concurrency-models",
+          "reviewed-jdk-result-obligation",
+          "runtime-keyed-read",
+          "same-evaluation",
+          "scalar-state",
+          "scoped-callable-completeness",
+          "semantic-control-flow",
+          "semantic-guard-facts",
+          "semantic-model-declared-effects",
+          "semantic-model-provenance",
+          "statement-reachability",
+          "structural-match",
+          "taint",
+          "terminal-obligation",
+          "transitive-procedure-effects",
+          "typestate",
+          "value-origin-assertion"
+        ]
+      },
+      "required_schema_versions": {
+        "builtin_catalog": [
+          2
+        ],
+        "policy_bundle": [],
+        "policy_document": [
+          1
+        ],
+        "release_index": [],
+        "rql": [
+          1
+        ],
+        "runtime": [],
+        "semantic_model_read": [],
+        "semantic_model_write": [],
+        "semantic_spec": []
+      },
+      "source_commit": "28babf267ce4602549588082d5801d78ba549edf",
+      "tag": "rules/v0.1.1"
+    },
+    {
+      "artifacts": [
+        {
+          "format": "tar.gz",
+          "name": "bifrost.public.packs-0.1.1-native.tar.gz",
+          "role": "native",
+          "sha256": "f14fc2edc1d58bca1662262f1f89e690a81baca0cfe48ed92bd463e8b8269f32",
+          "size_bytes": 34129755
+        }
+      ],
+      "content_count": 8,
+      "descriptor_qualification": {
+        "evidence": [
+          "Exact public Bifrost baseline bytes; archive and file integrity verified. Full behavior qualification pending."
+        ],
+        "status": "pending"
+      },
+      "engine_range": {
+        "max_exclusive": "0.12.1",
+        "min_inclusive": "0.12.0"
+      },
+      "manifest_sha256": "f28356cb17e85d84de3432de837f2d045e554e6d3d8d1f08018015e4960446d8",
+      "native_contents": [
+        {
+          "completeness": "partial",
+          "content_version": "21.0.8",
+          "dependencies": [
+            "{\"bifrost\": \">=0.8.18, <1.0.0\", \"toolchains\": [{\"name\": \"jdk\", \"requirement\": \">=21.0.0, <22.0.0\"}]}"
+          ],
+          "identity": "bifrost.jdk"
+        },
+        {
+          "completeness": "partial",
+          "content_version": "2.2.20",
+          "dependencies": [
+            "{\"bifrost\": \">=0.8.19, <1.0.0\", \"toolchains\": [{\"name\": \"kotlin\", \"requirement\": \">=2.2.0, <2.3.0\"}]}"
+          ],
+          "identity": "bifrost.kotlin-stdlib"
+        },
+        {
+          "completeness": "complete",
+          "content_version": "2026.9.14",
+          "dependencies": [
+            "{\"bifrost\": \">=0.8.24, <1.0.0\", \"toolchains\": [{\"name\": \"cpython\", \"requirement\": \">=3.10.0, <3.15.0\"}]}"
+          ],
+          "identity": "bifrost.python-stdlib"
+        },
+        {
+          "completeness": "complete",
+          "content_version": "2026.9.7",
+          "dependencies": [
+            "{\"bifrost\": \">=0.8.24, <1.0.0\", \"toolchains\": [{\"name\": \"cpython\", \"requirement\": \">=3.10.0, <3.15.0\"}]}"
+          ],
+          "identity": "bifrost.python-stdlib-assertions"
+        },
+        {
+          "completeness": "partial",
+          "content_version": "1.100.0-nightly",
+          "dependencies": [
+            "{\"bifrost\": \">=0.10.5, <1.0.0\", \"toolchains\": [{\"name\": \"rust\", \"requirement\": \"=1.100.0-nightly\"}]}"
+          ],
+          "identity": "bifrost.rust-stdlib"
+        },
+        {
+          "completeness": "complete",
+          "content_version": "2.13.16",
+          "dependencies": [
+            "{\"bifrost\": \">=0.8.18, <1.0.0\", \"toolchains\": [{\"name\": \"scala\", \"requirement\": \">=2.13.0, <2.14.0\"}]}"
+          ],
+          "identity": "bifrost.scala-library"
+        },
+        {
+          "completeness": "complete",
+          "content_version": "7.0.2",
+          "dependencies": [
+            "{\"bifrost\": \">=0.10.5, <1.0.0\", \"toolchains\": []}"
+          ],
+          "identity": "bifrost.typescript-stdlib"
+        },
+        {
+          "completeness": "partial",
+          "content_version": "0.12.0",
+          "dependencies": [
+            "{\"bifrost\": \"=0.12.0\", \"toolchains\": [{\"name\": \"jdk\", \"requirement\": \"=21.0.8\"}]}"
+          ],
+          "identity": "bifrost.external.java"
+        }
+      ],
+      "pack_id": "bifrost.public.packs",
+      "policy_count": 0,
+      "required_capabilities": {
+        "contract_version": 1,
+        "provided": [],
+        "required": []
+      },
+      "required_schema_versions": {
+        "builtin_catalog": [],
+        "policy_bundle": [],
+        "policy_document": [],
+        "release_index": [
+          3
+        ],
+        "rql": [],
+        "runtime": [],
+        "semantic_model_read": [
+          2,
+          5
+        ],
+        "semantic_model_write": [],
+        "semantic_spec": []
+      },
+      "source_commit": "28babf267ce4602549588082d5801d78ba549edf",
+      "tag": "packs/v0.1.1"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Public release byte and descriptor audit only. Engine installation, activation, query, policy execution, and offline runtime reuse remain pending.",
+  "tag_verification": "GitHub git/ref/tags API returned type=commit at each descriptor source commit."
+}
