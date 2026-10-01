@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "candidate_id": "jvm-jndi-filter-escaping",
+  "status": "incomplete",
+  "qualification_status": "unqualified",
+  "engine": {
+    "version": "0.12.0",
+    "binary_sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "builtin_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e",
+    "platform": "macOS arm64"
+  },
+  "jdk": {
+    "runtime": "Temurin 21.0.8+9",
+    "provider_factory": "com.sun.jndi.ldap.LdapCtxFactory",
+    "provider_provenance": "fixture configuration only; analyzer did not prove this configuration reaches every search receiver"
+  },
+  "model": {
+    "pack_id": "bifrost.external.java",
+    "pack_version": "0.12.0",
+    "pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+    "active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+    "activation_status": "active",
+    "source_kind": "generated"
+  },
+  "files_sha256": {
+    "research/stdlib/prototypes/jndi-filter-escaping/fixtures/JndiFilterCases.java": "e5e371abedf0c75e8c8e755cec8b51fe8a6a069f903a32869cda9b2c12927635",
+    "research/stdlib/prototypes/jndi-filter-escaping/queries/call-bindings.json": "b9784c63a4b344cfd3630183b0cc4e94815b6c593f28108f4c1a5df7a35f0cce",
+    "research/stdlib/prototypes/jndi-filter-escaping/queries/dispatch-targets.json": "5192a541435a448379e4c11cd3a76faa5c0409fcb02975c4dfbc86ff503a46b5",
+    "research/stdlib/prototypes/jndi-filter-escaping/discovery-only.rqlp": "5707b66ed7c3f4d9633833b93d98382ef1b496678cda4774852330a55d01d8a3"
+  },
+  "raw_output_sha256": {
+    "jndi-issue27-bindings.json": "e05dba5eb757bcc74151391248b94cef673ee33903fe454123cb5b046cd12213",
+    "jndi-issue27-dispatch.json": "7ec624522ac46d873ad5d20d05669b361ebe55723dc56979349b92dd3d3a2eeb",
+    "jndi-issue27-policy.json": "657a4c6b0f3f43e85584d34350702bbbd557e3cdb537f3f0f240a79c4be1a53b"
+  },
+  "call_bindings": [
+    {
+      "line": 25,
+      "actual_count": 3,
+      "bound_count": 0,
+      "coverage": "unknown",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "incomplete",
+      "model_id": "member.4d14ca0aad5d96b889327230aa81549a43fa4628493745d0512c94d091048cef",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false,
+      "reason": "callee_unresolved"
+    },
+    {
+      "line": 34,
+      "actual_count": 3,
+      "bound_count": 0,
+      "coverage": "unknown",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "incomplete",
+      "model_id": "member.0c180e986b786160822479e04fd016c058473168fc58d5e384eed9f4835183c0",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false,
+      "reason": "callee_unresolved"
+    },
+    {
+      "line": 44,
+      "actual_count": 3,
+      "bound_count": 0,
+      "coverage": "unknown",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "incomplete",
+      "model_id": "member.4d14ca0aad5d96b889327230aa81549a43fa4628493745d0512c94d091048cef",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false,
+      "reason": "callee_unresolved"
+    },
+    {
+      "line": 49,
+      "actual_count": 4,
+      "bound_count": 0,
+      "coverage": "unknown",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "incomplete",
+      "model_id": "member.02a58db15b65879c2c186c539fa6d5d5e700ff0ac6d53deaf2e8f3b3fe53eaa4",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false,
+      "reason": "callee_unresolved"
+    },
+    {
+      "line": 56,
+      "actual_count": 2,
+      "bound_count": 2,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "exact",
+      "model_id": "member.50013c3c361ffade1bc412111eeb01b198cd8978ba464f9e19f120eb369b7451",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false
+    },
+    {
+      "line": 56,
+      "actual_count": 2,
+      "actual_index": 0,
+      "bound_count": 2,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "exact",
+      "model_id": "member.50013c3c361ffade1bc412111eeb01b198cd8978ba464f9e19f120eb369b7451",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "proven",
+      "selector_exact": false
+    },
+    {
+      "line": 56,
+      "actual_count": 2,
+      "actual_index": 1,
+      "bound_count": 2,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "exact",
+      "model_id": "member.50013c3c361ffade1bc412111eeb01b198cd8978ba464f9e19f120eb369b7451",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "proven",
+      "selector_exact": false
+    },
+    {
+      "line": 63,
+      "actual_count": 3,
+      "bound_count": 0,
+      "coverage": "unknown",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "incomplete",
+      "model_id": "member.4d14ca0aad5d96b889327230aa81549a43fa4628493745d0512c94d091048cef",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false,
+      "reason": "callee_unresolved"
+    },
+    {
+      "line": 68,
+      "actual_count": 3,
+      "bound_count": 0,
+      "coverage": "unknown",
+      "dispatch_outcome": "unproven",
+      "dispatch_coverage": "truncated",
+      "dispatch_targets_truncated": true,
+      "mapping": "incomplete",
+      "model_id": "member.4d14ca0aad5d96b889327230aa81549a43fa4628493745d0512c94d091048cef",
+      "model_pack_digest": "8613916e52fb3138d92dcfc94368eaad87a0caaa38c1323aa9ca3e5023dc0122",
+      "model_active_set_hash": "e5c7340f929119963e22cfb0fc25bece44e675840f180b908718782f69df73c7",
+      "model_activation_status": "active",
+      "model_completeness": "partial",
+      "target_origin": "semantic_model",
+      "conversion_status": "not_applicable",
+      "selector_exact": false,
+      "reason": "callee_unresolved"
+    },
+    {
+      "line": 72,
+      "actual_count": 3,
+      "bound_count": 3,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "resolved",
+      "dispatch_coverage": "exhaustive",
+      "dispatch_targets_truncated": false,
+      "mapping": "exact",
+      "target_origin": "source",
+      "conversion_status": "not_applicable",
+      "selector_exact": true,
+      "selector_proof": "derived"
+    },
+    {
+      "line": 72,
+      "actual_count": 3,
+      "actual_index": 0,
+      "bound_count": 3,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "resolved",
+      "dispatch_coverage": "exhaustive",
+      "dispatch_targets_truncated": false,
+      "mapping": "exact",
+      "target_origin": "source",
+      "formal_name": "name",
+      "conversion_status": "unknown",
+      "selector_exact": true,
+      "selector_proof": "derived"
+    },
+    {
+      "line": 72,
+      "actual_count": 3,
+      "actual_index": 1,
+      "bound_count": 3,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "resolved",
+      "dispatch_coverage": "exhaustive",
+      "dispatch_targets_truncated": false,
+      "mapping": "exact",
+      "target_origin": "source",
+      "formal_name": "filter",
+      "conversion_status": "unknown",
+      "selector_exact": true,
+      "selector_proof": "derived"
+    },
+    {
+      "line": 72,
+      "actual_count": 3,
+      "actual_index": 2,
+      "bound_count": 3,
+      "coverage": "exhaustive",
+      "dispatch_outcome": "resolved",
+      "dispatch_coverage": "exhaustive",
+      "dispatch_targets_truncated": false,
+      "mapping": "exact",
+      "target_origin": "source",
+      "formal_name": "controls",
+      "conversion_status": "unknown",
+      "selector_exact": true,
+      "selector_proof": "derived"
+    }
+  ],
+  "binding_diagnostics": [
+    [
+      "call_binding_dispatch_partial",
+      "call_bindings established an exact declared target and actual-to-formal mapping, but exact selector proof remains unavailable (dispatch outcome=unproven, coverage=truncated, target_count=1)"
+    ],
+    [
+      "semantic_analysis_partial",
+      "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=truncated, target_count=1, binding coverage=unknown)"
+    ],
+    [
+      "semantic_analysis_partial",
+      "call_bindings model signature conversion is unavailable: SignatureApplicability"
+    ]
+  ],
+  "dispatch_targets": [
+    {
+      "line": 25,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 34,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 44,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 49,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 56,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 63,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 68,
+      "boundary_kind": "external",
+      "completeness": "partial",
+      "coverage": "truncated",
+      "dispatch": "may_dispatch",
+      "target_path": "bifrost-unmaterialized-external"
+    },
+    {
+      "line": 72,
+      "boundary_kind": null,
+      "completeness": "complete",
+      "coverage": "exhaustive",
+      "dispatch": "proven_dispatch",
+      "target_path": "research/stdlib/prototypes/jndi-filter-escaping/fixtures/JndiFilterCases.java"
+    }
+  ],
+  "discovery_policy": {
+    "id": "research.discovery.jvm-jndi-search-call-shapes",
+    "completion": {
+      "type": "complete"
+    },
+    "candidate_count": 8,
+    "diagnostics": []
+  },
+  "limitations": [
+    "Exact JDK overload/formal binding is not established for raw, parameterized, or structured DirContext.search calls.",
+    "Provider configuration to each receiver and authentication/result-use flow were not proven.",
+    "Name-only discovery includes a local lookalike; zero qualified security findings is incomplete, not clean."
+  ]
+}
