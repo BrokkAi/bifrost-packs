@@ -44,8 +44,26 @@ def rules_stage(root, source, baseline, stage):
         if release.digest(data) != entry['sha256']:
             release.fail('integrity-error', 'baseline policy bytes differ')
         target = stage / entry['path']; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(data)
-    for name in ('LICENSE', 'NOTICE.md', 'README.md'):
-        shutil.copyfile(root / name, stage / name)
+    shutil.copyfile(root / 'LICENSE', stage / 'LICENSE')
+    (stage / 'NOTICE.md').write_text(
+        '# Notices and source provenance\n\n'
+        f'These public policy files are copied from BrokkAi/bifrost {baseline["tag"]} '
+        f'at commit `{baseline["commit"]}`. The source archive identifies '
+        'LICENSE.md as Apache-2.0. The release contains the four public policy '
+        'catalogs listed in content-lock.json; each path and SHA-256 is pinned '
+        'there and in the release repository baseline.\n\n'
+        'Full behavior qualification remains pending.\n',
+        encoding='utf-8',
+    )
+    (stage / 'README.md').write_text(
+        '# Bifrost public policy rules baseline\n\n'
+        f'This archive contains policy files copied from the public Bifrost '
+        f'{baseline["tag"]} source commit `{baseline["commit"]}`. The filtered '
+        'content-lock.json records the exact paths and byte hashes. The source '
+        'archive is pending full behavioral qualification; its engine compatibility '
+        'bound is declared in pack-release.json.\n',
+        encoding='utf-8',
+    )
     for name in ('scripts/smoke.py', 'scripts/content.py', 'tests/cases/dynamic-evaluation/positive.py', 'tests/cases/dynamic-evaluation/near-miss.py'):
         if (root / name).is_file():
             target = stage / name; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(root / name, target)

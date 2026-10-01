@@ -1,12 +1,26 @@
 {
   "repository": "https://github.com/BrokkAi/bifrost",
-  "commit": "4ec4489e850b809c9cc7750e4c450c7560c45de0",
-  "tag": "v0.11.5",
+  "commit": "32763afdc77b2a99cab023d2c2def4c42e14d360",
+  "tag": "v0.12.0",
   "rules": [
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "98edf0a7de161de79d7e09651b8010539a5b8378d8030b8d21dc1a17278cd887",
+      "sha256": "b3dd67bc9d80f932a3e905bda271cde76fd0a397184ebc30015f414066cbe23f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/c-self-assignment.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/c-self-assignment.rqlp",
+      "sha256": "060548e0736be67cd0b25c6389fb87e033f042b7b292b68a234742fb244f673b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/contradictory-condition.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/contradictory-condition.rqlp",
+      "sha256": "e892f7cf6ef2c1621165904da361cf116bc9e17453b9d71bdedfa2f08455d646",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -18,6 +32,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.code-smells/policies/discarded-pure-result.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/discarded-pure-result.rqlp",
+      "sha256": "cb56f696c38a591ec6c128f47e3c3d6371b2a75f49c2bd5f26e25e7a2aadfe0f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/dynamic-evaluation.rqlp",
       "sha256": "5bd3488db5c0b0bc9997f9bc83faccee018c1675934478fbe26723565fa98f1b",
@@ -25,9 +46,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.code-smells/policies/empty-failure-handler.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/empty-failure-handler.rqlp",
+      "sha256": "5c4c4eaf5512cc8117788f50c98a38e358ed1cd651ce160bbd13deaab507e247",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp",
       "sha256": "6e59a5290af21439ec6377b3876a785913b008300a3c46478f03bbd0ef4f3124",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/failed-swap.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/failed-swap.rqlp",
+      "sha256": "0463becfa61b7773bec865365942b72832ab44964450ed999ffbcfa7bfdfd4bb",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -60,6 +95,34 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.code-smells/policies/identical-conditional-branches.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/identical-conditional-branches.rqlp",
+      "sha256": "ff7b347cd534bdf78a6aa4a671d758bc7ec27cd2ca4ac4f9f55698b95dd3eed8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/ignored-status-result.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/ignored-status-result.rqlp",
+      "sha256": "d5619b754a32a805c69486a379991d17af3f94e8ceaf0611246cefddcabf5903",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/local-self-assignment.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/local-self-assignment.rqlp",
+      "sha256": "fc0323bc218d0d2f0189adeaee97e049a7709c99bc876499c8b65d1ea73a00ee",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/loop-body-never-repeats.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/loop-body-never-repeats.rqlp",
+      "sha256": "c450a7877ff3a81db51e82f8c73b4def44a25ee7b96b0b86a72151a27c13c7cf",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.code-smells/policies/loop-invariant-sort.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/loop-invariant-sort.rqlp",
       "sha256": "a0b9b05066408d7285a7954d9cf839f33780d213c5a0baa8cf138cf57cbf7582",
@@ -70,6 +133,13 @@
       "path": "rules/bifrost.code-smells/policies/network-call-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/network-call-in-loop.rqlp",
       "sha256": "c8a792d61b558439d1cc463281c39ed432c37db34d2995162b2539a282392d2c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/overwritten-unread-value.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/overwritten-unread-value.rqlp",
+      "sha256": "dea81b4c99b465c39f3f1a9f328e657a50d1bd6572332addd53c15242fc6630d",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -95,9 +165,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/redundant-boolean-branches.rqlp",
+      "sha256": "7dc7947b9706df75ac2861554f7296a6c2267755325fcfa998cf0d4149edd4d8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/regex-compile-in-loop.rqlp",
       "sha256": "ec609a11a0c3512d66bcb33bc4a9191424dcaaa7c2b86bc26228536c292204ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/repeated-branch-condition.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/repeated-branch-condition.rqlp",
+      "sha256": "590f4815afb38131e709fb1331559520247c522f9b76c2261caf83657f09dfc3",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -119,6 +203,13 @@
       "path": "rules/bifrost.code-smells/policies/subprocess-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/subprocess-in-loop.rqlp",
       "sha256": "2dd875fe3995434be3d86cf1e051bde88729e300a71d297837353df9c66f9853",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/unreachable-statement.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/unreachable-statement.rqlp",
+      "sha256": "195913ebe573d6b4b315b0456f1ff1e3a27cd60689f17114801956d469bbcf78",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -146,7 +237,28 @@
     {
       "path": "rules/bifrost.effects/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/manifest.json",
-      "sha256": "03d4bf42f8c91521782ed5af73116fa534b0e96cfc06029bfc94c05fa62f683c",
+      "sha256": "1e6ffb38ab84b6e1ee78b182feb318a40d487760d5d08e23a27722da9160328a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp",
+      "sha256": "d3fe33c90fe2776d28fc8744483c487686361d341b69edde957d103e254232db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp",
+      "sha256": "3b0915be4655ce70213b87c5c2728df15be6fabc8a2bdd39918f5b50a7e0e6e3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp",
+      "sha256": "1d5e38e0b4ea1463e230c98dad562842ade061337c8ff19a83ae2bbcb64b0a9b",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -158,9 +270,37 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp",
+      "sha256": "58fe5931e1d2dfca44caf4bf55b3ab48d0fe80ac7f0c4a736934145af1262abc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp",
       "sha256": "1a9a40514a756b5770408d8d0fc840ab885c378a214f1786b4078aea946279c1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp",
+      "sha256": "00372ab2aa8df449ea89a2cc15fe87b7650e26a1ff74dd3dc86f56b863dfad5f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp",
+      "sha256": "4e54c2c6063be382d44a44b789886d0eb30665e7571e9c45e9e3669400270e7c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp",
+      "sha256": "92c10c239ff198d8c947d8cee230e8bd89de750c4cf983734ba459807bf5af79",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -174,7 +314,7 @@
     {
       "path": "rules/bifrost.security/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
-      "sha256": "7fa504f303060ab5ac10aeae39e69baec738da5397304c74c9f53a9e1c904a1a",
+      "sha256": "41fbf3b2a36ccec9d75e84f5f6db8155729802e98a847a6d45ba5026c40cf1e9",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -370,11 +510,20 @@
     {
       "path": "rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp",
-      "sha256": "a3853b4289229de9afc01dcaefba7e151e2a7bdc69d57cbd3bc88b150f42ba2d",
+      "sha256": "576d53fe2619e558eb64e64b4062a99ca745d28750ebc1a246c250f0688189dc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/process-input-to-os-system.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/python/process-input-to-os-system.rqlp",
+      "sha256": "f73b6d623ca7e15f2666c23e1f1c98a2faa33b8296f2151fefdd5521f419bd4e",
       "classification": "public",
       "license": "Apache-2.0"
     }
   ],
-  "native_asset": "bifrost-semantic-packs-v0.11.5.tar.gz",
-  "native_sha256": "d16f94892ddd01cf9e1a2e77f4bda48fe09720f9b3bab7d1b41efd6413ebb3b1"
+  "native_asset": "bifrost-semantic-packs-v0.12.0.tar.gz",
+  "native_sha256": "f14fc2edc1d58bca1662262f1f89e690a81baca0cfe48ed92bd463e8b8269f32",
+  "engine_asset": "bifrost-v0.12.0-x86_64-unknown-linux-gnu.tar.gz",
+  "engine_sha256": "6938fdbda79ee008f9e2d13abe87b341aec7765946859d918cee90da9fa8b503"
 }

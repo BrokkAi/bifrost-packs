@@ -73,7 +73,7 @@ class BaselineRulesStageTests(unittest.TestCase):
         self.baseline = {
             "repository": "https://github.com/BrokkAi/bifrost",
             "commit": "a" * 40,
-            "tag": "v0.11.5",
+            "tag": "v0.12.0",
             "rules": self.entries,
         }
 
@@ -135,8 +135,10 @@ class BaselineNativeContentsTests(unittest.TestCase):
         self.addCleanup(self.temporary_directory.cleanup)
         self.root = Path(self.temporary_directory.name)
 
-    def _native_archive(self, *, identity_mismatch=False, raw_size_mismatch=False):
+    def _native_archive(self, *, identity_mismatch=False, raw_size_mismatch=False, version="0.11.5"):
         prefix = "bifrost-semantic-packs/"
+        major, minor, patch = version.split(".")
+        engine_max = f"{major}.{minor}.{int(patch) + 1}"
         files = {}
         authored_rows = []
         generated_rows = []
@@ -161,7 +163,7 @@ class BaselineNativeContentsTests(unittest.TestCase):
                 "schema_version": 1,
                 "completeness": "complete",
                 "license": "Apache-2.0",
-                "compatibility": {"engine": ">=0.11.5,<0.11.6"},
+                "compatibility": {"engine": f">={version},<{engine_max}"},
             }
             manifest_data = json.dumps(manifest, sort_keys=True).encode("utf-8")
             manifest_path = f"manifests/{name}.json"
@@ -196,7 +198,7 @@ class BaselineNativeContentsTests(unittest.TestCase):
 
         index = {
             "schema_version": 3,
-            "generator": {"version": "0.11.5"},
+            "generator": {"version": version},
             "packs": authored_rows,
             "generated_productions": generated_rows,
         }
@@ -212,11 +214,11 @@ class BaselineNativeContentsTests(unittest.TestCase):
 
         archive = self.root / "native.tar.gz"
         archive.write_bytes(_tar_bytes(files))
-        baseline = {"native_sha256": _sha256(archive.read_bytes()), "tag": "v0.11.5"}
+        baseline = {"native_sha256": _sha256(archive.read_bytes()), "tag": f"v{version}"}
         return archive, baseline
 
     def test_native_index_manifest_and_raw_and_deflate_shards_are_accepted(self):
-        archive, baseline = self._native_archive()
+        archive, baseline = self._native_archive(version="0.12.0")
 
         contents = build_release.native_contents(archive, baseline)
 
@@ -229,7 +231,7 @@ class BaselineNativeContentsTests(unittest.TestCase):
         self.assertTrue(all(row["schemas"]["release_index"] == [3] for row in contents))
 
     def test_published_archive_checksum_mismatch_is_rejected(self):
-        archive, baseline = self._native_archive()
+        archive, baseline = self._native_archive(version="0.12.0")
         baseline["native_sha256"] = "0" * 64
 
         with self.assertRaises(release.ReleaseError) as caught:
@@ -238,7 +240,7 @@ class BaselineNativeContentsTests(unittest.TestCase):
         self.assertEqual(caught.exception.code, "integrity-error")
 
     def test_manifest_identity_mismatch_is_rejected(self):
-        archive, baseline = self._native_archive(identity_mismatch=True)
+        archive, baseline = self._native_archive(identity_mismatch=True, version="0.12.0")
 
         with self.assertRaises(release.ReleaseError) as caught:
             build_release.native_contents(archive, baseline)
@@ -246,7 +248,7 @@ class BaselineNativeContentsTests(unittest.TestCase):
         self.assertEqual(caught.exception.code, "integrity-error")
 
     def test_raw_shard_size_mismatch_is_rejected(self):
-        archive, baseline = self._native_archive(raw_size_mismatch=True)
+        archive, baseline = self._native_archive(raw_size_mismatch=True, version="0.12.0")
 
         with self.assertRaises(release.ReleaseError) as caught:
             build_release.native_contents(archive, baseline)
@@ -256,7 +258,7 @@ class BaselineNativeContentsTests(unittest.TestCase):
 
 def _profile():
     return {
-        "engine_version": "0.11.5",
+        "engine_version": "0.12.0",
         "build_identity": "test-build-identity",
         "model_set_sha256": "a" * 64,
         "capability_contract_version": 1,
@@ -274,8 +276,8 @@ class ReleaseDependencyTests(unittest.TestCase):
         self.common_config = {
             "repository": self.repository,
             "visibility": "public",
-            "engine_min_inclusive": "0.11.0",
-            "engine_max_exclusive": "0.12.0",
+            "engine_min_inclusive": "0.12.0",
+            "engine_max_exclusive": "0.13.0",
         }
         self.paths = []
 
@@ -285,7 +287,7 @@ class ReleaseDependencyTests(unittest.TestCase):
         version,
         *,
         dependencies=(),
-        minimum="0.11.0",
+        minimum="0.12.0",
     ):
         directory = self.root / f"{pack_id.replace('.', '-')}-{version}"
         directory.mkdir()
@@ -359,7 +361,7 @@ class ReleaseDependencyTests(unittest.TestCase):
             "1.0.0",
             dependencies=[self._dependency("bifrost.public.packs", "1.0.0")],
         )
-        self._candidate("bifrost.public.packs", "1.0.0", minimum="0.11.6")
+        self._candidate("bifrost.public.packs", "1.0.0", minimum="0.12.1")
 
         with self.assertRaises(release.ReleaseError) as caught:
             release.select_release(self.paths, _profile(), "bifrost.public.rules")

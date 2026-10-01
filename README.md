@@ -36,9 +36,10 @@ see [validation](validation.json) and [transition sequencing](docs/v013-transiti
 Read [NOTICE.md](NOTICE.md) and preserved per-source notices. Apache-2.0 applies
 to Brokk public material; third-party licenses and exceptions remain in force.
 
-Public releases use separate `rules/vX.Y.Z` and `packs/vX.Y.Z` tags. The initial
-streams match the public Bifrost `v0.11.5` release, while the newer content stored
-here remains available for authoring. See [release streams](docs/release-streams.md)
-for baseline provenance, exact dependencies, packaging, and qualification limits.
-New native pack releases run repository-owned generation; see
+Public releases use separate `rules/vX.Y.Z` and `packs/vX.Y.Z` tags. The original
+`v0.1.0` releases remain pinned to public Bifrost `v0.11.5`; `v0.1.1` uses exact
+public Bifrost `v0.12.0` rules and semantic-pack release artifacts. See
+[release streams](docs/release-streams.md) for baseline provenance, exact
+dependencies, packaging, and qualification limits. Native releases from `v0.2.0`
+onward run repository-owned generation; see
 [generation](docs/generation.md) for tool pins and independent consumer compatibility.

@@ -40,9 +40,10 @@ this repository. It builds the exact public generator source declared in
 and records the compiler and executable hash before executing it. A prebuilt tool
 can instead be configured with an exact executable checksum. Private engine
 implementation is not imported.
-`workflow_dispatch` stages reviewable artifacts; `packs/vX.Y.Z` publishes the
-result only after generation and verification succeed. Rules retain their separate
-release workflow. The existing `packs/v0.1.0` baseline remains immutable.
+`workflow_dispatch` stages reviewable artifacts; `packs/v0.2.0` and later tags
+publish generated content only after generation and verification succeed. The
+separate baseline workflow publishes `packs/v0.1.1` from the exact Bifrost
+v0.12.0 native archive. The existing `packs/v0.1.0` release remains immutable.
 
 For a source-built executable and its build receipt, use:
 

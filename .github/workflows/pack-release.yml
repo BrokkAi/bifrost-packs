@@ -4,15 +4,16 @@ on:
     inputs:
       component:
         type: choice
-        options: [rules]
+        options: [rules, packs]
         required: true
       version:
         type: string
-        default: '0.1.0'
+        default: '0.1.1'
         required: true
   push:
     tags:
       - 'rules/v*.*.*'
+      - 'packs/v0.1.1'
 permissions:
   contents: read
 jobs:
@@ -34,10 +35,6 @@ jobs:
         run: |
           set -euo pipefail
           component="$INPUT_COMPONENT"
-          if [[ "$component" == packs ]]; then
-            echo "Use Generate native packs for independently generated packs" >&2
-            exit 2
-          fi
           version="$INPUT_VERSION"
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             component="${GITHUB_REF_NAME%%/*}"
@@ -75,20 +72,29 @@ jobs:
           python3 -B release-contract/release.py verify-artifact \
             --manifest "$RUNNER_TEMP/dist/pack-release.json" --artifact "$archive"
       - name: Test released baseline rule with matching Bifrost binary
-        if: ${{ startsWith(github.ref_name, 'rules/') || inputs.component == 'rules' }}
+        if: ${{ (startsWith(github.ref_name, 'rules/') || inputs.component == 'rules') && github.event_name != 'pull_request' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh release download v0.11.5 --repo BrokkAi/bifrost \
-            --pattern bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz --dir "$RUNNER_TEMP"
-          echo "2e3b11c0dde31643ffbac117c0db6a8711831a2a7c435f40dd0d45c98af73227  $RUNNER_TEMP/bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz" | sha256sum -c -
-          mkdir "$RUNNER_TEMP/engine" "$RUNNER_TEMP/rules"
-          tar -xzf "$RUNNER_TEMP/bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz" -C "$RUNNER_TEMP/engine"
-          tar -xzf "$RUNNER_TEMP"/dist/bifrost.public.rules-*-source.tar.gz -C "$RUNNER_TEMP/rules"
-          binary=$(find "$RUNNER_TEMP/engine" -type f -name bifrost)
-          python3 -B scripts/smoke.py --binary "$binary" --root "$RUNNER_TEMP/rules" --output "$RUNNER_TEMP/smoke"
-          cp "$RUNNER_TEMP/smoke/smoke.json" "$RUNNER_TEMP/dist/smoke.json"
+          baseline=release-baseline.json
+          if jq -e .baseline release-config.rules.json >/dev/null; then
+            repo=$(jq -r .repository "$baseline")
+            repo=${repo#https://github.com/}
+            tag=$(jq -r .tag "$baseline")
+            asset=$(jq -r .engine_asset "$baseline")
+            hash=$(jq -r .engine_sha256 "$baseline")
+            gh release download "$tag" --repo "$repo" --pattern "$asset" --dir "$RUNNER_TEMP"
+            echo "$hash  $RUNNER_TEMP/$asset" | sha256sum -c -
+            mkdir "$RUNNER_TEMP/engine" "$RUNNER_TEMP/rules"
+            tar -xzf "$RUNNER_TEMP/$asset" -C "$RUNNER_TEMP/engine"
+            tar -xzf "$RUNNER_TEMP"/dist/bifrost.public.rules-*-source.tar.gz -C "$RUNNER_TEMP/rules"
+            binary=$(find "$RUNNER_TEMP/engine" -type f -name bifrost)
+            python3 -B scripts/smoke.py --binary "$binary" --root "$RUNNER_TEMP/rules" --output "$RUNNER_TEMP/smoke"
+            cp "$RUNNER_TEMP/smoke/smoke.json" "$RUNNER_TEMP/dist/smoke.json"
+          else
+            echo "Rules source release has no pinned engine baseline; focused engine smoke is unavailable."
+          fi
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: component-release-${{ github.sha }}
@@ -118,4 +124,4 @@ jobs:
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
           gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 pack-release.json "${evidence[@]}" \
             --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
-            --notes "Independent component release from $GITHUB_SHA. Initial content matches public Bifrost v0.11.5; stable pack identities and versions retained. Full behavioral qualification pending. Rules source artifacts require explicit consumer support; packs use the unchanged upstream native bundle."
+            --notes "Independent component release from $GITHUB_SHA. Baseline bytes come from public Bifrost v0.12.0 and are bounded to engine >=0.12.0,<0.12.1. Rules smoke is focused positive and near-miss evidence only; full behavior qualification remains pending. Native packs/v0.1.1 reuses the exact upstream semantic-pack bundle."
