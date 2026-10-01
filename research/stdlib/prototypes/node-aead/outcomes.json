@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "candidate_id": "node-crypto-authenticated-decipher-finalization",
+  "status": "incomplete",
+  "qualification": "unqualified",
+  "scope": "Bounded probe of the exact Bifrost build, source-only fixtures, and observed activation recorded here. This is not a global engine-support claim.",
+  "runtime_contract": {
+    "runtime": "Node.js v26.7.0",
+    "openssl": "3.6.4",
+    "platform": "darwin-arm64",
+    "source": "https://nodejs.org/download/release/v26.7.0/docs/api/crypto.html",
+    "witness_status": "supported",
+    "witness_report": {
+      "path": "local-temporary-evidence/runtime-witness.json",
+      "sha256": "57b0c966003f68cfab15961988dcb7eae4206741a373fa687318f2ec4605292c"
+    }
+  },
+  "bifrost": {
+    "version": "0.12.0",
+    "sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+    "build_identity_kind": "opaque exact embedded source identity printed by the binary",
+    "builtin_policy_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e",
+    "source_revision": "d0fae94998081e7be2bc069edab4501943ddc927"
+  },
+  "activation": {
+    "observed_pack": "bifrost.node-runtime-values-javascript@0.1.0",
+    "status": "incompatible",
+    "reason": "The report has no activation evidence for pkg:generic/nodejs.org/node@22.11.0. The discovered shard requires profile configuration 70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056 and artifact sha256 24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222. The tested runtime is Node v26.7.0; this runtime-values shard does not establish crypto declaration coverage."
+  },
+  "model_attempt": {
+    "path": "model-attempt.json",
+    "sha256": "31fbcc663217f98471fb0d0e3c70a1584f774aa9e63978b91b9bdfbebd08e6f6",
+    "model_id": null,
+    "model_hash": null,
+    "result": "No exact Node crypto declaration summary was available in the observed activation. Same-object update/final correlation and successful-final dominance were not independently assessed beyond this identity gate."
+  },
+  "fixtures": [
+    {
+      "path": "fixtures/flow-cases.mjs",
+      "sha256": "36b61e3c8b573db8afe4e67c7de9f37d5e3d50cd946bd7319ece2fae5b97125f",
+      "cases": [
+        {"id": "publish-before-final", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "Tampered GCM tag makes final() throw after publish() records one provisional plaintext value."},
+        {"id": "same-object-final-before-publish-valid-tag", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "Valid GCM tag; final() returns normally before staged plaintext is published."},
+        {"id": "same-object-final-before-publish-invalid-tag", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "Tampered GCM tag makes final() throw and the publication ledger remains empty."},
+        {"id": "final-on-other-object", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "A separately constructed valid empty-message decipher finalizes normally; the target decipher then throws after its plaintext was published."},
+        {"id": "import-alias-and-helper", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "Aliased node:crypto import and helper-mediated update output are published before target final() throws."},
+        {"id": "cbc-non-aead-exclusion", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "Valid AES-128-CBC ciphertext and a 16-byte IV decrypt successfully; CBC is outside authenticated-encryption scope."},
+        {"id": "final-before-publication", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "Covered by the valid-tag staging case above; the duplicate finalBeforePublish helper is not separately invoked."}
+      ]
+    },
+    {
+      "path": "fixtures/lookalike.mjs",
+      "sha256": "f745396918ec76978af7a81b4636bc0a339fa5e7cd99b207b757f7ddf2248e6d",
+      "cases": [
+        {"id": "workspace-local-same-spelling-api", "analysis_outcome": "incomplete", "runtime_outcome": "supported", "witness": "The local same-name implementation returns normally. Bifrost resolves its createDecipheriv spelling to a local source declaration; method binding remains incomplete."}
+      ]
+    },
+    {
+      "path": "fixtures/runtime-witness.mjs",
+      "sha256": "abe2bc15fed9a673765433b9e116e005dbd58b3c4b59b3d7811a24d4218b43f7",
+      "role": "Assertion-based Node runtime witness; successful exit confirms fixture behavior only, not static-analysis qualification."
+    }
+  ],
+  "queries": [
+    {"path": "queries/create-decipheriv.json", "sha256": "b8f85c8883f7eb33a21ebfe6853c5f548eb9fd9c4c1e3b12d0914fff22167c73", "report_sha256": "31192d59e1db09c6eef12e4c3b25df5877163a1b47239a2b03d150a0a45e17be", "rows": 7, "typed_diagnostics": 0, "purpose": "Factory call-shape discovery."},
+    {"path": "queries/update.json", "sha256": "4f659bdf4f3bdd51d03a9278bf042347276701faedac75b70e7116fc1ccc3805", "report_sha256": "a1741db62a334c002e26da6193a9691af90398c6ebb11dfaf6fafda653d37cd7", "rows": 10, "typed_diagnostics": 0, "purpose": "update() call-shape discovery."},
+    {"path": "queries/set-auth-tag.json", "sha256": "f2957df2adbb770f9e9628ee52f7a104cbe832c78c0fea5e4bbd8166c4b66daf", "report_sha256": "0739d32c5212348d51c5e1df50c393f24675b1de73ac5ab5e6d039130c3c415b", "rows": 7, "typed_diagnostics": 0, "purpose": "setAuthTag() call-shape discovery."},
+    {"path": "queries/final.json", "sha256": "21852e37d20a365a6d57061897caa7f2bed73898ff7d1437c9d22b0006e2d123", "report_sha256": "b3858b8563e2d8a06e0782742ef9c404a1cb47d3abf6bc8537f78b3be6bfdda4", "rows": 10, "typed_diagnostics": 0, "purpose": "final() call-shape discovery."},
+    {"path": "queries/publish.json", "sha256": "47f4886e7dc721bd4cab8b7d0579499447424226f0ba140d75f19627b908cf8d", "report_sha256": "86ec7379c35698560cdeeddcab79d191443b14fd692921d26fc550933ae7c290", "rows": 7, "typed_diagnostics": 0, "purpose": "Concrete publication-boundary call-shape discovery."},
+    {"path": "queries/imports.json", "sha256": "33179c8197526e614a0c8ca583fdd84455738cb62d051be8ff7ce15f3b84562d", "report_sha256": "7240fdf035985f8476a941d9c8ab19ad63f71104521afd9ac830a0fc02bc2f89", "rows": 5, "typed_diagnostics": 0, "purpose": "Import syntax discovery; does not prove resolved export identity."},
+    {"path": "queries/dispatch-outcomes.json", "sha256": "833adbdbd20293d47c21ef8a1cfd64fd505ba439f915d0984749fe7fcdd867c2", "report_sha256": "5008612dc34b2a069ae261c2592698fbca990dfa04a08e0f9f255614ccbb5a6b", "rows": 34, "typed_diagnostics": 0, "purpose": "Resolver-backed call dispatch outcomes and coverage."},
+    {"path": "queries/dispatch-targets.json", "sha256": "b656a7f00a7e536446fcf7f417f97866d072b4f1987f2e91ccbc9569e46311fc", "report_sha256": "1931b473c03b171ace7fcb5eefd4421ac5cbd7c63d774391cec65d51e0679d28", "rows": 10, "typed_diagnostics": 0, "purpose": "Resolver-backed candidate targets, boundary, proof and completeness."},
+    {"path": "queries/call-bindings.json", "sha256": "b7dbae717fc9c2ceb3d8304c03ca1e1b88e446493ca14a6e5ddcb1362edf54fa", "report_sha256": "49f9c7bac558dc9b09035685122345169bdc77a0cc3bb1dc177a503c3e4f657c", "rows": 36, "typed_diagnostics": 33, "purpose": "Actual/formal and receiver binding completeness."}
+  ],
+  "resolver_evidence": {
+    "dispatch_outcomes": {
+      "rows": 34,
+      "counts": {
+        "unknown_open": 24,
+        "unproven_truncated": 6,
+        "unproven_open": 3,
+        "resolved_exhaustive": 1
+      },
+      "node_factory_targets": "Six direct node:crypto factory-shaped calls map to bifrost-unmaterialized-external with boundary_kind=external, proof=proven, completeness=partial, coverage=truncated, dispatch=may_dispatch. This is not exact Node declaration identity.",
+      "lookalike_factory": "The workspace-local factory resolves exhaustively to its source declaration. That does not identify the Node API."
+    },
+    "dispatch_targets": {
+      "rows": 10,
+      "external_partial_truncated": 6,
+      "workspace_source_targets": 4
+    },
+    "call_bindings": {
+      "rows": 36,
+      "typed_diagnostics": [
+        {"code": "semantic_analysis_partial", "impact": "incomplete", "count": 33, "message": "call_bindings did not establish complete actual-to-formal coverage"}
+      ],
+      "diagnostic_axes": {
+        "unknown_open_target_count_0_binding_unknown": 24,
+        "unproven_truncated_target_count_1_binding_unknown": 6,
+        "unproven_open_target_count_1_binding_unknown": 1,
+        "unproven_open_target_count_1_binding_exhaustive": 2
+      },
+      "lookalike_binding_reasons": {
+        "receiver_binding_unsupported": 3,
+        "no_matching_formal": 1,
+        "complete_rows": 2
+      }
+    },
+    "flow_gate": "No same-object update/final relation or final-success dominance query was assessed after exact crypto declaration identity failed."
+  },
+  "discovery_policy": {
+    "path": "rqlp/discovery-only.rqlp",
+    "sha256": "b9cae66bf47427fb69a2d578d582566d7b6fee301a640a3b68f8cb5968d1b853",
+    "report_sha256": "1a854c54779b6c9a6e4ad01e75f8a7306c6b48e40a981443757f2498bb778c60",
+    "policy_hash": "8f9291c363bf1500dbe4792e417a7fbe34b883e104d8173645e50f849127215f",
+    "completion": "complete",
+    "findings": 41,
+    "findings_by_fixture": {"fixtures/flow-cases.mjs": 36, "fixtures/lookalike.mjs": 5},
+    "typed_diagnostics": 0,
+    "interpretation": "Complete syntactic discovery only. The 5 local-lookalike matches are direct evidence that this selector cannot classify crypto API identity; no production/security rule was qualified."
+  },
+  "reproduction": {
+    "binary_binding": "Set BIFROST_012 to the binary matching the recorded SHA-256 and version. The absolute host path is intentionally omitted from this public summary.",
+    "workspace": "Copy fixtures/, queries/, and rqlp/ into a temporary source-only workspace, then run from that workspace root.",
+    "query_args": [
+      ["--root", ".", "--query-file", "queries/create-decipheriv.json"],
+      ["--root", ".", "--query-file", "queries/update.json"],
+      ["--root", ".", "--query-file", "queries/set-auth-tag.json"],
+      ["--root", ".", "--query-file", "queries/final.json"],
+      ["--root", ".", "--query-file", "queries/publish.json"],
+      ["--root", ".", "--query-file", "queries/imports.json"],
+      ["--root", ".", "--query-file", "queries/dispatch-outcomes.json"],
+      ["--root", ".", "--query-file", "queries/dispatch-targets.json"],
+      ["--root", ".", "--query-file", "queries/call-bindings.json"]
+    ],
+    "discovery_policy_args": ["--root", ".", "--no-builtin-policies", "--policy-file", "rqlp/discovery-only.rqlp", "--evaluation-date", "2026-10-01", "--format", "json"],
+    "runtime_command": "node fixtures/runtime-witness.mjs",
+    "observed_checkout_attempt": "An in-place query attempt could not acquire an existing shared analyzer-cache lock and returned Operation not permitted. Successful canonical query and policy outputs below are from the isolated source-only replay; the lock error is not analyzed as a product failure."
+  },
+  "canonical_reports": {
+    "raw_reports_are_committed": false,
+    "local_temporary_report_names": [
+      "runtime-witness.json",
+      "create-decipheriv.json",
+      "update.json",
+      "set-auth-tag.json",
+      "final.json",
+      "publish.json",
+      "imports.json",
+      "dispatch-outcomes.json",
+      "dispatch-targets.json",
+      "call-bindings.json",
+      "discovery-policy.json"
+    ],
+    "query_and_policy_report_sha256_values": "Recorded on each query entry and under discovery_policy.report_sha256. Raw report files remain local evidence and are not copied into this public pack."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "languages": ["javascript"],
+  "match": {
+    "kind": "call",
+    "callee": { "name": { "regex": "^(createDecipheriv|update|setAuthTag|final)$" } }
+  },
+  "steps": [
+    { "op": "call_shape" },
+    { "op": "call_bindings" }
+  ],
+  "limit": 100,
+  "result_detail": "full"
+}

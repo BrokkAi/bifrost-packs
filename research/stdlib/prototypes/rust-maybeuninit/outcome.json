@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "candidate_id": "rust-maybeuninit-initialization-state",
+  "outcome": "incomplete",
+  "stop_gate": "Exact Rust standard-library declaration identity cannot be established on the fixture scope, so a state protocol connecting a MaybeUninit object to its unsafe consumers is unsupported by the evidence gathered.",
+  "reproduction": {
+    "source_revision": "d0fae94998081e7be2bc069edab4501943ddc927",
+    "branch": "dave/stdlib-query-modeling",
+    "working_tree_fixture_roots": "research/stdlib/prototypes/rust-maybeuninit/fixtures/*.rs",
+    "rust_toolchain": {
+      "status": "not_exercised",
+      "reason": "No compilation or runtime execution was needed for source-only analyzer probes; undefined-behavior positives must not be run as ordinary tests."
+    },
+    "bifrost": {
+      "version": "0.12.0",
+      "binary_sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+      "builtin_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e",
+      "semantic_model_activation": {
+        "status": "none",
+        "activated_model_hashes": []
+      },
+      "reported_build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+      "reported_build_identity_kind": "opaque identifier printed by --build-identity; not asserted to be a source commit"
+    },
+    "runtime_contract_documentation": {
+      "identity": "Rust std 1.98.1 MaybeUninit API documentation",
+      "url": "https://doc.rust-lang.org/std/mem/union.MaybeUninit.html",
+      "status": "reference_only_not_executable_qualification",
+      "source_claims": [
+        "uninit creates uninitialized state",
+        "new returns initialized MaybeUninit<T>",
+        "write initializes the receiver with a valid T",
+        "assume_init and the assume_init_* family require initialized, valid T"
+      ]
+    },
+    "repository_model_input": {
+      "path": "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json",
+      "sha256": "c150a8cc53b8891cd13cd4cc85fdb07274a54138a21a335f4c65cc01a052c264",
+      "status": "pinned_rustdoc_json_source_set_specification_only_not_activated",
+      "pinned_toolchain": "rustc 1.100.0-nightly (fb6531d55 2026-08-23)",
+      "note": "The pack README specifies rustdoc JSON inputs and generation; this run did not build shards or activate a semantic model."
+    },
+    "commands": [
+      {
+        "purpose": "structural call-shape discovery; diagnostic only",
+        "argv_template": "bifrost-0.12.0 --root . --query-file queries/discover-maybeuninit-call-shapes.json",
+        "query": "queries/discover-maybeuninit-call-shapes.json",
+        "query_sha256": "3c7a61db01f50437e7350a8f57e21bc571bb09c34604499390fc5fa5b0384533",
+        "observed": "Matched the uninit/new/write/assume_init spellings in both standard-looking fixtures and an application-defined lookalike. This is not declaration identity or a candidate policy finding."
+      },
+      {
+        "purpose": "RQL assume_init structural discovery; diagnostic only",
+        "argv_template": "bifrost-0.12.0 --root . --query-file queries/discover-assume-init.rql",
+        "query": "queries/discover-assume-init.rql",
+        "query_sha256": "0bf67f909b5e24f430200ee3df121381258321dad6a3bdde100d45b809bdeacf",
+        "observed": "Found the named method shapes including application-defined lookalike; no std identity or initialization-state verdict."
+      },
+      {
+        "purpose": "proven incoming call sites for indexed assume_init method",
+        "argv_template": "bifrost-0.12.0 --root . --query-file queries/call-sites-to-indexed-assume-init.rql",
+        "query": "queries/call-sites-to-indexed-assume-init.rql",
+        "query_sha256": "0a5330ce4c20e64f7213876b7400a670647b3f37b64d97c1abbd235bbe16470f",
+        "observed": "Zero result rows with diagnostic call_relation_candidates_omitted: omitted 1 unresolved call candidate for fixtures.application.MaybeUninit.assume_init."
+      },
+      {
+        "purpose": "declaration lookup at standard-looking type import, constructor, unsafe consumer, and same-spelling lookalike consumer",
+        "argv_template": "bifrost-0.12.0 --root . --tool get_declarations_by_location --args <json references below>",
+        "args_template": {
+          "references": [
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 4,
+              "column": 21
+            },
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 4,
+              "column": 42
+            },
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 5,
+              "column": 24
+            },
+            {
+              "path": "fixtures/near-lookalike-type.rs",
+              "line": 25,
+              "column": 24
+            }
+          ]
+        },
+        "observed": "MaybeUninit import and ::uninit: unresolvable_import_boundary. Standard assume_init receiver and app lookalike assume_init receiver: no_declaration with no_indexed_definition because receiver type could not be determined."
+      },
+      {
+        "purpose": "definition lookup on same reference positions",
+        "argv_template": "bifrost-0.12.0 --root . --tool get_definitions_by_location --args <same json references>",
+        "observed": "Same external-import boundary and receiver-type gap, reported as unresolvable_import_boundary / no_definition.",
+        "args_template": {
+          "references": [
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 4,
+              "column": 21
+            },
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 4,
+              "column": 42
+            },
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 5,
+              "column": 24
+            },
+            {
+              "path": "fixtures/near-lookalike-type.rs",
+              "line": 25,
+              "column": 24
+            }
+          ]
+        }
+      },
+      {
+        "purpose": "type lookup on same reference positions",
+        "argv_template": "bifrost-0.12.0 --root . --tool get_type_by_location --args <same json references>",
+        "observed": "No explicit Rust type for these type, associated-function, and method reference positions; this does not prove absence of the actual type, only an unsupported type lookup.",
+        "args_template": {
+          "references": [
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 4,
+              "column": 21
+            },
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 4,
+              "column": 42
+            },
+            {
+              "path": "fixtures/positive-uninitialized.rs",
+              "line": 5,
+              "column": 24
+            },
+            {
+              "path": "fixtures/near-lookalike-type.rs",
+              "line": 25,
+              "column": 24
+            }
+          ]
+        }
+      },
+      {
+        "purpose": "symbol source lookup for std identity and local lookalike",
+        "argv_template": "bifrost-0.12.0 --root . --tool get_symbol_sources --args '{\"symbols\":[\"MaybeUninit\",\"std::mem::MaybeUninit\",\"assume_init\"]}'",
+        "observed": "Returned only fixtures.application.MaybeUninit declarations; std::mem::MaybeUninit was not found in the fixture index."
+      }
+    ]
+  },
+  "fixture_evidence": [
+    {
+      "path": "fixtures/positive-uninitialized.rs",
+      "sha256": "758e2a6432e05fde8afff66ec1fee348800e033d4af5d602c295fcc82aa207b4",
+      "role": "positive UB source input; expected finding if exact type/state supported; not executed"
+    },
+    {
+      "path": "fixtures/near-written-same-object.rs",
+      "sha256": "dcbcf959976c877552f475d3e2fd13fe05f5e5dfb88aa77df1777bbb9234b385",
+      "role": "same-object initialized near miss"
+    },
+    {
+      "path": "fixtures/near-new-constructor.rs",
+      "sha256": "fb633d45bd8f9b10fd8368e314f34627f5a17af0b4896c44c9583ea1cf4b98c1",
+      "role": "initialized constructor near miss"
+    },
+    {
+      "path": "fixtures/positive-unrelated-object-write.rs",
+      "sha256": "e2c8353810643932d1f5d21e182ac96caf81f444fe0fad3d0c5854266ca62eb0",
+      "role": "positive UB: another object's write leaves the consumed slot uninitialized"
+    },
+    {
+      "path": "fixtures/positive-aliased-reference-uninitialized.rs",
+      "sha256": "15af3165871a470a5676bc511763c803cad7e6b7ceac65a2dcbb16e3623f6d30",
+      "role": "positive UB through alias; expected same-object alias tracking; not executed"
+    },
+    {
+      "path": "fixtures/positive-one-branch-initializes.rs",
+      "sha256": "3ca484682fcb4f5c7720c0cab6fc215e32e4b3778880176b1fc1addcb0c4c75e",
+      "role": "positive UB on the branch that skips the write; not executed"
+    },
+    {
+      "path": "fixtures/near-all-branches-initialize.rs",
+      "sha256": "fd4d2bf974aae030b7a52241c431a8e157f2caa4323ad172090a88cdf3e79828",
+      "role": "all branch arms write the same object"
+    },
+    {
+      "path": "fixtures/near-helper-initializes.rs",
+      "sha256": "f7eb04bec73bc1a935ed566024a41dc8641110682ffbab5b954c7d9be32ec674",
+      "role": "helper performs an initializer; interprocedural state transfer is unqualified"
+    },
+    {
+      "path": "fixtures/incomplete-unknown-ffi-escape.rs",
+      "sha256": "192678ca84cb79e699b78452fd8de663177c0d86e6ac51433aabe5b26fe9f795",
+      "role": "unknown FFI may initialize; state must remain inconclusive"
+    },
+    {
+      "path": "fixtures/near-lookalike-type.rs",
+      "sha256": "3edb407bb1b81bda2ef2d727f71ca56080d79bc7f19e54eaef5008f5405e605a",
+      "role": "same-spelling application type must not count as std identity"
+    }
+  ],
+  "cases": [
+    {
+      "case": "uninitialized-direct-assume-init",
+      "status": "incomplete",
+      "evidence": "Source fixture and shape discovery exist; std declaration identity and state finding were not proven."
+    },
+    {
+      "case": "same-object-write",
+      "status": "incomplete",
+      "evidence": "Near-miss source exists; no state transition or clean verdict was produced."
+    },
+    {
+      "case": "new-initializer",
+      "status": "incomplete",
+      "evidence": "Near-miss source exists; no constructor contract or clean verdict was produced."
+    },
+    {
+      "case": "unrelated-object-write",
+      "status": "incomplete",
+      "evidence": "Positive source exists; query cannot prove the slot and written object identities."
+    },
+    {
+      "case": "alias",
+      "status": "incomplete",
+      "evidence": "Positive source exists; alias-to-object state was not analyzed."
+    },
+    {
+      "case": "one-branch-write",
+      "status": "incomplete",
+      "evidence": "Positive source exists; branch-sensitive initialization-state verdict was not produced."
+    },
+    {
+      "case": "all-branches-write",
+      "status": "incomplete",
+      "evidence": "Near-miss source exists; path-merge state verdict was not produced."
+    },
+    {
+      "case": "helper-initializes",
+      "status": "incomplete",
+      "evidence": "Helper transfer exists in source; exact callee/object transfer and state verdict were not produced."
+    },
+    {
+      "case": "unknown-ffi-escape",
+      "status": "unsupported",
+      "evidence": "Must remain unknown absent an exact FFI write/escape contract."
+    },
+    {
+      "case": "lookalike-type",
+      "status": "incomplete",
+      "evidence": "Local type declarations are indexed, while the std counterpart is not; method receiver resolution fails for both."
+    }
+  ],
+  "capability_gap": {
+    "summary": "On exact local source fixtures, the installed analyzer can structurally discover spelled calls, but cannot connect the Rust std import or method receiver to an indexed standard-library declaration. It therefore cannot prove the exact API identity needed for a typestate event, and no run evaluated same-object initialization state.",
+    "minimum_reproduction": "`use std::mem::MaybeUninit; let slot = MaybeUninit::<u32>::uninit(); unsafe { slot.assume_init() }` plus an application-defined `MaybeUninit<T>` lookalike, with declaration/definition lookups at the import, ::uninit, and assume_init references. See command args and outcomes above.",
+    "required_next_evidence": [
+      "An activated exact rustdoc-derived declaration model for std::mem::MaybeUninit and its methods, or dependency indexing that resolves those declarations.",
+      "Receiver and call-target resolution distinguishing std MaybeUninit from an application lookalike.",
+      "A modeled typestate/value protocol relating the same object's uninit/new/write/unsafe-consumer events across branches, aliases, helper calls and incomplete escapes.",
+      "Harmless analyzer-only positive and near-miss fixture evidence, with partial and unsupported paths retained explicitly."
+    ],
+    "public_issue_routing": "Generic external Rust declaration/model activation and protocol work; private issue IDs are deliberately omitted from this public artifact."
+  },
+  "no_production_rule_registered": true,
+  "no_rust_runtime_execution": true,
+  "raw_evidence_location": "Raw tool outputs are outside the public repository in task-local scratch; host paths are omitted."
+}

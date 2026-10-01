@@ -1,0 +1,10 @@
+{
+  "schema_version": "1",
+  "languages": ["python"],
+  "match": {"kind": "function"},
+  "steps": [
+    {"op": "procedure_of"},
+    {"op": "state_events_of"}
+  ],
+  "result_detail": "full"
+}
