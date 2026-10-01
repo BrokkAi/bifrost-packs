@@ -1,0 +1,5 @@
+; Flow output retains unsupported relation axes as diagnostics.
+(result-detail full
+  (language java
+    (flow-relations-of
+      (procedure-of (method :name "positiveSameMapAndKey")))))

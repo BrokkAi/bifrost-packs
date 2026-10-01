@@ -1,0 +1,6 @@
+; Resolve each keySet receiver occurrence to its lexical binding identity.
+(result-detail full
+  (language java
+    (binding-of
+      (occurrences-in :class reference :role receiver_position
+        (call :callee (name "keySet") :receiver (capture "iteratedMap"))))))

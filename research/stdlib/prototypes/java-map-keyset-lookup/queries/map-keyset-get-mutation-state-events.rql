@@ -1,0 +1,5 @@
+; Inspect local state events around remove before get.
+(result-detail full
+  (language java
+    (state-events-of
+      (procedure-of (method :name "nearMutationBeforeLookup")))))

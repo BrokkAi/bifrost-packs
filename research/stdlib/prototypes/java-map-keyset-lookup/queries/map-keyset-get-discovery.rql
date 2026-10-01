@@ -1,0 +1,9 @@
+; Structural discovery only. Captures are syntax nodes, not resolved APIs.
+(result-detail full
+  (language java
+    (inside
+      (for_loop :iterable
+        (call :callee (name "keySet") :receiver (capture "iteratedMap"))
+        :capture "loop")
+      (call :callee (name "get") :receiver (capture "lookupMap")
+            :args [(capture "lookupKey")] :capture "lookup"))))

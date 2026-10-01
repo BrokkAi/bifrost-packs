@@ -1,0 +1,5 @@
+; Inspect local state events in the positive method; absence of effects is not inferred.
+(result-detail full
+  (language java
+    (state-events-of
+      (procedure-of (method :name "positiveSameMapAndKey")))))
