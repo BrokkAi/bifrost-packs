@@ -511,6 +511,8 @@ def build_inventory(repo: Path) -> dict[str, Any]:
             tag_counts.update(rule.tags)
 
     pack_counts = Counter(rule.pack_id for rule in rules if rule.pack_id is not None)
+    if manifest_mode:
+        pack_counts.update({pack_id: 0 for pack_id in packs})
     family_counts = Counter(PurePosixPath(rule.path).parts[1] for rule in rules if rule.pack_id is None)
     pack_details = []
     for pack_id, count in sorted(pack_counts.items()):
@@ -552,8 +554,8 @@ def build_inventory(repo: Path) -> dict[str, Any]:
             "activation_counts": dict(sorted(activation_counts.items())) if manifest_mode else None,
             "inline_query_language_policy_counts": dict(sorted(inline_language_counts.items())) if not manifest_mode else None,
             "tag_policy_counts": dict(sorted(tag_counts.items())) if not manifest_mode else None,
-            "case_record_count": sum(sum(counts.values()) for counts in case_counts.values()),
-            "case_record_policy_count": len(case_counts),
+            "case_expectation_count": sum(sum(counts.values()) for counts in case_counts.values()),
+            "case_expectation_policy_count": len(case_counts),
         },
         "policies": policies,
     }
@@ -627,13 +629,13 @@ def render_summary(inventory: dict[str, Any]) -> str:
             lines.append("Topic tags (overlapping): " + ", ".join(
                 f"{_md(name)} {amount}" for name, amount in tags.items()
             ) + ".")
-    if summary["case_record_count"]:
+    if summary["case_expectation_count"]:
         positive = sum(policy.get("recorded_case_expectations", {}).get("positive", 0)
                        for policy in inventory["policies"])
-        zero = summary["case_record_count"] - positive
+        zero = summary["case_expectation_count"] - positive
         lines.append(
-            f"Recorded case expectations: {summary['case_record_count']} across "
-            f"{summary['case_record_policy_count']} rules ({positive} positive, {zero} zero expected). "
+            f"Recorded case expectations: {summary['case_expectation_count']} across "
+            f"{summary['case_expectation_policy_count']} rules ({positive} positive, {zero} zero expected). "
             "These counts describe fixtures, not executed test results."
         )
     lines.extend([
@@ -670,13 +672,13 @@ def render_catalog(inventory: dict[str, Any]) -> str:
                 + ", ".join(f"{_md(tag)} {count}" for tag, count in summary["tag_policy_counts"].items())
                 + "."
             )
-    if summary["case_record_count"]:
+    if summary["case_expectation_count"]:
         lines.append(
             "Case figures count JSON expected-finding declarations only: a nonempty expected_findings list is "
             "counted as positive and an empty list as zero expected. They do not report runtime test results."
         )
     columns = ["Policy", "Stable ID", "Manifest support / query scopes", "Category", "Severity"]
-    if summary["case_record_count"]:
+    if summary["case_expectation_count"]:
         columns.append("Recorded case expectations")
     lines.extend(["", "| " + " | ".join(columns) + " |", "| " + " | ".join("---" for _ in columns) + " |"])
     for policy in inventory["policies"]:
@@ -685,14 +687,14 @@ def render_catalog(inventory: dict[str, Any]) -> str:
         linked_name = f"[{name}]({display_path})"
         support = policy["supported_languages"]
         if support is not None:
-            support_text = ", ".join(support) if support else "Undeclared"
+            support_text = ", ".join(support) if support else "None (empty declaration)"
         else:
             query = ", ".join(policy["query_languages"]) or "none"
             support_text = f"Undeclared; query: {query}"
         category = policy["category"] or "unspecified"
         severity = policy["severity"] or "unspecified"
         row = [linked_name, f"`{_md(policy['id'])}`", _md(support_text), _md(category), _md(severity)]
-        if summary["case_record_count"]:
+        if summary["case_expectation_count"]:
             row.append(_md(_case_label(policy.get("recorded_case_expectations")) or "unrecorded"))
         lines.append("| " + " | ".join(row) + " |")
     return "\n".join(lines) + "\n"

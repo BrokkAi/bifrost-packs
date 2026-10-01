@@ -95,6 +95,17 @@ class RuleStatsTests(unittest.TestCase):
         with self.assertRaisesRegex(rule_stats.InventoryError, "duplicate rule ID"):
             rule_stats.build_inventory(self.root)
 
+    def test_empty_support_differs_from_missing_and_empty_packs_count(self):
+        self.write_manifest([{ "path": "policies/a.rqlp", "id": "family.a", "supported_languages": [] }])
+        empty = self.root / "rules" / "empty" / "manifest.json"
+        empty.parent.mkdir()
+        empty.write_text(json.dumps({"schema_version": 2, "id": "empty", "policies": []}), encoding="utf-8")
+        inventory = rule_stats.build_inventory(self.root)
+        self.assertEqual(inventory["summary"]["pack_count"], 2)
+        self.assertEqual(inventory["policies"][0]["supported_languages"], [])
+        self.assertIn("None (empty declaration)", rule_stats.render_catalog(inventory))
+        self.assertEqual(inventory["summary"]["declared_language_policy_pair_count"], 0)
+
     def test_manifest_id_and_policy_id_must_match(self):
         self.write_manifest([{"path": "policies/a.rqlp", "id": "other.id", "supported_languages": ["python"]}])
         with self.assertRaisesRegex(rule_stats.InventoryError, "does not match policy ID"):
@@ -129,7 +140,7 @@ class RuleStatsTests(unittest.TestCase):
         }
         (case_dir / "a.json").write_text(json.dumps(record), encoding="utf-8")
         inventory = rule_stats.build_inventory(self.root)
-        self.assertEqual(inventory["summary"]["case_record_count"], 2)
+        self.assertEqual(inventory["summary"]["case_expectation_count"], 2)
         self.assertEqual(inventory["policies"][0]["recorded_case_expectations"], {"positive": 1, "zero_expected": 1})
         self.assertIn("do not report runtime test results", rule_stats.render_catalog(inventory))
         record["policy_id"] = "other.id"
