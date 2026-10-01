@@ -20,6 +20,9 @@ qualified here. Pack versions are independent of engine versions.
   hashes.
 - `release-contract/`: shared public/premium release metadata and selection
   tools.
+- [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
+  typestate hypotheses, ownership routing and a proposed qualification queue.
+  These are research leads, not enabled or qualified rules.
 
 Verify and create a reproducible **source** archive offline:
 
