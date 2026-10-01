@@ -1,0 +1,4 @@
+; Probe receiver analysis for every structural get call; inspect outcome and evidence.
+(result-detail full
+  (language java
+    (receiver-outcome (call :callee (name "get")))))

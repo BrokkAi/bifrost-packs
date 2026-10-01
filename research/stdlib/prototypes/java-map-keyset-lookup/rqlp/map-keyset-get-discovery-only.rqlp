@@ -1,0 +1,17 @@
+(policy
+  :schema-version 1
+  :id "bifrost.research.java.map-keyset-get-discovery"
+  :name "Map keySet/get structural candidates"
+  :message "Review this Map.get call inside keySet iteration"
+  :severity note
+  :description "Discovery-only structural candidates. This policy matches method spellings and lexical containment; it does not prove exact JDK declarations, same map object, same loop-key binding, stable map state, or an unmodified/custom Map contract. It must not be treated as a qualified finding or enabled in a published policy catalog."
+  :tags ["research" "java" "map-keyset" "discovery-only"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql :schema-version 1
+          (language java
+            (inside
+              (for_loop :iterable (call :callee (name "keySet")) :capture "loop")
+              (call :callee (name "get") :capture "lookup"))))))
