@@ -1,0 +1,14 @@
+{
+  "schema_version": "1",
+  "languages": ["c"],
+  "where": ["research/joern/prototypes/posix-credential-drop/fixtures/*.c"],
+  "match": {
+    "kind": "function",
+    "name": {"regex": "^(drop_.*|lookalike_.*)$"}
+  },
+  "steps": [
+    {"op": "procedure_of"},
+    {"op": "state_events_of"}
+  ],
+  "result_detail": "full"
+}

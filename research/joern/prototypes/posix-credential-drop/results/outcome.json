@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "record_kind": "research-only-runtime-qualification",
+  "status": "unsupported_incomplete",
+  "candidate": "linux-glibc-credential-drop",
+  "production_rule_qualified": false,
+  "engine": {
+    "version": "0.12.0",
+    "path": "/Users/dave/Library/Caches/bifrost-agent/binaries/0.12.0/darwin-arm64/bifrost",
+    "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+    "build_identity_kind": "opaque",
+    "binary_sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "built_in_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e",
+    "workspace": "/Users/dave/.codex/worktrees/issue-24-joern/bifrost-packs",
+    "workspace_head": "f3e5468571d580062522d472d8b145efacc48fde",
+    "workspace_readiness": {
+      "semantic_packs_ready": true,
+      "usage_index_ready": true,
+      "interpretation": "readiness only; not proof of candidate API/model coverage"
+    }
+  },
+  "joern_source": {
+    "repository": "https://github.com/joernio/joern",
+    "revision": "af6f9573359ad26c418cbd31ab2ccc8dc32c1019",
+    "license": "Apache-2.0",
+    "license_sha256": "2e50a6169977b8c7bb3c3fb39e13b4502c0a5f00c79716647bee12731f50c4ce",
+    "copied_upstream_code": false
+  },
+  "catalog_probe": {
+    "c_policy_ids": [
+      "bifrost.correctness.c-self-assignment",
+      "bifrost.security.c.stored-request-to-sql",
+      "bifrost.security.c.store-requires-validation"
+    ],
+    "candidate_policy_found": false,
+    "candidate_model_symbols_found": 0,
+    "model_symbol_search_truncated": false,
+    "mcp_run_policy": {
+      "status": "clean",
+      "empty_selection": true,
+      "files_scanned": 0,
+      "findings": 0,
+      "qualification": "vacuous; not used as evidence of clean code"
+    }
+  },
+  "query_runs": [
+    {
+      "file": "queries/dispatch-outcomes.json",
+      "exit_code": 0,
+      "rows": 12,
+      "truncated": false,
+      "diagnostic_count": 0,
+      "observed": {
+        "system_header_calls": 9,
+        "system_header_outcome": "unknown",
+        "system_header_coverage": "open",
+        "system_header_target_count": 0,
+        "local_lookalike_calls": 3,
+        "local_lookalike_outcome": "resolved",
+        "local_lookalike_coverage": "exhaustive",
+        "local_lookalike_target_count": 1
+      }
+    },
+    {
+      "file": "queries/dispatch-targets.json",
+      "exit_code": 0,
+      "rows": 3,
+      "truncated": false,
+      "diagnostic_count": 0,
+      "observed": {
+        "targets": ["setgroups", "setgid", "setuid"],
+        "all_local_to_fixture": true,
+        "proof": "proven",
+        "completeness": "complete"
+      }
+    },
+    {
+      "file": "queries/call-bindings.json",
+      "exit_code": 0,
+      "rows": 13,
+      "truncated": false,
+      "diagnostic_count": 9,
+      "diagnostic": "semantic_analysis_partial",
+      "observed": {
+        "external_mapping": "incomplete",
+        "external_bound_count": 0,
+        "external_reason": "callee_unresolved",
+        "external_selector_exact": false,
+        "local_lookalikes": "exact declaration selection with complete actual/formal counts; conversion status unknown"
+      }
+    },
+    {
+      "file": "queries/procedure-state.json",
+      "exit_code": 0,
+      "rows": 6,
+      "truncated": false,
+      "diagnostic_count": 0,
+      "observed": {
+        "event_class": "read",
+        "subject": "binding",
+        "credential_state_events": 0,
+        "uncovered_axis": "same_evaluation_relation"
+      }
+    },
+    {
+      "file": "queries/procedure-guards.json",
+      "exit_code": 0,
+      "rows": 3,
+      "truncated": false,
+      "diagnostic_count": 0,
+      "observed": {
+        "path": "fixtures/failure-continues.c",
+        "proof": "proven",
+        "completeness": "complete",
+        "predicate": "opaque"
+      }
+    },
+    {
+      "file": "queries/procedure-exits.json",
+      "exit_code": 0,
+      "rows": 4,
+      "truncated": false,
+      "diagnostic_count": 0,
+      "observed": {
+        "procedures": 2,
+        "boundaries_per_procedure": ["normal_exit", "exceptional_exit"],
+        "proof": "proven",
+        "completeness": "complete",
+        "api_return_to_credential_state_relation": "not established"
+      }
+    }
+  ],
+  "safety": {
+    "compiled": false,
+    "executed": false,
+    "reason": "fixtures contain credential-changing call shapes and are analyzer inputs only"
+  },
+  "repository_validation": {
+    "content_verify": {
+      "exit_code": 0,
+      "locked_files": 297,
+      "aggregate_sha256": "de15461f6ba35bfc7f670cb48e518752ac021e57eb608a9b408119a9aef8e0dd"
+    },
+    "native_integrity": {
+      "exit_code": 0,
+      "manifests": 42,
+      "shards": 48,
+      "semantics": "not-qualified"
+    },
+    "unit_tests": {
+      "exit_code": 0,
+      "command": "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "tests": 87
+    }
+  },
+  "limitations": [
+    "Exact external Linux/glibc declaration identities remain unresolved.",
+    "Actual-to-formal bindings for external calls are incomplete.",
+    "No credential-state event model, exact success/failure effect, or required ordering is available.",
+    "Caller privilege, current credentials, helper boundaries, and thread synchronization are unmodeled.",
+    "Filesystem check/use was inventoried but not prototyped in this runtime experiment.",
+    "The exploratory control_relations query exceeded its row/output budget and was not retained."
+  ],
+  "input_sha256": {
+    "README.md": "b63d295e77e21a16401fe471afb9159f891c7ea94c629ce2a00eeea52c44bb0a",
+    "model-attempt.json": "ec0ebbb885bc1e0e40cd678b4bcacbe12c908140d20a0d4ecf564bf192d394c7",
+    "fixtures/failure-continues.c": "1f1da76009ca3c361187f5e6ea7d385f337ac803da00d7faec06a9bbc553ecf8",
+    "fixtures/guarded-order.c": "f2557f61c9d40fdae7376860f7a408c54933c92dfbdae403bc07ca4a7ae6e371",
+    "fixtures/local-lookalike.c": "eb015dfc6bfd32cf00bbf21c4810c29adabc9497dd4ceda6f363d2fffe2a4eab",
+    "fixtures/wrong-order.c": "a7d49a64e0b7603b19ce1ae9c4a3fce408f212077d8b3ec37f0321852bef5bc2",
+    "queries/call-bindings.json": "394e74ec2f5a698fb937af963a2931d6bf65cdfb736a7e554e44711312e2ff6f",
+    "queries/dispatch-outcomes.json": "5e9df5e746ed282e43d26fea469767a474879590672fd7b4fd67c18f45d005b6",
+    "queries/dispatch-targets.json": "e2799b571635d41b14fc9e483d7652f32b29403b7b61ff450308a6d7b5a7ea54",
+    "queries/procedure-exits.json": "3ebf0d1da6b485ed5828caab33a9a3a7cd2ef703735515e9fb55a3f86b26f6ab",
+    "queries/procedure-guards.json": "0ce1aa706f6fcf66dc8777a2e54ce7ed21deb13624d86144323bf9265179f7db",
+    "queries/procedure-state.json": "431ef625e6c91463857b32b40e934cef3c4a0dd7778bd7f83538042fa99299e5"
+  }
+}

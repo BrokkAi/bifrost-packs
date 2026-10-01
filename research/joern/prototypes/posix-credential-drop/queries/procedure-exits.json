@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "languages": ["c"],
+  "where": ["research/joern/prototypes/posix-credential-drop/fixtures/*.c"],
+  "limit": 20,
+  "match": {
+    "kind": "function",
+    "name": {"regex": "^(drop_guarded|drop_ignoring_group_failure)$"}
+  },
+  "steps": [
+    {"op": "procedure_of"},
+    {"op": "cfg_exits"}
+  ],
+  "result_detail": "full"
+}

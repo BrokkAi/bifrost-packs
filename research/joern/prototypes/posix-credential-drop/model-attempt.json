@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "record_kind": "research-model-proposal-not-an-engine-model",
+  "candidate_id": "linux-glibc-credential-drop",
+  "status": "not-registered",
+  "platform_scope": {
+    "os": "Linux",
+    "libc": "glibc",
+    "libc_version": "not-pinned",
+    "kernel_contract": "not-pinned",
+    "thread_contract": "process credentials; libc/NPTL synchronization must be modeled"
+  },
+  "api_identities_required": [
+    {
+      "symbol": "setgroups",
+      "declaration_header": "grp.h",
+      "identity": "unresolved in the active Bifrost catalog",
+      "source_contract": "Linux man-pages setgroups(2), pinned revision required"
+    },
+    {
+      "symbol": "setgid",
+      "declaration_header": "unistd.h",
+      "identity": "unresolved in the active Bifrost catalog",
+      "source_contract": "POSIX.1-2024 plus Linux credential semantics"
+    },
+    {
+      "symbol": "setuid",
+      "declaration_header": "unistd.h",
+      "identity": "unresolved in the active Bifrost catalog",
+      "source_contract": "POSIX.1-2024 plus Linux credential semantics"
+    }
+  ],
+  "required_events": [
+    "on exact setgroups call returning 0, replace the supplementary-group state with its exact bound group-list argument",
+    "on exact setgid call returning 0, update the Linux real/effective/saved group IDs according to the modeled caller privileges and input value",
+    "on exact setuid call returning 0, update the Linux real/effective/saved user IDs according to the modeled caller privileges and input value",
+    "setuid must not be modeled as changing supplementary groups",
+    "on a -1 result, preserve the prior credential state and errno outcome"
+  ],
+  "unmodeled_axes_blocking_promotion": [
+    "canonical libc declaration identity and local lookalike separation",
+    "caller privilege and current credential state",
+    "interprocedural/helper state and exact call result propagation",
+    "failure-edge control and complete exits",
+    "thread-group synchronization semantics",
+    "versioned Linux and glibc applicability"
+  ],
+  "activation": {
+    "status": "none",
+    "model_hashes": []
+  }
+}
