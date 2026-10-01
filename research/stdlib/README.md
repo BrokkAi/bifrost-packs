@@ -3,7 +3,10 @@
 Reviewed on 2026-10-01 against public packs revision
 `bb0eb7158e4b322304af29bdb8f56c697937585c`. Three Luna xhigh subagents
 researched Python, JDK/.NET and Go/Node independently. The primary agent reviewed
-their contracts and added Rust, C/C++ and PHP/Ruby runtime leads.
+their contracts and added Rust, C/C++ and PHP/Ruby runtime leads. Two further
+Luna xhigh subagents investigated Rust and Ruby; primary review retained eleven
+additional records: four candidates, three proof-heavy deferrals and four
+existing-owner/catalog routes.
 
 The [catalog](candidates.md) and [CSV](candidates.csv) contain research hypotheses,
 not runnable policies. [JSON](candidates.json) retains the API identities,
@@ -16,8 +19,12 @@ Priority measures investigation value; it does not certify Bifrost support.
 Public scope is a standard runtime's APIs: CPython stdlib, JDK modules, Node
 built-ins, Go stdlib, Rust `std`, .NET base class library and PHP/Ruby runtime
 APIs. C ISO-library APIs and POSIX/libc extensions are distinguished by their
-platform contracts. Kotlin/Scala calls to JDK and TypeScript calls to Node need
-their own adapter qualification; shared APIs do not prove language parity.
+platform contracts. Ruby default gems are included only under an explicit runtime
+and shipped-library contract; independently upgraded gem versions need separate
+qualification. Ruby 3.4 documentation is a version-scoped reference, not a claim
+about every current Ruby runtime. Kotlin/Scala calls to JDK and TypeScript calls
+to Node need their own adapter qualification; shared APIs do not prove language
+parity.
 
 Third-party packages, drivers, frameworks and customer/application protocols stay
 outside this stdlib queue. A standard interface backed by a driver must separate

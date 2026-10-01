@@ -34,6 +34,17 @@ Every row is research-only and unqualified. The [qualification contract](README.
 | [php-proc-open-paired-ownership](#php-proc-open-paired-ownership) | php | typestate | P2 | candidate |
 | [php-runtime-deserialization](#php-runtime-deserialization) | php | taint | P2 | existing-catalog-routing |
 | [ruby-marshal-untrusted-load](#ruby-marshal-untrusted-load) | ruby | taint | P2 | existing-catalog-routing |
+| [rust-maybeuninit-initialization-state](#rust-maybeuninit-initialization-state) | rust | typestate | P1 | candidate |
+| [rust-condvar-predicate-recheck](#rust-condvar-predicate-recheck) | rust | typestate | P2 | candidate |
+| [rust-bufwriter-drop-hidden-flush-error](#rust-bufwriter-drop-hidden-flush-error) | rust | typestate | P2 | candidate |
+| [rust-unix-pre-exec-callback-safety](#rust-unix-pre-exec-callback-safety) | rust | execution-context safety precondition | P2 | deferred-proof-heavy |
+| [rust-process-environment-mutation-thread-state](#rust-process-environment-mutation-thread-state) | rust | concurrency safety precondition | P2 | deferred-proof-heavy |
+| [ruby-net-http-active-peer-verification-disabled](#ruby-net-http-active-peer-verification-disabled) | ruby | typestate | P1 | candidate |
+| [ruby-open3-popen3-paired-pipe-draining](#ruby-open3-popen3-paired-pipe-draining) | ruby | typestate | P2 | deferred-proof-heavy |
+| [ruby-open3-popen3-owned-pipe-closure](#ruby-open3-popen3-owned-pipe-closure) | ruby | typestate | P2 | existing-owner |
+| [ruby-tempfile-create-unlinked-owner](#ruby-tempfile-create-unlinked-owner) | ruby | typestate | P2 | existing-owner |
+| [ruby-kernel-open-pipe-command-taint](#ruby-kernel-open-pipe-command-taint) | ruby | taint | P2 | existing-owner |
+| [ruby-psych-unsafe-load-untrusted-yaml](#ruby-psych-unsafe-load-untrusted-yaml) | ruby | taint | P2 | existing-catalog-routing |
 
 ## python-queue-task-accounting
 
@@ -909,3 +920,335 @@ Stop gate: Existing catalog routing: do not open duplicate work. Unknown runtime
 Ownership: Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.
 
 Sources: [Ruby 3.4 Marshal security guidance](https://docs.ruby-lang.org/en/3.4/Marshal.html).
+
+## rust-maybeuninit-initialization-state
+
+**Prove MaybeUninit initialization before assuming a T value** (typestate; candidate).
+
+APIs: `std::mem::MaybeUninit::{uninit,new,write,assume_init,assume_init_ref,assume_init_mut,assume_init_read,assume_init_drop}`.
+
+For an exact MaybeUninit<T> created in an uninitialized state, report an assume_init-family operation only when analysis proves that the same object is still uninitialized on a feasible reaching path. A successful write of a valid T or MaybeUninit::new establishes initialization. zeroed is not a generic initializer: all-zero validity and T's other invariants are type-specific. This lead covers missing initialization only; duplicate assume_init_read on non-Copy data is a separate ownership contract.
+
+Positive fixture sketch:
+
+```text
+let slot = std::mem::MaybeUninit::<u32>::uninit();
+let value = unsafe { slot.assume_init() }; // UB: no value was written
+```
+
+Near-miss fixture sketch:
+
+```text
+let mut slot = std::mem::MaybeUninit::<u32>::uninit();
+slot.write(42);
+let value = unsafe { slot.assume_init() }; // the same object was fully initialized
+```
+
+Required proof: Resolve exact std declarations and MaybeUninit<T>; track the same object through supported moves and aliases; establish full initialization and T validity at each unsafe consumer; model branches and the successful result of initialization helpers.
+
+Stop gate: Stop if raw-pointer writes, field or array initialization, FFI out-pointers, helper calls, aliases, or type invariants prevent proving the same object's initialized state. Do not infer safety from zeroed or from the presence of any write; preserve unknown as incomplete.
+
+Ownership: Distinct memory-initialization state from generic acquired-resource cleanup. No existing public Rust policy in the reviewed pack proves this object-specific initialization invariant.
+
+Sources: [Rust 1.98.1 MaybeUninit](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html).
+
+## rust-condvar-predicate-recheck
+
+**Recheck the guarded predicate after Condvar::wait returns** (typestate; candidate).
+
+APIs: `std::sync::Condvar::{wait,wait_timeout,wait_while,wait_timeout_while}`, `std::sync::{Mutex,MutexGuard}`.
+
+When code waits because a mutex-protected predicate is false and then consumes state as though the predicate became true, the same predicate must be checked again after every wait return while holding the reacquired guard. Condvar::wait can return spuriously; another waiter can also consume a condition before this thread reacquires the mutex. wait_while and wait_timeout_while repeat the predicate check. This is not a finding for notification waits whose continuation safely handles a false predicate.
+
+Positive fixture sketch:
+
+```text
+let mut g = lock.lock().unwrap();
+if g.queue.is_empty() { g = cv.wait(g).unwrap(); }
+let item = g.queue.pop().unwrap(); // may be empty after wake
+```
+
+Near-miss fixture sketch:
+
+```text
+let mut g = lock.lock().unwrap();
+while g.queue.is_empty() { g = cv.wait(g).unwrap(); }
+let item = g.queue.pop().unwrap();
+// Condvar::wait_while(g, |state| state.queue.is_empty()) is another guarded form.
+```
+
+Required proof: Prove exact Condvar and MutexGuard identities; bind the guard returned by wait; identify the same predicate before waiting and the dependent operation after reacquisition; model loop guards, poisoning exits, and relevant branches.
+
+Stop gate: Stop if the mutex/predicate relationship or post-wake control dependence is unknown. Do not flag every wait call or replace missing Rust guard facts with syntax-only guesses; report incomplete until predicate and guard flow are supported.
+
+Ownership: A distinct predicate/wakeup protocol, separate from generic resource lifecycle and API-name bans. The candidate requires guard and control-flow evidence before any policy claim.
+
+Sources: [Rust 1.98.1 Condvar](https://doc.rust-lang.org/std/sync/struct.Condvar.html).
+
+## rust-bufwriter-drop-hidden-flush-error
+
+**Do not report successful output when BufWriter drop hides a pending flush failure** (typestate; candidate).
+
+APIs: `std::io::BufWriter::{with_capacity,write,write_all,flush,into_inner,into_parts}`, `std::ops::Drop::drop`.
+
+Only for an application-declared output boundary where success promises delivery, report a BufWriter that still has pending bytes when control returns success without a checked completion transition: Drop attempts to flush but ignores any error. A successful checked flush or checked into_inner discharges the pending-output state. into_parts intentionally returns unwritten bytes and is a near miss when that data is retained or retried. This does not imply durable storage; File::sync_all is a separate contract. For a generic underlying buffered writer, into_inner only discharges this BufWriter layer; require the separately declared downstream completion contract. Empty buffers and successful prior flush with no later writes are near misses.
+
+Positive fixture sketch:
+
+```text
+fn publish(file: std::fs::File) -> std::io::Result<()> {
+    let mut out = std::io::BufWriter::with_capacity(128, file);
+    out.write_all(b"record")?;
+    Ok(()) // declared publication succeeded; drop may hide a failed flush
+}
+```
+
+Near-miss fixture sketch:
+
+```text
+out.write_all(b"record")?;
+out.flush()?; // propagate delivery failure before reporting success
+Ok(())
+// Checked into_inner is another completion path; into_parts is safe when the returned bytes are handled.
+```
+
+Required proof: Resolve the exact BufWriter instance and underlying declared output sink; prove non-empty buffered data at the completion boundary; bind successful write, flush and into_inner outcomes; know the application-declared success/publication boundary and ownership at drop.
+
+Stop gate: Do not report a drop by itself, best-effort output, writers transferred to a caller, or a buffer whose pending state is unknown. Route an explicitly discarded flush/into_inner Result to ignored-result coverage; do not infer durability from flush success.
+
+Ownership: This is the hidden I/O error from Drop at a declared output boundary, not generic unclosed-resource reporting or an explicitly discarded Result. Require an application completion contract before qualifying it.
+
+Sources: [Rust 1.98.1 BufWriter](https://doc.rust-lang.org/std/io/struct.BufWriter.html).
+
+## rust-unix-pre-exec-callback-safety
+
+**Audit operations in Unix CommandExt::pre_exec callbacks** (execution-context safety precondition; deferred-proof-heavy).
+
+APIs: `std::os::unix::process::CommandExt::pre_exec`, `std::process::Command::{spawn,status,output}`, `std::env::{var,var_os}`, `std::sync::Mutex::lock`.
+
+A concern requires the exact pre_exec closure to contain or reach an operation that is not safe in the post-fork child and the same Command to be executed by spawn, status or output on Unix. Registration alone is not a finding. CommandExt::exec does not fork and is outside this contract.
+
+Positive fixture sketch:
+
+```text
+use std::os::unix::process::CommandExt;
+let mut cmd = std::process::Command::new("helper");
+unsafe { cmd.pre_exec(|| { let _ = std::env::var("MODE"); Ok(()) }); }
+let _child = cmd.spawn()?;
+```
+
+Near-miss fixture sketch:
+
+```text
+use std::os::unix::process::CommandExt;
+let mut cmd = std::process::Command::new("helper");
+unsafe { cmd.pre_exec(|| Ok(())); }
+let _child = cmd.spawn()?;
+```
+
+Required proof: Prove Unix target, callback identity and body, same Command reaching spawn/status/output, and direct or transitive operation effects against a pinned platform's async-signal-safe contract. Treat multiple registered closures and early error returns accurately.
+
+Stop gate: Defer until closure capture, helper calls, macros, platform function allowlists and post-fork execution are modeled. Do not flag every pre_exec registration; exclude CommandExt::exec because it does not fork.
+
+Ownership: A post-fork callback contract distinct from child reaping and shell syntax. Keep Unix scope and callback execution separate from ordinary Command construction.
+
+Sources: [Rust 1.98.1 Unix CommandExt](https://doc.rust-lang.org/std/os/unix/process/trait.CommandExt.html), [Rust 1.98.1 Command](https://doc.rust-lang.org/std/process/struct.Command.html).
+
+## rust-process-environment-mutation-thread-state
+
+**Process environment mutation has a global concurrency precondition on non-Windows targets** (concurrency safety precondition; deferred-proof-heavy).
+
+APIs: `std::env::{set_var,remove_var,var,var_os}`, `std::thread::{spawn,Builder::spawn,JoinHandle::join}`.
+
+On Windows the documented mutation is sound in multithreaded programs; on non-Windows, soundness requires no other thread concurrently accessing the process environment through functions or global variables outside std::env. A thread merely existing is not enough to prove a violation, while a complete proof must account for opaque standard-library and C-library readers. This remains a platform-wide concurrency precondition, not a taint rule. The exact documented prohibition concerns concurrent access through functions or global variables outside std::env. Do not treat std::env::var_os on another thread alone as a violation witness.
+
+Positive fixture sketch:
+
+```text
+On a pinned non-Windows target, a live foreign/native helper thread is proven to read the process environment outside the synchronization used by std::env while the calling thread executes unsafe std::env::set_var. Require a witness of overlapping access; two calls through std::env alone do not establish the documented foreign-reader violation.
+```
+
+Near-miss fixture sketch:
+
+```text
+The mutation occurs before any other thread starts on a non-Windows target, or occurs on Windows under the documented platform guarantee.
+```
+
+Required proof: Pin target OS and Rust edition; establish concurrent read/write overlap across threads and environment-access effects, including relevant standard-library, native-library and global-variable paths.
+
+Stop gate: Defer unless a sound closed-world concurrency and environment-reader proof exists. The 2024 unsafe marker is not itself evidence of misuse, and absence of a visible reader is not proof of safety.
+
+Ownership: No blanket API prohibition proposed. This is a process-global concurrency precondition whose hidden readers make ordinary call-site matching unsound.
+
+Sources: [Rust 1.98.1 std::env::set_var safety](https://doc.rust-lang.org/std/env/fn.set_var.html), [Rust 2024 newly unsafe functions](https://doc.rust-lang.org/stable/edition-guide/rust-2024/newly-unsafe-functions.html).
+
+## ruby-net-http-active-peer-verification-disabled
+
+**Active HTTPS Net::HTTP clients can disable peer verification** (typestate; candidate).
+
+APIs: `Net::HTTP.start(address, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE)`, `Net::HTTP#use_ssl=`, `Net::HTTP#verify_mode=`, `Net::HTTP#request`, `Net::HTTP.get_response`, `Net::HTTP#get`.
+
+Scope this hypothesis to CRuby 3.4.0 with the shipped default gem net-http 0.6.0 and OpenSSL bindings resolved by that exact runtime. Report only when the same Net::HTTP instance uses TLS, its effective verify_mode is VERIFY_NONE at connection setup, and an HTTPS request reaches the active session. VERIFY_PEER is a near miss. A custom verification callback or a later configuration override is unresolved unless its effective behavior is proven.
+
+Positive fixture sketch:
+
+```text
+http = Net::HTTP.new(host, 443); http.use_ssl = true; http.verify_mode = OpenSSL::SSL::VERIFY_NONE; http.start { |active| active.get('/health') }
+```
+
+Near-miss fixture sketch:
+
+```text
+Net::HTTP.start(host, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_PEER) { |http| http.get('/health') }; also treat an unused configured client as a near miss.
+```
+
+Required proof: Resolve exact Net::HTTP object and method identities; track use_ssl and verify_mode writes into the same object through start/request; distinguish construction from an executed TLS session; model effective option defaults and overrides; pin Ruby and default-gem versions.
+
+Stop gate: Stop if configuration writes cannot be associated with the active client/session, if verification callbacks or overrides have unresolved effects, or if request execution cannot be shown. Do not infer disabled verification from HTTPS use, a nil field, or an unqualified method name.
+
+Ownership: Existing runtime network-effect models do not establish this verification protocol. Keep standard-library Net::HTTP acceptance separate from third-party client verification work, and recheck adjacent verification ownership before creating an issue.
+
+Sources: [Net::HTTP Ruby 3.4 API and implementation](https://docs.ruby-lang.org/en/3.4/Net/HTTP.html), [Ruby 3.4 default gem versions](https://docs.ruby-lang.org/en/3.4/NEWS_md.html), [OpenSSL SSLContext verification modes](https://docs.ruby-lang.org/en/3.4/OpenSSL/SSL/SSLContext.html).
+
+## ruby-open3-popen3-paired-pipe-draining
+
+**Open3.popen3 can deadlock when stdout and stderr are drained sequentially** (typestate; deferred-proof-heavy).
+
+APIs: `Open3.popen3(command, *args)`, `Open3.capture3(command, *args)`.
+
+Scope to Ruby 3.4.0 with the exact loaded Open3 implementation pinned. A possible finding requires proof that the child writes enough bytes to one returned pipe to fill its effective OS buffer before it exits or writes the other stream, while the parent waits for the other stream to reach EOF before draining the first. The guarantee is execution and environment dependent; sequential reads alone do not prove a deadlock.
+
+Positive fixture sketch:
+
+```text
+Open3.popen3('ruby', '-e', "STDERR.write('x' * 1_000_000); STDOUT.write('done')") do |_stdin, stdout, stderr, _wait_thr|
+  stdout.read  # waits for EOF while the child may be blocked on a full stderr pipe
+  stderr.read
+end
+```
+
+Near-miss fixture sketch:
+
+```text
+Open3.capture3('ruby', '-e', "STDERR.write('x' * 1_000_000); STDOUT.write('done')") drains stdout and stderr concurrently in its implementation and returns both outputs with process status.
+```
+
+Required proof: Prove exact Open3.popen3 result-to-stream identity, child write volume/order and parent blocking read order; pin OS/runtime and pipe behavior for the fixture; distinguish capture3's concurrent readers and bounded output from the raw returned pipes.
+
+Stop gate: Defer if static evidence cannot prove the child can exceed the relevant pipe capacity before the parent drains that stream, or if threads, helpers, callbacks, or alternate reads change the order. Do not report from a lexical stdout.read followed by stderr.read pattern alone.
+
+Ownership: No Ruby public policy or semantic model found for this paired-stream protocol. The contract is distinct from the open Ruby lifecycle work; retain it as deferred until child output volume and blocking order can be proved.
+
+Sources: [Open3 Ruby 3.4 API and pipe deadlock guidance](https://docs.ruby-lang.org/en/3.4/Open3.html), [Process.detach independently reaps children](https://docs.ruby-lang.org/en/3.4/Process.html), [CRuby v3_4_0 Open3 implementation and version-pinned behavior](https://raw.githubusercontent.com/ruby/ruby/v3_4_0/lib/open3.rb), [Ruby v3_4_0 shipped Open3 version](https://github.com/ruby/ruby/blob/v3_4_0/lib/open3/version.rb).
+
+## ruby-open3-popen3-owned-pipe-closure
+
+**Open3.popen3 non-block callers own the returned pipe cleanup** (typestate; existing-owner).
+
+APIs: `Open3.popen3(command, *args)`, `IO#close`, `Process::Waiter#value (status retrieval, not required for reaping)`.
+
+Scope to CRuby 3.4.0 with the exact loaded Open3 implementation pinned. In non-block form, each returned pipe owned by the caller should be closed unless ownership is explicitly transferred. The block form closes the streams and joins the wait thread. Open3's wait thread is established via Process.detach, so wait_thr.value is status retrieval rather than mandatory reaping.
+
+Positive fixture sketch:
+
+```text
+stdin, stdout, stderr, _wait_thr = Open3.popen3('worker'); consume(stdout); return # stdin/stdout/stderr are left open on an early exit
+```
+
+Near-miss fixture sketch:
+
+```text
+Open3.popen3('worker') { |stdin, stdout, stderr, _wait_thr| consume(stdout) } # block cleanup closes streams and joins wait thread; explicit ensure closure also discharges caller-owned streams
+```
+
+Required proof: Prove exact Open3 result tuple and stream identities; model aliasing, ensure paths, exceptions, block form and explicit ownership transfer; treat wait_thr.value as status consumption rather than mandatory cleanup.
+
+Stop gate: Route to existing Ruby lifecycle ownership and stop if returned stream identity, exit coverage, or transfer cannot be established. Avoid a new general process/resource leak engine or claims about zombies without direct evidence.
+
+Ownership: Route returned-pipe acquisition and cleanup models to existing Ruby lifecycle qualification. Generic lifecycle discovery does not certify Ruby coverage or this tuple mapping. Process.detach reaps independently; wait thread value retrieves status.
+
+Sources: [Open3 Ruby 3.4 API](https://docs.ruby-lang.org/en/3.4/Open3.html), [CRuby v3_4_0 Open3 implementation: Process.detach, stream close, wait_thread.join](https://raw.githubusercontent.com/ruby/ruby/v3_4_0/lib/open3.rb), [Process.detach independently reaps children](https://docs.ruby-lang.org/en/3.4/Process.html), [Ruby v3_4_0 shipped Open3 version](https://github.com/ruby/ruby/blob/v3_4_0/lib/open3/version.rb).
+
+## ruby-tempfile-create-unlinked-owner
+
+**Tempfile.create without a block leaves a persistent file to its caller** (typestate; existing-owner).
+
+APIs: `Tempfile.create(basename, tmpdir, anonymous: false)`, `Tempfile.create(..., &block)`, `Tempfile.create(..., anonymous: true)`, `Tempfile.new`.
+
+Scope to CRuby 3.4.0 with default gem tempfile 0.3.1. For the default non-block, anonymous:false form, the returned File and path remain caller-owned; close alone does not remove the path. A finding requires evidence the file is intended to be temporary and is no longer needed; an intentionally retained, renamed, or transferred artifact is not a cleanup violation. The block form closes and unlinks; anonymous:true removes before return. Platform-specific anonymous behavior stays version and OS scoped. The deletion obligation applies to a declared temporary-use scope when the file is no longer needed. A deliberately retained file, a successfully renamed output artifact, or transferred ownership is not a missing-unlink finding.
+
+Positive fixture sketch:
+
+```text
+A declared temporary-use helper obtains f = Tempfile.create, writes a temporary payload, closes f, and exits with no transfer or rename. File.exist?(f.path) remains true; fixture must pin the intended deletion boundary.
+```
+
+Near-miss fixture sketch:
+
+```text
+Tempfile.create { |f| write_scratch_data(f) }; f = Tempfile.create; write_scratch_data(f); f.close; File.unlink(f.path); # or explicitly rename/transfer a file intended to persist A successfully renamed or deliberately retained output artifact has a different ownership contract.
+```
+
+Required proof: Resolve exact Tempfile.create identity, return value/path identity, anonymous flag, block form and file ownership; model close versus unlink separately, all exits, helper transfer and platform-specific behavior.
+
+Stop gate: Route to Ruby lifecycle ownership; stop if the analyzer cannot track the returned File and path, distinguish close from unlink, model block/anonymous mode and explicit transfer, or prove the path was intended to be transient and no longer needed. Do not diagnose an intentionally retained/renamed artifact or rely on Tempfile.new finalizer timing as proof of prompt deletion.
+
+Ownership: Route close/unlink and invocation-form models to existing Ruby lifecycle qualification. This is an API-specific extension, not a separate lifecycle engine or a production-support claim.
+
+Sources: [Tempfile Ruby 3.4 API](https://docs.ruby-lang.org/en/3.4/Tempfile.html), [Ruby 3.4 Tempfile behavior and default gem versions](https://docs.ruby-lang.org/en/3.4/NEWS_md.html).
+
+## ruby-kernel-open-pipe-command-taint
+
+**A leading pipe makes Ruby 3.4 Kernel.open execute a command** (taint; existing-owner).
+
+APIs: `Kernel.open(path, mode, perm, **opts)`, `File.open(path, mode, perm, **opts) (near-miss identity)`.
+
+Scope only to CRuby 3.4.0 core Kernel.open where the executed string path begins with `|`; Ruby 4.0 is excluded because this mode is removed. Track attacker-controlled command text into the leading-pipe form and an actual call. Ordinary file paths and File.open do not satisfy this contract. For a shell-injection claim, also prove shell-language selection or metacharacter flow under the pinned command-invocation contract; pipe mode alone can invoke an executable directly. Unauthorized executable selection is a separate declared trust boundary.
+
+Positive fixture sketch:
+
+```text
+Kernel.open('| /usr/bin/printf %s ' + params[:text]) { |pipe| pipe.read } # An attacker-controlled shell metacharacter in text selects shell interpretation under the pinned invocation rules.
+```
+
+Near-miss fixture sketch:
+
+```text
+File.open(params[:path]) { |file| file.read }; Kernel.open('report.txt') { |file| file.read } File.open is only a near miss for this command-execution contract; an attacker-selected filesystem path needs its own access policy.
+```
+
+Required proof: Resolve Kernel.open versus File.open identity, prove the leading pipe prefix and tainted command text reach an executed call; preserve Ruby version and deprecation/removal scope; distinguish shell command flow from an ordinary filesystem path.
+
+Stop gate: Route to existing Ruby command-execution ownership and stop if call identity, leading-pipe semantics, taint flow, or runtime version is unresolved. Do not duplicate the existing Kernel.system sink family or claim Ruby 4 support.
+
+Ownership: Existing Ruby command-execution discovery owns the shell/executable family. Review this deprecated core API mode under that owner rather than opening a duplicate discovery; no content migration is implied.
+
+Sources: [Kernel Ruby 3.4 API and deprecation](https://docs.ruby-lang.org/en/3.4/Kernel.html), [Ruby 3.4 command injection guidance](https://docs.ruby-lang.org/en/3.4/command_injection_rdoc.html), [Kernel Ruby 4.0 API](https://docs.ruby-lang.org/ja/4.0/method/Kernel/m/open.html).
+
+## ruby-psych-unsafe-load-untrusted-yaml
+
+**Untrusted YAML reaches Psych.unsafe_load object construction** (taint; existing-catalog-routing).
+
+APIs: `Psych.unsafe_load(yaml, **kwargs)`, `Psych.unsafe_load_file(filename, **kwargs)`, `Psych.safe_load(yaml, **kwargs) (near miss)`, `Psych.load(yaml, **kwargs) (safe-load-like in Psych 5.2.2)`.
+
+Scope to CRuby 3.4.0 with shipped default gem psych 5.2.2. Report only when untrusted YAML bytes reach Psych.unsafe_load or unsafe_load_file and deserialization can instantiate an attacker-selected object graph. Do not infer danger from YAML.load in this version, from safe_load with its restricted classes, or from parsing a data-only primitive document. Other Psych versions require separate behavior evidence.
+
+Positive fixture sketch:
+
+```text
+yaml = params[:document]; object = Psych.unsafe_load(yaml); authorize(object)
+```
+
+Near-miss fixture sketch:
+
+```text
+Psych.safe_load(params[:document]); Psych.load(params[:document]) under the pinned Psych 5.2.2 safe-load semantics; trusted fixed YAML fixture into unsafe_load is also a trust-boundary near miss.
+```
+
+Required proof: Resolve exact Psych method identity and loaded gem version; prove untrusted byte provenance into the unsafe entrypoint and object-result identity; distinguish safe_load, permitted classes, aliases and primitive-only data; inspect whether the object reaches a security-sensitive use without claiming every YAML document is code execution.
+
+Stop gate: Route to the existing Ruby object-deserialization ownership and stop if the Psych version, exact unsafe method, taint boundary, or constructed-result use cannot be proven. Do not extend Ruby Marshal or blanket-flag YAML.load without version-specific behavior evidence.
+
+Ownership: Ruby object-deserialization and YAML/Psych discovery already have catalog ownership. Review the exact unsafe_load methods and version-specific safe defaults under those routes; this is not a new discovery or a content migration.
+
+Sources: [Psych Ruby 3.4 API](https://docs.ruby-lang.org/en/3.4/Psych.html), [Ruby 3.1 note on Psych 4 safe-load default](https://docs.ruby-lang.org/en/3.4/NEWS/NEWS-3_1_0_md.html), [Ruby 3.4 Psych default gem version](https://docs.ruby-lang.org/en/3.4/NEWS_md.html).
