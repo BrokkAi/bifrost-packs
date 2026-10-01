@@ -24,7 +24,7 @@ evidence, not a fresh `v0.2.0` candidate or a publication claim; inspect the
 exact release archive before recording its values. It does not establish
 consumer compatibility or behavior.
 
-The intended `rules/v0.1.1` content is the exact 49-policy baseline from public
+The intended `rules/v0.1.2` content is the exact 49-policy baseline from public
 Bifrost `v0.11.5`, source commit
 `4ec4489e850b809c9cc7750e4c450c7560c45de0`. Its actual schema requirements
 come from those policies and the built-in catalog: policy-document, RQL, and
@@ -52,6 +52,13 @@ it cannot satisfy policies that declare required capabilities.
 
 The native gate is reproducible at public Bifrost commit
 `62fc36c09ddb96746e716c1c3456a99957521d91`: `crates/bifrost-analysis/src/analyzer/semantic_model/model.rs:1172` requires the legacy compatibility field, and the catalog and runtime enforce it at `catalog/mod.rs:5210, 5318` and `runtime.rs:3290`. The generated Java pack's `=0.12.0` value rejects other engine versions; the other ranges are still engine-version gates, not format compatibility. See the [recorded blocker evidence](native-publication-blocker.json) for all eight constraints, the prior run identity, and artifact hash.
+
+Concurrent legacy releases `rules/v0.1.1` and `packs/v0.1.1` were published
+from `28babf267ce4602549588082d5801d78ba549edf`. They retain contract schema 1,
+engine range `>=0.12.0, <0.12.1`, and pending qualification. Their manifests and
+assets remain immutable. The rules `0.1.2` candidate deliberately retains the
+49-policy baseline scope described here; it does not absorb the concurrent
+branch's larger Bifrost 0.12 policy update.
 
 ## Legacy baseline
 

@@ -43,7 +43,7 @@ public Bifrost commit `62fc36c09ddb96746e716c1c3456a99957521d91`; this is tool
 provenance, not consumer qualification. A prior successful generation run
 observed model schema versions 2 and 5 and release index schema 3; it is
 diagnostic evidence, not a fresh release candidate. Verify any final values from
-the exact archive. The intended `rules/v0.1.1` contains
+the exact archive. The intended `rules/v0.1.2` contains
 the exact 49-policy `v0.11.5` baseline and depends on the exact
 `bifrost.public.packs` `0.2.0` release. The dependency is under review, and
 neither intended tag is a publication claim. See

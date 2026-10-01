@@ -43,7 +43,7 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-The intended next public streams are `packs/v0.2.0` and `rules/v0.1.1`;
+The intended next public streams are `packs/v0.2.0` and `rules/v0.1.2`;
 neither is a publication claim. The native archive still contains enforced
 engine-version compatibility fields, so the native schema/runtime migration
 must finish before a version-independent native release can be published. See

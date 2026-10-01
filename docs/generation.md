@@ -44,7 +44,7 @@ engine ranges capped at `<1.0.0`. At pinned public Bifrost commit
 `compatibility.bifrost`; catalog checks at `catalog/mod.rs:5210, 5318` and
 runtime validation at `runtime.rs:3290` enforce it. The publication guard
 rejects native archives that retain this field. The intended
-`packs/v0.2.0` and dependent `rules/v0.1.1` are not eligible for publication
+`packs/v0.2.0` and dependent `rules/v0.1.2` are not eligible for publication
 until the native schema/runtime gate is resolved.
 
 For a source-built executable and its build receipt, the generation command is:
