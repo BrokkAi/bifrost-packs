@@ -1,0 +1,58 @@
+; Research-only bounded taint attempt. Not registered in a pack manifest.
+; The external environment read is modeled, but pickle import binding, byte
+; transformation, same-stream contents, and authenticator/key trust must all
+; be proved before a result is considered qualified.
+(policy
+  :schema-version 1
+  :id "research.python.pickle-untrusted-input-provenance"
+  :name "Untrusted bytes reaching stdlib pickle (qualification attempt)"
+  :message "Untrusted bytes reach a Python pickle reconstruction entry point"
+  :severity note
+  :description "Discovery and qualification attempt only. A result would be an untrusted reconstruction-entry advisory; this policy does not prove a gadget, exploit, or attacker-controlled behavior."
+  :help-uri "https://docs.python.org/3.9/library/pickle.html"
+  :tags ["research" "python" "pickle" "provenance"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id python-process-environment-value
+              :display-name "CPython process environment value"
+              :categories [input.environment io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global os
+                      :container environ
+                      :key-kind static-property
+                      :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id python-pickle-loads-bytes
+              :display-name "Python pickle.loads payload bytes"
+              :categories [serialization.dynamic-object]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.pickle.loads-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "loads") (arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])])))

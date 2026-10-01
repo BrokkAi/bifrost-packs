@@ -16,8 +16,9 @@ Priority measures investigation value; it does not certify Bifrost support.
 
 The first [query-modeling wave](prototypes/README.md) records original fixtures,
 diagnostic queries and per-case outcomes for Node authenticated decryption,
-Python TLS, Rust initialization and Ruby Net::HTTP. Read the recorded capability
-gates before reusing a query; these attempts do not register production rules.
+Python TLS, Python pickle provenance, Rust initialization and Ruby Net::HTTP.
+Read the recorded capability gates before reusing a query; these attempts do not
+register production rules.
 
 ## Scope and ownership
 

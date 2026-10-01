@@ -1,0 +1,22 @@
+; This structural query is for candidate discovery only. It deliberately matches
+; spelling and must not be used to claim standard-library identity or trust.
+(policy
+  :schema-version 1
+  :id "research.python.pickle-loader-call-discovery"
+  :name "Python pickle loader call shapes (discovery only)"
+  :message "Discovery candidate only: confirm import identity, consumed operand and trust provenance"
+  :severity note
+  :description "Syntactic pickle loader candidates only. This is not a security finding, does not establish external or persisted provenance, and does not imply a gadget or exploit."
+  :help-uri "https://docs.python.org/3.9/library/pickle.html"
+  :tags ["research" "python" "pickle" "discovery"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql
+          :schema-version 1
+          (union
+            (language python
+              (call :receiver (name "pickle") :callee (name "load")))
+            (language python
+              (call :receiver (name "pickle") :callee (name "loads")))))))
