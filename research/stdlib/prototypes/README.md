@@ -19,6 +19,7 @@ it does not qualify other consumer versions or models.
 | --- | --- | --- | --- |
 | Rust initialization | Same MaybeUninit object is still uninitialized on a feasible path reaching assume_init | Incomplete: import and receiver declaration identity | [Rust attempt](rust-maybeuninit/README.md) |
 | Python TLS | Effective verification state of the same context reaches an active client handshake | Incomplete: external API identity/binding and qualified-constant state coverage | [Python attempt](stdlib-tls/README.md) |
+| Python pickle provenance | Untrusted bytes reaching Python pickle reconstruction | Incomplete: exact imported API identity and formal binding; trust and integrity remain unproved | [Python pickle attempt](python-pickle-provenance/README.md) |
 | Node authenticated decryption | Provisional plaintext reaches a reviewed effect before successful finalization of the same decipher | Incomplete: external API identity/binding; runtime witness passes | [Node attempt](node-aead/README.md) |
 | Ruby Net::HTTP | Verification is disabled when the same client starts TLS and sends a request | Incomplete: external receiver identity and Ruby state axes; required runtime unavailable | [Ruby attempt](ruby-net-http/README.md) |
 
