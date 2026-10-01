@@ -299,7 +299,7 @@ def resolve_release_set(paths, profile, pack_id, channel='stable', version=None,
     rejected_dependencies = []
     for candidate in candidates:
         manifest = candidate[2]
-        key = (pack_id, manifest['release_version'])
+        key = (manifest['pack']['repository'], pack_id, manifest['release_version'])
         if key in visiting:
             fail('invalid-manifest', 'cyclic release dependencies')
         result = [candidate]

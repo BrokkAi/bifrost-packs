@@ -183,6 +183,23 @@ class ReleaseTests(unittest.TestCase):
         qualified_policy = self.v1_candidate('1.3.0', role='policy')
         self.assertEqual(release.select_release([qualified_policy], profile('0.12.0'), 'test.public')['manifest_schema_version'], 1)
 
+    def test_same_pack_identity_in_distinct_repositories_is_not_a_cycle(self):
+        paths = []
+        for owner, pack, dependencies in (
+            ('root', 'test.public', [('test.shared', 'left')]),
+            ('left', 'test.shared', [('test.shared', 'right')]),
+            ('right', 'test.shared', []),
+        ):
+            repository = 'https://github.com/test/' + owner
+            manifest = release.make_manifest(dict(self.config, repository=repository, pack_id=pack), 'b' * 40, [], self.archive)
+            manifest['qualification']['integrity'] = dict(status='verified', evidence=['fixture checked'])
+            manifest['release_dependencies'] = [dict(pack_id=dependency, release_version='1.0.0', repository='https://github.com/test/' + dependency_owner) for dependency, dependency_owner in dependencies]
+            path = self.root / (owner + '.json')
+            path.write_text(json.dumps(manifest))
+            paths.append(path)
+        resolved = release.resolve_release_set(paths, profile(), 'test.public')
+        self.assertEqual([item[2]['pack']['repository'] for item in resolved], ['https://github.com/test/root', 'https://github.com/test/left', 'https://github.com/test/right'])
+
     def test_conflicting_transitive_dependencies_reject(self):
         paths = []
         repository = self.config['repository']
