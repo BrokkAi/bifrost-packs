@@ -65,7 +65,7 @@ class GeneratedReleaseTests(unittest.TestCase):
         self.receipt_path = fixture.root / 'generation.json'
         self.receipt_path.write_text(json.dumps(self.receipt))
         self.config = dict(pack_id='bifrost.public.packs', repository='https://github.com/test/packs', visibility='public',
-                           release_version='1.0.0', engine_min_inclusive='0.12.0', engine_max_exclusive='0.14.0')
+                           release_version='1.0.0')
         self.config_path = self.root / 'release-config.packs.json'
         self.config_path.write_text(json.dumps(self.config))
         self.output = fixture.root / 'dist'
@@ -74,21 +74,20 @@ class GeneratedReleaseTests(unittest.TestCase):
         with patch.object(native_release.subprocess, 'check_output', side_effect=['', self.commit]):
             return native_release.build(self.root, self.config_path, self.archive, self.receipt_path, self.output)
 
-    def test_older_generator_can_package_for_newer_consumer_without_claiming_qualification(self):
-        manifest = self.build()
-        self.assertEqual(manifest['compatibility']['engine']['min_inclusive'], '0.12.0')
-        self.assertEqual(manifest['qualification']['status'], 'pending')
-        path = self.output / 'pack-release.json'
-        for version in ('0.12.0', '0.13.0'):
-            profile = baseline_fixture._profile()
-            profile['engine_version'] = version
-            result = release.select_release([path], profile, 'bifrost.public.packs', allow_unqualified=True)
-            self.assertEqual(result['release_version'], '1.0.0')
-            with self.assertRaises(release.ReleaseError):
-                release.select_release([path], profile, 'bifrost.public.packs')
-        self.assertEqual(len(manifest['artifacts']), 4)
-        for artifact in manifest['artifacts']:
-            self.assertEqual(release.digest((self.output / artifact['name']).read_bytes()), artifact['sha256'])
+    def test_legacy_native_engine_gates_block_v2_release_metadata(self):
+        with self.assertRaisesRegex(release.ReleaseError, 'engine-version gate') as caught:
+            self.build()
+        self.assertEqual(caught.exception.code, 'incompatible-schema')
+
+    def test_integrity_checker_allows_native_metadata_without_an_engine_gate(self):
+        contents = [dict(kind='semantic-model', identity='migrated.pack', dependencies=['{"toolchains":[]}'])]
+        native_release.require_version_independent_native(contents)
+
+    def test_exact_native_engine_pin_is_still_a_gate(self):
+        contents = [dict(kind='semantic-model', identity='external.java', dependencies=['{"bifrost":"=0.12.0"}'])]
+        with self.assertRaisesRegex(release.ReleaseError, 'engine-version gate') as caught:
+            native_release.require_version_independent_native(contents)
+        self.assertEqual(caught.exception.code, 'incompatible-schema')
 
     def test_source_build_attestation_is_preserved_and_verified(self):
         self.generator['binary_sha256'] = None
@@ -104,7 +103,10 @@ class GeneratedReleaseTests(unittest.TestCase):
                                              source_archive_sha256=self.generator['asset_sha256'],
                                              cargo_lock_sha256='e' * 64, rust_toolchain='1.97.1', binary_sha256='f' * 64)
         self.receipt_path.write_text(json.dumps(self.receipt))
-        self.assertEqual(self.build()['qualification']['status'], 'pending')
+        # The existing native schema retains an enforced engine range and must
+        # stop before any v2 release manifest is emitted.
+        with self.assertRaisesRegex(release.ReleaseError, 'engine-version gate'):
+            self.build()
         self.receipt['generator_build']['cargo_lock_sha256'] = '0' * 64
         self.receipt_path.write_text(json.dumps(self.receipt))
         with self.assertRaisesRegex(release.ReleaseError, 'source build'):
@@ -135,12 +137,36 @@ class GeneratedReleaseTests(unittest.TestCase):
             self.build()
 
     def test_missing_required_consumer_schema_fails_selection(self):
-        self.build()
+        archive = self.output / 'native.tar.gz'
+        self.output.mkdir(parents=True)
+        archive.write_bytes(self.archive.read_bytes())
+        schemas = release.empty_schemas()
+        schemas['semantic_model_read'] = [4]
+        schemas['release_index'] = [3]
+        contents = [dict(kind='semantic-model', identity='test.pack', path='semantic-packs/test.json',
+                         sha256='a' * 64, languages=['rust'], dependencies=[], schemas=schemas,
+                         required_capabilities=[], license='Apache-2.0')]
+        config = dict(self.config, artifact_role='native', provenance=dict(
+            engine_version='0.11.5', build_identity='test-build', source_commit='a' * 40))
+        manifest = release.make_manifest(config, self.commit, contents, archive)
+        manifest['qualification'] = dict(
+            integrity=dict(status='verified', evidence=['archive and schema checks passed']),
+            behavior=dict(status='pending', evidence=['consumer behavior remains pending']),
+        )
+        path = self.output / 'pack-release.json'
+        path.write_text(json.dumps(manifest))
+        for version in ('0.11.5', '0.13.0', '9.9.9'):
+            profile = baseline_fixture._profile()
+            profile['engine_version'] = version
+            selected = release.select_release([path], profile, 'bifrost.public.packs')
+            self.assertEqual(selected['release_version'], '1.0.0')
+        self.assertNotIn('engine', manifest['compatibility'])
+        self.assertEqual(manifest['release_dependencies'], [])
+        self.assertEqual(manifest['qualification']['behavior']['status'], 'pending')
         profile = baseline_fixture._profile()
-        profile['engine_version'] = '0.13.0'
         profile['schemas']['release_index'] = []
         with self.assertRaises(release.ReleaseError) as caught:
-            release.select_release([self.output / 'pack-release.json'], profile, 'bifrost.public.packs', allow_unqualified=True)
+            release.select_release([path], profile, 'bifrost.public.packs')
         self.assertEqual(caught.exception.code, 'incompatible-schema')
 
 

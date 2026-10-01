@@ -56,7 +56,63 @@ def rules_stage(root, source, baseline, stage):
     return lock
 
 
-from native_release import native_contents
+from native_release import native_contents, require_version_independent_native
+
+
+def verify_archive_content(archive, expected_lock=None):
+    """Verify archive members, the embedded lock and all locked content bytes."""
+    actual = archive_files(archive)
+    import tempfile
+    import content as content_module
+
+    with tempfile.TemporaryDirectory() as temporary:
+        stage = Path(temporary)
+        for name, data in actual.items():
+            target = stage / release.safe_path(name)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(data)
+        verified_lock = content_module.verify_content(stage)
+    if expected_lock is not None and verified_lock != expected_lock:
+        release.fail('integrity-error', 'archived content lock differs from the verified stage lock')
+    return verified_lock
+
+
+def verify_stage_archive(archive, stage, expected_lock=None):
+    """Check a staged archive byte-for-byte, then verify its pinned content hashes."""
+    actual = archive_files(archive)
+    expected = {}
+    for path in stage.rglob('*'):
+        if path.is_symlink():
+            release.fail('integrity-error', 'release stage contains a symlink')
+        if path.is_file():
+            expected[path.relative_to(stage).as_posix()] = path.read_bytes()
+    if actual != expected:
+        release.fail('integrity-error', 'archive members differ from the verified stage')
+    try:
+        archived_lock = json.loads(actual['content-lock.json'])
+        if expected_lock is not None and archived_lock != expected_lock:
+            release.fail('integrity-error', 'archived content lock differs from the verified stage lock')
+        for entry in archived_lock['files']:
+            data = actual[release.safe_path(entry['path'])]
+            if release.digest(data) != entry['sha256']:
+                release.fail('integrity-error', f"archived locked bytes differ: {entry['path']}")
+        aggregate = ''.join(
+            f"{entry['sha256']}  {entry['path']}\n"
+            for entry in sorted(archived_lock['files'], key=lambda entry: entry['path'])
+        )
+        if release.digest(aggregate.encode()) != archived_lock['aggregate_sha256']:
+            release.fail('integrity-error', 'archived content-lock aggregate differs')
+    except (KeyError, TypeError, ValueError) as error:
+        release.fail('integrity-error', f'archived content lock is invalid: {error}')
+
+
+def qualify_integrity(manifest, evidence):
+    manifest['qualification'] = dict(
+        integrity=dict(status='verified', evidence=evidence),
+        behavior=dict(status='pending', evidence=[
+            'Full engine and semantic-model behavior qualification remains pending.',
+        ]),
+    )
 
 
 def build(root, component, version, output, source=None, native=None):
@@ -75,20 +131,49 @@ def build(root, component, version, output, source=None, native=None):
             with tempfile.TemporaryDirectory() as directory:
                 stage = Path(directory); lock = rules_stage(root, source, baseline, stage)
                 content.build_bundle(archive, stage)
+                verify_stage_archive(archive, stage, lock)
                 contents = release.public_contents(stage, lock, 'rules')
         else:
             if native is None: release.fail('invalid-manifest', 'baseline packs require --native-archive')
             archive = output / f"bifrost.public.packs-{version}-native.tar.gz"
             contents = native_contents(native, baseline)
+            require_version_independent_native(contents)
             shutil.copyfile(native, archive); config['artifact_role'] = 'native'
+            config['provenance'] = dict(
+                engine_version=baseline['tag'].removeprefix('v'),
+                source_commit=baseline['commit'],
+            )
     else:
         archive = output / f"bifrost.public.{component}-{version}-source.tar.gz"
         content.build_bundle(archive, root, component)
-        lock, raw = release.load_json(root / 'content-lock.json')
+        full_lock, raw = release.load_json(root / 'content-lock.json')
+        prefixes = ('rules/', 'fixtures/policy/', 'licenses/') if component == 'rules' else ('semantic-packs/', 'fixtures/semantic/', 'scripts/upstream/', 'licenses/')
+        lock = dict(full_lock, files=[entry for entry in full_lock['files'] if entry['path'].startswith(prefixes)])
+        aggregate = ''.join(f"{entry['sha256']}  {entry['path']}\n" for entry in sorted(lock['files'], key=lambda entry: entry['path']))
+        lock['aggregate_sha256'] = release.digest(aggregate.encode())
         origin = dict(repository=lock['source']['repository'], commit=lock['source']['revision'], lock_sha256=release.digest(raw))
         contents = release.public_contents(root, lock, component)
+        verify_archive_content(archive, lock)
+    if config.get('baseline') and component == 'rules':
+        config['provenance'] = dict(
+            engine_version=baseline['tag'].removeprefix('v'),
+            source_commit=baseline['commit'],
+        )
     manifest = release.make_manifest(config, commit, contents, archive, origin)
-    manifest['qualification']['evidence'] = ['Exact public Bifrost baseline bytes; archive and file integrity verified. Full behavior qualification pending.']
+    if component == 'rules' and config.get('baseline'):
+        qualify_integrity(manifest, [
+            'Verified the pinned public Bifrost commit, exact 49-policy inventory, and per-file SHA-256 values.',
+            'Verified the staged content lock, aggregate hash, and written archive members against the stage.',
+        ])
+    elif component == 'rules':
+        qualify_integrity(manifest, [
+            'Verified the checked-in authoring content lock and per-file SHA-256 values.',
+            'Verified the filtered stream lock, aggregate hash, and written archive members against the selected stream.',
+        ])
+    else:
+        qualify_integrity(manifest, [
+            'Verified the pinned native archive checksum, archive inventory, SHA256SUMS, index schema version, manifest descriptors and identities, shard hashes and sizes, supported encodings, decompressed sizes, and JSON payloads.',
+        ])
     release.validate_manifest(manifest)
     (output / 'pack-release.json').write_text(json.dumps(manifest, indent=2, sort_keys=True) + '\n')
     (output / (archive.name + '.sha256')).write_text(release.digest(archive.read_bytes()) + '  ' + archive.name + '\n')

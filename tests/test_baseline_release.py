@@ -299,7 +299,10 @@ class ReleaseDependencyTests(unittest.TestCase):
             artifact_role="native" if pack_id.endswith(".packs") else "policy",
         )
         manifest = release.make_manifest(config, "b" * 40, [], archive)
-        manifest["qualification"] = {"status": "qualified", "evidence": ["fixture"]}
+        manifest["qualification"] = {
+            "integrity": {"status": "verified", "evidence": ["fixture hashes"]},
+            "behavior": {"status": "qualified", "evidence": ["fixture behavior"]},
+        }
         if dependencies:
             manifest["release_dependencies"] = list(dependencies)
         path = directory / "pack-release.json"
@@ -353,18 +356,70 @@ class ReleaseDependencyTests(unittest.TestCase):
 
         self.assertEqual(caught.exception.code, "no-compatible-release")
 
-    def test_incompatible_dependency_fails(self):
+    def test_dependency_missing_capability_fails(self):
         self._candidate(
             "bifrost.public.rules",
             "1.0.0",
             dependencies=[self._dependency("bifrost.public.packs", "1.0.0")],
         )
-        self._candidate("bifrost.public.packs", "1.0.0", minimum="0.11.6")
+        pack_path, _ = self._candidate("bifrost.public.packs", "1.0.0")
+        pack_manifest = json.loads(pack_path.read_text(encoding="utf-8"))
+        pack_manifest["compatibility"]["capabilities"]["required"] = ["missing-capability"]
+        pack_path.write_text(json.dumps(pack_manifest), encoding="utf-8")
 
         with self.assertRaises(release.ReleaseError) as caught:
             release.select_release(self.paths, _profile(), "bifrost.public.rules")
 
         self.assertEqual(caught.exception.code, "no-compatible-release")
+
+    def test_dependency_from_wrong_repository_is_rejected(self):
+        self._candidate(
+            "bifrost.public.rules",
+            "1.0.0",
+            dependencies=[{
+                "pack_id": "bifrost.public.packs",
+                "release_version": "1.0.0",
+                "repository": "https://github.com/attacker/packs",
+            }],
+        )
+        self._candidate("bifrost.public.packs", "1.0.0")
+
+        with self.assertRaises(release.ReleaseError) as caught:
+            release.resolve_release_set(self.paths, _profile(), "bifrost.public.rules")
+
+        self.assertEqual(caught.exception.code, "no-compatible-release")
+        self.assertIn("exact repository", str(caught.exception))
+
+    def test_newest_root_with_unsatisfied_dependency_falls_back(self):
+        older, _ = self._candidate("bifrost.public.rules", "1.0.0")
+        newer, _ = self._candidate(
+            "bifrost.public.rules",
+            "2.0.0",
+            dependencies=[self._dependency("bifrost.public.packs", "2.0.0")],
+        )
+        self._candidate("bifrost.public.packs", "1.0.0")
+
+        resolved = release.resolve_release_set(self.paths, _profile(), "bifrost.public.rules")
+
+        self.assertEqual(Path(resolved[0][1]), older)
+        self.assertNotEqual(Path(resolved[0][1]), newer)
+
+    def test_newest_root_with_schema_incompatible_dependency_falls_back(self):
+        older, _ = self._candidate("bifrost.public.rules", "1.0.0")
+        newer, _ = self._candidate(
+            "bifrost.public.rules",
+            "2.0.0",
+            dependencies=[self._dependency("bifrost.public.packs", "1.0.0")],
+        )
+        pack_path, _ = self._candidate("bifrost.public.packs", "1.0.0")
+        pack_manifest = json.loads(pack_path.read_text(encoding="utf-8"))
+        pack_manifest["compatibility"]["schemas"]["rql"] = [99]
+        pack_path.write_text(json.dumps(pack_manifest), encoding="utf-8")
+
+        resolved = release.resolve_release_set(self.paths, _profile(), "bifrost.public.rules")
+
+        self.assertEqual(Path(resolved[0][1]), older)
+        self.assertNotEqual(Path(resolved[0][1]), newer)
 
     def test_dependency_cycle_fails(self):
         self._candidate(

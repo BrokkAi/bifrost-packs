@@ -190,8 +190,6 @@ class StreamDiscoveryTagTests(unittest.TestCase):
             "repository": "https://github.com/test/public",
             "visibility": "public",
             "release_version": "1.2.3",
-            "engine_min_inclusive": "0.11.0",
-            "engine_max_exclusive": "0.13.0",
             "artifact_role": "source",
         }
         manifest = release.make_manifest(config, "b" * 40, [], archive)

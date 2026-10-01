@@ -16,6 +16,7 @@ class DiscoveryTests(unittest.TestCase):
             root=Path(directory); archive=root/'pack.zip';archive.write_bytes(b'bytes')
             config=dict(pack_id='test.public', repository='https://github.com/test/public', visibility='public',release_version='1.0.0', engine_min_inclusive='0.11.0',engine_max_exclusive='0.13.0',artifact_role='source')
             manifest=release.make_manifest(config,'b'*40,[],archive)
+            manifest['qualification']={'integrity':{'status':'verified','evidence':['archive hash verified']},'behavior':{'status':'limited','evidence':['only format selection was checked']}}
             row=dict(tag_name='v1.0.0',draft=False,prerelease=False,assets=[dict(id=1,name='pack-release.json'),dict(id=2,name='pack.zip')])
             def fake(args):
                 if '--paginate' in args:return json.dumps([[dict(row,draft=True)],[row]]).encode()
