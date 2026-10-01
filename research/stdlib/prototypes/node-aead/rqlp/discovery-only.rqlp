@@ -1,0 +1,23 @@
+; Discovery selector only. Callee spelling does not establish Node module or
+; declaration identity and this policy is not a qualified security rule.
+(policy
+  :schema-version 1
+  :id "research.discovery.node-aead-decipher-call-shapes"
+  :name "Node AEAD decipher call-shape discovery"
+  :message "Inspect this call shape as a Node AEAD research candidate"
+  :severity note
+  :description "Syntactic discovery only: a matching name is not proof of node:crypto identity, authenticated mode, object identity, value flow, or final-success dominance."
+  :tags ["research" "discovery-only" "javascript"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql
+          :schema-version 1
+          (language javascript
+            (union
+              (call :callee (name "createDecipheriv"))
+              (call :callee (name "update"))
+              (call :callee (name "setAuthTag"))
+              (call :callee (name "final"))
+              (call :callee (name "publish")))))))

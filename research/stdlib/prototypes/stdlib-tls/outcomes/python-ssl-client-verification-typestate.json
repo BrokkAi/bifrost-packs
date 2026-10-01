@@ -1,0 +1,356 @@
+{
+  "candidate_id": "python-ssl-client-verification-typestate",
+  "language": "python",
+  "status": "incomplete",
+  "qualification": "unqualified",
+  "scope": "bounded query/model feasibility probe on original source-only fixtures; no TLS or network operations executed",
+  "runtime_contract": "Not pinned or qualified by these probes. The candidate's CPython 3.13 API source is https://docs.python.org/3.13/library/ssl.html; local interpreter/OpenSSL identity was not used as qualification evidence.",
+  "bifrost": {
+    "binary": "bifrost 0.12.0 darwin-arm64 cached executable (identified by SHA-256)",
+    "version": "0.12.0",
+    "sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+    "repo_head": "d0fae94998081e7be2bc069edab4501943ddc927",
+    "builtin_policy_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e",
+    "build_identity_kind": "Opaque identifier printed by --build-identity; no source commit mapping is inferred."
+  },
+  "fixtures": [
+    {
+      "path": "fixtures/python_tls_core.py",
+      "sha256": "7072f8f5d0a55e35b4946fff683675f5769dbea20155fc3b43c1e88ed898f540",
+      "cases": [
+        {
+          "id": "insecure_active",
+          "lines": "6-13",
+          "expectation": "candidate",
+          "analyzer_result": "unqualified; SSLContext constructor is unmaterialized external; following property writes were represented with partial state completeness"
+        },
+        {
+          "id": "secure_active",
+          "lines": "16-20",
+          "expectation": "near-miss",
+          "analyzer_result": "unqualified; create_default_context is unmaterialized external; same-context default verification is not proven"
+        },
+        {
+          "id": "hostname_disabled_active",
+          "lines": "23-28",
+          "expectation": "candidate for missing hostname validation only",
+          "analyzer_result": "unqualified; constructor is unmaterialized external; chain validation remains an expected contract property, not a finding claim"
+        },
+        {
+          "id": "verification_disabled_but_unused",
+          "lines": "31-35",
+          "expectation": "near-miss",
+          "analyzer_result": "unqualified; unused object is visible in syntax/state rows but no protocol adjudication ran"
+        },
+        {
+          "id": "alias_mutation_active",
+          "lines": "38-45",
+          "expectation": "candidate only if context alias identity is retained",
+          "analyzer_result": "unqualified; constructor is unmaterialized external and alias mutation state is not qualified"
+        },
+        {
+          "id": "verification_disabled_but_deferred",
+          "lines": "48-55",
+          "expectation": "near-miss within this procedure",
+          "analyzer_result": "unqualified; no handshake/use occurs in this procedure; later escaped use is outside this fixture claim"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/python_context_literal.py",
+      "sha256": "2a2258e866ef7a947d1edfe2e7fe95b164c02ec62424556d9e81828b7f819bb5",
+      "expectation": "diagnostic-isolation control with injected context and scalar verification mode",
+      "analyzer_result": "12 state-event rows, property writes and reads complete; no diagnostics"
+    },
+    {
+      "path": "fixtures/python_context_ssl_constant.py",
+      "sha256": "62b59f1f708c98f6dceea5b9b7bf518c3c35f825c8108c0343000fdce7bc44c3",
+      "expectation": "same context-state shape with module-qualified ssl.CERT_NONE",
+      "analyzer_result": "12 state-event rows; property events partial and flow_state_derivation_incomplete diagnostic reproduced"
+    },
+    {
+      "path": "fixtures/python_tls.py",
+      "sha256": "52682ed95c7de4ef8427b47b1fc8d58ca5dae502e880a65f4e71a6f45fb876b2",
+      "cases": [
+        {
+          "id": "local_same_name_type",
+          "lines": "54-67",
+          "expectation": "near-miss: local same-spelling type is unrelated to ssl.SSLContext",
+          "analyzer_result": "call_binding rows identify workspace source origin and exact actual/formal mappings; dispatch remains unproven/open and selector_exact is false"
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "path": "queries/python-call-shapes.json",
+      "sha256": "4d0b7bde47409634181977271e5810eb527151ebad002e97e509ba766880b7b4",
+      "purpose": "supported structural call-site discovery; decoded names are leads only, not exact API identities"
+    },
+    {
+      "path": "queries/python-dispatch.json",
+      "sha256": "88a2b1239444b2fea62c4a1b74a6a080844b21218214bc05f7eaebd385095499",
+      "purpose": "per-call dispatch outcome and coverage"
+    },
+    {
+      "path": "queries/python-dispatch-targets.json",
+      "sha256": "e258f2399b5b36f135fdc38e5abb88e875d268905c1edce45500cf8ed4b01130",
+      "purpose": "candidate target/boundary provenance"
+    },
+    {
+      "path": "queries/python-call-bindings.json",
+      "sha256": "d3a563c1b47261523fb8cfc30833260dcad7969844b967fb5841e2e09795f25d",
+      "purpose": "formal-argument identity and coverage"
+    },
+    {
+      "path": "queries/python-state-events.json",
+      "sha256": "a7ac4363d7e882dfdc2586a3fa0588e6a1bbf0da41384a8d97ade09c71592a02",
+      "purpose": "flow-sensitive local/property event projection"
+    },
+    {
+      "path": "queries/python-flow-relations.json",
+      "sha256": "e73f4ba6dc81de85b928610c7ab55bfdc4d5dd7208bc07ecd5250e8ad34bdf7e",
+      "purpose": "reaching/dominance/same-evaluation relation diagnostic"
+    },
+    {
+      "path": "queries/python-field-writes.json",
+      "sha256": "57e468e3791a455338507ee52413330b4dc8f3e4c35e3f7979287c725e1db4e5",
+      "purpose": "exact receiver/member write projection attempt; yielded no rows"
+    }
+  ],
+  "reproduction": {
+    "workspace_layout": "Copy one source fixture to <workspace>/fixtures and its query to <workspace>/queries; invoke the exact binary with --root <workspace> --query-file queries/<name>.json. Query roots contained only the listed fixtures and query files.",
+    "query_args": [
+      "--root <python-core-workspace> --query-file queries/python-call-shapes.json",
+      "--root <python-core-workspace> --query-file queries/python-dispatch.json",
+      "--root <python-core-workspace> --query-file queries/python-dispatch-targets.json",
+      "--root <python-core-workspace> --query-file queries/python-call-bindings.json",
+      "--root <python-core-workspace> --query-file queries/python-state-events.json",
+      "--root <python-core-workspace> --query-file queries/python-flow-relations.json",
+      "--root <python-core-workspace> --query-file queries/python-field-writes.json",
+      "--root <python-full-workspace> --query-file queries/python-call-shapes.json",
+      "--root <python-full-workspace> --query-file queries/python-call-bindings.json",
+      "--root <isolation-literal> --query-file queries/state-events.json",
+      "--root <isolation-ssl-constant> --query-file queries/state-events.json"
+    ],
+    "evidence": [
+      {
+        "path": "row-schemas.json",
+        "sha256": "f8eb81bfc2f9fe4253ae50102db9970aa741277446deedab574047b631742020"
+      },
+      {
+        "path": "core-python-call-shapes.json",
+        "sha256": "07d940ec03abc30e4dd957579c3f9e1b347a806f2cb38d09aa40c618ce521c49"
+      },
+      {
+        "path": "core-python-dispatch.json",
+        "sha256": "2776ce982f368fa2451a60a3be9155db05a72fccb7dce9dc711afb577fdf6bf7"
+      },
+      {
+        "path": "core-python-dispatch-targets.json",
+        "sha256": "2277db1598de90a8da9b2cfe87633664208326153cca8b84be6fe71978585888"
+      },
+      {
+        "path": "core-python-call-bindings.json",
+        "sha256": "f66b38dabd7c8531cd8b744f73e78d0fac8b386133af8e69c8bd0cae250391ac"
+      },
+      {
+        "path": "core-python-state-events.json",
+        "sha256": "0bd6d097d26498d7cac2a5fbb1df5b034e3f10ab7ff028fd133b815f6623f167"
+      },
+      {
+        "path": "core-python-flow-relations.json",
+        "sha256": "0f652e121c7545f0e44cef51f004a9bfdb2bcf1243e2d0a6e0e0482201e0f8ec"
+      },
+      {
+        "path": "core-python-field-writes.json",
+        "sha256": "56a1525bd8eba48c1ea40eee3e3da4ff79d53cbbf501f25f3d14f38e7c6aff70"
+      },
+      {
+        "path": "full-python-call-shapes.json",
+        "sha256": "a34dda162fd515c048f342fca84d7daac80424dd4dd852980068676d81fc39fc"
+      },
+      {
+        "path": "full-python-call-bindings.json",
+        "sha256": "f3f6ba4f00f688cd074e885aea458a46d65992fcc6e1ff0115f3275e430b1365"
+      },
+      {
+        "path": "python-context-literal.json",
+        "sha256": "3d8ca743be1200a872a99a6c391ef2e0187b75688172691a9bb12535ea1d3d76"
+      },
+      {
+        "path": "python-context-ssl-constant.json",
+        "sha256": "20d18b252865f2d78028f9f951e23318d59781a2eccab829654465385f4b2fb3"
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "code": "flow_state_derivation_incomplete",
+      "impact": "incomplete",
+      "language": "python",
+      "message": "fixtures/python_tls_core.py has an incomplete flow-state derivation in generation 0 (a field access has no binding-rooted base, so it contributes no property subject); uncovered axes: [property_events, property_reaching_relation, property_dominance_relation, same_evaluation_relation]",
+      "isolation": "An injected context with verify_mode = 0 has complete property events and no diagnostic. Replacing only the scalar with ssl.CERT_NONE reproduces this diagnostic. The evidence localizes the issue to module-qualified constant member handling in this probe; it does not establish how runtime ssl.CERT_NONE should be modeled."
+    },
+    {
+      "code": "receiver_analysis_partial",
+      "impact": "incomplete",
+      "language": "python",
+      "message": "member_targets returned 9 analysis rows with unsupported provider or shape: receiver_site_without_receiver"
+    },
+    {
+      "code": "semantic_results_omitted",
+      "impact": "incomplete",
+      "language": "python",
+      "message": "field_write_value requires one precise static member target"
+    },
+    {
+      "code": "semantic_analysis_partial",
+      "impact": "incomplete",
+      "language": "python",
+      "message": "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=resolved, coverage=exhaustive, target_count=1, binding coverage=unknown)"
+    },
+    {
+      "code": "flow_state_derivation_incomplete",
+      "impact": "incomplete",
+      "language": "python",
+      "message": "fixtures/context.py has an incomplete flow-state derivation in generation 0 (a field access has no binding-rooted base, so it contributes no property subject); uncovered axes: [property_events, property_reaching_relation, property_dominance_relation, same_evaluation_relation]",
+      "isolation": "This appears only when the otherwise matching fixture uses ssl.CERT_NONE; the scalar-mode counterpart has no diagnostics."
+    }
+  ],
+  "findings": [],
+  "supported_discovery": "queries/python-call-shapes.json is the supported structural discovery query. Its decoded callee names are candidate discovery only; it does not prove imported CPython SSL identity or classify security behavior.",
+  "stop_gate": "No .rqlp policy authored. Imported SSL constructors and methods are at an unmaterialized external boundary or unresolved callee in these probes; property values using ssl.CERT_NONE produce incomplete state coverage. No rule can currently correlate exact API identity, same-context configuration, effective verify_mode/check_hostname, server_hostname, connected client role, and the consuming handshake. Alias, unused/deferred, custom verifier/pinning, and real caller-socket conditions remain unqualified.",
+  "ruby_slice": {
+    "status": "out_of_scope_for_this_probe",
+    "path": "../ruby-net-http/README.md",
+    "note": "An independent Ruby Net::HTTP investigation is maintained in its own prototype directory and is not represented by this Python result."
+  },
+  "research_input": {
+    "candidate_record_sha256": "61c3f89ae425bac2ed3625c082b709ba09cf7b5f278f1d7e803823c01f0d095b",
+    "api_reference": "https://docs.python.org/3.13/library/ssl.html",
+    "semantic_model_sha256": null,
+    "semantic_model_status": "No CPython ssl API model was loaded or proven active in this fixture workspace; imported API calls ended at an unmaterialized external boundary. No semantic-model digest is claimed.",
+    "row_schema_sha256": "f8eb81bfc2f9fe4253ae50102db9970aa741277446deedab574047b631742020"
+  },
+  "isolation": {
+    "control_fixture": "fixtures/python_context_literal.py",
+    "control_result": "12 state-event rows; all property events complete; no diagnostics",
+    "constant_fixture": "fixtures/python_context_ssl_constant.py",
+    "constant_result": "12 state-event rows; property events partial; flow_state_derivation_incomplete diagnostic",
+    "interpretation": "Only the right-hand mode expression changed from numeric 0 to ssl.CERT_NONE. This localizes the reproduced flow diagnostic to module-qualified constant-field handling in the probe, not to basic context property state tracking. It does not supply runtime model provenance for CERT_NONE.",
+    "literal_runtime_fixture_sha256": "2a2258e866ef7a947d1edfe2e7fe95b164c02ec62424556d9e81828b7f819bb5",
+    "ssl_constant_runtime_fixture_sha256": "62b59f1f708c98f6dceea5b9b7bf518c3c35f825c8108c0343000fdce7bc44c3",
+    "scratch_mapping": {
+      "literal_source": "fixtures/python_context_literal.py",
+      "literal_scratch": "fixtures/context.py",
+      "ssl_constant_source": "fixtures/python_context_ssl_constant.py",
+      "ssl_constant_scratch": "fixtures/context.py",
+      "query_source": "queries/python-state-events.json",
+      "query_scratch": "queries/state-events.json",
+      "mapping": "Each scratch file is a byte-for-byte copy of the source fixture/query named above; the isolated diagnostic therefore reports fixtures/context.py."
+    }
+  },
+  "observations": {
+    "api_dispatch": "Bare SSLContext/create_default_context constructor sites emitted resolved/exhaustive outcomes, but dispatch_targets were may_dispatch at the external boundary, with completeness=partial and target_path=bifrost-unmaterialized-external. These favorable outcome fields do not identify an exact CPython API.",
+    "api_binding": "Imported SSL API call bindings returned callee_unresolved, mapping=incomplete, coverage=unknown, selector_exact=false; no exact formal/receiver binding was established.",
+    "local_lookalike": "The same-spelling workspace class produced source-origin call-binding rows; its receiver dispatch was still open/unproven, so it remains a name-collision near miss rather than a qualified SSL target.",
+    "state_events": "The Python adapter emitted state events, but property state for the real ssl.CERT_NONE fixture was partial and its query reported incomplete property event/reaching/dominance/same-evaluation axes.",
+    "field_write_projection": "The focused field-write query returned zero rows with receiver_analysis_partial and semantic_results_omitted diagnostics.",
+    "counts": {
+      "core_call_shapes": 15,
+      "core_dispatch_outcomes": 15,
+      "core_dispatch_targets": 6,
+      "core_call_bindings": 15,
+      "core_state_events": 65,
+      "core_flow_relations": 71,
+      "core_field_write_values": 0,
+      "context_literal_state_events": 12,
+      "context_ssl_constant_state_events": 12
+    },
+    "state_event_payload": "The published state_event row fields include subject/property kind plus internal subject/value IDs but no typed member name or literal value field. The separate field-write projection produced no rows for these assignments, so the query artifacts cannot distinguish verify_mode from check_hostname or decode CERT_NONE as an exact SSL value."
+  },
+  "semantic_model_activation": {
+    "status": "not_proven_active",
+    "sha256": null,
+    "evidence": "Imported SSL calls yield target_path=bifrost-unmaterialized-external, boundary_kind=external, completeness=partial. The external call_binding rows have no model_id/pack_id/active-set provenance and report callee_unresolved with unknown mapping/coverage. No semantic model was supplied to the query workspace.",
+    "limitation": "The typeshed and semantic-pack files present in this repository were not loaded into this isolated CLI workspace; their existence is not activation evidence."
+  },
+  "execution": {
+    "completed_queries": [
+      {
+        "query": "queries/python-call-shapes.json",
+        "exit_code": 0,
+        "rows": 15,
+        "diagnostics": 0
+      },
+      {
+        "query": "queries/python-dispatch.json",
+        "exit_code": 0,
+        "rows": 15,
+        "diagnostics": 0
+      },
+      {
+        "query": "queries/python-dispatch-targets.json",
+        "exit_code": 0,
+        "rows": 6,
+        "diagnostics": 0
+      },
+      {
+        "query": "queries/python-call-bindings.json",
+        "exit_code": 0,
+        "rows": 15,
+        "diagnostics": 15
+      },
+      {
+        "query": "queries/python-state-events.json",
+        "exit_code": 0,
+        "rows": 65,
+        "diagnostics": 1
+      },
+      {
+        "query": "queries/python-flow-relations.json",
+        "exit_code": 0,
+        "rows": 71,
+        "diagnostics": 3
+      },
+      {
+        "query": "queries/python-field-writes.json",
+        "exit_code": 0,
+        "rows": 0,
+        "diagnostics": 2
+      },
+      {
+        "query": "queries/python-call-shapes.json",
+        "workspace": "python_tls.py same-name near miss",
+        "exit_code": 0,
+        "rows": 16,
+        "diagnostics": 0
+      },
+      {
+        "query": "queries/python-call-bindings.json",
+        "workspace": "python_tls.py same-name near miss",
+        "exit_code": 0,
+        "rows": 16,
+        "diagnostics": 16
+      },
+      {
+        "query": "queries/state-events.json",
+        "workspace": "scalar context isolation",
+        "exit_code": 0,
+        "rows": 12,
+        "diagnostics": 0
+      },
+      {
+        "query": "queries/state-events.json",
+        "workspace": "ssl.CERT_NONE isolation",
+        "exit_code": 0,
+        "rows": 12,
+        "diagnostics": 1
+      }
+    ],
+    "no_policy_run": true,
+    "no_finding_result_claimed": true
+  }
+}

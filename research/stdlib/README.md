@@ -14,6 +14,11 @@ positive and near-miss sketches, source links, prerequisites and stop gates.
 The [qualification queue](qualification-queue.md) groups the next investigations.
 Priority measures investigation value; it does not certify Bifrost support.
 
+The first [query-modeling wave](prototypes/README.md) records original fixtures,
+diagnostic queries and per-case outcomes for Node authenticated decryption,
+Python TLS, Rust initialization and Ruby Net::HTTP. Read the recorded capability
+gates before reusing a query; these attempts do not register production rules.
+
 ## Scope and ownership
 
 Public scope is a standard runtime's APIs: CPython stdlib, JDK modules, Node
@@ -72,6 +77,6 @@ For each accepted investigation:
    enablement remain distinct delivery steps.
 
 The catalog was reviewed against the installed Bifrost policy manifest. No taint
-or typestate candidate was evaluated through the analyzer in this research pass.
+or typestate candidate was evaluated through the analyzer in the original catalog pass.
 Repository content/native byte-integrity checks and existing unit tests protect
 the unchanged pack content; they do not qualify these hypotheses.

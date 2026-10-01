@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "languages": ["rust"],
+  "match": {
+    "kind": "call",
+    "callee": {
+      "name": {
+        "regex": "^(uninit|new|write|assume_init(_ref|_mut|_read|_drop)?)$"
+      }
+    }
+  },
+  "limit": 1000,
+  "result_detail": "full"
+}

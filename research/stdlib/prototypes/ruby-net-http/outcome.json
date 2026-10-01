@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "candidate_id": "ruby-net-http-active-peer-verification-disabled",
+  "status": "incomplete",
+  "scope": {
+    "api_contract": "CRuby 3.4.0 with shipped default gem net-http 0.6.0 and the OpenSSL bindings loaded by that runtime",
+    "required_claim": "The same declaration-backed Net::HTTP client has TLS enabled and effective VERIFY_NONE when an active HTTPS request begins.",
+    "runtime_qualification": {
+      "status": "unsupported",
+      "required": "CRuby 3.4.0, net-http 0.6.0, and exact loaded OpenSSL binding/library",
+      "observed_host": "CRuby 2.6.10p210; Ruby OpenSSL binding 2.1.2; LibreSSL 3.3.6; no loaded net-http gem spec",
+      "fixture_execution": "not run; analyzer-only inputs"
+    }
+  },
+  "analyzer": {
+    "version": "0.12.0",
+    "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+    "binary_sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "builtin_policy_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e",
+    "workspace_scope": "Temporary fixture-only workspace; the merged catalog and repository source corpus were not queried as fixture inputs.",
+    "build_identity_semantics": "Exact --build-identity output; opaque build identity, not an inferred engine source commit.",
+    "builtin_policy_packs": [
+      {
+        "id": "bifrost.code-smells",
+        "version": "2.16.0",
+        "policy_count": 30
+      },
+      {
+        "id": "bifrost.correctness",
+        "version": "0.1.0",
+        "policy_count": 1
+      },
+      {
+        "id": "bifrost.security",
+        "version": "1.3.0",
+        "policy_count": 29
+      },
+      {
+        "id": "bifrost.effects",
+        "version": "1.4.0",
+        "policy_count": 10
+      }
+    ],
+    "build_identity_kind": "opaque_tool_reported_identifier"
+  },
+  "model_attempt": {
+    "status": "incomplete",
+    "production_rule_registered": false,
+    "rqlp_authored": false,
+    "query_role": "Structural query results are discovery only; exact external API and state selectors were not established.",
+    "capability_gaps": [
+      {
+        "axis": "external API declaration identity",
+        "status": "incomplete",
+        "diagnostic": "unresolvable_import_boundary",
+        "reference": {
+          "path": "fixtures/positive-active-verify-none.rb",
+          "line": 5,
+          "column": 19,
+          "target": "Net::HTTP"
+        },
+        "detail": "Net::HTTP appears to cross an unindexed Ruby gem boundary."
+      },
+      {
+        "axis": "receiver and member identity",
+        "status": "incomplete",
+        "diagnostic": "unsupported_ruby_receiver",
+        "references": [
+          {
+            "path": "fixtures/positive-active-verify-none.rb",
+            "line": 6,
+            "column": 8,
+            "target": "use_ssl"
+          },
+          {
+            "path": "fixtures/positive-active-verify-none.rb",
+            "line": 7,
+            "column": 8,
+            "target": "verify_mode"
+          },
+          {
+            "path": "fixtures/positive-active-verify-none.rb",
+            "line": 8,
+            "column": 8,
+            "target": "start"
+          },
+          {
+            "path": "fixtures/positive-active-verify-none.rb",
+            "line": 9,
+            "column": 17,
+            "target": "get"
+          }
+        ],
+        "detail": "Ruby method receiver is unresolved; get_type_by_location reports ruby_dynamic_receiver_unsupported for the Net::HTTP.new result and the receiver expressions."
+      },
+      {
+        "axis": "call argument binding",
+        "status": "incomplete",
+        "diagnostic": "semantic_analysis_partial",
+        "query": "queries/ruby-call-bindings.json",
+        "evidence": "15 syntactic call rows; every row has selector_exact=false and bound_count=0. Dispatch coverage is open; standard Net::HTTP call rows are callee_unresolved with unknown target count."
+      },
+      {
+        "axis": "same-object property state and request correlation",
+        "status": "incomplete",
+        "diagnostic": "flow_state_axis_unsupported",
+        "query": "queries/ruby-http-state-events.json",
+        "uncovered_axes": [
+          "binding_events",
+          "reaching_relation",
+          "dominance_relation",
+          "property_reaching_relation",
+          "property_dominance_relation",
+          "same_evaluation_relation"
+        ],
+        "detail": "Only partial binding events are emitted; property writes cannot be related to the active request receiver."
+      },
+      {
+        "axis": "runtime behavior and version contract",
+        "status": "unsupported",
+        "detail": "The host runtime does not match the pinned Ruby/default-gem/OpenSSL contract. No fixture was executed."
+      }
+    ],
+    "model_activation": {
+      "candidate_specific_model_activated": false,
+      "production_rule_registered": false,
+      "operations_exercised": [
+        "CodeQuery call_bindings discovery",
+        "CodeQuery state_events_of capability probe",
+        "declaration/type navigation"
+      ],
+      "note": "These generic operations and built-in pack manifest do not constitute a Ruby Net::HTTP TLS model activation."
+    }
+  },
+  "cases": [
+    {
+      "id": "active-verify-none-positive",
+      "fixture": "fixtures/positive-active-verify-none.rb",
+      "expected": "Finding only if this same Net::HTTP client starts an HTTPS request with effective verification disabled.",
+      "status": "incomplete",
+      "evidence": [
+        "Net::HTTP declaration crosses unindexed gem boundary",
+        "setter/start/get receiver identity unresolved",
+        "property-state and same-object request relations unsupported"
+      ]
+    },
+    {
+      "id": "active-verify-peer-near-miss",
+      "fixture": "fixtures/near-active-verify-peer.rb",
+      "expected": "No finding when active client uses VERIFY_PEER.",
+      "status": "incomplete",
+      "evidence": [
+        "call discovered structurally",
+        "constant and receiver API identity not resolved",
+        "effective request-time property state unavailable"
+      ]
+    },
+    {
+      "id": "unused-configured-client-near-miss",
+      "fixture": "fixtures/near-unused-configured-client.rb",
+      "expected": "No finding when configured client is never started or used.",
+      "status": "incomplete",
+      "evidence": [
+        "constructor and setters discovered structurally",
+        "external API identity unavailable",
+        "execution/active-session proof unavailable"
+      ]
+    },
+    {
+      "id": "different-active-object-near-miss",
+      "fixture": "fixtures/near-different-http-object.rb",
+      "expected": "No finding when weak configuration belongs to a different client than the active request.",
+      "status": "incomplete",
+      "evidence": [
+        "both constructors and active request discovered structurally",
+        "receiver alias/object identity and property reaching are unavailable"
+      ]
+    },
+    {
+      "id": "local-http-lookalike-near-miss",
+      "fixture": "fixtures/near-local-lookalike.rb",
+      "expected": "Do not treat same-named local HTTP class or constants as Net::HTTP/OpenSSL API identity.",
+      "status": "incomplete",
+      "evidence": [
+        "HTTP.verify_mode accessor declaration resolves to this fixture's local HTTP class",
+        "method receiver type and request/session state remain unsupported"
+      ]
+    }
+  ],
+  "discovery_queries": [
+    {
+      "path": "queries/ruby-call-bindings.json",
+      "sha256": "48bbc6f28bd454534d4455df2bcb30e5e2ae3a33d805e45db9353509240aacc6",
+      "result_sha256": "52f0081f5be1472ef8a2a8f877d1e27de66c2d153e373077f47ea12c54ae6434",
+      "result_count": 15,
+      "status": "incomplete",
+      "selector_role": "Discovery only; call binding does not prove identity."
+    },
+    {
+      "path": "queries/ruby-property-assignment-shapes.json",
+      "sha256": "6f1c16eaf49347cce0094aa41a1b0101e62c1a96e23d99a3046cdcbd92fad23c",
+      "result_sha256": "0537f2c7dcc670f344c0109b451d008424cf8669673719ac666da11baa2a733f",
+      "result_count": 13,
+      "status": "complete",
+      "selector_role": "Assignment-shape discovery only; no receiver or external API proof."
+    },
+    {
+      "path": "queries/ruby-http-state-events.json",
+      "sha256": "0dd60cb1a7f010cfc2f307dd5885ace8a68170344b3124d254dda86b132ef781",
+      "result_sha256": "09a044be7bb6afc137fddc9af2b90f24cca6e2f50a462ef11d6ff2c93c0255d2",
+      "result_count": 5,
+      "status": "incomplete",
+      "selector_role": "Partial binding events; no property relation or same-object state proof."
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "fixtures/positive-active-verify-none.rb",
+      "sha256": "87e3ef3f205d28d6088064faf0ea6d7e116c01e5cb34493c07ab10b40c03f497"
+    },
+    {
+      "path": "fixtures/near-active-verify-peer.rb",
+      "sha256": "148b23c1f8d8778b0aea7251bbba79ea1bc9b94283558fe3a4bcc9d7ae314bce"
+    },
+    {
+      "path": "fixtures/near-unused-configured-client.rb",
+      "sha256": "c4b6cf3a7ba37509dbf01cfcb8187497c352aa9c0c44d7f24c5138835ef51046"
+    },
+    {
+      "path": "fixtures/near-different-http-object.rb",
+      "sha256": "3cdcce02f78473f81d110a80aa3fe390e74e5921f78b8c32dc56c97ff4697c8e"
+    },
+    {
+      "path": "fixtures/near-local-lookalike.rb",
+      "sha256": "426099ef8ba9ba9dc30b3d8c844b27a0ce6a83ba82036b72fa32281b23bbf7b5"
+    }
+  ],
+  "navigation_evidence": {
+    "operation": "get_declarations_by_location",
+    "command_template": "bifrost --root . --tool get_declarations_by_location --args '<references>'",
+    "result_sha256": "513bddbb69851931faa8b52e95ef0f8a0d757cb013a15d7551330adee0f04480",
+    "rows": [
+      {
+        "path": "fixtures/positive-active-verify-none.rb",
+        "line": 5,
+        "column": 19,
+        "status": "unresolvable_import_boundary",
+        "target": "Net::HTTP"
+      },
+      {
+        "path": "fixtures/positive-active-verify-none.rb",
+        "line": 6,
+        "column": 8,
+        "status": "no_declaration",
+        "diagnostic": "unsupported_ruby_receiver",
+        "target": "use_ssl"
+      },
+      {
+        "path": "fixtures/positive-active-verify-none.rb",
+        "line": 7,
+        "column": 8,
+        "status": "no_declaration",
+        "diagnostic": "unsupported_ruby_receiver",
+        "target": "verify_mode"
+      },
+      {
+        "path": "fixtures/positive-active-verify-none.rb",
+        "line": 8,
+        "column": 8,
+        "status": "no_declaration",
+        "diagnostic": "unsupported_ruby_receiver",
+        "target": "start"
+      },
+      {
+        "path": "fixtures/positive-active-verify-none.rb",
+        "line": 9,
+        "column": 17,
+        "status": "no_declaration",
+        "diagnostic": "unsupported_ruby_receiver",
+        "target": "get"
+      },
+      {
+        "path": "fixtures/near-local-lookalike.rb",
+        "line": 23,
+        "column": 8,
+        "status": "resolved",
+        "target": "verify_mode",
+        "definition": "HTTP.verify_mode at line 4"
+      }
+    ],
+    "get_definitions_by_location_result_sha256": "f2da326838df8302dc33f5083ae804ca84bc9cf77ca17a3fc089d070aa292ae9",
+    "get_type_by_location_result_sha256": "8e433edccebd8e380c2a5de971549c64a1a73394fdde2e8bab1385f4c0527ed1",
+    "type_diagnostic": "ruby_dynamic_receiver_unsupported"
+  },
+  "catalog_context": {
+    "path": "research/stdlib/candidates.json",
+    "sha256": "1ce609b0e358b9b34db7772edf526cde6db965be682ea1abc51312a20441be5d",
+    "used_as": "Read-only candidate contract; not part of the fixture CLI input workspace."
+  },
+  "reproduction": {
+    "directory_layout": "Copy fixtures/*.rb and queries/*.json from this directory into a temporary workspace with the same relative paths.",
+    "binary": "Bifrost 0.12.0 with SHA-256 168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "commands": [
+      [
+        "bifrost",
+        "--root",
+        ".",
+        "--query-file",
+        "queries/ruby-call-bindings.json"
+      ],
+      [
+        "bifrost",
+        "--root",
+        ".",
+        "--query-file",
+        "queries/ruby-property-assignment-shapes.json"
+      ],
+      [
+        "bifrost",
+        "--root",
+        ".",
+        "--query-file",
+        "queries/ruby-http-state-events.json"
+      ],
+      [
+        "bifrost",
+        "--root",
+        ".",
+        "--tool",
+        "get_declarations_by_location",
+        "--args",
+        "{\"references\":[{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":5,\"column\":10},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":5,\"column\":19},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":6,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":7,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":8,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":9,\"column\":17},{\"path\":\"fixtures/near-local-lookalike.rb\",\"line\":23,\"column\":8}]}"
+      ],
+      [
+        "bifrost",
+        "--root",
+        ".",
+        "--tool",
+        "get_definitions_by_location",
+        "--args",
+        "{\"references\":[{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":5,\"column\":10},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":5,\"column\":19},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":6,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":7,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":8,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":9,\"column\":17},{\"path\":\"fixtures/near-local-lookalike.rb\",\"line\":23,\"column\":8}]}"
+      ],
+      [
+        "bifrost",
+        "--root",
+        ".",
+        "--tool",
+        "get_type_by_location",
+        "--args",
+        "{\"references\":[{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":5,\"column\":10},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":5,\"column\":19},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":6,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":7,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":8,\"column\":8},{\"path\":\"fixtures/positive-active-verify-none.rb\",\"line\":9,\"column\":17},{\"path\":\"fixtures/near-local-lookalike.rb\",\"line\":23,\"column\":8}]}"
+      ]
+    ],
+    "exact_invocations_and_raw_reports": "Retained in task-local temporary evidence storage; not copied into the public artifact."
+  },
+  "model_activation": {
+    "status": "not_proven",
+    "model_supplied": false,
+    "candidate_specific_model_active_for_fixture_workspace": false,
+    "semantic_model_hash": null,
+    "scope": "This is an observation about the exact fixture-only CLI workspace and invocation, not a universal absence claim.",
+    "evidence": "Generic call-binding, state-event, and navigation operations ran, but no Ruby Net::HTTP TLS model was supplied or demonstrated active."
+  }
+}

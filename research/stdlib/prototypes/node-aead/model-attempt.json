@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "candidate_id": "node-crypto-authenticated-decipher-finalization",
+  "attempt_kind": "external-model-requirements",
+  "model_id": null,
+  "model_hash": null,
+  "status": "incomplete",
+  "qualification_status": "unqualified",
+  "scope": "Bifrost 0.12.0 on the recorded Node v26.7.0 source-only workspace and observed activation state; this does not claim a global engine limitation.",
+  "observed_node_pack_activation": {
+    "id": "bifrost.node-runtime-values-javascript",
+    "version": "0.1.0",
+    "status": "incompatible",
+    "reason": "The active policy run had no activation evidence for pkg:generic/nodejs.org/node@22.11.0; the discovered shard also requires profile configuration 70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056 and artifact sha256 24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222. The tested runtime is Node v26.7.0. This runtime-values candidate does not establish crypto declaration coverage."
+  },
+  "required_declarations": [
+    "node:crypto.createDecipheriv(algorithm, key, iv, options)",
+    "Decipheriv.update(data, inputEncoding, outputEncoding)",
+    "Decipheriv.setAuthTag(buffer, encoding)",
+    "Decipheriv.final(outputEncoding)"
+  ],
+  "optional_declarations_not_exercised": [
+    "Decipheriv.setAAD(buffer, options)"
+  ],
+  "required_relations": [
+    "Resolved import/export identity from node:crypto to the exact createDecipheriv declaration",
+    "Return value of createDecipheriv is the receiver object for setAAD, setAuthTag, update, and final",
+    "Return value of update is provisional plaintext tied to that same receiver",
+    "final normal-return and exceptional-return are distinct events on that receiver",
+    "An effect consuming the update result before the same receiver's successful final is a finding",
+    "Private staging followed by same-receiver successful final before effect is not a finding",
+    "Authenticated algorithm mode is distinguished from non-AEAD modes"
+  ],
+  "gap": "In the tested activation, no exact Node crypto declaration summary was available. The resolver produced an unmaterialized external candidate for createDecipheriv and incomplete call bindings; name selectors can discover fixtures but cannot support policy classification. Same-object update/final correlation and final-success dominance were not independently assessed beyond this identity gate.",
+  "sources": [
+    "https://nodejs.org/download/release/v26.7.0/docs/api/crypto.html",
+    "https://github.com/nodejs/node/tree/v26.7.0/lib"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1",
+  "languages": ["ruby"],
+  "match": {
+    "kind": "function",
+    "name": "request_without_peer_verification"
+  },
+  "steps": [
+    { "op": "procedure_of" },
+    { "op": "state_events_of" }
+  ],
+  "limit": 1000,
+  "result_detail": "full"
+}
