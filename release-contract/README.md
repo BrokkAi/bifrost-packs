@@ -1,84 +1,86 @@
-# Shared pack release contract v1
+# Shared pack release contract v2
 
-This directory is the canonical contract for public and private pack repositories.
-Premium packaging fetches these files at a full public commit and verifies their
-SHA-256 hashes; it does not maintain a second divergent schema.
+This directory defines the release metadata and selection contract shared by
+public and private pack repositories. Schema 2 is the current contract for new
+releases. Schema 1 remains available for immutable historical manifests.
 
-Every GitHub pack release contains `pack-release.json`, a source or runtime
-archive, and archive checksum sidecars. Archive names are
-`<pack-id>-<independent-semver>-<role>.<format>` (for example
-`bifrost.public-0.1.0-source.tar.gz`). Public source archives include content-lock.json;
-premium policy archives retain policy-bundle.json. Native index.json schema 3 is
-separate from release metadata schema 1. Older legacy releases without metadata
-are invalid for this contract and need explicit historical pinning, not silent
-fallback. Releases are not published by this task.
+## Compatibility and qualification
 
-The manifest records the pack repository's immutable source commit, independent
-release version, origin lock where relevant, artifact SHA-256/size/role, stable
-policy/model identities, authored/resolved policy hashes, language/dependency
-metadata, schema requirements, capability contract and qualification evidence.
-Schema axes include policy document, RQL, built-in catalog, premium policy bundle,
-native semantic read/write, authoring spec, native release index, and runtime.
-Empty schema arrays mean that axis is not required by this artifact. A release
-version or engine version does not substitute for these requirements.
+Schema 2 compatibility declares required schema versions and semantic
+capabilities. The schema axes are policy document, RQL, built-in catalog,
+premium policy bundle, semantic-model read/write, semantic spec, release index,
+and runtime. Each release declares only the axes its included content actually
+uses; an empty axis means no requirement. The selector checks those declarations
+against the consumer profile and checks each content item's requirements against
+the release aggregate. It also resolves exact release dependencies by pack ID,
+release version, and repository. Engine-version bounds are not part of schema 2
+compatibility.
 
-Engine profiles must provide engine version, exact build identity, model-set
-SHA-256, capability contract version 1, supported schema sets and capability set.
-Bifrost does not yet advertise this profile; trusted integration tooling must
-supply it. Do not invent capabilities from an engine version. Pending source
-archives are reviewable only with `--allow-unqualified`; default scan selection
-requires qualified policy/native artifacts. Compatibility is not proof of complete
-coverage or clean findings.
+Qualification keeps byte integrity separate from behavior:
 
-`release.py select` reads local manifests, validates all candidates, filters engine
-range, schemas, required capabilities, stable/prerelease channel and qualification,
-then selects highest SemVer. Exact `--version` and/or `--commit` pins narrow it.
-Equal-precedence conflicting identities fail. All selected artifact bytes are
-verified before writing the scan receipt. The receipt retains engine profile,
-release version, source commit, manifest hash and artifact hashes; resolve once
-before a scan and retain that receipt throughout it.
+- `integrity.status` is `pending`, `verified`, or `failed`.
+- `behavior.status` is `pending`, `limited`, `qualified`, or `failed`.
 
-```sh
-python3 release-contract/release.py select --pack-id bifrost.public.rules \
-  --engine-profile /path/to/engine-profile.json --channel stable \
-  --cache-dir /path/to/cache --receipt /path/to/scan-pack-receipt.json \
-  /path/to/cached/pack-release.json
-```
+Default schema 2 selection requires verified integrity and behavior that has not
+failed. Pending or limited behavior does not make a format-incompatible release
+compatible, and compatible formats do not prove full behavior or completeness.
+`--allow-unqualified` permits pending integrity for reproduction; it never
+permits failed integrity or failed behavior. It does not change schema,
+capability, channel, pin, or dependency checks. Preserve partial completeness
+and typed incomplete outcomes in any scan result.
 
-`discover.py` explicitly enumerates **all** GitHub release pages rather than using
-GitHub's latest pointer. It verifies repository, channel, annotated/lightweight tag
-commit and manifest identity, selects before downloading artifacts, verifies
-hashes and saves a cache. Private online discovery requires authenticated `gh`
-access; tokens are never included in receipts. `--offline` uses cached candidates
-and hash-addressed artifacts with no API/auth requirement. Refresh is explicit.
+Optional provenance may record engine version, build identity, and source
+commit. `provenance.testing` records measured test engine identities separately
+from generation/origin provenance, retaining original source commits. Those
+fields document how evidence was collected; engine version never
+gates schema 2 acceptance and must not be used to invent missing capabilities.
 
-```sh
-python3 release-contract/discover.py --repository BrokkAi/bifrost-packs \
-  --visibility public --pack-id bifrost.public --engine-profile engine-profile.json \
-  --cache-dir /path/to/cache --receipt scan-pack-receipt.json
-```
+Schema 1 releases retain their original single qualification field and exact
+engine-range behavior. Keep their manifests and interpretations unchanged; do
+not convert them to schema 2 or infer new evidence for them.
 
-Typed errors are `no-compatible-release`, `invalid-manifest`,
-`unsupported-manifest-schema`, `incompatible-schema`,
-`unavailable-credentials/network`, and `integrity-error`. None means an empty or
-clean policy set. Cache/manifest integrity is not authentication against an attacker
-with cache write access: use trusted repository and cache boundaries. Publication
-must verify clean source, tag-to-commit binding, independent release version,
-qualified evidence and artifact hashes. Future v0.13 consumer integration remains
-in `docs/v013-transition.md`.
+## Artifacts and selection
 
-The public component workflow stages on manual dispatch and publishes only
-on explicit `rules/vX.Y.Z` or `packs/vX.Y.Z` tags. See
-[release streams](../docs/release-streams.md) for the pinned initial Bifrost
-release baseline and dependency resolution. Premium retains its qualified policy ZIP workflow
-and stages the same metadata convention. Initial public stream releases are published explicitly after green CI.
-Merge public PR first, then premium PR; the premium contract uses an immutable
-public commit and hashes. Later contract changes require an explicit premium pin
-update and renewed tests. Engine cutover and native release qualification remain
-separate.
+Each GitHub release contains `pack-release.json`, its source, native, or policy
+artifact, and SHA-256 sidecars. Archive names use
+`<pack-id>-<independent-semver>-<role>.<format>`. Public source archives include
+`content-lock.json`; premium policy archives retain `policy-bundle.json`.
+Native `index.json` and model schemas remain separate from release metadata.
+Source archives are review and reproduction inputs; they are not native
+installable bundles.
 
-Native generation uses `native_generation.py` and `native_release.py` in either
-public or private repositories. Generator version/build/checksums are independent
-from release compatibility. The generation receipt and both original measurement
-records are indexed as checksum-verified sidecar artifacts; they do not qualify
-consumer behavior. `bifrost.premium.packs` uses `packs/vX.Y.Z` tags.
+Selection validates every candidate, checks the declared schemas and actual
+required capabilities, applies channel and exact pins, and resolves exact
+dependencies before selecting the newest eligible release. It verifies all
+selected artifact bytes before writing a receipt containing the exact release,
+source commit, manifest hash, dependency identities, and artifact hashes. Resolve
+once per scan and retain that receipt throughout the scan. An empty finding set
+under incomplete coverage is not a clean result.
+
+`discover.py` enumerates GitHub release pages rather than relying on GitHub's
+latest pointer. It checks repository, tag-to-commit binding, manifest identity,
+and artifact hashes. Online private discovery needs authenticated `gh` access.
+Offline selection uses cached manifests and hash-addressed artifacts. Refresh is
+explicit.
+
+For the premium repository, pin one immutable public commit and verify hashes for
+the schema 2 `manifest.schema.json`, the legacy `manifest.v1.schema.json`, and
+the shared reader/selector and discovery code from that same commit. Keep the
+full commit and hashes in the premium repository's `release-config.json`; never
+fetch a moving branch or maintain an independently edited schema copy. A contract update requires an
+explicit pin and renewed validation.
+
+The new public streams described in [release streams](../docs/release-streams.md)
+are intended artifacts, not evidence of publication. Native release publication
+also depends on the native schema/runtime accepting the generated content without
+an engine-version gate; see [generation](../docs/generation.md) and the
+[v0.13 transition](../docs/v013-transition.md).
+
+New publication also runs `publication.py` against the actual archive bytes and
+verified exact dependency manifests. Current native packs fail with
+`incompatible-schema` because inner `compatibility.bifrost` declarations remain
+runtime gates; see [the recorded reproduction](../docs/native-publication-blocker.json).
+Manual and pull-request native workflows stage raw generation evidence without
+creating a selectable release manifest. Rules smoke runs attach checksum-indexed
+inputs, raw reports and executable identity with `behavior.status = limited`;
+release notes are generated from the manifest's actual requirements.

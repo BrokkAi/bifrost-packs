@@ -3,13 +3,9 @@
   "pack_id": "bifrost.public.packs",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.1.0",
-  "engine_min_inclusive": "0.11.5",
-  "engine_max_exclusive": "0.11.6",
-  "qualification": "pending",
+  "release_version": "0.2.0",
   "artifact_role": "source",
-  "future_default_engine_version": "0.13.0",
-  "notes": "Initial stream matches public Bifrost v0.11.5. Structural integrity and focused smoke are separate from full behavioral qualification.",
+  "notes": "Intended 0.2.0 stream generates native packs from pinned public tooling. The baseline builder remains available for verified historical inputs; all v2 native indexing is blocked while payloads retain engine-version gates.",
   "component": "packs",
   "baseline": "release-baseline.json"
 }

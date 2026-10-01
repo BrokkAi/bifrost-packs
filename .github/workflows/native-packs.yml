@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Independent pack release version (stages only)
+        description: Independent pack release version (raw generation evidence only until native migration)
         required: true
         default: '0.2.0'
   pull_request:
@@ -85,6 +85,7 @@ jobs:
             --config native-generation.json --binary "$BIFROST_SEMANTIC_PACK_BIN" \
             --build-receipt "$RUNNER_TEMP/generator-cache/build.json" --output "$RUNNER_TEMP/native"
       - name: Index generated packs with independent compatibility requirements
+        if: ${{ startsWith(github.ref, 'refs/tags/packs/') }}
         env:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
@@ -99,10 +100,19 @@ jobs:
             --archive "$RUNNER_TEMP/native/native.tar.gz" \
             --receipt "$RUNNER_TEMP/native/generation.json" --output "$RUNNER_TEMP/dist"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        if: ${{ startsWith(github.ref, 'refs/tags/packs/') }}
         with:
           name: generated-native-packs-${{ github.sha }}
           path: |
             ${{ runner.temp }}/dist/*
+          if-no-files-found: error
+          retention-days: 30
+      - name: Stage raw generation evidence while native runtime migration is pending
+        if: ${{ !startsWith(github.ref, 'refs/tags/packs/') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: native-generation-evidence-${{ github.sha }}
+          path: ${{ runner.temp }}/native/**
           if-no-files-found: error
           retention-days: 30
   publish:
@@ -112,19 +122,28 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
         with:
           name: generated-native-packs-${{ github.sha }}
           path: dist
+      - name: Check version-independent native publication
+        run: python3 -B release-contract/publication.py --manifest dist/pack-release.json --directory dist
       - name: Publish generated native packs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md
           cd dist
           sha256sum -c *.sha256
           flags=()
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
           gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 *.json \
             --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
-            --notes "Independently generated packs from $GITHUB_SHA. Generator provenance and unchanged measurements included. Native content reproducibility verified; full consumer behavior qualification remains pending."
+            --notes-file release-notes.md

@@ -3,18 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.1.0",
-  "engine_min_inclusive": "0.11.5",
-  "engine_max_exclusive": "0.11.6",
-  "qualification": "pending",
+  "release_version": "0.1.1",
   "artifact_role": "source",
-  "future_default_engine_version": "0.13.0",
-  "notes": "Initial stream matches public Bifrost v0.11.5. Structural integrity and focused smoke are separate from full behavioral qualification.",
+  "notes": "This stream retains the exact 49 public Bifrost v0.11.5 policies. Behavioral qualification is separate from verified source and archive integrity.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.1.0",
+      "release_version": "0.2.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ],

@@ -1,0 +1,91 @@
+{
+  "status": "blocked-native-format-runtime-migration",
+  "evidence_source": "Prior terminal successful public generation run; diagnostic evidence, not a new release or fresh candidate qualification",
+  "generation_run": "https://github.com/BrokkAi/bifrost-packs/actions/runs/36729915450",
+  "source_commit": "97374bacf203cba1c1c28f5f9da4884f061864e2",
+  "generator": {
+    "asset": "source.tar.gz",
+    "asset_sha256": "f493b9f994aaaf46525dd4e05c22e0cf95917245fea2d942f39125d633411c0b",
+    "binary_sha256": null,
+    "build": {
+      "cargo_lock_sha256": "a41ee93d487631314353cba4ab8d20a6d2546d9469ff5aaad4b33d1889f15590",
+      "rust_toolchain": "1.97.1"
+    },
+    "commit": "62fc36c09ddb96746e716c1c3456a99957521d91",
+    "repository": "https://github.com/BrokkAi/bifrost",
+    "version": "0.12.0"
+  },
+  "artifact_sha256": "db984ad8e30679dd1d17d5e6db1c5fa047d3f76dd641a0d95c790c749e566121",
+  "native_schemas": [
+    2,
+    5
+  ],
+  "release_index_schema": 3,
+  "inner_constraints": [
+    {
+      "pack_id": "bifrost.jdk",
+      "content_version": "21.0.8",
+      "schema_version": 5,
+      "engine_requirement": ">=0.8.18, <1.0.0",
+      "completeness": "partial"
+    },
+    {
+      "pack_id": "bifrost.kotlin-stdlib",
+      "content_version": "2.2.20",
+      "schema_version": 5,
+      "engine_requirement": ">=0.8.19, <1.0.0",
+      "completeness": "partial"
+    },
+    {
+      "pack_id": "bifrost.python-stdlib",
+      "content_version": "2026.9.14",
+      "schema_version": 5,
+      "engine_requirement": ">=0.8.24, <1.0.0",
+      "completeness": "complete"
+    },
+    {
+      "pack_id": "bifrost.python-stdlib-assertions",
+      "content_version": "2026.9.7",
+      "schema_version": 2,
+      "engine_requirement": ">=0.8.24, <1.0.0",
+      "completeness": "complete"
+    },
+    {
+      "pack_id": "bifrost.rust-stdlib",
+      "content_version": "1.100.0-nightly",
+      "schema_version": 5,
+      "engine_requirement": ">=0.10.5, <1.0.0",
+      "completeness": "partial"
+    },
+    {
+      "pack_id": "bifrost.scala-library",
+      "content_version": "2.13.16",
+      "schema_version": 5,
+      "engine_requirement": ">=0.8.18, <1.0.0",
+      "completeness": "complete"
+    },
+    {
+      "pack_id": "bifrost.typescript-stdlib",
+      "content_version": "7.0.2",
+      "schema_version": 5,
+      "engine_requirement": ">=0.10.5, <1.0.0",
+      "completeness": "complete"
+    },
+    {
+      "pack_id": "bifrost.external.java",
+      "content_version": "0.12.0",
+      "schema_version": 5,
+      "engine_requirement": "=0.12.0",
+      "completeness": "partial"
+    }
+  ],
+  "public_engine_gate_locations": {
+    "commit": "62fc36c09ddb96746e716c1c3456a99957521d91",
+    "model": "crates/bifrost-analysis/src/analyzer/semantic_model/model.rs:1172",
+    "catalog": [
+      "crates/bifrost-analysis/src/analyzer/semantic_model/catalog/mod.rs:5210",
+      "crates/bifrost-analysis/src/analyzer/semantic_model/catalog/mod.rs:5318"
+    ],
+    "activation": "crates/bifrost-analysis/src/analyzer/semantic_model/runtime.rs:3290"
+  }
+}

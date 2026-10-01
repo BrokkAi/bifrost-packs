@@ -8,7 +8,7 @@ on:
         required: true
       version:
         type: string
-        default: '0.1.0'
+        default: '0.1.1'
         required: true
   push:
     tags:
@@ -88,7 +88,8 @@ jobs:
           tar -xzf "$RUNNER_TEMP"/dist/bifrost.public.rules-*-source.tar.gz -C "$RUNNER_TEMP/rules"
           binary=$(find "$RUNNER_TEMP/engine" -type f -name bifrost)
           python3 -B scripts/smoke.py --binary "$binary" --root "$RUNNER_TEMP/rules" --output "$RUNNER_TEMP/smoke"
-          cp "$RUNNER_TEMP/smoke/smoke.json" "$RUNNER_TEMP/dist/smoke.json"
+          python3 -B release-contract/attach_smoke.py --manifest "$RUNNER_TEMP/dist/pack-release.json" \
+            --evidence "$RUNNER_TEMP/smoke" --output "$RUNNER_TEMP/dist"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: component-release-${{ github.sha }}
@@ -101,21 +102,46 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
         with:
           name: component-release-${{ github.sha }}
           path: dist
+      - name: Verify exact published dependency and publication integrity
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          dependency_version=$(jq -r '.release_dependencies[0].release_version' dist/pack-release.json)
+          mkdir "$RUNNER_TEMP/dependency"
+          gh release download "packs/v$dependency_version" --repo "$GITHUB_REPOSITORY" \
+            --pattern pack-release.json --dir "$RUNNER_TEMP/dependency"
+          while IFS= read -r asset; do
+            gh release download "packs/v$dependency_version" --repo "$GITHUB_REPOSITORY" \
+              --pattern "$asset" --dir "$RUNNER_TEMP/dependency"
+          done < <(jq -r '.artifacts[].name' "$RUNNER_TEMP/dependency/pack-release.json")
+          python3 -B release-contract/publication.py --manifest "$RUNNER_TEMP/dependency/pack-release.json" \
+            --directory "$RUNNER_TEMP/dependency"
+          dependency_commit=$(jq -r .source.commit "$RUNNER_TEMP/dependency/pack-release.json")
+          test "$(git rev-parse "packs/v${dependency_version}^{commit}")" = "$dependency_commit"
+          python3 -B release-contract/publication.py --manifest dist/pack-release.json --directory dist \
+            --dependency-manifest "$RUNNER_TEMP/dependency/pack-release.json"
       - name: Publish tagged component release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md
           cd dist
           sha256sum -c *.sha256
           flags=()
-          evidence=()
-          if [[ -f smoke.json ]]; then evidence+=(smoke.json); fi
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
-          gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 pack-release.json "${evidence[@]}" \
+          gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 *.json *.txt *.rqlp *.py \
             --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
-            --notes "Independent component release from $GITHUB_SHA. Initial content matches public Bifrost v0.11.5; stable pack identities and versions retained. Full behavioral qualification pending. Rules source artifacts require explicit consumer support; packs use the unchanged upstream native bundle."
+            --notes-file release-notes.md

@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 SCHEMA_PATH = Path(__file__).with_name('manifest.schema.json')
+V1_SCHEMA_PATH = Path(__file__).with_name('manifest.v1.schema.json')
 SCHEMA_KEYS = ('policy_document', 'rql', 'builtin_catalog', 'policy_bundle', 'semantic_model_read', 'semantic_model_write', 'semantic_spec', 'release_index', 'runtime')
 ERROR_EXIT = {'no-compatible-release': 2, 'invalid-manifest': 3, 'unsupported-manifest-schema': 4, 'incompatible-schema': 5, 'unavailable-credentials/network': 6, 'integrity-error': 7}
 
@@ -25,6 +26,17 @@ def fail(code, message):
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def _schema_for_version(version):
+    if version == 1:
+        path = V1_SCHEMA_PATH
+    elif version == 2:
+        path = SCHEMA_PATH
+    else:
+        fail('unsupported-manifest-schema', f'unsupported release manifest schema version: {version!r}')
+    schema, _ = load_json(path)
+    return schema
 
 
 def load_json(path):
@@ -112,15 +124,19 @@ def safe_path(value):
 def validate_manifest(manifest):
     if not isinstance(manifest, dict):
         fail('invalid-manifest', 'manifest must be an object')
-    if manifest.get('manifest_schema_version') != 1:
-        fail('unsupported-manifest-schema', 'only release manifest schema 1 is supported')
-    schema, _ = load_json(SCHEMA_PATH)
+    schema_version = manifest.get('manifest_schema_version')
+    if type(schema_version) is not int:
+        fail('unsupported-manifest-schema', f'unsupported release manifest schema version: {schema_version!r}')
+    schema = _schema_for_version(schema_version)
     _validate(manifest, schema, schema)
     if manifest['source']['repository'] != manifest['pack']['repository'] or manifest['source']['dirty']:
         fail('invalid-manifest', 'release source must be the clean pack repository commit')
-    engine = manifest['compatibility']['engine']
-    if semver(engine['min_inclusive']) >= semver(engine['max_exclusive']):
-        fail('invalid-manifest', 'engine range is empty')
+    if schema_version == 1:
+        engine = manifest['compatibility']['engine']
+        if semver(engine['min_inclusive']) >= semver(engine['max_exclusive']):
+            fail('invalid-manifest', 'engine range is empty')
+    if 'provenance' in manifest and 'engine_version' in manifest['provenance']:
+        semver(manifest['provenance']['engine_version'])
     required_caps = set(manifest['compatibility']['capabilities']['required'])
     declared_schemas = manifest['compatibility']['schemas']
     seen = set()
@@ -142,8 +158,25 @@ def validate_manifest(manifest):
         names.append(artifact['name'])
     if len(set(names)) != len(names):
         fail('invalid-manifest', 'duplicate artifact filename')
-    if manifest['qualification']['status'] == 'qualified' and not manifest['qualification']['evidence']:
+    if schema_version == 1 and manifest['qualification']['status'] == 'qualified' and not manifest['qualification']['evidence']:
         fail('invalid-manifest', 'qualified content requires evidence')
+    if schema_version == 2:
+        dependencies = manifest['release_dependencies']
+        identities = set()
+        versions_by_repository = {}
+        for dependency in dependencies:
+            identity = (dependency['pack_id'], dependency['release_version'], dependency['repository'])
+            if identity in identities:
+                fail('invalid-manifest', 'duplicate exact release dependency')
+            identities.add(identity)
+            key = (dependency['pack_id'], dependency['repository'])
+            if key in versions_by_repository and versions_by_repository[key] != dependency['release_version']:
+                fail('invalid-manifest', f'conflicting exact release dependencies for {dependency["pack_id"]} from {dependency["repository"]}')
+            versions_by_repository[key] = dependency['release_version']
+        for axis in ('integrity', 'behavior'):
+            state = manifest['qualification'][axis]
+            if state['status'] != 'pending' and not any(evidence.strip() for evidence in state['evidence']):
+                fail('invalid-manifest', f'{axis} qualification status {state["status"]} requires meaningful evidence')
     return manifest
 
 
@@ -162,7 +195,18 @@ def validate_profile(profile):
     return profile
 
 
-def resolve_candidate(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False):
+def verify_artifact(artifact, path):
+    path = Path(path)
+    if path.is_symlink() or not path.is_file():
+        fail('unavailable-credentials/network', f'artifact not available in verified cache: {artifact["name"]}')
+    raw = path.read_bytes()
+    if len(raw) != artifact['size_bytes'] or digest(raw) != artifact['sha256']:
+        fail('integrity-error', f'artifact hash/size mismatch: {artifact["name"]}')
+    return artifact
+
+
+def _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, repository=None):
+    """Return compatible candidates newest first; dependencies may reject a root candidate."""
     validate_profile(profile)
     if channel not in ('stable', 'prerelease'):
         fail('invalid-manifest', 'channel must be stable or prerelease')
@@ -172,11 +216,13 @@ def resolve_candidate(paths, profile, pack_id, channel='stable', version=None, c
         fail('invalid-manifest', 'commit pin must be a full SHA')
     eligible = []
     identities = {}
-    schema_blocked = False
+    blocked = {'engine': False, 'schemas': [], 'capabilities': [], 'capability_contract': None, 'qualification': False}
     for path in paths:
         manifest, raw = load_json(path)
         validate_manifest(manifest)
         if manifest['pack']['id'] != pack_id:
+            continue
+        if repository is not None and manifest['pack']['repository'] != repository:
             continue
         current_version = manifest['release_version']
         if version and current_version != version or commit and manifest['source']['commit'] != commit:
@@ -188,46 +234,97 @@ def resolve_candidate(paths, profile, pack_id, channel='stable', version=None, c
             fail('invalid-manifest', 'ambiguous release versions with equal SemVer precedence')
         identities[key] = digest(raw)
         compatibility = manifest['compatibility']
-        bounds = compatibility['engine']
-        if not semver(bounds['min_inclusive']) <= semver(profile['engine_version']) < semver(bounds['max_exclusive']):
-            continue
+        if manifest['manifest_schema_version'] == 1:
+            bounds = compatibility['engine']
+            if not semver(bounds['min_inclusive']) <= semver(profile['engine_version']) < semver(bounds['max_exclusive']):
+                blocked['engine'] = True
+                continue
         caps = compatibility['capabilities']
-        if caps['contract_version'] != profile['capability_contract_version'] or not set(caps['required']) <= set(profile['capabilities']):
+        missing_capabilities = sorted(set(caps['required']) - set(profile['capabilities']))
+        if caps['contract_version'] != profile['capability_contract_version'] or missing_capabilities:
+            blocked['capabilities'].extend(missing_capabilities)
+            if caps['contract_version'] != profile['capability_contract_version']:
+                blocked['capability_contract'] = (caps['contract_version'], profile['capability_contract_version'])
             continue
-        if any(not set(values) <= set(profile['schemas'][axis]) for axis, values in compatibility['schemas'].items()):
-            schema_blocked = True
+        missing_schemas = [
+            f'{axis}={value}'
+            for axis, values in compatibility['schemas'].items()
+            for value in sorted(set(values) - set(profile['schemas'][axis]))
+        ]
+        if missing_schemas:
+            blocked['schemas'].extend(missing_schemas)
             continue
-        if not allow_unqualified and (manifest['qualification']['status'] != 'qualified' or not any(a['role'] in ('native', 'policy') for a in manifest['artifacts'])):
-            continue
+        qualification = manifest['qualification']
+        if manifest['manifest_schema_version'] == 1:
+            qualified = qualification['status'] == 'qualified' and any(a['role'] in ('native', 'policy') for a in manifest['artifacts'])
+            if not allow_unqualified and not qualified:
+                blocked['qualification'] = True
+                continue
+        else:
+            integrity = qualification['integrity']['status']
+            behavior = qualification['behavior']['status']
+            if integrity == 'failed' or behavior == 'failed' or (integrity != 'verified' and not allow_unqualified):
+                blocked['qualification'] = True
+                continue
         eligible.append((key, str(path), manifest, digest(raw)))
     if not eligible:
-        fail('incompatible-schema' if schema_blocked else 'no-compatible-release', 'no release satisfies schemas, capabilities, engine range, channel, pins and qualification')
-    return max(eligible, key=lambda item: (item[0], item[1]))
+        details = []
+        if blocked['engine']: details.append(f'legacy engine range (engine {profile["engine_version"]})')
+        if blocked['schemas']: details.append('missing schema support: ' + ', '.join(sorted(set(blocked['schemas']))))
+        if blocked['capabilities']: details.append('missing required semantic capabilities: ' + ', '.join(sorted(set(blocked['capabilities']))))
+        if blocked['capability_contract']:
+            expected, actual = blocked['capability_contract']
+            details.append(f'capability contract version {expected} required, profile has {actual}')
+        if blocked['qualification']: details.append('integrity/behavior qualification does not permit default selection')
+        if version or commit: details.append('requested pin')
+        detail = ', '.join(details) or 'channel or release identity'
+        code = 'incompatible-schema' if blocked['schemas'] and not (blocked['engine'] or blocked['capabilities'] or blocked['capability_contract'] or blocked['qualification']) else 'no-compatible-release'
+        fail(code, f'no {pack_id} release satisfies {detail}')
+    return sorted(eligible, key=lambda item: (item[0], item[1]), reverse=True)
 
 
-def verify_artifact(artifact, path):
-    path = Path(path)
-    if path.is_symlink() or not path.is_file():
-        fail('unavailable-credentials/network', f'artifact not available in verified cache: {artifact["name"]}')
-    raw = path.read_bytes()
-    if len(raw) != artifact['size_bytes'] or digest(raw) != artifact['sha256']:
-        fail('integrity-error', f'artifact hash/size mismatch: {artifact["name"]}')
-    return artifact
+def resolve_candidate(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False):
+    return _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified)[0]
 
 
-def resolve_release_set(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False, visiting=()):
-    candidate = resolve_candidate(paths, profile, pack_id, channel, version, commit, allow_unqualified)
-    manifest = candidate[2]
-    key = (pack_id, manifest['release_version'])
-    if key in visiting:
-        fail('invalid-manifest', 'cyclic release dependencies')
-    result = [candidate]
-    for dependency in manifest.get('release_dependencies', []):
-        if dependency['repository'] != manifest['pack']['repository']:
-            fail('no-compatible-release', 'dependency requires explicit discovery of another repository')
-        dependency_channel = 'stable' if semver(dependency['release_version'])[3] else 'prerelease'
-        result.extend(resolve_release_set(paths, profile, dependency['pack_id'], dependency_channel, dependency['release_version'], None, allow_unqualified, visiting + (key,)))
-    return result
+def resolve_release_set(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False, visiting=(), expected_repository=None):
+    try:
+        candidates = _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, expected_repository)
+    except ReleaseError as error:
+        if expected_repository is not None and error.code == 'no-compatible-release':
+            fail('no-compatible-release', f'no {pack_id} release from exact repository {expected_repository} satisfies the contract: {error}')
+        raise
+    if expected_repository is not None and not candidates:
+        fail('no-compatible-release', f'no {pack_id} release from exact repository {expected_repository} satisfies the contract')
+    rejected_dependencies = []
+    for candidate in candidates:
+        manifest = candidate[2]
+        key = (pack_id, manifest['release_version'])
+        if key in visiting:
+            fail('invalid-manifest', 'cyclic release dependencies')
+        result = [candidate]
+        try:
+            for dependency in manifest.get('release_dependencies', []):
+                dependency_channel = 'stable' if semver(dependency['release_version'])[3] else 'prerelease'
+                child = resolve_release_set(paths, profile, dependency['pack_id'], dependency_channel, dependency['release_version'], None, allow_unqualified, visiting + (key,), dependency['repository'])
+                result.extend(child)
+            resolved = {}
+            for row in result:
+                selected = row[2]
+                identity = (selected['pack']['repository'], selected['pack']['id'])
+                exact = (selected['release_version'], row[3])
+                if identity in resolved and resolved[identity] != exact:
+                    fail('no-compatible-release', f'conflicting exact dependency set for {identity[1]} from {identity[0]}')
+                resolved[identity] = exact
+        except ReleaseError as error:
+            if error.code not in ('no-compatible-release', 'incompatible-schema') or version or commit:
+                raise
+            rejected_dependencies.append(str(error))
+            continue
+        return result
+    if rejected_dependencies:
+        fail('no-compatible-release', f'no compatible {pack_id} release has a satisfiable exact dependency set: {rejected_dependencies[-1]}')
+    fail('no-compatible-release', f'no compatible {pack_id} release dependency set')
 
 
 def select_release(paths, profile, pack_id, channel='stable', version=None, commit=None, cache_dir=None, allow_unqualified=False):
@@ -238,13 +335,13 @@ def select_release(paths, profile, pack_id, channel='stable', version=None, comm
         for artifact in dependency_manifest['artifacts']:
             parent = Path(cache_dir) / artifact['sha256'] if cache_dir else Path(dependency_path).parent
             verify_artifact(artifact, parent / artifact['name'])
-        dependencies.append(dict(pack_id=dependency_manifest['pack']['id'], release_version=dependency_manifest['release_version'], source_commit=dependency_manifest['source']['commit'], manifest_sha256=dependency_hash, artifacts=dependency_manifest['artifacts']))
+        dependencies.append(dict(pack_id=dependency_manifest['pack']['id'], repository=dependency_manifest['pack']['repository'], manifest_schema_version=dependency_manifest['manifest_schema_version'], qualification=dependency_manifest['qualification'], release_version=dependency_manifest['release_version'], source_commit=dependency_manifest['source']['commit'], manifest_sha256=dependency_hash, artifacts=dependency_manifest['artifacts']))
     artifacts = []
     for artifact in manifest['artifacts']:
         parent = Path(cache_dir) / artifact['sha256'] if cache_dir else Path(path).parent
         verify_artifact(artifact, parent / artifact['name'])
         artifacts.append(artifact)
-    return {'dependencies': dependencies, 'receipt_schema_version': 1, 'pack_id': pack_id, 'release_version': manifest['release_version'], 'source_commit': manifest['source']['commit'], 'manifest_sha256': manifest_hash, 'engine_profile': profile, 'qualification': manifest['qualification'], 'artifacts': artifacts}
+    return {'dependencies': dependencies, 'receipt_schema_version': 2, 'manifest_schema_version': manifest['manifest_schema_version'], 'pack_id': pack_id, 'release_version': manifest['release_version'], 'source_commit': manifest['source']['commit'], 'manifest_sha256': manifest_hash, 'engine_profile': profile, 'qualification': manifest['qualification'], 'artifacts': artifacts}
 
 
 def empty_schemas():
@@ -303,9 +400,14 @@ def make_manifest(config, commit, contents, archive, origin=None):
     for item in contents:
         for axis, values in item['schemas'].items():
             aggregate[axis] = sorted(set(aggregate[axis]) | set(values))
-    manifest = dict(manifest_schema_version=1, pack=dict(id=config['pack_id'], repository=config['repository'], visibility=config['visibility']), release_version=config['release_version'], source=dict(repository=config['repository'], commit=commit, dirty=False), compatibility=dict(engine=dict(min_inclusive=config['engine_min_inclusive'], max_exclusive=config['engine_max_exclusive']), schemas=aggregate, capabilities=dict(contract_version=1, required=sorted({v for item in contents for v in item['required_capabilities']}), provided=[])), contents=contents, artifacts=[dict(name=archive.name, sha256=digest(archive.read_bytes()), size_bytes=archive.stat().st_size, format='tar.gz' if archive.name.endswith('.tar.gz') else 'zip', role=config['artifact_role'])], qualification=dict(status='pending', evidence=[]))
-    if config.get('release_dependencies'):
-        manifest['release_dependencies'] = config['release_dependencies']
+    qualification = config['qualification'] if 'qualification' in config else {
+        'integrity': {'status': 'pending', 'evidence': []},
+        'behavior': {'status': 'pending', 'evidence': []},
+    }
+    manifest = dict(manifest_schema_version=2, pack=dict(id=config['pack_id'], repository=config['repository'], visibility=config['visibility']), release_version=config['release_version'], source=dict(repository=config['repository'], commit=commit, dirty=False), compatibility=dict(schemas=aggregate, capabilities=dict(contract_version=1, required=sorted({v for item in contents for v in item['required_capabilities']}), provided=[])), contents=contents, artifacts=[dict(name=archive.name, sha256=digest(archive.read_bytes()), size_bytes=archive.stat().st_size, format='tar.gz' if archive.name.endswith('.tar.gz') else 'zip', role=config['artifact_role'])], qualification=qualification, release_dependencies=config.get('release_dependencies', []))
+    provenance = config.get('provenance')
+    if provenance:
+        manifest['provenance'] = provenance
     if origin:
         manifest['content_origin'] = origin
     return validate_manifest(manifest)

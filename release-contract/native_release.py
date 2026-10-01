@@ -75,6 +75,26 @@ def native_contents(archive, baseline=None, generator_version=None):
     return contents
 
 
+def require_version_independent_native(contents):
+    """Refuse v2 release metadata while native payloads still gate on engine versions."""
+    for item in contents:
+        if item['kind'] != 'semantic-model':
+            continue
+        for dependency in item['dependencies']:
+            try:
+                metadata = json.loads(dependency)
+            except (TypeError, ValueError):
+                continue
+            if isinstance(metadata, dict) and ('bifrost' in metadata or 'engine' in metadata):
+                key = 'bifrost' if 'bifrost' in metadata else 'engine'
+                release.fail(
+                    'incompatible-schema',
+                    f"{item['identity']}: native compatibility.{key}={metadata[key]!r} "
+                    'remains an enforced engine-version gate; migrate the native format and '
+                    'runtime before version-independent publication',
+                )
+
+
 
 def verify_receipt(root, config, archive, receipt_path, commit):
     import native_generation as generation
@@ -155,17 +175,28 @@ def build(root, config_path, archive, receipt_path, output, version=None):
     if version:
         config['release_version'] = version
     release.semver(config['release_version'])
+    require_version_independent_native(contents)
     config['artifact_role'] = 'native'
+    config['provenance'] = dict(
+        engine_version=receipt['generator']['version'],
+        build_identity='sha256:' + receipt['binary_sha256'],
+        source_commit=receipt['generator']['commit'],
+    )
     output.mkdir(parents=True, exist_ok=True)
     target = output / f"{config['pack_id']}-{config['release_version']}-native.tar.gz"
     if target.resolve() == archive.resolve():
         release.fail('invalid-manifest', 'release output must differ from generation input')
     shutil.copyfile(archive, target)
     manifest = release.make_manifest(config, commit, contents, target)
-    manifest['qualification']['evidence'] = [
-        'Generated using the exact pinned tool; native verification and two-pass content comparison passed.',
-        'Original timings retained separately; full consumer behavior qualification pending.'
-    ]
+    manifest['qualification'] = dict(
+        integrity=dict(status='verified', evidence=[
+            'Verified archive inventory and SHA256SUMS, native index schema version, manifest descriptors and identities, shard hashes and sizes, supported encodings, decompressed sizes, and JSON payloads.',
+            'Verified the pinned generator and recipe receipt, archive hash, two-pass native content digest, and original measurement bytes.',
+        ]),
+        behavior=dict(status='pending', evidence=[
+            'Native consumer behavior is not qualified; the original generation receipt remains pending.',
+        ]),
+    )
     sidecars = [('generation.json', receipt_bytes), *measurements]
     for name, data in sidecars:
         (output / name).write_bytes(data)
