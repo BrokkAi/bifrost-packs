@@ -99,3 +99,34 @@ qualified public engine, run real library acceptance in a fresh isolated cache:
 Until those runs and publication pass, issue #7 remains incomplete. Artifact
 availability, synthetic tests, byte integrity and a compatible descriptor each
 provide narrower evidence than the requested runtime tuple.
+
+## Outer selection versus inner native acceptance
+
+There are two separate compatibility axes. Immutable release schema 1 outer
+metadata gates selection by engine version as well as schemas and capabilities.
+New release schema 2 outer metadata deliberately selects by schemas,
+capabilities, and exact dependencies without an engine-version range.
+
+The current native payload contract separately requires `compatibility.bifrost`
+in models/specs and enforces it in catalog installation and runtime activation.
+The pack repository's schema 2 publication gate goes further than outer
+selection: `release-contract/publication.py` inspects native bytes and
+`native_release.require_version_independent_native` rejects any inner `bifrost`
+or `engine` gate. Therefore successful schema 2 outer selection alone cannot
+satisfy current native publication policy, nor prove inner activation.
+Regenerating Java with a newer exact pin would change its valid engine but
+would retain the publication conflict. A correct engine-owned producer/reader
+handoff must be checked against current code; the source locations below are
+reproducible observations of pinned public source, not claims about a moving
+branch.
+
+At public source `62fc36c09ddb96746e716c1c3456a99957521d91`,
+`crates/bifrost-analysis/src/analyzer/semantic_model/model.rs:1172` requires the
+inner field, `catalog/mod.rs:5210,5318` validates its version requirement, and
+`runtime.rs:3290` enforces it for activation. The real JDK production path at
+`crates/bifrost-semantic-packs/src/release_bundle.rs:970-990` invokes
+`JvmDependencyPackAdapter`. Its request builder at
+`crates/bifrost-analysis/src/analyzer/jvm/external.rs:1347-1356` writes the exact
+producer package version. Pack-only descriptor edits cannot change that
+producer/reader contract. Current verification and any migration decisions
+remain with the engine sessions.

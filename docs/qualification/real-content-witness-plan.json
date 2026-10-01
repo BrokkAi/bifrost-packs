@@ -1,0 +1,97 @@
+{
+  "engine": null,
+  "fixtures": [
+    {
+      "path": "tests/cases/dynamic-evaluation/positive.py",
+      "sha256": "23f14bfe227d201bd369cf32712049424d7307ef80c248c02c76f3eac1e0f41b"
+    },
+    {
+      "path": "tests/cases/dynamic-evaluation/near-miss.py",
+      "sha256": "da72f3d7ecd3b4fe7aeb9cccc5a961091a8b31b2e1993613ed2929e6324155c3"
+    }
+  ],
+  "policy_witness": {
+    "authored_hash": "455fca5f51f3291329d71adaa89b4c5e478df8a869272e633b6cd138afe54fb3",
+    "dependencies": [],
+    "identity": "bifrost.correctness.dynamic-evaluation",
+    "kind": "policy",
+    "languages": [
+      "python",
+      "javascript",
+      "typescript"
+    ],
+    "path": "rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp",
+    "required_capabilities": [
+      "structural-match",
+      "normalized-call"
+    ],
+    "resolved_semantic_hash": "455fca5f51f3291329d71adaa89b4c5e478df8a869272e633b6cd138afe54fb3",
+    "schemas": {
+      "builtin_catalog": [],
+      "policy_bundle": [],
+      "policy_document": [
+        1
+      ],
+      "release_index": [],
+      "rql": [
+        1
+      ],
+      "runtime": [],
+      "semantic_model_read": [],
+      "semantic_model_write": [],
+      "semantic_spec": []
+    },
+    "sha256": "5bd3488db5c0b0bc9997f9bc83faccee018c1675934478fbe26723565fa98f1b"
+  },
+  "remaining": "Bind to immutable published engine, registry-only lock, actual profile and engine-owned APIs after dependency handoff. No Cargo or library acceptance executed.",
+  "required_results": [
+    "exact selected catalog policy identity before execution",
+    "positive one finding, near-miss zero with complete supported coverage",
+    "installed inventory distinct from activated model and declaration query proof",
+    "warmed isolated cache offline reuse with same selected model",
+    "empty offline cache rejects",
+    "invalid selected archive/model/policy rejects without embedded fallback"
+  ],
+  "schema_version": 1,
+  "scope": "Candidate witnesses from immutable real public content, not engine capability or behavior proof. Full selected release requirements must pass before these witnesses run.",
+  "semantic_witness": {
+    "activation": [
+      {
+        "configurations": [],
+        "targets": [],
+        "toolchain": {
+          "name": "cpython",
+          "version": ">=3.10.0, <3.15.0"
+        }
+      }
+    ],
+    "declaration": {
+      "id": "type.4f971dbebc35c326ce94be6c2f702119359eeb2b82de5c273fedbf70229f444e",
+      "locator": {
+        "kind": "artifact",
+        "path": "pathlib/__init__.pyi",
+        "symbol": "pathlib.Path"
+      },
+      "name": "pathlib.Path",
+      "visibility": "public"
+    },
+    "manifest": {
+      "bytes": 626693,
+      "path": "manifests/fadbb6755e6bf391010cf18d8a5b9e4a2c4f9f4dc51a9d6f8cc99e75d107fc43.json",
+      "sha256": "fadbb6755e6bf391010cf18d8a5b9e4a2c4f9f4dc51a9d6f8cc99e75d107fc43"
+    },
+    "pack_id": "bifrost.python-stdlib",
+    "pack_version": "2026.9.14",
+    "provenance": {
+      "revision": "1620e225476597f34177351ef913dc8390dade30",
+      "source": "https://github.com/python/typeshed"
+    },
+    "shard_asset": {
+      "bytes": 868747,
+      "path": "shards/438970bbaadffc5fde0a3ae6c6030e863176451e87fa8138bb9d4ab6e746ee45.bin",
+      "sha256": "438970bbaadffc5fde0a3ae6c6030e863176451e87fa8138bb9d4ab6e746ee45"
+    },
+    "shard_id": "declarations.external"
+  },
+  "status": "prepared-not-executed"
+}
