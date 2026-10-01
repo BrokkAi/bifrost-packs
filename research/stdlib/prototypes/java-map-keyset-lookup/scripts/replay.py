@@ -271,6 +271,7 @@ def main():
         },
         "performance": {"profiled": False, "speedup_claim": None},
         "upstream_related": [
+            "https://github.com/BrokkAi/bifrost-dev/issues/3814",
             "https://github.com/BrokkAi/bifrost-dev/issues/3811",
             "https://github.com/BrokkAi/bifrost-dev/issues/2444",
             "https://github.com/BrokkAi/bifrost-dev/issues/2445",
