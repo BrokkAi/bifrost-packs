@@ -1,0 +1,1434 @@
+[
+  {
+    "id": "python-queue-task-accounting",
+    "language": "python",
+    "title": "Queue work items need one completion acknowledgement per successful get",
+    "analysis": "A Queue's unfinished-task counter increments on put(), decrements on task_done(), and join() unblocks at zero. This is a concrete typestate/accounting contract: consumers should acknowledge each item after processing, including supported exceptional paths. A missing acknowledgement can hang join(); an extra acknowledgement raises ValueError. This is distinct from resource close/use lifecycle.",
+    "apis": [
+      "queue.Queue.put",
+      "queue.Queue.get",
+      "queue.Queue.task_done",
+      "queue.Queue.join",
+      "queue.SimpleQueue (excluded: no task_done/join contract)",
+      "asyncio.Queue.put/get/task_done/join (separate async surface)"
+    ],
+    "contract": "For each value returned by exact Queue.get()/get_nowait() on the same queue instance, the consumer must eventually mark the work complete with one task_done(), or transfer/requeue responsibility before acknowledging the current item, so a corresponding join() does not remain outstanding. queue.Queue.shutdown(immediate=True), introduced in Python 3.13, intentionally changes join accounting and must not be reported as missing worker acknowledgements. Do not infer correctness from qsize()/empty(). task_done decrements a queue-level count and takes no item argument: a per-item acknowledgement obligation needs an explicit worker-ownership profile and global puts/gets accounting; retries and delegated acknowledgements must be modeled.",
+    "positive": "def worker(q):\n    item = q.get()\n    process(item)  # if this raises, the unfinished-task count is never decremented\n    q.task_done()\n# A later q.join() can wait forever.",
+    "near_miss": "def worker(q):\n    item = q.get()\n    try:\n        process(item)\n    finally:\n        q.task_done()\n# Alternatively, transfer a failed item to a retry/dead-letter queue before\n# acknowledging the current queue's item.",
+    "prerequisites": "Exact queue object identity through aliases/arguments; distinguish Queue from SimpleQueue and asyncio.Queue; bind each get to task_done; model try/finally and exception exits; account for requeue/retry and 3.13 shutdown(immediate=True).",
+    "stop_gate": "Stop if the analyzer cannot preserve queue alias identity, pair get results with acknowledgements, or represent exception and shutdown paths. A textual count of get()/task_done() calls is insufficient. Treat unknown escape or helper ownership as incomplete.",
+    "priority": "P2",
+    "confidence": "medium-high for CPython API contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/queue.html",
+        "title": "queue \u2014 Synchronized queue class (Python 3.13)"
+      },
+      {
+        "url": "https://docs.python.org/3.13/library/asyncio-queue.html",
+        "title": "asyncio queues (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "python-socketserver-shutdown-thread-state",
+    "language": "python",
+    "title": "BaseServer.shutdown must stop a running serve_forever loop from another thread",
+    "analysis": "The documented shutdown contract depends on a live loop and thread relation. Calling shutdown() when serve_forever() is not running in a different thread deadlocks. This is an unusually precise standard-library typestate/concurrency lead.",
+    "apis": [
+      "socketserver.BaseServer.serve_forever",
+      "socketserver.BaseServer.shutdown",
+      "socketserver.BaseServer.server_close"
+    ],
+    "contract": "For the same BaseServer object, shutdown() is safe only while serve_forever() is running in a different thread; shutdown() requests stop and waits. server_close() is a distinct cleanup action and is not a substitute for shutdown().",
+    "positive": "class BadServer(socketserver.TCPServer):\n    def service_actions(self):\n        self.shutdown()  # same thread as serve_forever; documented deadlock\n\nserver = BadServer(addr, Handler)\nserver.serve_forever()",
+    "near_miss": "server = socketserver.ThreadingTCPServer(addr, Handler)\nthread = threading.Thread(target=server.serve_forever)\nthread.start()\nserver.shutdown()  # controlling thread differs from serve_forever thread\nthread.join()\nserver.server_close()\n# The same safe ordering applies when another existing control thread calls shutdown().",
+    "prerequisites": "Prove BaseServer instance identity at both methods; know serve_forever execution is active and identify its thread; represent call/thread join ordering and subclasses without assuming all objects share the contract.",
+    "stop_gate": "Stop if control-flow/thread modeling cannot establish same-instance active serve_forever on another thread. Do not approximate with method-name order or assume shutdown is safe whenever a Thread object exists.",
+    "priority": "P2",
+    "confidence": "high API contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/socketserver.html",
+        "title": "socketserver \u2014 A framework for network servers (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "python-xinclude-untrusted-href",
+    "language": "python",
+    "title": "Untrusted XInclude href can select a local resource through ElementInclude's default loader",
+    "analysis": "ElementTree parsing does not by itself expand XInclude; an explicit ElementInclude.include() call does. Its default loader reads the referenced resource from disk, with href values obtained from the XML include element. This supports a narrow source-to-filesystem-read lead only where attacker-controlled XML reaches expansion.",
+    "apis": [
+      "xml.etree.ElementTree.fromstring",
+      "xml.etree.ElementTree.parse",
+      "xml.etree.ElementInclude.include",
+      "xml.etree.ElementInclude.default_loader"
+    ],
+    "contract": "Taint must flow from untrusted XML input into an XInclude element's href, through an exact ElementInclude.include() call using the default loader (loader omitted/None), to a local resource read. A custom loader with a proven restrictive policy or a fixed trusted XML document is a control. The documented max_depth bounds recursion but does not establish href trust.",
+    "positive": "root = ET.fromstring(request.body)\nElementInclude.include(root)  # default loader reads include hrefs from disk",
+    "near_miss": "root = ET.fromstring(TRUSTED_TEMPLATE)\nElementInclude.include(root, loader=allowlisted_loader)  # custom loader accepts only approved identifiers",
+    "prerequisites": "Track parsed XML provenance into element attributes and the href consumed by XInclude; prove default-loader selection versus custom loader; model the path/resource read and any data exposure separately.",
+    "stop_gate": "Stop if XML node/attribute lineage, default-loader selection, or filesystem effect identity is unavailable. Do not report arbitrary XML parsing, external entity behavior, or an include call with a restrictive custom loader as this finding.",
+    "priority": "P2",
+    "confidence": "medium: public docs establish include/default-loader disk behavior; attacker-controlled href lineage requires analyzer proof",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/xml.etree.elementtree.html",
+        "title": "xml.etree.ElementTree (Python 3.13)"
+      },
+      {
+        "url": "https://docs.python.org/3.13/library/xml.html",
+        "title": "XML Processing Modules and security considerations (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "python-multiprocessing-connection-recv-pickle",
+    "language": "python",
+    "title": "Connection.recv implicitly unpickles messages from a peer",
+    "analysis": "multiprocessing.connection.Connection.recv() returns a Python object by automatically unpickling received data. That is an implicit deserialization boundary not expressed as a call to pickle.load(s), so the existing direct-call unsafe-deserialization selector does not describe the full contract.",
+    "apis": [
+      "multiprocessing.connection.Connection.recv",
+      "multiprocessing.connection.Connection.recv_bytes",
+      "multiprocessing.connection.Listener",
+      "multiprocessing.connection.Client",
+      "multiprocessing.Pipe"
+    ],
+    "contract": "An exact Connection.recv() on a connection whose peer is not established as trusted/authenticated performs implicit pickle deserialization. recv_bytes() returns bytes and is not itself the same object-construction sink. Listener/Client authentication configuration and Pipe's process-local context affect trust; do not infer untrustedness merely from the method name. Peer authentication establishes credential possession, not automatically benign payloads; only an explicit trusted-peer contract discharges the object-deserialization trust boundary.",
+    "positive": "conn = listener.accept()  # endpoint can be an untrusted peer unless authenticated\nobj = conn.recv()",
+    "near_miss": "conn = multiprocessing.Pipe()[0]\nobj = conn.recv()  # the docs distinguish Pipe-created connections from other connections;\n                   # same method call alone does not prove an untrusted peer",
+    "prerequisites": "Resolve Connection receiver identity and origin (Pipe vs Listener/Client); follow authentication-key configuration or an explicit trust profile; model recv's implicit pickle effect separately from recv_bytes.",
+    "stop_gate": "Stop if connection origin, peer authentication, or trust state cannot be proven. Do not turn every recv() into a finding or rely on a same-named method selector.",
+    "priority": "P1",
+    "confidence": "high behavior contract; trust-source classification is unresolved",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/multiprocessing.html",
+        "title": "multiprocessing \u2014 Process-based parallelism (Python 3.13)"
+      },
+      {
+        "url": "https://docs.python.org/3.13/library/pickle.html",
+        "title": "pickle \u2014 Python object serialization (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "python-logging-config-listener-verification",
+    "language": "python",
+    "title": "A logging configuration listener needs a verification gate before processing received config",
+    "analysis": "logging.config.listen() starts a localhost socket listener for logging configurations. The standard library warns that parts of configuration processing use eval() and recommends the verify callback to reject unrecognized data, including on multi-user machines. This is a contextual source-to-code-execution/control-contract lead.",
+    "apis": [
+      "logging.config.listen",
+      "logging.config.stopListening",
+      "logging.config.dictConfig",
+      "logging.config.fileConfig"
+    ],
+    "contract": "When a logging.config.listen() thread processes bytes that may be supplied by an untrusted local user, a verify callback should authenticate/decrypt and return accepted bytes or None. Absence of verify is only reportable under an applicable untrusted-local-user threat profile; localhost binding does not mean mutually trusted callers.",
+    "positive": "listener = logging.config.listen(port=9020)  # no verify callback\nlistener.start()",
+    "near_miss": "listener = logging.config.listen(port=9020, verify=verify_signed_config)\nlistener.start()",
+    "prerequisites": "Exact listen target; configuration of verify argument and its callback's result semantics; deployment threat profile for multi-user local access; model configuration processing/evaluation as the dangerous effect.",
+    "stop_gate": "Stop if call identity or verify-argument binding is incomplete, callback validation cannot be established, or the policy has no applicable local-user threat context. Do not flag all logging configuration or equate localhost with remote exposure.",
+    "priority": "P2",
+    "confidence": "high documented contract; context applicability requires explicit policy scope",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/logging.config.html",
+        "title": "logging.config \u2014 Logging configuration (Python 3.13)"
+      },
+      {
+        "url": "https://docs.python.org/3.13/library/security_warnings.html",
+        "title": "Security Considerations (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint + verification gate"
+  },
+  {
+    "id": "python-dynamic-import-untrusted-name",
+    "language": "python",
+    "title": "Untrusted module names can reach importlib.import_module and execute selected module initialization",
+    "analysis": "importlib.import_module(name) dynamically imports a named module, and module import executes its initialization. A name controlled by an attacker can select among modules visible on the active import path. This is a taint-to-dynamic-code-loading lead, not a claim that every plugin import is unsafe.",
+    "apis": [
+      "importlib.import_module",
+      "builtins.__import__",
+      "importlib.util.spec_from_file_location",
+      "importlib.util.module_from_spec"
+    ],
+    "contract": "Report only when untrusted data reaches the exact module-name argument of a dynamic import and the selected module executes under the application's authority without a proven allowlist/registry gate. File-based loading is a related but distinct path-and-loader contract.",
+    "positive": "module_name = request.args['plugin']\nplugin = importlib.import_module(module_name)",
+    "near_miss": "plugin = importlib.import_module(ALLOWED_PLUGINS[request.args['plugin']])  # key is mapped to a fixed allowlist",
+    "prerequisites": "Exact dynamic import identity and argument binding; source-to-name propagation; prove an allowlist or dispatch gate's completeness; account for package-relative names, meta_path hooks, import caches, and sys.path provenance.",
+    "stop_gate": "Stop if module identity/path resolution or allowlist completeness is unknown. Do not infer arbitrary code execution from a constant trusted import or from a name-only `import` match.",
+    "priority": "P2",
+    "confidence": "medium-high documented import behavior; attacker-controlled-name exploitation depends on import-path context",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/importlib.html",
+        "title": "importlib \u2014 The implementation of import (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "python-ctypes-dynamic-library-load",
+    "language": "python",
+    "title": "Untrusted library names reaching ctypes loaders can load native code into the process",
+    "analysis": "ctypes.CDLL and the library-loader helpers load shared libraries into the process; platform loaders resolve names and paths under platform-specific rules. A value-flow policy could identify data-controlled native library selection, subject to a strict path/identity contract.",
+    "apis": [
+      "ctypes.CDLL",
+      "ctypes.PyDLL",
+      "ctypes.WinDLL",
+      "ctypes.OleDLL",
+      "ctypes.cdll.LoadLibrary",
+      "ctypes.windll.LoadLibrary"
+    ],
+    "contract": "Taint reaching the exact library-name argument is dangerous only when resolution can select an attacker-controlled or untrusted native library. A constant, trusted absolute path or complete allowlist is a control. Platform search paths, dependent libraries, handles, and preloaded objects alter what name resolution means.",
+    "positive": "library_name = request.args['backend']\nlib = ctypes.CDLL(library_name)",
+    "near_miss": "lib = ctypes.CDLL('/usr/lib/libtrusted_backend.so')  # fixed deployment-owned path",
+    "prerequisites": "Exact ctypes loader identity and formal argument binding; track attacker-controlled name/path; determine whether resolved library location can be influenced; keep platform and loader-search semantics explicit.",
+    "stop_gate": "Stop if runtime loader resolution, path provenance, or platform scope is unknown. Do not classify every CDLL call or trust a basename-only allowlist as path-safe.",
+    "priority": "P2",
+    "confidence": "medium: loading behavior is documented; exploitable resolution is platform/deployment dependent",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/ctypes.html",
+        "title": "ctypes \u2014 A foreign function library for Python (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "deferred-proof-heavy",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "python-ssl-client-verification-typestate",
+    "language": "python",
+    "title": "Client TLS contexts must preserve certificate-chain and hostname verification through wrap_socket",
+    "analysis": "SSLContext configuration is stateful. PROTOCOL_TLS_CLIENT configures CERT_REQUIRED and hostname checking; other protocol contexts have insecure defaults. CERT_REQUIRED alone does not validate the hostname, and wrap_socket needs server_hostname for hostname matching. This yields a concrete security typestate candidate.",
+    "apis": [
+      "ssl.create_default_context",
+      "ssl.SSLContext",
+      "ssl.PROTOCOL_TLS_CLIENT",
+      "ssl.CERT_REQUIRED",
+      "ssl.CERT_NONE",
+      "SSLContext.verify_mode",
+      "SSLContext.check_hostname",
+      "SSLContext.wrap_socket",
+      "SSLContext.wrap_bio"
+    ],
+    "contract": "For client-side peer authentication, the context at handshake must have certificate verification enabled (CERT_REQUIRED) and hostname checking enabled, and wrap_socket/wrap_bio must supply the intended server_hostname. create_default_context() and PROTOCOL_TLS_CLIENT establish the documented secure baseline; later mutations can invalidate it. Server-side client-certificate authentication is a separate contract.",
+    "positive": "ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)\nctx.check_hostname = False\nctx.verify_mode = ssl.CERT_NONE\nsock = ctx.wrap_socket(raw_sock)  # no peer hostname validation",
+    "near_miss": "ctx = ssl.create_default_context()\nsock = ctx.wrap_socket(raw_sock, server_hostname=host)",
+    "prerequisites": "Track exact SSLContext object, constructor/default state, all verify_mode/check_hostname mutations, client versus server use, aliasing and wrap call; use version/OpenSSL scope for any defaults asserted.",
+    "stop_gate": "Stop if context identity/mutations escape, client/server role is unknown, or handshake call cannot be tied to the configured context. Never report based solely on a protocol constant spelling or a context variable's name. A proven equivalent peer pinning/verification contract before sensitive communication is a separate supported control; do not assume every custom trust scheme is defective. An unused context or wrap with handshake disabled and no later do_handshake/use is a near miss.",
+    "priority": "P1",
+    "confidence": "high documented contract; analyzer state coverage unqualified",
+    "sources": [
+      {
+        "url": "https://docs.python.org/3.13/library/ssl.html",
+        "title": "ssl \u2014 TLS/SSL wrapper for socket objects (Python 3.13)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "jvm-zip-entry-containment",
+    "language": "JVM (Java; Kotlin/Scala callers of JDK members)",
+    "title": "Contain JDK ZIP entry paths before filesystem writes",
+    "analysis": "java.util.zip exposes the entry name from the archive; the API does not establish that the name stays under an extraction directory. A sink-specific rule can catch archive-controlled names resolved to a write path without a path-component containment proof.",
+    "apis": [
+      "java.util.zip.ZipInputStream.getNextEntry / ZipFile.entries or stream",
+      "java.util.zip.ZipEntry.getName",
+      "java.nio.file.Path.resolve/normalize/startsWith",
+      "java.nio.file.Files.newOutputStream/copy or java.io.FileOutputStream"
+    ],
+    "contract": "ZipEntry.getName returns the entry name. Before writing, reject rooted paths and establish that the normalized candidate remains beneath the normalized extraction root using Path component semantics, not a string prefix. Lexical normalization alone does not prove safety against symlink or filesystem races.",
+    "positive": "An untrusted ZipInputStream entry named ../../outside.txt is resolved under dest and passed to Files.copy/newOutputStream without checking the resolved path against dest.",
+    "near_miss": "Resolve and normalize against an absolute extraction root, reject rooted entries, and require candidate.startsWith(root) as a Path component check before the write. This is only a lexical traversal control; symlink and race cases need separate proof.",
+    "prerequisites": "Prove the exact JDK ZIP and filesystem member identities, archive provenance, same entry-name value flowing into the path and write, and the intended extraction root. For Kotlin/Scala, use the resolved JDK member identity rather than a language facade or wrapper name.",
+    "stop_gate": "Stop if archive entry identity, destination root, path provider/platform semantics, or the actual write cannot be proven. Do not claim symlink-safe extraction from lexical normalize/startsWith alone; preserve incomplete status for symlink and TOCTOU cases.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/zip/ZipEntry.html",
+        "title": "ZipEntry (Java SE 21)"
+      },
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/zip/ZipInputStream.html",
+        "title": "ZipInputStream (Java SE 21)"
+      },
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html",
+        "title": "Path (Java SE 21)"
+      }
+    ],
+    "overlap": "Distinct stdlib archive/path APIs. Sharing a weakness family with third-party archive packages does not establish identical policy ownership.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "jvm-jndi-filter-escaping",
+    "language": "JVM (Java; Kotlin/Scala callers of JDK members)",
+    "title": "Keep untrusted values out of JNDI LDAP filter syntax",
+    "analysis": "DirContext.search has a raw filter overload and a filter-expression plus filter-arguments overload. Oracle's JNDI tutorial documents automatic escaping for the latter. This gives a precise taint-position and a realistic safe near-miss for LDAP filter injection.",
+    "apis": [
+      "javax.naming.directory.DirContext.search(String|Name, String filter, SearchControls)",
+      "javax.naming.directory.DirContext.search(String|Name, String filterExpr, Object[] filterArgs, SearchControls)",
+      "JDK built-in LDAP provider when provider identity is proven"
+    ],
+    "contract": "The filter is RFC 2254/LDAP filter syntax. The filter-arguments overload substitutes values and performs escaping; string concatenation into the raw filter overload preserves attacker-controlled filter operators.",
+    "positive": "A login directory search builds (uid=<input>) by concatenating request text into the raw filter string, then uses the result set to select an authenticated identity.",
+    "near_miss": "Use a fixed filter expression such as (uid={0}) and pass the untrusted value as filterArgs; alternatively construct an attribute match through the structured Attributes overload.",
+    "prerequisites": "Prove exact DirContext.search overload identity, taint reaching the filter grammar/value position, and result use in a security-relevant lookup. Prefer the JDK LDAP provider with resolved provider evidence; do not assume every third-party JNDI provider has the same encoding contract.",
+    "stop_gate": "Stop when call binding/provider identity is unknown, the tainted value is not part of the filter, the argument overload's escaping cannot be established, or the directory result does not affect the claimed security decision. Treat partial provider discovery as incomplete.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.naming/javax/naming/directory/DirContext.html",
+        "title": "DirContext (Java SE 21)"
+      },
+      {
+        "url": "https://docs.oracle.com/javase/jndi/tutorial/ldap/search/search.html",
+        "title": "JNDI LDAP context search methods and filter arguments"
+      },
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.naming/javax/naming/directory/package-summary.html",
+        "title": "javax.naming.directory (Java SE 21)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "jvm-aead-cipherinputstream-integrity",
+    "language": "JVM (Java; Kotlin/Scala callers of JDK members)",
+    "title": "Do not consume AEAD plaintext through CipherInputStream",
+    "analysis": "Java SE 21 CipherInputStream documentation explicitly says it may swallow BadPaddingException and other failed-integrity exceptions, so callers may not learn that decryption authentication failed. The docs say it may be unsuitable for authenticated modes such as GCM and point to Cipher directly.",
+    "apis": [
+      "javax.crypto.CipherInputStream(InputStream, Cipher)",
+      "javax.crypto.Cipher.init(DECRYPT_MODE, ...)",
+      "AEAD cipher identity such as AES/GCM/NoPadding",
+      "javax.crypto.Cipher.doFinal / AEADBadTagException as the comparison path"
+    ],
+    "contract": "For AEAD decryption, tag validation is a required success condition. CipherInputStream may catch integrity-check exceptions and not rethrow them; direct Cipher.doFinal reports an AEADBadTagException when the tag does not match.",
+    "positive": "An application decrypts attacker-controlled GCM ciphertext through CipherInputStream and parses, authorizes, or commits data read from the stream without another authenticated-result contract.",
+    "near_miss": "Use Cipher directly and make consumption of the returned plaintext control-dependent on doFinal completing normally; reject AEADBadTagException before acting on plaintext.",
+    "prerequisites": "Prove exact CipherInputStream and Cipher identities, a decrypt-mode AEAD algorithm, the same Cipher instance, untrusted ciphertext provenance, and a downstream sensitive consumer of bytes returned before an explicit successful authentication result.",
+    "stop_gate": "Do not generalize to non-AEAD ciphers or infer authentication from an algorithm name fragment. Stop if provider/algorithm mode, ciphertext flow, or the downstream use is unknown; do not treat a swallowed exception as proof that every provider emitted plaintext.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/javax/crypto/CipherInputStream.html",
+        "title": "CipherInputStream (Java SE 21)"
+      },
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/javax/crypto/Cipher.html",
+        "title": "Cipher (Java SE 21)"
+      },
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/javax/crypto/AEADBadTagException.html",
+        "title": "AEADBadTagException (Java SE 21)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint + typestate"
+  },
+  {
+    "id": "gcm-nonce-reuse-same-key",
+    "language": "JVM (Java/Kotlin/Scala) and C#/.NET",
+    "title": "Require fresh GCM nonce values for each encryption under a key",
+    "analysis": "Oracle's JCA guide says not to reuse AES-GCM key/IV combinations for encryption and explicitly reinitialize for each encryption. Microsoft documents the same-key nonce uniqueness requirement on AesGcm.Encrypt. The behavior is temporal and relational, not a local name-based API check.",
+    "apis": [
+      "JDK javax.crypto.Cipher.getInstance(\"AES/GCM/NoPadding\") + init(ENCRYPT_MODE, key, GCMParameterSpec) + doFinal",
+      ".NET System.Security.Cryptography.AesGcm.Encrypt(nonce, plaintext, ciphertext, tag, associatedData)"
+    ],
+    "contract": "For distinct successful GCM encryptions using the same effective key, nonce/IV byte values must be unique. The rule does not apply to decryptions and must not infer key equality from variable names alone.",
+    "positive": "Two distinct successful encryptions in one pinned process reuse the same effective key and equal fixed nonce bytes. Cross-process restart/counter persistence is deferred until configuration/lifecycle evidence exists.",
+    "near_miss": "The same key is retained while each encryption receives a provably distinct nonce from a non-wrapping per-key counter or a separately justified unique-nonce mechanism. A new key per operation also breaks the same-key pair.",
+    "prerequisites": "Prove exact AES-GCM encryption mode/API, successful distinct encryption sites, effective key identity/equality, nonce byte-value equality, and control-flow reachability across loops/calls/restarts as applicable. Retain alias and value provenance for arrays/spans and key wrappers.",
+    "stop_gate": "Stop rather than compare names or assume fresh arrays contain equal/different values. Preserve incomplete when key aliasing, nonce contents, provider-generated IV guarantees, lifecycle scope, or counter reset/wrap behavior is unknown. Do not report decrypt calls or non-GCM modes.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/security/java-cryptography-architecture-jca-reference-guide.html",
+        "title": "Java Cryptography Architecture Reference Guide (Java SE 21)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesgcm.encrypt?view=net-10.0",
+        "title": "AesGcm.Encrypt (.NET 10 API)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "deferred-proof-heavy",
+    "analysis_kind": "relational encryption protocol"
+  },
+  {
+    "id": "dotnet-processstartinfo-executable-and-shell-boundary",
+    "language": "C#/.NET",
+    "title": "Track ProcessStartInfo executable selection and explicit shell parsing",
+    "analysis": "ProcessStartInfo separates FileName, Arguments, ArgumentList, and UseShellExecute. ArgumentList escapes process-argument boundaries, but the target application still interprets those arguments. Shell grammar is only in scope when the launched executable is proven to be a command interpreter and the tainted value occupies its command-language operand; Process.Start is not equivalent to /bin/sh -c.",
+    "apis": [
+      "System.Diagnostics.ProcessStartInfo.FileName",
+      "ProcessStartInfo.Arguments",
+      "ProcessStartInfo.ArgumentList",
+      "ProcessStartInfo.UseShellExecute",
+      "System.Diagnostics.Process.Start"
+    ],
+    "contract": "FileName selects the application/document to start. ArgumentList builds an escaped command-line representation for the OS; it does not neutralize a later command interpreter. UseShellExecute selects OS-shell launching behavior and varies by target/runtime defaults, so policy decisions must use explicit or resolved state. Attacker-controlled executable selection needs an explicit unauthorized-code/trust boundary; legitimate caller-authorized tool selection is not inherently a violation.",
+    "positive": "Untrusted input selects ProcessStartInfo.FileName, or reaches a command string passed to a proven interpreter such as cmd.exe /c or sh -c before Process.Start. For the latter, trace the interpreter's command-language position, not merely any argument.",
+    "near_miss": "A fixed executable receives an ordinary untrusted value as one ArgumentList item with UseShellExecute=false and no explicit interpreter. Do not call shell injection solely because a value contains semicolons or pipes; target-specific argument/option injection is a separate contract.",
+    "prerequisites": "Prove exact System.Diagnostics identities, FileName or interpreter identity, UseShellExecute state, argument position, taint flow, and the Process.Start call. Pin .NET target/runtime and platform where shell dispatch or quoting differs.",
+    "stop_gate": "Stop if executable resolution, UseShellExecute, argument boundaries, platform, or target command grammar is unknown. Never collapse every Arguments/ArgumentList flow into POSIX shell execution; keep target-specific argument injection out of this rule.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo?view=net-10.0",
+        "title": "ProcessStartInfo (.NET 10 API)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-10.0",
+        "title": "ProcessStartInfo.ArgumentList (.NET 10 API)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.arguments?view=net-10.0",
+        "title": "ProcessStartInfo.Arguments (.NET 10 API)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "dotnet-xmlreader-external-dtd-resolution",
+    "language": "C#/.NET",
+    "title": "Require explicit safe DTD and resolver state for untrusted XML",
+    "analysis": "XmlReaderSettings defaults DtdProcessing to Prohibit; on .NET Framework 4.5.2+ XmlResolver defaults to null, while older framework versions differ. Explicit Parse plus an external-capable resolver can let untrusted XML cause file/network resolution. XmlTextReader has separate defaults and must not inherit XmlReaderSettings assumptions.",
+    "apis": [
+      "System.Xml.XmlReaderSettings.DtdProcessing",
+      "XmlReaderSettings.XmlResolver",
+      "System.Xml.XmlReader.Create",
+      "System.Xml.XmlTextReader.DtdProcessing/XmlResolver (separate versioned API)"
+    ],
+    "contract": "DtdProcessing.Parse enables DTD processing. External resolution requires a resolver capable of opening the referenced resource. DtdProcessing.Prohibit rejects DTDs; XmlResolver=null blocks external resource resolution for XmlReaderSettings. Defaults are type- and framework-version-specific.",
+    "positive": "An attacker-controlled XML document is consumed by an XmlReader created with DtdProcessing.Parse and a resolver that can access external file or network resources; the entity result is read by the application.",
+    "near_miss": "Keep DtdProcessing.Prohibit (the XmlReaderSettings default) or use Parse with XmlResolver=null and no alternate resolver path. Do not treat XML that permits inline DTDs but cannot resolve external resources as an XXE finding.",
+    "prerequisites": "Prove untrusted XML provenance, the same settings object reaching XmlReader.Create, concrete reader type, effective DtdProcessing and resolver values, runtime/framework version, and actual parser consumption. Separate external entity access from entity-expansion/size DoS.",
+    "stop_gate": "Stop if parser type, default configuration, target framework, resolver implementation, or external resource reachability is unknown. Do not carry XmlReaderSettings defaults over to XmlTextReader or to third-party XML parsers.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.dtdprocessing?view=net-10.0",
+        "title": "XmlReaderSettings.DtdProcessing (.NET 10 API)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.xmlresolver?view=net-10.0",
+        "title": "XmlReaderSettings.XmlResolver (.NET 10 API)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreader.create?view=net-10.0",
+        "title": "XmlReader.Create (.NET 10 API)"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint + typestate"
+  },
+  {
+    "id": "dotnet-regex-unbounded-backtracking",
+    "language": "C#/.NET",
+    "title": "Bound .NET backtracking regex work on attacker-controlled input",
+    "analysis": "The .NET Regex default match timeout is InfiniteMatchTimeout unless a timeout is explicitly set or an application-wide default is configured. Microsoft warns that near-matching text can cause excessive backtracking. A useful rule needs a proven backtracking-heavy pattern and attacker-controlled near-match input; missing timeout alone is not a finding.",
+    "apis": [
+      "System.Text.RegularExpressions.Regex(String, RegexOptions, TimeSpan)",
+      "Regex.MatchTimeout",
+      "Regex.IsMatch/Match/Replace/Split",
+      "RegexOptions.NonBacktracking where supported"
+    ],
+    "contract": "A finite timeout bounds one matching operation and throws RegexMatchTimeoutException. Without an explicit or app-wide timeout, matching is infinite by default. NonBacktracking changes engine behavior for its supported syntax subset.",
+    "positive": "A known catastrophic-backtracking expression such as nested ambiguous quantifiers is applied with the backtracking engine to attacker-controlled long near-match text using the default infinite timeout.",
+    "near_miss": "Use a finite per-instance/per-call timeout with deliberate timeout handling, or RegexOptions.NonBacktracking for compatible patterns; a bounded input-size contract can also constrain exposure.",
+    "prerequisites": "Prove the exact Regex operation and object, pattern structure/engine mode, attacker control of match input, input-size or timeout state, and whether an app-wide timeout is configured.",
+    "stop_gate": "Stop if the pattern is dynamic/unknown, the selected engine cannot be established, or global timeout configuration is unavailable. Do not report every Regex call without a timeout; require a structural backtracking witness or another defensible risk bound.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex.matchtimeout?view=net-10.0",
+        "title": "Regex.MatchTimeout (.NET 10 API)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions",
+        "title": "Backtracking in .NET regular expressions"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "deferred-proof-heavy",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "dotnet-rfc2898-weak-default-parameters",
+    "language": "C#/.NET",
+    "title": "Reject legacy PBKDF2 constructors with weak implicit defaults",
+    "analysis": "Microsoft marks several Rfc2898DeriveBytes constructors obsolete starting in .NET 7 because the implicit iteration count (1000) and/or hash (SHA-1) are no longer considered secure. This is an exact overload/configuration lead; a universal modern iteration threshold should remain workspace policy, not be invented by the pack.",
+    "apis": [
+      "System.Security.Cryptography.Rfc2898DeriveBytes(string, byte[])",
+      "Rfc2898DeriveBytes overloads omitting iteration count or HashAlgorithmName",
+      "Rfc2898DeriveBytes.Pbkdf2 one-shot APIs"
+    ],
+    "contract": "The legacy defaults are 1000 iterations and HashAlgorithmName.SHA1. SYSLIB0041 marks default-parameter constructors obsolete from .NET 7. .NET 10 additionally obsoletes all instance constructors (SYSLIB0060) because PBKDF2 is intended as a one-shot operation.",
+    "positive": "A password-derived key is created using a default-parameter constructor, or the overload omits the hash/iteration setting and thereby selects the documented legacy defaults.",
+    "near_miss": "Use Rfc2898DeriveBytes.Pbkdf2 with explicit salt, work factor, hash algorithm, and output length chosen by the application\u2019s current security policy; do not encode a fixed universal iteration count in the pack.",
+    "prerequisites": "Resolve the exact constructor overload and target framework, and establish that its derived bytes are used for a password-based key/verifier. Preserve explicit iteration/hash settings even when below local policy for a configuration-specific finding rather than treating all PBKDF2 as identical.",
+    "stop_gate": "Stop if overload identity or target framework is unknown. Do not flag explicit parameters solely because they are below an invented universal threshold; require a policy-defined floor or the exact obsolete-default overload.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0041",
+        "title": "SYSLIB0041: Rfc2898DeriveBytes legacy defaults"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rfc2898derivebytes?view=net-10.0",
+        "title": "Rfc2898DeriveBytes (.NET 10 API)"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0060",
+        "title": "SYSLIB0060: Rfc2898DeriveBytes constructors are obsolete"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "out-of-scope-match-lead",
+    "analysis_kind": "match/configuration"
+  },
+  {
+    "id": "go-database-sql-tx-terminal",
+    "language": "Go",
+    "title": "Complete database/sql transactions on every reachable exit",
+    "analysis": "A *sql.Tx is an owned, single-transaction handle whose work ends only at Commit, Rollback, or (for BeginTx) cancellation of its bound context. An unfinished transaction can retain a connection and leave application-level work pending. This is a package-specific typestate candidate, not a generic method-name rule.",
+    "apis": [
+      "database/sql.DB.Begin",
+      "database/sql.DB.BeginTx",
+      "database/sql.Conn.BeginTx",
+      "database/sql.Tx.Commit",
+      "database/sql.Tx.Rollback"
+    ],
+    "contract": "For each successfully returned *sql.Tx, prove a terminal Commit or Rollback on that same transaction on all paths before ownership leaves the analyzed scope. BeginTx uses its context until terminal completion; cancellation makes database/sql roll back. DB.Begin uses context.Background internally, so there is no equivalent caller context cancellation path. Commit and Rollback both make later Tx operations fail with ErrTxDone.",
+    "positive": "A function calls db.Begin(), performs a write, then returns from an error branch without committing, rolling back, or transferring the transaction to an owner that will finish it.",
+    "near_miss": "The function defers tx.Rollback() immediately after BeginTx and commits on success; the deferred rollback after Commit is harmless. A BeginTx path whose exact context is proven cancelled also has an implicit rollback and should not be reported as an unclosed transaction.",
+    "prerequisites": "Resolve exact database/sql API identities and *sql.Tx object identity through aliases, parameters, helper returns, and closures; prove the Begin success branch; model defer order, callbacks, panic/exception-equivalent exits, Commit/Rollback, and the exact BeginTx context cancellation relation. Distinguish a transaction transferred to another owner.",
+    "stop_gate": "Stop if Tx identity, ownership transfer, branch completion, defer execution, or BeginTx cancellation cannot be proven. Do not infer completion from a function named close/finish or from a driver-specific transaction type without exact identity.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://pkg.go.dev/database/sql@go1.27.1",
+        "title": "Go database/sql package docs, go1.27.1"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/database/sql/sql.go",
+        "title": "Go source tag go1.27.1: database/sql/sql.go (BeginTx and Tx lifecycle)"
+      }
+    ],
+    "overlap": "stdlib database/sql protocol is separate from vendor SQL syntax. Closure/leak components reuse Go lifecycle qualification; transaction/iteration semantics need separate bounded acceptance.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "go-crypto-tls-client-skip-verification",
+    "language": "Go",
+    "title": "Track InsecureSkipVerify into active TLS client configurations",
+    "analysis": "crypto/tls documents that InsecureSkipVerify=true accepts any peer certificate and hostname unless custom verification is used. The useful detector boundary is an active client config reaching a handshake, not a field literal in isolation. Callback presence is not proof that callback logic validates the peer.",
+    "apis": [
+      "crypto/tls.Config.InsecureSkipVerify",
+      "crypto/tls.Config.VerifyConnection",
+      "crypto/tls.Config.VerifyPeerCertificate",
+      "crypto/tls.Client",
+      "net/http.Transport.TLSClientConfig",
+      "crypto/tls.Conn.Handshake/HandshakeContext/Read/Write",
+      "net/http.Client.Do"
+    ],
+    "contract": "Report only when the exact client-side tls.Config reaching tls.Client or an HTTP Transport has InsecureSkipVerify true and the analyzer can prove no custom verification callback is configured. A configured callback makes the outcome unresolved unless its behavior is itself proven; do not treat mere callback presence as safe. A zero/default false value retains the standard verification path. tls.Client construction and a Transport field assignment alone are not active handshakes; require a correlated executing consumer.",
+    "positive": "A Config with InsecureSkipVerify=true and nil verification callbacks reaches a client Conn that performs Handshake (or a Transport used by Client.Do). The same effective config is used at the handshake.",
+    "near_miss": "InsecureSkipVerify is false/default false. If it is true with a custom verification callback, do not suppress a finding merely because the callback exists; classify it as unqualified unless the callback's verification behavior is established. A config or tls.Client wrapper that is built but never performs a handshake/use is also a near miss.",
+    "prerequisites": "Resolve exact stdlib field and client-use identities; track Config pointer/copy/Clone identity and writes before handshake; distinguish client from server use; discover callbacks set through helper or mutation paths; account for Transport and tls.Client consumers.",
+    "stop_gate": "Stop or preserve incomplete status when the final Config value, escape/mutation, client/server role, or callback behavior cannot be resolved. No string matching on field names and no claim that custom verification is correct from callback presence alone.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://pkg.go.dev/crypto/tls@go1.27.1",
+        "title": "Go crypto/tls package docs, go1.27.1"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/crypto/tls/common.go",
+        "title": "Go source tag go1.27.1: crypto/tls/common.go"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "go-archive-extraction-root-confinement",
+    "language": "Go",
+    "title": "Confine stdlib archive entry writes to the extraction root",
+    "analysis": "archive/tar and archive/zip expose archive-controlled names; their insecure-path diagnostics are conditional and do not establish filesystem confinement. In Go 1.27.1, tar ErrInsecurePath is gated by GODEBUG=tarinsecurepath=0, validates names but not link targets, and callers may ignore the error. ZIP ErrInsecurePath checks are also GODEBUG-gated. Go 1.24 introduced os.Root/OpenInRoot for directory-confined filesystem operations, subject to documented platform limitations.",
+    "apis": [
+      "archive/tar.Reader.Next",
+      "archive/tar.Header.Name",
+      "archive/zip.File.Name",
+      "archive/zip.File.Open",
+      "os.OpenRoot",
+      "os.Root.OpenFile/Create/Mkdir",
+      "os.OpenInRoot",
+      "os.OpenFile",
+      "os.Create",
+      "filepath.Join"
+    ],
+    "contract": "Trace an archive entry name to a filesystem write path. Treat direct writes using filepath.Join(root, archiveName) and ordinary os write APIs as potentially escaping; `os.Root` operations on the same root confine `..` and symlinks under their documented threat model. Do not assume tar/zip ErrInsecurePath is enabled, fatal, or validates tar link targets. Lexical filepath.IsLocal/Clean alone does not prove symlink/race safety. Start with a proven ../ escape in raw entries obtained by iterating Reader.File or Reader.Next. Do not treat all dynamic entry names as escaping, or assume Go filepath.Join has another runtime's absolute-component semantics.",
+    "positive": "An extractor takes tar.Header.Name or zip.File.Name and opens filepath.Join(destination, entryName) with os.OpenFile/os.Create without establishing component containment or using an exact destination os.Root.",
+    "near_miss": "The extractor opens one os.Root for the destination and writes each entry through that same root's OpenFile/Create/Mkdir methods. A lexical IsLocal check alone is not an equivalent near-miss for symlink or TOCTOU threats. Tar link targets must be analyzed separately from Header.Name.",
+    "prerequisites": "Prove exact archive API/member identity and entry-name provenance; track destination root identity and all normalization/validation; understand actual write APIs, symlink/hardlink handling, and return/error paths. Scope os.Root guarantees by GOOS; the Go docs note weaker TOCTOU protection for GOOS=js and do not promise mount-boundary confinement.",
+    "stop_gate": "Stop if archive metadata provenance, destination root identity, write path, symlink target semantics, or platform behavior is uncertain. Do not claim archive extraction is safe from a GODEBUG flag or lexical path filter alone.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://pkg.go.dev/archive/tar@go1.27.1",
+        "title": "Go archive/tar package docs, go1.27.1"
+      },
+      {
+        "url": "https://pkg.go.dev/archive/zip@go1.27.1",
+        "title": "Go archive/zip package docs, go1.27.1"
+      },
+      {
+        "url": "https://pkg.go.dev/os@go1.27.1",
+        "title": "Go os package docs, go1.27.1"
+      },
+      {
+        "url": "https://go.dev/blog/osroot",
+        "title": "Go blog: Traversal-resistant file APIs (os.Root introduced in Go 1.24)"
+      }
+    ],
+    "overlap": "Distinct stdlib archive/path APIs. Sharing a weakness family with third-party archive packages does not establish identical policy ownership.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "node-crypto-authenticated-decipher-finalization",
+    "language": "JavaScript/TypeScript (Node.js built-ins)",
+    "title": "Do not consume authenticated-decryption plaintext before decipher.final succeeds",
+    "analysis": "Node's crypto docs explicitly warn that plaintext from Decipheriv.update may have uncertain authenticity; for authenticated modes, authenticity is generally established only when the same decipher's final() succeeds. Missing or invalid authentication causes final() to throw and ciphertext must be discarded. This gives a concrete taint/typestate boundary where provisional plaintext must not reach parsing, storage, authorization, or other effects first.",
+    "apis": [
+      "node:crypto.createDecipheriv",
+      "Decipheriv.update",
+      "Decipheriv.setAAD",
+      "Decipheriv.setAuthTag",
+      "Decipheriv.final"
+    ],
+    "contract": "For authenticated modes documented by Node (GCM, CCM, OCB, chacha20-poly1305), treat update() output as unauthenticated until the exact same Decipheriv instance completes final() successfully; only then allow trusted use. Respect mode-specific ordering: setAuthTag before update for CCM, before final for GCM/OCB/chacha20-poly1305. If final throws, discard all accumulated output. Pure private staging/parsing alone is not an authenticity-bypass finding: require an effect, publication or trusted decision from the provisional bytes. Configure any application-owned consuming boundary explicitly.",
+    "positive": "Plaintext returned by update influences a concrete write/authorization/publication boundary before the same decipher final succeeds; a tampered input later makes final throw after the earlier effect.",
+    "near_miss": "Accumulate update output in a private buffer, call final(), and only after it returns successfully parse or publish the concatenated plaintext; discard the buffer on a thrown final(). Non-authenticated modes are outside this contract.",
+    "prerequisites": "Resolve exact node:crypto identities and authenticated algorithm mode; track one Decipheriv object and update outputs through aliases, callbacks, and async functions; model setAAD/setAuthTag ordering, final success/throw, and effect sinks. TypeScript wrappers must resolve to the Node built-in API, not a lookalike.",
+    "stop_gate": "Stop if mode, decipher identity, exception flow, or whether provisional bytes reach a security-sensitive effect cannot be proven. Do not treat any call to final on a different object or a caught final error as authentication success.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://nodejs.org/download/release/v24.16.0/docs/api/crypto.html",
+        "title": "Node.js v24.16.0 crypto API docs"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/nodejs/node/v24.16.0/lib/internal/crypto/cipher.js",
+        "title": "Node.js source tag v24.16.0: lib/internal/crypto/cipher.js"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint + typestate"
+  },
+  {
+    "id": "go-net-http-response-body-completion",
+    "language": "Go",
+    "title": "Close successful net/http client response bodies on every exit",
+    "analysis": "For successful Client.Do/Get calls, net/http returns a non-nil response Body that the caller is expected to close. The transport may not reuse a keep-alive connection unless the body is both read to EOF and closed; Close may trigger bounded asynchronous draining. This is a standard-library-specific lifecycle specialization, not a claim that an unclosed body always leaks permanently.",
+    "apis": [
+      "net/http.Client.Do/Get/Head/Post",
+      "net/http.Response.Body",
+      "io.ReadAll",
+      "io.Copy",
+      "io.Copy(io.Discard, body)",
+      "io.ReadCloser.Close"
+    ],
+    "contract": "Only treat a response body as caller-owned after the client call returns err == nil. Require close on all exits or a proven ownership transfer. Reading to EOF without Close is insufficient for the documented caller obligation; Close without full reading can still be correct, though connection reuse is not guaranteed. A non-nil Response with non-nil error is limited to redirect failure and its body is already closed.",
+    "positive": "resp, err := client.Do(req); after err is checked nil, an early return from a status/error branch bypasses resp.Body.Close and no helper takes ownership.",
+    "near_miss": "defer resp.Body.Close() immediately after the nil-error check, or pass the body to a proven owner that closes it on every path. Closing is still sufficient for the obligation when the caller intentionally does not consume the whole body.",
+    "prerequisites": "Resolve exact net/http client call and response/body identity; model err/response pairing, early return, defer, helper ownership transfer, callback/exception paths, and wrappers. Exclude server-side request bodies and request bodies closed by Transport.",
+    "stop_gate": "Stop if response/body identity or ownership transfer is unresolved. Do not flag all io.ReadAll calls, assume EOF implies Close, or label this a permanent resource leak without lifecycle evidence.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://pkg.go.dev/net/http@go1.27.1",
+        "title": "Go net/http package docs, go1.27.1"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/client.go",
+        "title": "Go source tag go1.27.1: net/http/client.go"
+      }
+    ],
+    "overlap": "stdlib net/http body closure is an API-specific specialization of existing Go lifecycle qualification, distinct from dependency-owned S3 models.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-owner",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "node-child-process-shell-boundary",
+    "language": "JavaScript/TypeScript (Node.js built-ins)",
+    "title": "Keep dynamic command text away from Node child_process shell APIs",
+    "analysis": "Node documents that exec() runs a command through a shell and warns against passing unsanitized input. spawn()/execFile() avoid a shell by default, but argv separation addresses shell metacharacter interpretation only; it does not prove an argument is not interpreted as an option, a path is safe, or the executable is trusted.",
+    "apis": [
+      "node:child_process.exec",
+      "execSync",
+      "spawn",
+      "spawnSync",
+      "execFile",
+      "execFileSync",
+      "options.shell"
+    ],
+    "contract": "Track attacker-controlled command text into an exact shell-interpreting API: exec/execSync or spawn/execFile variants with shell:true. Do not report shell injection solely because tainted data is one argv element with shell disabled. Keep option injection, executable selection, and filesystem path validation as separate contracts.",
+    "positive": "exec('tool --input ' + request.query.value) reaches a child_process.exec call, so shell syntax in the dynamic portion is interpreted by the command shell.",
+    "near_miss": "spawn('tool', ['--input', request.query.value], {shell:false}) separates arguments from shell text for this specific sink. It is not automatically safe against option injection or unsafe executable/path selection.",
+    "prerequisites": "Use exact Node built-in member identities; propagate taint through template/string operations and options; resolve shell defaults by API/version and explicit options; model aliases and wrapper calls. Do not infer protection from argv alone beyond shell interpretation.",
+    "stop_gate": "Do not open a duplicate candidate: route to the existing public JS/TS child-process security wave. Stop any rule draft if shell option resolution, built-in identity, or taint flow cannot be proven; do not claim argv prevents option injection.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://nodejs.org/download/release/v24.16.0/docs/api/child_process.html",
+        "title": "Node.js v24.16.0 child_process API docs"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/nodejs/node/v24.16.0/lib/child_process.js",
+        "title": "Node.js source tag v24.16.0: lib/child_process.js"
+      }
+    ],
+    "overlap": "Node shell execution is already in the JavaScript/TypeScript public security wave; contribute precise built-in API cases to that owner.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-owner",
+    "analysis_kind": "taint"
+  },
+  {
+    "status": "research-only",
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "id": "rust-child-reaping",
+    "language": "rust",
+    "title": "Owned std::process::Child must reach a proven reap or ownership transfer",
+    "analysis": "typestate",
+    "apis": [
+      "std::process::Command::spawn",
+      "std::process::Child::{wait,wait_with_output,try_wait,kill}"
+    ],
+    "contract": "For a successfully spawned, locally owned child in a long-running Unix process, require a successful wait/wait_with_output or try_wait returning Ok(Some(_)) before ownership is discarded. kill alone is not a reap. Model live, reaped and transferred states; do not treat drop as waiting.",
+    "positive": "Spawn a fixed harmless child; an early error path drops the local Child without a wait. A second positive calls kill then drops the handle.",
+    "near_miss": "Successful wait; try_wait Ok(Some(_)); helper takes ownership and demonstrably waits; Command::output/status waits internally. try_wait Ok(None) remains positive if abandoned.",
+    "prerequisites": "Exact std declarations and successful-result binding; moved ownership, aliases, Result/Option branch predicates, helper summaries, every supported exit. Restrict initial claim to Unix long-running owner procedures.",
+    "stop_gate": "Stop when native std identity, moves, escape, result polarity or exit partition is unproven. Do not infer universal OS exhaustion or a violation for intentional process-lifetime children.",
+    "priority": "P1",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/process/struct.Child.html",
+        "title": "Rust 1.98.1 Child"
+      },
+      {
+        "url": "https://doc.rust-lang.org/std/process/struct.Command.html",
+        "title": "Rust 1.98.1 Command"
+      }
+    ],
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "status": "research-only",
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "id": "rust-explicit-shell-command",
+    "language": "rust",
+    "title": "Untrusted data enters an explicit shell command executed by std::process::Command",
+    "analysis": "taint",
+    "apis": [
+      "std::process::Command::{new,arg,args,spawn,status,output}"
+    ],
+    "contract": "On a pinned Unix platform, prove a Command targeting an explicitly reviewed shell such as /bin/sh receives untrusted shell syntax in its -c command operand and is executed. Generic Command arguments are data, not shell syntax. Windows cmd.exe/batch parsing requires a separate contract.",
+    "positive": "CLI input is formatted into the argument following -c on Command::new(\"/bin/sh\"), then status is called.",
+    "near_miss": "Fixed /usr/bin/printf executable with constant format and input as a separate data argument; constructed-but-never-executed shell command; taint confined to an unused variable.",
+    "prerequisites": "Command builder identity and mutation order; exact argv slot and shell/executable identity; trusted-boundary configuration for CLI input; source-to-command-string flow and execution correlation.",
+    "stop_gate": "Stop if final program/argv, shell parsing context, source trust or execution cannot be proven. A data argument can still cause application-specific option injection; this lead makes only a shell-syntax claim.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/process/struct.Command.html",
+        "title": "Rust 1.98.1 Command argument semantics"
+      }
+    ],
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "status": "research-only",
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "id": "rust-path-root-containment",
+    "language": "rust",
+    "title": "Untrusted std::path composition reaches a filesystem write outside a declared root",
+    "analysis": "taint",
+    "apis": [
+      "std::path::Path::join",
+      "std::path::PathBuf::push",
+      "std::fs::{write,File::create,OpenOptions::open}"
+    ],
+    "contract": "For an application-declared storage root, track untrusted path components through std path composition into an executed write and prove the resulting target can escape the root. Absolute components replace the base; lexical checks do not establish symlink/race safety.",
+    "positive": "A request-derived absolute component is joined to a fixed storage root and passed to fs::write, with no effective containment gate.",
+    "near_miss": "The same value is written as file contents to a fixed target; a closed allowlist maps to constant relative names; path construction is unused. Component-aware guarded writes need separately qualified path and symlink assumptions.",
+    "prerequisites": "Exact std identity including trait/inherent resolution; path mutation and platform components; declared root/trust boundary; write target binding, guard dominance and filesystem assumptions.",
+    "stop_gate": "Stop when path semantics, root contract or write reachability is unknown. Neither join nor canonicalize is a universal sanitizer. Record platform, symlink and TOCTOU exclusions.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/path/struct.PathBuf.html",
+        "title": "Rust 1.98.1 PathBuf composition"
+      },
+      {
+        "url": "https://doc.rust-lang.org/std/fs/fn.write.html",
+        "title": "Rust std fs write"
+      }
+    ],
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "taint"
+  },
+  {
+    "status": "research-only",
+    "overlap": "An open engine investigation reports missing global C declaration binding. Recheck the current exact build before qualification; no spelling fallback.",
+    "id": "c-stdio-format-taint",
+    "language": "c/cpp",
+    "title": "Untrusted bytes reach the format operand of a libc printf-family call",
+    "analysis": "taint",
+    "apis": [
+      "printf",
+      "fprintf",
+      "sprintf",
+      "snprintf",
+      "vprintf",
+      "vfprintf",
+      "vsnprintf"
+    ],
+    "contract": "Track attacker-controlled input into the exact format operand of a reached libc formatted-output function, including wrappers. Data in a constant-format %s argument is a near miss. A bounded destination does not make a tainted format safe.",
+    "positive": "Read external bytes into a buffer and pass it as fprintf(log, input); snprintf(out, n, input) is another positive.",
+    "near_miss": "fprintf(log, \"%s\", input); equivalent constant-format wrapper; attacker input does not reach the format position; workspace function named printf.",
+    "prerequisites": "Header-proven global external identity; correct zero-based format positions (printf 0, fprintf/sprintf 1, snprintf 2); varargs/wrapper flow; source buffer memory identity and extent. Separate libc/toolchain/platform profile.",
+    "stop_gate": "An existing engine investigation reports a global C declaration binding gap; this pass did not reproduce it on a current build. Stop unless exact native identity binds; no name-based endpoint or severity assertion from API presence alone.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://sourceware.org/glibc/manual/2.39/html_node/Formatted-Output-Functions.html",
+        "title": "glibc 2.39 formatted output"
+      },
+      {
+        "url": "https://sourceware.org/glibc/manual/latest/html_node/Variable-Arguments-Output.html",
+        "title": "glibc variadic output"
+      }
+    ],
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "needs-identity-recheck",
+    "analysis_kind": "taint"
+  },
+  {
+    "status": "research-only",
+    "overlap": "Reuse existing lifecycle specialization under the C/C++ I/O-resource qualification owners. FILE versus subprocess release models belong there.",
+    "id": "c-stream-close-protocol",
+    "language": "c/cpp",
+    "title": "Track FILE ownership and the correct close operation for ordinary and subprocess streams",
+    "analysis": "typestate",
+    "apis": [
+      "fopen",
+      "fclose",
+      "popen",
+      "pclose",
+      "fread",
+      "fwrite"
+    ],
+    "contract": "After a successful acquisition, distinguish an ordinary FILE stream from a subprocess stream. The former closes via fclose; the latter closes/waits via pclose. Subsequent use or duplicate close on a proven closed alias is a protocol violation. Returning a stream can transfer ownership.",
+    "positive": "Use fwrite through an alias after fclose on an ordinary FILE; abandon a popen stream without pclose on a supported owner exit.",
+    "near_miss": "A helper takes ownership and invokes the correct close; acquisition returns null; an unrelated FILE is closed; process termination requires a different lifetime contract.",
+    "prerequisites": "Exact external declaration identity; null-result guards; allocation/alias and ownership summaries; normal/error exits; correct release behavior including a close operation that reports an error.",
+    "stop_gate": "Stop at any exact external identity gap, may-alias/escape, unknown release behavior or unsupported exits. Existing generic lifecycle policy is not proof of libc ownership or subprocess wait semantics.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://sourceware.org/glibc/manual/2.23/html_node/Closing-Streams.html",
+        "title": "glibc 2.23 close semantics"
+      },
+      {
+        "url": "https://sourceware.org/glibc/manual/2.40/html_node/Pipe-to-a-Subprocess.html",
+        "title": "glibc 2.40 subprocess streams"
+      }
+    ],
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-owner",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "php-proc-open-paired-ownership",
+    "language": "php",
+    "title": "proc_open process and pipe ownership must be settled in order",
+    "analysis": "typestate",
+    "apis": [
+      "proc_open",
+      "fclose",
+      "proc_close"
+    ],
+    "contract": "After successful proc_open, correlate the returned process resource with the output pipes. Track owned pipes and require closure before blocking proc_close where a still-open pipe can prevent child completion. Resource release and pipe release are distinct events; no deadlock claim without a concrete blocking dependency.",
+    "positive": "A fixed harmless child waits for EOF on stdin while the parent calls proc_close with its corresponding write pipe still open.",
+    "near_miss": "Parent closes its stdin pipe before proc_close and drains/closes owned output pipes; supplied inherited STDIN/STDOUT resources must not be assumed to be newly owned pipes.",
+    "prerequisites": "Exact PHP runtime identities; output-parameter array propagation; per-index pipe/resource pairing; child wait-for-EOF behavior and owned-versus-inherited descriptor classification; error exits.",
+    "stop_gate": "Stop when descriptor shape, process/pipe correlation or child blocking behavior is unknown. A missing-close advisory is weaker than a proven deadlock.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://www.php.net/manual/en/function.proc-open.php",
+        "title": "PHP proc_open manual; PHP 7.4+ array-command distinction"
+      }
+    ],
+    "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "php-runtime-deserialization",
+    "language": "php",
+    "title": "Untrusted bytes reach runtime unserialize",
+    "analysis": "taint",
+    "apis": [
+      "unserialize"
+    ],
+    "contract": "Prove untrusted serialized bytes reach the first argument. allowed_classes is not a blanket safety guarantee; use data-only interchange as the close alternative. Authentication of stored bytes must precede deserialization with an exact integrity/trust contract.",
+    "positive": "User-supplied bytes reach unserialize, including an allowed_classes=false variation that must not be declared universally safe.",
+    "near_miss": "Data-only JSON decoding with schema validation for this object-deserialization claim; immutable trusted fixture bytes. A hash without a verified secret integrity relationship does not remove taint.",
+    "prerequisites": "Exact builtin identity; source trust and byte propagation through storage/decoding; version/options; if modeled, integrity result, same bytes and dominance before use.",
+    "stop_gate": "Existing research routing: do not open a duplicate qualification ticket. Stop at unresolved trust, builtin identity or effective integrity guard.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://www.php.net/unserialize",
+        "title": "PHP unserialize security warning"
+      }
+    ],
+    "overlap": "Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-catalog-routing",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "ruby-marshal-untrusted-load",
+    "language": "ruby",
+    "title": "Untrusted bytes reach Ruby Marshal.load/restore",
+    "analysis": "taint",
+    "apis": [
+      "Marshal.load",
+      "Marshal.restore"
+    ],
+    "contract": "Track untrusted bytes or a stream into runtime object deserialization. Hooks can execute during loading; post-load type checking cannot guard the load itself.",
+    "positive": "Bytes read at an explicit external input boundary reach Marshal.load, then a class check is made afterward.",
+    "near_miss": "Trusted immutable test data; data-only parser for this specific object-deserialization claim; unrelated local object method named load.",
+    "prerequisites": "Exact runtime module/method identity including aliases; byte/stream provenance, wrapper summaries; trust boundary configuration.",
+    "stop_gate": "Existing catalog routing: do not open duplicate work. Unknown runtime identity or input trust remains incomplete.",
+    "priority": "P2",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Marshal.html",
+        "title": "Ruby 3.4 Marshal security guidance"
+      }
+    ],
+    "overlap": "Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-catalog-routing",
+    "analysis_kind": "taint"
+  },
+  {
+    "status": "research-only",
+    "id": "rust-maybeuninit-initialization-state",
+    "language": "rust",
+    "title": "Prove MaybeUninit initialization before assuming a T value",
+    "analysis": "Track a MaybeUninit object's state from uninitialized through a complete valid write to an unsafe value-producing operation. This is a type-specific initialization proof, not a blanket unsafe-call ban.",
+    "apis": [
+      "std::mem::MaybeUninit::{uninit,new,write,assume_init,assume_init_ref,assume_init_mut,assume_init_read,assume_init_drop}"
+    ],
+    "contract": "For an exact MaybeUninit<T> created in an uninitialized state, report an assume_init-family operation only when analysis proves that the same object is still uninitialized on a feasible reaching path. A successful write of a valid T or MaybeUninit::new establishes initialization. zeroed is not a generic initializer: all-zero validity and T's other invariants are type-specific. This lead covers missing initialization only; duplicate assume_init_read on non-Copy data is a separate ownership contract.",
+    "positive": "let slot = std::mem::MaybeUninit::<u32>::uninit();\nlet value = unsafe { slot.assume_init() }; // UB: no value was written",
+    "near_miss": "let mut slot = std::mem::MaybeUninit::<u32>::uninit();\nslot.write(42);\nlet value = unsafe { slot.assume_init() }; // the same object was fully initialized",
+    "prerequisites": "Resolve exact std declarations and MaybeUninit<T>; track the same object through supported moves and aliases; establish full initialization and T validity at each unsafe consumer; model branches and the successful result of initialization helpers.",
+    "stop_gate": "Stop if raw-pointer writes, field or array initialization, FFI out-pointers, helper calls, aliases, or type invariants prevent proving the same object's initialized state. Do not infer safety from zeroed or from the presence of any write; preserve unknown as incomplete.",
+    "priority": "P1",
+    "confidence": "high standard-library safety contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/mem/union.MaybeUninit.html",
+        "title": "Rust 1.98.1 MaybeUninit"
+      }
+    ],
+    "overlap": "Distinct memory-initialization state from generic acquired-resource cleanup. No existing public Rust policy in the reviewed pack proves this object-specific initialization invariant.",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "status": "research-only",
+    "id": "rust-condvar-predicate-recheck",
+    "language": "rust",
+    "title": "Recheck the guarded predicate after Condvar::wait returns",
+    "analysis": "Track the mutex-protected predicate associated with a Condvar across wait and wakeup. A wake does not establish that the predicate is true.",
+    "apis": [
+      "std::sync::Condvar::{wait,wait_timeout,wait_while,wait_timeout_while}",
+      "std::sync::{Mutex,MutexGuard}"
+    ],
+    "contract": "When code waits because a mutex-protected predicate is false and then consumes state as though the predicate became true, the same predicate must be checked again after every wait return while holding the reacquired guard. Condvar::wait can return spuriously; another waiter can also consume a condition before this thread reacquires the mutex. wait_while and wait_timeout_while repeat the predicate check. This is not a finding for notification waits whose continuation safely handles a false predicate.",
+    "positive": "let mut g = lock.lock().unwrap();\nif g.queue.is_empty() { g = cv.wait(g).unwrap(); }\nlet item = g.queue.pop().unwrap(); // may be empty after wake",
+    "near_miss": "let mut g = lock.lock().unwrap();\nwhile g.queue.is_empty() { g = cv.wait(g).unwrap(); }\nlet item = g.queue.pop().unwrap();\n// Condvar::wait_while(g, |state| state.queue.is_empty()) is another guarded form.",
+    "prerequisites": "Prove exact Condvar and MutexGuard identities; bind the guard returned by wait; identify the same predicate before waiting and the dependent operation after reacquisition; model loop guards, poisoning exits, and relevant branches.",
+    "stop_gate": "Stop if the mutex/predicate relationship or post-wake control dependence is unknown. Do not flag every wait call or replace missing Rust guard facts with syntax-only guesses; report incomplete until predicate and guard flow are supported.",
+    "priority": "P2",
+    "confidence": "high documented wakeup contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/sync/struct.Condvar.html",
+        "title": "Rust 1.98.1 Condvar"
+      }
+    ],
+    "overlap": "A distinct predicate/wakeup protocol, separate from generic resource lifecycle and API-name bans. The candidate requires guard and control-flow evidence before any policy claim.",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "status": "research-only",
+    "id": "rust-bufwriter-drop-hidden-flush-error",
+    "language": "rust",
+    "title": "Do not report successful output when BufWriter drop hides a pending flush failure",
+    "analysis": "Track buffered output and its completion state through an explicitly declared delivery or commit boundary. BufWriter::drop attempts a flush but cannot report a flush error to the caller.",
+    "apis": [
+      "std::io::BufWriter::{with_capacity,write,write_all,flush,into_inner,into_parts}",
+      "std::ops::Drop::drop"
+    ],
+    "contract": "Only for an application-declared output boundary where success promises delivery, report a BufWriter that still has pending bytes when control returns success without a checked completion transition: Drop attempts to flush but ignores any error. A successful checked flush or checked into_inner discharges the pending-output state. into_parts intentionally returns unwritten bytes and is a near miss when that data is retained or retried. This does not imply durable storage; File::sync_all is a separate contract. For a generic underlying buffered writer, into_inner only discharges this BufWriter layer; require the separately declared downstream completion contract. Empty buffers and successful prior flush with no later writes are near misses.",
+    "positive": "fn publish(file: std::fs::File) -> std::io::Result<()> {\n    let mut out = std::io::BufWriter::with_capacity(128, file);\n    out.write_all(b\"record\")?;\n    Ok(()) // declared publication succeeded; drop may hide a failed flush\n}",
+    "near_miss": "out.write_all(b\"record\")?;\nout.flush()?; // propagate delivery failure before reporting success\nOk(())\n// Checked into_inner is another completion path; into_parts is safe when the returned bytes are handled.",
+    "prerequisites": "Resolve the exact BufWriter instance and underlying declared output sink; prove non-empty buffered data at the completion boundary; bind successful write, flush and into_inner outcomes; know the application-declared success/publication boundary and ownership at drop.",
+    "stop_gate": "Do not report a drop by itself, best-effort output, writers transferred to a caller, or a buffer whose pending state is unknown. Route an explicitly discarded flush/into_inner Result to ignored-result coverage; do not infer durability from flush success.",
+    "priority": "P2",
+    "confidence": "high documented Drop/flush behavior; application boundary and analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/io/struct.BufWriter.html",
+        "title": "Rust 1.98.1 BufWriter"
+      }
+    ],
+    "overlap": "This is the hidden I/O error from Drop at a declared output boundary, not generic unclosed-resource reporting or an explicitly discarded Result. Require an application completion contract before qualifying it.",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "status": "research-only",
+    "id": "rust-unix-pre-exec-callback-safety",
+    "language": "rust",
+    "title": "Audit operations in Unix CommandExt::pre_exec callbacks",
+    "analysis": "The pre_exec callback runs in a restricted execution state in the forked child before exec. Rust documents that allocation, std::env access and mutex acquisition are not guaranteed to work there; valid operations must respect the platform's async-signal-safety rules.",
+    "apis": [
+      "std::os::unix::process::CommandExt::pre_exec",
+      "std::process::Command::{spawn,status,output}",
+      "std::env::{var,var_os}",
+      "std::sync::Mutex::lock"
+    ],
+    "contract": "A concern requires the exact pre_exec closure to contain or reach an operation that is not safe in the post-fork child and the same Command to be executed by spawn, status or output on Unix. Registration alone is not a finding. CommandExt::exec does not fork and is outside this contract.",
+    "positive": "use std::os::unix::process::CommandExt;\nlet mut cmd = std::process::Command::new(\"helper\");\nunsafe { cmd.pre_exec(|| { let _ = std::env::var(\"MODE\"); Ok(()) }); }\nlet _child = cmd.spawn()?;",
+    "near_miss": "use std::os::unix::process::CommandExt;\nlet mut cmd = std::process::Command::new(\"helper\");\nunsafe { cmd.pre_exec(|| Ok(())); }\nlet _child = cmd.spawn()?;",
+    "prerequisites": "Prove Unix target, callback identity and body, same Command reaching spawn/status/output, and direct or transitive operation effects against a pinned platform's async-signal-safe contract. Treat multiple registered closures and early error returns accurately.",
+    "stop_gate": "Defer until closure capture, helper calls, macros, platform function allowlists and post-fork execution are modeled. Do not flag every pre_exec registration; exclude CommandExt::exec because it does not fork.",
+    "priority": "P2",
+    "confidence": "high documented execution context; exact safe-operation set and analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/os/unix/process/trait.CommandExt.html",
+        "title": "Rust 1.98.1 Unix CommandExt"
+      },
+      {
+        "url": "https://doc.rust-lang.org/std/process/struct.Command.html",
+        "title": "Rust 1.98.1 Command"
+      }
+    ],
+    "overlap": "A post-fork callback contract distinct from child reaping and shell syntax. Keep Unix scope and callback execution separate from ordinary Command construction.",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "deferred-proof-heavy",
+    "analysis_kind": "execution-context safety precondition"
+  },
+  {
+    "status": "research-only",
+    "id": "rust-process-environment-mutation-thread-state",
+    "language": "rust",
+    "title": "Process environment mutation has a global concurrency precondition on non-Windows targets",
+    "analysis": "Rust marks std::env::set_var and remove_var unsafe in Edition 2024 because environment mutation may be unsound while another thread reads or writes the process environment on non-Windows targets. The documentation says standard-library and C-library readers prevent a practical closed-world proof.",
+    "apis": [
+      "std::env::{set_var,remove_var,var,var_os}",
+      "std::thread::{spawn,Builder::spawn,JoinHandle::join}"
+    ],
+    "contract": "On Windows the documented mutation is sound in multithreaded programs; on non-Windows, soundness requires no other thread concurrently accessing the process environment through functions or global variables outside std::env. A thread merely existing is not enough to prove a violation, while a complete proof must account for opaque standard-library and C-library readers. This remains a platform-wide concurrency precondition, not a taint rule. The exact documented prohibition concerns concurrent access through functions or global variables outside std::env. Do not treat std::env::var_os on another thread alone as a violation witness.",
+    "positive": "On a pinned non-Windows target, a live foreign/native helper thread is proven to read the process environment outside the synchronization used by std::env while the calling thread executes unsafe std::env::set_var. Require a witness of overlapping access; two calls through std::env alone do not establish the documented foreign-reader violation.",
+    "near_miss": "The mutation occurs before any other thread starts on a non-Windows target, or occurs on Windows under the documented platform guarantee.",
+    "prerequisites": "Pin target OS and Rust edition; establish concurrent read/write overlap across threads and environment-access effects, including relevant standard-library, native-library and global-variable paths.",
+    "stop_gate": "Defer unless a sound closed-world concurrency and environment-reader proof exists. The 2024 unsafe marker is not itself evidence of misuse, and absence of a visible reader is not proof of safety.",
+    "priority": "P2",
+    "confidence": "high documented platform contract; static proof intentionally deferred",
+    "sources": [
+      {
+        "url": "https://doc.rust-lang.org/std/env/fn.set_var.html",
+        "title": "Rust 1.98.1 std::env::set_var safety"
+      },
+      {
+        "url": "https://doc.rust-lang.org/stable/edition-guide/rust-2024/newly-unsafe-functions.html",
+        "title": "Rust 2024 newly unsafe functions"
+      }
+    ],
+    "overlap": "No blanket API prohibition proposed. This is a process-global concurrency precondition whose hidden readers make ordinary call-site matching unsound.",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "deferred-proof-heavy",
+    "analysis_kind": "concurrency safety precondition"
+  },
+  {
+    "id": "ruby-net-http-active-peer-verification-disabled",
+    "language": "ruby",
+    "title": "Active HTTPS Net::HTTP clients can disable peer verification",
+    "analysis": "Net::HTTP exposes SSL configuration on the client object. In Ruby 3.4, the Net::HTTP.start use_ssl path defaults verify_mode to VERIFY_PEER, while the option hash can override it with VERIFY_NONE. A finding must correlate the exact effective configuration with a request that actually starts an HTTPS session; merely constructing or configuring an unused client is not enough.",
+    "apis": [
+      "Net::HTTP.start(address, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE)",
+      "Net::HTTP#use_ssl=",
+      "Net::HTTP#verify_mode=",
+      "Net::HTTP#request",
+      "Net::HTTP.get_response",
+      "Net::HTTP#get"
+    ],
+    "contract": "Scope this hypothesis to CRuby 3.4.0 with the shipped default gem net-http 0.6.0 and OpenSSL bindings resolved by that exact runtime. Report only when the same Net::HTTP instance uses TLS, its effective verify_mode is VERIFY_NONE at connection setup, and an HTTPS request reaches the active session. VERIFY_PEER is a near miss. A custom verification callback or a later configuration override is unresolved unless its effective behavior is proven.",
+    "positive": "http = Net::HTTP.new(host, 443); http.use_ssl = true; http.verify_mode = OpenSSL::SSL::VERIFY_NONE; http.start { |active| active.get('/health') }",
+    "near_miss": "Net::HTTP.start(host, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_PEER) { |http| http.get('/health') }; also treat an unused configured client as a near miss.",
+    "prerequisites": "Resolve exact Net::HTTP object and method identities; track use_ssl and verify_mode writes into the same object through start/request; distinguish construction from an executed TLS session; model effective option defaults and overrides; pin Ruby and default-gem versions.",
+    "stop_gate": "Stop if configuration writes cannot be associated with the active client/session, if verification callbacks or overrides have unresolved effects, or if request execution cannot be shown. Do not infer disabled verification from HTTPS use, a nil field, or an unqualified method name.",
+    "priority": "P1",
+    "confidence": "high for Ruby 3.4 API defaults and controls; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Net/HTTP.html",
+        "title": "Net::HTTP Ruby 3.4 API and implementation"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/NEWS_md.html",
+        "title": "Ruby 3.4 default gem versions"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/OpenSSL/SSL/SSLContext.html",
+        "title": "OpenSSL SSLContext verification modes"
+      }
+    ],
+    "overlap": "Existing runtime network-effect models do not establish this verification protocol. Keep standard-library Net::HTTP acceptance separate from third-party client verification work, and recheck adjacent verification ownership before creating an issue.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "candidate",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "ruby-open3-popen3-paired-pipe-draining",
+    "language": "ruby",
+    "title": "Open3.popen3 can deadlock when stdout and stderr are drained sequentially",
+    "analysis": "Open3.popen3 exposes separate stdout and stderr pipes. Ruby's documentation warns that each pipe has a fixed-size buffer and reading extensively from one without draining the other can deadlock. This is a child-output and parent-read ordering protocol, separate from command injection and from forgetting to close a returned stream.",
+    "apis": [
+      "Open3.popen3(command, *args)",
+      "Open3.capture3(command, *args)"
+    ],
+    "contract": "Scope to Ruby 3.4.0 with the exact loaded Open3 implementation pinned. A possible finding requires proof that the child writes enough bytes to one returned pipe to fill its effective OS buffer before it exits or writes the other stream, while the parent waits for the other stream to reach EOF before draining the first. The guarantee is execution and environment dependent; sequential reads alone do not prove a deadlock.",
+    "positive": "Open3.popen3('ruby', '-e', \"STDERR.write('x' * 1_000_000); STDOUT.write('done')\") do |_stdin, stdout, stderr, _wait_thr|\n  stdout.read  # waits for EOF while the child may be blocked on a full stderr pipe\n  stderr.read\nend",
+    "near_miss": "Open3.capture3('ruby', '-e', \"STDERR.write('x' * 1_000_000); STDOUT.write('done')\") drains stdout and stderr concurrently in its implementation and returns both outputs with process status.",
+    "prerequisites": "Prove exact Open3.popen3 result-to-stream identity, child write volume/order and parent blocking read order; pin OS/runtime and pipe behavior for the fixture; distinguish capture3's concurrent readers and bounded output from the raw returned pipes.",
+    "stop_gate": "Defer if static evidence cannot prove the child can exceed the relevant pipe capacity before the parent drains that stream, or if threads, helpers, callbacks, or alternate reads change the order. Do not report from a lexical stdout.read followed by stderr.read pattern alone.",
+    "priority": "P2",
+    "confidence": "high for documented deadlock condition; proof feasibility low and environment-specific",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Open3.html",
+        "title": "Open3 Ruby 3.4 API and pipe deadlock guidance"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Process.html",
+        "title": "Process.detach independently reaps children"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/ruby/ruby/v3_4_0/lib/open3.rb",
+        "title": "CRuby v3_4_0 Open3 implementation and version-pinned behavior"
+      },
+      {
+        "url": "https://github.com/ruby/ruby/blob/v3_4_0/lib/open3/version.rb",
+        "title": "Ruby v3_4_0 shipped Open3 version"
+      }
+    ],
+    "overlap": "No Ruby public policy or semantic model found for this paired-stream protocol. The contract is distinct from the open Ruby lifecycle work; retain it as deferred until child output volume and blocking order can be proved.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "deferred-proof-heavy",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "ruby-open3-popen3-owned-pipe-closure",
+    "language": "ruby",
+    "title": "Open3.popen3 non-block callers own the returned pipe cleanup",
+    "analysis": "Open3.popen3 with a block closes the supplied streams and joins its wait thread on block exit. In non-block form it returns stdin, stdout, stderr, and a wait thread created by Process.detach; callers should close the three streams, while the detached wait thread independently reaps the child. Missing wait_thr.value is not evidence of an unreaped child. This is a narrow API-specific stream-ownership extension to Ruby lifecycle work.",
+    "apis": [
+      "Open3.popen3(command, *args)",
+      "IO#close",
+      "Process::Waiter#value (status retrieval, not required for reaping)"
+    ],
+    "contract": "Scope to CRuby 3.4.0 with the exact loaded Open3 implementation pinned. In non-block form, each returned pipe owned by the caller should be closed unless ownership is explicitly transferred. The block form closes the streams and joins the wait thread. Open3's wait thread is established via Process.detach, so wait_thr.value is status retrieval rather than mandatory reaping.",
+    "positive": "stdin, stdout, stderr, _wait_thr = Open3.popen3('worker'); consume(stdout); return # stdin/stdout/stderr are left open on an early exit",
+    "near_miss": "Open3.popen3('worker') { |stdin, stdout, stderr, _wait_thr| consume(stdout) } # block cleanup closes streams and joins wait thread; explicit ensure closure also discharges caller-owned streams",
+    "prerequisites": "Prove exact Open3 result tuple and stream identities; model aliasing, ensure paths, exceptions, block form and explicit ownership transfer; treat wait_thr.value as status consumption rather than mandatory cleanup.",
+    "stop_gate": "Route to existing Ruby lifecycle ownership and stop if returned stream identity, exit coverage, or transfer cannot be established. Avoid a new general process/resource leak engine or claims about zombies without direct evidence.",
+    "priority": "P2",
+    "confidence": "high for API stream-close contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Open3.html",
+        "title": "Open3 Ruby 3.4 API"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/ruby/ruby/v3_4_0/lib/open3.rb",
+        "title": "CRuby v3_4_0 Open3 implementation: Process.detach, stream close, wait_thread.join"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Process.html",
+        "title": "Process.detach independently reaps children"
+      },
+      {
+        "url": "https://github.com/ruby/ruby/blob/v3_4_0/lib/open3/version.rb",
+        "title": "Ruby v3_4_0 shipped Open3 version"
+      }
+    ],
+    "overlap": "Route returned-pipe acquisition and cleanup models to existing Ruby lifecycle qualification. Generic lifecycle discovery does not certify Ruby coverage or this tuple mapping. Process.detach reaps independently; wait thread value retrieves status.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-owner",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "ruby-tempfile-create-unlinked-owner",
+    "language": "ruby",
+    "title": "Tempfile.create without a block leaves a persistent file to its caller",
+    "analysis": "Tempfile.create has distinct cleanup semantics by invocation form. In Ruby 3.4, the default non-block, non-anonymous form does not remove the file automatically; the caller should close it and remove it when no longer needed. The block form closes and removes the path before returning, and anonymous: true removes it before returning. Tempfile.new relies on a finalizer with nondeterministic timing and is not a safe near-miss proof of prompt cleanup.",
+    "apis": [
+      "Tempfile.create(basename, tmpdir, anonymous: false)",
+      "Tempfile.create(..., &block)",
+      "Tempfile.create(..., anonymous: true)",
+      "Tempfile.new"
+    ],
+    "contract": "Scope to CRuby 3.4.0 with default gem tempfile 0.3.1. For the default non-block, anonymous:false form, the returned File and path remain caller-owned; close alone does not remove the path. A finding requires evidence the file is intended to be temporary and is no longer needed; an intentionally retained, renamed, or transferred artifact is not a cleanup violation. The block form closes and unlinks; anonymous:true removes before return. Platform-specific anonymous behavior stays version and OS scoped. The deletion obligation applies to a declared temporary-use scope when the file is no longer needed. A deliberately retained file, a successfully renamed output artifact, or transferred ownership is not a missing-unlink finding.",
+    "positive": "A declared temporary-use helper obtains f = Tempfile.create, writes a temporary payload, closes f, and exits with no transfer or rename. File.exist?(f.path) remains true; fixture must pin the intended deletion boundary.",
+    "near_miss": "Tempfile.create { |f| write_scratch_data(f) }; f = Tempfile.create; write_scratch_data(f); f.close; File.unlink(f.path); # or explicitly rename/transfer a file intended to persist A successfully renamed or deliberately retained output artifact has a different ownership contract.",
+    "prerequisites": "Resolve exact Tempfile.create identity, return value/path identity, anonymous flag, block form and file ownership; model close versus unlink separately, all exits, helper transfer and platform-specific behavior.",
+    "stop_gate": "Route to Ruby lifecycle ownership; stop if the analyzer cannot track the returned File and path, distinguish close from unlink, model block/anonymous mode and explicit transfer, or prove the path was intended to be transient and no longer needed. Do not diagnose an intentionally retained/renamed artifact or rely on Tempfile.new finalizer timing as proof of prompt deletion.",
+    "priority": "P2",
+    "confidence": "high for Ruby 3.4 API cleanup contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Tempfile.html",
+        "title": "Tempfile Ruby 3.4 API"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/NEWS_md.html",
+        "title": "Ruby 3.4 Tempfile behavior and default gem versions"
+      }
+    ],
+    "overlap": "Route close/unlink and invocation-form models to existing Ruby lifecycle qualification. This is an API-specific extension, not a separate lifecycle engine or a production-support claim.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-owner",
+    "analysis_kind": "typestate"
+  },
+  {
+    "id": "ruby-kernel-open-pipe-command-taint",
+    "language": "ruby",
+    "title": "A leading pipe makes Ruby 3.4 Kernel.open execute a command",
+    "analysis": "For Ruby 3.4 core Kernel.open, a path beginning with `|` selects subprocess behavior; otherwise it opens a file. Untrusted input reaching the command text after this prefix can reach shell execution. Ruby 3.4 deprecates this leading-pipe form for removal in Ruby 4.0, so the finding must be pinned to a runtime that still supports it and must not generalize to File.open.",
+    "apis": [
+      "Kernel.open(path, mode, perm, **opts)",
+      "File.open(path, mode, perm, **opts) (near-miss identity)"
+    ],
+    "contract": "Scope only to CRuby 3.4.0 core Kernel.open where the executed string path begins with `|`; Ruby 4.0 is excluded because this mode is removed. Track attacker-controlled command text into the leading-pipe form and an actual call. Ordinary file paths and File.open do not satisfy this contract. For a shell-injection claim, also prove shell-language selection or metacharacter flow under the pinned command-invocation contract; pipe mode alone can invoke an executable directly. Unauthorized executable selection is a separate declared trust boundary.",
+    "positive": "Kernel.open('| /usr/bin/printf %s ' + params[:text]) { |pipe| pipe.read } # An attacker-controlled shell metacharacter in text selects shell interpretation under the pinned invocation rules.",
+    "near_miss": "File.open(params[:path]) { |file| file.read }; Kernel.open('report.txt') { |file| file.read } File.open is only a near miss for this command-execution contract; an attacker-selected filesystem path needs its own access policy.",
+    "prerequisites": "Resolve Kernel.open versus File.open identity, prove the leading pipe prefix and tainted command text reach an executed call; preserve Ruby version and deprecation/removal scope; distinguish shell command flow from an ordinary filesystem path.",
+    "stop_gate": "Route to existing Ruby command-execution ownership and stop if call identity, leading-pipe semantics, taint flow, or runtime version is unresolved. Do not duplicate the existing Kernel.system sink family or claim Ruby 4 support.",
+    "priority": "P2",
+    "confidence": "high for Ruby 3.4 API contract; analyzer feasibility unqualified",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Kernel.html",
+        "title": "Kernel Ruby 3.4 API and deprecation"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/command_injection_rdoc.html",
+        "title": "Ruby 3.4 command injection guidance"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/ja/4.0/method/Kernel/m/open.html",
+        "title": "Kernel Ruby 4.0 API"
+      }
+    ],
+    "overlap": "Existing Ruby command-execution discovery owns the shell/executable family. Review this deprecated core API mode under that owner rather than opening a duplicate discovery; no content migration is implied.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-owner",
+    "analysis_kind": "taint"
+  },
+  {
+    "id": "ruby-psych-unsafe-load-untrusted-yaml",
+    "language": "ruby",
+    "title": "Untrusted YAML reaches Psych.unsafe_load object construction",
+    "analysis": "Psych.unsafe_load and unsafe_load_file convert YAML to Ruby objects without the restricted-class guarantees of safe_load. Ruby 3.4 ships Psych 5.2.2, whose load API is safe-load-like by default; an unsafe rule must therefore target unsafe_load entrypoints and must not blanket-ban YAML.load. This is a distinct parser API from Marshal, but belongs to the broader untrusted object-deserialization family.",
+    "apis": [
+      "Psych.unsafe_load(yaml, **kwargs)",
+      "Psych.unsafe_load_file(filename, **kwargs)",
+      "Psych.safe_load(yaml, **kwargs) (near miss)",
+      "Psych.load(yaml, **kwargs) (safe-load-like in Psych 5.2.2)"
+    ],
+    "contract": "Scope to CRuby 3.4.0 with shipped default gem psych 5.2.2. Report only when untrusted YAML bytes reach Psych.unsafe_load or unsafe_load_file and deserialization can instantiate an attacker-selected object graph. Do not infer danger from YAML.load in this version, from safe_load with its restricted classes, or from parsing a data-only primitive document. Other Psych versions require separate behavior evidence.",
+    "positive": "yaml = params[:document]; object = Psych.unsafe_load(yaml); authorize(object)",
+    "near_miss": "Psych.safe_load(params[:document]); Psych.load(params[:document]) under the pinned Psych 5.2.2 safe-load semantics; trusted fixed YAML fixture into unsafe_load is also a trust-boundary near miss.",
+    "prerequisites": "Resolve exact Psych method identity and loaded gem version; prove untrusted byte provenance into the unsafe entrypoint and object-result identity; distinguish safe_load, permitted classes, aliases and primitive-only data; inspect whether the object reaches a security-sensitive use without claiming every YAML document is code execution.",
+    "stop_gate": "Route to the existing Ruby object-deserialization ownership and stop if the Psych version, exact unsafe method, taint boundary, or constructed-result use cannot be proven. Do not extend Ruby Marshal or blanket-flag YAML.load without version-specific behavior evidence.",
+    "priority": "P2",
+    "confidence": "high for Psych 5.2.2 API distinction; exploitability depends on tainted object graph and use",
+    "sources": [
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/Psych.html",
+        "title": "Psych Ruby 3.4 API"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/NEWS/NEWS-3_1_0_md.html",
+        "title": "Ruby 3.1 note on Psych 4 safe-load default"
+      },
+      {
+        "url": "https://docs.ruby-lang.org/en/3.4/NEWS_md.html",
+        "title": "Ruby 3.4 Psych default gem version"
+      }
+    ],
+    "overlap": "Ruby object-deserialization and YAML/Psych discovery already have catalog ownership. Review the exact unsafe_load methods and version-specific safe defaults under those routes; this is not a new discovery or a content migration.",
+    "status": "research-only",
+    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "retrieved_at": "2026-10-01",
+    "disposition": "existing-catalog-routing",
+    "analysis_kind": "taint"
+  }
+]
