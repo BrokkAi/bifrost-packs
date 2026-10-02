@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 70 unique rule IDs from 4 manifest packs.
+This catalog lists 72 unique rule IDs from 4 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -30,6 +30,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Redundant Boolean return branches](../rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp) | `bifrost.correctness.redundant-boolean-branches` | java, javascript, python, typescript | correctness | warning |
 | [Regular-expression compilation inside a loop](../rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp) | `bifrost.performance.regex-compile-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Repeated stable branch condition](../rules/bifrost.code-smells/policies/repeated-branch-condition.rqlp) | `bifrost.correctness.repeated-branch-condition` | java, javascript, python, typescript | correctness | warning |
+| [Rust adapters that can erase Result errors](../rules/bifrost.code-smells/policies/rust-error-dropped-by-adapter.rqlp) | `bifrost.correctness.rust-error-dropped-by-adapter` | rust | correctness | note |
+| [Input-reachable Rust recursion to review](../rules/bifrost.code-smells/policies/rust-input-recursion-without-bound.rqlp) | `bifrost.correctness.rust-input-recursion-without-bound` | rust | correctness | note |
 | [Serialization inside a loop](../rules/bifrost.code-smells/policies/serialization-in-loop.rqlp) | `bifrost.performance.serialization-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Sleep inside a collection-iteration loop](../rules/bifrost.code-smells/policies/sleep-in-loop.rqlp) | `bifrost.performance.sleep-in-loop` | java, python, rust | performance | note |
 | [Subprocess creation inside a loop](../rules/bifrost.code-smells/policies/subprocess-in-loop.rqlp) | `bifrost.performance.subprocess-in-loop` | java, javascript, python, typescript | performance | note |
