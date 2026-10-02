@@ -27,24 +27,24 @@ qualified here. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**72 unique rules across 4 policy packs.**
+**71 unique rules across 4 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
-| Pack | bifrost.code-smells | 32 |
+| Pack | bifrost.code-smells | 31 |
 | Pack | bifrost.correctness | 1 |
 | Pack | bifrost.effects | 10 |
 | Pack | bifrost.security | 29 |
-| Category | correctness | 23 |
+| Category | correctness | 22 |
 | Category | effects | 10 |
 | Category | performance | 10 |
 | Category | security | 29 |
 | Severity | error | 31 |
-| Severity | note | 12 |
+| Severity | note | 11 |
 | Severity | warning | 29 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 172 rule-language pairs.
+13 declared languages; 171 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -58,11 +58,11 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | php | 6 |
 | python | 28 |
 | ruby | 4 |
-| rust | 17 |
+| rust | 16 |
 | scala | 4 |
 | typescript | 24 |
 
-Activation labels: opt-in 26, unspecified 46. Omitted labels remain unspecified.
+Activation labels: opt-in 26, unspecified 45. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->

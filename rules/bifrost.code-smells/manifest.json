@@ -511,22 +511,6 @@
       "remediation": "Use a pool-safe memoization such as PoolSafeMemo::get_or_build_parallel, or build the value eagerly before entering the parallel region."
     },
     {
-      "path": "policies/rust-error-dropped-by-adapter.rqlp",
-      "id": "bifrost.correctness.rust-error-dropped-by-adapter",
-      "authored_hash": "3e3bb53c8a3e71b3699a82ebe0807add62e72eeb333930b8748da2efc19095e4",
-      "resolved_semantic_hash": "3e3bb53c8a3e71b3699a82ebe0807add62e72eeb333930b8748da2efc19095e4",
-      "category": "correctness",
-      "supported_languages": [
-        "rust"
-      ],
-      "required_capabilities": [
-        "structural-match",
-        "normalized-call-roles"
-      ],
-      "severity_rationale": "These adapter shapes can discard Result errors, but the selector cannot prove the .ok() result type or flatten item type, so the finding remains a note-level review prompt.",
-      "remediation": "Propagate or convert errors deliberately; use a Result-aware iterator path such as collecting into Result when appropriate, and document intentional error-to-Option conversion."
-    },
-    {
       "path": "policies/rust-input-recursion-without-bound.rqlp",
       "id": "bifrost.correctness.rust-input-recursion-without-bound",
       "authored_hash": "8fd2d58d9eadc3ee05adb293d41696e354b38776bf8b4dee0d4b18c948a4758d",
