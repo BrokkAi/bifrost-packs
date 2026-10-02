@@ -1,0 +1,18 @@
+; This is syntax discovery, not a JNDI security rule. It intentionally includes
+; LocalDirectory.search and cannot prove overload, provider, flow or result use.
+(policy
+  :schema-version 1
+  :id "research.discovery.jvm-jndi-search-call-shapes"
+  :name "JNDI search call-shape discovery"
+  :message "Inspect this Java search call as a JNDI research candidate"
+  :severity note
+  :description "Search spelling alone cannot establish DirContext overload or LDAP filter injection."
+  :tags ["research" "discovery-only" "java"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql
+          :schema-version 1
+          (language java
+            (call :callee (name "search"))))))
