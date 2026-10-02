@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "incomplete",
+  "model_id": null,
+  "model_hash": null,
+  "requirement": "Exact standard-library module identity, named-constructor declarations, and target interpreter activation.",
+  "observed": {
+    "engine_version": "0.12.0",
+    "module_import_boundary": "external_unknown",
+    "from_import_target_segments": ["hashlib", "new"],
+    "pinned_public_python_pack": "bifrost.python-stdlib@2026.9.14",
+    "pinned_pack_contains_hashlib_stub": false,
+    "pinned_pack_activation": "CPython >=3.10.0,<3.15.0",
+    "local_runtime": "CPython 3.9.6"
+  },
+  "result": "The observed resolver binding identifies import syntax and lexical aliases, not the CPython standard-library module or a callable declaration. The repository's pinned Python slice does not cover hashlib, and its activation does not cover the local witness runtime. No consumer project's exact runtime/model activation was supplied, so constructor availability remains unqualified.",
+  "decision": "Do not emit an optimization advisory, severity, or scanner activation from this result."
+}
