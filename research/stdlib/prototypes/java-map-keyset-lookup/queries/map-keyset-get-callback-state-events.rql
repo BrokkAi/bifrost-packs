@@ -1,0 +1,5 @@
+; Inspect local state events around an unresolved callback before get.
+(result-detail full
+  (language java
+    (state-events-of
+      (procedure-of (method :name "incompleteUnknownEffect")))))

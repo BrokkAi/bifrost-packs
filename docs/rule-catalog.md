@@ -1,0 +1,77 @@
+# Rule catalog
+
+This catalog lists 70 unique rule IDs from 4 manifest packs.
+Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
+
+| Policy | Stable ID | Manifest support / query scopes | Category | Severity |
+| --- | --- | --- | --- | --- |
+| [C self-assignment](../rules/bifrost.code-smells/policies/c-self-assignment.rqlp) | `bifrost.correctness.c-self-assignment` | c | correctness | warning |
+| [Fixed conditional outcome](../rules/bifrost.code-smells/policies/contradictory-condition.rqlp) | `bifrost.correctness.contradictory-condition` | java, javascript, python, typescript | correctness | warning |
+| [Database call inside a loop](../rules/bifrost.code-smells/policies/database-call-in-loop.rqlp) | `bifrost.performance.database-call-in-loop` | java, javascript, python, typescript | performance | note |
+| [Discarded pure transformation result](../rules/bifrost.code-smells/policies/discarded-pure-result.rqlp) | `bifrost.correctness.discarded-pure-result` | java | correctness | warning |
+| [Dynamic code evaluation](../rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp) | `bifrost.correctness.dynamic-evaluation` | javascript, python, typescript | correctness | warning |
+| [Empty failure handler](../rules/bifrost.code-smells/policies/empty-failure-handler.rqlp) | `bifrost.correctness.empty-failure-handler` | cpp, csharp, java, javascript, kotlin, php, python, ruby, typescript | correctness | warning |
+| [Expensive operation inside nested loops](../rules/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp) | `bifrost.performance.expensive-operation-in-nested-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Failed local swap](../rules/bifrost.code-smells/policies/failed-swap.rqlp) | `bifrost.correctness.failed-swap` | csharp, go, java, javascript, kotlin, python, typescript | correctness | warning |
+| [File read inside a loop](../rules/bifrost.code-smells/policies/file-read-in-loop.rqlp) | `bifrost.performance.file-read-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Go data race](../rules/bifrost.code-smells/policies/go-data-race.rqlp) | `bifrost.correctness.go-data-race` | go | correctness | error |
+| [Go nil dereference](../rules/bifrost.code-smells/policies/go-nil-dereference.rqlp) | `bifrost.correctness.go-nil-dereference` | go | correctness | error |
+| [Go failure path returns the wrong error](../rules/bifrost.code-smells/policies/go-wrong-error-on-failure-path.rqlp) | `bifrost.correctness.go-wrong-error-on-failure-path` | go | correctness | error |
+| [Identical conditional branches](../rules/bifrost.code-smells/policies/identical-conditional-branches.rqlp) | `bifrost.correctness.identical-conditional-branches` | java, javascript, python, typescript | correctness | warning |
+| [Ignored file-deletion status](../rules/bifrost.code-smells/policies/ignored-status-result.rqlp) | `bifrost.correctness.ignored-status-result` | java | correctness | note |
+| [Local self-assignment](../rules/bifrost.code-smells/policies/local-self-assignment.rqlp) | `bifrost.correctness.local-self-assignment` | csharp, go, java, javascript, kotlin, python, typescript | correctness | warning |
+| [Loop body never repeats](../rules/bifrost.code-smells/policies/loop-body-never-repeats.rqlp) | `bifrost.correctness.loop-body-never-repeats` | csharp, go, java, javascript, kotlin, php, python, rust, typescript | correctness | warning |
+| [Loop-invariant receiver sorted on every iteration](../rules/bifrost.code-smells/policies/loop-invariant-sort.rqlp) | `bifrost.performance.loop-invariant-sort` | java, javascript, python, rust, typescript | performance | warning |
+| [Network request inside a loop](../rules/bifrost.code-smells/policies/network-call-in-loop.rqlp) | `bifrost.performance.network-call-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Overwritten unread local value](../rules/bifrost.code-smells/policies/overwritten-unread-value.rqlp) | `bifrost.correctness.overwritten-unread-value` | csharp, go, java, javascript, kotlin, python, typescript | correctness | warning |
+| [Parsing inside a loop](../rules/bifrost.code-smells/policies/parsing-in-loop.rqlp) | `bifrost.performance.parsing-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Python absent member](../rules/bifrost.code-smells/policies/python-absent-member.rqlp) | `bifrost.correctness.python-absent-member` | python | correctness | error |
+| [Rayon parallelism inside a blocking lazy initializer](../rules/bifrost.code-smells/policies/rayon-in-blocking-lazy-init.rqlp) | `bifrost.correctness.rayon-in-blocking-lazy-init` | rust | correctness | warning |
+| [Redundant Boolean return branches](../rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp) | `bifrost.correctness.redundant-boolean-branches` | java, javascript, python, typescript | correctness | warning |
+| [Regular-expression compilation inside a loop](../rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp) | `bifrost.performance.regex-compile-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Repeated stable branch condition](../rules/bifrost.code-smells/policies/repeated-branch-condition.rqlp) | `bifrost.correctness.repeated-branch-condition` | java, javascript, python, typescript | correctness | warning |
+| [Serialization inside a loop](../rules/bifrost.code-smells/policies/serialization-in-loop.rqlp) | `bifrost.performance.serialization-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Sleep inside a collection-iteration loop](../rules/bifrost.code-smells/policies/sleep-in-loop.rqlp) | `bifrost.performance.sleep-in-loop` | java, python, rust | performance | note |
+| [Subprocess creation inside a loop](../rules/bifrost.code-smells/policies/subprocess-in-loop.rqlp) | `bifrost.performance.subprocess-in-loop` | java, javascript, python, typescript | performance | note |
+| [Unreachable statement](../rules/bifrost.code-smells/policies/unreachable-statement.rqlp) | `bifrost.correctness.unreachable-statement` | csharp, go, java, javascript, kotlin, php, python, rust, typescript | correctness | warning |
+| [Unsafe object deserialization](../rules/bifrost.code-smells/policies/unsafe-deserialization.rqlp) | `bifrost.correctness.unsafe-deserialization` | python | correctness | warning |
+| [Resource lifecycle](../rules/bifrost.correctness/policies/resource-lifecycle.rqlp) | `bifrost.correctness.resource-lifecycle` | go, java, javascript, kotlin, php, python, rust, scala, typescript | correctness | error |
+| [Selected C# boundary reaches no network effect](../rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.csharp.selected-boundary-no-network-io` | csharp | effects | error |
+| [Selected Go boundary reaches no network effect](../rules/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp) | `bifrost.effects.go.selected-boundary-no-network-io` | go | effects | error |
+| [Selected Java boundary reaches no network effect](../rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp) | `bifrost.effects.java.selected-boundary-no-network-io` | java | effects | error |
+| [Selected JavaScript boundary reaches no network effect](../rules/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.javascript.selected-boundary-no-network-io` | javascript | effects | error |
+| [Selected Kotlin boundary reaches no network effect](../rules/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp) | `bifrost.effects.kotlin.selected-boundary-no-network-io` | kotlin | effects | error |
+| [Selected Python boundary reaches no network effect](../rules/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp) | `bifrost.effects.python.selected-boundary-no-network-io` | python | effects | error |
+| [Selected Ruby boundary reaches no network effect](../rules/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp) | `bifrost.effects.ruby.selected-boundary-no-network-io` | ruby | effects | error |
+| [Selected Rust boundary reaches no network effect](../rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp) | `bifrost.effects.rust.selected-boundary-no-network-io` | rust | effects | error |
+| [Selected Scala boundary reaches no network effect](../rules/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp) | `bifrost.effects.scala.selected-boundary-no-network-io` | scala | effects | error |
+| [Selected TypeScript boundary reaches no network effect](../rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.typescript.selected-boundary-no-network-io` | typescript | effects | error |
+| [Stored request value requires the configured validator (C)](../rules/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp) | `bifrost.security.c.store-requires-validation` | c | security | warning |
+| [Stored request value reaches SQL (C)](../rules/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp) | `bifrost.security.c.stored-request-to-sql` | c | security | error |
+| [Stored request value requires the configured validator (C++)](../rules/bifrost.security/policies/declared-storage/cpp-store-requires-validation.rqlp) | `bifrost.security.cpp.store-requires-validation` | cpp | security | warning |
+| [Stored request value reaches SQL (C++)](../rules/bifrost.security/policies/declared-storage/cpp-stored-request-to-sql.rqlp) | `bifrost.security.cpp.stored-request-to-sql` | cpp | security | error |
+| [Stored request value requires the configured validator (C#)](../rules/bifrost.security/policies/declared-storage/csharp-store-requires-validation.rqlp) | `bifrost.security.csharp.store-requires-validation` | csharp | security | warning |
+| [Stored request value reaches SQL (C#)](../rules/bifrost.security/policies/declared-storage/csharp-stored-request-to-sql.rqlp) | `bifrost.security.csharp.stored-request-to-sql` | csharp | security | error |
+| [Stored request value requires the configured validator (Go)](../rules/bifrost.security/policies/declared-storage/go-store-requires-validation.rqlp) | `bifrost.security.go.store-requires-validation` | go | security | warning |
+| [Stored request value reaches SQL (Go)](../rules/bifrost.security/policies/declared-storage/go-stored-request-to-sql.rqlp) | `bifrost.security.go.stored-request-to-sql` | go | security | error |
+| [Stored request value requires the configured validator (Java)](../rules/bifrost.security/policies/declared-storage/java-store-requires-validation.rqlp) | `bifrost.security.java.store-requires-validation` | java | security | warning |
+| [Stored request value reaches JDBC SQL (Java)](../rules/bifrost.security/policies/declared-storage/java-stored-request-to-sql.rqlp) | `bifrost.security.java.stored-request-to-sql` | java | security | error |
+| [Stored request value requires the configured validator (JavaScript)](../rules/bifrost.security/policies/declared-storage/javascript-store-requires-validation.rqlp) | `bifrost.security.javascript.store-requires-validation` | javascript | security | warning |
+| [Stored request value reaches pg SQL (JavaScript)](../rules/bifrost.security/policies/declared-storage/javascript-stored-request-to-sql.rqlp) | `bifrost.security.javascript.stored-request-to-sql` | javascript | security | error |
+| [Stored request value requires the configured validator (Kotlin)](../rules/bifrost.security/policies/declared-storage/kotlin-store-requires-validation.rqlp) | `bifrost.security.kotlin.store-requires-validation` | kotlin | security | warning |
+| [Stored request value reaches JDBC SQL (Kotlin)](../rules/bifrost.security/policies/declared-storage/kotlin-stored-request-to-sql.rqlp) | `bifrost.security.kotlin.stored-request-to-sql` | kotlin | security | error |
+| [Stored request value requires the configured validator (PHP)](../rules/bifrost.security/policies/declared-storage/php-store-requires-validation.rqlp) | `bifrost.security.php.store-requires-validation` | php | security | warning |
+| [Stored request value reaches SQL (PHP)](../rules/bifrost.security/policies/declared-storage/php-stored-request-to-sql.rqlp) | `bifrost.security.php.stored-request-to-sql` | php | security | error |
+| [Stored request value requires the configured validator (Python)](../rules/bifrost.security/policies/declared-storage/python-store-requires-validation.rqlp) | `bifrost.security.python.store-requires-validation` | python | security | warning |
+| [Stored request value reaches SQLite SQL (Python)](../rules/bifrost.security/policies/declared-storage/python-stored-request-to-sql.rqlp) | `bifrost.security.python.stored-request-to-sql` | python | security | error |
+| [Stored request value requires the configured validator (Ruby)](../rules/bifrost.security/policies/declared-storage/ruby-store-requires-validation.rqlp) | `bifrost.security.ruby.store-requires-validation` | ruby | security | warning |
+| [Stored request value reaches SQL (Ruby)](../rules/bifrost.security/policies/declared-storage/ruby-stored-request-to-sql.rqlp) | `bifrost.security.ruby.stored-request-to-sql` | ruby | security | error |
+| [Stored request value requires the configured validator (Rust)](../rules/bifrost.security/policies/declared-storage/rust-store-requires-validation.rqlp) | `bifrost.security.rust.store-requires-validation` | rust | security | warning |
+| [Stored request value reaches SQL (Rust)](../rules/bifrost.security/policies/declared-storage/rust-stored-request-to-sql.rqlp) | `bifrost.security.rust.stored-request-to-sql` | rust | security | error |
+| [Stored request value requires the configured validator (Scala)](../rules/bifrost.security/policies/declared-storage/scala-store-requires-validation.rqlp) | `bifrost.security.scala.store-requires-validation` | scala | security | warning |
+| [Stored request value reaches JDBC SQL (Scala)](../rules/bifrost.security/policies/declared-storage/scala-stored-request-to-sql.rqlp) | `bifrost.security.scala.stored-request-to-sql` | scala | security | error |
+| [Stored request value requires the configured validator (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp) | `bifrost.security.typescript.store-requires-validation` | typescript | security | warning |
+| [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
+| [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
+| [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
+| [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |

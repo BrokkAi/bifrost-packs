@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "languages": ["python"],
+  "where": [["research/stdlib/prototypes/python-pickle-provenance/fixtures/**/*.py"]],
+  "match": {
+    "kind": "call",
+    "callee": {"name": {"regex": "^(load|loads|decode_pickle)$"}}
+  },
+  "steps": [
+    {"op": "call_shape"},
+    {"op": "call_bindings"}
+  ],
+  "limit": 100,
+  "result_detail": "full"
+}

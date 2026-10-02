@@ -8,7 +8,7 @@ This is an additive copy. Bifrost still owns its existing built-in selection and
 release artifacts. A future v0.13.0 consumer transition is not implemented or
 qualified here. Pack versions are independent of engine versions.
 
-- `rules/`: four built-in policy packs, with unchanged IDs, authored/resolved
+- `rules/`: public policy packs, with unchanged IDs, authored/resolved
   semantic hashes, queries, and endpoint documents.
 - `semantic-packs/`: authored source/specifications/notices, `models/`
   inputs, and `embedded/` native manifests/shards. Preserve completeness and
@@ -23,6 +23,55 @@ qualified here. Pack versions are independent of engine versions.
 - [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
   typestate hypotheses, ownership routing and a proposed qualification queue.
   These are research leads, not enabled or qualified rules.
+
+## Rule inventory
+
+<!-- rule-stats:start -->
+**70 unique rules across 4 policy packs.**
+
+| Breakdown | Value | Rules |
+| --- | --- | ---: |
+| Pack | bifrost.code-smells | 30 |
+| Pack | bifrost.correctness | 1 |
+| Pack | bifrost.effects | 10 |
+| Pack | bifrost.security | 29 |
+| Category | correctness | 21 |
+| Category | effects | 10 |
+| Category | performance | 10 |
+| Category | security | 29 |
+| Severity | error | 31 |
+| Severity | note | 10 |
+| Severity | warning | 29 |
+
+Languages are explicit manifest declarations; a rule may appear in multiple rows.
+13 declared languages; 170 rule-language pairs.
+
+| Manifest supported language | Rules |
+| --- | ---: |
+| c | 3 |
+| cpp | 3 |
+| csharp | 9 |
+| go | 12 |
+| java | 28 |
+| javascript | 24 |
+| kotlin | 10 |
+| php | 6 |
+| python | 28 |
+| ruby | 4 |
+| rust | 15 |
+| scala | 4 |
+| typescript | 24 |
+
+Activation labels: opt-in 26, unspecified 44. Omitted labels remain unspecified.
+Metadata is an inventory, not evidence of enablement or behavior qualification.
+[Full rule catalog](docs/rule-catalog.md).
+<!-- rule-stats:end -->
+
+Regenerate with `python3 tools/rule_stats.py --write`. The
+[inventory guide](docs/rule-stats.md) covers JSON export and the optional
+pre-commit hook; CI checks the generated tables for drift.
+
+## Source verification
 
 Verify and create a reproducible **source** archive offline:
 

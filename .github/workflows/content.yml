@@ -17,6 +17,10 @@ jobs:
           python-version: '3.12'
       - name: Test integrity and compatibility failure handling
         run: python3 -B -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Check generated rule inventory
+        run: |
+          python3 -B -m unittest discover -s tools/tests -p 'test_*.py' -v
+          python3 -B tools/rule_stats.py --check
       - name: Verify locked content and native shard bytes
         run: |
           python3 scripts/content.py verify

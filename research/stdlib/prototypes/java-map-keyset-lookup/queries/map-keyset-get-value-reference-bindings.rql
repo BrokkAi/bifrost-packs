@@ -1,0 +1,6 @@
+; Probe whether Java value-reference occurrences resolve to stable lexical
+; binding ids. Keep raw occurrence targets in the companion query too.
+(result-detail full
+  (language java
+    (binding-of
+      (occurrences :class reference :role value_reference))))

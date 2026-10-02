@@ -1,0 +1,6 @@
+(result-detail full
+  (language java
+    (binding-of
+      (occurrences-in :class reference :role receiver_position
+        (call :receiver (capture "receiver") :callee (name "get")
+              :args [(capture "argument")])))))

@@ -1,0 +1,10 @@
+; Captures expose exact loop and call ranges/AST ids for evidence joins.
+; They do not prove declaration identity, aliasing, effects, or dispatch.
+(result-detail full
+  (language java
+    (inside
+      (for_loop :iterable
+        (call :callee (name "keySet") :receiver (capture "iteratedMap"))
+        :capture "loop")
+      (call :callee (name "get") :receiver (capture "lookupMap")
+            :args [(capture "lookupKey")] :capture "lookup"))))

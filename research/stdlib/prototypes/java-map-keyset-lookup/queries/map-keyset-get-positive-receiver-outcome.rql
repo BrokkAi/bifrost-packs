@@ -1,0 +1,6 @@
+; Bound receiver probe for the positive source shape.
+(result-detail full
+  (language java
+    (receiver-outcome
+      (inside-decl (method :name "positiveSameMapAndKey")
+                   (call :callee (name "get"))))))

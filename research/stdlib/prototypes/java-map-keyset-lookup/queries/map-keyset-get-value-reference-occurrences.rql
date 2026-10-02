@@ -1,0 +1,5 @@
+; Preserve raw value-reference targets separately from binding-of results.
+; Some Java adapter targets expose lexical metadata without a stable target id.
+(result-detail full
+  (language java
+    (occurrences :class reference :role value_reference)))
