@@ -23,11 +23,6 @@
     "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
     "binary_sha256": "cbe227be1c8d5c02aa2b3ecd2c6343514295d32a8315f8d2db10b310b3d58483",
     "result": "All 20 focused reports completed with zero diagnostics; positive fixtures produced findings and near-miss cases remained outside the selected findings.",
-    "current_master": {
-      "expected_build_identity": "2b459ffe52da4dc7449400cfbd444afe041eaba9",
-      "status": "not-run-in-this-workspace",
-      "reason": "The expected bifrost-dev target/release/bifrost binary was unavailable, and the parent checkout has unrelated dirty build state."
-    },
     "reproduction_command": "BIFROST_OPEN_POLICY_PACK_ROOT=$PWD/rules BIFROST_CACHE_ROOT=/tmp/bundles-cache bifrost --root fixtures/policy/<pack>/<fixture> --no-builtin-policies --policy-file .bifrost/policies/<policy>.rqlp --format json --fail-on never --output <report.json>"
   },
   "focused_smoke": {
