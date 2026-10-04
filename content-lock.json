@@ -14,6 +14,412 @@
   },
   "files": [
     {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-avoid-semaphores/.bifrost/policies/avoid-semaphores.rqlp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-avoid-semaphores/.bifrost/policies/avoid-semaphores.rqlp",
+      "sha256": "fe09bdaf23e11f6656fe9a4e46ac0f113db0ed63c9588fcae7973a5701026d77",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-avoid-semaphores/helpers.h",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-avoid-semaphores/helpers.h",
+      "sha256": "e0c68808a5ed470e5da2aa998db88df9bcb38047b9660a4daf00165206165fd1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-avoid-semaphores/main.cpp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-avoid-semaphores/main.cpp",
+      "sha256": "4177489584fc8b9338405edeef3aaa2584fbe151b3d9914508a4890fddea276f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-heap-memory/.bifrost/policies/heap-memory.rqlp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-heap-memory/.bifrost/policies/heap-memory.rqlp",
+      "sha256": "fbe9aee3ea5dcd9f2b02699a4c3c26a67ac615d58c6c73478cfb37f86bd73493",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-heap-memory/main.cpp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-heap-memory/main.cpp",
+      "sha256": "13823c8d2b7077fd7e47cc28e271f79f3d4dba834a16e2084d987334eb96a9f3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-simple-control-flow-jmp/.bifrost/policies/simple-control-flow-jmp.rqlp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-simple-control-flow-jmp/.bifrost/policies/simple-control-flow-jmp.rqlp",
+      "sha256": "b7728d0f055d60a9b5bbfdb333c8759aa9ee62ac7dd7bf8585047b4738a442fc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-simple-control-flow-jmp/helpers.h",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-simple-control-flow-jmp/helpers.h",
+      "sha256": "6fc4c0dc3206b32f33b3b3c1d732afdd743881453b35da3fb80b96fbeabd075b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-simple-control-flow-jmp/main.cpp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-simple-control-flow-jmp/main.cpp",
+      "sha256": "18e7a20b1ae483c062d451ed755ffa90a7c0ed3b1e1b8d73064a75a1ba037dc1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-thread-safety/.bifrost/policies/thread-safety.rqlp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-thread-safety/.bifrost/policies/thread-safety.rqlp",
+      "sha256": "1db31108e41e3e326068b3b3dc2e522193575cbb5ca163c0ab2c3befe41ae28c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-thread-safety/main.cpp",
+      "source_path": "fixtures/policy/bifrost.c-jpl/cpp-jpl-c-thread-safety/main.cpp",
+      "sha256": "ede98d247173e5ff61054330a6d02d968a58d5d906e19abf9612fe5dc0611da6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-108/.bifrost/policies/av-rule-108.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-108/.bifrost/policies/av-rule-108.rqlp",
+      "sha256": "894fa94322763bad7f3e0db37bab5aa4f740bad9a04741ee6ca6f23282c851fe",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-108/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-108/helper.h",
+      "sha256": "6bb0441c48933b19605c960cabd09fe1d5f386347604b58b02ad2b31b1770cd0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-108/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-108/main.cpp",
+      "sha256": "53de6b11186b0ddf041ac275a6e6715d7523ef6a80a40a0c646390a91d25402b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-110/.bifrost/policies/av-rule-110.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-110/.bifrost/policies/av-rule-110.rqlp",
+      "sha256": "5ebd3736ea19ca8a10479508e38828854d8ec5bed827c23078dab3fcf63124d0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-110/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-110/helper.h",
+      "sha256": "6bb0441c48933b19605c960cabd09fe1d5f386347604b58b02ad2b31b1770cd0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-110/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-110/main.cpp",
+      "sha256": "062d95c8faddc2d7dfa42660e0f2f91210de409db0512094bc54a956e02e0221",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-13/.bifrost/policies/av-rule-13.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-13/.bifrost/policies/av-rule-13.rqlp",
+      "sha256": "a7e2bcc6eca60ef082a391d7ad3cdcf59c419180b7e46be9ed599b958aa6efdc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-13/helpers.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-13/helpers.h",
+      "sha256": "ed4eeddf18a3125c8414100b34f9f2c4aba9f112e46a4f6889f499ac5271019a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-13/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-13/main.cpp",
+      "sha256": "0dd488deaeed0d25cdd894b35e17ce4dfd8002d285b730cb33a3d54f77fac0e4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-14/.bifrost/policies/av-rule-14.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-14/.bifrost/policies/av-rule-14.rqlp",
+      "sha256": "bbaa0a9d5efc656c9222a854f8125b7d53c07dfdd5b7c016aadc1cf22ad9b7a3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-14/helpers.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-14/helpers.h",
+      "sha256": "608845ab2498e1648573ececbd80d538dbe9452f729377394ddfbb847c87ee19",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-14/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-14/main.cpp",
+      "sha256": "fb072adf5c6c6454b57425886819a5d9e37c0743b3f95831ce531bc5d87c8c3c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-149/.bifrost/policies/av-rule-149.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-149/.bifrost/policies/av-rule-149.rqlp",
+      "sha256": "270748be1f4c5e010545f1b6adde7e97f8148f7094a5039843f8b2fc4290ebfd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-149/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-149/main.cpp",
+      "sha256": "cf6e23389ca288488326452cc0c8b5215a9328e469a306931fffe63f1d1f4a34",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-150/.bifrost/policies/av-rule-150.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-150/.bifrost/policies/av-rule-150.rqlp",
+      "sha256": "6a0d6d146f81068417de7127657b927de56f18c41fee0ff3b55a6261e6c7645f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-150/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-150/helper.h",
+      "sha256": "89070a51dab8b283be61ba0b5998923c6db719b2bab886a3f6937f922a2a6406",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-150/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-150/main.cpp",
+      "sha256": "6e13ecff58013f1941d564cfebc4e8f5508f9c3966ef21b744bc2ea48f9fa790",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-159/.bifrost/policies/av-rule-159.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-159/.bifrost/policies/av-rule-159.rqlp",
+      "sha256": "45deda39e7d417c81227cae84593e52cfcb692c30af59fa5ff928737e5d7e8ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-159/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-159/helper.h",
+      "sha256": "89070a51dab8b283be61ba0b5998923c6db719b2bab886a3f6937f922a2a6406",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-159/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-159/main.cpp",
+      "sha256": "c055dba41f8eb77cebb346e736aeed988f3813e62b106566cfb59e6040fe53bb",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-19/.bifrost/policies/av-rule-19.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-19/.bifrost/policies/av-rule-19.rqlp",
+      "sha256": "00b42c4234926deb07d4659ddde9b889ad280fb498a2ffec1799618015ac96c9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-19/helpers.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-19/helpers.h",
+      "sha256": "99ddb1966130f0993eda924997fbbd705bd4f0a3a48281c76c587720e9f4f0f5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-19/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-19/main.cpp",
+      "sha256": "b4000d064a89e068d0e18f907d4571d01144ac27f00e801ec204c2cef67993db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-208/.bifrost/policies/av-rule-208.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-208/.bifrost/policies/av-rule-208.rqlp",
+      "sha256": "91421cc8f53f17ee2ec7f91d9306ed83258eafe8970783669eff0a1676d679e4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-208/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-208/helper.h",
+      "sha256": "8ce279cfa8e032a7a9fb12c41e36c6da6ab3b0c58ed29770e44193c24edda008",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-208/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-208/main.cpp",
+      "sha256": "d5185cd0f19efa0cbc4b3615f75243bb66c95f6033bd2e875f2a98bc58002285",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-209/.bifrost/policies/av-rule-209.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-209/.bifrost/policies/av-rule-209.rqlp",
+      "sha256": "e39e9d380a748bdb223cec014f27300344890b387d2f4a7dcf197d137971e8dd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-209/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-209/helper.h",
+      "sha256": "b876f5dc04f14cd094f6f5c2969fb4e92b38fa45fece8a05fabc319a669dfbf1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-209/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-209/main.cpp",
+      "sha256": "fb1d04ea2cf867f69c9e40a40baf561822d2a3a472cc80e9d425a16d2a83ba4e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-21/.bifrost/policies/av-rule-21.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-21/.bifrost/policies/av-rule-21.rqlp",
+      "sha256": "581c0b33cdfa6099dae3f5023d2bc09b0b1bc65980a0545902d7832334601bb0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-21/helpers.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-21/helpers.h",
+      "sha256": "cc3cccd0d6836c33675085b7f06e26ce9f007fa943a0f48767f1c33b3cd25932",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-21/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-21/main.cpp",
+      "sha256": "db336eae40083b93da34138251a942ba615d6e7c1d7bbd1a66b37b64fe377777",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-22/.bifrost/policies/av-rule-22.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-22/.bifrost/policies/av-rule-22.rqlp",
+      "sha256": "ce3b1c3a10cfbb0f49ee1c1e19a7809bdd40e9325b057c98e32952ab6c12ab6c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-22/helpers.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-22/helpers.h",
+      "sha256": "1f6fb96ab49d68b96253addccf8b96ac7e127a030c00f6731cf599d0ed6fced1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-22/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-22/main.cpp",
+      "sha256": "93678e59e13b0b18bdf30141d893fad96b8e2e6011aecd0efde16318ef7b3ec0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/.bifrost/policies/av-rule-25.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/.bifrost/policies/av-rule-25.rqlp",
+      "sha256": "375734baa97cb9d731f4d458d89ee4f47dbd55ccd41d6e7cb657e14314e8eac4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/main.cpp",
+      "sha256": "16c139ae62cd73efcd7f6352212dc23aea26f3c105d4d7188d2d49105808b9d9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/other.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/other.h",
+      "sha256": "556cb541d22fd418f3783ee5e91b39afa4cd4e3ad7a113eb3712b4d5e859d15e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/time.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-25/time.h",
+      "sha256": "6b9bb92bc1e5c8bbd5e355d0b3a94a57a0a176939b979bbd4f6b9b82c654da20",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-53-1/.bifrost/policies/av-rule-53-1.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-53-1/.bifrost/policies/av-rule-53-1.rqlp",
+      "sha256": "237db4783e0cb7505857d81f3037d6929e8f5efd1961173a61e93e0499698f97",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-53-1/good.h",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-53-1/good.h",
+      "sha256": "3be5cb7275f04eb2cf85af8a6790fd815e6a2449bc3379074ee4940b1f04e079",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-53-1/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-jsf/cpp-jsf-av-rule-53-1/main.cpp",
+      "sha256": "79de4e681e9ac9d6d43bfeb1126019527d0fe1c48e30fedf1dd4129db55d0aff",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-dynamic-alloc-after-init/.bifrost/policies/dynamic-alloc-after-init.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-dynamic-alloc-after-init/.bifrost/policies/dynamic-alloc-after-init.rqlp",
+      "sha256": "dd9cfce75b90d6aaf74278e3f2b8096415ba2937f875cfbc856109aa448ce42f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-dynamic-alloc-after-init/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-dynamic-alloc-after-init/helper.h",
+      "sha256": "1a4796228e297f789a3ea680dbdbf11979482dea85f948070202820f36bd291b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-dynamic-alloc-after-init/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-dynamic-alloc-after-init/main.cpp",
+      "sha256": "80f91ea3fb136a44c42b7cea2188ff2b5746c525e0421e28f47e12e00c8d916e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-use-of-jmp/.bifrost/policies/use-of-jmp.rqlp",
+      "source_path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-use-of-jmp/.bifrost/policies/use-of-jmp.rqlp",
+      "sha256": "62a0cbf8e23bc6b14fde5665f1a536f9d3e89087ae50577b0db7fefc89f90f8c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-use-of-jmp/helper.h",
+      "source_path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-use-of-jmp/helper.h",
+      "sha256": "c7fc8ea289f35ffec63a43b0687ff3b81960c64b42089003bfdeedf0d7a33c83",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-use-of-jmp/main.cpp",
+      "source_path": "fixtures/policy/bifrost.cpp-power-of-10/cpp-power-of-10-use-of-jmp/main.cpp",
+      "sha256": "938ea2eb44a2ac969dec6b67e2dcb2479a7ca8200c820520f6967923ebd20b12",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "fixtures/policy/policies/dynamic-eval.rqlp",
       "source_path": "crates/bifrost-policy/testdata/policies/dynamic-eval.rqlp",
       "sha256": "97eea5ce88fb392ddd06b801e833be0349484b68238c8afa0a438297e5bdb013",
@@ -123,6 +529,41 @@
         "revision": "18dfe1e4938d",
         "url": "https://raw.githubusercontent.com/adoptium/jdk21u/18dfe1e4938d/LICENSE"
       }
+    },
+    {
+      "path": "rules/bifrost.c-jpl/manifest.json",
+      "source_path": "rules/bifrost.c-jpl/manifest.json",
+      "sha256": "ab2f46d5919bcd46fa3777c57a504b6b050c611431953a0edbe2c00fae948381",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.c-jpl/policies/avoid-semaphores.rqlp",
+      "source_path": "rules/bifrost.c-jpl/policies/avoid-semaphores.rqlp",
+      "sha256": "fe09bdaf23e11f6656fe9a4e46ac0f113db0ed63c9588fcae7973a5701026d77",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.c-jpl/policies/heap-memory.rqlp",
+      "source_path": "rules/bifrost.c-jpl/policies/heap-memory.rqlp",
+      "sha256": "fbe9aee3ea5dcd9f2b02699a4c3c26a67ac615d58c6c73478cfb37f86bd73493",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.c-jpl/policies/simple-control-flow-jmp.rqlp",
+      "source_path": "rules/bifrost.c-jpl/policies/simple-control-flow-jmp.rqlp",
+      "sha256": "b7728d0f055d60a9b5bbfdb333c8759aa9ee62ac7dd7bf8585047b4738a442fc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.c-jpl/policies/thread-safety.rqlp",
+      "source_path": "rules/bifrost.c-jpl/policies/thread-safety.rqlp",
+      "sha256": "1db31108e41e3e326068b3b3dc2e522193575cbb5ca163c0ab2c3befe41ae28c",
+      "classification": "public",
+      "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.code-smells/manifest.json",
@@ -352,6 +793,132 @@
       "path": "rules/bifrost.correctness/policies/resource-lifecycle.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.correctness/policies/resource-lifecycle.rqlp",
       "sha256": "f82711ec2437ee32ebca183620e161dfa81a7ace26a174c339db015ee947b067",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/manifest.json",
+      "source_path": "rules/bifrost.cpp-jsf/manifest.json",
+      "sha256": "ae9e5a03fb0b998d0a4431ed13fffdfddf44f718beaf957a43c8cdc659e06440",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-108.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-108.rqlp",
+      "sha256": "894fa94322763bad7f3e0db37bab5aa4f740bad9a04741ee6ca6f23282c851fe",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-110.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-110.rqlp",
+      "sha256": "5ebd3736ea19ca8a10479508e38828854d8ec5bed827c23078dab3fcf63124d0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-13.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-13.rqlp",
+      "sha256": "a7e2bcc6eca60ef082a391d7ad3cdcf59c419180b7e46be9ed599b958aa6efdc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-14.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-14.rqlp",
+      "sha256": "bbaa0a9d5efc656c9222a854f8125b7d53c07dfdd5b7c016aadc1cf22ad9b7a3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-149.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-149.rqlp",
+      "sha256": "270748be1f4c5e010545f1b6adde7e97f8148f7094a5039843f8b2fc4290ebfd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-150.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-150.rqlp",
+      "sha256": "6a0d6d146f81068417de7127657b927de56f18c41fee0ff3b55a6261e6c7645f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-159.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-159.rqlp",
+      "sha256": "45deda39e7d417c81227cae84593e52cfcb692c30af59fa5ff928737e5d7e8ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-19.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-19.rqlp",
+      "sha256": "00b42c4234926deb07d4659ddde9b889ad280fb498a2ffec1799618015ac96c9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-208.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-208.rqlp",
+      "sha256": "91421cc8f53f17ee2ec7f91d9306ed83258eafe8970783669eff0a1676d679e4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-209.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-209.rqlp",
+      "sha256": "e39e9d380a748bdb223cec014f27300344890b387d2f4a7dcf197d137971e8dd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-21.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-21.rqlp",
+      "sha256": "581c0b33cdfa6099dae3f5023d2bc09b0b1bc65980a0545902d7832334601bb0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-22.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-22.rqlp",
+      "sha256": "ce3b1c3a10cfbb0f49ee1c1e19a7809bdd40e9325b057c98e32952ab6c12ab6c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-25.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-25.rqlp",
+      "sha256": "375734baa97cb9d731f4d458d89ee4f47dbd55ccd41d6e7cb657e14314e8eac4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-jsf/policies/av-rule-53-1.rqlp",
+      "source_path": "rules/bifrost.cpp-jsf/policies/av-rule-53-1.rqlp",
+      "sha256": "237db4783e0cb7505857d81f3037d6929e8f5efd1961173a61e93e0499698f97",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-power-of-10/manifest.json",
+      "source_path": "rules/bifrost.cpp-power-of-10/manifest.json",
+      "sha256": "44a5cc8fa11e3bf6518b7d8bfb1962441ee83bcff19f1598a0616330b0281a35",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-power-of-10/policies/dynamic-alloc-after-init.rqlp",
+      "source_path": "rules/bifrost.cpp-power-of-10/policies/dynamic-alloc-after-init.rqlp",
+      "sha256": "dd9cfce75b90d6aaf74278e3f2b8096415ba2937f875cfbc856109aa448ce42f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.cpp-power-of-10/policies/use-of-jmp.rqlp",
+      "source_path": "rules/bifrost.cpp-power-of-10/policies/use-of-jmp.rqlp",
+      "sha256": "62a0cbf8e23bc6b14fde5665f1a536f9d3e89087ae50577b0db7fefc89f90f8c",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2113,5 +2680,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "de15461f6ba35bfc7f670cb48e518752ac021e57eb608a9b408119a9aef8e0dd"
+  "aggregate_sha256": "cf10717e81f59b7cdf9c9b6d933671d7dab9683b25abe4abf91effb879efad58"
 }

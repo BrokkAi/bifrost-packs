@@ -1,0 +1,20 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-power-of-10.dynamic-alloc-after-init"
+  :name "Power of 10 Rule 3: dynamic allocation outside initialization"
+  :message "dynamic allocation is only allowed during initialization"
+  :severity note
+  :description "Mirrors CodeQL cpp/power-of-10/dynamic-alloc-after-init (cpp/ql/src/Power of 10/Rule 3/DynamicAllocAfterInit.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Exact malloc/calloc calls outside initialization-named functions require review."
+  :tags ["cpp" "power-of-10" "codeql-cpp-power-of-10-dynamic-alloc-after-init"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (union
+          (not-inside
+            (function :name/regex "(?i)^(init.*|.*_init)$")
+            (call :callee (name "malloc")))
+          (not-inside
+            (function :name/regex "(?i)^(init.*|.*_init)$")
+            (call :callee (name "calloc")))))))
+  )

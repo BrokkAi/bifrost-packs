@@ -1,0 +1,21 @@
+(policy
+  :schema-version 1
+  :id "bifrost.c-jpl.avoid-semaphores"
+  :name "JPL-C Rule 09: avoid semaphores"
+  :message "avoid this semaphore or locking primitive"
+  :severity note
+  :description "Mirrors CodeQL cpp/jpl-c/avoid-semaphores (cpp/ql/src/JPL_C/LOC-2/Rule 09/AvoidSemaphores.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The bounded name match identifies the reviewed VxWorks semaphore and locking primitives."
+  :tags ["cpp" "jpl-c" "codeql-cpp-jpl-c-avoid-semaphores"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (union
+          (call :callee (name "semBCreate"))
+          (call :callee (name "semMCreate"))
+          (call :callee (name "semCCreate"))
+          (call :callee (name "semRWCreate"))
+          (call :callee (name "taskLock"))
+          (call :callee (name "intLock"))
+          (call :callee (name "taskRtpLock"))))))
+  )

@@ -1,0 +1,1 @@
+struct ClockValue { int seconds; };

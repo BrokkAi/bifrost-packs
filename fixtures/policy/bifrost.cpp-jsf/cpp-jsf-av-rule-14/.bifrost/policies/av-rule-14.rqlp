@@ -1,0 +1,13 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-14"
+  :name "JSF AV Rule 14"
+  :message "lowercase literal suffix requires review"
+  :severity error
+  :description "Mirrors CodeQL cpp/jsf/av-rule-14 (cpp/ql/src/jsf/4.04 Environment/AV Rule 14.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Lowercase unsigned or long literal suffixes require review."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-14"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp (literal (text/regex ".*[ul][uUlL]*\\s*$")))))
+  )
