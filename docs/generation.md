@@ -72,7 +72,8 @@ acceptance remain separate release requirements.
 
 The authored unittest assertion input retains its upstream CPython v3.13.5
 provenance and notice. Its engine-version keys were removed from both the
-selected authored model and its generation spec for the native migration; the
+selected authored model and its generation spec for the native migration. The
+authored model uses schema 8, whose compatibility shape supports this omission; the
 spec pins the exact bifrost-packs artifact commit and SHA-256. Assertion shards,
 toolchain requirements and activation conditions are unchanged. Historical
 embedded and published payloads retain their original compatibility metadata.
