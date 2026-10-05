@@ -1,0 +1,108 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.csharp-codeql-quality",
+  "version": "0.1.0",
+  "name": "Bifrost C# CodeQL quality",
+  "description": "Public C# structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
+  "policies": [
+    {
+      "path": "policies/empty-block.rqlp",
+      "id": "bifrost.csharp-codeql-quality.empty-block",
+      "authored_hash": "0df5e28ec7a9851994da2a5bb8413d0939444bd9342e1fa72cdbf5f326254e69",
+      "resolved_semantic_hash": "0df5e28ec7a9851994da2a5bb8413d0939444bd9342e1fa72cdbf5f326254e69",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "prepared-syntax"],
+      "severity_rationale": "An empty branch or loop body can silently discard a required operation and is often an unfinished or accidental control-flow path.",
+      "remediation": "Review the empty body and either remove the branch or add the intended operation; comment-only bodies remain intentional documentation rather than a finding."
+    },
+    {
+      "path": "policies/useless-if-statement.rqlp",
+      "id": "bifrost.csharp-codeql-quality.useless-if-statement",
+      "authored_hash": "6b9c75d0583ba0ffdcd3b1d893771bd6bdb8a90006b61290dd1056b7a0eff00a",
+      "resolved_semantic_hash": "6b9c75d0583ba0ffdcd3b1d893771bd6bdb8a90006b61290dd1056b7a0eff00a",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "branch-relations", "failure-handler-state"],
+      "severity_rationale": "An if statement with an empty arm has no useful behavior on that branch and can conceal a missing operation or redundant condition.",
+      "remediation": "Review the condition and branch intent, then remove the useless branch or implement the missing operation."
+    },
+    {
+      "path": "policies/nested-loops-with-same-variable.rqlp",
+      "id": "bifrost.csharp-codeql-quality.nested-loops-with-same-variable",
+      "authored_hash": "bbc35f80e0c27bca70888f86fb2b5410202fb57a0ba836a5926b7c41e24ac3a4",
+      "resolved_semantic_hash": "bbc35f80e0c27bca70888f86fb2b5410202fb57a0ba836a5926b7c41e24ac3a4",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "statement-facts", "lexical-environment"],
+      "severity_rationale": "Reusing an enclosing loop's iteration variable in a nested loop can overwrite the outer control state and cause skipped or repeated iterations.",
+      "remediation": "Use a distinct inner iteration variable, or review the loop conditions and updates if the reuse is deliberate."
+    },
+    {
+      "path": "policies/static-array.rqlp",
+      "id": "bifrost.csharp-codeql-quality.static-array",
+      "authored_hash": "396b89670bc525840ad85097286e8a41a04a008097fdbd86ef0b77a9ec1cc8b9",
+      "resolved_semantic_hash": "396b89670bc525840ad85097286e8a41a04a008097fdbd86ef0b77a9ec1cc8b9",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "language-rule-facts"],
+      "severity_rationale": "A public static readonly array exposes mutable shared storage even though the field reference cannot be reassigned.",
+      "remediation": "Expose an immutable collection or return a defensive copy, depending on the API contract."
+    },
+    {
+      "path": "policies/use-number-constant.rqlp",
+      "id": "bifrost.csharp-codeql-quality.use-number-constant",
+      "authored_hash": "e2cad30aab5201ecfc3980c5ac7a6362e57621e6af012e17c785163d2106e952",
+      "resolved_semantic_hash": "e2cad30aab5201ecfc3980c5ac7a6362e57621e6af012e17c785163d2106e952",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "language-rule-facts", "lexical-environment"],
+      "severity_rationale": "Repeating a numeric value that already has a visible named constant makes intent harder to read and allows related values to drift.",
+      "remediation": "Use the visible named constant when it expresses the same value and semantics."
+    },
+    {
+      "path": "policies/catch-of-all-exceptions.rqlp",
+      "id": "bifrost.csharp-codeql-quality.catch-of-all-exceptions",
+      "authored_hash": "4c02cd1cee20cc8ed931ee000571ad10b9e287b76e5317e469ad94d50bcaf5c4",
+      "resolved_semantic_hash": "4c02cd1cee20cc8ed931ee000571ad10b9e287b76e5317e469ad94d50bcaf5c4",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "failure-handler-state", "type-hierarchy"],
+      "severity_rationale": "Catching System.Exception without filtering or rethrowing can hide failures and leave the program in an invalid state.",
+      "remediation": "Catch the narrow exception types the operation can handle, or rethrow after recording context when a catch-all boundary is required."
+    },
+    {
+      "path": "policies/call-to-obsolete-method.rqlp",
+      "id": "bifrost.csharp-codeql-quality.call-to-obsolete-method",
+      "authored_hash": "3f268070aff7d99b7dea63d86e342fb46ff7685d0439ccb968f5da16b7f97911",
+      "resolved_semantic_hash": "3f268070aff7d99b7dea63d86e342fb46ff7685d0439ccb968f5da16b7f97911",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "declaration-attributes"],
+      "severity_rationale": "Calling an API explicitly marked obsolete can preserve deprecated behavior, trigger future build failures, or bypass a documented replacement.",
+      "remediation": "Migrate to the API named by the deprecation guidance, or isolate and document the compatibility boundary if migration is not yet possible."
+    },
+    {
+      "path": "policies/recursive-equals-call.rqlp",
+      "id": "bifrost.csharp-codeql-quality.recursive-equals-call",
+      "authored_hash": "cf30d80d81661c65374ea87db8fd74fbfc2e154775455084abfda0ef5dbb7407",
+      "resolved_semantic_hash": "cf30d80d81661c65374ea87db8fd74fbfc2e154775455084abfda0ef5dbb7407",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "lexical-environment"],
+      "severity_rationale": "An Equals override that calls the same overload with its uncast parameter can recurse indefinitely instead of comparing the intended value.",
+      "remediation": "Call the correctly typed overload or compare the relevant fields directly after handling the null and type cases."
+    },
+    {
+      "path": "policies/stringbuilder-initialized-with-character.rqlp",
+      "id": "bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character",
+      "authored_hash": "69f1d0b704ceb22a216bd63d7a7d5882133ecd686723ffbac455c4f01e2438c0",
+      "resolved_semantic_hash": "69f1d0b704ceb22a216bd63d7a7d5882133ecd686723ffbac455c4f01e2438c0",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "expression-kind-facts"],
+      "severity_rationale": "Passing a character to the one-argument StringBuilder constructor selects the integer-capacity overload and often creates an unexpectedly large or invalid buffer.",
+      "remediation": "Convert the character to a string when text initialization is intended, or pass an explicit capacity when capacity initialization is intended."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -570,6 +570,61 @@
       "severity_rationale": "A request value stored without the validator the workspace requires bypasses the application's own reviewed storage invariant.",
       "remediation": "Pass request-derived values through the configured validator before storing them, or narrow the reviewed configuration if the obligation does not apply.",
       "activation": "opt-in"
+    },
+    {
+      "path": "policies/csharp/xml-injection.rqlp",
+      "id": "bifrost.security.csharp.xml-injection",
+      "authored_hash": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
+      "resolved_semantic_hash": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
+      "severity_rationale": "External input written as raw XML text can terminate the intended element or add attacker-controlled XML structure.",
+      "remediation": "Escape untrusted XML text with SecurityElement.Escape or write it through a typed XmlWriter value API instead of WriteRaw."
+    },
+    {
+      "path": "policies/csharp/xpath-injection.rqlp",
+      "id": "bifrost.security.csharp.xpath-injection",
+      "authored_hash": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
+      "resolved_semantic_hash": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
+      "severity_rationale": "External input embedded in an XPath expression can alter node selection and expose or modify unintended data.",
+      "remediation": "Use a parameterized XPath mechanism where available, or validate and encode values according to the XPath context before building the expression."
+    },
+    {
+      "path": "policies/csharp/code-injection.rqlp",
+      "id": "bifrost.security.csharp.code-injection",
+      "authored_hash": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
+      "resolved_semantic_hash": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
+      "severity_rationale": "External input compiled as CodeDom source becomes executable code in the application's process and privileges.",
+      "remediation": "Do not compile external text. Select a fixed implementation or validate a bounded data representation before processing it."
+    },
+    {
+      "path": "policies/csharp/ldap-injection.rqlp",
+      "id": "bifrost.security.csharp.ldap-injection",
+      "authored_hash": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "resolved_semantic_hash": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
+      "severity_rationale": "External input embedded in a DirectorySearcher LDAP filter can change the directory query and return unintended entries.",
+      "remediation": "Use a reviewed LDAP filter encoder before interpolation, or construct the query from an allowlisted representation; this public pack does not model third-party encoders."
+    },
+    {
+      "path": "policies/csharp/assembly-path-injection.rqlp",
+      "id": "bifrost.security.csharp.assembly-path-injection",
+      "authored_hash": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
+      "resolved_semantic_hash": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
+      "severity_rationale": "External input used as an assembly path can load an unintended local or remote assembly into the process.",
+      "remediation": "Resolve assemblies from a fixed allowlist and use Path.GetFileName only as a component of validation, not as the sole authorization decision."
     }
   ]
 }

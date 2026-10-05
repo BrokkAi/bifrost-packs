@@ -1,0 +1,59 @@
+; CodeQL query: csharp/ql/src/Security Features/CWE-094/CodeInjection.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Product source contract: System.Environment.GetEnvironmentVariable is the public BCL external-input
+; source. ASP.NET and System.Web sources are intentionally outside this pack.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.code-injection"
+  :name "C# code injection"
+  :message "external input reaches CodeDomProvider.CompileAssemblyFromSource"
+  :severity error
+  :description "Mirrors CodeQL csharp/ql/src/Security Features/CWE-094/CodeInjection.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Environment.GetEnvironmentVariable data reaching the exact CodeDomProvider.CompileAssemblyFromSource source operand at formal index 1."
+  :tags ["security" "csharp" "codeql" "code-injection" "cwe-94"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id environment-get-environment-variable
+              :display-name "Environment.GetEnvironmentVariable external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id code-compiler-source
+              :display-name "CodeDomProvider source"
+              :categories [code.dynamic]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.CodeDom.Compiler.CodeDomProvider.CompileAssemblyFromSource"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "CompileAssemblyFromSource") :arity 2)))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "94")))

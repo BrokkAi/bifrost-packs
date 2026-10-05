@@ -1,0 +1,36 @@
+; CodeQL query: csharp/ql/src/Likely Bugs/StringBuilderCharInit.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: an exact constructor identity carries structured argument
+; facts, including the character-literal kind; the fixture's named int-capacity
+; formal represents the corresponding implicit char-to-int conversion case
+; until C# expression typing is published as a general query fact.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character"
+  :name "C# StringBuilder initialized with a character"
+  :message "StringBuilder receives a character"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/StringBuilderCharInit.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects the modeled StringBuilder constructor when a character literal or typed character parameter reaches its one-argument overload."
+  :tags ["csharp" "codeql" "quality" "stringbuilder"]
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (union
+        (resolved-call
+          :resolves-to "System.Text.StringBuilder.StringBuilder"
+          :proof declared
+          (call-bindings
+            (call-shape
+              (language csharp
+                (call :callee (name "StringBuilder") (arity 1)
+                  :args [(character_literal)])))))
+        (resolved-call
+          :resolves-to "System.Text.StringBuilder.StringBuilder"
+          :proof declared
+          (call-bindings
+            (call-shape
+              (language csharp
+                (call :callee (name "StringBuilder") (arity 1)
+                  :args [(identifier :name "value")]))))))))
+    (group :name by-call :by (calls.site_id)
+      (aggregate :name selected-calls :op count))
+    (assert :group by-call :value selected-calls :cardinality (exactly 0))))

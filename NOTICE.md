@@ -20,6 +20,9 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   from the engine's published Cargo crate. They are included in this source
   repository/source archive only and must remain separate from runtime bundles.
 - Rust declaration specifications retain MIT OR Apache-2.0 metadata.
+- The authored .NET BCL declaration and summary model retains the .NET
+  Foundation and Contributors MIT terms; see licenses/DotNet-Runtime-MIT.txt
+  and semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json.
 - Kotlin, Scala, Typeshed, PHPStorm and TypeScript source specifications retain
   their recorded license, pinned input hashes, and notices. Downloaded inputs
   are not vendored here. Node's complete upstream notice is preserved.
