@@ -69,3 +69,10 @@ Manual dispatch stages generation evidence. A stream tag still invokes
 inner engine gates. A successful integrity run does not authorize a tag or
 publication. Engine/library witnesses and live external-content/offline Docker
 acceptance remain separate release requirements.
+
+The authored unittest assertion input retains its upstream CPython v3.13.5
+provenance and notice. Its engine-version keys were removed from both the
+selected authored model and its generation spec for the native migration; the
+spec pins the exact bifrost-packs artifact commit and SHA-256. Assertion shards,
+toolchain requirements and activation conditions are unchanged. Historical
+embedded and published payloads retain their original compatibility metadata.

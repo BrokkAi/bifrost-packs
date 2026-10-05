@@ -19,7 +19,7 @@ public Bifrost tooling version `0.13.0` at source
 `948f6700d2e668ee830aa42abf7ed4151d5bf560`. The source archive, lockfile,
 Rust toolchain and build receipt are pinned in `native-generation.json`.
 Generator identity does not prove consumer compatibility or behavior. Inspect
-actual schemas in the exact generated archive. The seven generation-spec
+actual schemas in the exact generated archive. The selected generation-spec
 corrections and reviewed ordinary Python baseline imports carry per-entry
 `source_revision` provenance in `content-lock.json`. Newer schema-14 authoring
 models are excluded from this schema-8 native recipe.
