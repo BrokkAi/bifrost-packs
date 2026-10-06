@@ -14,51 +14,50 @@ existing manifest schema, engine range, and qualification semantics.
 
 ## Intended next releases
 
-The intended next semantic-pack release is `packs/v0.2.0`, generated with the
-public Bifrost `bifrost-semantic-pack` tool at version `0.12.0`, source commit
-`62fc36c09ddb96746e716c1c3456a99957521d91`. The generator pin is provenance
-for produced bytes. A prior successful generation run at source commit
-`97374bacf203cba1c1c28f5f9da4884f061864e2` produced an archive with native
-model schema versions 2 and 5 and release index schema 3. This is diagnostic
-evidence, not a fresh `v0.2.0` candidate or a publication claim; inspect the
-exact release archive before recording its values. It does not establish
-consumer compatibility or behavior.
+The intended next semantic-pack release is `packs/v0.2.0`, generated with
+public Bifrost tooling version `0.13.0` at source
+`948f6700d2e668ee830aa42abf7ed4151d5bf560`. The source archive, lockfile,
+Rust toolchain and build receipt are pinned in `native-generation.json`.
+Generator identity does not prove consumer compatibility or behavior. Inspect
+actual schemas in the exact generated archive. The selected generation-spec
+corrections and reviewed ordinary Python baseline imports carry per-entry
+`source_revision` provenance in `content-lock.json`. Newer schema-14 authoring
+models are excluded from this schema-8 native recipe.
 
-The intended `rules/v0.1.2` content is the exact 49-policy baseline from public
-Bifrost `v0.11.5`, source commit
-`4ec4489e850b809c9cc7750e4c450c7560c45de0`. Its actual schema requirements
-come from those policies and the built-in catalog: policy-document, RQL, and
-built-in-catalog axes. Its 49 policies declare 46 distinct required capability
-identifiers. The consumer profile must advertise them; the current engine
-profile advertises none, and an engine version does not supply or imply them.
-The exact policy documents and required capabilities must be derived from the
-pinned 49-policy baseline, not the repository's larger authoring copy. The rules
-manifest pins exactly
+The intended `rules/v0.1.2` content is the current locked authoring copy: 70
+policy documents across the four checked-in public manifests, with 60 distinct
+required capability identifiers. The source archive carries the checked-in
+policy files, focused smoke fixtures, and tracked research evidence. Research
+files are archive metadata and are not entries in `content-lock.json` or the
+release policy inventory. The rules manifest pins exactly
 `bifrost.public.packs` release `0.2.0` from this repository. That dependency
 is under review and must resolve to the exact release before the rules stream can
 be selected or published.
 
+Source-byte integrity and consumer qualification remain separate. The release
+records the locked policy bytes and required capabilities, while a consumer must
+prove that its exact build supports those capabilities and then qualify behavior.
+The focused dynamic-evaluation smoke uses the published Bifrost `v0.12.0`
+Linux binary, verifies its release sidecar checksum, and records one positive and
+one realistic near-miss. It is limited evidence for that policy and does not
+qualify the full 70-policy set.
+
 These are intended release identities, not claims that either tag or artifact
 has been published. The v2 release manifest describes schemas and capabilities
 without an engine-version range. It records integrity and behavior separately;
-format compatibility does not prove full behavior. The native pack artifact
-currently still carries per-pack `compatibility.bifrost` gates. The generated
-Java pack declares `=0.12.0`; the other packs declare version ranges that also
-cap at `<1.0.0`. Native catalog and runtime validation enforce that field, so a
-version-independent native release cannot be published honestly until the
-native schema and runtime are migrated. Publication must stay blocked while that
-gate remains. The engine profile also currently advertises no capabilities, so
-it cannot satisfy policies that declare required capabilities.
-
-The native gate is reproducible at public Bifrost commit
-`62fc36c09ddb96746e716c1c3456a99957521d91`: `crates/bifrost-analysis/src/analyzer/semantic_model/model.rs:1172` requires the legacy compatibility field, and the catalog and runtime enforce it at `catalog/mod.rs:5210, 5318` and `runtime.rs:3290`. The generated Java pack's `=0.12.0` value rejects other engine versions; the other ranges are still engine-version gates, not format compatibility. See the [recorded blocker evidence](native-publication-blocker.json) for all eight constraints, the prior run identity, and artifact hash.
+format compatibility does not prove full behavior. The pinned schema-8 producer/reader migration removes engine-version gates
+from newly generated native content. The specs now use that contract; legacy
+native artifacts retain their original gates. The publication guard still
+rejects any inner `bifrost` or `engine` gate. A fresh generation receipt and
+exact-archive inspection are required before claiming eligibility. The
+[historical blocker evidence](native-publication-blocker.json) remains attributed
+to the earlier public 0.12.0 generator and its eight gated descriptors.
 
 Concurrent legacy releases `rules/v0.1.1` and `packs/v0.1.1` were published
 from `28babf267ce4602549588082d5801d78ba549edf`. They retain contract schema 1,
 engine range `>=0.12.0, <0.12.1`, and pending qualification. Their manifests and
-assets remain immutable. The rules `0.1.2` candidate deliberately retains the
-49-policy baseline scope described here; it does not absorb the concurrent
-branch's larger Bifrost 0.12 policy update.
+assets remain immutable. The `rules/v0.1.2` candidate publishes the current
+70-policy authoring copy while preserving those immutable legacy artifacts.
 
 ## Legacy baseline
 
@@ -79,11 +78,14 @@ generated content when known. Do not fill in unknown future schema values from
 the generator version. Per-content completeness remains explicit, including
 `partial`.
 
-The existing release baseline pins source commits, policy files, and the native
-archive checksum. Release-building verifies those inputs and archive contents.
-Manual dispatch stages raw generation evidence. A stream tag can publish only
-after the native schema/runtime gate and exact dependency pass; current tag
-publication fails closed.
+The existing release baseline remains available for historical baseline builds and
+continues to pin source commits, policy files, and the native archive checksum.
+The current rules stream is selected from `content-lock.json`; release-building
+verifies its locked bytes and archive contents. Manual dispatch stages raw
+generation evidence. A stream tag can publish after the exact dependency and
+verified-integrity checks; schema-2 behavior may remain pending or limited.
+Consumer capability and behavior proof remains required before default
+selection or a consumer cutover.
 
 See [the shared contract](../release-contract/README.md) for schema 1 and 2
 selection semantics, and [generation](generation.md) for the generator pin,
