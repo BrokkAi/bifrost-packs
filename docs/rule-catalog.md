@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 105 unique rule IDs from 8 manifest packs.
+This catalog lists 124 unique rule IDs from 9 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -76,6 +76,25 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Selected Rust boundary reaches no network effect](../rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp) | `bifrost.effects.rust.selected-boundary-no-network-io` | rust | effects | error |
 | [Selected Scala boundary reaches no network effect](../rules/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp) | `bifrost.effects.scala.selected-boundary-no-network-io` | scala | effects | error |
 | [Selected TypeScript boundary reaches no network effect](../rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.typescript.selected-boundary-no-network-io` | typescript | effects | error |
+| [Java constructor typo](../rules/bifrost.java-codeql-quality/policies/constructor-typo.rqlp) | `bifrost.java-codeql-quality.constructor-typo` | java | quality | warning |
+| [Java enum identifier](../rules/bifrost.java-codeql-quality/policies/enum-identifier.rqlp) | `bifrost.java-codeql-quality.enum-identifier` | java | quality | warning |
+| [Java inconsistent Javadoc throws](../rules/bifrost.java-codeql-quality/policies/inconsistent-javadoc-throws.rqlp) | `bifrost.java-codeql-quality.inconsistent-javadoc-throws` | java | quality | warning |
+| [Java misnamed constant](../rules/bifrost.java-codeql-quality/policies/misnamed-constant.rqlp) | `bifrost.java-codeql-quality.misnamed-constant` | java | quality | warning |
+| [Java misnamed variable](../rules/bifrost.java-codeql-quality/policies/misnamed-variable.rqlp) | `bifrost.java-codeql-quality.misnamed-variable` | java | quality | warning |
+| [Java non-final immutable field](../rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp) | `bifrost.java-codeql-quality.non-final-immutable-field` | java | quality | warning |
+| [Java non-private field](../rules/bifrost.java-codeql-quality/policies/non-private-field.rqlp) | `bifrost.java-codeql-quality.non-private-field` | java | quality | warning |
+| [Raw generic constructor invocation](../rules/bifrost.java-codeql-quality/policies/raw-constructor-invocation.rqlp) | `bifrost.java-codeql-quality.raw-constructor-invocation` | java | quality | warning |
+| [Raw generic return type](../rules/bifrost.java-codeql-quality/policies/raw-return-type.rqlp) | `bifrost.java-codeql-quality.raw-return-type` | java | quality | warning |
+| [Java raw generic variable](../rules/bifrost.java-codeql-quality/policies/raw-variable.rqlp) | `bifrost.java-codeql-quality.raw-variable` | java | quality | warning |
+| [Type bound extends final](../rules/bifrost.java-codeql-quality/policies/type-bound-extends-final.rqlp) | `bifrost.java-codeql-quality.type-bound-extends-final` | java | quality | warning |
+| [Type variable hides type](../rules/bifrost.java-codeql-quality/policies/type-variable-hides-type.rqlp) | `bifrost.java-codeql-quality.type-variable-hides-type` | java | quality | warning |
+| [Java underscore identifier](../rules/bifrost.java-codeql-quality/policies/underscore-identifier.rqlp) | `bifrost.java-codeql-quality.underscore-identifier` | java | quality | warning |
+| [Java undocumented exception](../rules/bifrost.java-codeql-quality/policies/undocumented-exception.rqlp) | `bifrost.java-codeql-quality.undocumented-exception` | java | quality | warning |
+| [Java undocumented function](../rules/bifrost.java-codeql-quality/policies/undocumented-function.rqlp) | `bifrost.java-codeql-quality.undocumented-function` | java | quality | warning |
+| [Java undocumented parameter](../rules/bifrost.java-codeql-quality/policies/undocumented-parameter.rqlp) | `bifrost.java-codeql-quality.undocumented-parameter` | java | quality | warning |
+| [Java undocumented return value](../rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp) | `bifrost.java-codeql-quality.undocumented-return-value` | java | quality | warning |
+| [Java undocumented type](../rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp) | `bifrost.java-codeql-quality.undocumented-type` | java | quality | warning |
+| [Java unknown Javadoc parameter](../rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp) | `bifrost.java-codeql-quality.unknown-javadoc-parameter` | java | quality | warning |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
