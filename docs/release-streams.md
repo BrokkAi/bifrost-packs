@@ -24,7 +24,7 @@ corrections and reviewed ordinary Python baseline imports carry per-entry
 `source_revision` provenance in `content-lock.json`. Newer schema-14 authoring
 models are excluded from this schema-8 native recipe.
 
-The intended `rules/v0.1.2` content is the current locked authoring copy. The release descriptor derives its exact policy
+The intended `rules/v0.1.3` content is the current locked authoring copy. The release descriptor derives its exact policy
 inventory and required capability identifiers from the checked-in manifests. The source archive carries the checked-in
 policy files, focused smoke fixtures, and tracked research evidence. Research
 files are archive metadata and are not entries in `content-lock.json` or the
@@ -55,7 +55,7 @@ to the earlier public 0.12.0 generator and its eight gated descriptors.
 Concurrent legacy releases `rules/v0.1.1` and `packs/v0.1.1` were published
 from `28babf267ce4602549588082d5801d78ba549edf`. They retain contract schema 1,
 engine range `>=0.12.0, <0.12.1`, and pending qualification. Their manifests and
-assets remain immutable. The `rules/v0.1.2` candidate publishes the current
+assets remain immutable. The `rules/v0.1.3` candidate publishes the current
 locked policy authoring copy while preserving those immutable legacy artifacts.
 
 ## Legacy baseline
@@ -89,3 +89,5 @@ selection or a consumer cutover.
 See [the shared contract](../release-contract/README.md) for schema 1 and 2
 selection semantics, and [generation](generation.md) for the generator pin,
 integrity evidence, and behavioral limits.
+
+Smoke evidence is also retained in `smoke-evidence.zip`, including exact zero-byte logs that GitHub cannot accept as standalone release assets. The ZIP has stable member ordering, timestamps, and permissions. The `rules/v0.1.2` publication attempt passed packaging and dependency verification but failed uploading an empty log; it has no published release.
