@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.ruby.core-result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "rubygems",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "ruby-core-result-use-obligations.json",
+    "sha256": "69a08bc69199d485de4a672d6f0c3c1ea8de44adbf3bd7a0ff33f9feb2ae886e",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/ruby/ruby-core-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Ruby core RBS signatures; reviewed String transformation and Kernel#system result-use contracts",
+    "revision": "Ruby RBS/Sorbet result-use review; engine fixture revision c5620808cb"
+  },
+  "license": "Ruby",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/ruby-rbs-core-result-use.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "ruby",
+      "owner": "String",
+      "name": "strip",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "ruby",
+      "owner": "Kernel",
+      "name": "system",
+      "has_receiver": true,
+      "parameter_count": 1
+    }
+  ]
+}
