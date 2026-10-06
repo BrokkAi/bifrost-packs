@@ -1,0 +1,77 @@
+; CodeQL query: csharp/ql/src/Security Features/CWE-114/AssemblyPathInjection.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Product source contract: System.Environment.GetEnvironmentVariable is the public BCL external-input
+; source. ASP.NET and System.Web sources are intentionally outside this pack.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.assembly-path-injection"
+  :name "C# assembly path injection"
+  :message "external input reaches Assembly.LoadFrom"
+  :severity error
+  :description "Mirrors CodeQL csharp/ql/src/Security Features/CWE-114/AssemblyPathInjection.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Environment.GetEnvironmentVariable data reaching the exact Assembly.LoadFrom path operand unless System.IO.Path.GetFileName removes the untrusted label."
+  :tags ["security" "csharp" "codeql" "assembly-path-injection" "cwe-114"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id environment-get-environment-variable
+              :display-name "Environment.GetEnvironmentVariable external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id assembly-load-from-path
+              :display-name "Assembly.LoadFrom path"
+              :categories [code.dynamic-load]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Reflection.Assembly.LoadFrom"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "LoadFrom") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])])
+      :sanitizers
+        (endpoint-set
+          :entries [
+            (sanitizer
+              :id path-get-file-name
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.IO.Path.GetFileName"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetFileName") :arity 1))))))
+              :input (argument :index 0)
+              :output return-value
+              :removes [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "114")))

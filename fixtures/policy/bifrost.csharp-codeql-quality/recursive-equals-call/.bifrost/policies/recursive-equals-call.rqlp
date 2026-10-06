@@ -1,0 +1,26 @@
+; CodeQL: csharp/ql/src/Likely Bugs/RecursiveEquals.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: exact call target equals the enclosing source declaration;
+; Equals(object) is selected by structured parameter type and casts select the
+; typed overload instead.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.recursive-equals-call"
+  :name "C# recursive Equals call"
+  :message "Equals may call itself recursively"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/RecursiveEquals.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports an Equals(object) override that calls the same target with its uncast parameter and implicit or this receiver."
+  :tags ["csharp" "codeql" "quality" "recursion"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language csharp
+        (filter :where
+          ((caller_id eq (field callee_id))
+           (receiver_kind in (implicit this))
+           (argument_identity eq (field caller_parameter_identity)))
+          (call-sites-to :proof proven
+            (enclosing-decl
+              (method
+                :name "Equals"
+                :parameter-type "object"))))))))

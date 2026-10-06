@@ -1,0 +1,29 @@
+; CodeQL query: Language Abuse/CatchOfGenericException.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report only unfiltered catches related to System.Exception
+; that do not rethrow the caught exception. The reviewed BCL model supplies the
+; System.Exception hierarchy; without that model, unresolved external types stay
+; structured incomplete rather than becoming clean non-matches.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.catch-of-all-exceptions"
+  :name "C# catch of all exceptions"
+  :message "catch-all exception handler does not rethrow"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Language Abuse/CatchOfGenericException.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports unfiltered catches related to System.Exception that do not rethrow when the reviewed BCL semantic model is active; without that model, unresolved external hierarchies remain structured-incomplete rather than becoming clean non-matches."
+  :tags ["csharp" "codeql" "quality" "exceptions"]
+  :analysis (analysis
+    :type assertion
+    (bind :name catch
+      :query (rql :schema-version 1
+        (filter :where ((caught_type_relation eq system_exception)
+                        (caught_type eq "System.Exception")
+                        (has_filter eq false)
+                        (rethrow_kind eq none)
+                        (proof eq exact)
+                        (coverage eq exhaustive))
+          (failure-handler-state
+            (language csharp (catch))))))
+    (group :name by-catch :by (catch.id)
+      (aggregate :name catch-all-handlers :op count))
+    (assert :group by-catch :value catch-all-handlers :cardinality (exactly 0))))
