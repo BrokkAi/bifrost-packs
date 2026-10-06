@@ -1,0 +1,60 @@
+; CodeQL query: csharp/ql/src/Security Features/CWE-090/LDAPInjection.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Product source contract: System.Environment.GetEnvironmentVariable is the public BCL external-input
+; source. The public pack models the BCL DirectorySearcher constructor only; the
+; premium AntiXSS LDAP encoder model is intentionally not included here.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.ldap-injection"
+  :name "C# LDAP injection"
+  :message "external input reaches DirectorySearcher filter"
+  :severity error
+  :description "Mirrors CodeQL csharp/ql/src/Security Features/CWE-090/LDAPInjection.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Environment.GetEnvironmentVariable data reaching the exact System.DirectoryServices.DirectorySearcher string constructor. The public pack does not claim coverage for third-party LDAP encoders."
+  :tags ["security" "csharp" "codeql" "ldap-injection" "cwe-90"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id environment-get-environment-variable
+              :display-name "Environment.GetEnvironmentVariable external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id directory-searcher-filter
+              :display-name "DirectorySearcher filter constructor argument"
+              :categories [ldap.query]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.DirectoryServices.DirectorySearcher.DirectorySearcher"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "DirectorySearcher") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "90")))

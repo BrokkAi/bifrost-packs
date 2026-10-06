@@ -1,0 +1,37 @@
+; CodeQL: csharp/ql/src/API Abuse/CallToObsoleteMethod.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: exact source-declared target identity and resolved
+; System.ObsoleteAttribute identity; obsolete callers are excluded.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.call-to-obsolete-method"
+  :name "C# call to obsolete method"
+  :message "call to an obsolete method"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/API Abuse/CallToObsoleteMethod.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls whose exact target has System.ObsoleteAttribute, excluding calls from obsolete members or types."
+  :tags ["csharp" "codeql" "quality" "api-abuse"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language csharp
+        (except
+          (call-sites-to :proof proven
+            (enclosing-decl
+              (resolved-value
+                :resolves-to "System.ObsoleteAttribute"
+                :proof exact
+                (language csharp (decorator)))))
+          (call-sites-from :proof proven
+            (union
+              (enclosing-decl
+                (resolved-value
+                  :resolves-to "System.ObsoleteAttribute"
+                  :proof exact
+                  (language csharp (decorator))))
+              (members
+                (filter :where ((kind eq class))
+                  (enclosing-decl
+                    (resolved-value
+                      :resolves-to "System.ObsoleteAttribute"
+                      :proof exact
+                      (language csharp (decorator)))))))))))))

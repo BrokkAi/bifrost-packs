@@ -1,0 +1,948 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.dotnet.bcl-csharp",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-dotnet-models",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": ".NET API reference and dotnet/runtime reference assemblies for the reviewed BCL members in this pack",
+    "revision": "dotnet-9.0"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-bcl-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.dotnet.bcl-csharp"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.dotnet.bcl-csharp.system-exception",
+            "name": "System.Exception",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Exception"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-systemexception",
+            "name": "System.SystemException",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "System.Exception",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.SystemException"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-invalid-operation-exception",
+            "name": "System.InvalidOperationException",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "System.SystemException",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.InvalidOperationException"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-console",
+            "name": "System.Console",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Console.dll",
+              "symbol": "System.Console"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-environment",
+            "name": "System.Environment",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Environment"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-text-stringbuilder",
+            "name": "System.Text.StringBuilder",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Text.StringBuilder"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-xml-xmlwriter",
+            "name": "System.Xml.XmlWriter",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlWriter"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-xml-xpath-navigator",
+            "name": "System.Xml.XPath.XPathNavigator",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.XPath.dll",
+              "symbol": "System.Xml.XPath.XPathNavigator"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-codedom-provider",
+            "name": "System.CodeDom.Compiler.CodeDomProvider",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.CodeDom.dll",
+              "symbol": "System.CodeDom.Compiler.CodeDomProvider"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-directoryservices-searcher",
+            "name": "System.DirectoryServices.DirectorySearcher",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.DirectoryServices.dll",
+              "symbol": "System.DirectoryServices.DirectorySearcher"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-reflection-assembly",
+            "name": "System.Reflection.Assembly",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Reflection.dll",
+              "symbol": "System.Reflection.Assembly"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-io-path",
+            "name": "System.IO.Path",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.IO.Path"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-security-securityelement",
+            "name": "System.Security.SecurityElement",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Security.SecurityElement"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.dotnet.bcl-csharp.system-console.readline",
+            "owner": "type.dotnet.bcl-csharp.system-console",
+            "name": "ReadLine",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Console.dll",
+              "symbol": "System.Console.ReadLine()"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-environment.get-environment-variable",
+            "owner": "type.dotnet.bcl-csharp.system-environment",
+            "name": "GetEnvironmentVariable",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "variable",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Environment.GetEnvironmentVariable(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-text-stringbuilder.constructor-capacity",
+            "owner": "type.dotnet.bcl-csharp.system-text-stringbuilder",
+            "name": "StringBuilder",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "capacity",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Int32",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "StringBuilder(System.Int32)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-text-stringbuilder.constructor-string",
+            "owner": "type.dotnet.bcl-csharp.system-text-stringbuilder",
+            "name": "StringBuilder",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "StringBuilder(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-xml-xmlwriter.write-raw",
+            "owner": "type.dotnet.bcl-csharp.system-xml-xmlwriter",
+            "name": "WriteRaw",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "text",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Void",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlWriter.WriteRaw(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-xml-xpath-navigator.select",
+            "owner": "type.dotnet.bcl-csharp.system-xml-xpath-navigator",
+            "name": "Select",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "xpath",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Xml.XPath.XPathNodeIterator",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.XPath.dll",
+              "symbol": "System.Xml.XPath.XPathNavigator.Select(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-codedom-provider.compile-assembly-from-source",
+            "owner": "type.dotnet.bcl-csharp.system-codedom-provider",
+            "name": "CompileAssemblyFromSource",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.CodeDom.Compiler.CompilerParameters",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "source",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.CodeDom.Compiler.CompilerResults",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.CodeDom.dll",
+              "symbol": "System.CodeDom.Compiler.CodeDomProvider.CompileAssemblyFromSource(System.CodeDom.Compiler.CompilerParameters,System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-directoryservices-searcher.constructor",
+            "owner": "type.dotnet.bcl-csharp.system-directoryservices-searcher",
+            "name": "DirectorySearcher",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "filter",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.DirectoryServices.dll",
+              "symbol": "System.DirectoryServices.DirectorySearcher.DirectorySearcher(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-reflection-assembly.load-from",
+            "owner": "type.dotnet.bcl-csharp.system-reflection-assembly",
+            "name": "LoadFrom",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "assemblyFile",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Reflection.Assembly",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Reflection.dll",
+              "symbol": "System.Reflection.Assembly.LoadFrom(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-io-path.get-file-name",
+            "owner": "type.dotnet.bcl-csharp.system-io-path",
+            "name": "GetFileName",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.IO.Path.GetFileName(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-security-securityelement.escape",
+            "owner": "type.dotnet.bcl-csharp.system-security-securityelement",
+            "name": "Escape",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "str",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Security.SecurityElement.Escape(System.String)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.dotnet-bcl-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.dotnet.bcl-csharp"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.dotnet.bcl-csharp.system-console.readline",
+            "target": {
+              "path": "System.Console.dll",
+              "symbol": "System.Console.ReadLine()",
+              "has_receiver": false,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-environment.get-environment-variable",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.Environment.GetEnvironmentVariable(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-text-stringbuilder.constructor-capacity",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.Text.StringBuilder.StringBuilder(System.Int32)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-text-stringbuilder.constructor-string",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.Text.StringBuilder.StringBuilder(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-xml-xmlwriter.write-raw",
+            "target": {
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlWriter.WriteRaw(System.String)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-xml-xpath-navigator.select",
+            "target": {
+              "path": "System.Xml.XPath.dll",
+              "symbol": "System.Xml.XPath.XPathNavigator.Select(System.String)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-codedom-provider.compile-assembly-from-source",
+            "target": {
+              "path": "System.CodeDom.dll",
+              "symbol": "System.CodeDom.Compiler.CodeDomProvider.CompileAssemblyFromSource(System.CodeDom.Compiler.CompilerParameters,System.String)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-directoryservices-searcher.constructor",
+            "target": {
+              "path": "System.DirectoryServices.dll",
+              "symbol": "System.DirectoryServices.DirectorySearcher.DirectorySearcher(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-reflection-assembly.load-from",
+            "target": {
+              "path": "System.Reflection.dll",
+              "symbol": "System.Reflection.Assembly.LoadFrom(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-io-path.get-file-name",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.IO.Path.GetFileName(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [
+              {
+                "kind": "sanitize",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "output": {
+                  "kind": "normal_return"
+                },
+                "removes": [
+                  "untrusted"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "summary.dotnet.bcl-csharp.system-security-securityelement.escape",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.Security.SecurityElement.Escape(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [
+              {
+                "kind": "sanitize",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "output": {
+                  "kind": "normal_return"
+                },
+                "removes": [
+                  "untrusted"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
