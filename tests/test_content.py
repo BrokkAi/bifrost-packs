@@ -77,6 +77,20 @@ class ContentToolTests(unittest.TestCase):
         result = verify_content(self.root)
         self.assertEqual(len(result["files"]), 5)
 
+    def test_mixed_source_revisions_survive_bundle_and_reject_ambiguous_pins(self):
+        self.entries[0]["source_revision"] = "c" * 40
+        self._write_lock()
+        output = self.root.parent / "mixed-source.tar.gz"
+        build_bundle(output, self.root)
+        with tarfile.open(output, "r:gz") as archive:
+            bundled = json.load(archive.extractfile("content-lock.json"))
+        self.assertEqual(bundled["files"][0]["source_revision"], "c" * 40)
+        self.assertEqual(bundled["source"]["revision"], "a" * 40)
+        self.entries[0]["source_revision"] = "master"
+        self._write_lock()
+        with self.assertRaisesRegex(ContentError, "source_revision must be a full"):
+            verify_content(self.root)
+
     def test_verify_rejects_tampered_file(self):
         (self.root / "rules/example.rql").write_text("changed\n", encoding="utf-8")
         with self.assertRaisesRegex(ContentError, "SHA-256 mismatch"):

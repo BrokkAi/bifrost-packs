@@ -1877,14 +1877,16 @@
     {
       "path": "semantic-packs/embedded/python-os-command-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-declarations/manifest.json",
-      "sha256": "c9d9084b49b670f556c10da09f282ecec6a67760ea7f0495ddb1759fa46b2dbb",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "7b59876238e58d255bc8c53f5699147d2c40064b69112a17c0153cb765e4e59b",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
-      "path": "semantic-packs/embedded/python-os-command-declarations/shards/declarations.python-os-system.json",
-      "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-declarations/shards/declarations.python-os-system.json",
-      "sha256": "4d14f465a8453edd10148e14df49bbc77ef3a1c2184cf55fb78451f6f40d5df1",
+      "path": "semantic-packs/embedded/python-os-command-declarations/shards/declarations.python-os-commands.deflate",
+      "source_path": "crates/bifrost-semantic-packs/embedded/python-os-command-declarations/shards/declarations.python-os-commands.deflate",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "7253eba027aa32d3532dc7704a55dbee0dd4719f5b20c1d210a43266ce14d953",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2045,7 +2047,8 @@
     {
       "path": "semantic-packs/jvm/kotlin-stdlib-2.2.20.json",
       "source_path": "semantic-packs/jvm/kotlin-stdlib-2.2.20.json",
-      "sha256": "d5697222f963d84f608bf706963cbd8d6479ea88a37f23cd7001bde41a8b28ac",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "c9f0c2ae3221f74ecc8087c60a3bfca312619fb58e2eb8720e07871e4dac39db",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2073,14 +2076,16 @@
     {
       "path": "semantic-packs/jvm/scala-library-2.13.16.json",
       "source_path": "semantic-packs/jvm/scala-library-2.13.16.json",
-      "sha256": "37180bcf0d00695d6790bddc89509a6bb4da4abb166075c5fbcc2d00ce2d2560",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "c8f34d48a3afca07a896b5b4b424ccfe23f7e2134c8ae29da92031dd551ec07c",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/jvm/temurin-jdk-21.0.8+9.json",
       "source_path": "semantic-packs/jvm/temurin-jdk-21.0.8+9.json",
-      "sha256": "930b4a4402ec806cc2f08efc4fe99bed2984c3b6d18f3d2d156afe40f1bc13a4",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "1489d60faa40796f67acad3c64ea3bd97ba0df2e1b443dfc889df2f9004b0f03",
       "classification": "public",
       "license": "GPL-2.0-only WITH Classpath-exception-2.0"
     },
@@ -2395,7 +2400,8 @@
     {
       "path": "semantic-packs/php/phpstorm-stubs-2026.8.29.json",
       "source_path": "semantic-packs/php/phpstorm-stubs-2026.8.29.json",
-      "sha256": "41472bbba3445417f2d0fe748d126861ae8192b6e9726cc8ade6c0528fde3dc1",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "5ab7d984e6e54e1cc40cbd0ab29db4c422f881901212ab6808dfb5cdad893e32",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2430,7 +2436,8 @@
     {
       "path": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
       "source_path": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
-      "sha256": "68f1d150d2adf118a6882d3975cb1d6e0f85a5d0a009dfee9f423173a9689953",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "965f000cb202d26ee9e7e2a512673205dee1e831fc9e85b6d0e8e08c89993b78",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2449,23 +2456,48 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-declarations.json",
+      "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-declarations.json",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "29fcabc3c6052263fa3af36f7bf76e5c78f7c5f2d1d4491a7990dd0bccf021db",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
+      "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "8d94408e8d5835ff7eee813e9a3da1fa065af1b7ae6e4c9dca9f5c45d619b258",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "eeb62ee37f435e524324df0fd37894b26623902ddcbdda6b9a4ac445e6619b8f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/python/typeshed-stdlib-2026.8.31.json",
       "source_path": "semantic-packs/python/typeshed-stdlib-2026.8.31.json",
-      "sha256": "bbbd6a889a7ce41a7bb132825b8f62c8f7c1760e3d7d450627b31368dc64d587",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "5e851742428d6b60963988a3a6db7dd1617f8041ca206e9837940cc3d8d86eb2",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/python/unittest-assertions-2026.9.7.json",
       "source_path": "semantic-packs/python/unittest-assertions-2026.9.7.json",
-      "sha256": "50697e170cecbe791773b0ddd33d6e4fc9f4d5494b2dd9b061bf6022fdc19e48",
+      "sha256": "7715c04395490e490de4936769030efdfb016925444e175fbd134e859fa3b241",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/python/unittest-assertions-2026.9.7.spec.json",
       "source_path": "semantic-packs/python/unittest-assertions-2026.9.7.spec.json",
-      "sha256": "d7cc128f169bed96d051edc1eb23561a6d00946d9f9ae0247e70c22b81937bb3",
+      "sha256": "2446f63a1ef1e18e15b0513e938e6ee242d8b3df6ad75d21418f067f4e9b6569",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2486,7 +2518,8 @@
     {
       "path": "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json",
       "source_path": "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json",
-      "sha256": "c150a8cc53b8891cd13cd4cc85fdb07274a54138a21a335f4c65cc01a052c264",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "9b5e89376d6ad62c20d55c4b713ac9640c534d1125d4797ef6a53fb9fb363497",
       "classification": "public",
       "license": "MIT OR Apache-2.0"
     },
@@ -2626,7 +2659,8 @@
     {
       "path": "semantic-packs/typescript/typescript-7.0.2.json",
       "source_path": "semantic-packs/typescript/typescript-7.0.2.json",
-      "sha256": "852f60da9903726228d1cb04e70c42a5fcf4efe1c390dce8d338ab49dcb8a1db",
+      "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
+      "sha256": "a4583d2c24d17d17a291e2c3db6043b4199bf51f861b011fe83bec966ad62e1b",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -2680,5 +2714,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "cf10717e81f59b7cdf9c9b6d933671d7dab9683b25abe4abf91effb879efad58"
+  "aggregate_sha256": "bbaa023ac55b5f56f4cf91d937cf0b7a6e941b54ba95297905fb26294a88d0b8"
 }
