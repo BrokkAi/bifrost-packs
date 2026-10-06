@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.javascript.string-result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "npm",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "javascript-string-result-use-obligations.json",
+    "sha256": "703119d0f5a351443d0a9d1d2cddab50c5683125323f7d72fc36a63f937f0520",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/javascript/javascript-string-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:generic/nodejs.org/node@22.11.0"
+      },
+      "targets": [],
+      "configurations": [
+        "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+      ],
+      "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+    }
+  ],
+  "provenance": {
+    "source": "ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections; Node.js runtime artifact",
+    "revision": "ECMA-262 current edition; Node v22.11.0 artifact and profile pinned by activation evidence; exact literal, untagged template, or builtin String(...) receiver proof only"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/node-22.11.0.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:generic/nodejs.org/node@22.11.0"
+    },
+    "targets": [],
+    "configurations": [
+      "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+    ],
+    "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "javascript",
+      "owner": "String",
+      "name": "trim",
+      "has_receiver": true,
+      "parameter_count": 0
+    }
+  ]
+}

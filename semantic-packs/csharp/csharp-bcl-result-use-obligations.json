@@ -1,0 +1,572 @@
+{
+  "schema_version": 6,
+  "pack_id": "bifrost.csharp.bcl-result-use-obligations",
+  "version": "1.0.0",
+  "producer": { "name": "bifrost-reviewed-csharp-bcl-models", "version": "0.1.0" },
+  "language": "csharp",
+  "ecosystem": "nuget",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://learn.microsoft.com/dotnet/api/system.string ; https://learn.microsoft.com/dotnet/api/system.int32.tryparse ; https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2.tryadd ; https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2",
+    "revision": ".NET 8 reference assemblies; ECMA-335 metadata identities; reviewed BCL result-use contracts"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": { "generated_code_only": false, "review_required": false },
+  "shards": [
+    {
+      "id": "csharp.bcl.reviewed-declarations",
+      "activation": [
+        { "package": { "name": "Microsoft.NETCore.App.Ref" }, "module": { "name": "System.Runtime" }, "targets": ["net8.0"] },
+        { "package": { "name": "Microsoft.NETCore.App.Ref" }, "module": { "name": "System.Collections" }, "targets": ["net8.0"] },
+        { "package": { "name": "Microsoft.NETCore.App.Ref" }, "module": { "name": "System.Collections.Concurrent" }, "targets": ["net8.0"] }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.csharp.system.string",
+            "name": "System.String",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_sealed": true,
+            "callable_surface_complete": true,
+            "aliases": ["string"],
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String" }
+          },
+          {
+            "id": "type.csharp.system.int32",
+            "name": "System.Int32",
+            "type_kind": "struct",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "aliases": ["int"],
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Int32" }
+          },
+          {
+            "id": "type.csharp.system.int64",
+            "name": "System.Int64",
+            "type_kind": "struct",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "aliases": ["long"],
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Int64" }
+          },
+          {
+            "id": "type.csharp.system.double",
+            "name": "System.Double",
+            "type_kind": "struct",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "aliases": ["double"],
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Double" }
+          },
+          {
+            "id": "type.csharp.system.decimal",
+            "name": "System.Decimal",
+            "type_kind": "struct",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "aliases": ["decimal"],
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Decimal" }
+          },
+          {
+            "id": "type.csharp.system.guid",
+            "name": "System.Guid",
+            "type_kind": "struct",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Guid" }
+          },
+          {
+            "id": "type.csharp.system.datetime",
+            "name": "System.DateTime",
+            "type_kind": "struct",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.DateTime" }
+          },
+          {
+            "id": "type.csharp.system.collections.generic.dictionary2",
+            "name": "System.Collections.Generic.Dictionary`2",
+            "type_kind": "class",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "type_parameters": ["TKey", "TValue"],
+            "aliases": ["Dictionary"],
+            "locator": { "kind": "artifact", "path": "System.Collections.dll", "symbol": "System.Collections.Generic.Dictionary`2" }
+          },
+          {
+            "id": "type.csharp.system.collections.concurrent.concurrentdictionary2",
+            "name": "System.Collections.Concurrent.ConcurrentDictionary`2",
+            "type_kind": "class",
+            "visibility": "public",
+            "callable_surface_complete": true,
+            "type_parameters": ["TKey", "TValue"],
+            "aliases": ["ConcurrentDictionary"],
+            "locator": { "kind": "artifact", "path": "System.Collections.Concurrent.dll", "symbol": "System.Collections.Concurrent.ConcurrentDictionary`2" }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.csharp.system.string.trim",
+            "owner": "type.csharp.system.string",
+            "name": "Trim",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.Trim" }
+          },
+          {
+            "id": "member.csharp.system.string.trimstart",
+            "owner": "type.csharp.system.string",
+            "name": "TrimStart",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.TrimStart" }
+          },
+          {
+            "id": "member.csharp.system.string.trimend",
+            "owner": "type.csharp.system.string",
+            "name": "TrimEnd",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.TrimEnd" }
+          },
+          {
+            "id": "member.csharp.system.string.tolower",
+            "owner": "type.csharp.system.string",
+            "name": "ToLower",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.ToLower" }
+          },
+          {
+            "id": "member.csharp.system.string.toupper",
+            "owner": "type.csharp.system.string",
+            "name": "ToUpper",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.ToUpper" }
+          },
+          {
+            "id": "member.csharp.system.string.tolowerinvariant",
+            "owner": "type.csharp.system.string",
+            "name": "ToLowerInvariant",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.ToLowerInvariant" }
+          },
+          {
+            "id": "member.csharp.system.string.toupperinvariant",
+            "owner": "type.csharp.system.string",
+            "name": "ToUpperInvariant",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "System.String" } },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.ToUpperInvariant" }
+          },
+          {
+            "id": "member.csharp.system.string.replace",
+            "owner": "type.csharp.system.string",
+            "name": "Replace",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "oldValue", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "newValue", "type": { "kind": "named", "name": "System.String" } }
+              ],
+              "returns": { "kind": "named", "name": "System.String" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.Replace(string,string)" }
+          },
+          {
+            "id": "member.csharp.system.string.substring1",
+            "owner": "type.csharp.system.string",
+            "name": "Substring",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [ { "name": "startIndex", "type": { "kind": "named", "name": "System.Int32" } } ],
+              "returns": { "kind": "named", "name": "System.String" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.Substring(int)" }
+          },
+          {
+            "id": "member.csharp.system.string.substring2",
+            "owner": "type.csharp.system.string",
+            "name": "Substring",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "startIndex", "type": { "kind": "named", "name": "System.Int32" } },
+                { "name": "length", "type": { "kind": "named", "name": "System.Int32" } }
+              ],
+              "returns": { "kind": "named", "name": "System.String" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.String.Substring(int,int)" }
+          },
+          {
+            "id": "member.csharp.system.int32.tryparse",
+            "owner": "type.csharp.system.int32",
+            "name": "TryParse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "s", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "result", "type": { "kind": "named", "name": "System.Int32" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Int32.TryParse(string,out int)" }
+          },
+          {
+            "id": "member.csharp.system.int64.tryparse",
+            "owner": "type.csharp.system.int64",
+            "name": "TryParse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "s", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "result", "type": { "kind": "named", "name": "System.Int64" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Int64.TryParse(string,out long)" }
+          },
+          {
+            "id": "member.csharp.system.double.tryparse",
+            "owner": "type.csharp.system.double",
+            "name": "TryParse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "s", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "result", "type": { "kind": "named", "name": "System.Double" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Double.TryParse(string,out double)" }
+          },
+          {
+            "id": "member.csharp.system.decimal.tryparse",
+            "owner": "type.csharp.system.decimal",
+            "name": "TryParse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "s", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "result", "type": { "kind": "named", "name": "System.Decimal" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Decimal.TryParse(string,out decimal)" }
+          },
+          {
+            "id": "member.csharp.system.guid.tryparse",
+            "owner": "type.csharp.system.guid",
+            "name": "TryParse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "input", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "result", "type": { "kind": "named", "name": "System.Guid" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.Guid.TryParse(string,out Guid)" }
+          },
+          {
+            "id": "member.csharp.system.datetime.tryparse",
+            "owner": "type.csharp.system.datetime",
+            "name": "TryParse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "s", "type": { "kind": "named", "name": "System.String" } },
+                { "name": "result", "type": { "kind": "named", "name": "System.DateTime" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Runtime.dll", "symbol": "System.DateTime.TryParse(string,out DateTime)" }
+          },
+          {
+            "id": "member.csharp.system.collections.generic.dictionary2.tryadd",
+            "owner": "type.csharp.system.collections.generic.dictionary2",
+            "name": "TryAdd",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                { "name": "key", "type": { "kind": "named", "name": "TKey" } },
+                { "name": "value", "type": { "kind": "named", "name": "TValue" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Collections.dll", "symbol": "Dictionary`2.TryAdd" }
+          },
+          {
+            "id": "member.csharp.system.collections.concurrent.concurrentdictionary2.tryadd",
+            "owner": "type.csharp.system.collections.concurrent.concurrentdictionary2",
+            "name": "TryAdd",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                { "name": "key", "type": { "kind": "named", "name": "TKey" } },
+                { "name": "value", "type": { "kind": "named", "name": "TValue" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Collections.Concurrent.dll", "symbol": "ConcurrentDictionary`2.TryAdd" }
+          },
+          {
+            "id": "member.csharp.system.collections.concurrent.concurrentdictionary2.tryremove",
+            "owner": "type.csharp.system.collections.concurrent.concurrentdictionary2",
+            "name": "TryRemove",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                { "name": "key", "type": { "kind": "named", "name": "TKey" } },
+                { "name": "value", "type": { "kind": "named", "name": "TValue" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Collections.Concurrent.dll", "symbol": "ConcurrentDictionary`2.TryRemove" }
+          },
+          {
+            "id": "member.csharp.system.collections.concurrent.concurrentdictionary2.tryupdate",
+            "owner": "type.csharp.system.collections.concurrent.concurrentdictionary2",
+            "name": "TryUpdate",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                { "name": "key", "type": { "kind": "named", "name": "TKey" } },
+                { "name": "newValue", "type": { "kind": "named", "name": "TValue" } },
+                { "name": "comparisonValue", "type": { "kind": "named", "name": "TValue" } }
+              ],
+              "returns": { "kind": "named", "name": "System.Boolean" }
+            },
+            "locator": { "kind": "artifact", "path": "System.Collections.Concurrent.dll", "symbol": "ConcurrentDictionary`2.TryUpdate" }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "csharp.bcl.reviewed-result-use",
+      "activation": [
+        { "package": { "name": "Microsoft.NETCore.App.Ref" }, "module": { "name": "System.Runtime" }, "targets": ["net8.0"] },
+        { "package": { "name": "Microsoft.NETCore.App.Ref" }, "module": { "name": "System.Collections" }, "targets": ["net8.0"] },
+        { "package": { "name": "Microsoft.NETCore.App.Ref" }, "module": { "name": "System.Collections.Concurrent" }, "targets": ["net8.0"] }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "csharp.system.string.trim.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.Trim()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.trimstart.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.TrimStart()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.trimend.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.TrimEnd()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.tolower.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.ToLower()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.toupper.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.ToUpper()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.tolowerinvariant.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.ToLowerInvariant()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.toupperinvariant.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.ToUpperInvariant()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.replace.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.Replace(string,string)", "has_receiver": true, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.substring1.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.Substring(int)", "has_receiver": true, "parameter_count": 1 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.string.substring2.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.String.Substring(int,int)", "has_receiver": true, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "pure_transformation_value" } ]
+          },
+          {
+            "id": "csharp.system.int32.tryparse.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.Int32.TryParse(string,out int)", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": false,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.int64.tryparse.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.Int64.TryParse(string,out long)", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": false,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.double.tryparse.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.Double.TryParse(string,out double)", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": false,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.decimal.tryparse.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.Decimal.TryParse(string,out decimal)", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": false,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.guid.tryparse.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.Guid.TryParse(string,out Guid)", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": false,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.datetime.tryparse.result-use",
+            "target": { "path": "System.Runtime.dll", "symbol": "System.DateTime.TryParse(string,out DateTime)", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": false,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.collections.generic.dictionary2.tryadd.result-use",
+            "target": { "path": "System.Collections.dll", "symbol": "System.Collections.Generic.Dictionary`2.TryAdd", "has_receiver": true, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.collections.concurrent.concurrentdictionary2.tryadd.result-use",
+            "target": { "path": "System.Collections.Concurrent.dll", "symbol": "System.Collections.Concurrent.ConcurrentDictionary`2.TryAdd", "has_receiver": true, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.collections.concurrent.concurrentdictionary2.tryremove.result-use",
+            "target": { "path": "System.Collections.Concurrent.dll", "symbol": "System.Collections.Concurrent.ConcurrentDictionary`2.TryRemove", "has_receiver": true, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          },
+          {
+            "id": "csharp.system.collections.concurrent.concurrentdictionary2.tryupdate.result-use",
+            "target": { "path": "System.Collections.Concurrent.dll", "symbol": "System.Collections.Concurrent.ConcurrentDictionary`2.TryUpdate", "has_receiver": true, "parameter_count": 3 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true,
+            "normal_result_count": 1, "transfers": [], "effects": [],
+            "result_use_obligations": [ { "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" } ]
+          }
+        ]
+      }
+    }
+  ]
+}
