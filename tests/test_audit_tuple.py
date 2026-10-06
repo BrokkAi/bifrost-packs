@@ -56,7 +56,7 @@ class TupleAuditTests(unittest.TestCase):
         (output / (artifact["name"] + ".sha256")).write_text(artifact["sha256"] + "  " + artifact["name"] + "\n")
         return output / "pack-release.json", target
 
-    def _rules_tuple(self):
+    def _rules_tuple(self, reproduction_metadata=None):
         case = self._case_dir("rules-case")
         source = case / "rule-source"
         source.mkdir()
@@ -101,6 +101,10 @@ class TupleAuditTests(unittest.TestCase):
         (source / "content-lock.json").write_text(json.dumps(lock))
         for name, text in metadata.items():
             (source / name).write_text(text)
+        for name, text in (reproduction_metadata or {}).items():
+            path = source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text)
         root = case / "rules-release"
         root.mkdir()
         import content
@@ -142,6 +146,17 @@ class TupleAuditTests(unittest.TestCase):
         self.assertEqual(result["public_content_lock"]["source_revision"], "c" * 40)
         self.assertEqual(result["public_content_lock"]["declared_source_lock_sha256"], "d" * 64)
         self.assertEqual(result["behavior"]["status"], "pending")
+
+    def test_reproduction_metadata_is_audited_without_promoting_research_policies(self):
+        manifest, _ = self._rules_tuple({
+            'research/probe.rqlp': '(policy :id "research.only")\n',
+            'research/fixtures/probe.java': 'class Probe {}\n',
+            'docs/qualification.md': 'Behavior pending.\n',
+            'release-contract/reproduce.py': '# reproduction helper\n',
+        })
+        result = audit_tuple.audit_tuple(manifest)
+        self.assertEqual(result['policy_count'], 1)
+        self.assertEqual([row['id'] for row in result['policy_identities']], ['demo.check'])
 
     def test_archive_tamper_and_descriptor_content_mismatch_fail_closed(self):
         manifest, archive = self._native_tuple()

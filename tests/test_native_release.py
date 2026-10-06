@@ -249,7 +249,7 @@ class GeneratedReleaseTests(unittest.TestCase):
         files['semantic-packs/research/schema14-model.json'] = b'tampered\n'
         source_archive.write_bytes(baseline_fixture._tar_bytes(files))
 
-        with self.assertRaisesRegex(release.ReleaseError, 'source archive content is invalid') as caught:
+        with self.assertRaisesRegex(release.ReleaseError, 'source archive members differ') as caught:
             native_release.verify_source_archive(self.root, source_archive)
         self.assertEqual(caught.exception.code, 'integrity-error')
 

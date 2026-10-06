@@ -113,6 +113,13 @@ def verify_source_archive(root, archive, content_module=None):
     content_module = content_module or _content_module(root)
     expected_lock = _packs_content_lock(root, content_module)
     actual = archive_files(archive)
+    expected = {
+        name: path.read_bytes()
+        for name, path in content_module._bundle_inputs(root, expected_lock)
+    }
+    expected['content-lock.json'] = (json.dumps(expected_lock, indent=2) + '\n').encode()
+    if actual != expected:
+        release.fail('integrity-error', 'source archive members differ from the current packs inputs')
     try:
         with tempfile.TemporaryDirectory() as temporary:
             stage = Path(temporary)
