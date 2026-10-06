@@ -125,6 +125,10 @@ def _validate_lock(lock: Any) -> dict[str, Any]:
                 f"{field}.path must be under one of: {', '.join(CONTENT_ROOTS)}"
             )
         _safe_relative_path(entry.get("source_path"), f"{field}.source_path")
+        if "source_revision" in entry:
+            source_revision = entry["source_revision"]
+            if not isinstance(source_revision, str) or not REVISION_RE.fullmatch(source_revision):
+                raise ContentError(f"{field}.source_revision must be a full 40-character commit SHA")
         if path in seen_paths:
             raise ContentError(f"duplicate locked path: {path}")
         seen_paths.add(path)

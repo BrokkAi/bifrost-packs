@@ -22,33 +22,19 @@ Schema 1 remains a legacy path. Its manifests retain exact engine-version
 ranges and the original single qualification semantics. Keep old releases
 immutable and apply those rules only to schema 1 manifests.
 
-The current JS engine and LSP release selectors support schema 1 only and need
-schema 2 support. Native selection has a separate gate: embedded native model
-manifests still require `compatibility.bifrost`, and Bifrost's catalog and
-runtime enforce it. The staged generated Java content declares
-`=0.12.0`; the other packs have engine ranges capped at `<1.0.0`. At pinned
-public Bifrost commit `62fc36c09ddb96746e716c1c3456a99957521d91`,
-`crates/bifrost-analysis/src/analyzer/semantic_model/model.rs:1172` requires
-`compatibility.bifrost`; catalog checks at `catalog/mod.rs:5210, 5318` and
-runtime validation at `runtime.rs:3290` enforce it. See the [recorded native
-publication blocker](native-publication-blocker.json). The new native release
-cannot be published as version-independent until the native schema and runtime
-are migrated. The intended 49-rule baseline declares 46 distinct required capability
-identifiers; the current engine capability profile is empty and cannot satisfy
-them. Do not infer capabilities from
-engine SemVer or a favorable metadata field.
+The v0.13 engine selector and schema-8 native producer/reader migration are
+available in pinned public source `948f6700d2e668ee830aa42abf7ed4151d5bf560`.
+This source availability is not public engine qualification. The new native
+recipe uses that exact producer, corrected specs and verified input caches;
+see [generation](generation.md). Historical 0.12.0 payloads remain immutable
+and gated. Inspect new bytes, install/catalog behavior, real profile capability
+support and exact dependency selection before admitting a candidate.
 
-The intended `packs/v0.2.0` release uses generator version `0.12.0` from
-public Bifrost commit `62fc36c09ddb96746e716c1c3456a99957521d91`; this is tool
-provenance, not consumer qualification. A prior successful generation run
-observed model schema versions 2 and 5 and release index schema 3; it is
-diagnostic evidence, not a fresh release candidate. Verify any final values from
-the exact archive. The intended `rules/v0.1.2` contains
-the exact 49-policy `v0.11.5` baseline and depends on the exact
-`bifrost.public.packs` `0.2.0` release. The dependency is under review, and
-neither intended tag is a publication claim. See
-[release streams](release-streams.md) and [generation](generation.md) for the
-current native publication blocker and evidence scope.
+The intended `rules/v0.1.2` remains the exact 49-policy historical baseline and
+its exact `packs/v0.2.0` dependency. This preparation does not substitute the
+larger rule-authoring copy. Newly reconciled schema-14 Python authoring content
+is not part of the schema-8 native recipe and needs its own supporting engine
+qualification. The intended tags are not publication claims.
 
 ## Future sequence
 
