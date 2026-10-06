@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.code-smells",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "name": "Bifrost code smells",
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
@@ -734,6 +734,23 @@
       ],
       "severity_rationale": "A blocking once-cell whose initializer joins on rayon can park the worker that owns the stolen re-entrant job and wedge the whole pool.",
       "remediation": "Use a pool-safe memoization such as PoolSafeMemo::get_or_build_parallel, or build the value eagerly before entering the parallel region."
+    },
+    {
+      "path": "policies/rust-input-recursion-without-bound.rqlp",
+      "id": "bifrost.correctness.rust-input-recursion-without-bound",
+      "authored_hash": "8fd2d58d9eadc3ee05adb293d41696e354b38776bf8b4dee0d4b18c948a4758d",
+      "resolved_semantic_hash": "8fd2d58d9eadc3ee05adb293d41696e354b38776bf8b4dee0d4b18c948a4758d",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "normalized-call-roles",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Direct recursion reachable from public text or byte input can make stack depth depend on input size, but this selector does not prove input progress or exclude explicit budgets.",
+      "remediation": "Review the recursive progress and available depth limits; add a deliberate budget or convert the traversal to an iterative form when input can grow without a safe bound."
     }
   ]
 }
