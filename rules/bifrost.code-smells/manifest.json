@@ -47,6 +47,8 @@
         "javascript",
         "typescript",
         "csharp",
+        "php",
+        "ruby",
         "rust",
         "c",
         "cpp"
@@ -60,9 +62,11 @@
         "reviewed-typescript-string-result-obligation",
         "reviewed-javascript-string-result-obligation",
         "reviewed-csharp-bcl-result-obligation",
+        "reviewed-php-result-obligation",
+        "reviewed-ruby-core-result-obligation",
         "native-result-obligation"
       ],
-      "severity_rationale": "An exact JDK 21 String.trim() result, a reviewed Python, TypeScript, JavaScript, or C# standard-library transformation result, or a native must-use result is discarded by the caller.",
+      "severity_rationale": "An exact JDK 21 String.trim() result, a reviewed Python, TypeScript, JavaScript, C#, PHP, or Ruby standard-library transformation result, or a native must-use result is discarded by the caller.",
       "remediation": "Use or return the transformed or must-use value if intended; review why the call was made before removing it. No automatic fix is supplied."
     },
     {
@@ -121,6 +125,8 @@
       "supported_languages": [
         "java",
         "csharp",
+        "php",
+        "ruby",
         "go",
         "rust",
         "c",
@@ -135,9 +141,11 @@
         "reviewed-libc-result-obligation",
         "reviewed-python-result-obligation",
         "reviewed-csharp-bcl-result-obligation",
+        "reviewed-php-result-obligation",
+        "reviewed-ruby-core-result-obligation",
         "native-result-obligation"
       ],
-      "severity_rationale": "An exact JDK 21 Files.deleteIfExists(Path) status, a native Go error result, a reviewed C/C++ libc status, a reviewed CPython stdlib status, or a C# BCL fallible status is discarded by a proved result-use relation.",
+      "severity_rationale": "An exact JDK 21 Files.deleteIfExists(Path) status, a native Go error result, a reviewed C/C++ libc status, a reviewed CPython stdlib status, a reviewed PHP false-status function, a reviewed Ruby Kernel#system status, or a C# BCL fallible status is discarded by a proved result-use relation.",
       "remediation": "Handle or deliberately ignore the fallible result according to the caller's intent. I/O exceptions are separate; no automatic fix is supplied."
     },
     {

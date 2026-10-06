@@ -10,16 +10,20 @@
 ; call-result-obligations relation checks every feasible dispatch arm before a
 ; finding. An ordinary Python assignment, including `_ = s.strip()`, consumes
 ; the value and is not a discard. C# uses exact sealed System.String dispatch
-; and therefore needs no builtin receiver assumption.
+; and therefore needs no builtin receiver assumption. PHP's reviewed global
+; functions require resolver-proven `_php_global_` identity; Ruby's arm uses
+; the reviewed Ruby core String#strip, #lstrip, #rstrip, #downcase, #upcase,
+; #sub, and #gsub transformations under the stated builtin-receiver
+; assumption, while subclasses and unknown receivers remain open.
 (policy
   :schema-version 1
   :id "bifrost.correctness.discarded-pure-result"
   :name "Discarded pure transformation result"
   :message "the result of this reviewed pure transformation or must-use value is discarded"
   :severity warning
-  :description "The exact JDK 21 String.trim() return value is unused by an expression statement or for-loop initializer/update. Python's reviewed CPython/typeshed str.strip, lower, upper, and two-argument replace values are unused by a direct expression statement under the stated assumption that annotated or inferred builtins.str receivers use the builtin implementation and builtin methods are not replaced; str subclasses and unknown or union receiver flows remain incomplete. TypeScript's reviewed lib.es5.d.ts String.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and two-string-argument replace values use the same assumption for annotated or inferred string receivers; unions, subclasses, any, and unknown flows remain incomplete. JavaScript's corresponding ECMA-262 String.prototype transformations require an exact string literal, untagged template literal, or unshadowed builtin String(...) result, and a variable from an unknown source remains open. C#'s reviewed sealed System.String Trim, TrimStart, TrimEnd, ToLower, ToUpper, ToLowerInvariant, ToUpperInvariant, Replace(string,string), and Substring values are unused by a direct expression statement under exact dispatch agreement. An ordinary assignment, including `_ = s.strip()` or `_ = s.trim()`, is consumption rather than discard. An expression lambda also discards the result when its resolved functional method returns void; a value-returning target retains it. Rust calls whose resolved declaration or workspace return type carries exact built-in must_use are covered by the native obligation arm; C and C++ calls use declaration or workspace class/struct/enum [[nodiscard]] and GNU warn_unused_result evidence read from attribute nodes. std/core must_use types without a reviewed model remain open. Unresolved or conflicting functional contracts, overloads, or native dispatch arms remain incomplete. Classifying a deferred body does not prove that it executes. This diagnostic requires a reviewed pure-transformation or native must_use obligation, proved result use, and complete dispatch coverage. Calls with missing model, artifact, declaration, or attribute evidence remain incomplete."
+  :description "The exact JDK 21 String.trim() return value is unused by an expression statement or for-loop initializer/update. Python's reviewed CPython/typeshed str.strip, lower, upper, and two-argument replace values are unused by a direct expression statement under the stated assumption that annotated or inferred builtins.str receivers use the builtin implementation and builtin methods are not replaced; str subclasses and unknown or union receiver flows remain incomplete. TypeScript's reviewed lib.es5.d.ts String.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and two-string-argument replace values use the same assumption for annotated or inferred string receivers; unions, subclasses, any, and unknown flows remain incomplete. JavaScript's corresponding ECMA-262 String.prototype transformations require an exact string literal, untagged template literal, or unshadowed builtin String(...) result, and a variable from an unknown source remains open. C#'s reviewed sealed System.String Trim, TrimStart, TrimEnd, ToLower, ToUpper, ToLowerInvariant, ToUpperInvariant, Replace(string,string), and Substring values are unused by a direct expression statement under exact dispatch agreement. PHP's reviewed global trim, ltrim, rtrim, strtolower, strtoupper, str_replace, and substr values are unused by a direct expression statement only when the resolver proves the synthetic `_php_global_` identity; a namespaced workspace function remains incomplete. Ruby's reviewed String#strip, #lstrip, #rstrip, #downcase, #upcase, #sub, and #gsub values are unused by a direct expression statement under the stated builtin-receiver assumption for RBS/Sorbet-proven String receivers; subclasses and unknown receivers remain open because Ruby classes are open to monkey patching. An ordinary assignment, including `_ = s.strip()` or `_ = s.trim()`, is consumption rather than discard. An expression lambda also discards the result when its resolved functional method returns void; a value-returning target retains it. Rust calls whose resolved declaration or workspace return type carries exact built-in must_use are covered by the native obligation arm; C and C++ calls use declaration or workspace class/struct/enum [[nodiscard]] and GNU warn_unused_result evidence read from attribute nodes. std/core must_use types without a reviewed model remain open. Unresolved or conflicting functional contracts, overloads, or native dispatch arms remain incomplete. Classifying a deferred body does not prove that it executes. This diagnostic requires a reviewed pure-transformation or native must_use obligation, proved result use, and complete dispatch coverage. Calls with missing model, artifact, declaration, or attribute evidence remain incomplete."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
-  :tags ["correctness" "java" "python" "javascript" "typescript" "csharp" "rust" "c" "cpp" "result-use"]
+  :tags ["correctness" "java" "python" "javascript" "typescript" "csharp" "php" "ruby" "rust" "c" "cpp" "result-use"]
   :analysis (analysis
     :type assertion
     (bind :name discarded
@@ -61,6 +65,21 @@
               (call-result-obligations
                 (call-shape
                   (call :callee (name/regex "^(Trim|TrimStart|TrimEnd|ToLower|ToUpper|ToLowerInvariant|ToUpperInvariant|Replace|Substring)$"))))))
+          (filter :where ((obligation_kind eq pure_transformation_value)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language php
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq pure_transformation_value)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language ruby
+              (call-result-obligations
+                (call-shape
+                  (call :callee (name/regex "^(strip|lstrip|rstrip|downcase|upcase|sub|gsub)$"))))))
           (filter :where ((obligation_kind eq must_use_value)
                           (provenance eq native)
                           (result_use eq discarded)

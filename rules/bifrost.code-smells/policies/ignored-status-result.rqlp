@@ -8,15 +8,19 @@
 ; only exact declaration signatures prove them, and explicit blank
 ; assignments remain intentional discards. C# reviewed Try APIs use false as
 ; the failure status; their out parameters do not consume the returned bool.
+; PHP's reviewed global status functions require `_php_global_` identity and
+; use false as the failure predicate. Ruby's reviewed Kernel#system status
+; returns true on success and false or nil on failure; Ruby exceptions and
+; unreviewed status-like methods remain outside this diagnostic.
 (policy
   :schema-version 1
   :id "bifrost.correctness.ignored-status-result"
   :name "Ignored fallible result"
   :message "a fallible result is discarded"
   :severity note
-  :description "The exact JDK 21 Files.deleteIfExists(Path) call returns a Boolean status: false means no file was deleted because the file did not exist. C#'s reviewed int, long, double, decimal, Guid, and DateTime TryParse APIs plus Dictionary and ConcurrentDictionary TryAdd/TryRemove/TryUpdate APIs return false on their reviewed failure path; out parameters do not consume that Boolean status. Go calls whose resolved declaration has a native predeclared error result, Rust calls whose resolved declaration returns core/std Result, reviewed C/C++ libc calls whose standard-header declaration returns EOF, nonzero, or -1 on failure, and reviewed CPython stdlib status calls whose module attribute identity is resolver-proven are covered by the same result-use relation. An expression statement or for-loop initializer/update discards a result; an explicit blank assignment is intentional. Missing or conflicting contracts, shadowed Go error names, unproved Rust aliases, unresolved dispatch, C/C++ calls without structured standard-header identity, and Python calls without structured CPython module identity remain incomplete. I/O exceptions and standard-library Write methods documented to never return an error remain separate. This diagnostic does not claim that every discarded fallible result is always a bug."
+  :description "The exact JDK 21 Files.deleteIfExists(Path) call returns a Boolean status: false means no file was deleted because the file did not exist. C#'s reviewed int, long, double, decimal, Guid, and DateTime TryParse APIs plus Dictionary and ConcurrentDictionary TryAdd/TryRemove/TryUpdate APIs return false on their reviewed failure path; out parameters do not consume that Boolean status. PHP's reviewed global file_put_contents, mkdir, unlink, rename, fclose, and fwrite calls return false on failure when the resolver proves `_php_global_` identity; fwrite byte counts are outside this contract. Ruby's reviewed Kernel#system returns true on success and false or nil on failure; only the exact core identity is included. Go calls whose resolved declaration has a native predeclared error result, Rust calls whose resolved declaration returns core/std Result, reviewed C/C++ libc calls whose standard-header declaration returns EOF, nonzero, or -1 on failure, and reviewed CPython stdlib status calls whose module attribute identity is resolver-proven are covered by the same result-use relation. An expression statement or for-loop initializer/update discards a result; an explicit blank assignment is intentional. Missing or conflicting contracts, shadowed Go error names, unproved Rust aliases, unresolved dispatch, C/C++ calls without structured standard-header identity, Python calls without structured CPython module identity, and PHP calls without structured `_php_global_` identity remain incomplete. I/O exceptions and standard-library Write methods documented to never return an error remain separate. This diagnostic does not claim that every discarded fallible result is always a bug."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
-  :tags ["correctness" "java" "csharp" "go" "rust" "c" "cpp" "python" "result-use" "status"]
+  :tags ["correctness" "java" "csharp" "php" "ruby" "go" "rust" "c" "cpp" "python" "result-use" "status"]
   :analysis (analysis
     :type assertion
     (bind :name discarded
@@ -41,6 +45,16 @@
               (call-result-obligations
                 (call-shape
                   (call :callee (name/regex "^(TryParse|TryAdd|TryRemove|TryUpdate)$"))))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate eq (enum false))
+                          (provenance eq reviewed)
+                          (obligation_basis eq dispatch_agreement)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language php
+              (call-result-obligations
+                (call-shape (call)))))
           (filter :where ((obligation_kind eq fallible_status)
                           (provenance eq native)
                           (result_use eq discarded)
@@ -86,7 +100,16 @@
                           (terminal eq false))
             (language python
               (call-result-obligations
-                (call-shape (call))))))))
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate in [(enum false) (enum null)])
+                          (provenance eq reviewed)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language ruby
+              (call-result-obligations
+                (call-shape (call :callee "system"))))))))
     (group :name by-call :by (discarded.id)
       (aggregate :name ignored-statuses :op count))
     (assert :group by-call :value ignored-statuses :cardinality (exactly 0))))

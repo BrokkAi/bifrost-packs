@@ -1,6 +1,6 @@
 # Batch 10 reviewed result-use content
 
-This document records the source-only transition for the five reviewed result-use
+This document records the source-only transition for the seven reviewed result-use
 models landed with the batch-10 policy arms. The model bytes are copied from the
 reviewed engine inputs without identity or provenance changes.
 
@@ -20,13 +20,18 @@ configuration are intentionally unchanged.
 | [JavaScript String model](../semantic-packs/javascript/javascript-string-result-use-obligations.json) | `bifrost.javascript.string-result-use-obligations` | Node.js 22.11.0 artifact and pinned activation digest |
 | [TypeScript String model](../semantic-packs/typescript/typescript-string-result-use-obligations.json) | `bifrost.typescript.string-result-use-obligations` | TypeScript 7.0.2 `lib/lib.es5.d.ts` activation |
 | [Python status model](../semantic-packs/python/python-status-result-use-obligations.json) | `bifrost.python.status-result-use-obligations` | CPython 3.13.5 and typeshed revision `1620e225476597f34177351ef913dc8390dade30` |
+| [PHP result-use model](../semantic-packs/php/php-result-use-obligations.json) | `bifrost.php.result-use-obligations` | JetBrains phpstorm-stubs revision `748ab87d16253a5b5d648b5fe4dae1ff4152bb03`, artifact SHA `270cfce465ac9e1de4abaa4f1facf70982f1becf70e040635f0519bd4a773bb9`; PHP 8.0-8.x manual; Apache-2.0 |
+| [Ruby core result-use model](../semantic-packs/ruby/ruby-core-result-use-obligations.json) | `bifrost.ruby.core-result-use-obligations` | Ruby core RBS/Sorbet review at engine fixture revision `c5620808cb`; Ruby License recorded; `Kernel#system` model stores `false`, while the policy also documents the reviewed `nil` failure outcome |
 
 Each source has a matching `.spec.json` with the exact source SHA, activation,
 measurement query, compatibility, provenance, license, and notice declaration.
+The PHP model is deliberately scoped to resolver-proven `_php_global_` calls;
+the Ruby model is deliberately scoped to the reviewed core identities and leaves
+open subclass, monkey-patched, and unknown receiver cases.
 
 ## Native generation transition
 
-No embedded manifest or shard is added for these five packs. The offline
+No embedded manifest or shard is added for these seven packs. The offline
 checkout has no executable built from the re-land engine commit
 `e14a898c9e` on `1152b43f5d` (the integrated re-land worktree is
 `2e205ac8ba`), and building a Rust generator would violate the workspace
@@ -42,8 +47,10 @@ Generation remains a separate, pinned transition:
    digest. Do not use the older executable as a substitute.
 2. Supply the exact artifacts named by the specs: Microsoft.NETCore.App.Ref
    8.0.0 reference assemblies, Node.js 22.11.0, TypeScript 7.0.2 with
-   `lib/lib.es5.d.ts`, and CPython 3.13.5/typeshed at the pinned revision.
-   Verify every artifact digest before generation.
+   `lib/lib.es5.d.ts`, CPython 3.13.5/typeshed at the pinned revision, the
+   phpstorm-stubs artifact named by the PHP spec, and the Ruby RBS core
+   signature source named by the Ruby spec. Verify every artifact digest before
+   generation.
 3. For each valid spec/model pair, run:
    ```sh
    bifrost-semantic-pack validate semantic-packs/<ecosystem>/<model>.json --format json
@@ -63,5 +70,5 @@ Generation remains a separate, pinned transition:
 
 Until that transition completes, source presence is not native installation or
 runtime qualification. The existing `verify-native.py` result covers only
-the already-embedded packs; these five source models are not included in that
+the already-embedded packs; these seven source models are not included in that
 count.

@@ -127,7 +127,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "942f79f68b49569703d9405bf16d55108d8fd2b6f41077115bc3819fea6b799e",
+      "sha256": "da49baa60d5481ff2065870cc3deac8f231d2664687be2aea08cb1bc9d9efc8f",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -155,7 +155,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/discarded-pure-result.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/discarded-pure-result.rqlp",
-      "sha256": "9dac1b2edfd8e272337d9234852bef8a3f1c12b8d6a036b7812359bf07f31319",
+      "sha256": "63be059cfd3931116616e9a96939c0076199d5415ac8adda0f1ec8a29d901b61",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -225,7 +225,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/ignored-status-result.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/ignored-status-result.rqlp",
-      "sha256": "93014a85e696f7c0f89299df4592fc1d5b890cdeb53035c6976cac04384041a1",
+      "sha256": "deeba5c78945db75f87f5cdef817d46630014000e4b5a51b7d225c550bad424d",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1889,6 +1889,27 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/php/notices/phpstorm-stubs-result-use.txt",
+      "source_path": "semantic-packs/php/notices/phpstorm-stubs-result-use.txt",
+      "sha256": "aed34de24d2eb33a3a6adadce97dd3f7e76953479e61922c689985476b603723",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/php/php-result-use-obligations.json",
+      "source_path": "tests/fixtures/php-result-use/php-result-use-obligations.json",
+      "sha256": "70fd46b09372be230e006a9de369781fda3487f3852ea2609969d015760ce2fd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/php/php-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/php/php-result-use-obligations.spec.json",
+      "sha256": "f22510483154981749f8aad2f1cf2af1a219f51e951d54de09c3c3a282ac57eb",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/php/phpstorm-stubs-2026.8.29.json",
       "source_path": "semantic-packs/php/phpstorm-stubs-2026.8.29.json",
       "sha256": "41472bbba3445417f2d0fe748d126861ae8192b6e9726cc8ade6c0528fde3dc1",
@@ -1985,6 +2006,27 @@
       "sha256": "d7cc128f169bed96d051edc1eb23561a6d00946d9f9ae0247e70c22b81937bb3",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/ruby/notices/ruby-rbs-core-result-use.txt",
+      "source_path": "semantic-packs/ruby/notices/ruby-rbs-core-result-use.txt",
+      "sha256": "f63e2c815d29675f430dc08b73c3943736d5e6ac646c645e0aafd9e542097eaa",
+      "classification": "public",
+      "license": "Ruby"
+    },
+    {
+      "path": "semantic-packs/ruby/ruby-core-result-use-obligations.json",
+      "source_path": "tests/suite_bench_policy/ruby_result_obligations.rs",
+      "sha256": "69a08bc69199d485de4a672d6f0c3c1ea8de44adbf3bd7a0ff33f9feb2ae886e",
+      "classification": "public",
+      "license": "Ruby"
+    },
+    {
+      "path": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
+      "sha256": "86eda8fb05a5f047ec42c8fae5758039f66607db4bc6af4b121293014e167603",
+      "classification": "public",
+      "license": "Ruby"
     },
     {
       "path": "semantic-packs/rust/README.md",
@@ -2211,5 +2253,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "47f8e0b0647d5fae0f2168e3b436b53b70a0e7fbd258e609e0d10ac31741d05b"
+  "aggregate_sha256": "c0c57c6b4c851865eae7a053a9195d4ff480d6db9487b81f60bc491edd451304"
 }
