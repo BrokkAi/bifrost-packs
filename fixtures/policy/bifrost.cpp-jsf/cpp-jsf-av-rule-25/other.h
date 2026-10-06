@@ -1,0 +1,1 @@
+struct OtherValue { int value; };

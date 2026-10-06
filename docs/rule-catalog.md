@@ -1,10 +1,14 @@
 # Rule catalog
 
-This catalog lists 85 unique rule IDs from 5 manifest packs.
+This catalog lists 105 unique rule IDs from 8 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
 | --- | --- | --- | --- | --- |
+| [JPL-C Rule 09: avoid semaphores](../rules/bifrost.c-jpl/policies/avoid-semaphores.rqlp) | `bifrost.c-jpl.avoid-semaphores` | cpp | correctness | note |
+| [JPL-C Rule 05: heap allocation outside initialization](../rules/bifrost.c-jpl/policies/heap-memory.rqlp) | `bifrost.c-jpl.heap-memory` | cpp | correctness | note |
+| [JPL-C Rule 11: non-local jump](../rules/bifrost.c-jpl/policies/simple-control-flow-jmp.rqlp) | `bifrost.c-jpl.simple-control-flow-jmp` | cpp | correctness | warning |
+| [JPL-C Rule 07: delay function](../rules/bifrost.c-jpl/policies/thread-safety.rqlp) | `bifrost.c-jpl.thread-safety` | cpp | correctness | warning |
 | [C self-assignment](../rules/bifrost.code-smells/policies/c-self-assignment.rqlp) | `bifrost.correctness.c-self-assignment` | c | correctness | warning |
 | [Fixed conditional outcome](../rules/bifrost.code-smells/policies/contradictory-condition.rqlp) | `bifrost.correctness.contradictory-condition` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Database call inside a loop](../rules/bifrost.code-smells/policies/database-call-in-loop.rqlp) | `bifrost.performance.database-call-in-loop` | java, javascript, python, typescript | performance | note |
@@ -37,6 +41,22 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Unreachable statement](../rules/bifrost.code-smells/policies/unreachable-statement.rqlp) | `bifrost.correctness.unreachable-statement` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Unsafe object deserialization](../rules/bifrost.code-smells/policies/unsafe-deserialization.rqlp) | `bifrost.correctness.unsafe-deserialization` | python | correctness | warning |
 | [Resource lifecycle](../rules/bifrost.correctness/policies/resource-lifecycle.rqlp) | `bifrost.correctness.resource-lifecycle` | go, java, javascript, kotlin, php, python, rust, scala, typescript | correctness | error |
+| [JSF AV Rule 108](../rules/bifrost.cpp-jsf/policies/av-rule-108.rqlp) | `bifrost.cpp-jsf.av-rule-108` | cpp | correctness | warning |
+| [JSF AV Rule 110](../rules/bifrost.cpp-jsf/policies/av-rule-110.rqlp) | `bifrost.cpp-jsf.av-rule-110` | cpp | correctness | warning |
+| [JSF AV Rule 13](../rules/bifrost.cpp-jsf/policies/av-rule-13.rqlp) | `bifrost.cpp-jsf.av-rule-13` | cpp | correctness | error |
+| [JSF AV Rule 14](../rules/bifrost.cpp-jsf/policies/av-rule-14.rqlp) | `bifrost.cpp-jsf.av-rule-14` | cpp | correctness | error |
+| [JSF AV Rule 149](../rules/bifrost.cpp-jsf/policies/av-rule-149.rqlp) | `bifrost.cpp-jsf.av-rule-149` | cpp | correctness | note |
+| [JSF AV Rule 150](../rules/bifrost.cpp-jsf/policies/av-rule-150.rqlp) | `bifrost.cpp-jsf.av-rule-150` | cpp | correctness | note |
+| [JSF AV Rule 159](../rules/bifrost.cpp-jsf/policies/av-rule-159.rqlp) | `bifrost.cpp-jsf.av-rule-159` | cpp | correctness | warning |
+| [JSF AV Rule 19](../rules/bifrost.cpp-jsf/policies/av-rule-19.rqlp) | `bifrost.cpp-jsf.av-rule-19` | cpp | correctness | error |
+| [JSF AV Rule 208](../rules/bifrost.cpp-jsf/policies/av-rule-208.rqlp) | `bifrost.cpp-jsf.av-rule-208` | cpp | correctness | note |
+| [JSF AV Rule 209](../rules/bifrost.cpp-jsf/policies/av-rule-209.rqlp) | `bifrost.cpp-jsf.av-rule-209` | cpp | correctness | note |
+| [JSF AV Rule 21](../rules/bifrost.cpp-jsf/policies/av-rule-21.rqlp) | `bifrost.cpp-jsf.av-rule-21` | cpp | correctness | error |
+| [JSF AV Rule 22](../rules/bifrost.cpp-jsf/policies/av-rule-22.rqlp) | `bifrost.cpp-jsf.av-rule-22` | cpp | correctness | error |
+| [JSF AV Rule 25](../rules/bifrost.cpp-jsf/policies/av-rule-25.rqlp) | `bifrost.cpp-jsf.av-rule-25` | cpp | correctness | error |
+| [JSF AV Rule 53.1](../rules/bifrost.cpp-jsf/policies/av-rule-53-1.rqlp) | `bifrost.cpp-jsf.av-rule-53-1` | cpp | correctness | warning |
+| [Power of 10 Rule 3: dynamic allocation outside initialization](../rules/bifrost.cpp-power-of-10/policies/dynamic-alloc-after-init.rqlp) | `bifrost.cpp-power-of-10.dynamic-alloc-after-init` | cpp | correctness | note |
+| [Power of 10 Rule 1: non-local jump](../rules/bifrost.cpp-power-of-10/policies/use-of-jmp.rqlp) | `bifrost.cpp-power-of-10.use-of-jmp` | cpp | correctness | warning |
 | [C# call to obsolete method](../rules/bifrost.csharp-codeql-quality/policies/call-to-obsolete-method.rqlp) | `bifrost.csharp-codeql-quality.call-to-obsolete-method` | csharp | quality | warning |
 | [C# catch of all exceptions](../rules/bifrost.csharp-codeql-quality/policies/catch-of-all-exceptions.rqlp) | `bifrost.csharp-codeql-quality.catch-of-all-exceptions` | csharp | quality | warning |
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |

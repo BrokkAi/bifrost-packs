@@ -1,0 +1,14 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-149"
+  :name "JSF AV Rule 149"
+  :message "octal constant requires review"
+  :severity note
+  :description "Mirrors CodeQL cpp/jsf/av-rule-149 (cpp/ql/src/jsf/4.18 Constants/AV Rule 149.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Nonzero octal literal spellings are discouraged by the JSF standard."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-149"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (numeric_literal (text/regex "^0[0-7]*[1-7][0-7]*[uUlL]*$")))))
+  )

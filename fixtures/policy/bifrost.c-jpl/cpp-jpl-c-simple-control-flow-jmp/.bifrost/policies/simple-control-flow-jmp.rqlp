@@ -1,0 +1,18 @@
+(policy
+  :schema-version 1
+  :id "bifrost.c-jpl.simple-control-flow-jmp"
+  :name "JPL-C Rule 11: non-local jump"
+  :message "the non-local jump function should not be used"
+  :severity warning
+  :description "Mirrors CodeQL cpp/jpl-c/simple-control-flow-jmp (cpp/ql/src/JPL_C/LOC-2/Rule 11/SimpleControlFlowJmp.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The four forbidden non-local jump calls are selected by exact callee identity."
+  :tags ["cpp" "jpl-c" "codeql-cpp-jpl-c-simple-control-flow-jmp"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (union
+          (call :callee (name "setjmp"))
+          (call :callee (name "longjmp"))
+          (call :callee (name "sigsetjmp"))
+          (call :callee (name "siglongjmp"))))))
+  )
