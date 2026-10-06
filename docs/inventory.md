@@ -3,8 +3,11 @@
 Canonical source: `aa291b97e55e48efc931ea89a16068404c3aad3e`, tree
 `a6cd88202e4fac378c60055a23153d710d3c4a79`. Destination base:
 `9a8df215d9b855c0bb589e02a4807759825855e3`. The exact per-path map is
-`content-lock.json`; it includes 293 unchanged source files and four pinned
-upstream license texts. Baseline-preserving source classification reported 2,254
+`content-lock.json`. Its initial copy contained 293 source files and four pinned
+upstream license texts; later reviewed imports record their own `source_revision`.
+The source archive includes newer ordinary Python authoring models. A native
+recipe selects only its explicit compatible inputs, so those authoring models
+do not enter a release automatically. Baseline-preserving source classification reported 2,254
 public, 4,712 private, five generated and zero review paths.
 
 | Layer | Copied | Consumer/tool dependency |

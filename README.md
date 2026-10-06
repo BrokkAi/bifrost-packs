@@ -95,15 +95,17 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-The intended next public streams are `packs/v0.2.0` and `rules/v0.1.2`;
-neither is a publication claim. The native archive still contains enforced
-engine-version compatibility fields, so the native schema/runtime migration
-must finish before a version-independent native release can be published. See
-the [recorded publication blocker](docs/native-publication-blocker.json), which
-identifies the prior diagnostic run and native source gates. The rules release pins the exact `packs/v0.2.0` dependency and remains contingent
-on that release. See [release streams](docs/release-streams.md) for the exact
-baseline and current gates, and [generation](docs/generation.md) for the pinned
-generator and behavioral evidence limits.
+The next public streams are `packs/v0.2.0` and `rules/v0.1.2`. The pinned
+public schema-8 producer removes native engine-version gates while retaining
+legacy compatibility. The [recorded blocker](docs/native-publication-blocker.json)
+describes historical generator output. New publication verifies the actual
+archive and exact dependency: rules pin `bifrost.public.packs@0.2.0`.
+The packs release also carries a source archive of current authored inputs and
+research; models outside the native recipe remain reproduction inputs with
+pending consumer qualification. The rules release packages the current locked
+policy inventory. Research probes remain research and are not enabled policies.
+See [release streams](docs/release-streams.md) and
+[generation](docs/generation.md) for exact pins and behavioral evidence limits.
 
 For the standalone LSP engine/content tuple, use the
 [qualification and handoff procedure](docs/standalone-qualification.md).

@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "candidate_id": "python-hashlib-new-constant-dispatch",
+  "status": "incomplete",
+  "qualification": "unqualified",
+  "scope": "Bounded source-only fixture replay on the exact recorded Bifrost binary and local CPython runtime. This is not a global engine or consumer-project claim.",
+  "runtime_contract": {
+    "runtime": "CPython 3.9.6",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "witness_status": "supported_on_recorded_runtime",
+    "witness_source": "fixtures/runtime-witness.py",
+    "witness_source_sha256": "6e5fcfcb30bc86e46d7d5a953f64f3e521c2687648940f8e770c68d3b600b64d",
+    "witness_output_sha256": "2da120b3f5ff7e80d4b6d66fccb09170eaeb8676118dcebac2370d54d8b26bf8",
+    "usedforsecurity_false_preserved": true,
+    "named_constructor_data_keyword_rejected": true,
+    "omitted_new_data_equals_named_constructor_default": true,
+    "performance_measured": false
+  },
+  "bifrost": {
+    "version": "0.12.0",
+    "sha256": "168cf91d61f7504fbabf77974bfe53cdcc6f41abfbb727b7b152db18a3c4b545",
+    "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+    "builtin_policy_catalog_sha256": "9d1e4021b68c4dbd8d03c2ab9c10c05578868bd2b38ceae5e9aeca1849ba083e"
+  },
+  "pinned_pack_evidence": {
+    "manifest": "semantic-packs/python/typeshed-stdlib-2026.8.31.json",
+    "pack_id": "bifrost.python-stdlib",
+    "pack_version": "2026.9.14",
+    "typeshed_revision": "1620e225476597f34177351ef913dc8390dade30",
+    "archive_sha256": "45154945afdda57a5cd3b90377b7ce649d572dc7296ace4d3fd01099f7cbaa37",
+    "hashlib_stub_present": false,
+    "activation": "CPython >=3.10.0,<3.15.0",
+    "measurement_activation": "CPython =3.13.5"
+  },
+  "fixtures": {
+    "fixtures/hashlib_cases.py": {
+      "sha256": "75263ba1f60c106bac5a6a3f0ff45f9b2f9d6cce71de9cc4ed9e80816c2030d2",
+      "cases": [
+        "module import alias",
+        "from-import alias",
+        "positional and keyword name/data forms",
+        "usedforsecurity=False",
+        "dynamic algorithm near miss",
+        "direct named constructor near miss",
+        "omitted data equivalence and invalid extra positional near miss",
+        "SHAKE named constructor",
+        "FIPS-sensitive MD5 exclusion",
+        "provider-specific algorithm exclusion",
+        "parameter and local-object shadowing"
+      ]
+    },
+    "fixtures/runtime-witness.py": {
+      "sha256": "2ea413bca338779874a6bdbe515a1b343fed8fa25575e2304b932babee893337",
+      "role": "Assertion-based local runtime equivalence witness; exit success proves fixture behavior only."
+    }
+  },
+  "queries": [
+    {
+      "path": "queries/constant-new-positional.rql",
+      "sha256": "652945d20ed9dcd331c5452a7fa1606a5378b834098dff97dd82e95bd64bdf19",
+      "report_sha256": "27925576067ffae7a4a9bb9a3ef8bcc8c8f6ab2af3c2cead2307a47d31df0b7c",
+      "rows": 6,
+      "diagnostics": 0,
+      "truncated": false,
+      "purpose": "Static literal algorithm plus two-position argument call-shape discovery."
+    },
+    {
+      "path": "queries/constant-new-keyword.rql",
+      "sha256": "d305924c1675596e5a86e69eb7dedc94c7403346c2c5802cfb29b473ecea87bb",
+      "report_sha256": "2a48e2fc29205c99d6d8ef3a2953831d7a1c64e4b5ed2d38b5e5cee75a0fac06",
+      "rows": 2,
+      "diagnostics": 0,
+      "truncated": false,
+      "purpose": "Keyword name/data call-shape discovery; preserves other call keywords in the source."
+    },
+    {
+      "path": "queries/constant-new-import-aliases.rql",
+      "sha256": "9a6b9d46bf4b4ab26aa32ad1d550927db9f6918c455ea3a0f286fa7aab4e9bbc",
+      "report_sha256": "17e3fa034fac9765c2962774a899eeda09ea94e74349500a594b5326e41d4cd0",
+      "rows": 11,
+      "diagnostics": 0,
+      "truncated": false,
+      "purpose": "Unqualified call-shape discovery including from-import aliases; intentionally overmatches member calls and does not prove binding identity."
+    },
+    {
+      "path": "queries/candidate-bindings.rql",
+      "sha256": "b4cb625498f578fd71f0149abb9b00ee0ad2b493992bee20561568728b801ec0",
+      "report_sha256": "349afdaa30405c5b01f59057df55afbb5e81762e1a0db1cbc1ebfdde9bbef966",
+      "rows": 18,
+      "diagnostics": 0,
+      "truncated": false,
+      "purpose": "Lexical binding evidence for constant-call references and local shadows."
+    }
+  ],
+  "resolver_evidence": {
+    "observed_import_bindings": [
+      {
+        "local_name": "hashes",
+        "target_segments": ["hashlib"],
+        "boundary": "external_unknown"
+      },
+      {
+        "local_name": "new_hash",
+        "target_segments": ["hashlib", "new"],
+        "boundary": "external_unknown"
+      }
+    ],
+    "local_shadow": "The hashlib parameter is resolved as a lexical parameter binding.",
+    "interpretation": "Import syntax and aliases are retained, but external_unknown does not establish CPython standard-library identity or a constructor declaration."
+  },
+  "discovery_policy": {
+    "path": "rqlp/discovery-only.rqlp",
+    "sha256": "dee301fd55736d4b41310699193a1662323762dfccc2274d8d7bd3b735478f12",
+    "report_sha256": "a8a4fd3c93ee01be42aba13d1e28b339cfe658a8c0fc09ac1b5e778e5f2fb82a",
+    "completion": "complete",
+    "findings": 11,
+    "typed_diagnostics": 0,
+    "finding_lines": [7, 11, 15, 19, 23, 27, 43, 47, 57, 69, 74],
+    "interpretation": "Complete syntactic discovery only. Both local-shadow calls are included, confirming that the selector is not an API-identity or optimization rule. This policy is not registered in a shared pack manifest."
+  },
+  "optimization_gates": {
+    "module_identity": "incomplete",
+    "consumer_python_version": "unknown",
+    "algorithm_available_in_target": "unknown",
+    "usedforsecurity_compatibility_for_consumer": "unverified",
+    "data_keyword_rewrite_equivalence": "not established; direct constructors reject data= on the recorded local runtime",
+    "omitted_data_rewrite_equivalence": "supported on recorded local runtime for each candidate algorithm; target runtime remains unverified",
+    "performance_benefit": "not measured",
+    "decision": "Do not emit an advisory or enable this selector in a scanner."
+  },
+  "reproduction": {
+    "binary_binding": "Set BIFROST_012 to the Bifrost 0.12.0 binary matching the recorded SHA-256.",
+    "workspace": "Run each command from this prototype directory.",
+    "raw_reports_are_committed": false,
+    "raw_reports_directory": "Local temporary evidence at /private/tmp/hashlib-probe-reports.",
+    "runtime_command": "python3 fixtures/runtime-witness.py"
+  },
+  "open_core": {
+    "classification": "New public research fixture authored directly against public CPython documentation and Bifrost public APIs.",
+    "private_content_imported": false
+  }
+}
