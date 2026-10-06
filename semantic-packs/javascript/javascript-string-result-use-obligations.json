@@ -1,0 +1,178 @@
+{
+  "schema_version": 5,
+  "pack_id": "bifrost.javascript.string-result-use-obligations",
+  "version": "1.0.0",
+  "producer": { "name": "bifrost-reviewed-javascript-models", "version": "0.1.0" },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections; Node.js runtime artifact",
+    "revision": "ECMA-262 current edition; Node v22.11.0 artifact and profile pinned by activation evidence; exact literal, untagged template, or builtin String(...) receiver proof only"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": { "generated_code_only": false, "review_required": false },
+  "shards": [
+    {
+      "id": "javascript.string.reviewed-declarations",
+      "activation": [
+        {
+          "package": { "name": "pkg:generic/nodejs.org/node@22.11.0" },
+          "targets": [],
+          "configurations": ["70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"],
+          "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.javascript.string",
+            "name": "String",
+            "type_kind": "class",
+            "visibility": "public",
+            "aliases": [],
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String" }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.javascript.string.trim",
+            "owner": "type.javascript.string",
+            "name": "trim",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "String" } },
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String.trim" }
+          },
+          {
+            "id": "member.javascript.string.trim-start",
+            "owner": "type.javascript.string",
+            "name": "trimStart",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "String" } },
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String.trimStart" }
+          },
+          {
+            "id": "member.javascript.string.trim-end",
+            "owner": "type.javascript.string",
+            "name": "trimEnd",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "String" } },
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String.trimEnd" }
+          },
+          {
+            "id": "member.javascript.string.to-lower-case",
+            "owner": "type.javascript.string",
+            "name": "toLowerCase",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "String" } },
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String.toLowerCase" }
+          },
+          {
+            "id": "member.javascript.string.to-upper-case",
+            "owner": "type.javascript.string",
+            "name": "toUpperCase",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": { "parameters": [], "returns": { "kind": "named", "name": "String" } },
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String.toUpperCase" }
+          },
+          {
+            "id": "member.javascript.string.replace",
+            "owner": "type.javascript.string",
+            "name": "replace",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                { "name": "searchValue", "type": { "kind": "named", "name": "String" } },
+                { "name": "replaceValue", "type": { "kind": "named", "name": "String" } }
+              ],
+              "returns": { "kind": "named", "name": "String" }
+            },
+            "locator": { "kind": "artifact", "path": "ecma-262", "symbol": "String.replace" }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "javascript.string.reviewed-result-use",
+      "activation": [
+        {
+          "package": { "name": "pkg:generic/nodejs.org/node@22.11.0" },
+          "targets": [],
+          "configurations": ["70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"],
+          "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "javascript.string.trim.result-use",
+            "target": { "path": "ecma-262", "symbol": "String.trim()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true, "normal_result_count": 1,
+            "transfers": [{ "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }],
+            "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+          },
+          {
+            "id": "javascript.string.trim-start.result-use",
+            "target": { "path": "ecma-262", "symbol": "String.trimStart()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true, "normal_result_count": 1,
+            "transfers": [{ "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }],
+            "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+          },
+          {
+            "id": "javascript.string.trim-end.result-use",
+            "target": { "path": "ecma-262", "symbol": "String.trimEnd()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true, "normal_result_count": 1,
+            "transfers": [{ "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }],
+            "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+          },
+          {
+            "id": "javascript.string.to-lower-case.result-use",
+            "target": { "path": "ecma-262", "symbol": "String.toLowerCase()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true, "normal_result_count": 1,
+            "transfers": [{ "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }],
+            "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+          },
+          {
+            "id": "javascript.string.to-upper-case.result-use",
+            "target": { "path": "ecma-262", "symbol": "String.toUpperCase()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true, "normal_result_count": 1,
+            "transfers": [{ "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }],
+            "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+          },
+          {
+            "id": "javascript.string.replace.result-use",
+            "target": { "path": "ecma-262", "symbol": "String.replace(searchValue, replaceValue)", "has_receiver": true, "parameter_count": 2 },
+            "completeness": "complete", "ordinary_heap_unchanged": true, "covers_overrides": true, "normal_result_count": 1,
+            "transfers": [{ "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }],
+            "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+          }
+        ]
+      }
+    }
+  ]
+}

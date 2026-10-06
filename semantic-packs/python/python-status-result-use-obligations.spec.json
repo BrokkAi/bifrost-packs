@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python.status-result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "python-status-result-use-obligations.json",
+    "sha256": "0b8b281c721ac48d29057ff0590bb83a2db778d3d3c0985f556c2a0dea0b438f",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/python/python-status-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.10.0, <3.15.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.10.0, <3.15.0"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "CPython subprocess.call documentation (https://docs.python.org/3.13/library/subprocess.html#subprocess.call), os.system documentation (https://docs.python.org/3.13/library/os.html#os.system), and typeshed; reviewed status-return functions whose nonzero status reports failure",
+    "revision": "typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; subprocess.call and os.system return status codes whose nonzero status indicates failure"
+  },
+  "license": "PSF-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-status-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.13.5"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "subprocess",
+      "name": "call",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}
