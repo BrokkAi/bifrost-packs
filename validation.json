@@ -16,6 +16,15 @@
     "status": "unqualified",
     "reason": "Full copied policy/model set has not been run against an exact intended v0.13 engine build; existing engine exposes no capability registry."
   },
+  "cpp_bundle_qualification": {
+    "status": "focused-complete-release-only",
+    "scope": "20 selected C/C++ coding-standard policies across bifrost.cpp-jsf, bifrost.c-jpl, and bifrost.cpp-power-of-10; the explicitly excluded functions-with-many-parameters rule is not included.",
+    "engine_version": "0.12.0",
+    "build_identity": "676def6c6615002002b1bb9d25211ad1476a5b5d",
+    "binary_sha256": "cbe227be1c8d5c02aa2b3ecd2c6343514295d32a8315f8d2db10b310b3d58483",
+    "result": "All 20 focused reports completed with zero diagnostics; positive fixtures produced findings and near-miss cases remained outside the selected findings.",
+    "reproduction_command": "BIFROST_OPEN_POLICY_PACK_ROOT=$PWD/rules BIFROST_CACHE_ROOT=/tmp/bundles-cache bifrost --root fixtures/policy/<pack>/<fixture> --no-builtin-policies --policy-file .bifrost/policies/<policy>.rqlp --format json --fail-on never --output <report.json>"
+  },
   "focused_smoke": {
     "scope": "One Python structural dynamic-evaluation policy only; no external API or security proof",
     "binary_version": "0.11.4",
