@@ -2,15 +2,20 @@
 """Index independently generated native packs without inferring consumer compatibility."""
 import argparse
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 import zlib
 
 import release
+
+
+PACK_CONTENT_PREFIXES = ('semantic-packs/', 'fixtures/semantic/', 'scripts/upstream/', 'licenses/')
 
 
 def archive_files(path):
@@ -73,6 +78,65 @@ def native_contents(archive, baseline=None, generator_version=None):
         schemas = release.empty_schemas(); schemas['semantic_model_read'] = [manifest['schema_version']]; schemas['release_index'] = [3]
         contents.append(dict(kind='semantic-model', identity=manifest['pack_id'], content_version=manifest['version'], completeness=manifest['completeness'], path=path, sha256=release.digest(data), languages=[manifest['language']], dependencies=[json.dumps(manifest['compatibility'], sort_keys=True)], schemas=schemas, required_capabilities=[], license=manifest['license']))
     return contents
+
+
+def _content_module(root):
+    """Load the checkout's content builder without importing build-release.py."""
+    path = root / 'scripts' / 'content.py'
+    if path.is_symlink() or not path.is_file():
+        release.fail('invalid-manifest', 'packs source builder is missing from the clean checkout')
+    spec = importlib.util.spec_from_file_location('_bifrost_packs_release_content', path)
+    if spec is None or spec.loader is None:
+        release.fail('invalid-manifest', 'cannot load the packs source builder')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _packs_content_lock(root, content_module):
+    """Return the exact lock selected by content.py's packs component stream."""
+    full_lock = content_module.verify_content(root)
+    lock = dict(full_lock, files=[
+        entry for entry in full_lock['files']
+        if entry['path'].startswith(PACK_CONTENT_PREFIXES)
+    ])
+    aggregate = ''.join(
+        f"{entry['sha256']}  {entry['path']}\n"
+        for entry in sorted(lock['files'], key=lambda entry: entry['path'])
+    )
+    lock['aggregate_sha256'] = release.digest(aggregate.encode())
+    return lock
+
+
+def verify_source_archive(root, archive, content_module=None):
+    """Verify a packs source archive against the current filtered authoring lock."""
+    content_module = content_module or _content_module(root)
+    expected_lock = _packs_content_lock(root, content_module)
+    actual = archive_files(archive)
+    try:
+        with tempfile.TemporaryDirectory() as temporary:
+            stage = Path(temporary)
+            for name, data in actual.items():
+                target = stage / release.safe_path(name)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(data)
+            verified_lock = content_module.verify_content(stage)
+    except content_module.ContentError as error:
+        release.fail('integrity-error', f'source archive content is invalid: {error}')
+    if verified_lock != expected_lock:
+        release.fail('integrity-error', 'source archive content lock differs from the current packs lock')
+    return verified_lock
+
+
+def _build_source_archive(root, output, version):
+    content_module = _content_module(root)
+    source_archive = output / f'bifrost.public.packs-{version}-source.tar.gz'
+    try:
+        content_module.build_bundle(source_archive, root, component='packs')
+    except content_module.ContentError as error:
+        release.fail('integrity-error', f'cannot build packs source archive: {error}')
+    verify_source_archive(root, source_archive, content_module)
+    return source_archive
 
 
 def require_version_independent_native(contents):
@@ -186,6 +250,7 @@ def build(root, config_path, archive, receipt_path, output, version=None):
     target = output / f"{config['pack_id']}-{config['release_version']}-native.tar.gz"
     if target.resolve() == archive.resolve():
         release.fail('invalid-manifest', 'release output must differ from generation input')
+    source_archive = _build_source_archive(root, output, config['release_version'])
     shutil.copyfile(archive, target)
     manifest = release.make_manifest(config, commit, contents, target)
     manifest['qualification'] = dict(
@@ -201,6 +266,14 @@ def build(root, config_path, archive, receipt_path, output, version=None):
     for name, data in sidecars:
         (output / name).write_bytes(data)
         manifest['artifacts'].append(dict(name=name, sha256=release.digest(data), size_bytes=len(data), format='json', role='source'))
+    source_data = source_archive.read_bytes()
+    manifest['artifacts'].append(dict(
+        name=source_archive.name,
+        sha256=release.digest(source_data),
+        size_bytes=len(source_data),
+        format='tar.gz',
+        role='source',
+    ))
     release.validate_manifest(manifest)
     (output / 'pack-release.json').write_text(json.dumps(manifest, indent=2, sort_keys=True) + '\n')
     for item in manifest['artifacts']:

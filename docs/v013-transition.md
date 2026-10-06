@@ -30,11 +30,17 @@ see [generation](generation.md). Historical 0.12.0 payloads remain immutable
 and gated. Inspect new bytes, install/catalog behavior, real profile capability
 support and exact dependency selection before admitting a candidate.
 
-The intended `rules/v0.1.2` remains the exact 49-policy historical baseline and
-its exact `packs/v0.2.0` dependency. This preparation does not substitute the
-larger rule-authoring copy. Newly reconciled schema-14 Python authoring content
-is not part of the schema-8 native recipe and needs its own supporting engine
-qualification. The intended tags are not publication claims.
+The intended `rules/v0.1.2` publishes the current locked 70-policy authoring
+copy and retains its exact `packs/v0.2.0` dependency. The rules source archive
+also carries tracked research evidence as non-production metadata; those files
+remain outside the content lock and policy inventory. The reconciled schema-14
+Python authoring models belong to the accompanying packs source artifact and
+native-generation inputs; they are not part of the rules inventory and remain
+excluded from the schema-8 native recipe. Their consumer capability and behavior
+qualification is a separate gate. The focused dynamic-evaluation smoke uses the
+published, sidecar-verified Bifrost `v0.12.0` Linux binary and remains limited
+evidence rather than whole-pack qualification. The intended tags are not
+publication claims.
 
 ## Future sequence
 

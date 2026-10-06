@@ -101,7 +101,6 @@ jobs:
         if: ${{ always() }}
         run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"
       - name: Index generated packs with independent compatibility requirements
-        if: ${{ startsWith(github.ref, 'refs/tags/packs/') }}
         env:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
@@ -115,8 +114,11 @@ jobs:
             --config release-config.packs.json --version "$version" \
             --archive "$RUNNER_TEMP/native/native.tar.gz" \
             --receipt "$RUNNER_TEMP/native/generation.json" --output "$RUNNER_TEMP/dist"
+          python3 -B release-contract/publication.py \
+            --manifest "$RUNNER_TEMP/dist/pack-release.json" --directory "$RUNNER_TEMP/dist"
+          python3 -B scripts/audit_tuple.py --manifest "$RUNNER_TEMP/dist/pack-release.json" \
+            --output "$RUNNER_TEMP/native-integrity-audit.json"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
-        if: ${{ startsWith(github.ref, 'refs/tags/packs/') }}
         with:
           name: generated-native-packs-${{ github.sha }}
           path: |

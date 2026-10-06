@@ -21,8 +21,9 @@ the reviewed schema-8 producer inputs. They no longer declare an inner engine
 version gate. The producer and reader enforce compatibility by actual schemas;
 legacy artifacts keep their original engine gates. Newer Python standard-library
 authoring models are retained here with exact import provenance, including a
-schema-14 summary model. The schema-8 recipe does not compile or distribute that
-summary model. Selecting it requires a separately qualified supporting producer
+schema-14 summary model. The schema-8 recipe does not compile that summary model
+into the native archive. The accompanying source archive pins all current authored
+inputs and research for reproduction. Selecting the summary model requires a separately qualified supporting producer
 and consumer; never lower its schema label or remove fields to fit this release.
 
 The earlier public `62fc36c09ddb96746e716c1c3456a99957521d91` generation
@@ -60,15 +61,16 @@ release receipt and isolated runtime cache.
 
 Generation, byte integrity, format compatibility and consumer behavior are
 separate outcomes. The current narrow Python dynamic-evaluation smoke does not
-qualify the 49-policy release baseline, the larger authoring tree, or a complete
+qualify the historical 49-policy baseline, the current rule inventory, or a complete
 cross-language pack set. Preserve `partial`, unsupported and incomplete results.
 Empty findings with incomplete coverage cannot become a clean result.
 
 Manual dispatch stages generation evidence. A stream tag still invokes
 `native_release.py` and the fail-closed publication guard, which reject remaining
 inner engine gates. A successful integrity run does not authorize a tag or
-publication. Engine/library witnesses and live external-content/offline Docker
-acceptance remain separate release requirements.
+publication. The release contract permits pending behavior with verified integrity;
+engine/library witnesses and live external-content/offline Docker acceptance
+remain required before claiming a qualified consumer tuple or default cutover.
 
 The authored unittest assertion input retains its upstream CPython v3.13.5
 provenance and notice. Its engine-version keys were removed from both the

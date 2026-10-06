@@ -24,19 +24,23 @@ corrections and reviewed ordinary Python baseline imports carry per-entry
 `source_revision` provenance in `content-lock.json`. Newer schema-14 authoring
 models are excluded from this schema-8 native recipe.
 
-The intended `rules/v0.1.2` content is the exact 49-policy baseline from public
-Bifrost `v0.11.5`, source commit
-`4ec4489e850b809c9cc7750e4c450c7560c45de0`. Its actual schema requirements
-come from those policies and the built-in catalog: policy-document, RQL, and
-built-in-catalog axes. Its 49 policies declare 46 distinct required capability
-identifiers. The exact consumer profile must advertise them. The earlier 0.12.0 profile
-advertised none; an engine version does not supply or imply capabilities.
-The exact policy documents and required capabilities must be derived from the
-pinned 49-policy baseline, not the repository's larger authoring copy. The rules
-manifest pins exactly
+The intended `rules/v0.1.2` content is the current locked authoring copy: 70
+policy documents across the four checked-in public manifests, with 60 distinct
+required capability identifiers. The source archive carries the checked-in
+policy files, focused smoke fixtures, and tracked research evidence. Research
+files are archive metadata and are not entries in `content-lock.json` or the
+release policy inventory. The rules manifest pins exactly
 `bifrost.public.packs` release `0.2.0` from this repository. That dependency
 is under review and must resolve to the exact release before the rules stream can
 be selected or published.
+
+Source-byte integrity and consumer qualification remain separate. The release
+records the locked policy bytes and required capabilities, while a consumer must
+prove that its exact build supports those capabilities and then qualify behavior.
+The focused dynamic-evaluation smoke uses the published Bifrost `v0.12.0`
+Linux binary, verifies its release sidecar checksum, and records one positive and
+one realistic near-miss. It is limited evidence for that policy and does not
+qualify the full 70-policy set.
 
 These are intended release identities, not claims that either tag or artifact
 has been published. The v2 release manifest describes schemas and capabilities
@@ -52,9 +56,8 @@ to the earlier public 0.12.0 generator and its eight gated descriptors.
 Concurrent legacy releases `rules/v0.1.1` and `packs/v0.1.1` were published
 from `28babf267ce4602549588082d5801d78ba549edf`. They retain contract schema 1,
 engine range `>=0.12.0, <0.12.1`, and pending qualification. Their manifests and
-assets remain immutable. The rules `0.1.2` candidate deliberately retains the
-49-policy baseline scope described here; it does not absorb the concurrent
-branch's larger Bifrost 0.12 policy update.
+assets remain immutable. The `rules/v0.1.2` candidate publishes the current
+70-policy authoring copy while preserving those immutable legacy artifacts.
 
 ## Legacy baseline
 
@@ -75,11 +78,14 @@ generated content when known. Do not fill in unknown future schema values from
 the generator version. Per-content completeness remains explicit, including
 `partial`.
 
-The existing release baseline pins source commits, policy files, and the native
-archive checksum. Release-building verifies those inputs and archive contents.
-Manual dispatch stages raw generation evidence. A stream tag can publish only
-after the native schema/runtime gate and exact dependency pass; current tag
-publication fails closed.
+The existing release baseline remains available for historical baseline builds and
+continues to pin source commits, policy files, and the native archive checksum.
+The current rules stream is selected from `content-lock.json`; release-building
+verifies its locked bytes and archive contents. Manual dispatch stages raw
+generation evidence. A stream tag can publish after the exact dependency and
+verified-integrity checks; schema-2 behavior may remain pending or limited.
+Consumer capability and behavior proof remains required before default
+selection or a consumer cutover.
 
 See [the shared contract](../release-contract/README.md) for schema 1 and 2
 selection semantics, and [generation](generation.md) for the generator pin,

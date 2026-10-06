@@ -11,6 +11,7 @@ import os
 import re
 import stat
 import shutil
+import subprocess
 import sys
 import tarfile
 import tempfile
@@ -253,6 +254,52 @@ def _list_content_files(repository_root: Path) -> set[str]:
     return found
 
 
+def _research_inputs(repository_root: Path) -> list[tuple[str, Path]]:
+    """Return tracked, text-only research evidence for source archives.
+
+    Research is archive metadata rather than locked production content. A
+    checked-out repository uses Git's tracked-file list so untracked evidence
+    cannot silently enter a release. Recursive component staging has no Git
+    directory, so it carries forward only the already-staged research tree.
+    """
+    research_root = repository_root / "research"
+    if not research_root.exists():
+        return []
+
+    if (repository_root / ".git").exists():
+        try:
+            output = subprocess.check_output(
+                ["git", "-C", str(repository_root), "ls-files", "-z", "--", "research"],
+                stderr=subprocess.PIPE,
+            )
+        except (OSError, subprocess.CalledProcessError) as error:
+            raise ContentError(f"cannot enumerate tracked research files: {error}") from error
+        candidates = [
+            item.decode("utf-8")
+            for item in output.split(b"\0")
+            if item
+        ]
+    else:
+        candidates = sorted(
+            path.relative_to(repository_root).as_posix()
+            for path in research_root.rglob("*")
+            if path.is_file()
+        )
+
+    inputs = []
+    for relative in candidates:
+        path = Path(relative)
+        if "__pycache__" in path.parts:
+            continue
+        source = _regular_file(repository_root, relative)
+        try:
+            source.read_bytes().decode("utf-8")
+        except UnicodeDecodeError as error:
+            raise ContentError(f"binary research file is not allowed: {relative}") from error
+        inputs.append((relative, source))
+    return inputs
+
+
 def _sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -307,6 +354,10 @@ def _bundle_inputs(repository_root: Path, lock: dict[str, Any]) -> list[tuple[st
                 if candidate.suffix in (".py", ".json", ".md") and "__pycache__" not in candidate.parts:
                     relative = candidate.relative_to(repository_root).as_posix()
                     inputs[relative] = _regular_file(repository_root, relative)
+    for relative, source in _research_inputs(repository_root):
+        if relative in inputs:
+            raise ContentError(f"duplicate source archive path: {relative}")
+        inputs[relative] = source
     return sorted(inputs.items())
 
 
