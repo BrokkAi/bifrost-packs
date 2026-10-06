@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 import tarfile
@@ -15,6 +16,28 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ResearchBundleTests(unittest.TestCase):
+    def test_source_archive_retains_non_python_regression_fixtures(self):
+        from test_content import ContentToolTests
+        fixture = ContentToolTests()
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        expected = {
+            'tests/cases/recursion/positive/src/lib.rs': 'pub fn parse() {}\n',
+            'tests/cases/recursion/positive/Cargo.toml': '[package]\nname="probe"\n',
+            'tests/cases/recursion/positive/.bifrost/policies/probe.rqlp': '(policy)\n',
+        }
+        for relative, text in expected.items():
+            path = fixture.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text)
+        archive_path = fixture.root.parent / 'fixture-source.tar.gz'
+        content.build_bundle(archive_path, fixture.root, component='rules')
+        with tarfile.open(archive_path) as archive:
+            for relative, text in expected.items():
+                self.assertEqual(archive.extractfile(relative).read(), text.encode())
+            lock = json.load(archive.extractfile('content-lock.json'))
+        self.assertFalse(any(entry['path'].startswith('tests/cases/') for entry in lock['files']))
+
     def test_tracked_research_is_carried_as_metadata_only(self):
         tracked = {
             item.decode("utf-8")

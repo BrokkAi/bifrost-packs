@@ -254,26 +254,26 @@ def _list_content_files(repository_root: Path) -> set[str]:
     return found
 
 
-def _research_inputs(repository_root: Path) -> list[tuple[str, Path]]:
-    """Return tracked, text-only research evidence for source archives.
+def _tracked_text_inputs(repository_root: Path, directory: str) -> list[tuple[str, Path]]:
+    """Return tracked, text-only reproduction inputs for source archives.
 
-    Research is archive metadata rather than locked production content. A
+    Reproduction inputs are archive metadata rather than production content. A
     checked-out repository uses Git's tracked-file list so untracked evidence
     cannot silently enter a release. Recursive component staging has no Git
-    directory, so it carries forward only the already-staged research tree.
+    directory, so it carries forward only the already-staged input tree.
     """
-    research_root = repository_root / "research"
-    if not research_root.exists():
+    input_root = repository_root / directory
+    if not input_root.exists():
         return []
 
     if (repository_root / ".git").exists():
         try:
             output = subprocess.check_output(
-                ["git", "-C", str(repository_root), "ls-files", "-z", "--", "research"],
+                ["git", "-C", str(repository_root), "ls-files", "-z", "--", directory],
                 stderr=subprocess.PIPE,
             )
         except (OSError, subprocess.CalledProcessError) as error:
-            raise ContentError(f"cannot enumerate tracked research files: {error}") from error
+            raise ContentError(f"cannot enumerate tracked {directory} files: {error}") from error
         candidates = [
             item.decode("utf-8")
             for item in output.split(b"\0")
@@ -282,7 +282,7 @@ def _research_inputs(repository_root: Path) -> list[tuple[str, Path]]:
     else:
         candidates = sorted(
             path.relative_to(repository_root).as_posix()
-            for path in research_root.rglob("*")
+            for path in input_root.rglob("*")
             if path.is_file()
         )
 
@@ -295,7 +295,7 @@ def _research_inputs(repository_root: Path) -> list[tuple[str, Path]]:
         try:
             source.read_bytes().decode("utf-8")
         except UnicodeDecodeError as error:
-            raise ContentError(f"binary research file is not allowed: {relative}") from error
+            raise ContentError(f"binary reproduction file is not allowed: {relative}") from error
         inputs.append((relative, source))
     return inputs
 
@@ -354,10 +354,9 @@ def _bundle_inputs(repository_root: Path, lock: dict[str, Any]) -> list[tuple[st
                 if candidate.suffix in (".py", ".json", ".md") and "__pycache__" not in candidate.parts:
                     relative = candidate.relative_to(repository_root).as_posix()
                     inputs[relative] = _regular_file(repository_root, relative)
-    for relative, source in _research_inputs(repository_root):
-        if relative in inputs:
-            raise ContentError(f"duplicate source archive path: {relative}")
-        inputs[relative] = source
+    for directory in ('research', 'tests/cases'):
+        for relative, source in _tracked_text_inputs(repository_root, directory):
+            inputs[relative] = source
     return sorted(inputs.items())
 
 
