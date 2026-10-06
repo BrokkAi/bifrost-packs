@@ -24,9 +24,8 @@ corrections and reviewed ordinary Python baseline imports carry per-entry
 `source_revision` provenance in `content-lock.json`. Newer schema-14 authoring
 models are excluded from this schema-8 native recipe.
 
-The intended `rules/v0.1.2` content is the current locked authoring copy: 70
-policy documents across the four checked-in public manifests, with 60 distinct
-required capability identifiers. The source archive carries the checked-in
+The intended `rules/v0.1.2` content is the current locked authoring copy. The release descriptor derives its exact policy
+inventory and required capability identifiers from the checked-in manifests. The source archive carries the checked-in
 policy files, focused smoke fixtures, and tracked research evidence. Research
 files are archive metadata and are not entries in `content-lock.json` or the
 release policy inventory. The rules manifest pins exactly
@@ -40,7 +39,7 @@ prove that its exact build supports those capabilities and then qualify behavior
 The focused dynamic-evaluation smoke uses the published Bifrost `v0.12.0`
 Linux binary, verifies its release sidecar checksum, and records one positive and
 one realistic near-miss. It is limited evidence for that policy and does not
-qualify the full 70-policy set.
+qualify the full released policy set.
 
 These are intended release identities, not claims that either tag or artifact
 has been published. The v2 release manifest describes schemas and capabilities
@@ -57,7 +56,7 @@ Concurrent legacy releases `rules/v0.1.1` and `packs/v0.1.1` were published
 from `28babf267ce4602549588082d5801d78ba549edf`. They retain contract schema 1,
 engine range `>=0.12.0, <0.12.1`, and pending qualification. Their manifests and
 assets remain immutable. The `rules/v0.1.2` candidate publishes the current
-70-policy authoring copy while preserving those immutable legacy artifacts.
+locked policy authoring copy while preserving those immutable legacy artifacts.
 
 ## Legacy baseline
 
