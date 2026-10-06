@@ -1,0 +1,463 @@
+{
+  "schema_version": 5,
+  "pack_id": "bifrost.ruby.core-result-use-obligations",
+  "version": "1.0.0",
+  "producer": {
+    "name": "bifrost-ruby-result-use-fixture",
+    "version": "0.1.0"
+  },
+  "language": "ruby",
+  "ecosystem": "rubygems",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Ruby core RBS/Sorbet result-use review; engine contract fixture only",
+    "revision": "c5620808cb"
+  },
+  "license": "Ruby",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "ruby.core.reviewed-declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "String",
+            "type_kind": "class",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String"
+            }
+          },
+          {
+            "id": "type.624a19754c2ddbe4536b1fe8cb9a3d2a5b1b9dcfc1541d0e069a62a87049a2ba",
+            "name": "Kernel",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "Kernel"
+            }
+          },
+          {
+            "id": "type.3664185fe68fc86c555cde811dfca80319493eaa26764c687ec8a79b0ea1ea7c",
+            "name": "Boolean",
+            "type_kind": "class",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "Boolean"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "ruby.core.string.strip",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "strip",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.strip"
+            }
+          },
+          {
+            "id": "ruby.core.string.lstrip",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "lstrip",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.lstrip"
+            }
+          },
+          {
+            "id": "ruby.core.string.rstrip",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "rstrip",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.rstrip"
+            }
+          },
+          {
+            "id": "ruby.core.string.downcase",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "downcase",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.downcase"
+            }
+          },
+          {
+            "id": "ruby.core.string.upcase",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "upcase",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.upcase"
+            }
+          },
+          {
+            "id": "ruby.core.string.sub",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "sub",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "argument0",
+                "type": {
+                    "kind": "named",
+                    "name": "String"
+                  }
+                },
+                {
+                  "name": "argument1",
+                  "type": {
+                    "kind": "named",
+                    "name": "String"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.sub"
+            }
+          },
+          {
+            "id": "ruby.core.string.gsub",
+            "owner": "type.3da0ab40da5a37fb649d78944f50d5e3d56219919b76138c96e435d06ea1b0da",
+            "name": "gsub",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "argument0",
+                  "type": {
+                    "kind": "named",
+                    "name": "String"
+                  }
+                },
+                {
+                  "name": "argument1",
+                  "type": {
+                    "kind": "named",
+                    "name": "String"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "String.gsub"
+            }
+          },
+          {
+            "id": "ruby.core.kernel.system",
+            "owner": "type.624a19754c2ddbe4536b1fe8cb9a3d2a5b1b9dcfc1541d0e069a62a87049a2ba",
+            "name": "system",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "argument0",
+                  "type": {
+                    "kind": "named",
+                    "name": "String"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Boolean"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "core.rbs",
+              "symbol": "Kernel.system"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "ruby.core.reviewed-result-use",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "ruby.core.string.strip.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.strip",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.string.lstrip.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.lstrip",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.string.rstrip.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.rstrip",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.string.downcase.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.downcase",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.string.upcase.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.upcase",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.string.sub.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.sub",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.string.gsub.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "String.gsub",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "ruby.core.kernel.system.result-use",
+            "target": {
+              "path": "core.rbs",
+              "symbol": "Kernel.system",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "fallible_status",
+                "failure_predicate": "false"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
