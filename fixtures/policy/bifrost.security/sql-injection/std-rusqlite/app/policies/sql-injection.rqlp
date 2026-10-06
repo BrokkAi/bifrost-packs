@@ -1,0 +1,50 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.sql-injection"
+  :name "Process input reaches SQL text"
+  :message "process input reaches the SQL text argument"
+  :severity error
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id env-var :display-name "std::env::var" :categories [input.environment io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (resolved-call :resolves-to "std.env.var" :proof declared
+              (call-bindings (call-shape (call :callee (name "var") (arity 1)))))))
+        :bind return-value :labels [attacker-controlled])
+      (source :id env-args :display-name "std::env::Args::nth" :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.env.Args.nth" :proof declared
+                (call-bindings (call-shape (call :callee (name "nth") (arity 1))))))))
+        :bind return-value :labels [attacker-controlled])
+      (source :id stdin-read-line :display-name "std::io::Stdin::read_line" :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.Stdin.read_line" :proof declared
+                (call-bindings (call-shape (call :callee (name "read_line") (arity 1))))))))
+        :bind (argument :index 0) :labels [attacker-controlled])])
+    :sinks (endpoint-set :entries [
+      (sink :id postgres-execute :display-name "postgres::Client::execute" :categories [sql.structure]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "postgres.Client.execute" :proof declared
+                (call-bindings (call-shape (call :callee (name "execute") (arity 2))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])
+      (sink :id rusqlite-execute :display-name "rusqlite::Connection::execute" :categories [sql.structure]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "rusqlite.Connection.execute" :proof declared
+                (call-bindings (call-shape (call :callee (name "execute") (arity 2))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "89")))

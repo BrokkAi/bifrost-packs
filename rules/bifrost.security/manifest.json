@@ -570,6 +570,40 @@
       "severity_rationale": "A request value stored without the validator the workspace requires bypasses the application's own reviewed storage invariant.",
       "remediation": "Pass request-derived values through the configured validator before storing them, or narrow the reviewed configuration if the obligation does not apply.",
       "activation": "opt-in"
+    },
+    {
+      "path": "policies/rust/non-https-url.rqlp",
+      "id": "bifrost.security.rust.non-https-url",
+      "authored_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
+      "resolved_semantic_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "literal-value-matching"
+      ],
+      "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
+      "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
+    },
+    {
+      "path": "policies/rust/sql-injection.rqlp",
+      "id": "bifrost.security.rust.sql-injection",
+      "authored_hash": "aef19c837a85e62d85727680b45897ece49ab406ba62cd7ef77ee66e8e53de9d",
+      "resolved_semantic_hash": "aef19c837a85e62d85727680b45897ece49ab406ba62cd7ef77ee66e8e53de9d",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "Environment, command-line, or stdin text that reaches SQL syntax can change the executed database command.",
+      "remediation": "Use driver parameter binding for values; do not concatenate untrusted input into SQL text."
     }
   ]
 }
