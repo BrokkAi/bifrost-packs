@@ -68,7 +68,86 @@ class GeneratedReleaseTests(unittest.TestCase):
                            release_version='1.0.0')
         self.config_path = self.root / 'release-config.packs.json'
         self.config_path.write_text(json.dumps(self.config))
+        self._write_content_fixture()
         self.output = fixture.root / 'dist'
+
+    def _write_content_fixture(self):
+        for name, contents in {
+            'LICENSE': 'license\n',
+            'NOTICE.md': 'notice\n',
+            'README.md': 'readme\n',
+        }.items():
+            (self.root / name).write_text(contents)
+        (self.root / 'scripts').mkdir()
+        (self.root / 'scripts' / 'content.py').write_bytes(
+            (ROOT / 'scripts' / 'content.py').read_bytes()
+        )
+        path = self.root / 'semantic-packs' / 'research' / 'schema14-model.json'
+        path.parent.mkdir(parents=True)
+        path.write_text('{"schema_version":14,"pack_id":"research.summary"}\n')
+        entry = dict(
+            path='semantic-packs/research/schema14-model.json',
+            source_path='research/schema14-model.json',
+            sha256=release.digest(path.read_bytes()),
+            classification='public',
+            license='Apache-2.0',
+        )
+        lock = dict(
+            schema_version=1,
+            content_version='0.1.0',
+            source=dict(repository='https://github.com/test/packs', revision='c' * 40),
+            engine=dict(first_default_version='0.13.0', qualification_revision='d' * 40,
+                        default_enabled=False, qualified_versions=[]),
+            files=[entry],
+        )
+        aggregate = f"{entry['sha256']}  {entry['path']}\n"
+        lock['aggregate_sha256'] = release.digest(aggregate.encode())
+        (self.root / 'content-lock.json').write_text(json.dumps(lock) + '\n')
+
+    def _version_independent_archive(self):
+        prefix = 'bifrost-semantic-packs/'
+        files = native_release.archive_files(self.archive)
+        index = json.loads(files[prefix + 'index.json'])
+        for row in index['packs'] + index.get('generated_productions', []):
+            path = prefix + row['manifest']['path']
+            manifest = json.loads(files[path])
+            manifest['compatibility'] = {'toolchains': []}
+            data = json.dumps(manifest, sort_keys=True).encode()
+            files[path] = data
+            row['manifest']['sha256'] = release.digest(data)
+            row['manifest']['bytes'] = len(data)
+        files[prefix + 'index.json'] = json.dumps(index, sort_keys=True).encode()
+        checksums = []
+        for path, data in sorted(files.items()):
+            if path not in (prefix + 'SHA256SUMS', prefix + 'measurements.json'):
+                checksums.append(f"{release.digest(data)}  {path.removeprefix(prefix)}\n")
+        files[prefix + 'SHA256SUMS'] = ''.join(checksums).encode()
+        archive = self.root / 'native-version-independent.tar.gz'
+        archive.write_bytes(baseline_fixture._tar_bytes(files))
+        return archive
+
+    def _native_content_digest(self, archive):
+        digest = hashlib.sha256()
+        prefix = 'bifrost-semantic-packs/'
+        for path, data in sorted(native_release.archive_files(archive).items()):
+            name = path.removeprefix(prefix)
+            if name == 'measurements.json':
+                continue
+            encoded = name.encode()
+            digest.update(len(encoded).to_bytes(8, 'big'))
+            digest.update(encoded)
+            digest.update(len(data).to_bytes(8, 'big'))
+            digest.update(data)
+        return digest.hexdigest()
+
+    def _rebind_receipt(self, archive):
+        self.archive = archive
+        native_digest = self._native_content_digest(archive)
+        self.receipt['archive']['sha256'] = release.digest(archive.read_bytes())
+        self.receipt['reproducibility']['native_content_sha256'] = native_digest
+        for run in self.receipt['reproducibility']['runs']:
+            run['native_content_sha256'] = native_digest
+        self.receipt_path.write_text(json.dumps(self.receipt))
 
     def build(self):
         with patch.object(native_release.subprocess, 'check_output', side_effect=['', self.commit]):
@@ -135,6 +214,44 @@ class GeneratedReleaseTests(unittest.TestCase):
         self.receipt_path.write_text(json.dumps(self.receipt))
         with self.assertRaisesRegex(release.ReleaseError, 'content differs'):
             self.build()
+
+    def test_native_release_attaches_current_packs_source_archive(self):
+        self._rebind_receipt(self._version_independent_archive())
+
+        manifest = self.build()
+
+        source_artifacts = [item for item in manifest['artifacts'] if item['role'] == 'source']
+        source_artifact = next(item for item in source_artifacts if item['format'] == 'tar.gz')
+        source_archive = self.output / source_artifact['name']
+        self.assertTrue(source_archive.is_file())
+        self.assertEqual(source_artifact['sha256'], release.digest(source_archive.read_bytes()))
+        self.assertEqual(source_artifact['size_bytes'], source_archive.stat().st_size)
+        source_files = native_release.archive_files(source_archive)
+        source_lock = json.loads(source_files['content-lock.json'])
+        self.assertIn(
+            'semantic-packs/research/schema14-model.json',
+            {entry['path'] for entry in source_lock['files']},
+        )
+        self.assertNotIn(
+            'research.summary',
+            {item['identity'] for item in manifest['contents']},
+        )
+        self.assertEqual(manifest['qualification']['behavior']['status'], 'pending')
+        native_artifacts = [item for item in manifest['artifacts'] if item['role'] == 'native']
+        self.assertEqual(len(native_artifacts), 1)
+
+    def test_native_release_rejects_tampered_source_archive_hash(self):
+        self._rebind_receipt(self._version_independent_archive())
+        manifest = self.build()
+        source_artifact = next(item for item in manifest['artifacts'] if item['format'] == 'tar.gz' and item['role'] == 'source')
+        source_archive = self.output / source_artifact['name']
+        files = native_release.archive_files(source_archive)
+        files['semantic-packs/research/schema14-model.json'] = b'tampered\n'
+        source_archive.write_bytes(baseline_fixture._tar_bytes(files))
+
+        with self.assertRaisesRegex(release.ReleaseError, 'source archive members differ') as caught:
+            native_release.verify_source_archive(self.root, source_archive)
+        self.assertEqual(caught.exception.code, 'integrity-error')
 
     def test_missing_required_consumer_schema_fails_selection(self):
         archive = self.output / 'native.tar.gz'

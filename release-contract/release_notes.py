@@ -25,6 +25,13 @@ def render(manifest):
                   f"Format/integrity evidence: {manifest['qualification']['integrity']['status']}.",
                   f"Behavior evidence: {manifest['qualification']['behavior']['status']}."])
     lines.extend(manifest['qualification']['behavior']['evidence'])
+    lines.extend(['', 'Pinned release artifacts:'])
+    for artifact in manifest['artifacts']:
+        lines.append(f"- `{artifact['name']}` ({artifact['role']}): SHA-256 `{artifact['sha256']}`")
+    if any(item['role'] == 'native' for item in manifest['artifacts']) and any(
+        item['role'] == 'source' and item['format'] == 'tar.gz' for item in manifest['artifacts']
+    ):
+        lines.extend(['', 'The source archive pins the current authored pack inputs. Only the native archive is installable; authored models outside the generation recipe remain source inputs with pending consumer qualification.'])
     lines.extend(['', 'Format compatibility does not establish complete analysis coverage or whole-language behavior qualification. Partial native content remains partial. Source rules require a consumer that supports source policy artifacts and this contract.'])
     return '\n'.join(lines) + '\n'
 

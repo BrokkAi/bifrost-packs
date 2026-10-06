@@ -5,7 +5,7 @@
   "visibility": "public",
   "release_version": "0.1.2",
   "artifact_role": "source",
-  "notes": "This stream retains the exact 49 public Bifrost v0.11.5 policies. Behavioral qualification is separate from verified source and archive integrity.",
+  "notes": "This stream publishes the current 70-policy authoring copy selected by content-lock.json. Source-byte integrity is verified separately from consumer capability and behavioral qualification.",
   "component": "rules",
   "release_dependencies": [
     {
@@ -13,6 +13,5 @@
       "release_version": "0.2.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
-  ],
-  "baseline": "release-baseline.json"
+  ]
 }

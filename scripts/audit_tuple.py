@@ -107,6 +107,10 @@ def _audit_rules(archive: Path, manifest: dict[str, Any]) -> tuple[list[dict[str
             "tests/cases/dynamic-evaluation/positive.py",
             "tests/cases/dynamic-evaluation/near-miss.py",
         })
+        # Current source releases carry reproduction tooling, documentation,
+        # tests and research as metadata. Use the source builder's same bounded
+        # inventory; these paths never become policy/content rows.
+        allowed.update(name for name, _ in content._bundle_inputs(root, lock))
         extras = sorted(set(files) - allowed)
         if extras:
             raise AuditError(f"rules source archive has unapproved or unindexed files: {extras}")
