@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'release-contract'))
 import attach_smoke
@@ -49,6 +50,21 @@ class SmokeAttachmentTests(unittest.TestCase):
         with self.assertRaises(release.ReleaseError) as caught:
             attach_smoke.attach(self.path, self.evidence, self.output)
         self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_empty_evidence_is_preserved_in_reproducible_zip(self):
+        empty = self.evidence / 'runs' / 'positive' / 'stderr.txt'
+        empty.write_bytes(b'')
+        expected = {p.relative_to(self.evidence).as_posix(): p.read_bytes()
+                    for p in self.evidence.rglob('*') if p.is_file()}
+        manifest = attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertTrue(all(a['size_bytes'] > 0 for a in manifest['artifacts']))
+        archive = self.output / 'smoke-evidence.zip'
+        original = archive.read_bytes()
+        with zipfile.ZipFile(archive) as evidence:
+            self.assertEqual({name: evidence.read(name) for name in evidence.namelist()}, expected)
+        self.path.write_text(json.dumps(self.manifest))
+        attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertEqual(archive.read_bytes(), original)
 
     def test_failed_summary_is_not_attached(self):
         self.summary['status'] = 'failed'
