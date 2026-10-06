@@ -1,0 +1,18 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-power-of-10.use-of-jmp"
+  :name "Power of 10 Rule 1: non-local jump"
+  :message "review non-local jump function"
+  :severity warning
+  :description "Mirrors CodeQL cpp/power-of-10/use-of-jmp (cpp/ql/src/Power of 10/Rule 1/UseOfJmp.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The four forbidden non-local jump calls are selected by exact callee identity."
+  :tags ["cpp" "power-of-10" "codeql-cpp-power-of-10-use-of-jmp"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (union
+          (call :callee (name "setjmp"))
+          (call :callee (name "longjmp"))
+          (call :callee (name "sigsetjmp"))
+          (call :callee (name "siglongjmp"))))))
+  )

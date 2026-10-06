@@ -1,0 +1,14 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-53-1"
+  :name "JSF AV Rule 53.1"
+  :message "invalid header filename sequence requires review"
+  :severity warning
+  :description "Mirrors CodeQL cpp/jsf/av-rule-53-1 (cpp/ql/src/jsf/4.09 Style/AV Rule 53.1.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The selected include module value contains a forbidden filename sequence."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-53-1"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (import :module (name/regex ".*('|\\x5c|/\\*|//|\\x22\\x22\\x22|<\\x22>).*")))))
+  )

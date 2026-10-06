@@ -1,0 +1,163 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.cpp-jsf",
+  "version": "0.1.0",
+  "name": "Bifrost JSF C++ coding standard",
+  "description": "Buildable JSF C++ coding-standard policies mirrored from the public CodeQL C/C++ query pack.",
+  "policies": [
+    {
+      "path": "policies/av-rule-108.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-108",
+      "authored_hash": "46b90e84b9d55753fab3fec458d7ec31c62b0331a8445f25c6a08cee8fea9d64",
+      "resolved_semantic_hash": "46b90e84b9d55753fab3fec458d7ec31c62b0331a8445f25c6a08cee8fea9d64",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "callable-signature"],
+      "severity_rationale": "A variadic callable has an open-ended argument contract that weakens the JSF interface and review boundary.",
+      "remediation": "Replace the variadic interface with an explicit parameter contract or document and constrain the accepted arguments."
+    },
+    {
+      "path": "policies/av-rule-110.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-110",
+      "authored_hash": "1a477f484598cbe6271cea0408a4142b126fec46281e4e96a411ecc1f6f01a21",
+      "resolved_semantic_hash": "1a477f484598cbe6271cea0408a4142b126fec46281e4e96a411ecc1f6f01a21",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "callable-signature"],
+      "severity_rationale": "A callable with more than seven parameters is difficult to invoke and review consistently.",
+      "remediation": "Group related inputs into a reviewed value object or split the callable while preserving its contract."
+    },
+    {
+      "path": "policies/av-rule-13.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-13",
+      "authored_hash": "7463070efc06dda03f428dd3aafe1c674b182bd280923fc88a17d7107eec522b",
+      "resolved_semantic_hash": "7463070efc06dda03f428dd3aafe1c674b182bd280923fc88a17d7107eec522b",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Wide-character literals introduce portability and representation assumptions that JSF requires reviewers to address.",
+      "remediation": "Use the project-approved character representation and document any required wide-character boundary."
+    },
+    {
+      "path": "policies/av-rule-14.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-14",
+      "authored_hash": "90517e3ece4d9ae41780103c05f80f8f449e9588c70fec968d99bb03542d6bfc",
+      "resolved_semantic_hash": "90517e3ece4d9ae41780103c05f80f8f449e9588c70fec968d99bb03542d6bfc",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Lowercase integer suffixes are a portable-source convention violation under JSF.",
+      "remediation": "Use the project-approved uppercase literal suffix spelling and preserve the intended literal type."
+    },
+    {
+      "path": "policies/av-rule-149.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-149",
+      "authored_hash": "54b98695deef2fab4a700aa46de631ef71a07c7cc10568799decdfe64816aa7b",
+      "resolved_semantic_hash": "54b98695deef2fab4a700aa46de631ef71a07c7cc10568799decdfe64816aa7b",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Nonzero octal constants are easy to misread and have implementation-sensitive intent.",
+      "remediation": "Replace the octal spelling with an explicit decimal or hexadecimal constant after reviewing its intended value."
+    },
+    {
+      "path": "policies/av-rule-150.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-150",
+      "authored_hash": "1bbb951dab3135b4386e5ef7671658a671c49ff31f68669e94fbc360853176fb",
+      "resolved_semantic_hash": "1bbb951dab3135b4386e5ef7671658a671c49ff31f68669e94fbc360853176fb",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Lowercase hexadecimal digits reduce consistency of constants in a safety-oriented codebase.",
+      "remediation": "Use the project-approved uppercase hexadecimal spelling after confirming the constant value."
+    },
+    {
+      "path": "policies/av-rule-159.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-159",
+      "authored_hash": "3d9c60c4f8821d27116611c4fcb7e1952663425c4cf5d7aa8161706a8f2eb208",
+      "resolved_semantic_hash": "3d9c60c4f8821d27116611c4fcb7e1952663425c4cf5d7aa8161706a8f2eb208",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "callable-signature"],
+      "severity_rationale": "Overloading logical or address-of operators can obscure evaluation and ownership semantics at every call site.",
+      "remediation": "Remove the overload or replace it with an explicitly named operation after reviewing all callers."
+    },
+    {
+      "path": "policies/av-rule-19.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-19",
+      "authored_hash": "a2df48307b3c6b88ed12dd83b18edd1fa42a12e2b02eff232f859b8127026aa5",
+      "resolved_semantic_hash": "a2df48307b3c6b88ed12dd83b18edd1fa42a12e2b02eff232f859b8127026aa5",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "The locale C library interface introduces global locale state and portability concerns in JSF code.",
+      "remediation": "Use the project-approved locale abstraction or document and isolate the required locale boundary."
+    },
+    {
+      "path": "policies/av-rule-208.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-208",
+      "authored_hash": "8b8e7d88f4bbf2b31065774b8ab6470785c2710fc971db2e6b9002c9ee5888d0",
+      "resolved_semantic_hash": "8b8e7d88f4bbf2b31065774b8ab6470785c2710fc971db2e6b9002c9ee5888d0",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "C++ exception paths complicate bounded failure handling and are prohibited by this JSF rule.",
+      "remediation": "Replace exception-based transfer with the project's explicit error contract and review every affected exit path."
+    },
+    {
+      "path": "policies/av-rule-209.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-209",
+      "authored_hash": "b3a98eaa5ccdaf9c5deeff6451b0f5621595141b7daf900035c2019386d905f3",
+      "resolved_semantic_hash": "b3a98eaa5ccdaf9c5deeff6451b0f5621595141b7daf900035c2019386d905f3",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Unqualified basic arithmetic types can vary in width and representation across targets.",
+      "remediation": "Use the project's fixed-width or reviewed domain type after confirming the required range and conversion behavior."
+    },
+    {
+      "path": "policies/av-rule-21.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-21",
+      "authored_hash": "5804ad1c847c639db1a67cf9ca473e202be3d097a5747bf7520f663a5ca9b66e",
+      "resolved_semantic_hash": "5804ad1c847c639db1a67cf9ca473e202be3d097a5747bf7520f663a5ca9b66e",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "The C signal interface creates global asynchronous control behavior outside the preferred JSF execution model.",
+      "remediation": "Use the project-approved signal abstraction or isolate and document the required signal boundary."
+    },
+    {
+      "path": "policies/av-rule-22.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-22",
+      "authored_hash": "8139e9bb93fbc04bf7ce0a968872af41a08f5a46a74a6865031b14f6dfdc2968",
+      "resolved_semantic_hash": "8139e9bb93fbc04bf7ce0a968872af41a08f5a46a74a6865031b14f6dfdc2968",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "The stdio interface bypasses the reviewed I/O abstraction and can weaken portability and resource review.",
+      "remediation": "Use the project-approved I/O abstraction or document and isolate the required stdio boundary."
+    },
+    {
+      "path": "policies/av-rule-25.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-25",
+      "authored_hash": "ea961eeb731f49a48e27b13b9ca3eb5cc87501492828982deddfcdea77486df0",
+      "resolved_semantic_hash": "ea961eeb731f49a48e27b13b9ca3eb5cc87501492828982deddfcdea77486df0",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "The time C library interface introduces platform-specific time behavior outside the reviewed JSF surface.",
+      "remediation": "Use the project-approved time abstraction or isolate and document the required time.h boundary."
+    },
+    {
+      "path": "policies/av-rule-53-1.rqlp",
+      "id": "bifrost.cpp-jsf.av-rule-53-1",
+      "authored_hash": "8f9b3c98012cb21559ca0d8b79e17e4b8f34e32bfbd7c0fa2f6385101dd98415",
+      "resolved_semantic_hash": "8f9b3c98012cb21559ca0d8b79e17e4b8f34e32bfbd7c0fa2f6385101dd98415",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Invalid include filename sequences can make preprocessing ambiguous or nonportable.",
+      "remediation": "Rename the header to a portable filename and use a valid include spelling."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.cpp-power-of-10",
+  "version": "0.1.0",
+  "name": "Bifrost Power of 10 C++ coding standard",
+  "description": "Buildable Power of 10 coding-standard policies mirrored from the public CodeQL C/C++ query pack.",
+  "policies": [
+    {
+      "path": "policies/dynamic-alloc-after-init.rqlp",
+      "id": "bifrost.cpp-power-of-10.dynamic-alloc-after-init",
+      "authored_hash": "d401906eaf241f003cfac3759a1733865d09d1803c5e8c693e23e26014509285",
+      "resolved_semantic_hash": "d401906eaf241f003cfac3759a1733865d09d1803c5e8c693e23e26014509285",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "normalized-call", "declaration-bounded-containment"],
+      "severity_rationale": "Dynamic allocation after initialization adds unbounded lifetime and failure behavior to a safety-critical program.",
+      "remediation": "Allocate during initialization or use a reviewed bounded-storage strategy for later work."
+    },
+    {
+      "path": "policies/use-of-jmp.rqlp",
+      "id": "bifrost.cpp-power-of-10.use-of-jmp",
+      "authored_hash": "5e172ffeba4f10ab25b2b4ea02137cbf6b30ffc3354129ca7f84c3cb2203d400",
+      "resolved_semantic_hash": "5e172ffeba4f10ab25b2b4ea02137cbf6b30ffc3354129ca7f84c3cb2203d400",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "normalized-call"],
+      "severity_rationale": "Non-local jumps defeat the simple, bounded control-flow model required by Power of 10.",
+      "remediation": "Replace setjmp or longjmp with structured control flow and explicit error propagation."
+    }
+  ]
+}

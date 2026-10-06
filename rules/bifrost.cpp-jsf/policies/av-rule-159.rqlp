@@ -1,0 +1,21 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-159"
+  :name "JSF AV Rule 159"
+  :message "logical or address-of operator overload requires review"
+  :severity warning
+  :description "Mirrors CodeQL cpp/jsf/av-rule-159 (cpp/ql/src/jsf/4.21 Operators/AV Rule 159.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The forbidden logical and address-of operator overloads are selected by structured callable identity and arity."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-159"]
+  :analysis (analysis
+    :type assertion
+    (bind :name operators
+      :query (rql :schema-version 1
+        (language cpp
+          (union
+            (callable-signature (enclosing-decl (method :name "operator&&")))
+            (callable-signature (enclosing-decl (method :name "operator||")))
+            (filter :where ((parameter_count eq 1))
+              (callable-signature (enclosing-decl (method :name "operator&"))))))))
+    (group :name by-operator :by (operators.id)
+      (aggregate :name violations :op count))
+    (assert :group by-operator :value violations :cardinality (exactly 0))))

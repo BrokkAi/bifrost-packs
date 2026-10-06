@@ -1,0 +1,1 @@
+int good_value();
