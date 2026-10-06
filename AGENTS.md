@@ -10,3 +10,11 @@
 - Keep incomplete and unsupported outcomes explicit. An empty result under
   incomplete coverage is not evidence of a clean program.
 - Packaging and scanner enablement are separate from storing content here.
+- Author public semantic packs and generation specifications here. The engine
+  copy supplies existing embedded sources and focused fixtures; it is not a
+  second public authoring destination. Reconcile reviewed baseline changes with
+  exact source revisions and hashes. Corpus-only models remain engine assurance
+  assets even when their paths were historically public.
+- A new authored model does not enter a native release automatically. The
+  release recipe selects its explicit inputs. Check their actual schema against
+  the pinned producer and consumer before adding them to that recipe.

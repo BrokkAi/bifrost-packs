@@ -546,6 +546,21 @@ def run(
     if final_output.exists() or final_output.is_symlink():
         _fail(f"--output already exists: {final_output}")
 
+    persistent_cache = None
+    if cache_input := os.environ.get("SEMANTIC_PACK_SOURCE_CACHE"):
+        cache_path = Path(cache_input)
+        if not cache_path.is_absolute():
+            _fail("SEMANTIC_PACK_SOURCE_CACHE must be absolute")
+        if cache_path.is_symlink() or (cache_path.exists() and not cache_path.is_dir()):
+            _fail("SEMANTIC_PACK_SOURCE_CACHE must be a real directory")
+        persistent_cache = cache_path.resolve()
+        for protected in (root, final_output):
+            try:
+                persistent_cache.relative_to(protected)
+            except ValueError:
+                continue
+            _fail("SEMANTIC_PACK_SOURCE_CACHE must be outside source and output directories")
+
     initial_plan = _input_plan_record(jobs, recipes)
     plan_bytes = json.dumps(initial_plan, sort_keys=True, separators=(",", ":")).encode()
     plan_sha = _sha256_bytes(plan_bytes)
@@ -567,8 +582,8 @@ def run(
 
     with tempfile.TemporaryDirectory(prefix=".native-generation-", dir=final_output.parent) as temporary:
         temp_root = Path(temporary)
-        source_cache = temp_root / "source-cache"
-        source_cache.mkdir()
+        source_cache = persistent_cache or temp_root / "source-cache"
+        source_cache.mkdir(parents=True, exist_ok=True)
         env = os.environ.copy()
         env["BIFROST_SEMANTIC_PACK_BIN"] = str(binary_path)
         env["SEMANTIC_PACK_SOURCE_CACHE"] = str(source_cache)

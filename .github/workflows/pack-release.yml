@@ -74,17 +74,20 @@ jobs:
           archive=$(find "$RUNNER_TEMP/dist" -name '*.tar.gz')
           python3 -B release-contract/release.py verify-artifact \
             --manifest "$RUNNER_TEMP/dist/pack-release.json" --artifact "$archive"
-      - name: Test released baseline rule with matching Bifrost binary
+      - name: Test current locked rules with matching Bifrost v0.12 binary
         if: ${{ startsWith(github.ref_name, 'rules/') || inputs.component == 'rules' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh release download v0.11.5 --repo BrokkAi/bifrost \
-            --pattern bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz --dir "$RUNNER_TEMP"
-          echo "2e3b11c0dde31643ffbac117c0db6a8711831a2a7c435f40dd0d45c98af73227  $RUNNER_TEMP/bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz" | sha256sum -c -
+          engine_asset=bifrost-v0.12.0-x86_64-unknown-linux-gnu.tar.gz
+          engine_checksum=6938fdbda79ee008f9e2d13abe87b341aec7765946859d918cee90da9fa8b503
+          gh release download v0.12.0 --repo BrokkAi/bifrost \
+            --pattern "$engine_asset" --pattern "$engine_asset.sha256" --dir "$RUNNER_TEMP"
+          test "$(awk '{print $1}' "$RUNNER_TEMP/$engine_asset.sha256")" = "$engine_checksum"
+          (cd "$RUNNER_TEMP" && sha256sum -c "$engine_asset.sha256")
           mkdir "$RUNNER_TEMP/engine" "$RUNNER_TEMP/rules"
-          tar -xzf "$RUNNER_TEMP/bifrost-v0.11.5-x86_64-unknown-linux-gnu.tar.gz" -C "$RUNNER_TEMP/engine"
+          tar -xzf "$RUNNER_TEMP/$engine_asset" -C "$RUNNER_TEMP/engine"
           tar -xzf "$RUNNER_TEMP"/dist/bifrost.public.rules-*-source.tar.gz -C "$RUNNER_TEMP/rules"
           binary=$(find "$RUNNER_TEMP/engine" -type f -name bifrost)
           python3 -B scripts/smoke.py --binary "$binary" --root "$RUNNER_TEMP/rules" --output "$RUNNER_TEMP/smoke"

@@ -237,6 +237,34 @@ class NativeGenerationTests(unittest.TestCase):
         with self.assertRaisesRegex(native_generation.NativeGenerationError, "exit status 17"):
             self.generate(binary, config_path)
 
+    def test_recipe_cache_persists_across_passes_and_invocations(self):
+        recipe = self.root / "scripts/cache-recipe.sh"
+        recipe.parent.mkdir()
+        recipe.write_text(
+            "#!/usr/bin/env bash\nset -e\n"
+            "printf 'used\\n' >> \"$SEMANTIC_PACK_SOURCE_CACHE/uses.txt\"\n"
+            '"$BIFROST_SEMANTIC_PACK_BIN" generate "$1" '
+            '"$PWD/inputs/source.json" "$PWD/inputs/artifact.bin"\n'
+        )
+        binary, config = self.write_config(recipes=[{"name": "cached", "script": "scripts/cache-recipe.sh"}])
+        cache = self.base / "shared-cache"
+        with mock.patch.dict(os.environ, {"SEMANTIC_PACK_SOURCE_CACHE": str(cache)}):
+            self.generate(binary, config)
+            self.generate(binary, config, output=self.base / "second-output")
+        self.assertEqual((cache / "uses.txt").read_text().splitlines(), ["used"] * 4)
+
+    def test_recipe_cache_rejects_source_output_and_non_directory_paths(self):
+        binary, config = self.write_config()
+        file = self.base / "cache-file"
+        file.write_text("not a directory")
+        link = self.base / "cache-link"
+        link.symlink_to(self.base, target_is_directory=True)
+        for cache in ("relative-cache", self.root / "cache", self.output / "cache", file, link):
+            with self.subTest(cache=cache), mock.patch.dict(os.environ, {"SEMANTIC_PACK_SOURCE_CACHE": str(cache)}):
+                with self.assertRaisesRegex(native_generation.NativeGenerationError, "SEMANTIC_PACK_SOURCE_CACHE"):
+                    self.generate(binary, config)
+                self.assertFalse(self.output.exists())
+
     def test_dirty_source_fails_before_generation(self):
         binary, config_path = self.write_config()
         (self.root / "uncommitted.txt").write_text("uncommitted\n")

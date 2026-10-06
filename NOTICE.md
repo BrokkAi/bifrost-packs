@@ -8,6 +8,11 @@ reviewed public material Apache-2.0. No premium content or private assurance
 suites are included. The public source URL is a publication coordinate; the
 canonical source revision may not be reachable in the public projection.
 
+Each lock entry's optional `source_revision` records a later reviewed import
+and overrides the initial revision for that entry. `source_path` preserves its
+original location. These are import provenance, not engine release coordinates
+or behavior qualification. Pack source commits bind subsequent authored edits.
+
 Third-party material retains its original terms. Per-file license fields are
 provenance labels, not a replacement license grant. Preserve all embedded
 headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
