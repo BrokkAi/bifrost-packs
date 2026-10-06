@@ -7,7 +7,10 @@ source's positive and same-shaped near-miss examples.
 
 Every policy retains CodeQL query provenance at commit
 `ae741615f3e178ce61289a651790dc67fcc18e19` and requires the unreleased Java
-fact and Javadoc support from `BrokkAi/bifrost-dev#4365`.
+fact and Javadoc support from `BrokkAi/bifrost-dev#4365`. The latest
+qualification matrix used engine commit
+`14ba3e856807e51d8ab829c00b5a272d81769511`; this content needs the next engine
+release containing those Java lanes and structural-facts v44.
 
 The `type-bound-extends-final` fixture includes `T extends String` as a JDK
 resolution case. That finding is emitted only when a JDK is active; the
