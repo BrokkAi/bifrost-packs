@@ -38,12 +38,15 @@
     {
       "path": "policies/discarded-pure-result.rqlp",
       "id": "bifrost.correctness.discarded-pure-result",
-      "authored_hash": "ed7c1d9501c52f0d373e66eb0afb913f42fef0b4e3f6882169385304f8724231",
-      "resolved_semantic_hash": "ed7c1d9501c52f0d373e66eb0afb913f42fef0b4e3f6882169385304f8724231",
+      "authored_hash": "bf524f44426ea49e4aa038838cf7bf1db3d904d2c9ec24cba14100d7ba73a1f9",
+      "resolved_semantic_hash": "bf524f44426ea49e4aa038838cf7bf1db3d904d2c9ec24cba14100d7ba73a1f9",
       "category": "correctness",
       "supported_languages": [
         "java",
         "python",
+        "javascript",
+        "typescript",
+        "csharp",
         "rust",
         "c",
         "cpp"
@@ -54,9 +57,12 @@
         "exact-result-use",
         "reviewed-jdk-result-obligation",
         "reviewed-python-builtin-result-obligation",
+        "reviewed-typescript-string-result-obligation",
+        "reviewed-javascript-string-result-obligation",
+        "reviewed-csharp-bcl-result-obligation",
         "native-result-obligation"
       ],
-      "severity_rationale": "An exact JDK 21 String.trim() result, a reviewed Python builtins.str transformation result, or a native must-use result is discarded by the caller.",
+      "severity_rationale": "An exact JDK 21 String.trim() result, a reviewed Python, TypeScript, JavaScript, or C# standard-library transformation result, or a native must-use result is discarded by the caller.",
       "remediation": "Use or return the transformed or must-use value if intended; review why the call was made before removing it. No automatic fix is supplied."
     },
     {
@@ -109,22 +115,29 @@
     {
       "path": "policies/ignored-status-result.rqlp",
       "id": "bifrost.correctness.ignored-status-result",
-      "authored_hash": "9f6c57a43fc9585e0605241ccdf5195b3b2b4c34372907f436fa8ec1de1cb2ed",
-      "resolved_semantic_hash": "9f6c57a43fc9585e0605241ccdf5195b3b2b4c34372907f436fa8ec1de1cb2ed",
+      "authored_hash": "49267bdec5005ea9f3205749a25850f9ae8610e94b5643291cf39b14906054fa",
+      "resolved_semantic_hash": "49267bdec5005ea9f3205749a25850f9ae8610e94b5643291cf39b14906054fa",
       "category": "correctness",
       "supported_languages": [
         "java",
+        "csharp",
         "go",
-        "rust"
+        "rust",
+        "c",
+        "cpp",
+        "python"
       ],
       "required_capabilities": [
         "normalized-call",
         "canonical-external-dispatch",
         "exact-result-use",
         "reviewed-jdk-result-obligation",
+        "reviewed-libc-result-obligation",
+        "reviewed-python-result-obligation",
+        "reviewed-csharp-bcl-result-obligation",
         "native-result-obligation"
       ],
-      "severity_rationale": "An exact JDK 21 Files.deleteIfExists(Path) status or a native Go error result is discarded by a proved result-use relation.",
+      "severity_rationale": "An exact JDK 21 Files.deleteIfExists(Path) status, a native Go error result, a reviewed C/C++ libc status, a reviewed CPython stdlib status, or a C# BCL fallible status is discarded by a proved result-use relation.",
       "remediation": "Handle or deliberately ignore the fallible result according to the caller's intent. I/O exceptions are separate; no automatic fix is supplied."
     },
     {

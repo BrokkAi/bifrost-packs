@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.typescript.string-result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "npm",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "typescript-string-result-use-obligations.json",
+    "sha256": "6b6e2c79cf403d82c5307d04d28c2ebedd85b0d73821940fae0ed393a306f4ab",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/typescript/typescript-string-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "typescript",
+        "version": "=7.0.2"
+      },
+      "targets": [],
+      "configurations": [
+        "typescript-lib:es5"
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "TypeScript lib/lib.es5.d.ts String interface; ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections",
+    "revision": "TypeScript 7.0.2 lib.es5.d.ts; ECMA-262 current edition; assumption: annotated or inferred string receivers use the builtin String implementation and builtin methods are not replaced; subclasses, unions, any, and unknown flows remain outside this claim"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/typescript-7.0.2.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "typescript",
+      "version": "=7.0.2"
+    },
+    "targets": [],
+    "configurations": [
+      "typescript-lib:es5"
+    ]
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "typescript",
+      "owner": "String",
+      "name": "trim",
+      "has_receiver": true,
+      "parameter_count": 0
+    }
+  ]
+}

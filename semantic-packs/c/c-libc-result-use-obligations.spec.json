@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.c.libc.result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "cpp-headers",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "c-libc-result-use-obligations.json",
+    "sha256": "f0d9a547a6774c31dce061cd538eb886b500c0ede73b9a4b1462e135611ad88b",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/c/c-libc-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "ISO/IEC 9899:2018 clauses 7.21.7.3 (fputc), 7.21.7.4 (fputs), 7.21.7.10 (putc), 7.21.4 (file operations), and 7.22.4 (remove/rename); POSIX.1-2017 close(), read(), unlink(), and write() pages",
+    "revision": "C17 and POSIX.1-2017; reviewed libc status conventions: EOF, nonzero, and -1"
+  },
+  "license": "NOASSERTION",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/libc-result-use.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "cpp",
+      "owner": "",
+      "name": "fclose",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

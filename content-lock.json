@@ -127,7 +127,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "9f1eab76f07e55b86585d55091f46ccb17dec6c0ee2dd079551d708df008e9a6",
+      "sha256": "942f79f68b49569703d9405bf16d55108d8fd2b6f41077115bc3819fea6b799e",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -155,7 +155,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/discarded-pure-result.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/discarded-pure-result.rqlp",
-      "sha256": "a18539f4f6b3c5cf884340878b634a5e18f9042f66f1498072f2251858bd27f0",
+      "sha256": "9dac1b2edfd8e272337d9234852bef8a3f1c12b8d6a036b7812359bf07f31319",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -225,7 +225,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/ignored-status-result.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/ignored-status-result.rqlp",
-      "sha256": "fb83a5d5c0840a653dc6475bb1f8e200d3a4cf29b8f6fa8ff78baf87add9359b",
+      "sha256": "93014a85e696f7c0f89299df4592fc1d5b890cdeb53035c6976cac04384041a1",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -730,6 +730,48 @@
       "path": "semantic-packs/benchmarks/owasp-benchmark-java.json",
       "source_path": "semantic-packs/benchmarks/owasp-benchmark-java.json",
       "sha256": "98a17dad88d077f69662aa1a0e3ad9c5f7018e5d9cd83532e8cde0075208429e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/c/c-libc-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/c-libc-result-use-obligations.json",
+      "sha256": "f0d9a547a6774c31dce061cd538eb886b500c0ede73b9a4b1462e135611ad88b",
+      "classification": "public",
+      "license": "NOASSERTION"
+    },
+    {
+      "path": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
+      "sha256": "9557192563e19f52cad791d5aae236886e42e5c2328343e4a5d7c548e05ba4a7",
+      "classification": "public",
+      "license": "NOASSERTION"
+    },
+    {
+      "path": "semantic-packs/c/notices/libc-result-use.txt",
+      "source_path": "semantic-packs/c/notices/libc-result-use.txt",
+      "sha256": "7ec5fb23eace20c3107b8b4afd6b29129267c2f3c491cab498d64bf2fd8a7ce7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/csharp/csharp-bcl-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/csharp-bcl-result-use-obligations.json",
+      "sha256": "5761c3f787fb0cb1a4110905cc9a64f1787b9712ab6695b417adf5d4c7a129f1",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/csharp/csharp-bcl-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/csharp/csharp-bcl-result-use-obligations.spec.json",
+      "sha256": "5752561b2027c4752d8f2133349669afb18c7e57ff3c0c3996396a71eef06f6c",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "semantic-packs/csharp/notices/microsoft-netcore-app-ref-8.0.0.txt",
+      "source_path": "semantic-packs/csharp/notices/microsoft-netcore-app-ref-8.0.0.txt",
+      "sha256": "eaf74889c60629b5e9c7c9cbd272e8e65f514c01e7df42f3247edb7a6d475072",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1469,6 +1511,27 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/javascript/javascript-string-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/javascript-string-result-use-obligations.json",
+      "sha256": "703119d0f5a351443d0a9d1d2cddab50c5683125323f7d72fc36a63f937f0520",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/javascript/javascript-string-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/javascript/javascript-string-result-use-obligations.spec.json",
+      "sha256": "d27e56115214a125ed1b7e24b570c9718aae1f5f7718e1ce36bed8f352737646",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/javascript/notices/node-22.11.0.txt",
+      "source_path": "semantic-packs/javascript/notices/node-22.11.0.txt",
+      "sha256": "005a6b21c69b463886f7b0f476cea644e7a308cb7b0315697d00a06db7f89d4a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/jvm/README.md",
       "source_path": "semantic-packs/jvm/README.md",
       "sha256": "0e84ee8b354e54956c2d85add8bae249d73556f29724d460d966e665db071bcd",
@@ -1847,6 +1910,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/python/notices/cpython-status-3.13.5.txt",
+      "source_path": "semantic-packs/python/notices/cpython-status-3.13.5.txt",
+      "sha256": "c14690c6770c7e28656c81a81c6d7da14591f4a27e5ecfd62d6763548308a8cd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/python/notices/cpython-unittest-3.13.5.txt",
       "source_path": "semantic-packs/python/notices/cpython-unittest-3.13.5.txt",
       "sha256": "2593f3f6f67db7c1bc8369f7c02db214378866c779b47b2c9b573db3cc1bb714",
@@ -1880,6 +1950,20 @@
       "sha256": "8a529461d24767829f9c7abb19efa6668b54968aba5ce259a138df9944c4cc9c",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-status-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/python-status-result-use-obligations.json",
+      "sha256": "0b8b281c721ac48d29057ff0590bb83a2db778d3d3c0985f556c2a0dea0b438f",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-status-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/python/python-status-result-use-obligations.spec.json",
+      "sha256": "ade1df2ce926d4f29a52f297f9a01affc1fe3e3edfc7dea3e98fd81b2bfd088a",
+      "classification": "public",
+      "license": "PSF-2.0"
     },
     {
       "path": "semantic-packs/python/typeshed-stdlib-2026.8.31.json",
@@ -2064,6 +2148,20 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/typescript/typescript-string-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/typescript-string-result-use-obligations.json",
+      "sha256": "6b6e2c79cf403d82c5307d04d28c2ebedd85b0d73821940fae0ed393a306f4ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/typescript/typescript-string-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/typescript/typescript-string-result-use-obligations.spec.json",
+      "sha256": "73d0470e401be08fbfb9538685e9cc4f491e6d571452050897ae73da816253a4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/web-network/csharp/bifrost.web-network-csharp.json",
       "source_path": "semantic-packs/web-network/csharp/bifrost.web-network-csharp.json",
       "sha256": "939ca9eaa6b751eec0d110ea25f71bddd6d7afd138abb85a441679be52fb4990",
@@ -2113,5 +2211,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "bc3ecf4f67afe5984e434dbc6ef9c01d00504eee08162206ec5559eb28811d2d"
+  "aggregate_sha256": "47f8e0b0647d5fae0f2168e3b436b53b70a0e7fbd258e609e0d10ac31741d05b"
 }

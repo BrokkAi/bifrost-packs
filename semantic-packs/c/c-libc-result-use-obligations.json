@@ -1,0 +1,210 @@
+{
+  "schema_version": 5,
+  "pack_id": "bifrost.c.libc.result-use-obligations",
+  "version": "1.0.0",
+  "producer": { "name": "bifrost-reviewed-libc-models", "version": "0.1.0" },
+  "language": "cpp",
+  "ecosystem": "cpp-headers",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "ISO/IEC 9899:2018 clauses 7.21.7.3 (fputc), 7.21.7.4 (fputs), 7.21.7.10 (putc), 7.21.4 (file operations), and 7.22.4 (remove/rename); POSIX.1-2017 close(), read(), unlink(), and write() pages",
+    "revision": "C17 and POSIX.1-2017; reviewed libc status conventions: EOF, nonzero, and -1"
+  },
+  "license": "NOASSERTION",
+  "completeness": "complete",
+  "safety": { "generated_code_only": false, "review_required": false },
+  "shards": [
+    {
+      "id": "c.libc.reviewed-result-use",
+      "activation": [{ "targets": [], "configurations": [] }],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "c.stdio.fclose.eof.c17-7.21.4",
+            "target": { "path": "stdio.h", "symbol": "fclose", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "c.stdio.fflush.eof.c17-7.21.4",
+            "target": { "path": "stdio.h", "symbol": "fflush", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "c.stdio.fputs.eof.c17-7.21.7.4",
+            "target": { "path": "stdio.h", "symbol": "fputs", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "c.stdio.fputc.eof.c17-7.21.7.3",
+            "target": { "path": "stdio.h", "symbol": "fputc", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "c.stdio.putc.eof.c17-7.21.7.10",
+            "target": { "path": "stdio.h", "symbol": "putc", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "c.stdio.remove.nonzero.c17-7.22.4",
+            "target": { "path": "stdio.h", "symbol": "remove", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "nonzero" }]
+          },
+          {
+            "id": "c.stdio.rename.nonzero.c17-7.22.4",
+            "target": { "path": "stdio.h", "symbol": "rename", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "nonzero" }]
+          },
+          {
+            "id": "c.stdio.setvbuf.nonzero.c17-7.22.4",
+            "target": { "path": "stdio.h", "symbol": "setvbuf", "has_receiver": false, "parameter_count": 4 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "nonzero" }]
+          },
+          {
+            "id": "posix.unistd.close.minus-one.posix-2017",
+            "target": { "path": "unistd.h", "symbol": "close", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "minus_one" }]
+          },
+          {
+            "id": "posix.unistd.write.minus-one.posix-2017",
+            "target": { "path": "unistd.h", "symbol": "write", "has_receiver": false, "parameter_count": 3 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "minus_one" }]
+          },
+          {
+            "id": "posix.unistd.read.minus-one.posix-2017",
+            "target": { "path": "unistd.h", "symbol": "read", "has_receiver": false, "parameter_count": 3 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "minus_one" }]
+          },
+          {
+            "id": "posix.unistd.unlink.minus-one.posix-2017",
+            "target": { "path": "unistd.h", "symbol": "unlink", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "minus_one" }]
+          },
+          {
+            "id": "cpp.std.cstdio.fclose.eof.c17-7.21.4",
+            "target": { "path": "cstdio", "symbol": "std.fclose", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "cpp.std.cstdio.fflush.eof.c17-7.21.4",
+            "target": { "path": "cstdio", "symbol": "std.fflush", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "cpp.std.cstdio.fputs.eof.c17-7.21.7.4",
+            "target": { "path": "cstdio", "symbol": "std.fputs", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "cpp.std.cstdio.fputc.eof.c17-7.21.7.3",
+            "target": { "path": "cstdio", "symbol": "std.fputc", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "cpp.std.cstdio.putc.eof.c17-7.21.7.10",
+            "target": { "path": "cstdio", "symbol": "std.putc", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "eof" }]
+          },
+          {
+            "id": "cpp.std.cstdio.remove.nonzero.c17-7.22.4",
+            "target": { "path": "cstdio", "symbol": "std.remove", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "nonzero" }]
+          },
+          {
+            "id": "cpp.std.cstdio.rename.nonzero.c17-7.22.4",
+            "target": { "path": "cstdio", "symbol": "std.rename", "has_receiver": false, "parameter_count": 2 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "nonzero" }]
+          },
+          {
+            "id": "cpp.std.cstdio.setvbuf.nonzero.c17-7.22.4",
+            "target": { "path": "cstdio", "symbol": "std.setvbuf", "has_receiver": false, "parameter_count": 4 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "nonzero" }]
+          }
+        ]
+      }
+    }
+  ]
+}
