@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 108 unique rule IDs from 9 manifest packs.
+This catalog lists 107 unique rule IDs from 9 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -112,4 +112,3 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
-| [Process input reaches SQL text](../rules/bifrost.security/policies/rust/sql-injection.rqlp) | `bifrost.security.rust.sql-injection` | rust | security | error |

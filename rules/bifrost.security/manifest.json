@@ -681,24 +681,6 @@
       ],
       "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
-    },
-    {
-      "path": "policies/rust/sql-injection.rqlp",
-      "id": "bifrost.security.rust.sql-injection",
-      "authored_hash": "aef19c837a85e62d85727680b45897ece49ab406ba62cd7ef77ee66e8e53de9d",
-      "resolved_semantic_hash": "aef19c837a85e62d85727680b45897ece49ab406ba62cd7ef77ee66e8e53de9d",
-      "category": "security",
-      "supported_languages": [
-        "rust"
-      ],
-      "required_capabilities": [
-        "taint",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "semantic-model-provenance"
-      ],
-      "severity_rationale": "Environment, command-line, or stdin text that reaches SQL syntax can change the executed database command.",
-      "remediation": "Use driver parameter binding for values; do not concatenate untrusted input into SQL text."
     }
   ]
 }

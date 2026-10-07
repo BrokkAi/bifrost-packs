@@ -680,7 +680,7 @@
     {
       "path": "fixtures/policy/bifrost.security/README.md",
       "source_path": "fixtures/policy/bifrost.security/README.md",
-      "sha256": "6460adf5cc636addac9aa2e54c7a1ebc061b9a2c3909e4ed9a6d4e3479d70fa1",
+      "sha256": "5f03b3a044beec874bbe0f9687b3bdd51e9e000184e0b15f83df5847fedc1577",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -795,139 +795,6 @@
       "path": "fixtures/policy/bifrost.security/non-https-url/src/main.rs",
       "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/src/main.rs",
       "sha256": "20c2bf0727c880b03aacb548f777e3b3754cf7bdb10bd2b01812f88ca629cfa2",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/README.md",
-      "source_path": "fixtures/policy/bifrost.security/sql-injection/README.md",
-      "sha256": "3b1bba658562b694ac44d214ddb31c2c61c97a62cbf5daa6412489ec330a7889",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/app/.bifrost/semantic-models/bifrost.rust-postgres-sql.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-postgres-sql.json",
-      "sha256": "3001870a04a369005f650ebaceccd84e10eb459f419bcc4fc893cc21a9fab3f9",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/app/.bifrost/semantic-models/bifrost.rust-rusqlite-sql.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-rusqlite-sql.json",
-      "sha256": "6f325f8f476d3b05da1b79e719cfa43a2e1ee45e6b60d568ec887a8989014ea1",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/app/.bifrost/semantic-models/bifrost.rust-std-sql-taint.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-std-sql-taint.json",
-      "sha256": "7a5dcfdc5c6d251faffb03d3d78248585ccc45e70c0f0f2fcf21bd19c3b5ac01",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/app/Cargo.toml",
-      "source_path": "tests/fixtures/rust-sql-injection/external/sources-app/Cargo.toml",
-      "sha256": "b160bf155d1ca7e27af2952e6b7585543a13c7b59869a6b77293f035ead65723",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/app/policies/sql-injection.rqlp",
-      "source_path": "rules/bifrost.security/policies/rust/sql-injection.rqlp",
-      "sha256": "7eafad3d10e607d3b575f31b180b13a654b16f308f9b22c7c4a6e1007e17fb24",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/app/src/main.rs",
-      "source_path": "tests/fixtures/rust-sql-injection/external/sources-app/src/main.rs",
-      "sha256": "8db6fb12e596570b6eac0c4ffcc4df141a9ed33c8aab3b29910d0d20ce0d3ee7",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/stubs/postgres/Cargo.toml",
-      "source_path": "tests/fixtures/rust-sql-injection/external/stubs/postgres/Cargo.toml",
-      "sha256": "445552e79db49f4ca7cd548019df8868d69beb657b40395f178ae1915b8185e6",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-postgres/stubs/postgres/src/lib.rs",
-      "source_path": "tests/fixtures/rust-sql-injection/external/stubs/postgres/src/lib.rs",
-      "sha256": "263c0052cdddeffb80d8e5841d64485db8498925aa51c9eb6b3618502018e0a9",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/app/.bifrost/semantic-models/bifrost.rust-postgres-sql.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-postgres-sql.json",
-      "sha256": "3001870a04a369005f650ebaceccd84e10eb459f419bcc4fc893cc21a9fab3f9",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/app/.bifrost/semantic-models/bifrost.rust-rusqlite-sql.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-rusqlite-sql.json",
-      "sha256": "6f325f8f476d3b05da1b79e719cfa43a2e1ee45e6b60d568ec887a8989014ea1",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/app/.bifrost/semantic-models/bifrost.rust-std-sql-taint.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-std-sql-taint.json",
-      "sha256": "7a5dcfdc5c6d251faffb03d3d78248585ccc45e70c0f0f2fcf21bd19c3b5ac01",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/app/Cargo.toml",
-      "source_path": "tests/fixtures/rust-sql-injection/external/sources-app/Cargo.toml",
-      "sha256": "675cdaa84848dbebfc5cc8d4139235bd22e87558ae19cda8bf55e84eecc080dd",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/app/policies/sql-injection.rqlp",
-      "source_path": "rules/bifrost.security/policies/rust/sql-injection.rqlp",
-      "sha256": "7eafad3d10e607d3b575f31b180b13a654b16f308f9b22c7c4a6e1007e17fb24",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/app/src/main.rs",
-      "source_path": "tests/fixtures/rust-sql-injection/external/sources-app/src/main.rs",
-      "sha256": "501763e15e5d2644e04dfa4e29037bc086f5917695f4786740e18c58c8e53425",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/stubs/rusqlite/Cargo.toml",
-      "source_path": "tests/fixtures/rust-sql-injection/external/stubs/rusqlite/Cargo.toml",
-      "sha256": "3a922c3c3549ae9b9a64c21401943ccccc82fcbe30f28119a183b35792c1e894",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "fixtures/policy/bifrost.security/sql-injection/std-rusqlite/stubs/rusqlite/src/lib.rs",
-      "source_path": "tests/fixtures/rust-sql-injection/external/stubs/rusqlite/src/lib.rs",
-      "sha256": "0557f73c6beeaf72b4c609ad495487814f43ca144923efa42353cd5b5766a9c3",
       "classification": "public",
       "license": "Apache-2.0",
       "source_revision": "26c360ce219bab07f6224a490468741151b64623"
@@ -1670,7 +1537,7 @@
     {
       "path": "rules/bifrost.security/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
-      "sha256": "ef9256f3d5995094c23d7577e2c1c6ca631871320ba63dee6fe704d3400e6dca",
+      "sha256": "4857a2c82608dd04787da7f53ccc2c8b49bdc9a8ed8f3e950ac3842cde5667c8",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1916,14 +1783,6 @@
       "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
       "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/policies/non-https-url.rqlp",
       "sha256": "584265b59c2c21360fa59829f996b0e5cbf3a8788092eb88135b84bd1ccd5a6d",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "rules/bifrost.security/policies/rust/sql-injection.rqlp",
-      "source_path": "tests/fixtures/rust-sql-injection/external/sources-app/policies/rust-input-to-sql.rqlp",
-      "sha256": "7eafad3d10e607d3b575f31b180b13a654b16f308f9b22c7c4a6e1007e17fb24",
       "classification": "public",
       "license": "Apache-2.0",
       "source_revision": "26c360ce219bab07f6224a490468741151b64623"
@@ -3354,20 +3213,12 @@
       "license": "Ruby"
     },
     {
-      "path": "semantic-packs/rust-sql-injection/bifrost.rust-postgres-sql.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-postgres-sql.json",
-      "sha256": "3001870a04a369005f650ebaceccd84e10eb459f419bcc4fc893cc21a9fab3f9",
+      "path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
+      "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
+      "sha256": "a45d3ced0629ac4dff0b5be8d4753311ea31de6da21e43efebfc5a7cda24c51e",
       "classification": "public",
       "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
-    },
-    {
-      "path": "semantic-packs/rust-sql-injection/bifrost.rust-rusqlite-sql.json",
-      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-rusqlite-sql.json",
-      "sha256": "6f325f8f476d3b05da1b79e719cfa43a2e1ee45e6b60d568ec887a8989014ea1",
-      "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+      "source_revision": "217109df44f6b166d6dd779a7f2b7743365b79cc"
     },
     {
       "path": "semantic-packs/rust-sql-injection/bifrost.rust-std-sql-taint.json",
@@ -3604,5 +3455,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "a6f8061c1132fe2ac0b735afba00fd4a409f144c10bfc9c86c8584bd4f8af476"
+  "aggregate_sha256": "9f846d75c85f27ecc3f1dd025cbfd06098fdc0e7bb7ac7a068fb4b81cfa05268"
 }
