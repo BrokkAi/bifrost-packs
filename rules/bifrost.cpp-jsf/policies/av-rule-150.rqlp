@@ -1,0 +1,14 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-150"
+  :name "JSF AV Rule 150"
+  :message "lowercase hexadecimal literal requires review"
+  :severity note
+  :description "Mirrors CodeQL cpp/jsf/av-rule-150 (cpp/ql/src/jsf/4.18 Constants/AV Rule 150.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Lowercase hexadecimal digits in a selected numeric literal require review."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-150"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (numeric_literal (text/regex ".*[a-f].*")))))
+  )

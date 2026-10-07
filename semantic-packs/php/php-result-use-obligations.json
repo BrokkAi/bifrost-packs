@@ -1,0 +1,34 @@
+{
+  "schema_version": 5,
+  "pack_id": "bifrost.php.result-use-obligations",
+  "language": "php",
+  "ecosystem": "php",
+  "artifact_identity": {
+    "source": "JetBrains phpstorm-stubs global function declarations",
+    "revision": "748ab87d16253a5b5d648b5fe4dae1ff4152bb03",
+    "artifact_sha256": "270cfce465ac9e1de4abaa4f1facf70982f1becf70e040635f0519bd4a773bb9",
+    "contract_source": "PHP 8.0-8.x manual"
+  },
+  "provenance": "Reviewed PHP global functions. Resolver-proven _php_global_ identity is required; a namespaced workspace function is not a reviewed builtin. The error-suppression operator @ does not consume a return value, so bare @unlink(...) remains a discarded status use. fwrite byte counts are excluded; only false is the failure predicate.",
+  "completeness": "complete",
+  "b4_pure_transformations": [
+    { "function": "trim", "arities": [1, 2], "predicate": null },
+    { "function": "ltrim", "arities": [1, 2], "predicate": null },
+    { "function": "rtrim", "arities": [1, 2], "predicate": null },
+    { "function": "strtolower", "arities": [1], "predicate": null },
+    { "function": "strtoupper", "arities": [1], "predicate": null },
+    { "function": "str_replace", "arities": [3], "predicate": null },
+    { "function": "substr", "arities": [2, 3], "predicate": null }
+  ],
+  "b5_false_status": [
+    { "function": "file_put_contents", "arities": [2, 3, 4], "predicate": "false" },
+    { "function": "mkdir", "arities": [1, 2, 3], "predicate": "false" },
+    { "function": "unlink", "arities": [1, 2], "predicate": "false" },
+    { "function": "rename", "arities": [2, 3], "predicate": "false" },
+    { "function": "fclose", "arities": [1], "predicate": "false" },
+    { "function": "fwrite", "arities": [2, 3], "predicate": "false", "note": "byte counts are outside this contract" }
+  ],
+  "summary_count": 24,
+  "basis": "dispatch_agreement",
+  "receiver": "none; global function identity is resolved structurally"
+}

@@ -1,0 +1,16 @@
+(policy
+  :schema-version 1
+  :id "bifrost.c-jpl.heap-memory"
+  :name "JPL-C Rule 05: heap allocation outside initialization"
+  :message "dynamic allocation occurs outside initialization"
+  :severity note
+  :description "Mirrors CodeQL cpp/jpl-c/heap-memory (cpp/ql/src/JPL_C/LOC-2/Rule 05/HeapMemory.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Exact allocation call names outside initialization-named functions require review."
+  :tags ["cpp" "jpl-c" "codeql-cpp-jpl-c-heap-memory"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (not-inside
+          (function :name/regex "^(?i:init.*|.*_init)$")
+          (call :callee (name/regex "^(malloc|calloc|alloca|sbrk|valloc)$"))))))
+  )

@@ -30,7 +30,7 @@ see [generation](generation.md). Historical 0.12.0 payloads remain immutable
 and gated. Inspect new bytes, install/catalog behavior, real profile capability
 support and exact dependency selection before admitting a candidate.
 
-The intended `rules/v0.1.2` publishes the current locked 70-policy authoring
+The intended `rules/v0.1.3` publishes the current locked policy authoring
 copy and retains its exact `packs/v0.2.0` dependency. The rules source archive
 also carries tracked research evidence as non-production metadata; those files
 remain outside the content lock and policy inventory. The reconciled schema-14

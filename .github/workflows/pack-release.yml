@@ -8,7 +8,7 @@ on:
         required: true
       version:
         type: string
-        default: '0.1.2'
+        default: '0.1.3'
         required: true
   push:
     tags:
@@ -145,6 +145,6 @@ jobs:
           sha256sum -c *.sha256
           flags=()
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
-          gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 *.json *.txt *.rqlp *.py \
+          gh release create "$GITHUB_REF_NAME" *.tar.gz smoke-evidence.zip *.sha256 *.json *.txt *.rqlp *.py \
             --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
             --notes-file release-notes.md

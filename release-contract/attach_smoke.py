@@ -2,6 +2,8 @@
 """Attach bounded smoke evidence without claiming whole-pack qualification."""
 import argparse
 import json
+import io
+import zipfile
 from pathlib import Path
 import release
 
@@ -41,6 +43,8 @@ def attach(manifest_path, evidence, output):
     if release.digest(policy_bytes) != policies[0]['sha256'] or release.digest(policy_bytes) != smoke['copied_policy_sha256']:
         release.fail('integrity-error', 'smoke policy bytes differ from released bytes')
     indexed = {item['name'] for item in manifest['artifacts']}
+    archive_buffer = io.BytesIO()
+    archive = zipfile.ZipFile(archive_buffer, 'w', compression=zipfile.ZIP_DEFLATED)
     for path in sorted(evidence.rglob('*')):
         if path.is_dir():
             continue
@@ -53,10 +57,27 @@ def attach(manifest_path, evidence, output):
             release.fail('invalid-manifest', 'duplicate smoke evidence asset')
         indexed.add(name)
         data = path.read_bytes()
+        member = zipfile.ZipInfo(relative, date_time=(1980, 1, 1, 0, 0, 0))
+        member.create_system = 3
+        member.external_attr = 0o100644 << 16
+        member.compress_type = zipfile.ZIP_DEFLATED
+        archive.writestr(member, data)
+        # GitHub rejects zero-byte release assets; retain their exact bytes in the ZIP.
+        if not data:
+            continue
         (output / name).write_bytes(data)
         artifact = dict(name=name, sha256=release.digest(data), size_bytes=len(data), format=path.suffix.removeprefix('.') or 'text', role='source')
         manifest['artifacts'].append(artifact)
         (output / (name + '.sha256')).write_text(artifact['sha256'] + '  ' + name + '\n')
+    archive.close()
+    name = 'smoke-evidence.zip'
+    if name in indexed:
+        release.fail('invalid-manifest', 'duplicate smoke evidence archive')
+    data = archive_buffer.getvalue()
+    (output / name).write_bytes(data)
+    artifact = dict(name=name, sha256=release.digest(data), size_bytes=len(data), format='zip', role='source')
+    manifest['artifacts'].append(artifact)
+    (output / (name + '.sha256')).write_text(artifact['sha256'] + '  ' + name + '\n')
     manifest['qualification']['behavior'] = dict(status='limited', evidence=[smoke['scope'], 'One Python policy: complete positive (one finding) and near-miss (zero findings). Full released policy/model behavior remains unqualified; indexed smoke files retain inputs, reports and executable identity.'])
     provenance = dict(manifest.get('provenance', {}))
     testing = list(provenance.get('testing', []))

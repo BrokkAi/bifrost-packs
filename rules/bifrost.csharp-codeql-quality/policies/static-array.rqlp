@@ -1,0 +1,16 @@
+; CodeQL csharp/ql/src/Bad Practices/Implementation Hiding/StaticArray.ql
+; at commit ae741615f3e178ce61289a651790dc67fcc18e19.
+; Engine contract: select the exact public static readonly non-empty/unknown
+; C# array field declaration, excluding the private and known-empty near miss.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.static-array"
+  :name "C# static array"
+  :message "public static readonly array field has a non-empty initializer"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/Implementation Hiding/StaticArray.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects public static readonly array fields with non-empty or unknown initializers."
+  :tags ["csharp" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (assignment :language-rule "cs/static-array")))))
