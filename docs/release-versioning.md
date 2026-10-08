@@ -36,8 +36,8 @@ and incomplete outcomes explicit in the release evidence and consumer reports.
 
 Documentation that is not published as a release asset does not by itself
 require a release. Existing releases are immutable: do not retag or rewrite an
-existing release to correct versioning or documentation. Apply the corrected
-guidance to the next release that includes the relevant content.
+existing release to correct versioning or documentation. Apply this guidance prospectively to the next release that includes the
+relevant content. State the reason for the bump in its release notes.
 
 The examples in this guide are hypothetical and are not claims that those tags
 or artifacts have been published.

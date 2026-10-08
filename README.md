@@ -115,8 +115,9 @@ retaining legacy compatibility. The [recorded blocker](docs/native-publication-b
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
 `bifrost.public.packs@0.2.1`.
-These pending plans predate the versioning policy; reassess candidate versions
-and dependency pins together against all included changes before tagging.
+The version choices recorded below predate this policy. Preserve already
+published releases; reassess unpublished candidate versions and dependency pins
+together against all included changes before tagging.
 The next packs source archive carries the newly authored Go embed declarations,
 the expanded Python typeshed import closure used by the selected Python native
 input, and Rust and Python standard-library models. The Go, Rust, and other

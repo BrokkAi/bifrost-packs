@@ -17,8 +17,9 @@ rules and compatibility boundaries.
 
 ## Intended next releases
 
-These pending plans predate the versioning policy; reassess candidate versions
-and dependency pins together against all included changes before tagging.
+The version choices recorded below predate this policy. Preserve already
+published releases; reassess unpublished candidate versions and dependency pins
+together against all included changes before tagging.
 
 The published `packs/v0.2.0` release contains 8 native model entries using
 schema 8 from public
