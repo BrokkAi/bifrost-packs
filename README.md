@@ -20,6 +20,8 @@ qualified here. Pack versions are independent of engine versions.
   hashes.
 - `release-contract/`: shared public/premium release metadata and selection
   tools.
+- [Release versioning](docs/release-versioning.md): independent stream bump
+  rules and compatibility boundaries.
 - [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
   typestate hypotheses, ownership routing and a proposed qualification queue.
   These are research leads, not enabled or qualified rules.
@@ -113,6 +115,8 @@ retaining legacy compatibility. The [recorded blocker](docs/native-publication-b
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
 `bifrost.public.packs@0.2.1`.
+These pending plans predate the versioning policy; reassess candidate versions
+and dependency pins together against all included changes before tagging.
 The next packs source archive carries the newly authored Go embed declarations,
 the expanded Python typeshed import closure used by the selected Python native
 input, and Rust and Python standard-library models. The Go, Rust, and other

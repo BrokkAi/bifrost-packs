@@ -4,6 +4,10 @@ This directory defines the release metadata and selection contract shared by
 public and private pack repositories. Schema 2 is the current contract for new
 releases. Schema 1 remains available for immutable historical manifests.
 
+See [release versioning](../docs/release-versioning.md) for independent stream
+bump rules and the distinction between compatibility, qualification, and
+completeness.
+
 ## Compatibility and qualification
 
 Schema 2 compatibility declares required schema versions and semantic

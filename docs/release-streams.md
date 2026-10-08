@@ -12,7 +12,13 @@ A rules release does not imply a packs release, and matching version numbers do
 not imply the contents were qualified together. Legacy releases keep their
 existing manifest schema, engine range, and qualification semantics.
 
+See [release versioning](release-versioning.md) for the independent stream bump
+rules and compatibility boundaries.
+
 ## Intended next releases
+
+These pending plans predate the versioning policy; reassess candidate versions
+and dependency pins together against all included changes before tagging.
 
 The published `packs/v0.2.0` release contains 8 native model entries using
 schema 8 from public
