@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 124 unique rule IDs from 9 manifest packs.
+This catalog lists 126 unique rule IDs from 10 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -95,6 +95,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Java undocumented return value](../rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp) | `bifrost.java-codeql-quality.undocumented-return-value` | java | quality | warning |
 | [Java undocumented type](../rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp) | `bifrost.java-codeql-quality.undocumented-type` | java | quality | warning |
 | [Java unknown Javadoc parameter](../rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp) | `bifrost.java-codeql-quality.unknown-javadoc-parameter` | java | quality | warning |
+| [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
@@ -129,3 +130,4 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
+| [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
