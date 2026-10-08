@@ -348,6 +348,69 @@ summary targets the canonical `dataclasses.dataclass` declaration with one
 implicit class parameter and a variadic keyword tail. This is an identity
 contract only: it does not claim that generated dataclass members are modeled.
 
+## Reviewed security API additions
+
+The reviewed declarations follow the pinned Typeshed revision above and
+CPython 3.13.5 signatures. This addition set is:
+
+- Types: `io.BufferedRandom`, `io.BufferedReader`, `io.BufferedWriter`,
+  `io.FileIO`, `builtins.bytes`, `os`, `ssl.SSLContext`, `tempfile`, and
+  `urllib.request`, plus `http`, `http.server`, `socketserver`, `email`,
+  `email.message`, `_io`, `http.server.BaseHTTPRequestHandler`,
+  `socketserver.StreamRequestHandler`, `socketserver.BaseRequestHandler`,
+  `email.message.Message`, `io.BufferedIOBase`, `io.IOBase`,
+  `_io._IOBase`, and `_io._BufferedIOBase`.
+- New constructor declarations in the partial API artifact:
+  `socket.socket.__init__`, `ftplib.FTP.__init__`, and
+  `logging.Logger.__init__`. The existing `smtplib.SMTP.__init__` declaration
+  is reused. `ssl.SSLContext.__init__(protocol)` is declared by the bounded
+  complete SSL artifact below.
+- `logging.getLogger`, with exact return class `logging.Logger`.
+- `re.compile`, with exact return class `re.Pattern`.
+- `builtins.open`, with exact return classes `io.TextIOWrapper`,
+  `io.BufferedReader`, `io.BufferedWriter`, `io.BufferedRandom`, and
+  `io.FileIO`.
+- `tempfile.mktemp`, `os.tempnam`, and `os.tmpnam` identities for the
+  insecure-temporary-file policy.
+- The separate complete SSL artifact declares `ssl.wrap_socket` and the
+  bounded SSL protocol declaration set: `ssl.PROTOCOL_SSLv2`,
+  `ssl.PROTOCOL_SSLv3`, `ssl.PROTOCOL_SSLv23`,
+  `ssl.PROTOCOL_TLS`, `ssl.PROTOCOL_TLS_CLIENT`,
+  `ssl.PROTOCOL_TLS_SERVER`, `ssl.PROTOCOL_TLSv1`, `ssl.PROTOCOL_TLSv1_1`,
+  and `ssl.PROTOCOL_TLSv1_2`. It declares the complete `ssl.wrap_socket`
+  signature, including `ssl_version`, and `ssl.SSLContext.__init__(protocol)`;
+  it is complete for exactly this bounded SSL declaration set. These SSL
+  member records are omitted from the general partial API artifact so both
+  packs can be active without duplicate call identities.
+- `bytes.decode`, with its receiver-to-return transfer.
+- `write` sinks on those same five `io` classes. The existing
+  `io.TextIOWrapper.write` declaration and summary are reused; the other four
+  class members are added here.
+- `socket.socket.recv` as a candidate remote-input source and
+  `urllib.request.urlopen` as the exact outgoing-request API. The declarations
+  and summaries cover these standard-library identities, but the pinned
+  evaluator still reports receiver dispatch for `socket.recv()` on a
+  constructed socket as unknown. No public rule in this batch relies on that
+  source; it remains unvalidated until exact dispatch is available.
+- HTTP server declaration facts for `BaseHTTPRequestHandler.path` and
+  `.headers`, inherited `StreamRequestHandler.rfile`,
+  `email.message.Message.__getitem__`, and `_io._BufferedIOBase.read` support
+  handler-based remote-input probes. They describe the stdlib declarations;
+  the current pack schema has no instance-member remote-source fact, and the
+  pinned evaluator does not resolve the inherited `self.path` read to an exact
+  source. The SSRF and external-API rules therefore remain blocked rather than
+  treating syntax-only field matches as remote input.
+
+The HTTP declaration facts are in the partial stdlib API declaration pack;
+they do not label those fields as remote sources. The complete bounded SSL
+set is also in `bifrost.python-ssl-protocol-declarations.json`. The temporary-file
+APIs and the other reviewed API additions are in the partial stdlib API
+declaration pack. The security-sink declaration pack adds
+`socket.socket.__init__` and `socket.socket.recv`. The summary pack adds
+`builtins.open`, `bytes.decode`, `io.BufferedRandom.write`,
+`io.BufferedReader.write`, `io.BufferedWriter.write`, `io.FileIO.write`,
+`socket.socket.recv`, and `urllib.request.urlopen`.
+
 An activation supplies its target as the interpreter's own `sys.platform`
 value, which is the vocabulary typeshed's platform guards name. A target from
 another vocabulary would read as an ordinary mismatch and could drop a

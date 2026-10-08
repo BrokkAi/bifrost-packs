@@ -1,0 +1,20 @@
+; CodeQL query: python/ql/src/Classes/InconsistentMRO.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a class only when its complete Python hierarchy fact
+; proves inconsistent C3 linearization; unresolved bases remain incomplete.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.inconsistent-mro"
+  :name "Python inconsistent method resolution order"
+  :message "Class construction has an inconsistent method resolution order"
+  :severity error
+  :description "Mirrors CodeQL python/ql/src/Classes/InconsistentMRO.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Python classes whose resolved bases prove an inconsistent C3 linearization; unresolved hierarchy results remain typed incomplete."
+  :tags ["python" "codeql" "quality" "class-hierarchy"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq hierarchy)
+                      (outcome eq inconsistent)
+                      (reason eq inconsistent_linearization)
+                      (coverage eq complete))
+        (class-hierarchy
+          (enclosing-decl (language python (class))))))))

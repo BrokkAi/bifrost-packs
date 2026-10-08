@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Expressions/EqualsNone.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag comparisons using == with None as a comparator.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.test-equals-none"
+  :name "Python equality test against None"
+  :message "Use is None to test for the None singleton."
+  :severity note
+  :description "Finds equality comparisons whose right comparator is the None literal."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python
+        (comparison :operator (text/regex "^==$") :right (null_literal))))))

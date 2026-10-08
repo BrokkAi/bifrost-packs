@@ -1,0 +1,27 @@
+; CodeQL query: python/ql/src/Security/CWE-377/InsecureTemporaryFile.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Report exact calls to tempfile.mktemp and the historical stdlib os.tempnam/os.tmpnam functions; tempfile.NamedTemporaryFile stays clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.insecure-temporary-file"
+  :name "Python insecure temporary filename"
+  :message "A temporary filename is created without securely opening the file"
+  :severity error
+  :description "Exact identities for tempfile.mktemp, os.tempnam, and os.tmpnam mirror the CodeQL temporary-name API set."
+  :tags ["security" "python" "filesystem" "temporary-file"]
+  :analysis (analysis
+    :type assertion
+    (bind :name insecure-temporary-name-api :query
+      (rql :schema-version 1
+        (union
+          (resolved-call :resolves-to "tempfile.mktemp" :proof exact
+            (call-bindings (call-shape (language python (call :callee (name "mktemp"))))))
+          (resolved-call :resolves-to "os.tempnam" :proof exact
+            (call-bindings (call-shape (language python (call :callee (name "tempnam"))))))
+          (resolved-call :resolves-to "os.tmpnam" :proof exact
+            (call-bindings (call-shape (language python (call :callee (name "tmpnam")))))))))
+    (group :name by-call :by (insecure-temporary-name-api.site_id)
+      (aggregate :name insecure-names :op count))
+    (assert :group by-call :value insecure-names :cardinality (exactly 0)))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "377")))

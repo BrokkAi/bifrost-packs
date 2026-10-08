@@ -1,0 +1,18 @@
+; CodeQL: python/ql/src/Classes/SubclassShadowing/SubclassShadowing.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report an ancestor initializer's proven attribute write that hides a descendant method, excluding same-class methods, setters, and writable properties.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.attribute-shadows-method"
+  :name "Superclass attribute shadows Python descendant method"
+  :message "A superclass initializer writes an attribute that shadows this descendant method"
+  :severity error
+  :description "A complete C3 ancestry and proven local initializer flow establish the hidden method; writable properties and setters are excluded."
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq attribute_shadows_method)
+                      (outcome eq issue)
+                      (proof eq proven)
+                      (completeness eq complete))
+        (python-attribute-shadows-method
+          (enclosing-decl (language python (class))))))))

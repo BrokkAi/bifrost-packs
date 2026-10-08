@@ -1,0 +1,18 @@
+; CodeQL: python/ql/src/Lexical/OldOctalLiteral.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag legacy leading-zero octal spellings, excluding zero and common
+; permission-mask widths.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.old-style-octal-literal"
+  :name "Python old-style octal literal"
+  :message "Use the 0o prefix for octal literals."
+  :severity warning
+  :description "Finds legacy leading-zero octal token spellings while excluding zero and common permission masks."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python
+        (numeric_literal
+          (text/regex "^0(?:[1-7]|[0-7]{2}|[0-7]{5}|[0-7]{7,})$"))))))

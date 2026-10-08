@@ -1,0 +1,21 @@
+; CodeQL query: python/ql/src/Security/CWE-327/InsecureDefaultProtocol.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Report exact ssl.wrap_socket calls whose ssl_version formal is defaulted; explicitly selected versions are clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.insecure-default-protocol"
+  :name "Python SSL default protocol"
+  :message "ssl.wrap_socket uses its default protocol"
+  :severity warning
+  :description "The exact ssl.wrap_socket API is unsafe when its ssl_version formal is defaulted."
+  :tags ["security" "python" "tls"]
+  :analysis (analysis
+    :type assertion
+    (bind :name defaulted-protocol :query
+      (rql :schema-version 1
+        (filter :where ((formal_name eq "ssl_version") (binding_kind eq defaulted))
+          (resolved-call :resolves-to "ssl.wrap_socket" :proof exact
+            (call-bindings (call-shape (language python (call))))))))
+    (group :name by-call :by (defaulted-protocol.site_id)
+      (aggregate :name default-protocols :op count))
+    (assert :group by-call :value default-protocols :cardinality (exactly 0))))

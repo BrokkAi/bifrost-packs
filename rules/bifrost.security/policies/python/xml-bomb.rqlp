@@ -1,0 +1,46 @@
+; CodeQL query: python/ql/src/Security/CWE-776/XmlBomb.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Exact stdlib XML parsers receive remote socket data; local lookalikes and constant parser arguments are excluded.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.xml-bomb"
+  :name "Python XML bomb input"
+  :message "Untrusted input reaches a standard-library XML parser"
+  :severity warning
+  :description "Untrusted socket data reaches exact xml.etree, xml.sax, or xml.dom.minidom parser APIs."
+  :tags ["security" "python" "xml" "denial-of-service"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled optimistic)
+    :sources (endpoint-set :entries [
+      (source :id socket-input
+        :display-name "sys.argv indexed input"
+        :categories [input.user-controlled]
+        :selector (rql :schema-version 1
+          (language python
+            (keyed-read-value
+              :runtime python :global sys :container argv :key-kind static-index
+              :source-origin pristine_input
+              (field_access :field (name "argv")))))
+        :bind matched-value
+        :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id xml-parser-input
+        :display-name "stdlib XML parser input"
+        :categories [parser.xml]
+        :selector (rql :schema-version 1
+          (union
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "xml.etree.ElementTree.fromstring" :proof exact
+                (call-bindings (call-shape (language python (call :callee (name "etree_fromstring")))))))
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "xml.sax.parseString" :proof exact
+                (call-bindings (call-shape (language python (call :callee (name "sax_parse_string")))))))
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "xml.dom.minidom.parseString" :proof exact
+                (call-bindings (call-shape (language python (call :callee (name "minidom_parse_string")))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [untrusted])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "776")))

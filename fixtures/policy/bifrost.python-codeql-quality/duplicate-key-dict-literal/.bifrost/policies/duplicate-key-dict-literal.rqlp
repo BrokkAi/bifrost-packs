@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Expressions/DuplicateKeyInDictionaryLiteral.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag a dictionary entry whose supported decoded literal key repeats an
+; earlier key in that same literal.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.duplicate-key-dict-literal"
+  :name "Python duplicate dictionary key"
+  :message "This dictionary key overwrites an earlier entry."
+  :severity warning
+  :description "Finds later dictionary entries whose supported literal keys equal an earlier key after decoding."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (object_property :duplicate-key true)))))

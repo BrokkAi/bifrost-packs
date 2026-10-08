@@ -19,6 +19,11 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 
 - CodeQL reduced corpus slices: MIT; see `licenses/CodeQL-MIT.txt` and the
   exact upstream revision in `semantic-packs/summary-corpora/pins.json`.
+- CodeQL-derived Python quality and security fixture test sources are MIT,
+  Copyright (c) GitHub, Inc.,
+  from `github/codeql` at
+  `ae741615f3e178ce61289a651790dc67fcc18e19`; see
+  `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded

@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 126 unique rule IDs from 10 manifest packs.
+This catalog lists 170 unique rule IDs from 11 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -95,6 +95,40 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Java undocumented return value](../rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp) | `bifrost.java-codeql-quality.undocumented-return-value` | java | quality | warning |
 | [Java undocumented type](../rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp) | `bifrost.java-codeql-quality.undocumented-type` | java | quality | warning |
 | [Java unknown Javadoc parameter](../rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp) | `bifrost.java-codeql-quality.unknown-javadoc-parameter` | java | quality | warning |
+| [Python asserts a tuple](../rules/bifrost.python-codeql-quality/policies/asserts-tuple.rqlp) | `bifrost.python-codeql-quality.asserts-tuple` | python | correctness | warning |
+| [Superclass attribute shadows Python descendant method](../rules/bifrost.python-codeql-quality/policies/attribute-shadows-method.rqlp) | `bifrost.python-codeql-quality.attribute-shadows-method` | python | correctness | error |
+| [Python comparison of constants](../rules/bifrost.python-codeql-quality/policies/comparison-of-constants.rqlp) | `bifrost.python-codeql-quality.comparison-of-constants` | python | correctness | warning |
+| [Python non-portable identity comparison](../rules/bifrost.python-codeql-quality/policies/comparison-using-is-non-portable.rqlp) | `bifrost.python-codeql-quality.comparison-using-is-non-portable` | python | quality | note |
+| [Python comparison using is](../rules/bifrost.python-codeql-quality/policies/comparison-using-is.rqlp) | `bifrost.python-codeql-quality.comparison-using-is` | python | correctness | warning |
+| [Python duplicate dictionary key](../rules/bifrost.python-codeql-quality/policies/duplicate-key-dict-literal.rqlp) | `bifrost.python-codeql-quality.duplicate-key-dict-literal` | python | correctness | warning |
+| [Python hash without equality](../rules/bifrost.python-codeql-quality/policies/equals-hash-mismatch.rqlp) | `bifrost.python-codeql-quality.equals-hash-mismatch` | python | correctness | warning |
+| [Failed Python inheritance inference](../rules/bifrost.python-codeql-quality/policies/failed-inheritance-inference.rqlp) | `bifrost.python-codeql-quality.failed-inheritance-inference` | python | correctness | warning |
+| [Python module imported with both forms](../rules/bifrost.python-codeql-quality/policies/import-and-import-from.rqlp) | `bifrost.python-codeql-quality.import-and-import-from` | python | quality | warning |
+| [Python module imports itself](../rules/bifrost.python-codeql-quality/policies/import-own-module.rqlp) | `bifrost.python-codeql-quality.import-own-module` | python | quality | warning |
+| [Python inconsistent method resolution order](../rules/bifrost.python-codeql-quality/policies/inconsistent-mro.rqlp) | `bifrost.python-codeql-quality.inconsistent-mro` | python | correctness | error |
+| [Python callable mixes value and implicit returns](../rules/bifrost.python-codeql-quality/policies/mixed-returns.rqlp) | `bifrost.python-codeql-quality.mixed-returns` | python | correctness | warning |
+| [Python callable returns tuples of varying lengths](../rules/bifrost.python-codeql-quality/policies/mixed-tuple-returns.rqlp) | `bifrost.python-codeql-quality.mixed-tuple-returns` | python | correctness | warning |
+| [Python mutable default modification](../rules/bifrost.python-codeql-quality/policies/modification-of-default-value.rqlp) | `bifrost.python-codeql-quality.modification-of-default-value` | python | quality | warning |
+| [Python old-style octal literal](../rules/bifrost.python-codeql-quality/policies/old-style-octal-literal.rqlp) | `bifrost.python-codeql-quality.old-style-octal-literal` | python | quality | warning |
+| [Overly complex Python destructor](../rules/bifrost.python-codeql-quality/policies/overly-complex-delete.rqlp) | `bifrost.python-codeql-quality.overly-complex-delete` | python | quality | warning |
+| [Python percent format requires a mapping](../rules/bifrost.python-codeql-quality/policies/percent-format-not-mapping.rqlp) | `bifrost.python-codeql-quality.percent-format-not-mapping` | python | correctness | error |
+| [Python percent format argument count](../rules/bifrost.python-codeql-quality/policies/percent-format-wrong-arguments.rqlp) | `bifrost.python-codeql-quality.percent-format-wrong-arguments` | python | correctness | error |
+| [Python polluting wildcard import](../rules/bifrost.python-codeql-quality/policies/polluting-import.rqlp) | `bifrost.python-codeql-quality.polluting-import` | python | quality | warning |
+| [Python redundant module-scope global declaration](../rules/bifrost.python-codeql-quality/policies/redundant-global-declaration.rqlp) | `bifrost.python-codeql-quality.redundant-global-declaration` | python | quality | warning |
+| [Python resource class should be a context manager](../rules/bifrost.python-codeql-quality/policies/should-be-context-manager.rqlp) | `bifrost.python-codeql-quality.should-be-context-manager` | python | quality | warning |
+| [Python str.format missing argument](../rules/bifrost.python-codeql-quality/policies/str-format-missing-argument.rqlp) | `bifrost.python-codeql-quality.str-format-missing-argument` | python | correctness | error |
+| [Python str.format missing named argument](../rules/bifrost.python-codeql-quality/policies/str-format-missing-named-argument.rqlp) | `bifrost.python-codeql-quality.str-format-missing-named-argument` | python | correctness | error |
+| [Python str.format surplus positional argument](../rules/bifrost.python-codeql-quality/policies/str-format-surplus-argument.rqlp) | `bifrost.python-codeql-quality.str-format-surplus-argument` | python | correctness | warning |
+| [Python str.format surplus named argument](../rules/bifrost.python-codeql-quality/policies/str-format-surplus-named-argument.rqlp) | `bifrost.python-codeql-quality.str-format-surplus-named-argument` | python | correctness | warning |
+| [Python super uses the wrong enclosing class](../rules/bifrost.python-codeql-quality/policies/super-not-enclosing-class.rqlp) | `bifrost.python-codeql-quality.super-not-enclosing-class` | python | correctness | error |
+| [Python syntax error](../rules/bifrost.python-codeql-quality/policies/syntax-error.rqlp) | `bifrost.python-codeql-quality.syntax-error` | python | correctness | error |
+| [Python equality test against None](../rules/bifrost.python-codeql-quality/policies/test-equals-none.rqlp) | `bifrost.python-codeql-quality.test-equals-none` | python | correctness | note |
+| [Python possibly uninitialized local](../rules/bifrost.python-codeql-quality/policies/undefined-placeholder-variable.rqlp) | `bifrost.python-codeql-quality.undefined-placeholder-variable` | python | correctness | error |
+| [Python special method raises an unexpected exception](../rules/bifrost.python-codeql-quality/policies/unexpected-raise-in-special-method.rqlp) | `bifrost.python-codeql-quality.unexpected-raise-in-special-method` | python | correctness | warning |
+| [Python unsafe cyclic import](../rules/bifrost.python-codeql-quality/policies/unsafe-cyclic-import.rqlp) | `bifrost.python-codeql-quality.unsafe-cyclic-import` | python | correctness | error |
+| [Python unused global variable](../rules/bifrost.python-codeql-quality/policies/unused-global-variable.rqlp) | `bifrost.python-codeql-quality.unused-global-variable` | python | quality | warning |
+| [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
+| [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | warning |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
@@ -129,5 +163,15 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
+| [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
+| [Python hard-coded standard-library credentials](../rules/bifrost.security/policies/python/hardcoded-credentials.rqlp) | `bifrost.security.python.hardcoded-credentials` | python | security | error |
+| [Python incomplete hostname regular expression](../rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp) | `bifrost.security.python.incomplete-hostname-regexp` | python | security | warning |
+| [Python incomplete URL substring sanitization](../rules/bifrost.security/policies/python/incomplete-url-substring-sanitization.rqlp) | `bifrost.security.python.incomplete-url-substring-sanitization` | python | security | warning |
+| [Python SSL default protocol](../rules/bifrost.security/policies/python/insecure-default-protocol.rqlp) | `bifrost.security.python.insecure-default-protocol` | python | security | warning |
+| [Python insecure SSL/TLS protocol](../rules/bifrost.security/policies/python/insecure-protocol.rqlp) | `bifrost.security.python.insecure-protocol` | python | security | warning |
+| [Python insecure temporary filename](../rules/bifrost.security/policies/python/insecure-temporary-file.rqlp) | `bifrost.security.python.insecure-temporary-file` | python | security | error |
+| [Python overly permissive file mode](../rules/bifrost.security/policies/python/overly-permissive-file.rqlp) | `bifrost.security.python.overly-permissive-file` | python | security | warning |
+| [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
+| [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
