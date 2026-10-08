@@ -1,0 +1,18 @@
+; CodeQL: python/ql/src/Variables/GlobalAtModuleLevel.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: A global declaration at module scope has no effect.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.redundant-global-declaration"
+  :name "Python redundant module-scope global declaration"
+  :message "A global declaration at module scope has no effect."
+  :severity warning
+  :description "Mirrors CodeQL python/ql/src/Variables/GlobalAtModuleLevel.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects global-directive occurrences whose exact innermost lexical scope is the module scope; function-local directives are excluded."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((role eq global_directive))
+        (occurrences-in :role global_directive
+          (filter :where ((kind is-null))
+            (language python (scopes))))))))

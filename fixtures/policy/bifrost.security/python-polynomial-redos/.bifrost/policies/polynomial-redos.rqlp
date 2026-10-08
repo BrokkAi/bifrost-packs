@@ -1,0 +1,87 @@
+; CodeQL query: python/ql/src/Security/CWE-730/PolynomialReDoS.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Exact stdlib regex sinks with a polynomial-risk fact receive remote socket data; compiled Pattern.search uses the declared exact re.Pattern return class.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.polynomial-redos"
+  :name "Python polynomial regular expression backtracking"
+  :message "Unbounded remote input reaches a polynomial-time regular expression"
+  :severity warning
+  :description "Finds exact standard-library regex execution sinks whose pattern has the engine polynomial-risk fact and whose subject receives remote socket data. A literal length bound through textwrap.shorten removes the source label."
+  :tags ["security" "python" "regexp" "redos"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled optimistic)
+    :sources (endpoint-set :entries [
+      (source :id socket-input
+        :display-name "sys.argv indexed input"
+        :categories [input.user-controlled]
+        :selector (rql :schema-version 1
+          (language python
+            (keyed-read-value
+              :runtime python :global sys :container argv :key-kind static-index
+              :source-origin pristine_input
+              (field_access :field (name "argv")))))
+        :bind matched-value
+        :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id re-match :display-name "Python re.match subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 1
+            (resolved-call :resolves-to "re.match" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "match") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 1) :accepts [untrusted])
+      (sink :id re-search :display-name "Python re.search subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 1
+            (resolved-call :resolves-to "re.search" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "search") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 1) :accepts [untrusted])
+      (sink :id re-fullmatch :display-name "Python re.fullmatch subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 1
+            (resolved-call :resolves-to "re.fullmatch" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "fullmatch") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 1) :accepts [untrusted])
+      (sink :id re-sub :display-name "Python re.sub subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 2
+            (resolved-call :resolves-to "re.sub" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "sub") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 2) :accepts [untrusted])
+      (sink :id re-split :display-name "Python re.split subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 1
+            (resolved-call :resolves-to "re.split" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "split") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 1) :accepts [untrusted])
+      (sink :id re-findall :display-name "Python re.findall subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 1
+            (resolved-call :resolves-to "re.findall" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "findall") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 1) :accepts [untrusted])
+      (sink :id re-finditer :display-name "Python re.finditer subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 1
+            (resolved-call :resolves-to "re.finditer" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "finditer") :has (regex_risk_polynomial))))))))
+        :dangerous-operand (argument :index 1) :accepts [untrusted])
+      (sink :id compiled-pattern-search :display-name "Compiled re.Pattern.search subject" :categories [regex.backtracking]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 0
+            (resolved-call :resolves-to "re.Pattern.search" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "search"))))))))
+        :dangerous-operand (argument :index 0) :accepts [untrusted])])
+    :sanitizers (endpoint-set :entries [
+      (sanitizer :id bounded-input
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 0
+            (resolved-call :resolves-to "textwrap.shorten" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "shorten"))))))))
+        :input (argument :index 0)
+        :output return-value
+        :removes [untrusted])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "730")))

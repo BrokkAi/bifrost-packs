@@ -1,0 +1,16 @@
+; CodeQL: java/ql/src/Advisory/Types/GenericsReturnType.ql
+; Commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select source methods whose declared return type names one proven generic declaration without type arguments.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.raw-return-type"
+  :name "Raw generic return type"
+  :message "method return type is raw"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language java
+        (method :language-rule "java/raw-return-type")))))

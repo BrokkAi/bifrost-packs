@@ -1,0 +1,20 @@
+; CodeQL query: python/ql/src/Variables/UndefinedPlaceHolder.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report local Python value reads that a complete procedure CFG proves may be uninitialized.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.undefined-placeholder-variable"
+  :name "Python possibly uninitialized local"
+  :message "local variable may be used before initialization"
+  :severity error
+  :description "Implements the local-flow portion of CodeQL py/undefined-placeholder-variable using exact Python bindings and CFG reads. Global, class-template, builtin, and closure lookup boundaries remain typed incomplete."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq undefined_placeholder_variable)
+                      (outcome eq may_be_uninitialized)
+                      (proof eq proven)
+                      (completeness eq complete))
+        (python-uninitialized-variable
+          (union (binding-uses (bindings))
+                 (occurrences :class reference
+                              :role [value_reference receiver_position])))))))

@@ -1,0 +1,19 @@
+; CodeQL query: python/ql/src/Imports/ModuleLevelCyclicImport.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report proven module-level member reads or from-imports used before a cyclic target defines the member.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.unsafe-cyclic-import"
+  :name "Python unsafe cyclic import"
+  :message "member may be used before the cyclically imported module defines it"
+  :severity error
+  :description "Mirrors CodeQL py/unsafe-cyclic-import for proven complete flat-workspace cycles. Guarded routes, dynamic module attributes, unresolved targets, and path-derived identities stay typed incomplete."
+  :tags ["python" "codeql" "quality" "correctness" "imports"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq unsafe_cyclic_import)
+                      (outcome eq issue)
+                      (proof eq proven)
+                      (completeness eq complete))
+        (python-unsafe-cyclic-import
+          (union (language python (field_access))
+                 (language python (import))))))))

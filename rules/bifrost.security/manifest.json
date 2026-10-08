@@ -6,85 +6,6 @@
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
     {
-      "path": "policies/jvm/servlet-parameter-to-jdbc.rqlp",
-      "id": "bifrost.security.java.servlet-parameter-to-jdbc",
-      "authored_hash": "cee6343fddcc667ebc97c15598552ff8bafb4f4f0a61d3ab91de3cb98f3bd26a",
-      "resolved_semantic_hash": "cee6343fddcc667ebc97c15598552ff8bafb4f4f0a61d3ab91de3cb98f3bd26a",
-      "category": "security",
-      "supported_languages": [
-        "java"
-      ],
-      "required_capabilities": [
-        "taint",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "semantic-model-provenance",
-        "scoped-callable-completeness"
-      ],
-      "severity_rationale": "Attacker-controlled data used as JDBC SQL structure can change the executed statement and compromise application data.",
-      "remediation": "Use a PreparedStatement with placeholders and bind untrusted values through typed setter methods instead of concatenating SQL text."
-    },
-    {
-      "path": "policies/jvm/system-getenv-to-runtime-exec.rqlp",
-      "id": "bifrost.security.java.system-getenv-to-runtime-exec",
-      "authored_hash": "64388737bcc0e1f39382e9f4d21ecf63ab75122b60e9c7b85dfdbd1654085d1d",
-      "resolved_semantic_hash": "64388737bcc0e1f39382e9f4d21ecf63ab75122b60e9c7b85dfdbd1654085d1d",
-      "category": "security",
-      "supported_languages": [
-        "java"
-      ],
-      "required_capabilities": [
-        "taint",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "semantic-model-provenance",
-        "scoped-callable-completeness",
-        "call-argument-conversion"
-      ],
-      "severity_rationale": "Attacker-controlled command text can execute unintended operating-system commands with the application's privileges.",
-      "remediation": "Avoid passing untrusted text to Runtime.exec. Use a fixed executable and validate arguments against an allowlist."
-    },
-    {
-      "path": "policies/python/process-input-to-os-system.rqlp",
-      "id": "bifrost.security.python.process-input-to-os-system",
-      "authored_hash": "594c125f8e59f0a0bec935b7691da102b699143eaac7fdc1ad3b1b364d2fcf08",
-      "resolved_semantic_hash": "594c125f8e59f0a0bec935b7691da102b699143eaac7fdc1ad3b1b364d2fcf08",
-      "category": "security",
-      "supported_languages": [
-        "python"
-      ],
-      "required_capabilities": [
-        "taint",
-        "runtime-keyed-read",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "semantic-model-provenance",
-        "scoped-callable-completeness"
-      ],
-      "severity_rationale": "A command string built from the process environment or the launch arguments runs in a subshell with the application's privileges, so attacker-controlled text changes the executed command.",
-      "remediation": "Do not pass process input to os.system. Use subprocess.run with an argument list and shell=False, and validate the executable against an allowlist."
-    },
-    {
-      "path": "policies/declared-storage/c-stored-request-to-sql.rqlp",
-      "id": "bifrost.security.c.stored-request-to-sql",
-      "authored_hash": "c286d4e92032a2e34c5778fc8d395b2d06ac16c77ee695bf0efaad49fd85437c",
-      "resolved_semantic_hash": null,
-      "category": "security",
-      "supported_languages": [
-        "c"
-      ],
-      "required_capabilities": [
-        "taint",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "declared-store-boundary",
-        "endpoint-set-imports"
-      ],
-      "severity_rationale": "A request value persisted through the declared store and read back into SQL text can change the executed statement and compromise application data.",
-      "remediation": "Pass untrusted values through the driver's parameter-binding contract instead of adding them to the SQL text.",
-      "activation": "opt-in"
-    },
-    {
       "path": "policies/declared-storage/c-store-requires-validation.rqlp",
       "id": "bifrost.security.c.store-requires-validation",
       "authored_hash": "42a369670f0ff0346b159394021af9d7296646ee1331ece21348158f68c2fe40",
@@ -104,13 +25,13 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/cpp-stored-request-to-sql.rqlp",
-      "id": "bifrost.security.cpp.stored-request-to-sql",
-      "authored_hash": "977a175308bd8a4a491afe293b53a8a993f0fe8eef403ca64baf2503d7463715",
+      "path": "policies/declared-storage/c-stored-request-to-sql.rqlp",
+      "id": "bifrost.security.c.stored-request-to-sql",
+      "authored_hash": "c286d4e92032a2e34c5778fc8d395b2d06ac16c77ee695bf0efaad49fd85437c",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "cpp"
+        "c"
       ],
       "required_capabilities": [
         "taint",
@@ -143,6 +64,102 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/declared-storage/cpp-stored-request-to-sql.rqlp",
+      "id": "bifrost.security.cpp.stored-request-to-sql",
+      "authored_hash": "977a175308bd8a4a491afe293b53a8a993f0fe8eef403ca64baf2503d7463715",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "cpp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "declared-store-boundary",
+        "endpoint-set-imports"
+      ],
+      "severity_rationale": "A request value persisted through the declared store and read back into SQL text can change the executed statement and compromise application data.",
+      "remediation": "Pass untrusted values through the driver's parameter-binding contract instead of adding them to the SQL text.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/csharp/assembly-path-injection.rqlp",
+      "id": "bifrost.security.csharp.assembly-path-injection",
+      "authored_hash": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
+      "resolved_semantic_hash": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "External input used as an assembly path can load an unintended local or remote assembly into the process.",
+      "remediation": "Resolve assemblies from a fixed allowlist and use Path.GetFileName only as a component of validation, not as the sole authorization decision."
+    },
+    {
+      "path": "policies/csharp/code-injection.rqlp",
+      "id": "bifrost.security.csharp.code-injection",
+      "authored_hash": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
+      "resolved_semantic_hash": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "External input compiled as CodeDom source becomes executable code in the application's process and privileges.",
+      "remediation": "Do not compile external text. Select a fixed implementation or validate a bounded data representation before processing it."
+    },
+    {
+      "path": "policies/csharp/ldap-injection.rqlp",
+      "id": "bifrost.security.csharp.ldap-injection",
+      "authored_hash": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "resolved_semantic_hash": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "External input embedded in a DirectorySearcher LDAP filter can change the directory query and return unintended entries.",
+      "remediation": "Use a reviewed LDAP filter encoder before interpolation, or construct the query from an allowlisted representation; this public pack does not model third-party encoders."
+    },
+    {
+      "path": "policies/declared-storage/csharp-store-requires-validation.rqlp",
+      "id": "bifrost.security.csharp.store-requires-validation",
+      "authored_hash": "d2cfb27f840e874d2513f1d1d8526c6ae79c017194f847694e041b0fbafe6916",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "flow",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "endpoint-set-imports"
+      ],
+      "severity_rationale": "A request value stored without the validator the workspace requires bypasses the application's own reviewed storage invariant.",
+      "remediation": "Pass request-derived values through the configured validator before storing them, or narrow the reviewed configuration if the obligation does not apply.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/declared-storage/csharp-stored-request-to-sql.rqlp",
       "id": "bifrost.security.csharp.stored-request-to-sql",
       "authored_hash": "85a82e21bef171c72a1bba916f2e01a206e5b876e0510d6a4ec8c520c01426ed",
@@ -163,13 +180,51 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/csharp-store-requires-validation.rqlp",
-      "id": "bifrost.security.csharp.store-requires-validation",
-      "authored_hash": "d2cfb27f840e874d2513f1d1d8526c6ae79c017194f847694e041b0fbafe6916",
-      "resolved_semantic_hash": null,
+      "path": "policies/csharp/xml-injection.rqlp",
+      "id": "bifrost.security.csharp.xml-injection",
+      "authored_hash": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
+      "resolved_semantic_hash": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
       "category": "security",
       "supported_languages": [
         "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "External input written as raw XML text can terminate the intended element or add attacker-controlled XML structure.",
+      "remediation": "Escape untrusted XML text with SecurityElement.Escape or write it through a typed XmlWriter value API instead of WriteRaw."
+    },
+    {
+      "path": "policies/csharp/xpath-injection.rqlp",
+      "id": "bifrost.security.csharp.xpath-injection",
+      "authored_hash": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
+      "resolved_semantic_hash": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "External input embedded in an XPath expression can alter node selection and expose or modify unintended data.",
+      "remediation": "Use a parameterized XPath mechanism where available, or validate and encode values according to the XPath context before building the expression."
+    },
+    {
+      "path": "policies/declared-storage/go-store-requires-validation.rqlp",
+      "id": "bifrost.security.go.store-requires-validation",
+      "authored_hash": "a768363a29c77009a220dd2f50dcbd0c98d171ec2ea0d60e03a0e8d63732b2fe",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "go"
       ],
       "required_capabilities": [
         "flow",
@@ -202,13 +257,32 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/go-store-requires-validation.rqlp",
-      "id": "bifrost.security.go.store-requires-validation",
-      "authored_hash": "a768363a29c77009a220dd2f50dcbd0c98d171ec2ea0d60e03a0e8d63732b2fe",
+      "path": "policies/jvm/servlet-parameter-to-jdbc.rqlp",
+      "id": "bifrost.security.java.servlet-parameter-to-jdbc",
+      "authored_hash": "cee6343fddcc667ebc97c15598552ff8bafb4f4f0a61d3ab91de3cb98f3bd26a",
+      "resolved_semantic_hash": "cee6343fddcc667ebc97c15598552ff8bafb4f4f0a61d3ab91de3cb98f3bd26a",
+      "category": "security",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Attacker-controlled data used as JDBC SQL structure can change the executed statement and compromise application data.",
+      "remediation": "Use a PreparedStatement with placeholders and bind untrusted values through typed setter methods instead of concatenating SQL text."
+    },
+    {
+      "path": "policies/declared-storage/java-store-requires-validation.rqlp",
+      "id": "bifrost.security.java.store-requires-validation",
+      "authored_hash": "b42faaaff9edb0e9e3cbcb65692563dbd188379da522136d2e0304cd641213eb",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "go"
+        "java"
       ],
       "required_capabilities": [
         "flow",
@@ -241,13 +315,33 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/java-store-requires-validation.rqlp",
-      "id": "bifrost.security.java.store-requires-validation",
-      "authored_hash": "b42faaaff9edb0e9e3cbcb65692563dbd188379da522136d2e0304cd641213eb",
-      "resolved_semantic_hash": null,
+      "path": "policies/jvm/system-getenv-to-runtime-exec.rqlp",
+      "id": "bifrost.security.java.system-getenv-to-runtime-exec",
+      "authored_hash": "64388737bcc0e1f39382e9f4d21ecf63ab75122b60e9c7b85dfdbd1654085d1d",
+      "resolved_semantic_hash": "64388737bcc0e1f39382e9f4d21ecf63ab75122b60e9c7b85dfdbd1654085d1d",
       "category": "security",
       "supported_languages": [
         "java"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness",
+        "call-argument-conversion"
+      ],
+      "severity_rationale": "Attacker-controlled command text can execute unintended operating-system commands with the application's privileges.",
+      "remediation": "Avoid passing untrusted text to Runtime.exec. Use a fixed executable and validate arguments against an allowlist."
+    },
+    {
+      "path": "policies/declared-storage/javascript-store-requires-validation.rqlp",
+      "id": "bifrost.security.javascript.store-requires-validation",
+      "authored_hash": "775b8afe54e27e2b2e915bfa12c8c136b99d9a9dcdc9a0171f26155d0fc241c8",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "javascript"
       ],
       "required_capabilities": [
         "flow",
@@ -280,13 +374,13 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/javascript-store-requires-validation.rqlp",
-      "id": "bifrost.security.javascript.store-requires-validation",
-      "authored_hash": "775b8afe54e27e2b2e915bfa12c8c136b99d9a9dcdc9a0171f26155d0fc241c8",
+      "path": "policies/declared-storage/kotlin-store-requires-validation.rqlp",
+      "id": "bifrost.security.kotlin.store-requires-validation",
+      "authored_hash": "f897db6e958a74512a3161a2803679bdfa9cb7ec7b66ae9529cfa4298153a618",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "javascript"
+        "kotlin"
       ],
       "required_capabilities": [
         "flow",
@@ -319,13 +413,13 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/kotlin-store-requires-validation.rqlp",
-      "id": "bifrost.security.kotlin.store-requires-validation",
-      "authored_hash": "f897db6e958a74512a3161a2803679bdfa9cb7ec7b66ae9529cfa4298153a618",
+      "path": "policies/declared-storage/php-store-requires-validation.rqlp",
+      "id": "bifrost.security.php.store-requires-validation",
+      "authored_hash": "ffa1029dd6b1ce77378047e5fafaa4e777dfa32411dcaeae52f075ce17e390e9",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "kotlin"
+        "php"
       ],
       "required_capabilities": [
         "flow",
@@ -358,13 +452,189 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/php-store-requires-validation.rqlp",
-      "id": "bifrost.security.php.store-requires-validation",
-      "authored_hash": "ffa1029dd6b1ce77378047e5fafaa4e777dfa32411dcaeae52f075ce17e390e9",
+      "path": "policies/python/bind-socket-all-network-interfaces.rqlp",
+      "id": "bifrost.security.python.bind-socket-all-network-interfaces",
+      "authored_hash": "763c209d50e7e3ce8b06b7f3aa30a4e258d36f90adc23ebbee2b731ba99554a1",
+      "resolved_semantic_hash": "763c209d50e7e3ce8b06b7f3aa30a4e258d36f90adc23ebbee2b731ba99554a1",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Binding on every interface exposes the service to traffic from any IPv4 or IPv6 address.",
+      "remediation": "Bind only to an intended interface such as loopback or a specifically configured address."
+    },
+    {
+      "path": "policies/python/hardcoded-credentials.rqlp",
+      "id": "bifrost.security.python.hardcoded-credentials",
+      "authored_hash": "e4c2fc9ccf60715a98a1065be5b265aeb27621e334c274cd8fe58a24526ae026",
+      "resolved_semantic_hash": "e4c2fc9ccf60715a98a1065be5b265aeb27621e334c274cd8fe58a24526ae026",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Long string or byte literals are sent directly as cryptographic or network credentials.",
+      "remediation": "Load credentials from a secret store or protected runtime configuration."
+    },
+    {
+      "path": "policies/python/incomplete-hostname-regexp.rqlp",
+      "id": "bifrost.security.python.incomplete-hostname-regexp",
+      "authored_hash": "aa61c11d6c8a4872ae2d49fc84f0e8c341e4fb59dc7430972c62daf99488567d",
+      "resolved_semantic_hash": "aa61c11d6c8a4872ae2d49fc84f0e8c341e4fb59dc7430972c62daf99488567d",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "An unescaped dot in a hostname check can accept domains beyond the intended literal hostname.",
+      "remediation": "Escape literal dots and anchor the expression to the complete hostname."
+    },
+    {
+      "path": "policies/python/incomplete-url-substring-sanitization.rqlp",
+      "id": "bifrost.security.python.incomplete-url-substring-sanitization",
+      "authored_hash": "1684f3722e5cb61e7bb4221bc5da37fc4b03f69f9098ffcc526552cc8d1e509b",
+      "resolved_semantic_hash": "1684f3722e5cb61e7bb4221bc5da37fc4b03f69f9098ffcc526552cc8d1e509b",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "An unanchored hostname substring check can accept attacker-controlled authorities.",
+      "remediation": "Parse the URL and compare its hostname, or use a boundary-aware, scheme-anchored check."
+    },
+    {
+      "path": "policies/python/insecure-default-protocol.rqlp",
+      "id": "bifrost.security.python.insecure-default-protocol",
+      "authored_hash": "7f75179bc93797e45910ca813fc7a2e578798b05bddbf65a4dddb7ef8dac2ca8",
+      "resolved_semantic_hash": "7f75179bc93797e45910ca813fc7a2e578798b05bddbf65a4dddb7ef8dac2ca8",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "The stdlib SSL wrapper selects its default protocol when no version is supplied.",
+      "remediation": "Supply a modern, explicitly configured TLS protocol or context."
+    },
+    {
+      "path": "policies/python/insecure-protocol.rqlp",
+      "id": "bifrost.security.python.insecure-protocol",
+      "authored_hash": "79a24169888d2b3e54bf5c44f0154c94eecc519b196916b68bbf8f7f9b094559",
+      "resolved_semantic_hash": "79a24169888d2b3e54bf5c44f0154c94eecc519b196916b68bbf8f7f9b094559",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-value-identity",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "SSLv2, SSLv3, TLSv1.0, and TLSv1.1 allow obsolete protocol negotiation.",
+      "remediation": "Use approved modern TLS protocol versions and configure the SSL context explicitly."
+    },
+    {
+      "path": "policies/python/insecure-temporary-file.rqlp",
+      "id": "bifrost.security.python.insecure-temporary-file",
+      "authored_hash": "354e457ef8ed2dbb32e0123851f5937c1ee95b497ee4f41a75f8bc87bd181c5c",
+      "resolved_semantic_hash": "354e457ef8ed2dbb32e0123851f5937c1ee95b497ee4f41a75f8bc87bd181c5c",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "The temporary-name APIs return a path without safely creating the file, enabling race conditions.",
+      "remediation": "Use tempfile.NamedTemporaryFile or another API that securely creates and opens the file."
+    },
+    {
+      "path": "policies/python/overly-permissive-file.rqlp",
+      "id": "bifrost.security.python.overly-permissive-file",
+      "authored_hash": "7a020c360d47cdaf64b53f0984fc4bf6e71b6ba1e27427ef699752ba59c1ad70",
+      "resolved_semantic_hash": "7a020c360d47cdaf64b53f0984fc4bf6e71b6ba1e27427ef699752ba59c1ad70",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "actual-to-formal-binding"
+      ],
+      "severity_rationale": "World or group permission bits can expose files beyond the owner.",
+      "remediation": "Grant only the minimum owner, group, and world permissions required."
+    },
+    {
+      "path": "policies/python/polynomial-redos.rqlp",
+      "id": "bifrost.security.python.polynomial-redos",
+      "authored_hash": "f5389a0ed9e2b4f2dfb5c5de203bdd859b5c5dae06c9d17e4720b624b5f5cbb2",
+      "resolved_semantic_hash": "f5389a0ed9e2b4f2dfb5c5de203bdd859b5c5dae06c9d17e4720b624b5f5cbb2",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted input reaches a regex shape with polynomial-time backtracking risk.",
+      "remediation": "Rewrite the regex to avoid polynomial backtracking and constrain input length."
+    },
+    {
+      "path": "policies/python/process-input-to-os-system.rqlp",
+      "id": "bifrost.security.python.process-input-to-os-system",
+      "authored_hash": "594c125f8e59f0a0bec935b7691da102b699143eaac7fdc1ad3b1b364d2fcf08",
+      "resolved_semantic_hash": "594c125f8e59f0a0bec935b7691da102b699143eaac7fdc1ad3b1b364d2fcf08",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A command string built from the process environment or the launch arguments runs in a subshell with the application's privileges, so attacker-controlled text changes the executed command.",
+      "remediation": "Do not pass process input to os.system. Use subprocess.run with an argument list and shell=False, and validate the executable against an allowlist."
+    },
+    {
+      "path": "policies/declared-storage/python-store-requires-validation.rqlp",
+      "id": "bifrost.security.python.store-requires-validation",
+      "authored_hash": "bce539224954757ab05f45d4afdddda96f9b4968d81d710407e18c998635e974",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "php"
+        "python"
       ],
       "required_capabilities": [
         "flow",
@@ -397,13 +667,33 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/python-store-requires-validation.rqlp",
-      "id": "bifrost.security.python.store-requires-validation",
-      "authored_hash": "bce539224954757ab05f45d4afdddda96f9b4968d81d710407e18c998635e974",
-      "resolved_semantic_hash": null,
+      "path": "policies/python/xml-bomb.rqlp",
+      "id": "bifrost.security.python.xml-bomb",
+      "authored_hash": "bd31c05263190d0308de01ecccf69528957895038aaa5ec08f37c10035b86e85",
+      "resolved_semantic_hash": "bd31c05263190d0308de01ecccf69528957895038aaa5ec08f37c10035b86e85",
       "category": "security",
       "supported_languages": [
         "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted XML reaches stdlib parsers that can expand internal entities without bounds.",
+      "remediation": "Use a hardened XML parser configuration and reject unsafe entity expansion."
+    },
+    {
+      "path": "policies/declared-storage/ruby-store-requires-validation.rqlp",
+      "id": "bifrost.security.ruby.store-requires-validation",
+      "authored_hash": "e06cf9385efd6893eff133e1e53e4ee734353e20bc0fce33906b800b952ceea1",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "ruby"
       ],
       "required_capabilities": [
         "flow",
@@ -436,13 +726,29 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/ruby-store-requires-validation.rqlp",
-      "id": "bifrost.security.ruby.store-requires-validation",
-      "authored_hash": "e06cf9385efd6893eff133e1e53e4ee734353e20bc0fce33906b800b952ceea1",
+      "path": "policies/rust/non-https-url.rqlp",
+      "id": "bifrost.security.rust.non-https-url",
+      "authored_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
+      "resolved_semantic_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "literal-value-matching"
+      ],
+      "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
+      "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
+    },
+    {
+      "path": "policies/declared-storage/rust-store-requires-validation.rqlp",
+      "id": "bifrost.security.rust.store-requires-validation",
+      "authored_hash": "2fdb10af8360284dcd19ddc4ae73011f11d08e735f2ccb3a7f93dc14c808d91a",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "ruby"
+        "rust"
       ],
       "required_capabilities": [
         "flow",
@@ -475,13 +781,13 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/rust-store-requires-validation.rqlp",
-      "id": "bifrost.security.rust.store-requires-validation",
-      "authored_hash": "2fdb10af8360284dcd19ddc4ae73011f11d08e735f2ccb3a7f93dc14c808d91a",
+      "path": "policies/declared-storage/scala-store-requires-validation.rqlp",
+      "id": "bifrost.security.scala.store-requires-validation",
+      "authored_hash": "8b2f4c177adcb9e10537d4f3d4272fe5c6528b76d942dc2dfbd8f240d098e61e",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "rust"
+        "scala"
       ],
       "required_capabilities": [
         "flow",
@@ -514,13 +820,13 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/declared-storage/scala-store-requires-validation.rqlp",
-      "id": "bifrost.security.scala.store-requires-validation",
-      "authored_hash": "8b2f4c177adcb9e10537d4f3d4272fe5c6528b76d942dc2dfbd8f240d098e61e",
+      "path": "policies/declared-storage/typescript-store-requires-validation.rqlp",
+      "id": "bifrost.security.typescript.store-requires-validation",
+      "authored_hash": "3b40938621aab7b234702813d6bb20a4e4b2d70c01b67b538fa17fc5ddf67829",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
-        "scala"
+        "typescript"
       ],
       "required_capabilities": [
         "flow",
@@ -551,80 +857,6 @@
       "severity_rationale": "A request value persisted through the declared store and read back into SQL text can change the executed statement and compromise application data.",
       "remediation": "Pass untrusted values through the driver's parameter-binding contract instead of adding them to the SQL text.",
       "activation": "opt-in"
-    },
-    {
-      "path": "policies/declared-storage/typescript-store-requires-validation.rqlp",
-      "id": "bifrost.security.typescript.store-requires-validation",
-      "authored_hash": "3b40938621aab7b234702813d6bb20a4e4b2d70c01b67b538fa17fc5ddf67829",
-      "resolved_semantic_hash": null,
-      "category": "security",
-      "supported_languages": [
-        "typescript"
-      ],
-      "required_capabilities": [
-        "flow",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "endpoint-set-imports"
-      ],
-      "severity_rationale": "A request value stored without the validator the workspace requires bypasses the application's own reviewed storage invariant.",
-      "remediation": "Pass request-derived values through the configured validator before storing them, or narrow the reviewed configuration if the obligation does not apply.",
-      "activation": "opt-in"
-    },
-    {
-      "path": "policies/csharp/xml-injection.rqlp",
-      "id": "bifrost.security.csharp.xml-injection",
-      "authored_hash": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
-      "resolved_semantic_hash": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
-      "category": "security",
-      "supported_languages": ["csharp"],
-      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
-      "severity_rationale": "External input written as raw XML text can terminate the intended element or add attacker-controlled XML structure.",
-      "remediation": "Escape untrusted XML text with SecurityElement.Escape or write it through a typed XmlWriter value API instead of WriteRaw."
-    },
-    {
-      "path": "policies/csharp/xpath-injection.rqlp",
-      "id": "bifrost.security.csharp.xpath-injection",
-      "authored_hash": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
-      "resolved_semantic_hash": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
-      "category": "security",
-      "supported_languages": ["csharp"],
-      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
-      "severity_rationale": "External input embedded in an XPath expression can alter node selection and expose or modify unintended data.",
-      "remediation": "Use a parameterized XPath mechanism where available, or validate and encode values according to the XPath context before building the expression."
-    },
-    {
-      "path": "policies/csharp/code-injection.rqlp",
-      "id": "bifrost.security.csharp.code-injection",
-      "authored_hash": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
-      "resolved_semantic_hash": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
-      "category": "security",
-      "supported_languages": ["csharp"],
-      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
-      "severity_rationale": "External input compiled as CodeDom source becomes executable code in the application's process and privileges.",
-      "remediation": "Do not compile external text. Select a fixed implementation or validate a bounded data representation before processing it."
-    },
-    {
-      "path": "policies/csharp/ldap-injection.rqlp",
-      "id": "bifrost.security.csharp.ldap-injection",
-      "authored_hash": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
-      "resolved_semantic_hash": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
-      "category": "security",
-      "supported_languages": ["csharp"],
-      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
-      "severity_rationale": "External input embedded in a DirectorySearcher LDAP filter can change the directory query and return unintended entries.",
-      "remediation": "Use a reviewed LDAP filter encoder before interpolation, or construct the query from an allowlisted representation; this public pack does not model third-party encoders."
-    },
-    {
-      "path": "policies/csharp/assembly-path-injection.rqlp",
-      "id": "bifrost.security.csharp.assembly-path-injection",
-      "authored_hash": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
-      "resolved_semantic_hash": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
-      "category": "security",
-      "supported_languages": ["csharp"],
-      "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
-      "severity_rationale": "External input used as an assembly path can load an unintended local or remote assembly into the process.",
-      "remediation": "Resolve assemblies from a fixed allowlist and use Path.GetFileName only as a component of validation, not as the sole authorization decision."
     }
   ]
 }

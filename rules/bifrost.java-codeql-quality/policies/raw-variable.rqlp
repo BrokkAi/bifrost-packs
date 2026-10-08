@@ -1,0 +1,20 @@
+; CodeQL: java/ql/src/Advisory/Types/GenericsVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select initialized field/local declarators and formal
+; parameters whose declared type is a proven generic declaration without type
+; arguments; parameter and assignment endpoints are one public rule.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.raw-variable"
+  :name "Java raw generic variable"
+  :message "generic variable type is raw"
+  :severity warning
+  :description "Mirrors CodeQL java/ql/src/Advisory/Types/GenericsVariable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports raw generic field/local declarators and formal parameters through the java/raw-variable language rule."
+  :tags ["java" "codeql" "quality" "generics"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language java
+        (union
+          (assignment :language-rule "java/raw-variable")
+          (parameter :language-rule "java/raw-variable"))))))
