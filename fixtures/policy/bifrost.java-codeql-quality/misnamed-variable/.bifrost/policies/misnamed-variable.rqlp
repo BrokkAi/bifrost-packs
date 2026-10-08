@@ -1,0 +1,18 @@
+; CodeQL java/ql/src/Advisory/Naming/NamingConventionsVariables.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report variable declaration names with uppercase initials,
+; excluding static-final immutable constant fields.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.misnamed-variable"
+  :name "Java misnamed variable"
+  :message "variable name should start with a lowercase letter"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java field, parameter, and local variable declaration names with uppercase initials."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (identifier
+          :name/regex "^[A-Z]"
+          :language-rule "java/misnamed-variable")))))

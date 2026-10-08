@@ -616,6 +616,293 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/README.md",
+      "source_path": "fixtures/policy/bifrost.java-codeql-quality/README.md",
+      "sha256": "8e0ac429804b39bc0a370bcc1703f898a8c0e1f677450646bc202fe18730a2af",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/constructor-typo/.bifrost/policies/constructor-typo.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/constructor-typo.rqlp",
+      "sha256": "cffdda01c68b8336d54fc235c819afe19b4364e9dede4d5494c8e629cf687166",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/constructor-typo/Example.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/constructor-typo/src/Example.java",
+      "sha256": "a99201c5b4df11da83716e6a32211b630f867d41a661553b679212be60479653",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/enum-identifier/.bifrost/policies/enum-identifier.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/enum-identifier.rqlp",
+      "sha256": "a63f0a1f443da6afbce62dedfd0effa1786ae63681346ce5dfd90fa890e3f285",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/enum-identifier/EnumIdentifier.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/enum-identifier/src/EnumIdentifier.java",
+      "sha256": "4977089ce064cfc716f31398c4d8989dd4259e7bc5a6c1f79a011bb49d32de10",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/inconsistent-javadoc-throws/.bifrost/policies/inconsistent-javadoc-throws.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/inconsistent-javadoc-throws.rqlp",
+      "sha256": "f5d95b482015fc5d4bbe8f353094bbb97ac6d336b2d0a08592d5e60c1cd39c12",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/inconsistent-javadoc-throws/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/misnamed-constant/.bifrost/policies/misnamed-constant.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/misnamed-constant.rqlp",
+      "sha256": "b755e39da81814236397a18a0bbec453a8471e01e74b05e55d673f591e01d19f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/misnamed-constant/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/misnamed-constant/src/Sample.java",
+      "sha256": "46df870b8e372eccd0f9b10031cf3402dae5483e1308a1aac6e69a5b59e82c64",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/misnamed-variable/.bifrost/policies/misnamed-variable.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/misnamed-variable.rqlp",
+      "sha256": "1f3191249a1cad1b9221768f6d3ebd109bd15cd35286c1df39004f73c522e990",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/misnamed-variable/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/misnamed-variable/src/Sample.java",
+      "sha256": "82b2f2ca69143dc9c17e38cd8759a0adf0e7e01e0c932d2aa54784e9e9d432f5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/non-final-immutable-field/.bifrost/policies/non-final-immutable-field.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp",
+      "sha256": "099302ee6ac9f2f4946545d8539ba531703bc383d5cd76c1b051963153fbd4b2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/non-final-immutable-field/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/non-final-immutable-field/src/Sample.java",
+      "sha256": "575e36c1e8ef709854b2d3aafc5efb1ff69dfcccb83c8e3d945ed5fb7491c57e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/non-private-field/.bifrost/policies/non-private-field.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/non-private-field.rqlp",
+      "sha256": "d2afee10c0f31afe0214c2fd59c0c8ce6de1b15b45d997b320fc094ef95d0e2f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/non-private-field/NearMiss.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/non-private-field/src/Sample.java",
+      "sha256": "345e4d6836a15f71ae657ccda56e6a0ff4f9c394533b9d5ebe8a19fbc0c9764e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/non-private-field/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/non-private-field/src/Sample.java",
+      "sha256": "4e4674d9e704cccf652d0984db280b11ef68fca6b0ec8fe0114e7f6bb58677b6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/raw-constructor-invocation/.bifrost/policies/raw-constructor-invocation.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/raw-constructor-invocation.rqlp",
+      "sha256": "f084fee10f8f2ed85d5cbde7965796b9ee30b032edb2303bc7091e3070d3fdee",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/raw-constructor-invocation/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jgen/raw-constructor/src/Sample.java",
+      "sha256": "2df52fdf51c36f72d24a3c5697b8306c60042bfeaa039b529dcf3ee4c69c052c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/raw-return-type/.bifrost/policies/raw-return-type.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/raw-return-type.rqlp",
+      "sha256": "b817f4060f54cabda2f4a7b8c907b5c1302c8e1b5373ad8504ac8eafc66c03a3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/raw-return-type/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jgen/raw-return/src/Sample.java",
+      "sha256": "2d7c976326d667a5d5cb186123aa8142d8aa806eeac5fd8c5b4411da6b33a15b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/raw-variable/.bifrost/policies/raw-variable.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/raw-variable.rqlp",
+      "sha256": "73281664efee9c8a912c2df94ca1803da2e32df0d1a011bfe0d9f68550fdc3e5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/raw-variable/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jgen/raw-variable/src/Sample.java",
+      "sha256": "9e9981c2bd6fa7d9febf910760be1521303ae1bd5e31031eb87afd173e22e51d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/type-bound-extends-final/.bifrost/policies/type-bound-extends-final.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/type-bound-extends-final.rqlp",
+      "sha256": "a175219559dd54e0fa47d47135657ada186b4d3e3314584500f690b59a070b5b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/type-bound-extends-final/README.md",
+      "source_path": "fixtures/policy/bifrost.java-codeql-quality/type-bound-extends-final/README.md",
+      "sha256": "10f7614319a452aae4edee294516228f0e71269af463d4df4ac7939dfbfb1c6f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/type-bound-extends-final/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jgen/type-bound-final/src/Sample.java",
+      "sha256": "472e5e60a2ad6abb81a5017fdfe515933b4a7c2aa80c33b144c5c69f7a8299f9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/type-variable-hides-type/.bifrost/policies/type-variable-hides-type.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/type-variable-hides-type.rqlp",
+      "sha256": "8781238a98b6b5172619512661c3cf9cbd809ff15e39b3309d565119e46ebf73",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/type-variable-hides-type/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jgen/type-variable-hides/src/Sample.java",
+      "sha256": "ac133aff1446674566f48f6c9f0273d0954f6a48fd40fc2dc5122465554ed893",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/underscore-identifier/.bifrost/policies/underscore-identifier.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/underscore-identifier.rqlp",
+      "sha256": "8d702795cb1cefd81009e505df65eed73e6a8e30323d6559827029459119a0db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/underscore-identifier/Underscore.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdecl/underscore-identifier/src/Underscore.java",
+      "sha256": "49b285a5c75e637ea2a0b13269eae11b5cc9bb6a225f532dcfe7ad051d001155",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-exception/.bifrost/policies/undocumented-exception.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-exception.rqlp",
+      "sha256": "518f6a08cb232ab9678cd293d2a9e65a428ff7663c76f292c7970e15a4fb6203",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-exception/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-function/.bifrost/policies/undocumented-function.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-function.rqlp",
+      "sha256": "5febcd60796a0914a320f316acf9ebc3afd7c764811346a1e90f37a0101279df",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-function/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-parameter/.bifrost/policies/undocumented-parameter.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-parameter.rqlp",
+      "sha256": "ac0cc670eea66e3645d288f703dc4bfdbf710aa4cd6ef4ba44b8338c5726b744",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-parameter/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-return-value/.bifrost/policies/undocumented-return-value.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp",
+      "sha256": "154b81b0eb4ae462e1b7fc4c9649d2e12738090797ad41017c73076088a45b1b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-return-value/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-type/.bifrost/policies/undocumented-type.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp",
+      "sha256": "87a63d25daa1b72f74936ff35e5424ac74e21718482b10e07bad529e5955de92",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/undocumented-type/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/unknown-javadoc-parameter/.bifrost/policies/unknown-javadoc-parameter.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp",
+      "sha256": "a5af9665ad66943b64041bd0ac8e8da3de6abe6e6411e131dd9161f8b9705256",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/unknown-javadoc-parameter/Sample.java",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-java-parity-jdoc/javadoc-rules/src/Sample.java",
+      "sha256": "d62c2cffe37039a341dff5df9034386cfeb3b9e8fa74bf907e9cbf88a9525159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "fixtures/policy/bifrost.rust-codeql-quality/README.md",
       "source_path": "fixtures/policy/bifrost.rust-codeql-quality/README.md",
       "sha256": "bcde6f589b11b7b3a72cea60dd21df0077e0fd1256f8c3a68e2de7cc458ad41c",
@@ -1516,6 +1803,146 @@
       "path": "rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
       "sha256": "64d37abcb2e61250dc3153b1adf6d191e3cf2671582d87d128abf8a382cd26ae",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/manifest.json",
+      "source_path": "rules/bifrost.java-codeql-quality/manifest.json",
+      "sha256": "f9c053ff5a7c536177e4fc68fa1eed3d768eb03bcc975dd84e3b7ce33aca7592",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/constructor-typo.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/constructor-typo.rqlp",
+      "sha256": "cffdda01c68b8336d54fc235c819afe19b4364e9dede4d5494c8e629cf687166",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/enum-identifier.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/enum-identifier.rqlp",
+      "sha256": "a63f0a1f443da6afbce62dedfd0effa1786ae63681346ce5dfd90fa890e3f285",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/inconsistent-javadoc-throws.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/inconsistent-javadoc-throws.rqlp",
+      "sha256": "f5d95b482015fc5d4bbe8f353094bbb97ac6d336b2d0a08592d5e60c1cd39c12",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/misnamed-constant.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/misnamed-constant.rqlp",
+      "sha256": "b755e39da81814236397a18a0bbec453a8471e01e74b05e55d673f591e01d19f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/misnamed-variable.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/misnamed-variable.rqlp",
+      "sha256": "1f3191249a1cad1b9221768f6d3ebd109bd15cd35286c1df39004f73c522e990",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp",
+      "sha256": "099302ee6ac9f2f4946545d8539ba531703bc383d5cd76c1b051963153fbd4b2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/non-private-field.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/non-private-field.rqlp",
+      "sha256": "d2afee10c0f31afe0214c2fd59c0c8ce6de1b15b45d997b320fc094ef95d0e2f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/raw-constructor-invocation.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/raw-constructor-invocation.rqlp",
+      "sha256": "f084fee10f8f2ed85d5cbde7965796b9ee30b032edb2303bc7091e3070d3fdee",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/raw-return-type.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/raw-return-type.rqlp",
+      "sha256": "b817f4060f54cabda2f4a7b8c907b5c1302c8e1b5373ad8504ac8eafc66c03a3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/raw-variable.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/raw-variable.rqlp",
+      "sha256": "73281664efee9c8a912c2df94ca1803da2e32df0d1a011bfe0d9f68550fdc3e5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/type-bound-extends-final.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/type-bound-extends-final.rqlp",
+      "sha256": "a175219559dd54e0fa47d47135657ada186b4d3e3314584500f690b59a070b5b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/type-variable-hides-type.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/type-variable-hides-type.rqlp",
+      "sha256": "8781238a98b6b5172619512661c3cf9cbd809ff15e39b3309d565119e46ebf73",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/underscore-identifier.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/underscore-identifier.rqlp",
+      "sha256": "8d702795cb1cefd81009e505df65eed73e6a8e30323d6559827029459119a0db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/undocumented-exception.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-exception.rqlp",
+      "sha256": "518f6a08cb232ab9678cd293d2a9e65a428ff7663c76f292c7970e15a4fb6203",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/undocumented-function.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-function.rqlp",
+      "sha256": "5febcd60796a0914a320f316acf9ebc3afd7c764811346a1e90f37a0101279df",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/undocumented-parameter.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-parameter.rqlp",
+      "sha256": "ac0cc670eea66e3645d288f703dc4bfdbf710aa4cd6ef4ba44b8338c5726b744",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp",
+      "sha256": "154b81b0eb4ae462e1b7fc4c9649d2e12738090797ad41017c73076088a45b1b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp",
+      "sha256": "87a63d25daa1b72f74936ff35e5424ac74e21718482b10e07bad529e5955de92",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp",
+      "sha256": "a5af9665ad66943b64041bd0ac8e8da3de6abe6e6411e131dd9161f8b9705256",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -3455,5 +3882,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "9f846d75c85f27ecc3f1dd025cbfd06098fdc0e7bb7ac7a068fb4b81cfa05268"
+  "aggregate_sha256": "01fd9e98523f2c17071bd94355c443f9a68290f13a5ea167b8fb1e57a7a0db23"
 }

@@ -1,0 +1,20 @@
+; CodeQL java/ql/src/Compatibility/JDK9/UnderscoreIdentifier.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report underscore package segments and declaration names;
+; ordinary uses are deliberately a near miss for this declaration lane. Legacy
+; recovery-shaped declarations may make coverage incomplete; partial findings
+; are not a clean result.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.underscore-identifier"
+  :name "Java underscore identifier"
+  :message "underscore is not a valid Java declaration identifier"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java package segments and declaration names spelled as a single underscore; legacy recovery-shaped declarations can leave the run structured-incomplete."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (identifier
+          :name "_"
+          :language-rule "java/underscore-identifier")))))
