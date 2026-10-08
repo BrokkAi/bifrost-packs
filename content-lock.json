@@ -618,7 +618,84 @@
     {
       "path": "fixtures/policy/bifrost.javascript-codeql-quality/README.md",
       "source_path": "fixtures/policy/bifrost.javascript-codeql-quality/README.md",
-      "sha256": "1cfa2e973bec91d520bf76ceebe44e26e10ecc4c21d4f44fe70ed77554af83be",
+      "sha256": "0a9fcf6b6524ab67348a0cb7fe310acb0ff3662fe1e01a9c3bb5b4c3bb0897bc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/alert-call/.bifrost/policies/alert-call.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/alert-call.rqlp",
+      "sha256": "4c97784c1f50c773c3a313ea76fe179f197874a085c5c1bba6a9a33cae54f97f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/alert-call/Probe.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/alert-call/Probe.js",
+      "sha256": "26a813064766398af71f0aa5affcebd385d75bdb484d55330c044e2a7228b7ce",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/.bifrost/packs.json",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/file-system-race/.bifrost/packs.json",
+      "sha256": "a66d02e4c3437456311a5462f1cf2fa4adb0f8c567d0bb4702be564aa2a4a064",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/.bifrost/policies/file-system-race.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/file-system-race.rqlp",
+      "sha256": "cee29dcb0a8d7cb95c0f33739b5abb07c8bd9ab32e467d7e8600590b8ace3be5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/.bifrost/semantic-models/bifrost.node-fs-javascript-declarations.json",
+      "source_path": "semantic-packs/node/fs/javascript/bifrost.node-fs-javascript-declarations.json",
+      "sha256": "fe54247572a288363a950ec275e459eee5d274d55dcac974851e1d2e5628254a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/.bifrost/semantic-models/bifrost.node-fs-javascript-summaries.json",
+      "source_path": "semantic-packs/node/fs/javascript/bifrost.node-fs-javascript-summaries.json",
+      "sha256": "efc5af90a610841d9a71127487012b81c3cf2b991e02df8601c744c18fd8f271",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/.nvmrc",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/file-system-race/.nvmrc",
+      "sha256": "6f7ebb0460b61089c4413e5740b5e2fa196a19281886e50ab1f99b15e0aeeb21",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/README.md",
+      "source_path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/README.md",
+      "sha256": "1ebc4b07416968f1629174e3a02d780da5cdb1a6c01a0436719ab8b0eca4f17e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/descriptor.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/file-system-race/descriptor.js",
+      "sha256": "0a70fa1ad88a0fa710187875054e71e7d3f29dc5e53af94be6effb7074036112",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/main.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/file-system-race/main.js",
+      "sha256": "bdc47b808c596991dcbfa61d0c8e597facdd64718c6629b9cb566a942ab66847",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/file-system-race/reassigned.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/file-system-race/reassigned.js",
+      "sha256": "c01670620c9f410bf1f045210193e692dc16741f6b1cf21e0bde12ce62c2ef6c",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -787,6 +864,48 @@
       "path": "fixtures/policy/bifrost.javascript-codeql-quality/overwritten-property/main.ts",
       "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/overwritten-property/main.ts",
       "sha256": "4b86590f9a01f83d7dd10d67b8ac5df986db455fafe16a3d479e2d4753debcf3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/password-in-configuration-file/.bifrost/policies/password-in-configuration-file.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/password-in-configuration-file.rqlp",
+      "sha256": "bdba740341c8141f6e4151e1049eb986cc2ba4665a51b087fb78ce32413504aa",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/password-in-configuration-file/config.json",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/password-in-configuration-file/config.json",
+      "sha256": "6bf2935efc3519abde32bc88ad128041cbea6b35b7216ba70ccd9cf18aba4a6d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/password-in-configuration-file/config.template.json",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/password-in-configuration-file/config.template.json",
+      "sha256": "05be248d6ed61198ceff2e2017b0ade4b686c99c6b9e4ac384af9f88b4750e23",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/password-in-configuration-file/config.yaml",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/password-in-configuration-file/config.yaml",
+      "sha256": "84ed193f2de30d1b89bd296b9bddc217fb2cb5e3036edb0d0edf9165d67214cb",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/password-in-configuration-file/empty.yaml",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/password-in-configuration-file/empty.yaml",
+      "sha256": "cb3609ac8c9cf706c63ece6cf6495abcb78b2be9a9902c9a51ef13a20c14c234",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/password-in-configuration-file/package.json",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsnode/password-in-configuration-file/package.json",
+      "sha256": "c466d8d2b03f769156db8c6f75a3d01291b5cb5ff9e205c7c0b81e0f0f781dd8",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1660,7 +1779,21 @@
     {
       "path": "rules/bifrost.javascript-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.javascript-codeql-quality/manifest.json",
-      "sha256": "0cec1f62b95cdc4185feb2ff46bb58c2934dfdc067b26e98d4314397052da2b4",
+      "sha256": "3272450946c22db77b760335852f10fe75e75839f14bc05b2c4cae1886d8caa2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/alert-call.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/alert-call.rqlp",
+      "sha256": "4c97784c1f50c773c3a313ea76fe179f197874a085c5c1bba6a9a33cae54f97f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/file-system-race.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/file-system-race.rqlp",
+      "sha256": "cee29dcb0a8d7cb95c0f33739b5abb07c8bd9ab32e467d7e8600590b8ace3be5",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1710,6 +1843,13 @@
       "path": "rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp",
       "source_path": "rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp",
       "sha256": "e819afaa0df6568773f238a5f355c84cd83a0c2de48869f1a8a6056ba48a936a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/password-in-configuration-file.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/password-in-configuration-file.rqlp",
+      "sha256": "bdba740341c8141f6e4151e1049eb986cc2ba4665a51b087fb78ce32413504aa",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -3189,6 +3329,27 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/node/fs/README.md",
+      "source_path": "semantic-packs/node/fs/README.md",
+      "sha256": "c6152828d2b1a5488c7716ad5750cfeb3767de95a23a4d454d6fa841405ac664",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/fs/javascript/bifrost.node-fs-javascript-declarations.json",
+      "source_path": "semantic-packs/node/fs/javascript/bifrost.node-fs-javascript-declarations.json",
+      "sha256": "fe54247572a288363a950ec275e459eee5d274d55dcac974851e1d2e5628254a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/node/fs/javascript/bifrost.node-fs-javascript-summaries.json",
+      "source_path": "semantic-packs/node/fs/javascript/bifrost.node-fs-javascript-summaries.json",
+      "sha256": "efc5af90a610841d9a71127487012b81c3cf2b991e02df8601c744c18fd8f271",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/node/runtime-values/README.md",
       "source_path": "semantic-packs/node/runtime-values/README.md",
       "sha256": "cba1caaed55bf30cdd94b5dface11270746e8f895f5b23acbd4f18ed9962efa1",
@@ -3624,5 +3785,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "670f3649781031123eacd8e946174cba60c5e8b17b5071c123f11ca5cc770f7b"
+  "aggregate_sha256": "c7a8f1bc24dd415f3a6369dcedbcafd77f5f8bb5117fb21d7a6aa40230bf5706"
 }

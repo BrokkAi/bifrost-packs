@@ -166,6 +166,57 @@
       ],
       "severity_rationale": "A likely misspelled identifier can silently refer to the wrong binding or API member.",
       "remediation": "Correct the identifier spelling and update references consistently."
+    },
+    {
+      "path": "policies/alert-call.rqlp",
+      "id": "bifrost.javascript-codeql-quality.alert-call",
+      "authored_hash": "4c97784c1f50c773c3a313ea76fe179f197874a085c5c1bba6a9a33cae54f97f",
+      "resolved_semantic_hash": "4c97784c1f50c773c3a313ea76fe179f197874a085c5c1bba6a9a33cae54f97f",
+      "category": "quality",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Browser alert pauses user interaction and is usually accidental in production code.",
+      "remediation": "Use an application notification or an intentional user-interface mechanism instead of a blocking alert."
+    },
+    {
+      "path": "policies/file-system-race.rqlp",
+      "id": "bifrost.javascript-codeql-quality.file-system-race",
+      "authored_hash": "cee29dcb0a8d7cb95c0f33739b5abb07c8bd9ab32e467d7e8600590b8ace3be5",
+      "resolved_semantic_hash": "cee29dcb0a8d7cb95c0f33739b5abb07c8bd9ab32e467d7e8600590b8ace3be5",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "semantic-model-provenance",
+        "value-flow",
+        "control-flow"
+      ],
+      "severity_rationale": "Checking a path before using it can expose a time-of-check/time-of-use race.",
+      "remediation": "Use a race-safe descriptor or atomic operation that combines checking and use."
+    },
+    {
+      "path": "policies/password-in-configuration-file.rqlp",
+      "id": "bifrost.javascript-codeql-quality.password-in-configuration-file",
+      "authored_hash": "bdba740341c8141f6e4151e1049eb986cc2ba4665a51b087fb78ce32413504aa",
+      "resolved_semantic_hash": "bdba740341c8141f6e4151e1049eb986cc2ba4665a51b087fb78ce32413504aa",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "configuration-facts"
+      ],
+      "severity_rationale": "Hard-coded password-like values in configuration can be exposed through source distribution or deployment artifacts.",
+      "remediation": "Load secrets from a managed secret store or runtime-provided environment, and keep templates value-free."
     }
   ]
 }

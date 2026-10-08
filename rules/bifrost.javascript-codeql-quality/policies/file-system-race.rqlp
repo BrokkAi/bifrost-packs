@@ -1,0 +1,56 @@
+; CodeQL query: javascript/ql/src/Security/CWE-367/FileSystemRace.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: a modeled Node fs check must precede an unsafe same-path
+; use in the same procedure. Identity is a lexical binding or decoded literal;
+; safe reads and descriptor-based operations are not use endpoints.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.file-system-race"
+  :name "JavaScript file check before use"
+  :message "A file is used after a check without a race-safe operation"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports modeled Node fs checks followed by unsafe same-path uses; the public Node fs model supplies exact declaration identities."
+  :tags ["javascript" "codeql" "quality" "security" "node"]
+  :analysis (analysis
+    :type assertion
+    (bind :name checks :query
+      (rql :schema-version 1
+        (filter :where ((path_identity is-not-null))
+          (union
+            (resolved-call :resolves-to member.node.fs.javascript.exists-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape
+                  (language javascript (call :callee (name "existsSync")))))))
+            (resolved-call :resolves-to member.node.fs.javascript.stat-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape (language javascript (call :callee (name "statSync")))))))
+            (resolved-call :resolves-to member.node.fs.javascript.lstat-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape (language javascript (call :callee (name "lstatSync")))))))
+            (resolved-call :resolves-to member.node.fs.javascript.access-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape (language javascript (call :callee (name "accessSync")))))))))))
+    (bind :name uses :query
+      (rql :schema-version 1
+        (filter :where ((path_identity is-not-null))
+          (union
+            (resolved-call :resolves-to member.node.fs.javascript.write-file-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape (language javascript (call :callee (name "writeFileSync")))))))
+            (resolved-call :resolves-to member.node.fs.javascript.append-file-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape (language javascript (call :callee (name "appendFileSync")))))))
+            (resolved-call :resolves-to member.node.fs.javascript.open-sync :proof declared
+              (call-argument :formal-index 0
+                (call-bindings (call-shape (language javascript (call :callee (name "openSync")))))))))))
+    (bind :name reaches :query
+      (rql :schema-version 1
+        (language javascript
+          (control-relations :relation [reaches]
+            (procedure-of (call))))))
+    (join :left checks :right uses :on ((path_identity path_identity)))
+    (join :left checks :right reaches :on ((program_point_id source_id)))
+    (group :name by-use :by (uses.id)
+      (aggregate :name unsafe-uses :op count
+        :where ((reaches.target_id eq uses.program_point_id))))
+    (assert :group by-use :value unsafe-uses :cardinality (exactly 0))))
