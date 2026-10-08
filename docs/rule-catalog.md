@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 105 unique rule IDs from 8 manifest packs.
+This catalog lists 114 unique rule IDs from 9 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -76,6 +76,15 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Selected Rust boundary reaches no network effect](../rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp) | `bifrost.effects.rust.selected-boundary-no-network-io` | rust | effects | error |
 | [Selected Scala boundary reaches no network effect](../rules/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp) | `bifrost.effects.scala.selected-boundary-no-network-io` | scala | effects | error |
 | [Selected TypeScript boundary reaches no network effect](../rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.typescript.selected-boundary-no-network-io` | typescript | effects | error |
+| [JavaScript conflicting function declaration](../rules/bifrost.javascript-codeql-quality/policies/function-declaration-conflict.rqlp) | `bifrost.javascript-codeql-quality.function-declaration-conflict` | javascript, typescript | correctness | error |
+| [JavaScript missing this qualifier](../rules/bifrost.javascript-codeql-quality/policies/missing-this-qualifier.rqlp) | `bifrost.javascript-codeql-quality.missing-this-qualifier` | javascript, typescript | correctness | error |
+| [JavaScript missing variable declaration](../rules/bifrost.javascript-codeql-quality/policies/missing-variable-declaration.rqlp) | `bifrost.javascript-codeql-quality.missing-variable-declaration` | javascript, typescript | correctness | warning |
+| [JavaScript misspelled identifier](../rules/bifrost.javascript-codeql-quality/policies/misspelled-identifier.rqlp) | `bifrost.javascript-codeql-quality.misspelled-identifier` | javascript, typescript | quality | warning |
+| [JavaScript mixed static and instance this access](../rules/bifrost.javascript-codeql-quality/policies/mixed-static-instance-this-access.rqlp) | `bifrost.javascript-codeql-quality.mixed-static-instance-this-access` | javascript, typescript | correctness | error |
+| [JavaScript nested function in default parameter](../rules/bifrost.javascript-codeql-quality/policies/nested-function-reference-in-default-parameter.rqlp) | `bifrost.javascript-codeql-quality.nested-function-reference-in-default-parameter` | javascript, typescript | correctness | error |
+| [JavaScript overwritten property](../rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp) | `bifrost.javascript-codeql-quality.overwritten-property` | javascript, typescript | correctness | error |
+| [JavaScript conflicting variable initialization](../rules/bifrost.javascript-codeql-quality/policies/variable-initialization-conflict.rqlp) | `bifrost.javascript-codeql-quality.variable-initialization-conflict` | javascript, typescript | correctness | error |
+| [JavaScript redeclared variable](../rules/bifrost.javascript-codeql-quality/policies/variable-redeclaration.rqlp) | `bifrost.javascript-codeql-quality.variable-redeclaration` | javascript, typescript | correctness | warning |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |

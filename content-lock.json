@@ -616,6 +616,237 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/README.md",
+      "source_path": "fixtures/policy/bifrost.javascript-codeql-quality/README.md",
+      "sha256": "1cfa2e973bec91d520bf76ceebe44e26e10ecc4c21d4f44fe70ed77554af83be",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/function-declaration-conflict/.bifrost/policies/function-declaration-conflict.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/function-declaration-conflict.rqlp",
+      "sha256": "b8882712dd9aa20fe5bf1658a9842470ec665822bd45bf5a23b877ad95dd0ff8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/function-declaration-conflict/functions.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/function-declaration-conflict/functions.js",
+      "sha256": "81a6507d26a05dde26dcbde3204b13819fe0126dab8dac815687934c22421ee1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/function-declaration-conflict/functions.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/function-declaration-conflict/functions.ts",
+      "sha256": "1698a7d358189cd740609ae4a0a23a635a15d9d2b3f9f58db5e2464176ef86cf",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-this-qualifier/.bifrost/policies/missing-this-qualifier.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/missing-this-qualifier.rqlp",
+      "sha256": "0cee96f050f7239e5269a72efc547279e72aa48ae58548b8c98a970829329759",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-this-qualifier/main.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/missing-this-qualifier/main.js",
+      "sha256": "080e6e6aae0670f6c5d1cf4773ab78b453cb0dc38c14be7da8cf63687efe65f6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-this-qualifier/main.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/missing-this-qualifier/main.ts",
+      "sha256": "080e6e6aae0670f6c5d1cf4773ab78b453cb0dc38c14be7da8cf63687efe65f6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-variable-declaration/.bifrost/policies/missing-variable-declaration.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/missing-variable-declaration.rqlp",
+      "sha256": "c23f1ac0f217f15e3d3dd8046f23f33e85fea11e3cfec023ae91e0b1007f9f7b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-variable-declaration/README.md",
+      "source_path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-variable-declaration/README.md",
+      "sha256": "f3ede7876f1e8fec1267737afe5bdb43f59d320fc94db50d5a533b8f57c3c78c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-variable-declaration/dynamic.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/missing-variable-declaration/dynamic.js",
+      "sha256": "726c796da790137161d4a1841bcb1558754be9c814754034512937a43e7bcd65",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-variable-declaration/missing-var.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/missing-variable-declaration/missing-var.js",
+      "sha256": "02a011cdfebedb8f377d102f4c09dc1e33212af15fe3592be4441b9747c638ba",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/missing-variable-declaration/missing-var.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/missing-variable-declaration/missing-var.ts",
+      "sha256": "5d898a664a4f1cba4b5e064ef14de432006829dc3595fabeee61e82d4b665c90",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/misspelled-identifier/.bifrost/policies/misspelled-identifier.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/misspelled-identifier.rqlp",
+      "sha256": "91f4a87b62a4c49d8c284b40fd240ee5d91c10d16045eac2e8c84dc3109580a0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/misspelled-identifier/helper.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/misspelled-identifier/helper.js",
+      "sha256": "328862c41ecdf6193875b8d61013ba4286b0f23d1e28aaffb1e1bcaa9d9168ea",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/misspelled-identifier/main.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/misspelled-identifier/main.js",
+      "sha256": "84f4466509d3b34493e8b15243309e2b604f0e115c6394da4380f0df21932ca7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/misspelled-identifier/main.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/misspelled-identifier/main.ts",
+      "sha256": "0f979c2f0cb1af7aab73f9c58ed2ae3dd269e87e544e452dd158a89093433cce",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/mixed-static-instance-this-access/.bifrost/policies/mixed-static-instance-this-access.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/mixed-static-instance-this-access.rqlp",
+      "sha256": "11d5aa636fe0a8a22c412284392c10d84aa95b55713180fa863138ba17f3ae7d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/mixed-static-instance-this-access/main.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/mixed-static-instance-this-access/main.js",
+      "sha256": "7d8c00222748947908c512e7548973c05d04eaa870a93bfa3127de15a9d194cd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/mixed-static-instance-this-access/main.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/mixed-static-instance-this-access/main.ts",
+      "sha256": "7d8c00222748947908c512e7548973c05d04eaa870a93bfa3127de15a9d194cd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/nested-function-reference-in-default-parameter/.bifrost/policies/nested-function-reference-in-default-parameter.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/nested-function-reference-in-default-parameter.rqlp",
+      "sha256": "fd05b9d2594db5f7b1d56ddda9159fa382152d9ac924d51639346047a974ea94",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/nested-function-reference-in-default-parameter/nested-default.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/nested-function-reference-in-default-parameter/nested-default.js",
+      "sha256": "aad6e8990e1ad155855870ee4c986378e41b527459068622b5e576ad363ed5a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/nested-function-reference-in-default-parameter/nested-default.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/nested-function-reference-in-default-parameter/nested-default.ts",
+      "sha256": "4eca3c126be3af30f1665a9a600f1c8d2056649ef562c9321d18bfda56bccb99",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/overwritten-property/.bifrost/policies/overwritten-property.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp",
+      "sha256": "e819afaa0df6568773f238a5f355c84cd83a0c2de48869f1a8a6056ba48a936a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/overwritten-property/main.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/overwritten-property/main.js",
+      "sha256": "4b86590f9a01f83d7dd10d67b8ac5df986db455fafe16a3d479e2d4753debcf3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/overwritten-property/main.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsclass/overwritten-property/main.ts",
+      "sha256": "4b86590f9a01f83d7dd10d67b8ac5df986db455fafe16a3d479e2d4753debcf3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-initialization-conflict/.bifrost/policies/variable-initialization-conflict.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/variable-initialization-conflict.rqlp",
+      "sha256": "2455e41572fdf124af4f9ed265c17aade54deda4d31593534fd4cc7e6eeca528",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-initialization-conflict/near.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/variable-initialization-conflict/near.js",
+      "sha256": "df146b9b9e8204b0c306fed54742d8f54515ef6f7ef9cdef7ee31dfa3a7abd9c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-initialization-conflict/positive.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/variable-initialization-conflict/positive.js",
+      "sha256": "af5f4ac1c1543e61c0de13f7949101b4f8d02a2bcaca488c4393aa18943dabf8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-initialization-conflict/positive.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/variable-initialization-conflict/positive.ts",
+      "sha256": "a21d936b7b420c7479a436d2f3d674fe3fb345f7a33291a63bd709f442e5afb2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-redeclaration/.bifrost/policies/variable-redeclaration.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/variable-redeclaration.rqlp",
+      "sha256": "045f6caabb5744b78a15f5d2745b79b4ccf44ebdf8dff8c1a838372a1c9e5ef4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-redeclaration/near.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/variable-redeclaration/near.js",
+      "sha256": "6e069957c199147039090099166144fe6d5240b6b38f4396a07a9a3fb723b1d2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-redeclaration/positive.js",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/variable-redeclaration/positive.js",
+      "sha256": "21e30d11edd1826bcc357c0a18a88645b61a68d5780981ae7c8edb4c9b94c692",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.javascript-codeql-quality/variable-redeclaration/positive.ts",
+      "source_path": "bifrost-dev/tests/fixtures/golden/codeql-js-parity-jsdecl/variable-redeclaration/positive.ts",
+      "sha256": "08db60db427979a9fa561e6ea222eab7316b0a9dfde84f00e0d1ad9b4437012f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "fixtures/policy/bifrost.security/README.md",
       "source_path": "fixtures/policy/bifrost.security/README.md",
       "sha256": "76c668cb4a192e4763dcfbd35c28343f3690fc773e2f7167e6a00f607dbddc15",
@@ -1423,6 +1654,76 @@
       "path": "rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
       "sha256": "64d37abcb2e61250dc3153b1adf6d191e3cf2671582d87d128abf8a382cd26ae",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/manifest.json",
+      "source_path": "rules/bifrost.javascript-codeql-quality/manifest.json",
+      "sha256": "0cec1f62b95cdc4185feb2ff46bb58c2934dfdc067b26e98d4314397052da2b4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/function-declaration-conflict.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/function-declaration-conflict.rqlp",
+      "sha256": "b8882712dd9aa20fe5bf1658a9842470ec665822bd45bf5a23b877ad95dd0ff8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/missing-this-qualifier.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/missing-this-qualifier.rqlp",
+      "sha256": "0cee96f050f7239e5269a72efc547279e72aa48ae58548b8c98a970829329759",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/missing-variable-declaration.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/missing-variable-declaration.rqlp",
+      "sha256": "c23f1ac0f217f15e3d3dd8046f23f33e85fea11e3cfec023ae91e0b1007f9f7b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/misspelled-identifier.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/misspelled-identifier.rqlp",
+      "sha256": "91f4a87b62a4c49d8c284b40fd240ee5d91c10d16045eac2e8c84dc3109580a0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/mixed-static-instance-this-access.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/mixed-static-instance-this-access.rqlp",
+      "sha256": "11d5aa636fe0a8a22c412284392c10d84aa95b55713180fa863138ba17f3ae7d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/nested-function-reference-in-default-parameter.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/nested-function-reference-in-default-parameter.rqlp",
+      "sha256": "fd05b9d2594db5f7b1d56ddda9159fa382152d9ac924d51639346047a974ea94",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp",
+      "sha256": "e819afaa0df6568773f238a5f355c84cd83a0c2de48869f1a8a6056ba48a936a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/variable-initialization-conflict.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/variable-initialization-conflict.rqlp",
+      "sha256": "2455e41572fdf124af4f9ed265c17aade54deda4d31593534fd4cc7e6eeca528",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.javascript-codeql-quality/policies/variable-redeclaration.rqlp",
+      "source_path": "rules/bifrost.javascript-codeql-quality/policies/variable-redeclaration.rqlp",
+      "sha256": "045f6caabb5744b78a15f5d2745b79b4ccf44ebdf8dff8c1a838372a1c9e5ef4",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -3323,5 +3624,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "31b2eb30f118abcfe30f54e426b756ba987e0740cbed45695945648d92ee75db"
+  "aggregate_sha256": "670f3649781031123eacd8e946174cba60c5e8b17b5071c123f11ca5cc770f7b"
 }

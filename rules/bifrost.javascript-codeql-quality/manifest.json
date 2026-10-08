@@ -1,0 +1,171 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.javascript-codeql-quality",
+  "version": "0.1.0",
+  "name": "Bifrost JavaScript CodeQL quality",
+  "description": "Public JavaScript and TypeScript declaration, binding, class, property, and identifier quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
+  "policies": [
+    {
+      "path": "policies/function-declaration-conflict.rqlp",
+      "id": "bifrost.javascript-codeql-quality.function-declaration-conflict",
+      "authored_hash": "b8882712dd9aa20fe5bf1658a9842470ec665822bd45bf5a23b877ad95dd0ff8",
+      "resolved_semantic_hash": "b8882712dd9aa20fe5bf1658a9842470ec665822bd45bf5a23b877ad95dd0ff8",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Conflicting same-name function declarations can change which implementation a lexical binding resolves to.",
+      "remediation": "Rename one function or separate the declarations into intentional scopes."
+    },
+    {
+      "path": "policies/variable-redeclaration.rqlp",
+      "id": "bifrost.javascript-codeql-quality.variable-redeclaration",
+      "authored_hash": "045f6caabb5744b78a15f5d2745b79b4ccf44ebdf8dff8c1a838372a1c9e5ef4",
+      "resolved_semantic_hash": "045f6caabb5744b78a15f5d2745b79b4ccf44ebdf8dff8c1a838372a1c9e5ef4",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Duplicate declarations in one lexical scope obscure binding intent and can change runtime behavior.",
+      "remediation": "Remove the duplicate declaration or move it to the intended scope."
+    },
+    {
+      "path": "policies/variable-initialization-conflict.rqlp",
+      "id": "bifrost.javascript-codeql-quality.variable-initialization-conflict",
+      "authored_hash": "2455e41572fdf124af4f9ed265c17aade54deda4d31593534fd4cc7e6eeca528",
+      "resolved_semantic_hash": "2455e41572fdf124af4f9ed265c17aade54deda4d31593534fd4cc7e6eeca528",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "A later initializer that immediately overwrites a sibling value makes declaration intent ambiguous.",
+      "remediation": "Use distinct names or combine the declaration so each initializer has one clear purpose."
+    },
+    {
+      "path": "policies/missing-variable-declaration.rqlp",
+      "id": "bifrost.javascript-codeql-quality.missing-variable-declaration",
+      "authored_hash": "c23f1ac0f217f15e3d3dd8046f23f33e85fea11e3cfec023ae91e0b1007f9f7b",
+      "resolved_semantic_hash": "c23f1ac0f217f15e3d3dd8046f23f33e85fea11e3cfec023ae91e0b1007f9f7b",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An assignment without a declaration can create or mutate implicit global state.",
+      "remediation": "Declare the variable with the intended let, const, or var binding; review dynamic-scope boundaries separately."
+    },
+    {
+      "path": "policies/nested-function-reference-in-default-parameter.rqlp",
+      "id": "bifrost.javascript-codeql-quality.nested-function-reference-in-default-parameter",
+      "authored_hash": "fd05b9d2594db5f7b1d56ddda9159fa382152d9ac924d51639346047a974ea94",
+      "resolved_semantic_hash": "fd05b9d2594db5f7b1d56ddda9159fa382152d9ac924d51639346047a974ea94",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "A default parameter that calls a nested function before initialization can fail at call time.",
+      "remediation": "Move the helper declaration or call it after initialization through an explicit parameter or function body."
+    },
+    {
+      "path": "policies/missing-this-qualifier.rqlp",
+      "id": "bifrost.javascript-codeql-quality.missing-this-qualifier",
+      "authored_hash": "0cee96f050f7239e5269a72efc547279e72aa48ae58548b8c98a970829329759",
+      "resolved_semantic_hash": "0cee96f050f7239e5269a72efc547279e72aa48ae58548b8c98a970829329759",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An unqualified class-owned call can resolve differently from the intended instance member.",
+      "remediation": "Use this.member(...) when the call targets the current instance."
+    },
+    {
+      "path": "policies/mixed-static-instance-this-access.rqlp",
+      "id": "bifrost.javascript-codeql-quality.mixed-static-instance-this-access",
+      "authored_hash": "11d5aa636fe0a8a22c412284392c10d84aa95b55713180fa863138ba17f3ae7d",
+      "resolved_semantic_hash": "11d5aa636fe0a8a22c412284392c10d84aa95b55713180fa863138ba17f3ae7d",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "member-resolution"
+      ],
+      "severity_rationale": "A this-member access with mismatched staticness can target no valid class member.",
+      "remediation": "Use the matching static or instance form and keep the declaration and access conventions consistent."
+    },
+    {
+      "path": "policies/overwritten-property.rqlp",
+      "id": "bifrost.javascript-codeql-quality.overwritten-property",
+      "authored_hash": "e819afaa0df6568773f238a5f355c84cd83a0c2de48869f1a8a6056ba48a936a",
+      "resolved_semantic_hash": "e819afaa0df6568773f238a5f355c84cd83a0c2de48869f1a8a6056ba48a936a",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "expression-kind-facts"
+      ],
+      "severity_rationale": "Duplicate object properties hide an earlier value and can make configuration or data construction order-dependent.",
+      "remediation": "Remove the duplicate key or make the intended final value explicit."
+    },
+    {
+      "path": "policies/misspelled-identifier.rqlp",
+      "id": "bifrost.javascript-codeql-quality.misspelled-identifier",
+      "authored_hash": "91f4a87b62a4c49d8c284b40fd240ee5d91c10d16045eac2e8c84dc3109580a0",
+      "resolved_semantic_hash": "91f4a87b62a4c49d8c284b40fd240ee5d91c10d16045eac2e8c84dc3109580a0",
+      "category": "quality",
+      "supported_languages": [
+        "javascript",
+        "typescript"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "A likely misspelled identifier can silently refer to the wrong binding or API member.",
+      "remediation": "Correct the identifier spelling and update references consistently."
+    }
+  ]
+}
