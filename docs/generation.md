@@ -8,7 +8,12 @@ for a release or enable it in a scanner.
 
 ## Pinned native candidate
 
-The intended `packs/v0.2.0` recipe builds the public `bifrost-semantic-pack`
+The published `packs/v0.2.0` artifact contains 8 native model entries using
+schema 8. Its source archive pins the authored inputs present at commit
+`8711584116169d94475cc8dd4a18caebd5a9e8e4`; later Go, Rust, Python, and
+expanded typeshed additions belong to the next source archive. Its behavior
+qualification remains pending. The intended next `packs/v0.2.1` recipe builds
+the public `bifrost-semantic-pack`
 producer version `0.13.0` from source
 `948f6700d2e668ee830aa42abf7ed4151d5bf560` with Rust `1.97.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
@@ -22,9 +27,12 @@ version gate. The producer and reader enforce compatibility by actual schemas;
 legacy artifacts keep their original engine gates. Newer Python standard-library
 authoring models are retained here with exact import provenance, including a
 schema-14 summary model. The schema-8 recipe does not compile that summary model
-into the native archive. The accompanying source archive pins all current authored
-inputs and research for reproduction. Selecting the summary model requires a separately qualified supporting producer
-and consumer; never lower its schema label or remove fields to fit this release.
+into the native archive. The `packs/v0.2.1` source archive pins the newly
+authored Go embed declarations, the expanded Python typeshed import closure used
+by the selected Python native input, and Rust and Python standard-library models.
+The Go, Rust, and other Python models remain outside the existing native recipe;
+selecting the summary model requires a separately qualified supporting producer
+and consumer. Never lower its schema label or remove fields to fit this release.
 
 The earlier public `62fc36c09ddb96746e716c1c3456a99957521d91` generation
 produced model schemas 2 and 5 with engine gates. The historical
@@ -39,7 +47,7 @@ python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
   --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
-  --config release-config.packs.json --version 0.2.0 \
+  --config release-config.packs.json --version 0.2.1 \
   --archive /absolute/scratch/native/native.tar.gz \
   --receipt /absolute/scratch/native/generation.json --output /absolute/scratch/dist
 ```

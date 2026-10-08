@@ -14,22 +14,38 @@ existing manifest schema, engine range, and qualification semantics.
 
 ## Intended next releases
 
-The intended next semantic-pack release is `packs/v0.2.0`, generated with
-public Bifrost tooling version `0.13.0` at source
+The published `packs/v0.2.0` release contains 8 native model entries using
+schema 8 from public
+Bifrost tooling version `0.13.0` at source
 `948f6700d2e668ee830aa42abf7ed4151d5bf560`. The source archive, lockfile,
 Rust toolchain and build receipt are pinned in `native-generation.json`.
-Generator identity does not prove consumer compatibility or behavior. Inspect
-actual schemas in the exact generated archive. The selected generation-spec
+Its source archive pins the authored inputs present at commit
+`8711584116169d94475cc8dd4a18caebd5a9e8e4`; it does not contain the later Go,
+Rust, Python, or expanded typeshed additions. Its native integrity is separate
+from consumer behavior, which remains pending;
+inspect actual schemas in the exact archive. The intended next semantic-pack
+release is `packs/v0.2.1`, using the same pinned schema-8 recipe unless a
+separately audited recipe change is made. The selected generation-spec
 corrections and reviewed ordinary Python baseline imports carry per-entry
 `source_revision` provenance in `content-lock.json`. Newer schema-14 authoring
-models are excluded from this schema-8 native recipe.
+models are excluded from this schema-8 native recipe. The `packs/v0.2.1`
+source archive carries the newly authored Go embed declarations, the expanded
+Python typeshed import closure used by the selected Python native input, and
+Rust and Python standard-library models. The Go, Rust, and other Python models
+remain outside the existing native recipe; all newly authored models remain
+subject to separate consumer qualification.
 
-The intended `rules/v0.1.3` content is the current locked authoring copy. The release descriptor derives its exact policy
+The published `rules/v0.1.3` release contains 105 unique rules across 8 policy
+packs and 113 content entries, with limited behavior evidence from its narrow
+smoke. The intended next `rules/v0.1.4` content is the current locked
+authoring copy. The current inventory contains 170 unique rules across 11
+policy packs: 65 additional rules comprising 19 Java quality rules, 34 Python
+quality rules, 10 Python security rules, and 2 Rust rules. The release descriptor derives its exact policy
 inventory and required capability identifiers from the checked-in manifests. The source archive carries the checked-in
 policy files, focused smoke fixtures, and tracked research evidence. Research
 files are archive metadata and are not entries in `content-lock.json` or the
 release policy inventory. The rules manifest pins exactly
-`bifrost.public.packs` release `0.2.0` from this repository. That dependency
+`bifrost.public.packs` release `0.2.1` from this repository. That dependency
 is under review and must resolve to the exact release before the rules stream can
 be selected or published.
 
@@ -41,8 +57,8 @@ Linux binary, verifies its release sidecar checksum, and records one positive an
 one realistic near-miss. It is limited evidence for that policy and does not
 qualify the full released policy set.
 
-These are intended release identities, not claims that either tag or artifact
-has been published. The v2 release manifest describes schemas and capabilities
+The `packs/v0.2.1` and `rules/v0.1.4` entries above are intended release
+identities, not claims that either tag or artifact has been published. The v2 release manifest describes schemas and capabilities
 without an engine-version range. It records integrity and behavior separately;
 format compatibility does not prove full behavior. The pinned schema-8 producer/reader migration removes engine-version gates
 from newly generated native content. The specs now use that contract; legacy
@@ -55,8 +71,10 @@ to the earlier public 0.12.0 generator and its eight gated descriptors.
 Concurrent legacy releases `rules/v0.1.1` and `packs/v0.1.1` were published
 from `28babf267ce4602549588082d5801d78ba549edf`. They retain contract schema 1,
 engine range `>=0.12.0, <0.12.1`, and pending qualification. Their manifests and
-assets remain immutable. The `rules/v0.1.3` candidate publishes the current
-locked policy authoring copy while preserving those immutable legacy artifacts.
+assets remain immutable. The `rules/v0.1.3` release remains the historical
+105-rule, 113-content stream; the `rules/v0.1.4` candidate publishes the
+current locked policy authoring copy while preserving those immutable legacy
+artifacts.
 
 ## Legacy baseline
 
