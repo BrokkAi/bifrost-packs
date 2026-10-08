@@ -616,9 +616,71 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/README.md",
+      "source_path": "fixtures/policy/bifrost.rust-codeql-quality/README.md",
+      "sha256": "bcde6f589b11b7b3a72cea60dd21df0077e0fd1256f8c3a68e2de7cc458ad41c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/README.md",
+      "source_path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/README.md",
+      "sha256": "5d25c4be09da446312a92800a5c1a6174825b728accb5b990e865d318b53b361",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/app/.bifrost/policies/ctor-initialization.rqlp",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/app/.bifrost/policies/ctor-initialization.rqlp",
+      "sha256": "29c62b3e9d41615ebb00a0123e739092f689e5648d20dbbe852e7fa9d562ef1c",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/app/Cargo.toml",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/app/Cargo.toml",
+      "sha256": "b36cc91622e5f287cbb3f5c5d71b8cb804f11fae398380deaa1ab9fa74e3aadb",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/app/src/lib.rs",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/app/src/lib.rs",
+      "sha256": "762012a3b23074dec89f14d71ebfbe70529eea65f9579c7e3f53a09ed1489e7d",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/app/src/startup.rs",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/app/src/startup.rs",
+      "sha256": "6a5641033f899caa45a0f2c23c377a0e967e0080bd0e032a94fbf8ad112d0919",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/stubs/libc/Cargo.toml",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/stubs/libc/Cargo.toml",
+      "sha256": "ac7f014b375ff8385542ebeb91839b94ad53cc2a668b98dcf98ea2e81bd9e41f",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.rust-codeql-quality/ctor-initialization/stubs/libc/src/lib.rs",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/stubs/libc/src/lib.rs",
+      "sha256": "2d497c778bcfc3861f78281624049f66316799863107bcedecd457b2801d7a89",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
       "path": "fixtures/policy/bifrost.security/README.md",
       "source_path": "fixtures/policy/bifrost.security/README.md",
-      "sha256": "76c668cb4a192e4763dcfbd35c28343f3690fc773e2f7167e6a00f607dbddc15",
+      "sha256": "5f03b3a044beec874bbe0f9687b3bdd51e9e000184e0b15f83df5847fedc1577",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -705,6 +767,37 @@
       "sha256": "c7ac2f2b0297916a10fda3a00b9a3b2856028ab70a1be7e1241f2c431c8474ba",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/non-https-url/Cargo.toml",
+      "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/Cargo.toml",
+      "sha256": "cda707759c122b70f076eeb4014c6eecdfe722a9913b080cf1804818fb459415",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/non-https-url/README.md",
+      "source_path": "fixtures/policy/bifrost.security/non-https-url/README.md",
+      "sha256": "1e1bac9a8c07b9014f61b8b90cf2a41a53f255f44549f415e03ddb2bff89a085",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/non-https-url/policies/non-https-url.rqlp",
+      "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/policies/non-https-url.rqlp",
+      "sha256": "584265b59c2c21360fa59829f996b0e5cbf3a8788092eb88135b84bd1ccd5a6d",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/non-https-url/src/main.rs",
+      "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/src/main.rs",
+      "sha256": "20c2bf0727c880b03aacb548f777e3b3754cf7bdb10bd2b01812f88ca629cfa2",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
     },
     {
       "path": "fixtures/policy/bifrost.security/xml-injection/.bifrost/policies/xml-injection.rqlp",
@@ -1427,9 +1520,24 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.rust-codeql-quality/manifest.json",
+      "source_path": "rules/bifrost.rust-codeql-quality/manifest.json",
+      "sha256": "66fd3be52bf183198d1e8b786890ac9e2b8fb0337d1bca1b5d0855d1b2201492",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp",
+      "source_path": "tests/fixtures/rust-codeql-parity/ctor-initialization/app/.bifrost/policies/ctor-initialization.rqlp",
+      "sha256": "29c62b3e9d41615ebb00a0123e739092f689e5648d20dbbe852e7fa9d562ef1c",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
       "path": "rules/bifrost.security/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
-      "sha256": "7c7bf236134c300aa4b740d2d1f92649b39ae1e8d36cae78462e30452f669442",
+      "sha256": "4857a2c82608dd04787da7f53ccc2c8b49bdc9a8ed8f3e950ac3842cde5667c8",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1670,6 +1778,14 @@
       "sha256": "f73b6d623ca7e15f2666c23e1f1c98a2faa33b8296f2151fefdd5521f419bd4e",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
+      "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/policies/non-https-url.rqlp",
+      "sha256": "584265b59c2c21360fa59829f996b0e5cbf3a8788092eb88135b84bd1ccd5a6d",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
     },
     {
       "path": "scripts/upstream/lib/semantic-pack-source.sh",
@@ -3097,6 +3213,22 @@
       "license": "Ruby"
     },
     {
+      "path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
+      "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
+      "sha256": "a45d3ced0629ac4dff0b5be8d4753311ea31de6da21e43efebfc5a7cda24c51e",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "217109df44f6b166d6dd779a7f2b7743365b79cc"
+    },
+    {
+      "path": "semantic-packs/rust-sql-injection/bifrost.rust-std-sql-taint.json",
+      "source_path": "semantic-packs/rust-sql-injection/bifrost.rust-std-sql-taint.json",
+      "sha256": "7a5dcfdc5c6d251faffb03d3d78248585ccc45e70c0f0f2fcf21bd19c3b5ac01",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
       "path": "semantic-packs/rust/README.md",
       "source_path": "semantic-packs/rust/README.md",
       "sha256": "15ee3c1a8633fdf7132abda5fd54d146053f4bd7f62ba0c446b21bfd37349098",
@@ -3323,5 +3455,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "31b2eb30f118abcfe30f54e426b756ba987e0740cbed45695945648d92ee75db"
+  "aggregate_sha256": "9f846d75c85f27ecc3f1dd025cbfd06098fdc0e7bb7ac7a068fb4b81cfa05268"
 }

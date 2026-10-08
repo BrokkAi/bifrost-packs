@@ -34,3 +34,5 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 
 The source archive is a mixed-license source distribution, not an Apache-only
 relicensing and not an installable native semantic-pack release bundle.
+
+Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19. Public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0. No CodeQL query implementation or third-party library source is copied. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.

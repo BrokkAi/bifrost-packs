@@ -1,0 +1,25 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.non-https-url"
+  :name "Non-HTTPS URL literal"
+  :message "an HTTP URL literal points outside the private and loopback address ranges"
+  :severity warning
+  :description "CodeQL's non-HTTPS URL rule selects decoded Rust string literal values beginning with http:// and excludes localhost, loopback, private IPv4, IPv6 loopback, and fc00::/7 authorities. The exclusion is a structural negation over the same literal value."
+  :tags ["security" "rust" "request-forgery" "cwe-918"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language rust
+        (string_literal
+          (value/regex "^http://")
+          (not (or
+            (value/regex "^http://localhost(?::|/|$)")
+            (value/regex "^http://127\\.")
+            (value/regex "^http://10\\.")
+            (value/regex "^http://192\\.168\\.")
+            (value/regex "^http://172\\.(?:1[6-9]|2[0-9]|3[0-1])\\.")
+            (value/regex "^http://\\[::1\\](?::|/|$)")
+            (value/regex "^http://\\[0:0:0:0:0:0:0:1\\](?::|/|$)")
+            (value/regex "^http://\\[[fF][cCdD][0-9A-Fa-f:]*\\](?::|/|$)")))))))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "918")))
