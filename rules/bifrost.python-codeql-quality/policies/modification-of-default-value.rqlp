@@ -1,0 +1,20 @@
+; CodeQL: python/ql/src/Functions/ModificationOfParameterWithDefault.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: This operation can modify a mutable parameter default.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.modification-of-default-value"
+  :name "Python mutable default modification"
+  :message "This operation can modify a mutable parameter default."
+  :severity warning
+  :description "Mirrors CodeQL python/ql/src/Functions/ModificationOfParameterWithDefault.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Proven mutation sites for list, dictionary, and set defaults are selected through the engine local-flow relation, including aliases and empty guards. Unknown local flow remains typed incomplete."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((relation eq modification_of_default_value)
+                      (outcome eq issue)
+                      (proof eq proven)
+                      (completeness eq complete))
+        (python-modification-of-default-value
+          (enclosing-decl (language python (function))))))))

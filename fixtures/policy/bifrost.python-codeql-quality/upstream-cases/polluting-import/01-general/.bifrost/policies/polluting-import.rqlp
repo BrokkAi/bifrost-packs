@@ -1,0 +1,17 @@
+; CodeQL query: python/ql/src/Imports/UnintentionalImport.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report complete wildcard imports from resolved local modules whose export surface has no __all__.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.polluting-import"
+  :name "Python polluting wildcard import"
+  :message "wildcard import pollutes the namespace because the module has no __all__"
+  :severity warning
+  :description "Mirrors CodeQL py/polluting-import for complete local module exports using parsed wildcard-import and __all__ facts. Unknown or unreadable export surfaces remain incomplete."
+  :tags ["python" "codeql" "quality" "imports"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((python_import_complete eq true)
+                      (python_import_form eq from)
+                      (python_import_wildcard eq true)
+                      (python_import_polluting eq true))
+        (python-import-site (language python (import)))))))

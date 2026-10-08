@@ -1,0 +1,20 @@
+; CodeQL: python/ql/src/Functions/ConsistentReturns.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: report callables with a reachable explicit value return and implicit None return.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.mixed-returns"
+  :name "Python callable mixes value and implicit returns"
+  :message "callable mixes explicit values with implicit None returns"
+  :severity warning
+  :description "Mirrors CodeQL py/mixed-returns at ae741615f3e178ce61289a651790dc67fcc18e19. Reports only a complete proven Python return profile containing both a reachable non-None value return and an implicit None return; unsupported control-flow cases stay incomplete."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((relation eq procedure_return_profile)
+                      (mixed_returns eq true)
+                      (proof eq proven)
+                      (completeness eq complete))
+        (procedure-return-profile
+          (procedure-of (language python (callable))))))))

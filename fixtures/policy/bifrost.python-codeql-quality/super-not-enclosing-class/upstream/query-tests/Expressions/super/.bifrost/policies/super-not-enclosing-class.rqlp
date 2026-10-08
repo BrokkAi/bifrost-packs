@@ -1,0 +1,19 @@
+; CodeQL query: python/ql/src/Expressions/CallToSuperWrongClass.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report only a proven explicit super(class, self) whose
+; resolved class argument differs from the method's owning class.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.super-not-enclosing-class"
+  :name "Python super uses the wrong enclosing class"
+  :message "First argument to super() should name the enclosing class"
+  :severity error
+  :description "Mirrors CodeQL python/ql/src/Expressions/CallToSuperWrongClass.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports complete Python call-context facts proving an explicit super class argument differs from the owning class."
+  :tags ["python" "codeql" "quality" "inheritance"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq call_context)
+                      (outcome eq super_mismatch)
+                      (coverage eq complete))
+        (python-call-relations
+          (enclosing-decl (language python (class))))))))

@@ -1,0 +1,3 @@
+import main
+
+value = main

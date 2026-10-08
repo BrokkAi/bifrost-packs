@@ -625,6 +625,182 @@
       "required_capabilities": ["taint", "exact-call-target", "actual-to-formal-binding", "semantic-model-provenance", "scoped-callable-completeness"],
       "severity_rationale": "External input used as an assembly path can load an unintended local or remote assembly into the process.",
       "remediation": "Resolve assemblies from a fixed allowlist and use Path.GetFileName only as a component of validation, not as the sole authorization decision."
+    },
+    {
+      "path": "policies/python/bind-socket-all-network-interfaces.rqlp",
+      "id": "bifrost.security.python.bind-socket-all-network-interfaces",
+      "authored_hash": "763c209d50e7e3ce8b06b7f3aa30a4e258d36f90adc23ebbee2b731ba99554a1",
+      "resolved_semantic_hash": "763c209d50e7e3ce8b06b7f3aa30a4e258d36f90adc23ebbee2b731ba99554a1",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Binding on every interface exposes the service to traffic from any IPv4 or IPv6 address.",
+      "remediation": "Bind only to an intended interface such as loopback or a specifically configured address."
+    },
+    {
+      "path": "policies/python/hardcoded-credentials.rqlp",
+      "id": "bifrost.security.python.hardcoded-credentials",
+      "authored_hash": "e4c2fc9ccf60715a98a1065be5b265aeb27621e334c274cd8fe58a24526ae026",
+      "resolved_semantic_hash": "e4c2fc9ccf60715a98a1065be5b265aeb27621e334c274cd8fe58a24526ae026",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Long string or byte literals are sent directly as cryptographic or network credentials.",
+      "remediation": "Load credentials from a secret store or protected runtime configuration."
+    },
+    {
+      "path": "policies/python/incomplete-hostname-regexp.rqlp",
+      "id": "bifrost.security.python.incomplete-hostname-regexp",
+      "authored_hash": "aa61c11d6c8a4872ae2d49fc84f0e8c341e4fb59dc7430972c62daf99488567d",
+      "resolved_semantic_hash": "aa61c11d6c8a4872ae2d49fc84f0e8c341e4fb59dc7430972c62daf99488567d",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "An unescaped dot in a hostname check can accept domains beyond the intended literal hostname.",
+      "remediation": "Escape literal dots and anchor the expression to the complete hostname."
+    },
+    {
+      "path": "policies/python/incomplete-url-substring-sanitization.rqlp",
+      "id": "bifrost.security.python.incomplete-url-substring-sanitization",
+      "authored_hash": "1684f3722e5cb61e7bb4221bc5da37fc4b03f69f9098ffcc526552cc8d1e509b",
+      "resolved_semantic_hash": "1684f3722e5cb61e7bb4221bc5da37fc4b03f69f9098ffcc526552cc8d1e509b",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "An unanchored hostname substring check can accept attacker-controlled authorities.",
+      "remediation": "Parse the URL and compare its hostname, or use a boundary-aware, scheme-anchored check."
+    },
+    {
+      "path": "policies/python/insecure-default-protocol.rqlp",
+      "id": "bifrost.security.python.insecure-default-protocol",
+      "authored_hash": "7f75179bc93797e45910ca813fc7a2e578798b05bddbf65a4dddb7ef8dac2ca8",
+      "resolved_semantic_hash": "7f75179bc93797e45910ca813fc7a2e578798b05bddbf65a4dddb7ef8dac2ca8",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "The stdlib SSL wrapper selects its default protocol when no version is supplied.",
+      "remediation": "Supply a modern, explicitly configured TLS protocol or context."
+    },
+    {
+      "path": "policies/python/insecure-protocol.rqlp",
+      "id": "bifrost.security.python.insecure-protocol",
+      "authored_hash": "79a24169888d2b3e54bf5c44f0154c94eecc519b196916b68bbf8f7f9b094559",
+      "resolved_semantic_hash": "79a24169888d2b3e54bf5c44f0154c94eecc519b196916b68bbf8f7f9b094559",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-value-identity",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "SSLv2, SSLv3, TLSv1.0, and TLSv1.1 allow obsolete protocol negotiation.",
+      "remediation": "Use approved modern TLS protocol versions and configure the SSL context explicitly."
+    },
+    {
+      "path": "policies/python/insecure-temporary-file.rqlp",
+      "id": "bifrost.security.python.insecure-temporary-file",
+      "authored_hash": "354e457ef8ed2dbb32e0123851f5937c1ee95b497ee4f41a75f8bc87bd181c5c",
+      "resolved_semantic_hash": "354e457ef8ed2dbb32e0123851f5937c1ee95b497ee4f41a75f8bc87bd181c5c",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "The temporary-name APIs return a path without safely creating the file, enabling race conditions.",
+      "remediation": "Use tempfile.NamedTemporaryFile or another API that securely creates and opens the file."
+    },
+    {
+      "path": "policies/python/overly-permissive-file.rqlp",
+      "id": "bifrost.security.python.overly-permissive-file",
+      "authored_hash": "7a020c360d47cdaf64b53f0984fc4bf6e71b6ba1e27427ef699752ba59c1ad70",
+      "resolved_semantic_hash": "7a020c360d47cdaf64b53f0984fc4bf6e71b6ba1e27427ef699752ba59c1ad70",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "actual-to-formal-binding"
+      ],
+      "severity_rationale": "World or group permission bits can expose files beyond the owner.",
+      "remediation": "Grant only the minimum owner, group, and world permissions required."
+    },
+    {
+      "path": "policies/python/polynomial-redos.rqlp",
+      "id": "bifrost.security.python.polynomial-redos",
+      "authored_hash": "f5389a0ed9e2b4f2dfb5c5de203bdd859b5c5dae06c9d17e4720b624b5f5cbb2",
+      "resolved_semantic_hash": "f5389a0ed9e2b4f2dfb5c5de203bdd859b5c5dae06c9d17e4720b624b5f5cbb2",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted input reaches a regex shape with polynomial-time backtracking risk.",
+      "remediation": "Rewrite the regex to avoid polynomial backtracking and constrain input length."
+    },
+    {
+      "path": "policies/python/xml-bomb.rqlp",
+      "id": "bifrost.security.python.xml-bomb",
+      "authored_hash": "bd31c05263190d0308de01ecccf69528957895038aaa5ec08f37c10035b86e85",
+      "resolved_semantic_hash": "bd31c05263190d0308de01ecccf69528957895038aaa5ec08f37c10035b86e85",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted XML reaches stdlib parsers that can expand internal entities without bounds.",
+      "remediation": "Use a hardened XML parser configuration and reject unsafe entity expansion."
     }
   ]
 }

@@ -1,0 +1,34 @@
+; CodeQL query: python/ql/src/Security/CVE-2018-1281/BindToAllInterfaces.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Direct stdlib socket construction and exact socket.socket.bind dispatch; wildcard host literals in tuple addresses are reported, while local and Unix sockets are clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.bind-socket-all-network-interfaces"
+  :name "Python socket binds to all network interfaces"
+  :message "A socket binds on every network interface"
+  :severity warning
+  :description "A wildcard IPv4, IPv6, or empty host literal flows through an address tuple to the exact stdlib socket.socket.bind API."
+  :tags ["security" "python" "network"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id all-interface-host
+        :display-name "all-interface host literal"
+        :categories [network.bind]
+        :selector (rql :schema-version 1
+          (language python
+            (string_literal :text/regex "^(?:\"(?:0\\.0\\.0\\.0|::)?\"|'(?:0\\.0\\.0\\.0|::)?')$")))
+        :bind matched-value
+        :labels [all-interface-host])])
+    :sinks (endpoint-set :entries [
+      (sink :id socket-bind
+        :display-name "socket bind address"
+        :categories [network.bind]
+        :selector (rql :schema-version 1
+          (call-argument :formal-index 0
+            (resolved-call :resolves-to "socket.socket.bind" :proof exact
+              (call-bindings (call-shape (language python (call :callee (name "bind"))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [all-interface-host])])))
