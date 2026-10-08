@@ -1,0 +1,16 @@
+; CodeQL: java/ql/src/Language Abuse/TypeVarExtendsFinalType.ql
+; Commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select a containing class when a structured type-variable or wildcard extends bound resolves to a source final declaration.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.type-bound-extends-final"
+  :name "Type bound extends final"
+  :message "type bound names a final type"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language java
+        (class :language-rule "java/type-bound-extends-final")))))
