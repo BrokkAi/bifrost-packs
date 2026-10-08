@@ -70,17 +70,23 @@ full commit and hashes in the premium repository's `release-config.json`; never
 fetch a moving branch or maintain an independently edited schema copy. A contract update requires an
 explicit pin and renewed validation.
 
-The new public streams described in [release streams](../docs/release-streams.md)
-are intended artifacts, not evidence of publication. Native release publication
-also depends on the native schema/runtime accepting the generated content without
-an engine-version gate; see [generation](../docs/generation.md) and the
+The published `packs/v0.2.0` release uses the schema-8 native model contract;
+its behavior qualification remains pending. The new public streams described in
+[release streams](../docs/release-streams.md) are intended artifacts, not
+evidence of publication. Native release publication runs the current
+version-independent schema-2 guard against the actual archive and exact
+dependency manifests; see [generation](../docs/generation.md) and the
 [v0.13 transition](../docs/v013-transition.md).
 
 New publication also runs `publication.py` against the actual archive bytes and
-verified exact dependency manifests. Current native packs fail with
-`incompatible-schema` because inner `compatibility.bifrost` declarations remain
-runtime gates; see [the recorded reproduction](../docs/native-publication-blocker.json).
-Manual and pull-request native workflows stage raw generation evidence without
-creating a selectable release manifest. Rules smoke runs attach checksum-indexed
-inputs, raw reports and executable identity with `behavior.status = limited`;
-release notes are generated from the manifest's actual requirements.
+verified exact dependency manifests. The publication guard rejects an archive
+with remaining inner `compatibility.bifrost` or `engine` declarations; the
+published schema-8 `packs/v0.2.0` artifact is the current live baseline. The
+[recorded reproduction](../docs/native-publication-blocker.json) preserves the
+earlier pre-schema-8 blocker and does not classify other generation or
+publication failures. Manual and pull-request native
+workflows generate and stage the candidate `pack-release.json`, native archive,
+sidecars, and raw generation evidence without creating a published GitHub
+release. Rules smoke runs attach checksum-indexed inputs, raw reports and
+executable identity with `behavior.status = limited`; release notes are
+generated from the manifest's actual requirements.

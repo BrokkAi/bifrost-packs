@@ -5,7 +5,7 @@ on:
       version:
         description: Independent pack release version (raw generation evidence only until native migration)
         required: true
-        default: '0.2.0'
+        default: '0.2.1'
   pull_request:
     paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
   push:
@@ -105,7 +105,7 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          version=${INPUT_VERSION:-0.2.0}
+          version=${INPUT_VERSION:-0.2.1}
           if [[ "$GITHUB_REF" == refs/tags/packs/* ]]; then
             version=${GITHUB_REF_NAME#packs/v}
             test "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" = "$GITHUB_SHA"
