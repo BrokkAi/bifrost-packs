@@ -12,62 +12,249 @@ typeshed revision.
 ## The pinned slice
 
 `typeshed-stdlib-2026.8.31.json` pins typeshed revision
-`1620e225476597f34177351ef913dc8390dade30` and lists 53 stub files. The
-slice is deliberately bounded to common runtime and standard-library surfaces:
+`1620e225476597f34177351ef913dc8390dade30` and contains 63 explicitly selected
+root stubs plus the 149 standard-library modules in their transitive import
+closure (212 stubs total). The root set is deliberately bounded to common
+runtime and standard-library surfaces.
 
-| Module | Pinned stub files |
+### Explicit root stubs
+
+| Root module | Pinned stub file |
 | --- | --- |
-| `builtins` | `builtins.pyi` |
+| `_collections_abc` | `_collections_abc.pyi` |
 | `_sitebuiltins` | `_sitebuiltins.pyi` |
-| `typing` | `typing.pyi` |
-| `re` | `re.pyi` |
-| `subprocess` | `subprocess.pyi` |
-| `os` | `os/__init__.pyi` |
-| `os.path` | `os/path.pyi`, `posixpath.pyi`, `ntpath.pyi` |
-| `json` | `json/__init__.pyi`, `json/decoder.pyi`, `json/encoder.pyi`, `json/scanner.pyi`, `json/tool.pyi` |
-| `collections` | `collections/__init__.pyi` |
-| `collections.abc` | `collections/abc.pyi`, `_collections_abc.pyi` |
 | `abc` | `abc.pyi` |
+| `builtins` | `builtins.pyi` |
 | `codecs` | `codecs.pyi` |
+| `collections` | `collections/__init__.pyi` |
+| `collections.abc` | `collections/abc.pyi` |
 | `contextlib` | `contextlib.pyi` |
-| `ctypes` | `ctypes/__init__.pyi`, `ctypes/wintypes.pyi` |
+| `ctypes` | `ctypes/__init__.pyi` |
+| `ctypes.wintypes` | `ctypes/wintypes.pyi` |
 | `dataclasses` | `dataclasses.pyi` |
 | `enum` | `enum.pyi` |
 | `errno` | `errno.pyi` |
 | `functools` | `functools.pyi` |
 | `gettext` | `gettext.pyi` |
-| `importlib` | `importlib/__init__.pyi`, `importlib/metadata/__init__.pyi` |
+| `hashlib` | `hashlib.pyi` |
+| `hmac` | `hmac.pyi` |
+| `importlib` | `importlib/__init__.pyi` |
+| `importlib.metadata` | `importlib/metadata/__init__.pyi` |
 | `inspect` | `inspect.pyi` |
 | `io` | `io.pyi` |
 | `itertools` | `itertools.pyi` |
+| `json` | `json/__init__.pyi` |
+| `json.decoder` | `json/decoder.pyi` |
+| `json.encoder` | `json/encoder.pyi` |
+| `json.scanner` | `json/scanner.pyi` |
+| `json.tool` | `json/tool.pyi` |
 | `logging` | `logging/__init__.pyi` |
 | `math` | `math/__init__.pyi` |
+| `ntpath` | `ntpath.pyi` |
 | `operator` | `operator.pyi` |
+| `os` | `os/__init__.pyi` |
+| `os.path` | `os/path.pyi` |
 | `pathlib` | `pathlib/__init__.pyi` |
 | `platform` | `platform.pyi` |
+| `posixpath` | `posixpath.pyi` |
 | `random` | `random.pyi` |
+| `re` | `re.pyi` |
 | `shlex` | `shlex.pyi` |
 | `shutil` | `shutil.pyi` |
+| `socket` | `socket.pyi` |
+| `ssl` | `ssl.pyi` |
 | `stat` | `stat.pyi` |
 | `struct` | `struct.pyi` |
+| `subprocess` | `subprocess.pyi` |
 | `sys` | `sys/__init__.pyi` |
 | `tempfile` | `tempfile.pyi` |
 | `textwrap` | `textwrap.pyi` |
 | `threading` | `threading.pyi` |
 | `time` | `time.pyi` |
 | `types` | `types.pyi` |
-| `unittest` | `unittest/__init__.pyi`, `unittest/async_case.pyi`, `unittest/case.pyi` |
+| `typing` | `typing.pyi` |
+| `unittest` | `unittest/__init__.pyi` |
+| `unittest.async_case` | `unittest/async_case.pyi` |
+| `unittest.case` | `unittest/case.pyi` |
 | `warnings` | `warnings.pyi` |
 | `weakref` | `weakref.pyi` |
+| `xml` | `xml/__init__.pyi` |
+| `xml.dom` | `xml/dom/__init__.pyi` |
+| `xml.dom.minidom` | `xml/dom/minidom.pyi` |
+| `xml.etree.ElementTree` | `xml/etree/ElementTree.pyi` |
+| `xml.etree` | `xml/etree/__init__.pyi` |
+| `xml.sax` | `xml/sax/__init__.pyi` |
 
-The pack is one slice of the standard library, not the standard library. It
-publishes nothing about the other standard-library modules
-stdlib modules typeshed carries. A consumer must not read a name's absence
-from this pack as a statement about the standard library. The manifest
-records `completeness: complete` because that field states extraction
-fidelity for the artifact the pack names, and the Python boundary judge reads
-it per module: a module this pack does not publish never reaches an absence
-verdict.
+The next table is the AST-derived transitive import closure of those roots
+for this exact typeshed revision. The producer currently parses imports but
+does not discover omitted source entries, so these 149 paths are explicit
+pack data until closure discovery moves into the engine producer. The closure
+contains only `stdlib/` stubs; every parsed import target resolved there.
+
+### Transitive import-closure stubs
+
+| Added module | Pinned stub file |
+| --- | --- |
+| `_ast` | `_ast.pyi` |
+| `_asyncio` | `_asyncio.pyi` |
+| `_blake2` | `_blake2.pyi` |
+| `_bz2` | `_bz2.pyi` |
+| `_codecs` | `_codecs.pyi` |
+| `_compression` | `_compression.pyi` |
+| `_contextvars` | `_contextvars.pyi` |
+| `_ctypes` | `_ctypes.pyi` |
+| `_decimal` | `_decimal.pyi` |
+| `_frozen_importlib` | `_frozen_importlib.pyi` |
+| `_frozen_importlib_external` | `_frozen_importlib_external.pyi` |
+| `_hashlib` | `_hashlib.pyi` |
+| `_interpqueues` | `_interpqueues.pyi` |
+| `_interpreters` | `_interpreters.pyi` |
+| `_io` | `_io.pyi` |
+| `_json` | `_json.pyi` |
+| `_operator` | `_operator.pyi` |
+| `_pickle` | `_pickle.pyi` |
+| `_queue` | `_queue.pyi` |
+| `_random` | `_random.pyi` |
+| `_socket` | `_socket.pyi` |
+| `_ssl` | `_ssl.pyi` |
+| `_stat` | `_stat.pyi` |
+| `_struct` | `_struct.pyi` |
+| `_thread` | `_thread.pyi` |
+| `_typeshed` | `_typeshed/__init__.pyi` |
+| `_typeshed.importlib` | `_typeshed/importlib.pyi` |
+| `_typeshed.xml` | `_typeshed/xml.pyi` |
+| `_warnings` | `_warnings.pyi` |
+| `_weakref` | `_weakref.pyi` |
+| `_weakrefset` | `_weakrefset.pyi` |
+| `_winapi` | `_winapi.pyi` |
+| `_zstd` | `_zstd.pyi` |
+| `annotationlib` | `annotationlib.pyi` |
+| `ast` | `ast.pyi` |
+| `asyncio` | `asyncio/__init__.pyi` |
+| `asyncio.base_events` | `asyncio/base_events.pyi` |
+| `asyncio.base_futures` | `asyncio/base_futures.pyi` |
+| `asyncio.constants` | `asyncio/constants.pyi` |
+| `asyncio.coroutines` | `asyncio/coroutines.pyi` |
+| `asyncio.events` | `asyncio/events.pyi` |
+| `asyncio.exceptions` | `asyncio/exceptions.pyi` |
+| `asyncio.futures` | `asyncio/futures.pyi` |
+| `asyncio.graph` | `asyncio/graph.pyi` |
+| `asyncio.locks` | `asyncio/locks.pyi` |
+| `asyncio.mixins` | `asyncio/mixins.pyi` |
+| `asyncio.proactor_events` | `asyncio/proactor_events.pyi` |
+| `asyncio.protocols` | `asyncio/protocols.pyi` |
+| `asyncio.queues` | `asyncio/queues.pyi` |
+| `asyncio.runners` | `asyncio/runners.pyi` |
+| `asyncio.selector_events` | `asyncio/selector_events.pyi` |
+| `asyncio.streams` | `asyncio/streams.pyi` |
+| `asyncio.subprocess` | `asyncio/subprocess.pyi` |
+| `asyncio.taskgroups` | `asyncio/taskgroups.pyi` |
+| `asyncio.tasks` | `asyncio/tasks.pyi` |
+| `asyncio.threads` | `asyncio/threads.pyi` |
+| `asyncio.timeouts` | `asyncio/timeouts.pyi` |
+| `asyncio.transports` | `asyncio/transports.pyi` |
+| `asyncio.unix_events` | `asyncio/unix_events.pyi` |
+| `asyncio.windows_events` | `asyncio/windows_events.pyi` |
+| `asyncio.windows_utils` | `asyncio/windows_utils.pyi` |
+| `bz2` | `bz2.pyi` |
+| `compression` | `compression/__init__.pyi` |
+| `compression._common` | `compression/_common/__init__.pyi` |
+| `compression._common._streams` | `compression/_common/_streams.pyi` |
+| `compression.zstd` | `compression/zstd/__init__.pyi` |
+| `compression.zstd._zstdfile` | `compression/zstd/_zstdfile.pyi` |
+| `concurrent` | `concurrent/__init__.pyi` |
+| `concurrent.futures` | `concurrent/futures/__init__.pyi` |
+| `concurrent.futures._base` | `concurrent/futures/_base.pyi` |
+| `concurrent.futures.interpreter` | `concurrent/futures/interpreter.pyi` |
+| `concurrent.futures.process` | `concurrent/futures/process.pyi` |
+| `concurrent.futures.thread` | `concurrent/futures/thread.pyi` |
+| `concurrent.interpreters` | `concurrent/interpreters/__init__.pyi` |
+| `concurrent.interpreters._crossinterp` | `concurrent/interpreters/_crossinterp.pyi` |
+| `concurrent.interpreters._queues` | `concurrent/interpreters/_queues.pyi` |
+| `contextvars` | `contextvars.pyi` |
+| `copyreg` | `copyreg.pyi` |
+| `ctypes._endian` | `ctypes/_endian.pyi` |
+| `decimal` | `decimal.pyi` |
+| `dis` | `dis.pyi` |
+| `fractions` | `fractions.pyi` |
+| `genericpath` | `genericpath.pyi` |
+| `gzip` | `gzip.pyi` |
+| `importlib._abc` | `importlib/_abc.pyi` |
+| `importlib._bootstrap` | `importlib/_bootstrap.pyi` |
+| `importlib._bootstrap_external` | `importlib/_bootstrap_external.pyi` |
+| `importlib.abc` | `importlib/abc.pyi` |
+| `importlib.machinery` | `importlib/machinery.pyi` |
+| `importlib.metadata._meta` | `importlib/metadata/_meta.pyi` |
+| `importlib.readers` | `importlib/readers.pyi` |
+| `importlib.resources` | `importlib/resources/__init__.pyi` |
+| `importlib.resources._common` | `importlib/resources/_common.pyi` |
+| `importlib.resources._functional` | `importlib/resources/_functional.pyi` |
+| `importlib.resources.abc` | `importlib/resources/abc.pyi` |
+| `multiprocessing` | `multiprocessing/__init__.pyi` |
+| `multiprocessing.connection` | `multiprocessing/connection.pyi` |
+| `multiprocessing.context` | `multiprocessing/context.pyi` |
+| `multiprocessing.managers` | `multiprocessing/managers.pyi` |
+| `multiprocessing.pool` | `multiprocessing/pool.pyi` |
+| `multiprocessing.popen_fork` | `multiprocessing/popen_fork.pyi` |
+| `multiprocessing.popen_forkserver` | `multiprocessing/popen_forkserver.pyi` |
+| `multiprocessing.popen_spawn_posix` | `multiprocessing/popen_spawn_posix.pyi` |
+| `multiprocessing.popen_spawn_win32` | `multiprocessing/popen_spawn_win32.pyi` |
+| `multiprocessing.process` | `multiprocessing/process.pyi` |
+| `multiprocessing.queues` | `multiprocessing/queues.pyi` |
+| `multiprocessing.reduction` | `multiprocessing/reduction.pyi` |
+| `multiprocessing.resource_sharer` | `multiprocessing/resource_sharer.pyi` |
+| `multiprocessing.shared_memory` | `multiprocessing/shared_memory.pyi` |
+| `multiprocessing.sharedctypes` | `multiprocessing/sharedctypes.pyi` |
+| `multiprocessing.spawn` | `multiprocessing/spawn.pyi` |
+| `multiprocessing.synchronize` | `multiprocessing/synchronize.pyi` |
+| `multiprocessing.util` | `multiprocessing/util.pyi` |
+| `numbers` | `numbers.pyi` |
+| `opcode` | `opcode.pyi` |
+| `pathlib.types` | `pathlib/types.pyi` |
+| `pickle` | `pickle.pyi` |
+| `pyexpat` | `pyexpat/__init__.pyi` |
+| `pyexpat.errors` | `pyexpat/errors.pyi` |
+| `pyexpat.model` | `pyexpat/model.pyi` |
+| `queue` | `queue.pyi` |
+| `resource` | `resource.pyi` |
+| `selectors` | `selectors.pyi` |
+| `signal` | `signal.pyi` |
+| `string` | `string/__init__.pyi` |
+| `sys.__jit` | `sys/__jit.pyi` |
+| `sys._monitoring` | `sys/_monitoring.pyi` |
+| `tarfile` | `tarfile.pyi` |
+| `typing_extensions` | `typing_extensions.pyi` |
+| `unittest._log` | `unittest/_log.pyi` |
+| `unittest.loader` | `unittest/loader.pyi` |
+| `unittest.main` | `unittest/main.pyi` |
+| `unittest.result` | `unittest/result.pyi` |
+| `unittest.runner` | `unittest/runner.pyi` |
+| `unittest.signals` | `unittest/signals.pyi` |
+| `unittest.suite` | `unittest/suite.pyi` |
+| `xml.dom.domreg` | `xml/dom/domreg.pyi` |
+| `xml.dom.minicompat` | `xml/dom/minicompat.pyi` |
+| `xml.dom.xmlbuilder` | `xml/dom/xmlbuilder.pyi` |
+| `xml.parsers` | `xml/parsers/__init__.pyi` |
+| `xml.parsers.expat` | `xml/parsers/expat/__init__.pyi` |
+| `xml.sax._exceptions` | `xml/sax/_exceptions.pyi` |
+| `xml.sax.handler` | `xml/sax/handler.pyi` |
+| `xml.sax.xmlreader` | `xml/sax/xmlreader.pyi` |
+| `xml.utils` | `xml/utils.pyi` |
+| `zipfile` | `zipfile/__init__.pyi` |
+| `zipfile._path` | `zipfile/_path/__init__.pyi` |
+| `zipimport` | `zipimport.pyi` |
+| `zlib` | `zlib.pyi` |
+
+The pack is one slice of the standard library, not the standard library. A
+module outside this selected source set is outside the pack's statements and
+cannot yield a standard-library absence verdict. The manifest stores one
+`completeness` value for the whole `python_stub` source set, not a separate
+value for each module; the Python boundary applies that pack value to each
+module it publishes. This generated set is `complete`, with zero rejected or
+suppressed stubs, so all 212 included module surfaces inherit complete
+extraction status. Module-specific dynamic behavior, such as `__getattr__` or
+an unenumerated `*` binding, still makes that module's boundary incomplete and
+cannot prove a name absent.
 
 `os.path`, `collections.abc`, `codecs`, and `struct` are re-export shims in
 typeshed. Their stubs spell `from ntpath import *`, `from posixpath import *`,
@@ -84,12 +271,12 @@ base and a name that is not on `set` can be proved absent. A name a guarded
 wildcard binds keeps that condition, so the `os.path` names carry the
 `sys.platform` guard their branch states.
 
-`_codecs` and `_struct` are outside this pinned source set, so `codecs` and
-`struct` keep the `*` binding, which is the honest statement "this surface
-binds names the pack could not enumerate". The Python boundary judge reports
-those two modules as incomplete instead of proving a name absent. A module
-whose `__all__` this producer cannot read as a list of string literals keeps
-the marker for the same reason.
+`_codecs` and `_struct` are in the pinned import closure. The generated pack
+expands both wildcard re-exports: `codecs` publishes 99 names and `struct`
+publishes 13, with no incomplete `*` marker. No newly added closure module has
+an unenumerated `*` or dynamic `__getattr__` marker. A module whose `__all__`
+this producer cannot read as a list of string literals keeps the marker for the
+same reason.
 
 Typeshed publishes overloaded methods as several records with one owner and
 name. The semantic-model overlay treats such records as one present member

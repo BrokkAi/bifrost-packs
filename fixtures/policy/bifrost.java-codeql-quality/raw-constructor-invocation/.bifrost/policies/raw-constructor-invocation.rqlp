@@ -1,0 +1,16 @@
+; CodeQL: java/ql/src/Advisory/Types/GenericsConstructor.ql
+; Commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select constructor object creations whose declared target type is generic and whose written type has no arguments.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.raw-constructor-invocation"
+  :name "Raw generic constructor invocation"
+  :message "generic constructor invocation is raw"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language java
+        (call :language-rule "java/raw-constructor-invocation")))))
