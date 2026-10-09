@@ -15,7 +15,19 @@
           :schema-version 1
           (union
             (language python
-              (inside-decl (loop :capture "region") (call :receiver (name "cursor") :callee (name "execute") :capture "smell")))
+              (filter :where ((effect_id eq "bifrost.performance.database_call")
+                              (derivation eq declared)
+                              (certainty eq definite)
+                              (proof eq proven)
+                              (coverage eq exhaustive)
+                              (terminal eq false)
+                              (execution_timing eq same_invocation)
+                              (timing eq immediate))
+                (call-effects
+                  (call-shape
+                    (inside-decl
+                      (loop :capture "region")
+                      (call :callee (name "execute") :capture "smell"))))))
             (language java
               (inside-decl (loop :capture "region") (call :receiver (name "statement") :callee (name "executeQuery") :capture "smell")))
             (language javascript

@@ -15,11 +15,21 @@
           :schema-version 1
           (union
             (language python
-              (loop
-                (has
-                  (loop :capture "region"
-                    (has
-                      (call :callee (name "open") :capture "smell"))))))
+              (filter :where ((effect_id eq "bifrost.performance.file_read")
+                              (derivation eq declared)
+                              (certainty eq definite)
+                              (proof eq proven)
+                              (coverage eq exhaustive)
+                              (terminal eq false)
+                              (execution_timing eq same_invocation)
+                              (timing eq immediate))
+                (call-effects
+                  (call-shape
+                    (loop
+                      (has
+                        (loop :capture "region"
+                          (has
+                            (call :callee (name "read") :capture "smell")))))))))
             (language java
               (loop
                 (has
