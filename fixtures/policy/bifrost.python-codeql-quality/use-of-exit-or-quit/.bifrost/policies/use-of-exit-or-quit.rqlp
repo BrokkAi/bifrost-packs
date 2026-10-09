@@ -1,0 +1,22 @@
+; CodeQL: python/ql/src/Statements/UseOfExit.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: The site module convenience exit and quit calls may be unavailable under python -S.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.use-of-exit-or-quit"
+  :name "Python use of exit or quit"
+  :message "The site module convenience exit and quit calls may be unavailable under python -S."
+  :severity warning
+  :description "Mirrors CodeQL python/ql/src/Statements/UseOfExit.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects unqualified call-callee occurrences only when Python builtin identity proves `builtins.exit` or `builtins.quit`. Member calls are excluded structurally; shadowed and unresolved identities remain typed incomplete."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((relation eq builtin_identity)
+                      (outcome eq builtin)
+                      (proof eq proven)
+                      (completeness eq complete)
+                      (target_id in ["builtins.exit" "builtins.quit"]))
+        (python-builtin-identity
+          (occurrences-in :class reference :role value_reference
+            (language python (call :callee (name/regex "^(exit|quit)$")))))))))

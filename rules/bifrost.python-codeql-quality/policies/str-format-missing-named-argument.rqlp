@@ -1,0 +1,22 @@
+; CodeQL: python/ql/src/Expressions/Formatting/WrongNameInArgumentsFor3101Format.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag supported str.format calls with a named field not supplied by
+; a matching keyword.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.str-format-missing-named-argument"
+  :name "Python str.format missing named argument"
+  :message "This format string requires a missing named argument."
+  :severity error
+  :description "Finds supported str.format calls where a parsed named field is absent from supplied keywords."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where
+        ((relation eq str_format_missing_named_argument)
+         (outcome eq issue)
+         (proof eq proven)
+         (completeness eq complete))
+        (python-format-issues
+          (language python (call :callee (name "format"))))))))

@@ -1,0 +1,19 @@
+; CodeQL: python/ql/src/Functions/IncorrectRaiseInSpecialMethod.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: report direct special-method raises proven outside the method's allowed exception family.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.unexpected-raise-in-special-method"
+  :name "Python special method raises an unexpected exception"
+  :message "special method raises an exception outside its protocol"
+  :severity warning
+  :description "Mirrors CodeQL py/unexpected-raise-in-special-method at ae741615f3e178ce61289a651790dc67fcc18e19. Reports direct raise operands only when the special-method contract proves the exception family mismatch; abstract methods, handled raises, and incomplete hierarchy or CFG evidence are excluded."
+  :tags ["python" "codeql" "quality" "exceptions"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((relation eq unexpected_raise_in_special_method)
+                      (outcome eq unexpected)
+                      (proof eq proven)
+                      (completeness eq complete))
+        (python-special-method-raise (language python (throw)))))))

@@ -19,6 +19,11 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 
 - CodeQL reduced corpus slices: MIT; see `licenses/CodeQL-MIT.txt` and the
   exact upstream revision in `semantic-packs/summary-corpora/pins.json`.
+- CodeQL-derived Python quality and security fixture test sources are MIT,
+  Copyright (c) GitHub, Inc.,
+  from `github/codeql` at
+  `ae741615f3e178ce61289a651790dc67fcc18e19`; see
+  `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded
@@ -34,3 +39,5 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 
 The source archive is a mixed-license source distribution, not an Apache-only
 relicensing and not an installable native semantic-pack release bundle.
+
+Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19. Public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0. No CodeQL query implementation or third-party library source is copied. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.

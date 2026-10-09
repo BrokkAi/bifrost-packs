@@ -1,0 +1,44 @@
+; CodeQL query: python/ql/src/Security/CWE-732/WeakFilePermissions.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Exact os.chmod and os.open calls with explicit literal modes are reported when world bits or group-write bits are set; safe literals, defaults, and local lookalikes are clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.overly-permissive-file"
+  :name "Python overly permissive file mode"
+  :message "File mode grants access beyond the owner"
+  :severity warning
+  :description "Reports explicit integer literals for exact os.chmod or os.open mode formals with any world permission or group-write permission. Computed expressions and defaults are outside this literal rule."
+  :tags ["security" "python" "filesystem" "permissions"]
+  :analysis (analysis
+    :type assertion
+    (bind :name permissive-modes :query
+      (rql :schema-version 1
+        (filter :where ((binding_kind ne defaulted))
+          (union
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.chmod" :proof exact
+                (call-bindings (call-shape (language python (call :arity 2 :args [(capture "path") (numeric_literal :integer-has-any-bits 7)]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.chmod" :proof exact
+                (call-bindings (call-shape (language python (call :arity 1 :args [(capture "path")] :kwargs [(mode (numeric_literal :integer-has-any-bits 7))]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.open" :proof exact
+                (call-bindings (call-shape (language python (call :arity 3 :args [(capture "path") (capture "flags") (numeric_literal :integer-has-any-bits 7)]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.open" :proof exact
+                (call-bindings (call-shape (language python (call :arity 2 :args [(capture "path") (capture "flags")] :kwargs [(mode (numeric_literal :integer-has-any-bits 7))]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.chmod" :proof exact
+                (call-bindings (call-shape (language python (call :arity 2 :args [(capture "path") (numeric_literal :integer-has-no-bits 7 :integer-has-any-bits 56)]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.chmod" :proof exact
+                (call-bindings (call-shape (language python (call :arity 1 :args [(capture "path")] :kwargs [(mode (numeric_literal :integer-has-no-bits 7 :integer-has-any-bits 56))]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.open" :proof exact
+                (call-bindings (call-shape (language python (call :arity 3 :args [(capture "path") (capture "flags") (numeric_literal :integer-has-no-bits 7 :integer-has-any-bits 56)]))))))
+            (call-argument :formal-name "mode"
+              (resolved-call :resolves-to "os.open" :proof exact
+                (call-bindings (call-shape (language python (call :arity 2 :args [(capture "path") (capture "flags")] :kwargs [(mode (numeric_literal :integer-has-no-bits 7 :integer-has-any-bits 56))]))))))))))
+    (group :name by-call :by (permissive-modes.site_id)
+      (aggregate :name unsafe-modes :op count))
+    (assert :group by-call :value unsafe-modes :cardinality (exactly 0))))

@@ -1,0 +1,16 @@
+; CodeQL query: java/ql/src/Advisory/Documentation/ImpossibleJavadocThrows.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: a grammar-backed Javadoc throws tag is inconsistent when
+; it names a checked exception not declared by the callable; unchecked tags are excluded.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.inconsistent-javadoc-throws"
+  :name "Java inconsistent Javadoc throws"
+  :message "Javadoc claims an impossible checked exception"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (method :language-rule "java/inconsistent-javadoc-throws")))))

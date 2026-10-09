@@ -1,0 +1,21 @@
+; CodeQL: python/ql/src/Expressions/ExpectedMappingForFormatString.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag named percent formats whose supported right operand is not a mapping.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.percent-format-not-mapping"
+  :name "Python percent format requires a mapping"
+  :message "Named percent formatting requires a mapping."
+  :severity error
+  :description "Finds percent-format operations with named fields and a supported non-mapping right operand."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where
+        ((relation eq percent_format_not_mapping)
+         (outcome eq issue)
+         (proof eq proven)
+         (completeness eq complete))
+        (python-format-issues
+          (language python (binary_expression)))))))

@@ -1,0 +1,15 @@
+; CodeQL query: python/ql/src/Imports/ModuleImportsItself.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a complete Python import whose parsed module identity is the importing module itself.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.import-own-module"
+  :name "Python module imports itself"
+  :message "module imports itself"
+  :severity warning
+  :description "Mirrors CodeQL py/import-own-module with the parser-derived importing-module identity; unresolved and path-derived identities are not treated as self-imports."
+  :tags ["python" "codeql" "quality" "imports"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((python_import_complete eq true)
+                      (python_import_own_module eq true))
+        (python-import-site (language python (import)))))))

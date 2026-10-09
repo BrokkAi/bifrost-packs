@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/analysis/TypeHierarchyFailure.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report each definite unresolved or non-class base inference failure; the whole policy run remains inconclusive when hierarchy inference fails.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.failed-inheritance-inference"
+  :name "Failed Python inheritance inference"
+  :message "The analyzer could not infer this class base"
+  :severity warning
+  :description "Reports each definite unresolved or non-class base expression. Runs report inconclusive when inference fails, preserving uncertainty for hierarchy-dependent checks."
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq inference_failure)
+                      (coverage eq complete))
+        (class-hierarchy
+          (enclosing-decl (language python (class))))))))

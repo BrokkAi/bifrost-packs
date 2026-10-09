@@ -1,0 +1,17 @@
+; CodeQL: python/ql/src/Expressions/NonPortableComparisonUsingIs.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag is/is-not comparisons against CPython-only interned small integer
+; and short string literals when value equality applies.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.comparison-using-is-non-portable"
+  :name "Python non-portable identity comparison"
+  :message "This identity comparison may depend on CPython interning."
+  :severity note
+  :description "Selects small integers and short strings that CPython may intern but Python does not require other implementations to intern."
+  :tags ["python" "codeql" "quality" "portability"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (python-comparison-using-is-non-portable
+        (language python (comparison))))))

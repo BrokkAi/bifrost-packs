@@ -1,0 +1,360 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-ssl-protocol-declarations",
+  "version": "1.0.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-stdlib-models",
+    "version": "1.0.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.13.5, <3.13.6"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "CPython ssl reference and pinned Typeshed 1620e225476597f34177351ef913dc8390dade30; bounded protocol constants and consuming API signatures",
+    "revision": "CPython v3.13.5; Typeshed 1620e225476597f34177351ef913dc8390dade30"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "python.codeql-ssl-protocol-declarations",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "cpython",
+            "version": ">=3.13.5, <3.13.6"
+          },
+          "targets": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.ssl",
+            "name": "ssl",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "ssl"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl"
+            }
+          },
+          {
+            "id": "type.python.ssl-context",
+            "name": "ssl.SSLContext",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.SSLContext"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.ssl.protocol-sslv2",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_SSLv2",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_SSLv2"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-sslv3",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_SSLv3",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_SSLv3"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-tlsv1",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_TLSv1",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_TLSv1"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-tlsv1-2",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_TLSv1_2",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_TLSv1_2"
+            }
+          },
+          {
+            "id": "member.python.ssl.wrap-socket",
+            "owner": "type.python.ssl",
+            "name": "wrap_socket",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "sock",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "keyfile",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "certfile",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "server_side",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "cert_reqs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ssl_version",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ca_certs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "do_handshake_on_connect",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "suppress_ragged_eofs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ciphers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.wrap_socket"
+            }
+          },
+          {
+            "id": "member.python.ssl.context.init",
+            "owner": "type.python.ssl-context",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "signature": {
+              "parameters": [
+                {
+                  "name": "protocol",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.SSLContext.__init__(protocol)"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-sslv23",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_SSLv23",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_SSLv23"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-tlsv1-1",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_TLSv1_1",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_TLSv1_1"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-tls",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_TLS",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_TLS"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-tls-client",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_TLS_CLIENT",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_TLS_CLIENT"
+            }
+          },
+          {
+            "id": "member.python.ssl.protocol-tls-server",
+            "owner": "type.python.ssl",
+            "name": "PROTOCOL_TLS_SERVER",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.int"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.PROTOCOL_TLS_SERVER"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.java-codeql-quality",
+  "version": "0.1.0",
+  "name": "Bifrost Java CodeQL quality",
+  "description": "Public Java declaration, naming, generics, constructor, and Javadoc quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
+  "policies": [
+    {
+      "path": "policies/non-final-immutable-field.rqlp",
+      "id": "bifrost.java-codeql-quality.non-final-immutable-field",
+      "authored_hash": "099302ee6ac9f2f4946545d8539ba531703bc383d5cd76c1b051963153fbd4b2",
+      "resolved_semantic_hash": "099302ee6ac9f2f4946545d8539ba531703bc383d5cd76c1b051963153fbd4b2",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A field that is only assigned during initialization can be final, making the class invariant explicit.",
+      "remediation": "Declare initialization-only immutable fields final after reviewing subclassing and serialization requirements."
+    },
+    {
+      "path": "policies/non-private-field.rqlp",
+      "id": "bifrost.java-codeql-quality.non-private-field",
+      "authored_hash": "d2afee10c0f31afe0214c2fd59c0c8ce6de1b15b45d997b320fc094ef95d0e2f",
+      "resolved_semantic_hash": "d2afee10c0f31afe0214c2fd59c0c8ce6de1b15b45d997b320fc094ef95d0e2f",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "An unused non-private field exposes mutable state beyond the type boundary.",
+      "remediation": "Make the field private or document and preserve the required external access contract."
+    },
+    {
+      "path": "policies/misnamed-constant.rqlp",
+      "id": "bifrost.java-codeql-quality.misnamed-constant",
+      "authored_hash": "b755e39da81814236397a18a0bbec453a8471e01e74b05e55d673f591e01d19f",
+      "resolved_semantic_hash": "b755e39da81814236397a18a0bbec453a8471e01e74b05e55d673f591e01d19f",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Static final constants with lowercase names obscure their constant role and weaken naming consistency.",
+      "remediation": "Rename the constant using the project\u2019s uppercase constant convention, preserving API compatibility where required."
+    },
+    {
+      "path": "policies/misnamed-variable.rqlp",
+      "id": "bifrost.java-codeql-quality.misnamed-variable",
+      "authored_hash": "1f3191249a1cad1b9221768f6d3ebd109bd15cd35286c1df39004f73c522e990",
+      "resolved_semantic_hash": "1f3191249a1cad1b9221768f6d3ebd109bd15cd35286c1df39004f73c522e990",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Uppercase-initial variable declarations look like types or constants and make local data flow harder to read.",
+      "remediation": "Rename fields, parameters, and locals with a lowercase initial according to the project naming convention."
+    },
+    {
+      "path": "policies/underscore-identifier.rqlp",
+      "id": "bifrost.java-codeql-quality.underscore-identifier",
+      "authored_hash": "8d702795cb1cefd81009e505df65eed73e6a8e30323d6559827029459119a0db",
+      "resolved_semantic_hash": "8d702795cb1cefd81009e505df65eed73e6a8e30323d6559827029459119a0db",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A single underscore is reserved or invalid as a Java identifier in modern source levels.",
+      "remediation": "Replace the underscore declaration or package segment with a descriptive identifier."
+    },
+    {
+      "path": "policies/enum-identifier.rqlp",
+      "id": "bifrost.java-codeql-quality.enum-identifier",
+      "authored_hash": "a63f0a1f443da6afbce62dedfd0effa1786ae63681346ce5dfd90fa890e3f285",
+      "resolved_semantic_hash": "a63f0a1f443da6afbce62dedfd0effa1786ae63681346ce5dfd90fa890e3f285",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Using the keyword enum as an identifier is invalid or confusing Java syntax.",
+      "remediation": "Rename the declaration to a non-keyword identifier."
+    },
+    {
+      "path": "policies/constructor-typo.rqlp",
+      "id": "bifrost.java-codeql-quality.constructor-typo",
+      "authored_hash": "cffdda01c68b8336d54fc235c819afe19b4364e9dede4d5494c8e629cf687166",
+      "resolved_semantic_hash": "cffdda01c68b8336d54fc235c819afe19b4364e9dede4d5494c8e629cf687166",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A method named like its enclosing type is easy to mistake for a constructor but has different method semantics.",
+      "remediation": "Rename the method or make the declaration a real constructor with the intended initialization behavior."
+    },
+    {
+      "path": "policies/raw-constructor-invocation.rqlp",
+      "id": "bifrost.java-codeql-quality.raw-constructor-invocation",
+      "authored_hash": "f084fee10f8f2ed85d5cbde7965796b9ee30b032edb2303bc7091e3070d3fdee",
+      "resolved_semantic_hash": "f084fee10f8f2ed85d5cbde7965796b9ee30b032edb2303bc7091e3070d3fdee",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "generic-type-facts",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Constructing a generic type without type arguments discards compile-time type safety.",
+      "remediation": "Supply the intended generic type arguments, preferably using the diamond operator where appropriate."
+    },
+    {
+      "path": "policies/raw-return-type.rqlp",
+      "id": "bifrost.java-codeql-quality.raw-return-type",
+      "authored_hash": "b817f4060f54cabda2f4a7b8c907b5c1302c8e1b5373ad8504ac8eafc66c03a3",
+      "resolved_semantic_hash": "b817f4060f54cabda2f4a7b8c907b5c1302c8e1b5373ad8504ac8eafc66c03a3",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "generic-type-facts",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A raw generic return type weakens callers\u2019 type checking and can introduce unchecked conversions.",
+      "remediation": "Return the generic type with its intended type arguments."
+    },
+    {
+      "path": "policies/raw-variable.rqlp",
+      "id": "bifrost.java-codeql-quality.raw-variable",
+      "authored_hash": "73281664efee9c8a912c2df94ca1803da2e32df0d1a011bfe0d9f68550fdc3e5",
+      "resolved_semantic_hash": "73281664efee9c8a912c2df94ca1803da2e32df0d1a011bfe0d9f68550fdc3e5",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "generic-type-facts",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A raw generic field, local, or parameter weakens the type contract at the declaration boundary.",
+      "remediation": "Add the intended type arguments to the field, local, or parameter declaration."
+    },
+    {
+      "path": "policies/type-bound-extends-final.rqlp",
+      "id": "bifrost.java-codeql-quality.type-bound-extends-final",
+      "authored_hash": "a175219559dd54e0fa47d47135657ada186b4d3e3314584500f690b59a070b5b",
+      "resolved_semantic_hash": "a175219559dd54e0fa47d47135657ada186b4d3e3314584500f690b59a070b5b",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "generic-type-facts",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A type variable or wildcard bound that extends a final type cannot admit a meaningful subtype.",
+      "remediation": "Use an open bound or remove the unnecessary type parameter after reviewing the API contract."
+    },
+    {
+      "path": "policies/type-variable-hides-type.rqlp",
+      "id": "bifrost.java-codeql-quality.type-variable-hides-type",
+      "authored_hash": "8781238a98b6b5172619512661c3cf9cbd809ff15e39b3309d565119e46ebf73",
+      "resolved_semantic_hash": "8781238a98b6b5172619512661c3cf9cbd809ff15e39b3309d565119e46ebf73",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "generic-type-facts",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A type parameter that shadows a visible type name makes signatures and references ambiguous to readers.",
+      "remediation": "Rename the type parameter so the visible type remains unambiguous."
+    },
+    {
+      "path": "policies/inconsistent-javadoc-throws.rqlp",
+      "id": "bifrost.java-codeql-quality.inconsistent-javadoc-throws",
+      "authored_hash": "f5d95b482015fc5d4bbe8f353094bbb97ac6d336b2d0a08592d5e60c1cd39c12",
+      "resolved_semantic_hash": "f5d95b482015fc5d4bbe8f353094bbb97ac6d336b2d0a08592d5e60c1cd39c12",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "An impossible checked-exception Javadoc tag documents behavior the callable does not declare.",
+      "remediation": "Remove the stale tag or update the declaration and documentation to describe the actual checked exception contract."
+    },
+    {
+      "path": "policies/unknown-javadoc-parameter.rqlp",
+      "id": "bifrost.java-codeql-quality.unknown-javadoc-parameter",
+      "authored_hash": "a5af9665ad66943b64041bd0ac8e8da3de6abe6e6411e131dd9161f8b9705256",
+      "resolved_semantic_hash": "a5af9665ad66943b64041bd0ac8e8da3de6abe6e6411e131dd9161f8b9705256",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "A Javadoc parameter tag that names no callable or type parameter is stale documentation.",
+      "remediation": "Rename the tag to a declared parameter or remove it."
+    },
+    {
+      "path": "policies/undocumented-exception.rqlp",
+      "id": "bifrost.java-codeql-quality.undocumented-exception",
+      "authored_hash": "518f6a08cb232ab9678cd293d2a9e65a428ff7663c76f292c7970e15a4fb6203",
+      "resolved_semantic_hash": "518f6a08cb232ab9678cd293d2a9e65a428ff7663c76f292c7970e15a4fb6203",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "A public callable\u2019s checked exception contract is incomplete without an acceptable Javadoc throws tag.",
+      "remediation": "Document each declared checked exception with an accurate @throws or @exception tag."
+    },
+    {
+      "path": "policies/undocumented-function.rqlp",
+      "id": "bifrost.java-codeql-quality.undocumented-function",
+      "authored_hash": "5febcd60796a0914a320f316acf9ebc3afd7c764811346a1e90f37a0101279df",
+      "resolved_semantic_hash": "5febcd60796a0914a320f316acf9ebc3afd7c764811346a1e90f37a0101279df",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "Public callable behavior is harder to use and review when it has no Javadoc contract.",
+      "remediation": "Add a Javadoc block describing the callable\u2019s behavior, parameters, return value, and exceptions as applicable."
+    },
+    {
+      "path": "policies/undocumented-parameter.rqlp",
+      "id": "bifrost.java-codeql-quality.undocumented-parameter",
+      "authored_hash": "ac0cc670eea66e3645d288f703dc4bfdbf710aa4cd6ef4ba44b8338c5726b744",
+      "resolved_semantic_hash": "ac0cc670eea66e3645d288f703dc4bfdbf710aa4cd6ef4ba44b8338c5726b744",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "A public callable parameter without Javadoc leaves its input contract unspecified.",
+      "remediation": "Add an accurate @param tag for each eligible public parameter."
+    },
+    {
+      "path": "policies/undocumented-return-value.rqlp",
+      "id": "bifrost.java-codeql-quality.undocumented-return-value",
+      "authored_hash": "154b81b0eb4ae462e1b7fc4c9649d2e12738090797ad41017c73076088a45b1b",
+      "resolved_semantic_hash": "154b81b0eb4ae462e1b7fc4c9649d2e12738090797ad41017c73076088a45b1b",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "A public non-void callable without a return-value description leaves callers without an output contract.",
+      "remediation": "Add an accurate @return tag describing the returned value."
+    },
+    {
+      "path": "policies/undocumented-type.rqlp",
+      "id": "bifrost.java-codeql-quality.undocumented-type",
+      "authored_hash": "87a63d25daa1b72f74936ff35e5424ac74e21718482b10e07bad529e5955de92",
+      "resolved_semantic_hash": "87a63d25daa1b72f74936ff35e5424ac74e21718482b10e07bad529e5955de92",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "javadoc-facts"
+      ],
+      "severity_rationale": "A public source type without Javadoc leaves its purpose and contract unexplained.",
+      "remediation": "Add a Javadoc block describing the public type and its intended use."
+    }
+  ]
+}

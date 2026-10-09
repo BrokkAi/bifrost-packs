@@ -1,0 +1,16 @@
+; CodeQL java/ql/src/Advisory/Declarations/NonPrivateField.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a non-private, non-constant field with no access
+; from outside its declaring type.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.non-private-field"
+  :name "Java non-private field"
+  :message "unused non-private field should be private"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java non-private non-constant fields without external reads."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (identifier :language-rule "java/non-private-field")))))

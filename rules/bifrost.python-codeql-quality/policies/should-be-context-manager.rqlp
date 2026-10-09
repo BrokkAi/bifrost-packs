@@ -1,0 +1,20 @@
+; CodeQL: python/ql/src/Classes/ShouldBeContextManager.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: report classes with __del__ that define neither context-manager method.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.should-be-context-manager"
+  :name "Python resource class should be a context manager"
+  :message "class defines __del__ without the context manager protocol"
+  :severity warning
+  :description "Mirrors CodeQL py/should-be-context-manager at ae741615f3e178ce61289a651790dc67fcc18e19. A class with a declared __del__ method is reported when it declares neither __enter__ nor __exit__."
+  :tags ["python" "codeql" "quality" "resource-management"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python
+        (except
+          (except
+            (class :has (method :name "__del__"))
+            (class :has (method :name "__enter__")))
+          (class :has (method :name "__exit__")))))))

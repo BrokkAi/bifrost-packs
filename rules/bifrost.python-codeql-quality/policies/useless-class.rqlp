@@ -1,0 +1,16 @@
+; CodeQL query: python/ql/src/Classes/UselessClass.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report complete top-level, public, stateless classes with at most one public method and no excluded class role.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.useless-class"
+  :name "Python useless class"
+  :message "class may be replaceable by a function or simple value"
+  :severity warning
+  :description "Mirrors CodeQL py/useless-class using the engine's counted methods and inheritance, subclass, special-method, decorator, mixin, statefulness, and scope facts. Partial class facts remain incomplete."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq useless_class) (outcome eq issue)
+                      (completeness eq complete))
+        (python-useless-class
+          (enclosing-decl (language python (class))))))))
