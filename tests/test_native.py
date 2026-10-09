@@ -16,13 +16,65 @@ spec.loader.exec_module(native)
 class NativeIntegrityTests(unittest.TestCase):
     def test_copied_native_inventory(self):
         result = native.verify(ROOT)
-        self.assertEqual((result['manifests'], result['shards']), (43, 49))
+        self.assertEqual((result['manifests'], result['shards']), (45, 49))
+        self.assertGreater(result['ecosystems_checked'], 0)
         self.assertEqual(result['semantics'], 'not-qualified')
+
+    def test_go_ecosystem_validation_rejects_the_legacy_label(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            models = root / 'semantic-packs/models'
+            embedded = root / 'semantic-packs/embedded/go-module-pack'
+            models.mkdir(parents=True)
+            (embedded / 'shards').mkdir(parents=True)
+            model = models / 'go-module-pack.json'
+            manifest = embedded / 'manifest.json'
+
+            model.write_text(json.dumps({'language': 'go', 'ecosystem': 'go-stdlib'}))
+            manifest.write_text(json.dumps({'language': 'go', 'ecosystem': 'go-module'}))
+            self.assertEqual(native.validate_ecosystems(root), 2)
+
+            model.write_text(json.dumps({'language': 'go', 'ecosystem': 'go'}))
+            with self.assertRaisesRegex(ValueError, "invalid ecosystem 'go'"):
+                native.validate_ecosystems(root)
+
+    def test_go_concurrency_errgroup_is_split_into_module_packs(self):
+        expected = {
+            'go-concurrency-errgroup': (
+                'bifrost.go.concurrency.errgroup',
+                'go.concurrency.errgroup',
+            ),
+            'go-concurrency-errgroup-declarations': (
+                'bifrost.go.concurrency.errgroup-declarations',
+                'go.concurrency.errgroup.declarations',
+            ),
+        }
+        for directory, (pack_id, shard_id) in expected.items():
+            manifest = json.loads(
+                (ROOT / f'semantic-packs/embedded/{directory}/manifest.json').read_text()
+            )
+            model = json.loads(
+                (ROOT / f'semantic-packs/models/{directory}.json').read_text()
+            )
+            self.assertEqual((manifest['pack_id'], manifest['version'], manifest['ecosystem']),
+                             (pack_id, '1.0.0', 'go-module'))
+            self.assertEqual((model['pack_id'], model['version'], model['ecosystem']),
+                             (pack_id, '1.0.0', 'go-module'))
+            self.assertEqual([item['shard_id'] for item in manifest['shards']], [shard_id])
+            self.assertEqual([item['id'] for item in model['shards']], [shard_id])
+
+        for directory in ('go-concurrency', 'go-concurrency-declarations'):
+            manifest = json.loads(
+                (ROOT / f'semantic-packs/embedded/{directory}/manifest.json').read_text()
+            )
+            self.assertEqual((manifest['version'], manifest['ecosystem']), ('2.0.0', 'go-stdlib'))
+            self.assertTrue(all('errgroup' not in item['shard_id'] for item in manifest['shards']))
 
     def test_go_embed_pack_identity_and_content(self):
         manifest_path = ROOT / 'semantic-packs/embedded/go-stdlib-embed-declarations/manifest.json'
         manifest = json.loads(manifest_path.read_text())
         self.assertEqual(manifest['pack_id'], 'bifrost.go.stdlib.embed-declarations')
+        self.assertEqual((manifest['version'], manifest['ecosystem']), ('2.0.0', 'go-stdlib'))
         self.assertEqual(manifest['language'], 'go')
         self.assertEqual(manifest['provenance']['revision'], 'go1.26.0')
         self.assertEqual(manifest['license'], 'BSD-3-Clause')
@@ -34,7 +86,7 @@ class NativeIntegrityTests(unittest.TestCase):
         raw = zlib.decompress(shard_path.read_bytes(), -15)
         payload = json.loads(raw)
         self.assertEqual(hashlib.sha256(raw).hexdigest(), descriptor['content_sha256'])
-        self.assertEqual(descriptor['content_sha256'], 'd2d6e5060c5b3d7a1c608edbbd2a881ea55abda8b2c4ea5686003446925a6846')
+        self.assertEqual(descriptor['content_sha256'], 'e4d9d98bc3bf03ed567b143b3fde7f25491924f0c21780ac2a488419cc9045e1')
         self.assertEqual(payload['pack_id'], manifest['pack_id'])
         self.assertEqual(payload['shard_id'], descriptor['shard_id'])
         self.assertEqual(

@@ -6,8 +6,56 @@ from pathlib import Path
 import zlib
 
 
+# Go labels are the activation ecosystems emitted by
+# crates/bifrost-analysis/src/analyzer/go/dependency_discovery.rs.
+# Other languages currently in this repository are explicit pass-throughs until
+# their discovery labels are audited against the engine source.
+DISCOVERY_ECOSYSTEMS = {
+    'go': {'go-module', 'go-stdlib'},
+}
+ALLOWED_AS_IS_LANGUAGES = {
+    'cpp',
+    'csharp',
+    'java',
+    'javascript',
+    'php',
+    'python',
+    'ruby',
+    'rust',
+    'scala',
+    'typescript',
+}
+
+
+def validate_ecosystems(root: Path) -> int:
+    """Check pack sources and manifests against the reviewed ecosystem map."""
+    paths = sorted((root / 'semantic-packs/models').glob('*.json'))
+    paths.extend(sorted((root / 'semantic-packs/embedded').glob('*/manifest.json')))
+    checked = 0
+    for path in paths:
+        pack = json.loads(path.read_text())
+        language = pack.get('language')
+        ecosystem = pack.get('ecosystem')
+        if language in DISCOVERY_ECOSYSTEMS:
+            if ecosystem not in DISCOVERY_ECOSYSTEMS[language]:
+                allowed = ', '.join(sorted(DISCOVERY_ECOSYSTEMS[language]))
+                raise ValueError(
+                    f'invalid ecosystem {ecosystem!r} for {language} pack {path}; '
+                    f'engine discovery emits: {allowed}'
+                )
+        elif language not in ALLOWED_AS_IS_LANGUAGES:
+            raise ValueError(
+                f'no ecosystem validation policy for language {language!r} in {path}'
+            )
+        checked += 1
+    if not paths:
+        raise ValueError('no semantic pack sources or manifests')
+    return checked
+
+
 def verify(root: Path) -> dict:
     manifests = sorted((root / 'semantic-packs/embedded').glob('*/manifest.json'))
+    ecosystem_count = validate_ecosystems(root)
     count = 0
     for path in manifests:
         manifest = json.loads(path.read_text())
@@ -43,7 +91,13 @@ def verify(root: Path) -> dict:
             raise ValueError(f'unlisted native shards: {path}')
     if not manifests:
         raise ValueError('no native manifests')
-    return {'manifests': len(manifests), 'shards': count, 'outcome': 'byte-integrity-verified', 'semantics': 'not-qualified'}
+    return {
+        'manifests': len(manifests),
+        'shards': count,
+        'ecosystems_checked': ecosystem_count,
+        'outcome': 'byte-integrity-verified',
+        'semantics': 'not-qualified',
+    }
 
 
 if __name__ == '__main__':

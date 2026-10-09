@@ -6000,7 +6000,7 @@
     {
       "path": "scripts/upstream/public/generate-go-atomic-semantic-pack.mjs",
       "source_path": "scripts/public/generate-go-atomic-semantic-pack.mjs",
-      "sha256": "1bfb8727cfa730471d294d7d123b3e9ebd822afb5c07aad3c2d59d01a61b3132",
+      "sha256": "a1538bc8812ebdc31d879be544f645759142e9d1671b3cc5355e959632a29831",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -6091,378 +6091,392 @@
     {
       "path": "semantic-packs/embedded/go-concurrency-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/manifest.json",
-      "sha256": "8a3cc90015888f4c3bac7c6410b98f8280f3d4f3b7905bc34530da15e1dc5a12",
+      "sha256": "b62107b7f78bd0bcc522c7b23dc0e3d1296a9c3d3e0b6440c8b7e8a87ad5a54a",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
-      "path": "semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.errgroup.declarations.deflate",
-      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.errgroup.declarations.deflate",
-      "sha256": "45d7e14df1d79202cb2525bee71aaf8079c7d0062ef2ac809cc808d814328225",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
       "path": "semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.sync.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.sync.declarations.deflate",
-      "sha256": "0c2ff270fc7bfe3ee7f3c8c1da24ae050dc3fbd84f19cfc01f252c944ecac930",
+      "sha256": "61f32f7d88fc34b386f67da00f2ff18770375f577abf506c390e104f8050c3d3",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.time.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency-declarations/shards/go.concurrency.time.declarations.deflate",
-      "sha256": "4c3a9af9917db6ffbb1af6bdc70cb31315b1f059e75ff4c6016142e9a06a7f4c",
+      "sha256": "cd3beeaafcb0f0e98f9a629feaf54697d5e782b4c61ee498ff4df6e3047dfd93",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-errgroup-declarations/manifest.json",
+      "source_path": "semantic-packs/embedded/go-concurrency-errgroup-declarations/manifest.json",
+      "sha256": "9cf0d5fda1a8b2edf26839ef6bc3ab97a2216ef2de1224f8c25c8792909c945a",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-errgroup-declarations/shards/go.concurrency.errgroup.declarations.deflate",
+      "source_path": "semantic-packs/embedded/go-concurrency-errgroup-declarations/shards/go.concurrency.errgroup.declarations.deflate",
+      "sha256": "9f56312e0d2fd30925a464355bdeef38bdb7af94232e2dfb97491ae5d08d65f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-errgroup/manifest.json",
+      "source_path": "semantic-packs/embedded/go-concurrency-errgroup/manifest.json",
+      "sha256": "9d4b62e2dad3f58cf330cf0e4ac2b9581ad8b105dbe71f162c49fa8dbdcd2e7a",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/embedded/go-concurrency-errgroup/shards/go.concurrency.errgroup.deflate",
+      "source_path": "semantic-packs/embedded/go-concurrency-errgroup/shards/go.concurrency.errgroup.deflate",
+      "sha256": "b828b1bbf85ae844875101f3c44c1e8ab1352c53329404750ad7194545549675",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-concurrency/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/manifest.json",
-      "sha256": "9754a3e12306b0324975284086bc64045b354d8a32cf9b650995b5d818e48283",
+      "sha256": "9336409dfde379d1622263c55f8e3ed3422ab58c2197efeaba3dc94ed37538b8",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
-      "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.errgroup.deflate",
-      "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.errgroup.deflate",
-      "sha256": "d7ef967fc23a251fbc585e4c49e18b6fdb1ae65c5d3ad21d820ad169644a302c",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
       "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.sync.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.sync.deflate",
-      "sha256": "95eb30e18538160856115b9d83b87ad5ad43b7f5cd8a0ba8f2dd588374314b10",
+      "sha256": "d718799241b25554bfaf83dc60add3c27c390e7f9c4d891ff05339d42346b500",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.testing.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.testing.deflate",
-      "sha256": "0bc739638bb69fa9a0bba8125413942918df81aad09b64a6f923d3cc2aed1fb5",
+      "sha256": "3c2506988d2c10f3c2fb4d508787f977c72eef87fa529d65eb7fbf24c717c15a",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-concurrency/shards/go.concurrency.time.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-concurrency/shards/go.concurrency.time.deflate",
-      "sha256": "14ee01a5449aac3c540e7be17723b6d294cc185a9c7440ed8e983bbedf2b80c0",
+      "sha256": "e37c41ebf9b136a7624a9c1fb5b8221c7aa3f76631e80cc963c0e4711d117ca8",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-bytes-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-bytes-declarations/manifest.json",
-      "sha256": "bf7e7905576bc098d9594049bc9e562ad614dfb9c77a0f044d52eb4bceabb5ca",
+      "sha256": "2f1a42f8e026597afc732e0eba18886c266330606bafb67f6b6341728f46319d",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-bytes-declarations/shards/go.stdlib.bytes.declarations.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-bytes-declarations/shards/go.stdlib.bytes.declarations.json",
-      "sha256": "14122f7c95955af813af5d6ca1c83389be6efc4dcde79b0087b26994d850aace",
+      "sha256": "b9b14128ef4486d2c0185efa875a71bf91fc80133972ac4f97a252f3fb9fa91d",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-crypto-x509-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509-declarations/manifest.json",
-      "sha256": "3c2e2d9a4d715439366c604781c17d3fa5f596e6f8d3b7285b73f96d9a431db1",
+      "sha256": "ab8cfdcfc776a0ddcc47955249ed08c8c3a763f72aea3e377c6ef55e013c3037",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-crypto-x509-declarations/shards/go.stdlib.crypto-x509.declarations.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509-declarations/shards/go.stdlib.crypto-x509.declarations.json",
-      "sha256": "ca2ec7e8fbff595e7ca74ad928683268de883b5b9a00d1b1c52b11389e411d29",
+      "sha256": "aa7bad583592743d4cd0aa31d2c44ca86ac338931aae016914ddb52076bb9396",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-crypto-x509/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509/manifest.json",
-      "sha256": "b569b926a69c5c4f969d96218ff58fea6b8384ed15773f0f9011ed4d9915dbc8",
+      "sha256": "77840b1134ec39214567435eea68b8ca42a367fc6b5d16f988358abbbc3510b2",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-crypto-x509/shards/go.stdlib.crypto-x509.parameter-preconditions.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-crypto-x509/shards/go.stdlib.crypto-x509.parameter-preconditions.json",
-      "sha256": "3192e3448290842726763ccfe53d188dcca9269ffdd1c6d6c0cb992bac6fbb2c",
+      "sha256": "9a376dc62e83496f51de7a6bb5751ded1fe89c0153f5adf26f2671dfdb176152",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-embed-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-embed-declarations/manifest.json",
-      "sha256": "807f4cf3de10af902a2791183c9f55f4ba29c99e5073e50e160c775ad39daf44",
+      "sha256": "c975a0695cdb427e5035c588b3d269ec3940bbc8793bcda82de179c5c092e369",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-embed-declarations/shards/go.stdlib.embed.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-embed-declarations/shards/go.stdlib.embed.declarations.deflate",
-      "sha256": "d410eaddc18038a02dcf54f07d14a3dacb12eb37dde72cf5428b72ca9a524e4f",
+      "sha256": "34ca04aff8d5b950611a7739ee1a2dd8eeca61af1be04e8f2e7cc152735ba79d",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-encoding-pem-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem-declarations/manifest.json",
-      "sha256": "bcae297a7b88e3131e96fecbffcf690922f31ee0824570707d761b53847ff02a",
+      "sha256": "544f86168b2216f936084a31b2fdb997a21c12719e1a47dd0a557d0af3371a56",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-encoding-pem-declarations/shards/go.stdlib.encoding-pem.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem-declarations/shards/go.stdlib.encoding-pem.declarations.deflate",
-      "sha256": "569694f1f7f21c36a10e1913335e65d65bc369e3da332c5f3f7ccf8185d83309",
+      "sha256": "2f5103a0e5568840a19d16c35b0c40161bb7dc07dfdc1f8094dcb9c5eafe6007",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-encoding-pem/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem/manifest.json",
-      "sha256": "730a5c0a694d935bb305538e57e06c24d9e583209b57bb910e19e1bc18027f47",
+      "sha256": "b7125e298ed60f30830518581d4806418eff8211393fcbd02382a685c26b1283",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-encoding-pem/shards/go.stdlib.encoding-pem.result-contracts.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-encoding-pem/shards/go.stdlib.encoding-pem.result-contracts.json",
-      "sha256": "3bab212537fdaad4111d06dd333bbcd7270b0aafb7115f0094b6e700f3e5289e",
+      "sha256": "07fa38efd7a8d68c145bd34400328463c26c0c4b332a149a899e68bfd8edb633",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-errors-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors-declarations/manifest.json",
-      "sha256": "0f3b21d99fa5fe9670062de1bcec76073025ff96b496e8f0e2fbfcde299aa224",
+      "sha256": "e4dd29fb1cb91e43f42fb3c4fa691f608eb00ddd86e0d7f694d190dd8739c2e6",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-errors-declarations/shards/go.stdlib.errors.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors-declarations/shards/go.stdlib.errors.declarations.deflate",
-      "sha256": "c2dc462c4bb2fcd8778caee690f78d38aba3c6a314aa89c89a4cda76f17a5e67",
+      "sha256": "6ebbb9a305bb6ea377901754d20072cd977f515ee55cf4ef0581eb954618540b",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-errors/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors/manifest.json",
-      "sha256": "2238a68556d3fa75eb80f621c0a59ac0ccd072929da13840964edd8bca6a7df2",
+      "sha256": "5bca930a8ac63014fc290885fe547823990bc48aec0ed6146d106aa298c3a4a6",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-errors/shards/go.stdlib.errors.conditional-result-refinements.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-errors/shards/go.stdlib.errors.conditional-result-refinements.json",
-      "sha256": "a40e4081431130afa898a351e43265456bef2ca27552125c1cb1451341853292",
+      "sha256": "8cddc6860a51f79f9bececcac8693d8975bb5e4f12e8a220e4c359b6c8eb0286",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-log-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log-declarations/manifest.json",
-      "sha256": "b728b7d71d7aec5e094d54b57aabca16edb3b6552c3a15c89efa49faee1c17fe",
+      "sha256": "fcc794c6774e832b0ba39dbd27ad860f05a04a468ad316d1fb4e4e63dc39eeca",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-log-declarations/shards/go.stdlib.log.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log-declarations/shards/go.stdlib.log.declarations.deflate",
-      "sha256": "54cd679f212f5158553e4741edf8a70602b2c3ae27dc6003a355dbc6a8059931",
+      "sha256": "7bfd2b3cf69d47a8f40fcf3523d4a9776f16358913926a43f73b4fa36d399e32",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-log/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log/manifest.json",
-      "sha256": "4fc8db93e898fa66f0a36ccd2c52aadffb173612e3c91bfa583d8ee6d279e2ea",
+      "sha256": "8fefe67bce0eec42292a110232381dd3d6a5ea191107a9a25891ee8b9a2494db",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-log/shards/go.stdlib.log.normal-continuation.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-log/shards/go.stdlib.log.normal-continuation.deflate",
-      "sha256": "ebd10adedf3814f5de3c505fa4b92572728c87c17421bbbb9e51645869c4e8cc",
+      "sha256": "2da0d2d3fc688c58c97a9e58cf5adedc6b1b152f505ae89fa2f610fb54bb6bf2",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-declarations/manifest.json",
-      "sha256": "446993db273b157196c389ee43385c3985dee0545ee5938eac779d018e669bb7",
+      "sha256": "6257aff69d1457950ebdce6ecc0fdde0e340eb73cd6a93eb3cefd9aaf5bc5f5d",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-declarations/shards/go.stdlib.net.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-declarations/shards/go.stdlib.net.declarations.deflate",
-      "sha256": "e67e760576c6659a08d50c58b8e94aef3661ff0be969147f6d737dcc56c59677",
+      "sha256": "5407b7a48d290e2e2a38008e1e578ea5ac8ae3c4bf7977c7b862457ece251817",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-http-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http-declarations/manifest.json",
-      "sha256": "ac227fbe78274ca42d062b67f37f790072669d3ebdca69cf6f75741ee220e4b8",
+      "sha256": "e5626f806ef431d14063534e39da93bb771e832b7c2d06803152e716f1d9ae5c",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-http-declarations/shards/go.stdlib.net-http.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http-declarations/shards/go.stdlib.net-http.declarations.deflate",
-      "sha256": "f02eeb4241498d084ea8c4fbe21b1e8043feb5553e2ea693c6fe6a39a2d5e832",
+      "sha256": "bc9c1294afacbebffcb95cb068c73bb3d7dbdce8ab8225702e04168b8ec28fee",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-http/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http/manifest.json",
-      "sha256": "90ff3c1b976495761a9e4510ef65e61eaf28421e2bd7402e691d85703fbaedc9",
+      "sha256": "66cf2ef3ecbbc4a67ab9cbe65734b4bb63a2174a9c8d372d8b137f49d580ebe4",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-http/shards/go.stdlib.net-http.handler-registration.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-http/shards/go.stdlib.net-http.handler-registration.deflate",
-      "sha256": "20660acb01e8fcfdce2e6813db1df6afbe21f66441e91bfefdd07de497a44a58",
+      "sha256": "0a7d7b7852c4ca547f0579d6d1ab8de9bd372383f9a6afeffde5beaddcb24174",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-url-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url-declarations/manifest.json",
-      "sha256": "ae1636052835ee61d08d16cdf87b6c37747cea347d245b587a1c03aa4dd52258",
+      "sha256": "c2549f4dbf02eae1226372eda9acf6823f495b6992fd4d6c3ad361b82bc55209",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-url-declarations/shards/go.stdlib.net-url.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url-declarations/shards/go.stdlib.net-url.declarations.deflate",
-      "sha256": "3862c120a6060da901bbe19f3d3ec788c7613d9c5a2b69f4e7a3fc6e34caed40",
+      "sha256": "b3c86f27f3988bec9c2ee14c165479c77c30916927a8217537dc6cb0666c60fb",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-url/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url/manifest.json",
-      "sha256": "fb0d4f9b0ca3554d35df153d42098ca2e21d3ecd1dae27522b5f362152066dd7",
+      "sha256": "5fa3707de7ef90c17c0675830c94582d9039cad6b4ba91262c23db7e222cf165",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net-url/shards/go.stdlib.net-url.result-contracts.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net-url/shards/go.stdlib.net-url.result-contracts.json",
-      "sha256": "57f9cfbb3f5a71b62ca49595e0c39e001332e19bc3e5bcfe13deb8ce26fbb2e4",
+      "sha256": "21be61618bb756bbae712241e2ea8401fa1e88a8db7b38ae4ca3b0781580246c",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net/manifest.json",
-      "sha256": "d65e54a579db44e7593499afb6fee841f7185c41e13d5586ebfa7abac29fbd7c",
+      "sha256": "381e1789f3086f02573e7c61a2da644790550f56c9c55942446b08cff10b3d8b",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-net/shards/go.stdlib.net.result-contracts.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-net/shards/go.stdlib.net.result-contracts.deflate",
-      "sha256": "2ce709a4a11512e341ca86e25a91c3f7df4904bab74def210a3184e3b6b07dde",
+      "sha256": "ac3ba18a95083f42e097947eb13f3b2bc727aab39c3dc6099681c31c6ef406c8",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-os-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os-declarations/manifest.json",
-      "sha256": "0c93c4cf73e9e819b576158cd5cc906e4f724bddd4a71e99a133aa4cf7b156ea",
+      "sha256": "b42b2e6ff328051d506d59ad4eb074e55737d068ed556590e103fdc388ef1a40",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-os-declarations/shards/go.stdlib.os.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os-declarations/shards/go.stdlib.os.declarations.deflate",
-      "sha256": "c577ce75bc300f190ce5856fb6670a2c69ff16c005bf7be0cb66c6ea7459ae7b",
+      "sha256": "519e72e8b553b615cc9990dbe2639dfcb0ee1814fe53ae3e63a9e49b344223fc",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-os/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os/manifest.json",
-      "sha256": "7c26db118a2353070b3b76c3f238f54cc8e4eac7088dfeb761242dc06b93eb7d",
+      "sha256": "2e6924fcf1a2265ccab50aa9ea3544162eeb9af1a883e26a5daba6487d44b49f",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-os/shards/go.stdlib.os.result-contracts.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-os/shards/go.stdlib.os.result-contracts.deflate",
-      "sha256": "c44422b122134fd2debbc0c3eaf9647e646c80b34f19eb1d201cf0a6aa77e6a0",
+      "sha256": "b56cc2ddc8a807311f297e642c1ec043391bc73c1c43930d592291df3b712704",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-path-filepath/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-path-filepath/manifest.json",
-      "sha256": "610b2ea4d943a0120b8d781ff8227f76610d6a371847030245d5ad85eaeea1ce",
+      "sha256": "11190760e6cea8faf672a03d1b54d4843350d280bdb55d42d8d93ebf4595701c",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-path-filepath/shards/go.stdlib.path-filepath.declarations.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-path-filepath/shards/go.stdlib.path-filepath.declarations.json",
-      "sha256": "47b3b1c5fb4a736b35a814691e12027a46ec20438ce98383cdd7fd34d48a5e7c",
+      "sha256": "cb26f81ffa4f141922d83b72ad7c5f423b106ef6164fee92b90527f084691027",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-sync-atomic-declarations/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic-declarations/manifest.json",
-      "sha256": "74ee22ef6354b1fb6e1af3ba5cfa1489899dd01952f4af20e24b5454acfd7f2d",
+      "sha256": "0063c2f6388ecd01d74560272b4314441ae2424239cbf41f7beea55e289b895e",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-sync-atomic-declarations/shards/go.stdlib.sync-atomic.declarations.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic-declarations/shards/go.stdlib.sync-atomic.declarations.deflate",
-      "sha256": "07e2f8fe8dfdfe2d4c01b659f092e110d2d78af8672b971378cc7d9f19635102",
+      "sha256": "8595cde16bf9aa515108b7b2ee858b78725835af235b98c569ffd33a54a1db11",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-sync-atomic/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic/manifest.json",
-      "sha256": "d0b197f6f7aebccbc728b07fc24d6a1964c0680d9894b0b85f3ae45520ff3ccf",
+      "sha256": "f57bfaf72f58732f50b0a8542f175eb3773f21124465e341e2b34d33bd30b083",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-sync-atomic/shards/go.stdlib.sync-atomic.concurrency.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-sync-atomic/shards/go.stdlib.sync-atomic.concurrency.deflate",
-      "sha256": "a38a490b27d6e3eac784c85fcea7322f0ef60b25c971b40acb0081a9305539bf",
+      "sha256": "6a5895a356993e3b1e93f2e0bc10d487369aa68a6e0f3861aa01c534d08f48f2",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-testing/manifest.json",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-testing/manifest.json",
-      "sha256": "bf781ba39338362e949c20e1b9bcd998555a794d7347a5162650315dd77500b1",
+      "sha256": "da51c0c7e9337d0d08710b369ec7302d3728582ccebe2da22cb4d6a667735ddf",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.concrete-receivers.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.concrete-receivers.deflate",
-      "sha256": "a540f36a47560c480f53741834be3a9144866b5b2d54ae3868260a815c093cd7",
+      "sha256": "03e6604d6de0089e2916b4e473657e1a502896a151ad7468c7b942b44b31514c",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.normal-continuation.deflate",
       "source_path": "crates/bifrost-semantic-packs/embedded/go-stdlib-testing/shards/go.stdlib.testing.normal-continuation.deflate",
-      "sha256": "ce8118d456f2c9a5601b74603dc01fed558365375f8524556a72f7a518d34634",
+      "sha256": "5df8c442187f1439d748c3f7be0c6567a32103c54704407531780aa089780a8b",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -6908,168 +6922,182 @@
     {
       "path": "semantic-packs/models/go-concurrency-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-concurrency-declarations.json",
-      "sha256": "a5b36b5093fabca4889b87a5ca1e2402fc483a08651c8070366666c62e8bf0ce",
+      "sha256": "be53f41814842f75824d0b9e088260c68b29bf0ecae2f7e2bd3fd19a4255e858",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-concurrency-errgroup-declarations.json",
+      "source_path": "semantic-packs/models/go-concurrency-errgroup-declarations.json",
+      "sha256": "c44951894e2fe4005a91abd885f9ebc07389aa998f2b1fa2f708c1c4734148c5",
+      "classification": "public",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "semantic-packs/models/go-concurrency-errgroup.json",
+      "source_path": "semantic-packs/models/go-concurrency-errgroup.json",
+      "sha256": "288be33418fc0d7cc4eb63cdf713d986c2ff8e68fe86a1e5115b57de31987576",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-concurrency.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-concurrency.json",
-      "sha256": "bc4d6c81d192fa56ac54ed0269023c5c30839bd7633c1352aa2a2629c82800c3",
+      "sha256": "4568a39c11aab37ef6c703534e69b041d83227494a046aae3f7748923dd31872",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-bytes-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-bytes-declarations.json",
-      "sha256": "9d66094928cb0593566e0c16f23c0579c103acfca6a391886e1a596fce9ba74c",
+      "sha256": "72895aee8f927502914383a01aa2f82444e71a8cbf7aa4aea439a352d793cde0",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-crypto-x509-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-crypto-x509-declarations.json",
-      "sha256": "79926dd52bffb921a17f812825f76284d3b0ba239c98b22068379fccae1f837f",
+      "sha256": "adee400c51e4266ea6c77b499333830e8f0a281e8e5e19b50f99753aaf67f3e5",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-crypto-x509.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-crypto-x509.json",
-      "sha256": "36e3cbb2b941eb1a160a19051de44599fc5fb264fb9e2b971d830a2d387fbc2f",
+      "sha256": "ab497ceae6e92fa47e2103bd5a013c9f89ecc0d3cb7590d7c6edd6187e074320",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-embed-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-embed-declarations.json",
-      "sha256": "d58e80b9e4ba5e327e23edfa52c49383a54342a961a542dda54af18ceba0e739",
+      "sha256": "7b126aebc015d6b972920c59b9cecf99937487b15fda4efff0dfd1282fe89b5d",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-encoding-pem-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-encoding-pem-declarations.json",
-      "sha256": "173fb9195c842179c82d1b8e81592070ee19aa9f54ed18de71d5433b094f5e45",
+      "sha256": "a5438b85350168809579efa72aa0c5fb5a4798c719a515ce1c42a1ca90ecf977",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-encoding-pem.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-encoding-pem.json",
-      "sha256": "35e66d6b21998f99df7f94d69fda6c95821abe7d8728d1851799c35c8e6a2e73",
+      "sha256": "4a533eb99b91379f6757294aab702e976b7a910f9ffdbee87e80097e2bcb5b87",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-errors-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-errors-declarations.json",
-      "sha256": "59bb687528238dd8347692bf833b784dc0ea764c0db34a8105291fd5f3641e14",
+      "sha256": "7cd54d4b0be323dc299ae72ef70ac2f2386aab5dfe0451e4ea224246e471b1a2",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-errors.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-errors.json",
-      "sha256": "cd4e7fc4e76be9cde8dce81a2bceed805019bc0c0c9c08c3259b68f198ef0519",
+      "sha256": "21284386f6c5cafa9132a7cb6b492201fe86a8c724f935ab13dba11fe8fd9cda",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-log-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-log-declarations.json",
-      "sha256": "1ff988019323445a90e2759f902877b70dfe8c1a44dec2e7a70e9607f50ac504",
+      "sha256": "e5e5ab0920783018e313ce3dfe13ac3fd0cdc6b34c42892289a42a57d47c17a2",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-log.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-log.json",
-      "sha256": "4b7b17569761a820a836a21affbbe302a758e5e939f9c41b94a4f5b00abb25f4",
+      "sha256": "3ce1c06b548fe804763806cd634cd0a23bfc349fd8fb1b7db6bf5014067f9dd3",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-net-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-declarations.json",
-      "sha256": "e4b91b768286c5dad34862ebd4479193a7d9b7b9ab6cbf1e76b8c51abf224216",
+      "sha256": "e6525316f865ef4ca13b26d6384a88d00071e40ab91cd6b2fdc82c6b70c89eb4",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-net-http-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-http-declarations.json",
-      "sha256": "fb2e4050481efdb51d7ab01c9058af39b790b6b25f32436c57db6c39ffc32572",
+      "sha256": "acb1f695c3fa4636e63f6cfb41d526eb4031d2676796d39e2fb54edd3e50829b",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-net-http.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-http.json",
-      "sha256": "de2d7faa8de46f14231528eed7ecba3ae8983e80bfec204740622f637517efdb",
+      "sha256": "5523c7302347180be6d3e8a7c93dc93bd14939da312ffb98e023520d460bd19c",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-net-url-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-url-declarations.json",
-      "sha256": "92ebd20b18634b18540203313a43cd1404b18158765019fc35380cd217f0ae1c",
+      "sha256": "6c9bc739e8c4531d299a32660080995752a79c9ca90093c16f19998ccf69a009",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-net-url.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net-url.json",
-      "sha256": "6de6ac0840b127d0f0a0684adc52b369c87c78db23653227d96023a76a8a81e7",
+      "sha256": "8e331c50d6b18ca12442c3efabf03d2fa2bea7cdbc7efd5bb0bd9e683ccf1cef",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-net.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-net.json",
-      "sha256": "c0ac5bb841e4817fed9946b168de0553de003fb1935394672289fb9c1a294df5",
+      "sha256": "b0b5fa3e1b628dd575fb55390a37ff44cf8acc281699004fd53da4dd80a08202",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-os-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-os-declarations.json",
-      "sha256": "1b56908d690f3c8f99eab99371e45b849dc484891ec0c3a55cf9c59a4c6e4bd5",
+      "sha256": "72123cb8d4ec3e4dc0b1026687d6e08522b72158127617ab72c77184f9703d34",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-os.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-os.json",
-      "sha256": "543acfbf79f8644bb0d1bee314e9bbe57c51a8b93d99d7e90697e4f17abfc04d",
+      "sha256": "08fe33bda31bbf2e75fdc81ceb81589bb3a801288c3cdf05b4ab626c769306c8",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-path-filepath.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-path-filepath.json",
-      "sha256": "3d99c5e173968fd4673218a823696e5bc64fb56b012f72582237300ed9d21849",
+      "sha256": "3ce03a3264b2789de2e5cb5b3639b3cd22f653bb643c4aa876940425102f68d8",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-sync-atomic-declarations.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-sync-atomic-declarations.json",
-      "sha256": "00acf0a02d38e21f57bad8635a53f577a560d98c4939d8a1db024f11873a3e68",
+      "sha256": "0700de771be59b664d353ff4d53b19e08eec7836259d9f2c0564ff12c74c4901",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-sync-atomic.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-sync-atomic.json",
-      "sha256": "8abc41bcaa712034fea60b06ebb335fdc00502c12021b6c23ba016dd4d2f2796",
+      "sha256": "6d7e911ef5326c3083f3312612b728e5b0c62d1410e1f2da4f1182f575610e65",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
     {
       "path": "semantic-packs/models/go-stdlib-testing.json",
       "source_path": "crates/bifrost-semantic-packs/models/go-stdlib-testing.json",
-      "sha256": "c9c0402ba9641ee656f52ba971f1609b0d21021a7e1e1f807f150486e2f305f3",
+      "sha256": "88ea115bba6973f3cb1801fc1604fed9eb7b3a68cecbe377c8caa914f33b1768",
       "classification": "public",
       "license": "BSD-3-Clause"
     },
@@ -7672,5 +7700,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "e53a03b839e60f55d5573043ebf5b383ecac3ddbffeb334d81717953696e5b80"
+  "aggregate_sha256": "2b1cf20277dce1d812cfb8def926041a3cb55523d8c4a508be5432330e68b51a"
 }
