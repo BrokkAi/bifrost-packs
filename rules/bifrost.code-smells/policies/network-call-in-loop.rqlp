@@ -31,8 +31,7 @@
                         (call :callee (name "urlopen") :capture "smell"))
                       (inside-decl
                         (loop :capture "region")
-                        (call :receiver (identifier :capture "target")
-                              :callee (name "request") :capture "smell")))))))
+                        (call :callee (name "request") :capture "smell")))))))
             (language java
               (inside-decl (loop :capture "region") (call :receiver (name "client") :callee (name "send") :capture "smell")))
             (language javascript
