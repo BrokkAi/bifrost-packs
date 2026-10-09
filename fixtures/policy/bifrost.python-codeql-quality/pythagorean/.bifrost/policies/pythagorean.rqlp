@@ -1,0 +1,137 @@
+; CodeQL: python/ql/src/Numerics/Pythagorean.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: A sum of squares passed to math.sqrt may lose precision.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.pythagorean"
+  :name "Pythagorean calculation with sub-optimal numerics"
+  :message "A sum of squares is passed to math.sqrt"
+  :severity warning
+  :description "Select a resolved math.sqrt call whose sole argument is a sum of two squares. Each square may be written directly or through a unique, unconditional local assignment."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((resolved_external_callee eq "math.sqrt"))
+        (union
+          (exact-external-callee
+            (call-shape
+              (language python
+                (call
+                  :callee (identifier)
+                  :arity 1
+                  :args (
+                    (binary_expression
+                      :operator (text/regex "^\\+$")
+                      :left (binary_expression
+                        :or [
+                          (binary_expression
+                            :operator (text/regex "^\\*\\*$")
+                            :left (identifier)
+                            :right (numeric_literal :integer-value "2"))
+                          (binary_expression
+                            :operator (text/regex "^\\*$")
+                            :left (identifier :capture "left_component")
+                            :right (identifier :capture "left_component"))])
+                      :right (binary_expression
+                        :or [
+                          (binary_expression
+                            :operator (text/regex "^\\*\\*$")
+                            :left (identifier)
+                            :right (numeric_literal :integer-value "2"))
+                          (binary_expression
+                            :operator (text/regex "^\\*$")
+                            :left (identifier :capture "right_component")
+                            :right (identifier :capture "right_component"))])))))))
+          (exact-external-callee
+            (call-shape
+              (language python
+                (call
+                  :callee (identifier)
+                  :arity 1
+                  :args (
+                    (binary_expression
+                      :operator (text/regex "^\\+$")
+                      :left (binary_expression
+                        :or [
+                          (binary_expression
+                            :operator (text/regex "^\\*\\*$")
+                            :left (identifier)
+                            :right (numeric_literal :integer-value "2"))
+                          (binary_expression
+                            :operator (text/regex "^\\*$")
+                            :left (identifier :capture "left_component")
+                            :right (identifier :capture "left_component"))])
+                      :right (identifier
+                        :local-value (binary_expression
+                          :or [
+                            (binary_expression
+                              :operator (text/regex "^\\*\\*$")
+                              :left (identifier)
+                              :right (numeric_literal :integer-value "2"))
+                            (binary_expression
+                              :operator (text/regex "^\\*$")
+                              :left (identifier :capture "local_right_component")
+                              :right (identifier :capture "local_right_component"))]))))))))
+          (exact-external-callee
+            (call-shape
+              (language python
+                (call
+                  :callee (identifier)
+                  :arity 1
+                  :args (
+                    (binary_expression
+                      :operator (text/regex "^\\+$")
+                      :left (identifier
+                        :local-value (binary_expression
+                          :or [
+                            (binary_expression
+                              :operator (text/regex "^\\*\\*$")
+                              :left (identifier)
+                              :right (numeric_literal :integer-value "2"))
+                            (binary_expression
+                              :operator (text/regex "^\\*$")
+                              :left (identifier :capture "local_left_component")
+                              :right (identifier :capture "local_left_component"))]))
+                      :right (binary_expression
+                        :or [
+                          (binary_expression
+                            :operator (text/regex "^\\*\\*$")
+                            :left (identifier)
+                            :right (numeric_literal :integer-value "2"))
+                          (binary_expression
+                            :operator (text/regex "^\\*$")
+                            :left (identifier :capture "right_component")
+                            :right (identifier :capture "right_component"))])))))))
+          (exact-external-callee
+            (call-shape
+              (language python
+                (call
+                  :callee (identifier)
+                  :arity 1
+                  :args (
+                    (binary_expression
+                      :operator (text/regex "^\\+$")
+                      :left (identifier
+                        :local-value (binary_expression
+                          :or [
+                            (binary_expression
+                              :operator (text/regex "^\\*\\*$")
+                              :left (identifier)
+                              :right (numeric_literal :integer-value "2"))
+                            (binary_expression
+                              :operator (text/regex "^\\*$")
+                              :left (identifier :capture "local_left_component")
+                              :right (identifier :capture "local_left_component"))]))
+                      :right (identifier
+                        :local-value (binary_expression
+                          :or [
+                            (binary_expression
+                              :operator (text/regex "^\\*\\*$")
+                              :left (identifier)
+                              :right (numeric_literal :integer-value "2"))
+                            (binary_expression
+                              :operator (text/regex "^\\*$")
+                              :left (identifier :capture "local_right_component")
+                              :right (identifier :capture "local_right_component"))]))))))))
+    )))))

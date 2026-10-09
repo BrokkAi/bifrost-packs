@@ -1,0 +1,10 @@
+; CodeQL: python/ql/src/Expressions/UnsupportedFormatCharacter.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Use a supported percent-format conversion character.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.percent-format-unsupported-character" :name "Unsupported percent format character" :message "Use a supported conversion character in a percent format string." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Expressions/UnsupportedFormatCharacter.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Use a supported percent-format conversion character."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq percent_format_unsupported_character) (outcome eq issue)
+                    (proof eq proven) (completeness eq complete))
+      (python-format-issues (language python (binary_expression)))))))

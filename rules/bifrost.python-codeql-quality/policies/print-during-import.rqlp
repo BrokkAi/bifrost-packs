@@ -1,0 +1,24 @@
+; CodeQL: python/ql/src/Statements/TopLevelPrint.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Avoid calling builtin print while a module is being imported.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.print-during-import"
+  :name "Python builtin print at module scope"
+  :message "A builtin print call at module scope can produce output during import."
+  :severity warning
+  :description "Reports exact calls to Python's builtin print function in module-scope code outside an if __name__ == '__main__' guard. Such calls can produce unexpected output when the module is imported."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq builtin_identity)
+                      (outcome eq builtin)
+                      (call_callee eq true))
+        (python-builtin-identity
+          (occurrences-in :class reference :role value_reference
+            (language python
+              (not-inside
+                (if :test (comparison
+                  :left (name "__name__")
+                  :right (string_literal (value/regex "^__main__$"))
+                  :operator (text/regex "^==$")))
+                (inside-decl (module) (call :callee (name "print")))))))))))

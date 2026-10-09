@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Expressions/ExplicitCallToDel.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Do not explicitly call __del__ as ordinary cleanup.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.explicit-call-to-delete" :name "Explicit call to __del__" :message "Do not call __del__ explicitly outside approved cleanup." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Expressions/ExplicitCallToDel.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Do not explicitly call __del__ as ordinary cleanup."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (language python
+      (except
+        (call :callee (name "__del__"))
+        (inside-decl (method :name "__del__")
+          (call :callee (name "__del__")
+            :args ((identifier :index 0 :name "self"))))
+        (inside-decl (method :name "__del__")
+            (call :callee (name "__del__")
+            :receiver (call :callee (name "super")))))))))

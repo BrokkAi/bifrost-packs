@@ -1,0 +1,14 @@
+; CodeQL: python/ql/src/Statements/ConstantInConditional.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Use a non-constant condition when branching is intended.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.constant-conditional-expression" :name "Constant in conditional" :message "Avoid a constant conditional test." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Statements/ConstantInConditional.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Use a non-constant condition when branching is intended."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (anchor :capture "condition"
+      (language python
+        (if :test
+          (or
+            (and (literal :capture "condition")
+                 (not (literal :boolean-value false)))
+            (and (name "NotImplemented") (capture "condition")))))))))

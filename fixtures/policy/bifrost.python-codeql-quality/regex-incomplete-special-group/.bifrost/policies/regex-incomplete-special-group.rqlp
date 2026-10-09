@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Expressions/Regex/MissingPartSpecialGroup.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Complete the special-group opener in the regular expression.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.regex-incomplete-special-group"
+  :name "Incomplete Python regex special group"
+  :message "Add the missing question mark to this named-group opener."
+  :severity warning
+  :description "Selects the Python regex risk fact used by the CodeQL-compatible regex-incomplete-special-group rule."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (regex_risk_incomplete_special_group)))))

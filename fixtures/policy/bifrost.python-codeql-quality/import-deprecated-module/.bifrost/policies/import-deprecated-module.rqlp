@@ -1,0 +1,17 @@
+; CodeQL: python/ql/src/Imports/DeprecatedModule.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Replace deprecated Python modules with their supported alternatives.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.import-deprecated-module"
+  :name "Import of deprecated Python module"
+  :message "Import a supported replacement for this deprecated module"
+  :severity warning
+  :description "Reports CodeQL's deprecated Python module names outside a handler proven to catch the builtin ImportError."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((python_import_in_import_error_handler eq false))
+        (python-import-site
+          (language python
+            (import :module (name/regex "^(posixfile|gopherlib|rgbimgmodule|pre|whrandom|rfc822|mimetools|MimeWriter|mimify|rotor|statcache|mpz|xreadlines|multifile|sets|buildtools|cfmfile|macfs|md5|sha)$"))))))))

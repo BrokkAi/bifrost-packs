@@ -1,0 +1,46 @@
+; CodeQL: python/ql/src/Functions/NonCls.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Name the first class-method parameter cls (or an accepted metaclass receiver).
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.not-named-cls"
+  :name "First parameter of a class method is not named cls"
+  :message "Class methods should use cls for their first parameter"
+  :severity warning
+  :description "Select a class receiver method when its first parameter is not a recognized class receiver name. Metaclass methods also accept self, and zero-parameter methods are reported."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (union
+        (filter :where ((coverage ne unrecorded)
+                        (parameter_count eq 0)
+                        (python_method_kind eq class)
+                        (python_owner_is_metaclass eq false))
+          (callable-signature
+            (enclosing-decl (language python (method)))))
+        (filter :where ((coverage ne unrecorded)
+                        (python_method_kind eq class)
+                        (python_owner_is_metaclass eq false)
+                        (first_parameter ne "cls")
+                        (first_parameter ne "mcls")
+                        (first_parameter ne "mcs")
+                        (first_parameter ne "metacls"))
+          (callable-signature
+            (enclosing-decl (language python (method)))))
+        (filter :where ((coverage ne unrecorded)
+                        (parameter_count eq 0)
+                        (python_method_kind eq instance)
+                        (python_owner_is_metaclass eq true))
+          (callable-signature
+            (enclosing-decl (language python (method)))))
+        (filter :where ((coverage ne unrecorded)
+                        (python_method_kind eq instance)
+                        (python_owner_is_metaclass eq true)
+                        (first_parameter ne "cls")
+                        (first_parameter ne "mcls")
+                        (first_parameter ne "mcs")
+                        (first_parameter ne "metacls")
+                        (first_parameter ne "self"))
+          (callable-signature
+            (enclosing-decl (language python (method)))))))))

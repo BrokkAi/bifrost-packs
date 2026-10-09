@@ -1,0 +1,23 @@
+; CodeQL: python/ql/src/Statements/DocStrings.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Add docstrings to public declarations selected by CodeQL.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.missing-docstring"
+  :name "Public Python declaration is missing a docstring"
+  :message "Add a docstring to this public Python declaration."
+  :severity warning
+  :description "CodeQL parity policy over complete Python documentation facts, including methods."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq documentation)
+                      (outcome eq issue)
+                      (completeness eq complete)
+                      (scope_is_public eq true))
+        (python-documentation
+          (enclosing-decl
+            (union (language python (module))
+                   (language python (class))
+                   (language python (function))
+                   (language python (method)))))))))

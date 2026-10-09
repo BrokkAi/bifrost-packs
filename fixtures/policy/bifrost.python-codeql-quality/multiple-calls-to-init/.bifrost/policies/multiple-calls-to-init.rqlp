@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Classes/CallsToInitDel/SuperclassInitCalledMultipleTimes.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Call each non-trivial superclass initializer at most once.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.multiple-calls-to-init"
+  :name "Multiple calls to Python superclass __init__"
+  :message "Calling superclass initializers more than once can duplicate initialization effects."
+  :severity warning
+  :description "CodeQL parity policy adapted from the engine-proven Python hierarchy relations."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq call_lifecycle) (outcome eq multiple_calls) (member_name eq "__init__") (coverage eq complete) (target_non_trivial eq true))
+        (python-call-relations (enclosing-decl (language python (class))))))))
