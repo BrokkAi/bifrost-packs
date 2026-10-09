@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 173 unique rule IDs from 11 manifest packs.
+This catalog lists 185 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -98,6 +98,18 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Java undocumented return value](../rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp) | `bifrost.java-codeql-quality.undocumented-return-value` | java | quality | warning |
 | [Java undocumented type](../rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp) | `bifrost.java-codeql-quality.undocumented-type` | java | quality | warning |
 | [Java unknown Javadoc parameter](../rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp) | `bifrost.java-codeql-quality.unknown-javadoc-parameter` | java | quality | warning |
+| [JavaScript global alert call](../rules/bifrost.javascript-codeql-quality/policies/alert-call.rqlp) | `bifrost.javascript-codeql-quality.alert-call` | javascript | quality | warning |
+| [JavaScript file check before use](../rules/bifrost.javascript-codeql-quality/policies/file-system-race.rqlp) | `bifrost.javascript-codeql-quality.file-system-race` | javascript | security | warning |
+| [JavaScript conflicting function declaration](../rules/bifrost.javascript-codeql-quality/policies/function-declaration-conflict.rqlp) | `bifrost.javascript-codeql-quality.function-declaration-conflict` | javascript, typescript | correctness | error |
+| [JavaScript missing this qualifier](../rules/bifrost.javascript-codeql-quality/policies/missing-this-qualifier.rqlp) | `bifrost.javascript-codeql-quality.missing-this-qualifier` | javascript, typescript | correctness | error |
+| [JavaScript missing variable declaration](../rules/bifrost.javascript-codeql-quality/policies/missing-variable-declaration.rqlp) | `bifrost.javascript-codeql-quality.missing-variable-declaration` | javascript, typescript | correctness | warning |
+| [JavaScript misspelled identifier](../rules/bifrost.javascript-codeql-quality/policies/misspelled-identifier.rqlp) | `bifrost.javascript-codeql-quality.misspelled-identifier` | javascript, typescript | quality | warning |
+| [JavaScript mixed static and instance this access](../rules/bifrost.javascript-codeql-quality/policies/mixed-static-instance-this-access.rqlp) | `bifrost.javascript-codeql-quality.mixed-static-instance-this-access` | javascript, typescript | correctness | error |
+| [JavaScript nested function in default parameter](../rules/bifrost.javascript-codeql-quality/policies/nested-function-reference-in-default-parameter.rqlp) | `bifrost.javascript-codeql-quality.nested-function-reference-in-default-parameter` | javascript, typescript | correctness | error |
+| [JavaScript overwritten property](../rules/bifrost.javascript-codeql-quality/policies/overwritten-property.rqlp) | `bifrost.javascript-codeql-quality.overwritten-property` | javascript, typescript | correctness | error |
+| [JavaScript password in configuration file](../rules/bifrost.javascript-codeql-quality/policies/password-in-configuration-file.rqlp) | `bifrost.javascript-codeql-quality.password-in-configuration-file` | javascript | security | warning |
+| [JavaScript conflicting variable initialization](../rules/bifrost.javascript-codeql-quality/policies/variable-initialization-conflict.rqlp) | `bifrost.javascript-codeql-quality.variable-initialization-conflict` | javascript, typescript | correctness | error |
+| [JavaScript redeclared variable](../rules/bifrost.javascript-codeql-quality/policies/variable-redeclaration.rqlp) | `bifrost.javascript-codeql-quality.variable-redeclaration` | javascript, typescript | correctness | warning |
 | [Python asserts a tuple](../rules/bifrost.python-codeql-quality/policies/asserts-tuple.rqlp) | `bifrost.python-codeql-quality.asserts-tuple` | python | correctness | warning |
 | [Superclass attribute shadows Python descendant method](../rules/bifrost.python-codeql-quality/policies/attribute-shadows-method.rqlp) | `bifrost.python-codeql-quality.attribute-shadows-method` | python | correctness | error |
 | [Python comparison of constants](../rules/bifrost.python-codeql-quality/policies/comparison-of-constants.rqlp) | `bifrost.python-codeql-quality.comparison-of-constants` | python | correctness | warning |

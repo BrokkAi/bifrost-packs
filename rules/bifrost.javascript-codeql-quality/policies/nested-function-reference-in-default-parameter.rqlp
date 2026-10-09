@@ -1,0 +1,16 @@
+; CodeQL query: javascript/ql/src/Declarations/DefaultArgumentReferencesNestedFunction.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: a default-parameter call joins only to a function declared
+; in the containing function body.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.nested-function-reference-in-default-parameter"
+  :name "JavaScript nested function in default parameter"
+  :message "a default parameter calls a function before its declaration is initialized"
+  :severity error
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports JavaScript and TypeScript default parameters that call a nested function before its declaration is initialized."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language js-ts
+        (call :language-rule "js/nested-function-reference-in-default-parameter")))))

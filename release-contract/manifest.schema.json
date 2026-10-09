@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/BrokkAi/bifrost-packs/blob/main/release-contract/manifest.schema.json",
-  "title": "Bifrost pack release manifest v2",
+  "title": "Bifrost pack release manifest v2 or v3",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -17,7 +17,10 @@
   ],
   "properties": {
     "manifest_schema_version": {
-      "const": 2
+      "enum": [
+        2,
+        3
+      ]
     },
     "pack": {
       "type": "object",
@@ -124,6 +127,9 @@
         }
       }
     },
+    "host_compatibility": {
+      "$ref": "#/$defs/host-compatibility"
+    },
     "contents": {
       "type": "array",
       "items": {
@@ -168,6 +174,9 @@
           },
           "schemas": {
             "$ref": "#/$defs/schema-set"
+          },
+          "host_schemas": {
+            "$ref": "#/$defs/host-schema-set"
           },
           "required_capabilities": {
             "$ref": "#/$defs/string-set"
@@ -347,6 +356,74 @@
       }
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "required": [
+          "manifest_schema_version"
+        ],
+        "properties": {
+          "manifest_schema_version": {
+            "const": 3
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "host_compatibility"
+        ],
+        "properties": {
+          "contents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "host_schemas"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "required": [
+          "manifest_schema_version"
+        ],
+        "properties": {
+          "manifest_schema_version": {
+            "const": 2
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "not": {
+          "type": "object",
+          "required": [
+            "host_compatibility"
+          ]
+        },
+        "properties": {
+          "contents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "not": {
+                "type": "object",
+                "required": [
+                  "host_schemas"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "semver": {
       "type": "string",
@@ -405,6 +482,45 @@
         },
         "runtime": {
           "$ref": "#/$defs/version-set"
+        }
+      }
+    },
+    "host-schema-set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_bundle"
+      ],
+      "properties": {
+        "policy_bundle": {
+          "$ref": "#/$defs/version-set"
+        }
+      }
+    },
+    "host-compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_version",
+        "schemas",
+        "required_routes"
+      ],
+      "properties": {
+        "contract_version": {
+          "const": 1
+        },
+        "schemas": {
+          "$ref": "#/$defs/host-schema-set"
+        },
+        "required_routes": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 1,
+          "items": {
+            "enum": [
+              "premium-policy-zip"
+            ]
+          }
         }
       }
     },

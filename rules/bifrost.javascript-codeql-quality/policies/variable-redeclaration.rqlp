@@ -1,0 +1,16 @@
+; CodeQL query: javascript/ql/src/Declarations/RedeclaredVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: declaration binders are grouped by file and lexical scope,
+; not by spelling alone.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.variable-redeclaration"
+  :name "JavaScript redeclared variable"
+  :message "a variable is declared more than once in one lexical scope"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports duplicate JavaScript and TypeScript variable declarations only when their structured lexical bindings coincide."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language js-ts
+        (identifier :language-rule "js/variable-redeclaration")))))
