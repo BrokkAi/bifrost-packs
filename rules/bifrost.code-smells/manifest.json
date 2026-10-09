@@ -1,30 +1,24 @@
 {
   "schema_version": 2,
   "id": "bifrost.code-smells",
-  "version": "2.19.0",
+  "version": "2.20.0",
   "name": "Bifrost code smells",
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
     {
       "path": "policies/excessive-parameters.rqlp",
       "id": "bifrost.maintainability.excessive-parameters",
-      "authored_hash": "721cbf8112d35fe9a9abd6822dc1c89854dd2a14e7db869e3bb14e64809bbadb",
-      "resolved_semantic_hash": "721cbf8112d35fe9a9abd6822dc1c89854dd2a14e7db869e3bb14e64809bbadb",
+      "authored_hash": "677da564c1aea69fe87cf5b129708a77583b6e19d669ff7815105bb2af618fb1",
+      "resolved_semantic_hash": "677da564c1aea69fe87cf5b129708a77583b6e19d669ff7815105bb2af618fb1",
       "category": "maintainability",
       "supported_languages": [
         "c",
         "cpp",
         "csharp",
-        "go",
         "java",
-        "javascript",
         "kotlin",
-        "php",
         "python",
-        "ruby",
-        "rust",
-        "scala",
-        "typescript"
+        "scala"
       ],
       "required_capabilities": [
         "structural-match",

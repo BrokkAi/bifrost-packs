@@ -8,18 +8,18 @@
   :name "Excessive callable parameters"
   :message "Callable declares more than seven parameters"
   :severity warning
-  :description "Reports exact callable_signature rows whose parameter_count exceeds the fixed seven-parameter review budget. Defaulted, keyword-only, and variadic parameters count once; an implicit receiver is not a formal parameter; and a destructured formal counts once at its declaration level. Declaration and overload sites are preserved by the signature row identity. Unrecorded coverage stays outside this exact-only result and is not treated as a clean zero. The callable-signature row has no override or generated-code marker, so this policy does not claim to suppress those declarations."
+  :description "Reports exact callable_signature rows whose parameter_count exceeds the fixed seven-parameter review budget. Defaulted, keyword-only, and variadic parameters count once; an implicit receiver is not a formal parameter; and a destructured formal counts once at its declaration level. Structured site identity preserves overload sites while collapsing repeated declaration and definition rows. Unrecorded coverage stays outside this exact-only result and makes the policy inconclusive through the structured query diagnostic rather than clean. Go, JavaScript, PHP, Ruby, Rust, and TypeScript callable_signature producers currently publish no exact CallableArity for the reviewed declarations, so they are outside this claim. The row has no override or generated-code marker, so this policy does not claim to suppress those declarations."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
   :tags ["maintainability" "parameters" "callable-signature" "code-smell"]
   :analysis (analysis
     :type assertion
     (bind :name signature
       :query (rql :schema-version 1
-        (language c cpp csharp go java javascript kotlin php python ruby rust scala typescript
+        (language c cpp csharp java kotlin python scala
           (filter :where ((parameter_count gt 7)
                           (coverage eq exact)
                           (role in [function method constructor]))
             (callable-signature (enclosing-decl (callable)))))))
-    (group :name by-signature :by (signature.id)
+    (group :name by-signature :by (signature.site_id)
       (aggregate :name violations :op count))
     (assert :group by-signature :value violations :cardinality (exactly 0))))
