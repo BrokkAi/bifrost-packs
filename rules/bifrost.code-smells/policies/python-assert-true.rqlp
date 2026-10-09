@@ -1,0 +1,15 @@
+; D1: the deliberately narrow structural Python assertion subset.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.python-assert-true"
+  :name "Python assert True"
+  :message "assert True is ineffective and can be removed"
+  :severity warning
+  :description "Reports only a Python assert statement whose direct test child is the boolean literal True. assert False, comparisons such as x == x, and assertion-library calls are outside this structural subset and remain clean or subject to their own policies."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["python" "assertion" "code-smell"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python
+        (assertion :test (boolean_literal :boolean-value true))))))

@@ -1,0 +1,26 @@
+; D3: excessive parameters over the persisted callable_signature relation.
+; The seven-parameter budget follows the common review threshold used by
+; maintainability linters. This policy intentionally reports only exact rows:
+; an unrecorded signature remains outside the exact-only claim rather than being
+; treated as zero.
+(policy
+  :schema-version 1
+  :id "bifrost.maintainability.excessive-parameters"
+  :name "Excessive callable parameters"
+  :message "Callable declares more than seven parameters"
+  :severity warning
+  :description "Reports exact callable_signature rows whose parameter_count exceeds the fixed seven-parameter review budget. Defaulted, keyword-only, and variadic parameters count once; an implicit receiver is not a formal parameter; and a destructured formal counts once at its declaration level. Structured site identity preserves overload sites while collapsing repeated declaration and definition rows. RQLP can filter scalar coverage, but it cannot map a non-exact coverage value to an inconclusive policy verdict, so this policy reports only exact rows and claims only languages where non-exact rows are rare. In the 2026-10-09 census, non-exact rows were C (cJSON): 0, Java (Bifrost Java fixtures): 1, and Python (Bifrost Python fixtures): 2; the Java and Python counts come from fixtures, not a real project. C++, C#, Kotlin and Scala are excluded until their non-exact rows can be reported as inconclusive: the census found at least 18 (C++ fmt), 20 (C# commandline), 22 (Kotlin colormath) and 106 (Scala scopt). Go, JavaScript, PHP, Ruby, Rust and TypeScript producers publish no exact arity. The row has no override or generated-code marker, so this policy does not claim to suppress those declarations."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["maintainability" "parameters" "callable-signature" "code-smell"]
+  :analysis (analysis
+    :type assertion
+    (bind :name signature
+      :query (rql :schema-version 1
+        (language c java python
+          (filter :where ((parameter_count gt 7)
+                          (coverage eq exact)
+                          (role in [function method constructor]))
+            (callable-signature (enclosing-decl (callable)))))))
+    (group :name by-signature :by (signature.site_id)
+      (aggregate :name violations :op count))
+    (assert :group by-signature :value violations :cardinality (exactly 0))))

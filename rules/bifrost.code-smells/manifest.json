@@ -1,10 +1,45 @@
 {
   "schema_version": 2,
   "id": "bifrost.code-smells",
-  "version": "2.18.0",
+  "version": "2.20.0",
   "name": "Bifrost code smells",
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
+    {
+      "path": "policies/excessive-parameters.rqlp",
+      "id": "bifrost.maintainability.excessive-parameters",
+      "authored_hash": "ce9cbf22fd9c720b9f1a7c6d0565c834620ef8a5f8a71ae2e8b09f1afb7b1bd6",
+      "resolved_semantic_hash": "ce9cbf22fd9c720b9f1a7c6d0565c834620ef8a5f8a71ae2e8b09f1afb7b1bd6",
+      "category": "maintainability",
+      "supported_languages": [
+        "c",
+        "java",
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "callable-signature"
+      ],
+      "severity_rationale": "A callable with more than seven declared parameters is difficult to invoke, review, and evolve as one contract.",
+      "remediation": "Group related inputs into a reviewed value object or split the callable while preserving its declaration and overload contracts.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python-assert-true.rqlp",
+      "id": "bifrost.correctness.python-assert-true",
+      "authored_hash": "09b8bab36da5e631d8012f7aaf09ea30b308658d6bc90b4dfc23c9f2052eb8b0",
+      "resolved_semantic_hash": "09b8bab36da5e631d8012f7aaf09ea30b308658d6bc90b4dfc23c9f2052eb8b0",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "A literal True assertion cannot fail and has no runtime checking effect.",
+      "remediation": "Remove the assertion or replace it with the intended condition; this policy does not judge assert False or non-literal assertion expressions.",
+      "activation": "opt-in"
+    },
     {
       "path": "policies/contradictory-condition.rqlp",
       "id": "bifrost.correctness.contradictory-condition",
