@@ -1,34 +1,59 @@
 {
   "schema_version": 5,
   "pack_id": "bifrost.php.result-use-obligations",
+  "version": "1.0.0",
+  "producer": { "name": "bifrost-reviewed-php-models", "version": "0.1.0" },
   "language": "php",
   "ecosystem": "php",
-  "artifact_identity": {
-    "source": "JetBrains phpstorm-stubs global function declarations",
-    "revision": "748ab87d16253a5b5d648b5fe4dae1ff4152bb03",
-    "artifact_sha256": "270cfce465ac9e1de4abaa4f1facf70982f1becf70e040635f0519bd4a773bb9",
-    "contract_source": "PHP 8.0-8.x manual"
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": [{ "name": "php", "requirement": ">=8.0.0, <9.0.0" }]
   },
-  "provenance": "Reviewed PHP global functions. Resolver-proven _php_global_ identity is required; a namespaced workspace function is not a reviewed builtin. The error-suppression operator @ does not consume a return value, so bare @unlink(...) remains a discarded status use. fwrite byte counts are excluded; only false is the failure predicate.",
+  "provenance": {
+    "source": "JetBrains phpstorm-stubs global function declarations and the PHP 8.0-8.x manual; reviewed PHP pure transformations and false-status functions",
+    "revision": "JetBrains phpstorm-stubs revision 748ab87d16253a5b5d648b5fe4dae1ff4152bb03; artifact sha256 270cfce465ac9e1de4abaa4f1facf70982f1becf70e040635f0519bd4a773bb9; PHP 8.0-8.x manual contracts"
+  },
+  "license": "Apache-2.0",
   "completeness": "complete",
-  "b4_pure_transformations": [
-    { "function": "trim", "arities": [1, 2], "predicate": null },
-    { "function": "ltrim", "arities": [1, 2], "predicate": null },
-    { "function": "rtrim", "arities": [1, 2], "predicate": null },
-    { "function": "strtolower", "arities": [1], "predicate": null },
-    { "function": "strtoupper", "arities": [1], "predicate": null },
-    { "function": "str_replace", "arities": [3], "predicate": null },
-    { "function": "substr", "arities": [2, 3], "predicate": null }
-  ],
-  "b5_false_status": [
-    { "function": "file_put_contents", "arities": [2, 3, 4], "predicate": "false" },
-    { "function": "mkdir", "arities": [1, 2, 3], "predicate": "false" },
-    { "function": "unlink", "arities": [1, 2], "predicate": "false" },
-    { "function": "rename", "arities": [2, 3], "predicate": "false" },
-    { "function": "fclose", "arities": [1], "predicate": "false" },
-    { "function": "fwrite", "arities": [2, 3], "predicate": "false", "note": "byte counts are outside this contract" }
-  ],
-  "summary_count": 24,
-  "basis": "dispatch_agreement",
-  "receiver": "none; global function identity is resolved structurally"
+  "safety": { "generated_code_only": false, "review_required": false },
+  "shards": [
+    {
+      "id": "php.reviewed-result-use",
+      "activation": [
+        {
+          "toolchain": { "name": "php", "version": ">=8.0.0, <9.0.0" },
+          "targets": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          { "id": "php._php_global_.trim.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.trim(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.trim.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.trim(string,string)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.ltrim.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.ltrim(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.ltrim.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.ltrim(string,string)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.rtrim.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.rtrim(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.rtrim.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.rtrim(string,string)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.strtolower.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.strtolower(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.strtoupper.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.strtoupper(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.str_replace.3.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.str_replace(string,string,string)", "has_receiver": false, "parameter_count": 3 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.substr.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.substr(string,int)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.substr.3.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.substr(string,int,int)", "has_receiver": false, "parameter_count": 3 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }] },
+          { "id": "php._php_global_.file_put_contents.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.file_put_contents(string,string)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.file_put_contents.3.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.file_put_contents(string,string,int)", "has_receiver": false, "parameter_count": 3 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.file_put_contents.4.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.file_put_contents(string,string,int,resource)", "has_receiver": false, "parameter_count": 4 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.mkdir.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.mkdir(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.mkdir.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.mkdir(string,int)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.mkdir.3.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.mkdir(string,int,bool)", "has_receiver": false, "parameter_count": 3 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.unlink.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.unlink(string)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.unlink.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.unlink(string,bool)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.rename.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.rename(string,string)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.rename.3.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.rename(string,string,bool)", "has_receiver": false, "parameter_count": 3 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.fclose.1.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.fclose(resource)", "has_receiver": false, "parameter_count": 1 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.fwrite.2.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.fwrite(resource,string)", "has_receiver": false, "parameter_count": 2 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] },
+          { "id": "php._php_global_.fwrite.3.result-use", "target": { "path": "standard/basic.php", "symbol": "_php_global_.fwrite(resource,string,int)", "has_receiver": false, "parameter_count": 3 }, "completeness": "complete", "ordinary_heap_unchanged": true, "normal_result_count": 1, "transfers": [], "effects": [], "result_use_obligations": [{ "result_ordinal": 0, "kind": "fallible_status", "failure_predicate": "false" }] }
+        ]
+      }
+    }
+  ]
 }
