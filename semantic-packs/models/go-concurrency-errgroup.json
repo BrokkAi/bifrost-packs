@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.go.concurrency.errgroup",
+  "version": "1.0.0",
+  "producer": { "name": "bifrost", "version": "0.11.3" },
+  "language": "go",
+  "ecosystem": "go-module",
+  "compatibility": { "bifrost": ">=0.11.3, <1.0.0", "toolchains": [] },
+  "provenance": {
+    "source": "https://pkg.go.dev/golang.org/x/sync/errgroup",
+    "revision": "x-sync-v0.15.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": { "generated_code_only": false, "review_required": false },
+  "shards": [
+    {
+      "id": "go.concurrency.errgroup",
+      "activation": [{ "module": { "name": "golang.org/x/sync", "version": ">=0.1.0, <1.0.0" } }],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "errgroup.with-context",
+            "target": { "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.WithContext(ctx context.Context)", "has_receiver": false, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "locations": [{ "id": "errgroup.with-context.group", "location_kind": "heap" }],
+            "transfers": [{ "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "indexed_normal_return", "ordinal": 1 } }],
+            "effects": [{ "kind": "allocation", "event": "errgroup.with-context.group-allocation", "output": { "kind": "indexed_normal_return", "ordinal": 0 } }]
+          },
+          {
+            "id": "errgroup.group.go",
+            "target": { "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group.Go(f func() error)", "has_receiver": true, "parameter_count": 1 },
+            "completeness": "complete",
+            "transfers": [],
+            "concurrency_effects": [{ "kind": "task_spawn", "callable": { "kind": "parameter", "ordinal": 0 }, "group": { "kind": "receiver" } }]
+          },
+          {
+            "id": "errgroup.group.wait",
+            "target": { "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group.Wait()", "has_receiver": true, "parameter_count": 0 },
+            "completeness": "complete",
+            "transfers": [],
+            "concurrency_effects": [{ "kind": "task_join", "group": { "kind": "receiver" } }]
+          },
+          {
+            "id": "errgroup.group.try-go",
+            "target": { "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group.TryGo(f func() error)", "has_receiver": true, "parameter_count": 1 },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "concurrency_effects": [
+              { "kind": "task_spawn", "callable": { "kind": "parameter", "ordinal": 0 }, "group": { "kind": "receiver" }, "condition": "call_result_true" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
