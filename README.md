@@ -56,22 +56,22 @@ qualified here. Pack versions are independent of engine versions.
 | Severity | warning | 103 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 381 rule-language pairs.
+13 declared languages; 377 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 15 |
-| cpp | 35 |
-| csharp | 30 |
+| cpp | 34 |
+| csharp | 29 |
 | go | 18 |
 | java | 48 |
 | javascript | 37 |
-| kotlin | 15 |
+| kotlin | 14 |
 | php | 15 |
 | python | 76 |
 | ruby | 15 |
 | rust | 28 |
-| scala | 15 |
+| scala | 14 |
 | typescript | 34 |
 
 Activation labels: opt-in 29, unspecified 155. Omitted labels remain unspecified.
