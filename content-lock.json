@@ -4261,8 +4261,8 @@
     },
     {
       "path": "rules/bifrost.code-smells/manifest.json",
-      "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "d4b84646cfe30bb08a72220a2eca985186ef95dfa9e33acb003472ceb4ff198b",
+      "source_path": "rules/bifrost.code-smells/manifest.json",
+      "sha256": "f4d3247b59a42572cdcdc2df96d04aa518804bc583142fc702078ae5a967c4bb",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -4305,6 +4305,13 @@
       "path": "rules/bifrost.code-smells/policies/empty-failure-handler.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/empty-failure-handler.rqlp",
       "sha256": "a009742387fcae9c48c5ac5035ce7d509acba5de690162c0243ece925a0fd0e4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/excessive-parameters.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/excessive-parameters.rqlp",
+      "sha256": "8390edbe3f6e33214ba9f16d910cdf0d0c752c41068cd48747f67e01677f2970",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -4410,6 +4417,13 @@
       "path": "rules/bifrost.code-smells/policies/python-absent-member.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/python-absent-member.rqlp",
       "sha256": "82b61cb76c4df5892b01446841966c788771203650fda64e0072ceb803ae60f3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-assert-true.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-assert-true.rqlp",
+      "sha256": "4d561e8a316568564b5e8b16bd84dd77969a7c67b319daa03240f54393d04d56",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7189,5 +7203,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "136116ab03c2bd33a0dc4b8818afbddb730c8445630fc85867fcf8a35dedc5ff"
+  "aggregate_sha256": "1190d9c2b84407bd99af77938ec96df2e997567c4ad3e01befdd920eee33e284"
 }
