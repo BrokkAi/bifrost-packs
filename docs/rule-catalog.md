@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 170 unique rule IDs from 11 manifest packs.
+This catalog lists 173 unique rule IDs from 11 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -15,6 +15,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Discarded pure transformation result](../rules/bifrost.code-smells/policies/discarded-pure-result.rqlp) | `bifrost.correctness.discarded-pure-result` | c, cpp, csharp, java, javascript, php, python, ruby, rust, typescript | correctness | warning |
 | [Dynamic code evaluation](../rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp) | `bifrost.correctness.dynamic-evaluation` | javascript, python, typescript | correctness | warning |
 | [Empty failure handler](../rules/bifrost.code-smells/policies/empty-failure-handler.rqlp) | `bifrost.correctness.empty-failure-handler` | cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
+| [Excessive callable nesting](../rules/bifrost.code-smells/policies/excessive-nesting.rqlp) | `bifrost.code-smells.excessive-nesting` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | maintainability | warning |
 | [Expensive operation inside nested loops](../rules/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp) | `bifrost.performance.expensive-operation-in-nested-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Failed local swap](../rules/bifrost.code-smells/policies/failed-swap.rqlp) | `bifrost.correctness.failed-swap` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [File read inside a loop](../rules/bifrost.code-smells/policies/file-read-in-loop.rqlp) | `bifrost.performance.file-read-in-loop` | java, javascript, python, rust, typescript | performance | note |
@@ -27,6 +28,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Loop body never repeats](../rules/bifrost.code-smells/policies/loop-body-never-repeats.rqlp) | `bifrost.correctness.loop-body-never-repeats` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Loop-invariant receiver sorted on every iteration](../rules/bifrost.code-smells/policies/loop-invariant-sort.rqlp) | `bifrost.performance.loop-invariant-sort` | java, javascript, python, rust, typescript | performance | warning |
 | [Network request inside a loop](../rules/bifrost.code-smells/policies/network-call-in-loop.rqlp) | `bifrost.performance.network-call-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Oversized callable complexity](../rules/bifrost.code-smells/policies/oversized-function-complexity.rqlp) | `bifrost.code-smells.oversized-function-complexity` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | maintainability | warning |
+| [Oversized callable span](../rules/bifrost.code-smells/policies/oversized-function-span.rqlp) | `bifrost.code-smells.oversized-function-span` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | maintainability | warning |
 | [Overwritten unread local value](../rules/bifrost.code-smells/policies/overwritten-unread-value.rqlp) | `bifrost.correctness.overwritten-unread-value` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Parsing inside a loop](../rules/bifrost.code-smells/policies/parsing-in-loop.rqlp) | `bifrost.performance.parsing-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Python absent member](../rules/bifrost.code-smells/policies/python-absent-member.rqlp) | `bifrost.correctness.python-absent-member` | python | correctness | error |
