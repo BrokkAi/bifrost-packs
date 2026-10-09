@@ -1,8 +1,10 @@
-# Shared pack release contract v2
+# Shared pack release contract v2 and v3
 
 This directory defines the release metadata and selection contract shared by
-public and private pack repositories. Schema 2 is the current contract for new
-releases. Schema 1 remains available for immutable historical manifests.
+public and private pack repositories. Schema 2 remains the engine-only contract
+for existing and new releases that do not need a host format. Schema 3 adds a
+separate host admission scope. Schema 1 remains available for immutable
+historical manifests.
 
 See [release versioning](../docs/release-versioning.md) for independent stream
 bump rules and the distinction between compatibility, qualification, and
@@ -42,6 +44,44 @@ gates schema 2 acceptance and must not be used to invent missing capabilities.
 Schema 1 releases retain their original single qualification field and exact
 engine-range behavior. Keep their manifests and interpretations unchanged; do
 not convert them to schema 2 or infer new evidence for them.
+
+## Host and engine admission in schema 3
+
+Schema 3 keeps `compatibility.schemas` and every content item's `schemas`
+engine-only. They retain all nine axes from schema 2, including
+`policy_bundle`; the producer never copies a host requirement into that engine
+axis. Every schema 3 content item also has the exact closed object
+`host_schemas: {"policy_bundle": [...]}`.
+
+The release-level `host_compatibility` object is also closed and exact:
+
+```json
+{
+  "contract_version": 1,
+  "schemas": {"policy_bundle": []},
+  "required_routes": []
+}
+```
+
+The `policy_bundle` array contains unique positive integers. The route list is
+either empty or contains the supported route `premium-policy-zip`. The release
+host schema union must equal the union of all content `host_schemas`; an empty
+array expresses no host-format requirement.
+
+Selecting a schema 3 release requires both an engine profile and an independent
+host profile. The host profile has exactly
+`contract_version`, `schemas`, and `provided_routes`, with contract version 1,
+the same closed `policy_bundle` schema map, and the closed supported route set.
+Host support is checked separately from engine schemas and capabilities, so an
+engine-compatible release remains inadmissible when the host schema or route is
+missing. Schema 2 callers and receipts continue to use the existing API.
+
+The Python API keeps the optional host argument at the end of the selector
+signatures: `select_release(..., allow_unqualified=False,
+host_profile=None)`, with the same option available through candidate and
+dependency resolution. Producers opt into the new contract explicitly with
+`make_manifest(..., manifest_schema_version=3,
+host_compatibility=...)`; their content rows provide `host_schemas`.
 
 ## Artifacts and selection
 

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python.str-result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "python-str-result-use-obligations.json",
+    "sha256": "9fa34bbe3e2e7d6e76858fa0521db11d2da1b1f38ed2b666969a672d609b9bfb",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/963ccd039eac571d929fdfff212d265ff3a0d162/semantic-packs/python/python-str-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.10.0, <3.15.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.10.0, <3.15.0"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "CPython builtins.str reference and typeshed; reviewed pure transformations strip, lower, upper, and replace",
+    "revision": "typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; assumption: annotated or inferred builtins.str receivers use the builtin implementation and builtin methods are not replaced; subclass and open flows remain outside this claim"
+  },
+  "license": "PSF-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-str-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.13.5"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "builtins.str",
+      "name": "strip",
+      "has_receiver": true,
+      "parameter_count": 0
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+; CodeQL query: javascript/ql/src/Declarations/MissingVarDecl.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: an assignment is reported only when its structured binding
+; is unresolved and its first access is a write followed by a read.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.missing-variable-declaration"
+  :name "JavaScript missing variable declaration"
+  :message "an assignment creates an implicit global"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports undeclared JavaScript and TypeScript assignments with a proven write-then-read shape; dynamic scope and direct eval can leave coverage incomplete."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language js-ts
+        (assignment :left (identifier)
+          :language-rule "js/missing-variable-declaration")))))

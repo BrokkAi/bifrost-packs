@@ -1,0 +1,75 @@
+{
+  "schema_version": 4,
+  "pack_id": "bifrost.node-fs-javascript-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-node-models",
+    "version": "0.1.0"
+  },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Node.js fs API summaries",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "shards": [
+    {
+      "id": "node-fs-summaries",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:generic/nodejs.org/node@22.11.0"
+          },
+          "targets": [],
+          "configurations": [
+            "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+          ],
+          "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.node.fs.exists-sync",
+            "target": {
+              "path": "node/lib/fs.js",
+              "symbol": "fs.existsSync",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.node.fs.write-file-sync",
+            "target": {
+              "path": "node/lib/fs.js",
+              "symbol": "fs.writeFileSync",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -11,6 +11,8 @@ from pathlib import Path
 SCHEMA_PATH = Path(__file__).with_name('manifest.schema.json')
 V1_SCHEMA_PATH = Path(__file__).with_name('manifest.v1.schema.json')
 SCHEMA_KEYS = ('policy_document', 'rql', 'builtin_catalog', 'policy_bundle', 'semantic_model_read', 'semantic_model_write', 'semantic_spec', 'release_index', 'runtime')
+HOST_SCHEMA_KEYS = ('policy_bundle',)
+SUPPORTED_HOST_ROUTES = ('premium-policy-zip',)
 ERROR_EXIT = {'no-compatible-release': 2, 'invalid-manifest': 3, 'unsupported-manifest-schema': 4, 'incompatible-schema': 5, 'unavailable-credentials/network': 6, 'integrity-error': 7}
 
 
@@ -31,7 +33,7 @@ def digest(data):
 def _schema_for_version(version):
     if version == 1:
         path = V1_SCHEMA_PATH
-    elif version == 2:
+    elif version in (2, 3):
         path = SCHEMA_PATH
     else:
         fail('unsupported-manifest-schema', f'unsupported release manifest schema version: {version!r}')
@@ -72,6 +74,20 @@ def _validate(value, schema, root, location='$'):
         if valid != 1:
             fail('invalid-manifest', f'{location}: expected one schema alternative')
         return
+    if 'allOf' in schema:
+        for branch in schema['allOf']:
+            _validate(value, branch, root, location)
+    if 'anyOf' in schema:
+        if not any(_valid(value, branch, root, location) for branch in schema['anyOf']):
+            fail('invalid-manifest', f'{location}: expected one schema alternative')
+    if 'not' in schema and _valid(value, schema['not'], root, location):
+        fail('invalid-manifest', f'{location}: schema alternative is forbidden')
+    if 'if' in schema:
+        if _valid(value, schema['if'], root, location):
+            if 'then' in schema:
+                _validate(value, schema['then'], root, location)
+        elif 'else' in schema:
+            _validate(value, schema['else'], root, location)
     types = {'object': dict, 'array': list, 'string': str, 'integer': int, 'boolean': bool, 'null': type(None)}
     kind = schema.get('type')
     if kind and (not isinstance(value, types[kind]) or kind == 'integer' and isinstance(value, bool)):
@@ -93,6 +109,8 @@ def _validate(value, schema, root, location='$'):
     elif kind == 'array':
         if len(value) < schema.get('minItems', 0):
             fail('invalid-manifest', f'{location}: too few entries')
+        if len(value) > schema.get('maxItems', len(value)):
+            fail('invalid-manifest', f'{location}: too many entries')
         if schema.get('uniqueItems') and len({json.dumps(v, sort_keys=True) for v in value}) != len(value):
             fail('invalid-manifest', f'{location}: duplicate entries')
         for index, child in enumerate(value):
@@ -104,6 +122,14 @@ def _validate(value, schema, root, location='$'):
             fail('invalid-manifest', f'{location}: HTTPS URI required')
     elif kind == 'integer' and value < schema.get('minimum', value):
         fail('invalid-manifest', f'{location}: below minimum')
+
+
+def _valid(value, schema, root, location):
+    try:
+        _validate(value, schema, root, location)
+    except ReleaseError:
+        return False
+    return True
 
 
 def semver(version):
@@ -135,6 +161,10 @@ def validate_manifest(manifest):
         engine = manifest['compatibility']['engine']
         if semver(engine['min_inclusive']) >= semver(engine['max_exclusive']):
             fail('invalid-manifest', 'engine range is empty')
+    if schema_version == 2 and ('host_compatibility' in manifest or any('host_schemas' in item for item in manifest['contents'])):
+        fail('invalid-manifest', 'manifest schema 2 has no host compatibility scope')
+    if schema_version == 3:
+        validate_host_compatibility(manifest['host_compatibility'])
     if 'provenance' in manifest and 'engine_version' in manifest['provenance']:
         semver(manifest['provenance']['engine_version'])
     required_caps = set(manifest['compatibility']['capabilities']['required'])
@@ -150,6 +180,10 @@ def validate_manifest(manifest):
             fail('invalid-manifest', 'content capability missing from release requirements')
         if any(not set(values) <= set(declared_schemas[axis]) for axis, values in item['schemas'].items()):
             fail('invalid-manifest', 'content schema missing from release requirements')
+        if schema_version == 3:
+            host_schemas = item['host_schemas']
+            if any(not set(values) <= set(manifest['host_compatibility']['schemas'][axis]) for axis, values in host_schemas.items()):
+                fail('invalid-manifest', 'content host schema missing from release requirements')
     names = []
     for artifact in manifest['artifacts']:
         safe_path(artifact['name'])
@@ -177,6 +211,13 @@ def validate_manifest(manifest):
             state = manifest['qualification'][axis]
             if state['status'] != 'pending' and not any(evidence.strip() for evidence in state['evidence']):
                 fail('invalid-manifest', f'{axis} qualification status {state["status"]} requires meaningful evidence')
+    if schema_version == 3:
+        host_union = empty_host_schemas()
+        for item in manifest['contents']:
+            for axis, values in item['host_schemas'].items():
+                host_union[axis] = sorted(set(host_union[axis]) | set(values))
+        if any(set(host_union[axis]) != set(values) for axis, values in manifest['host_compatibility']['schemas'].items()):
+            fail('invalid-manifest', 'host compatibility schemas must equal the content host schema union')
     return manifest
 
 
@@ -195,6 +236,30 @@ def validate_profile(profile):
     return profile
 
 
+def validate_host_compatibility(host_compatibility):
+    if not isinstance(host_compatibility, dict) or set(host_compatibility) != {'contract_version', 'schemas', 'required_routes'}:
+        fail('invalid-manifest', 'host compatibility requires exactly contract_version, schemas and required_routes')
+    if host_compatibility['contract_version'] != 1:
+        fail('incompatible-schema', 'unsupported host compatibility contract')
+    if any(route not in SUPPORTED_HOST_ROUTES for route in host_compatibility['required_routes']):
+        fail('invalid-manifest', 'unsupported host route')
+    return host_compatibility
+
+
+def validate_host_profile(host_profile):
+    required = {'contract_version', 'schemas', 'provided_routes'}
+    if not isinstance(host_profile, dict) or set(host_profile) != required:
+        fail('invalid-manifest', 'host profile requires exactly contract_version, schemas and provided_routes')
+    if type(host_profile['contract_version']) is not int or host_profile['contract_version'] != 1:
+        fail('incompatible-schema', 'unsupported host profile contract')
+    schema, _ = load_json(SCHEMA_PATH)
+    _validate(host_profile['schemas'], schema['$defs']['host-schema-set'], schema)
+    _validate(host_profile['provided_routes'], schema['$defs']['string-set'], schema)
+    if any(route not in SUPPORTED_HOST_ROUTES for route in host_profile['provided_routes']):
+        fail('invalid-manifest', 'unsupported host route')
+    return host_profile
+
+
 def verify_artifact(artifact, path):
     path = Path(path)
     if path.is_symlink() or not path.is_file():
@@ -205,9 +270,11 @@ def verify_artifact(artifact, path):
     return artifact
 
 
-def _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, repository=None):
+def _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, repository=None, host_profile=None):
     """Return compatible candidates newest first; dependencies may reject a root candidate."""
     validate_profile(profile)
+    if host_profile is not None:
+        validate_host_profile(host_profile)
     if channel not in ('stable', 'prerelease'):
         fail('invalid-manifest', 'channel must be stable or prerelease')
     if version:
@@ -216,7 +283,7 @@ def _eligible_candidates(paths, profile, pack_id, channel, version, commit, allo
         fail('invalid-manifest', 'commit pin must be a full SHA')
     eligible = []
     identities = {}
-    blocked = {'engine': False, 'schemas': [], 'capabilities': [], 'capability_contract': None, 'qualification': False}
+    blocked = {'engine': False, 'schemas': [], 'capabilities': [], 'capability_contract': None, 'host_schemas': [], 'host_routes': [], 'host_profile': False, 'qualification': False}
     for path in paths:
         manifest, raw = load_json(path)
         validate_manifest(manifest)
@@ -254,6 +321,21 @@ def _eligible_candidates(paths, profile, pack_id, channel, version, commit, allo
         if missing_schemas:
             blocked['schemas'].extend(missing_schemas)
             continue
+        if manifest['manifest_schema_version'] == 3:
+            if host_profile is None:
+                blocked['host_profile'] = True
+                continue
+            host_compatibility = manifest['host_compatibility']
+            missing_host_schemas = [
+                f'{axis}={value}'
+                for axis, values in host_compatibility['schemas'].items()
+                for value in sorted(set(values) - set(host_profile['schemas'][axis]))
+            ]
+            missing_host_routes = sorted(set(host_compatibility['required_routes']) - set(host_profile['provided_routes']))
+            if missing_host_schemas or missing_host_routes:
+                blocked['host_schemas'].extend(missing_host_schemas)
+                blocked['host_routes'].extend(missing_host_routes)
+                continue
         qualification = manifest['qualification']
         if manifest['manifest_schema_version'] == 1:
             qualified = qualification['status'] == 'qualified' and any(a['role'] in ('native', 'policy') for a in manifest['artifacts'])
@@ -275,21 +357,24 @@ def _eligible_candidates(paths, profile, pack_id, channel, version, commit, allo
         if blocked['capability_contract']:
             expected, actual = blocked['capability_contract']
             details.append(f'capability contract version {expected} required, profile has {actual}')
+        if blocked['host_profile']: details.append('v3 host profile is required')
+        if blocked['host_schemas']: details.append('missing host schema support: ' + ', '.join(sorted(set(blocked['host_schemas']))))
+        if blocked['host_routes']: details.append('missing host routes: ' + ', '.join(sorted(set(blocked['host_routes']))))
         if blocked['qualification']: details.append('integrity/behavior qualification does not permit default selection')
         if version or commit: details.append('requested pin')
         detail = ', '.join(details) or 'channel or release identity'
-        code = 'incompatible-schema' if blocked['schemas'] and not (blocked['engine'] or blocked['capabilities'] or blocked['capability_contract'] or blocked['qualification']) else 'no-compatible-release'
+        code = 'incompatible-schema' if (blocked['schemas'] or blocked['host_schemas']) and not (blocked['engine'] or blocked['capabilities'] or blocked['capability_contract'] or blocked['host_profile'] or blocked['host_routes'] or blocked['qualification']) else 'no-compatible-release'
         fail(code, f'no {pack_id} release satisfies {detail}')
     return sorted(eligible, key=lambda item: (item[0], item[1]), reverse=True)
 
 
-def resolve_candidate(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False):
-    return _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified)[0]
+def resolve_candidate(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False, host_profile=None):
+    return _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, host_profile=host_profile)[0]
 
 
-def resolve_release_set(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False, visiting=(), expected_repository=None):
+def resolve_release_set(paths, profile, pack_id, channel='stable', version=None, commit=None, allow_unqualified=False, visiting=(), expected_repository=None, host_profile=None):
     try:
-        candidates = _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, expected_repository)
+        candidates = _eligible_candidates(paths, profile, pack_id, channel, version, commit, allow_unqualified, expected_repository, host_profile)
     except ReleaseError as error:
         if expected_repository is not None and error.code == 'no-compatible-release':
             fail('no-compatible-release', f'no {pack_id} release from exact repository {expected_repository} satisfies the contract: {error}')
@@ -306,7 +391,7 @@ def resolve_release_set(paths, profile, pack_id, channel='stable', version=None,
         try:
             for dependency in manifest.get('release_dependencies', []):
                 dependency_channel = 'stable' if semver(dependency['release_version'])[3] else 'prerelease'
-                child = resolve_release_set(paths, profile, dependency['pack_id'], dependency_channel, dependency['release_version'], None, allow_unqualified, visiting + (key,), dependency['repository'])
+                child = resolve_release_set(paths, profile, dependency['pack_id'], dependency_channel, dependency['release_version'], None, allow_unqualified, visiting + (key,), dependency['repository'], host_profile)
                 result.extend(child)
             resolved = {}
             for row in result:
@@ -327,8 +412,8 @@ def resolve_release_set(paths, profile, pack_id, channel='stable', version=None,
     fail('no-compatible-release', f'no compatible {pack_id} release dependency set')
 
 
-def select_release(paths, profile, pack_id, channel='stable', version=None, commit=None, cache_dir=None, allow_unqualified=False):
-    candidates = resolve_release_set(paths, profile, pack_id, channel, version, commit, allow_unqualified)
+def select_release(paths, profile, pack_id, channel='stable', version=None, commit=None, cache_dir=None, allow_unqualified=False, host_profile=None):
+    candidates = resolve_release_set(paths, profile, pack_id, channel, version, commit, allow_unqualified, host_profile=host_profile)
     _, path, manifest, manifest_hash = candidates[0]
     dependencies = []
     for _, dependency_path, dependency_manifest, dependency_hash in candidates[1:]:
@@ -341,11 +426,18 @@ def select_release(paths, profile, pack_id, channel='stable', version=None, comm
         parent = Path(cache_dir) / artifact['sha256'] if cache_dir else Path(path).parent
         verify_artifact(artifact, parent / artifact['name'])
         artifacts.append(artifact)
-    return {'dependencies': dependencies, 'receipt_schema_version': 2, 'manifest_schema_version': manifest['manifest_schema_version'], 'pack_id': pack_id, 'release_version': manifest['release_version'], 'source_commit': manifest['source']['commit'], 'manifest_sha256': manifest_hash, 'engine_profile': profile, 'qualification': manifest['qualification'], 'artifacts': artifacts}
+    receipt = {'dependencies': dependencies, 'receipt_schema_version': 2, 'manifest_schema_version': manifest['manifest_schema_version'], 'pack_id': pack_id, 'release_version': manifest['release_version'], 'source_commit': manifest['source']['commit'], 'manifest_sha256': manifest_hash, 'engine_profile': profile, 'qualification': manifest['qualification'], 'artifacts': artifacts}
+    if manifest['manifest_schema_version'] == 3:
+        receipt['host_profile'] = host_profile
+    return receipt
 
 
 def empty_schemas():
     return {key: [] for key in SCHEMA_KEYS}
+
+
+def empty_host_schemas():
+    return {key: [] for key in HOST_SCHEMA_KEYS}
 
 
 def expected_tag(manifest):
@@ -395,7 +487,13 @@ def public_contents(root, lock, component=None):
     return sorted(contents, key=lambda row: (row['kind'], row['identity'], row['path']))
 
 
-def make_manifest(config, commit, contents, archive, origin=None):
+def make_manifest(config, commit, contents, archive, origin=None, *, manifest_schema_version=2, host_compatibility=None):
+    if manifest_schema_version not in (2, 3):
+        fail('unsupported-manifest-schema', f'unsupported release manifest schema version: {manifest_schema_version!r}')
+    if manifest_schema_version == 2 and host_compatibility is not None:
+        fail('invalid-manifest', 'schema 2 producer has no host compatibility scope')
+    if manifest_schema_version == 3 and host_compatibility is None:
+        fail('invalid-manifest', 'schema 3 producer requires host compatibility')
     aggregate = empty_schemas()
     for item in contents:
         for axis, values in item['schemas'].items():
@@ -404,7 +502,9 @@ def make_manifest(config, commit, contents, archive, origin=None):
         'integrity': {'status': 'pending', 'evidence': []},
         'behavior': {'status': 'pending', 'evidence': []},
     }
-    manifest = dict(manifest_schema_version=2, pack=dict(id=config['pack_id'], repository=config['repository'], visibility=config['visibility']), release_version=config['release_version'], source=dict(repository=config['repository'], commit=commit, dirty=False), compatibility=dict(schemas=aggregate, capabilities=dict(contract_version=1, required=sorted({v for item in contents for v in item['required_capabilities']}), provided=[])), contents=contents, artifacts=[dict(name=archive.name, sha256=digest(archive.read_bytes()), size_bytes=archive.stat().st_size, format='tar.gz' if archive.name.endswith('.tar.gz') else 'zip', role=config['artifact_role'])], qualification=qualification, release_dependencies=config.get('release_dependencies', []))
+    manifest = dict(manifest_schema_version=manifest_schema_version, pack=dict(id=config['pack_id'], repository=config['repository'], visibility=config['visibility']), release_version=config['release_version'], source=dict(repository=config['repository'], commit=commit, dirty=False), compatibility=dict(schemas=aggregate, capabilities=dict(contract_version=1, required=sorted({v for item in contents for v in item['required_capabilities']}), provided=[])), contents=contents, artifacts=[dict(name=archive.name, sha256=digest(archive.read_bytes()), size_bytes=archive.stat().st_size, format='tar.gz' if archive.name.endswith('.tar.gz') else 'zip', role=config['artifact_role'])], qualification=qualification, release_dependencies=config.get('release_dependencies', []))
+    if manifest_schema_version == 3:
+        manifest['host_compatibility'] = host_compatibility
     provenance = config.get('provenance')
     if provenance:
         manifest['provenance'] = provenance
@@ -416,8 +516,8 @@ def make_manifest(config, commit, contents, archive, origin=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    create = commands.add_parser('create'); create.add_argument('--root', type=Path, default=Path.cwd()); create.add_argument('--archive', type=Path, required=True); create.add_argument('--output', type=Path, required=True); create.add_argument('--config', type=Path, default=Path('release-config.json')); create.add_argument('--version')
-    select = commands.add_parser('select'); select.add_argument('--engine-profile', type=Path, required=True); select.add_argument('--pack-id', required=True); select.add_argument('--channel', choices=['stable', 'prerelease'], default='stable'); select.add_argument('--version'); select.add_argument('--commit'); select.add_argument('--cache-dir', type=Path); select.add_argument('--allow-unqualified', action='store_true'); select.add_argument('--receipt', type=Path, required=True); select.add_argument('manifests', nargs='+', type=Path)
+    create = commands.add_parser('create'); create.add_argument('--root', type=Path, default=Path.cwd()); create.add_argument('--archive', type=Path, required=True); create.add_argument('--output', type=Path, required=True); create.add_argument('--config', type=Path, default=Path('release-config.json')); create.add_argument('--version'); create.add_argument('--manifest-schema-version', type=int, choices=[2, 3], default=2); create.add_argument('--host-compatibility', type=Path)
+    select = commands.add_parser('select'); select.add_argument('--engine-profile', type=Path, required=True); select.add_argument('--host-profile', type=Path); select.add_argument('--pack-id', required=True); select.add_argument('--channel', choices=['stable', 'prerelease'], default='stable'); select.add_argument('--version'); select.add_argument('--commit'); select.add_argument('--cache-dir', type=Path); select.add_argument('--allow-unqualified', action='store_true'); select.add_argument('--receipt', type=Path, required=True); select.add_argument('manifests', nargs='+', type=Path)
     verify = commands.add_parser('verify-artifact'); verify.add_argument('--manifest', type=Path, required=True); verify.add_argument('--artifact', type=Path, required=True)
     args = parser.parse_args()
     try:
@@ -428,11 +528,13 @@ def main():
             if status.stdout.strip(): fail('invalid-manifest', 'release creation requires clean source checkout')
             commit = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
             origin = dict(repository=lock['source']['repository'], commit=lock['source']['revision'], lock_sha256=digest(raw))
-            result = make_manifest(config, commit, public_contents(root, lock, config.get('component')), args.archive, origin)
+            host_compatibility = load_json(args.host_compatibility)[0] if args.host_compatibility else None
+            result = make_manifest(config, commit, public_contents(root, lock, config.get('component')), args.archive, origin, manifest_schema_version=args.manifest_schema_version, host_compatibility=host_compatibility)
             args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
         elif args.command == 'select':
             profile, _ = load_json(args.engine_profile)
-            result = select_release(args.manifests, profile, args.pack_id, args.channel, args.version, args.commit, args.cache_dir, args.allow_unqualified)
+            host_profile = load_json(args.host_profile)[0] if args.host_profile else None
+            result = select_release(args.manifests, profile, args.pack_id, args.channel, args.version, args.commit, args.cache_dir, args.allow_unqualified, host_profile)
             args.receipt.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
         else:
             manifest, _ = load_json(args.manifest); validate_manifest(manifest)
