@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.rust-std-io-write",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "producer": {
     "name": "bifrost-reviewed-rust-codeql-parity-models",
     "version": "0.1.0"
@@ -13,8 +13,8 @@
     "toolchains": []
   },
   "provenance": {
-    "source": "Rust standard-library stdout/stderr handles, Write methods, and formatted print sinks used by CodeQL rust/log-injection, plus the zero-flow String constructor and String/str value carriers needed to reach those sinks.",
-    "revision": "rust-std-1.100; CodeQL ae741615f3e178ce61289a651790dc67fcc18e19"
+    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only.",
+    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19"
   },
   "license": "Apache-2.0",
   "completeness": "complete",
@@ -65,7 +65,18 @@
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
               "symbol": "std.io.Stdout"
-            }
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.io.Write",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ]
           },
           {
             "id": "type.rust-codeql.std-io-stderr",
@@ -76,7 +87,18 @@
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
               "symbol": "std.io.Stderr"
-            }
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.io.Write",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ]
           },
           {
             "id": "type.rust-codeql.std-io-stdout-lock",
@@ -87,7 +109,18 @@
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
               "symbol": "std.io.StdoutLock"
-            }
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.io.Write",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ]
           },
           {
             "id": "type.rust-codeql.std-io-stderr-lock",
@@ -98,7 +131,18 @@
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
               "symbol": "std.io.StderrLock"
-            }
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.io.Write",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ]
           },
           {
             "id": "type.rust-codeql.std-io-stdio",
@@ -154,6 +198,41 @@
               "path": "library/alloc/src/string.rs",
               "symbol": "std.string.String"
             }
+          },
+          {
+            "id": "type.rust-codeql.std-io-write",
+            "name": "std.io.Write",
+            "type_kind": "trait",
+            "visibility": "public",
+            "is_abstract": true,
+            "callable_surface_complete": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-fs-file",
+            "name": "std.fs.File",
+            "type_kind": "struct",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs.File"
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.io.Write",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ]
           }
         ],
         "members": [
@@ -655,6 +734,238 @@
               "path": "library/alloc/src/string.rs",
               "symbol": "std.string.String.replace"
             }
+          },
+          {
+            "id": "member.rust-codeql.std-io-write-trait-write",
+            "owner": "type.rust-codeql.std-io-write",
+            "name": "write",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write.write"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-io-write-trait-write_all",
+            "owner": "type.rust-codeql.std-io-write",
+            "name": "write_all",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write.write_all"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-io-write-trait-write_fmt",
+            "owner": "type.rust-codeql.std-io-write",
+            "name": "write_fmt",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "fmt",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write.write_fmt"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-fs-file-write",
+            "owner": "type.rust-codeql.std-fs-file",
+            "name": "write",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs.File.write"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-io-stdout-write-fmt",
+            "owner": "type.rust-codeql.std-io-stdout",
+            "name": "write_fmt",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "fmt",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.Stdout.write_fmt"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-io-stderr-write-fmt",
+            "owner": "type.rust-codeql.std-io-stderr",
+            "name": "write_fmt",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "fmt",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.Stderr.write_fmt"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-io-stdout-lock-write-fmt",
+            "owner": "type.rust-codeql.std-io-stdout-lock",
+            "name": "write_fmt",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "fmt",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.StdoutLock.write_fmt"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-io-stderr-lock-write-fmt",
+            "owner": "type.rust-codeql.std-io-stderr-lock",
+            "name": "write_fmt",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "fmt",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.io.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.StderrLock.write_fmt"
+            }
           }
         ],
         "relations": []
@@ -984,6 +1295,110 @@
               "symbol": "std.string.String.new",
               "has_receiver": false,
               "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-write-trait-write",
+            "target": {
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write.write",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-write-trait-write_all",
+            "target": {
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write.write_all",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-write-trait-write_fmt",
+            "target": {
+              "path": "library/std/src/io/mod.rs",
+              "symbol": "std.io.Write.write_fmt",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-fs-file-write",
+            "target": {
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs.File.write",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-stdout-write-fmt",
+            "target": {
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.Stdout.write_fmt",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-stderr-write-fmt",
+            "target": {
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.Stderr.write_fmt",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-stdout-lock-write-fmt",
+            "target": {
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.StdoutLock.write_fmt",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-io-stderr-lock-write-fmt",
+            "target": {
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.StderrLock.write_fmt",
+              "has_receiver": true,
+              "parameter_count": 1
             },
             "completeness": "complete",
             "locations": [],

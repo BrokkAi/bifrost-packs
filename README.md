@@ -73,7 +73,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 14 |
 | typescript | 34 |
 
-Activation labels: opt-in 26, unspecified 156. Omitted labels remain unspecified.
+Activation labels: opt-in 27, unspecified 155. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
