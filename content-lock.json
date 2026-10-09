@@ -6035,7 +6035,7 @@
     {
       "path": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
       "source_path": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
-      "sha256": "bf1d70572ab3e884b6e207b600ac8c7799e99dc373011fc524f1a5eeec6b9897",
+      "sha256": "bf13ccfffe6e793afeb621d46c67fa62f10f9fdfc7e12d1f52b1feec03abc842",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7244,14 +7244,14 @@
     {
       "path": "semantic-packs/php/php-result-use-obligations.json",
       "source_path": "tests/fixtures/php-result-use/php-result-use-obligations.json",
-      "sha256": "70fd46b09372be230e006a9de369781fda3487f3852ea2609969d015760ce2fd",
+      "sha256": "1badecaa783bba57c71b2cfbf936ddeb6b7701ca8aaadcefb0bec5608e8c5b6c",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/php/php-result-use-obligations.spec.json",
       "source_path": "semantic-packs/php/php-result-use-obligations.spec.json",
-      "sha256": "f22510483154981749f8aad2f1cf2af1a219f51e951d54de09c3c3a282ac57eb",
+      "sha256": "d219e7677cd1cf8e11c534568b381da5f1c08feb37317a85381c603d88f9e415",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7281,6 +7281,13 @@
       "path": "semantic-packs/python/notices/cpython-status-3.13.5.txt",
       "source_path": "semantic-packs/python/notices/cpython-status-3.13.5.txt",
       "sha256": "c14690c6770c7e28656c81a81c6d7da14591f4a27e5ecfd62d6763548308a8cd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/notices/cpython-str-3.13.5.txt",
+      "source_path": "semantic-packs/python/notices/cpython-str-3.13.5.txt",
+      "sha256": "2c9e0981c4896e43fa8fbc4183fc1097a8d4640f9d7d54ac07de2c826974d187",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7331,6 +7338,20 @@
       "path": "semantic-packs/python/python-status-result-use-obligations.spec.json",
       "source_path": "semantic-packs/python/python-status-result-use-obligations.spec.json",
       "sha256": "ade1df2ce926d4f29a52f297f9a01affc1fe3e3edfc7dea3e98fd81b2bfd088a",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-str-result-use-obligations.json",
+      "source_path": "crates/bifrost-semantic-packs/models/python-str-result-use-obligations.json",
+      "sha256": "9fa34bbe3e2e7d6e76858fa0521db11d2da1b1f38ed2b666969a672d609b9bfb",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-str-result-use-obligations.spec.json",
+      "source_path": "semantic-packs/python/python-str-result-use-obligations.spec.json",
+      "sha256": "424b409dc6b335307af0945f84132f82bd6204f21e7cbefae960018a732523a9",
       "classification": "public",
       "license": "PSF-2.0"
     },
@@ -7397,14 +7418,14 @@
     {
       "path": "semantic-packs/ruby/ruby-core-result-use-obligations.json",
       "source_path": "tests/suite_bench_policy/ruby_result_obligations.rs",
-      "sha256": "69a08bc69199d485de4a672d6f0c3c1ea8de44adbf3bd7a0ff33f9feb2ae886e",
+      "sha256": "f2fcd71ecc34d0a72af985e05e4b0a609a9ab4462e99856fd78b1f0b23114082",
       "classification": "public",
       "license": "Ruby"
     },
     {
       "path": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
       "source_path": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
-      "sha256": "86eda8fb05a5f047ec42c8fae5758039f66607db4bc6af4b121293014e167603",
+      "sha256": "1a880ae9bc4755b09bb3cc56291a0b5a950f579653b3891c4ba665945799cc1d",
       "classification": "public",
       "license": "Ruby"
     },
@@ -7651,5 +7672,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "39169d9d4faa93f647f5a7047b3a9c4a8fca4942bfab2b58532a11ea0a35de0d"
+  "aggregate_sha256": "e53a03b839e60f55d5573043ebf5b383ecac3ddbffeb334d81717953696e5b80"
 }
