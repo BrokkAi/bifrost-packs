@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 170 unique rule IDs from 11 manifest packs.
+This catalog lists 171 unique rule IDs from 11 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -29,6 +29,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Network request inside a loop](../rules/bifrost.code-smells/policies/network-call-in-loop.rqlp) | `bifrost.performance.network-call-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Overwritten unread local value](../rules/bifrost.code-smells/policies/overwritten-unread-value.rqlp) | `bifrost.correctness.overwritten-unread-value` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Parsing inside a loop](../rules/bifrost.code-smells/policies/parsing-in-loop.rqlp) | `bifrost.performance.parsing-in-loop` | java, javascript, python, rust, typescript | performance | note |
+| [Cleanup overrides pending control flow](../rules/bifrost.code-smells/policies/pending-cleanup-flow.rqlp) | `bifrost.correctness.pending-cleanup-flow` | javascript, ruby | correctness | warning |
 | [Python absent member](../rules/bifrost.code-smells/policies/python-absent-member.rqlp) | `bifrost.correctness.python-absent-member` | python | correctness | error |
 | [Rayon parallelism inside a blocking lazy initializer](../rules/bifrost.code-smells/policies/rayon-in-blocking-lazy-init.rqlp) | `bifrost.correctness.rayon-in-blocking-lazy-init` | rust | correctness | warning |
 | [Redundant Boolean return branches](../rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp) | `bifrost.correctness.redundant-boolean-branches` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
