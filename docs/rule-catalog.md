@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 221 unique rule IDs from 12 manifest packs.
+This catalog lists 220 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -132,7 +132,6 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Inconsistent Python equality and inequality](../rules/bifrost.python-codeql-quality/policies/inconsistent-equality.rqlp) | `bifrost.python-codeql-quality.inconsistent-equality` | python | correctness | warning |
 | [Python inconsistent method resolution order](../rules/bifrost.python-codeql-quality/policies/inconsistent-mro.rqlp) | `bifrost.python-codeql-quality.inconsistent-mro` | python | correctness | error |
 | [Python initializer calls an overridden method](../rules/bifrost.python-codeql-quality/policies/init-calls-subclass.rqlp) | `bifrost.python-codeql-quality.init-calls-subclass` | python | correctness | warning |
-| [Python __iter__ returns a non-iterator](../rules/bifrost.python-codeql-quality/policies/iter-returns-non-iterator.rqlp) | `bifrost.python-codeql-quality.iter-returns-non-iterator` | python | correctness | error |
 | [Python iterator does not return itself](../rules/bifrost.python-codeql-quality/policies/iter-returns-non-self.rqlp) | `bifrost.python-codeql-quality.iter-returns-non-self` | python | correctness | error |
 | [Missing call to Python superclass __del__](../rules/bifrost.python-codeql-quality/policies/missing-call-to-delete.rqlp) | `bifrost.python-codeql-quality.missing-call-to-delete` | python | correctness | error |
 | [Missing call to Python superclass __init__](../rules/bifrost.python-codeql-quality/policies/missing-call-to-init.rqlp) | `bifrost.python-codeql-quality.missing-call-to-init` | python | correctness | error |

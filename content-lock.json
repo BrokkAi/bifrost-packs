@@ -2278,128 +2278,6 @@
       }
     },
     {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/.bifrost/policies/iter-returns-non-iterator.rqlp",
-      "source_path": "rules/bifrost.python-codeql-quality/policies/iter-returns-non-iterator.rqlp",
-      "sha256": "195c85bdceb35b63eafccfbd884e191c2610d0aaa85b0b2f41008708f980f259",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/README.md",
-      "source_path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/README.md",
-      "sha256": "832fccf8900e989a83fdefcbb9c0f9f49753af09e7072f8f5cdbc5e869b28714",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/explicit_return_in_init.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/explicit_return_in_init.py",
-      "sha256": "20d30b227606f24c6a128ab03cecd2c1bb085dce6e6b0f17bbd0b4976a4ec3d2",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/explicit_return_in_init.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/functions_test.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/functions_test.py",
-      "sha256": "269792a4db0a56391871f6ff0b7cd833a2be2d1affa3a879b1ce24eaac630610",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/functions_test.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/mox.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/mox.py",
-      "sha256": "1a6643fc2fc5c9caf2586b83698ff68dace562b9e542f913c74b158a56192842",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/mox.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/om_test.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/om_test.py",
-      "sha256": "a4531927e48056cb741dc4b7883d79039de33e99397ea2e0f847fd7f3992c372",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/om_test.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/protocols.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/protocols.py",
-      "sha256": "6fe57458130625e6a68a77706e30c57d191b1d513109f8b1b81e746c0de0f801",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/protocols.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/special.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/special.py",
-      "sha256": "fb4f25b67779378a21e2ee1db5f29b6b484d76ae82e80e325bd841848452f8d4",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/special.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/use_mox.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/use_mox.py",
-      "sha256": "4492577fb47d727e9d44ed2bd30790ff0c8e4c7be01a792d942cababa897a179",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/use_mox.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/zope/__init__.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/zope/__init__.py",
-      "sha256": "e2d22809f3699df07dc165c66c76f2b7a81cfad2df79f36b199c7a9f60cbe1d0",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/zope/__init__.py"
-      }
-    },
-    {
-      "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-iterator/upstream/Functions/general/zope/interface.py",
-      "source_path": "python/ql/test/query-tests/Functions/general/zope/interface.py",
-      "sha256": "2d8741a6aae8dc84570bc04065f3bd780488c0eb6a9215597588d5108489205d",
-      "classification": "public",
-      "license": "MIT",
-      "external_source": {
-        "repository": "https://github.com/github/codeql",
-        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
-        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/general/zope/interface.py"
-      }
-    },
-    {
       "path": "fixtures/policy/bifrost.python-codeql-quality/iter-returns-non-self/.bifrost/policies/iter-returns-non-self.rqlp",
       "source_path": "rules/bifrost.python-codeql-quality/policies/iter-returns-non-self.rqlp",
       "sha256": "a9d45796e5fd844e1584cd12ad52b46fa1a1fa20d1abd512bf52822a6dea0f20",
@@ -7138,7 +7016,7 @@
     {
       "path": "rules/bifrost.python-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.python-codeql-quality/manifest.json",
-      "sha256": "9dbdd7dc61468d125a5e6f87f7ef67f66cee21f66821b7d38712e0319aea8afa",
+      "sha256": "5475ad63d1df54b497e16e591bb699b19811e37c818b96cfe5377499ba2dac03",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7314,13 +7192,6 @@
       "path": "rules/bifrost.python-codeql-quality/policies/init-calls-subclass.rqlp",
       "source_path": "rules/bifrost.python-codeql-quality/policies/init-calls-subclass.rqlp",
       "sha256": "aa23be286a44c88e01b9ee77e9abf75be6fe8bebef68df38eba325020287d296",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
-      "path": "rules/bifrost.python-codeql-quality/policies/iter-returns-non-iterator.rqlp",
-      "source_path": "rules/bifrost.python-codeql-quality/policies/iter-returns-non-iterator.rqlp",
-      "sha256": "195c85bdceb35b63eafccfbd884e191c2610d0aaa85b0b2f41008708f980f259",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -9729,5 +9600,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "9ec20af06e51b357acd7b2ef86dc765aeb77480396b9d66147a5b186c20f7e69"
+  "aggregate_sha256": "84d785b1bd387488b7e2fa4544cab6dad65986779f3aee8c76a577dd63b48490"
 }

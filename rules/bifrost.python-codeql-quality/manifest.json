@@ -803,23 +803,6 @@
       "remediation": "Initialize required state first or call a private helper that subclasses do not override."
     },
     {
-      "path": "policies/iter-returns-non-iterator.rqlp",
-      "id": "bifrost.python-codeql-quality.iter-returns-non-iterator",
-      "authored_hash": "5e6e05da711a7c8308a61582fadeb45952a4d397db780824d39c57f0130757ac",
-      "resolved_semantic_hash": "5e6e05da711a7c8308a61582fadeb45952a4d397db780824d39c57f0130757ac",
-      "category": "correctness",
-      "supported_languages": [
-        "python"
-      ],
-      "required_capabilities": [
-        "structural-match",
-        "language-rule-facts",
-        "python-class-hierarchy"
-      ],
-      "severity_rationale": "Python requires __iter__ to return an iterator; another value causes iteration to fail.",
-      "remediation": "Return an iterator, for example iter(self.items)."
-    },
-    {
       "path": "policies/iter-returns-non-self.rqlp",
       "id": "bifrost.python-codeql-quality.iter-returns-non-self",
       "authored_hash": "8c0c9a3fd43e6217865a0766ea547d8215cfd2b1eaa802c9a9792c59c63ad8fd",
