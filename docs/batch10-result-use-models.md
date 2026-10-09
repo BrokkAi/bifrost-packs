@@ -15,7 +15,7 @@ configuration are intentionally unchanged.
 
 | Source | Pack ID | Evidence retained |
 | --- | --- | --- |
-| [C libc model](../semantic-packs/c/c-libc-result-use-obligations.json) | `bifrost.c.libc.result-use-obligations` | C17/POSIX.1-2017; C/C++ header declarations; license remains `NOASSERTION` pending review |
+| [C libc model](../semantic-packs/c/c-libc-result-use-obligations.json) | `bifrost.c.libc.result-use-obligations` | C17/POSIX.1-2017; C/C++ header declarations; Apache-2.0 (Brokk-authored facts, owner decision 2026-10-08) |
 | [C# BCL model](../semantic-packs/csharp/csharp-bcl-result-use-obligations.json) | `bifrost.csharp.bcl-result-use-obligations` | Microsoft.NETCore.App.Ref 8.0.0, net8.0, System.Runtime/System.Collections assemblies |
 | [JavaScript String model](../semantic-packs/javascript/javascript-string-result-use-obligations.json) | `bifrost.javascript.string-result-use-obligations` | Node.js 22.11.0 artifact and pinned activation digest |
 | [TypeScript String model](../semantic-packs/typescript/typescript-string-result-use-obligations.json) | `bifrost.typescript.string-result-use-obligations` | TypeScript 7.0.2 `lib/lib.es5.d.ts` activation |
@@ -60,8 +60,7 @@ Generation remains a separate, pinned transition:
      semantic-packs/<ecosystem>/<model>.json
    bifrost-semantic-pack verify /absolute/scratch/batch10-native
    ```
-   The C pair additionally requires an SPDX license decision before the spec
-   can pass the generator's fail-closed `NOASSERTION` check.
+
 4. Review the generated `index.json`, manifests, shards, rejects, notices,
    measurements, and `SHA256SUMS`. Copy only the deterministic manifest and
    shard outputs into `semantic-packs/embedded/`, then add their hashes to

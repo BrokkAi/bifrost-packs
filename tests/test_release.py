@@ -22,6 +22,16 @@ def profile(engine_version='0.12.0', **overrides):
     return result
 
 
+def host_profile(**overrides):
+    result = dict(
+        contract_version=1,
+        schemas={'policy_bundle': [1]},
+        provided_routes=['premium-policy-zip'],
+    )
+    result.update(overrides)
+    return result
+
+
 class ReleaseTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -67,6 +77,41 @@ class ReleaseTests(unittest.TestCase):
         manifest.pop('release_dependencies', None)
         release.validate_manifest(manifest)
         path = self.root / ('v1-' + version + '.json')
+        path.write_text(json.dumps(manifest))
+        return path
+
+    def v3_candidate(self, version='1.0.0', **kwargs):
+        schemas = release.empty_schemas()
+        schemas['policy_document'] = [1]
+        schemas['rql'] = [1]
+        content = dict(
+            kind='policy',
+            identity='synthetic.policy',
+            path='rules/synthetic.rqlp',
+            sha256='c' * 64,
+            languages=['python'],
+            dependencies=[],
+            schemas=schemas,
+            host_schemas={'policy_bundle': [1]},
+            required_capabilities=[],
+        )
+        manifest = release.make_manifest(
+            dict(self.config, release_version=version),
+            'b' * 40,
+            [content],
+            self.archive,
+            manifest_schema_version=3,
+            host_compatibility={
+                'contract_version': 1,
+                'schemas': {'policy_bundle': [1]},
+                'required_routes': ['premium-policy-zip'],
+            },
+        )
+        manifest['qualification'] = kwargs.get('qualification', {
+            'integrity': {'status': 'verified', 'evidence': ['artifact hash verified']},
+            'behavior': {'status': 'qualified', 'evidence': ['positive and near-miss fixtures']},
+        })
+        path = self.root / ('v3-' + version + '.json')
         path.write_text(json.dumps(manifest))
         return path
 
@@ -233,6 +278,17 @@ class ReleaseTests(unittest.TestCase):
         with self.assertRaises(release.ReleaseError):
             release.validate_manifest(manifest)
 
+    def test_v2_rejects_host_scope_without_changing_default_selection(self):
+        manifest = release.make_manifest(self.config, 'b' * 40, [], self.archive)
+        manifest['host_compatibility'] = {
+            'contract_version': 1,
+            'schemas': {'policy_bundle': [1]},
+            'required_routes': ['premium-policy-zip'],
+        }
+        with self.assertRaises(release.ReleaseError):
+            release.validate_manifest(manifest)
+        self.assertEqual(release.select_release([self.candidate('1.0.0')], profile(), 'test.public')['manifest_schema_version'], 2)
+
     def test_v2_conflicting_dependency_versions_are_rejected(self):
         manifest = release.make_manifest(self.config, 'b' * 40, [], self.archive)
         manifest['release_dependencies'] = [
@@ -266,6 +322,64 @@ class ReleaseTests(unittest.TestCase):
         paths = [self.candidate('1.0.0+x'), self.candidate('1.0.0+y')]
         with self.assertRaises(release.ReleaseError):
             release.select_release(paths, profile(), 'test.public')
+
+    def test_v3_keeps_engine_and_host_unions_separate(self):
+        path = self.v3_candidate()
+        manifest = json.loads(path.read_text())
+        self.assertEqual(manifest['compatibility']['schemas']['policy_document'], [1])
+        self.assertEqual(manifest['compatibility']['schemas']['policy_bundle'], [])
+        self.assertEqual(manifest['contents'][0]['schemas']['policy_bundle'], [])
+        self.assertEqual(manifest['host_compatibility']['schemas'], {'policy_bundle': [1]})
+        self.assertEqual(manifest['contents'][0]['host_schemas'], {'policy_bundle': [1]})
+        receipt = release.select_release([path], profile(), 'test.public', host_profile=host_profile())
+        self.assertEqual(receipt['manifest_schema_version'], 3)
+        self.assertEqual(receipt['host_profile'], host_profile())
+
+    def test_v3_requires_independent_host_admission(self):
+        path = self.v3_candidate()
+        with self.assertRaisesRegex(release.ReleaseError, 'host profile is required'):
+            release.select_release([path], profile(), 'test.public')
+        for near_miss in (
+            dict(host_profile(), schemas={'policy_bundle': []}),
+            dict(host_profile(), provided_routes=[]),
+        ):
+            with self.subTest(host_profile=near_miss):
+                with self.assertRaises(release.ReleaseError) as caught:
+                    release.select_release([path], profile(), 'test.public', host_profile=near_miss)
+                self.assertIn('host', str(caught.exception))
+        for invalid_profile in (
+            dict(host_profile(), schemas={'policy_bundle': [1], 'unknown_axis': []}),
+            dict(host_profile(), provided_routes=['unsupported-route']),
+            dict(host_profile(), unknown_key=True),
+        ):
+            with self.subTest(host_profile=invalid_profile):
+                with self.assertRaises(release.ReleaseError):
+                    release.select_release([path], profile(), 'test.public', host_profile=invalid_profile)
+
+    def test_v3_host_contract_is_closed_and_union_bound(self):
+        path = self.v3_candidate()
+        manifest = json.loads(path.read_text())
+        manifest['host_compatibility']['schemas']['policy_bundle'] = [1, 2]
+        with self.assertRaisesRegex(release.ReleaseError, 'host compatibility schemas'):
+            release.validate_manifest(manifest)
+
+        for mutation in (
+            lambda value: value['host_compatibility'].update(unknown_axis=[]),
+            lambda value: value['host_compatibility'].__setitem__('required_routes', ['unsupported-route']),
+            lambda value: value.__setitem__('manifest_schema_version', 4),
+            lambda value: value['contents'][0]['host_schemas'].update(unknown_axis=[1]),
+        ):
+            candidate = json.loads(path.read_text())
+            mutation(candidate)
+            with self.subTest(candidate=candidate):
+                with self.assertRaises(release.ReleaseError):
+                    release.validate_manifest(candidate)
+
+    def test_v3_producer_requires_explicit_host_scope(self):
+        with self.assertRaises(release.ReleaseError):
+            release.make_manifest(self.config, 'b' * 40, [], self.archive, manifest_schema_version=3)
+        with self.assertRaises(release.ReleaseError):
+            release.make_manifest(self.config, 'b' * 40, [], self.archive, host_compatibility=host_profile())
 
 
 if __name__ == '__main__':

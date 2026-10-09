@@ -16,6 +16,38 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ResearchBundleTests(unittest.TestCase):
+    def test_source_archives_retain_rust_io_write_fixtures(self):
+        fixture_root = "tests/cases/rust-io-write"
+        expected = {
+            f"{fixture_root}/{case}/{relative}"
+            for case in ("positive", "near-miss")
+            for relative in ("Cargo.toml", "src/lib.rs")
+        }
+        expected.add(f"{fixture_root}/README.md")
+        for relative in sorted(expected):
+            self.assertTrue((ROOT / relative).is_file(), relative)
+
+        with tempfile.TemporaryDirectory() as directory:
+            for component in (None, "rules", "packs"):
+                with self.subTest(component=component):
+                    archive_path = Path(directory) / f"{component or 'full'}-source.tar.gz"
+                    content.build_bundle(archive_path, ROOT, component=component)
+                    with tarfile.open(archive_path, "r:gz") as archive:
+                        names = set(archive.getnames())
+                        self.assertEqual(
+                            {name for name in names if name.startswith(f"{fixture_root}/")},
+                            expected,
+                        )
+                        for relative in sorted(expected):
+                            self.assertEqual(
+                                archive.extractfile(relative).read(),
+                                (ROOT / relative).read_bytes(),
+                            )
+                        self.assertFalse(any(
+                            name.startswith("tests/fixtures/semantic/rust-io-write/")
+                            for name in names
+                        ))
+
     def test_source_archive_retains_non_python_regression_fixtures(self):
         from test_content import ContentToolTests
         fixture = ContentToolTests()
