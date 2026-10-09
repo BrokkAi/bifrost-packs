@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 170 unique rule IDs from 11 manifest packs.
+This catalog lists 171 unique rule IDs from 11 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -34,6 +34,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Redundant Boolean return branches](../rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp) | `bifrost.correctness.redundant-boolean-branches` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Regular-expression compilation inside a loop](../rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp) | `bifrost.performance.regex-compile-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Repeated stable branch condition](../rules/bifrost.code-smells/policies/repeated-branch-condition.rqlp) | `bifrost.correctness.repeated-branch-condition` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
+| [Repeated non-trivial literal](../rules/bifrost.code-smells/policies/repeated-literal.rqlp) | `bifrost.code-smells.repeated-literal` | c, cpp, csharp, javascript, php, python, ruby, rust, typescript | maintainability | warning |
 | [Input-reachable Rust recursion to review](../rules/bifrost.code-smells/policies/rust-input-recursion-without-bound.rqlp) | `bifrost.correctness.rust-input-recursion-without-bound` | rust | correctness | note |
 | [Serialization inside a loop](../rules/bifrost.code-smells/policies/serialization-in-loop.rqlp) | `bifrost.performance.serialization-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Sleep inside a collection-iteration loop](../rules/bifrost.code-smells/policies/sleep-in-loop.rqlp) | `bifrost.performance.sleep-in-loop` | java, python, rust | performance | note |
