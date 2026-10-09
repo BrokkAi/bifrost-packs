@@ -27,7 +27,7 @@
                   (call-shape
                     (inside-decl
                       (loop :capture "region")
-                      (call :receiver (name "subprocess") :callee (name "run") :capture "smell"))))))
+                      (call :callee (name "run") :capture "smell"))))))
             (language java
               (inside-decl (loop :capture "region") (call :receiver (name "runtime") :callee (name "exec") :capture "smell")))
             (language javascript

@@ -27,7 +27,7 @@
                   (call-shape
                     (inside-decl
                       (loop :capture "region")
-                      (call :receiver (name "json") :callee (name "dumps") :capture "smell"))))))
+                      (call :callee (name "dumps") :capture "smell"))))))
             (language java
               (inside-decl (loop :capture "region") (call :callee (name "writeValueAsString") :capture "smell")))
             (language javascript

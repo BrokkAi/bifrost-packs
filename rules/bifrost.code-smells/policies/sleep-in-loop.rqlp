@@ -27,7 +27,7 @@
                   (call-shape
                     (inside-decl
                       (for_loop :capture "region")
-                      (call :receiver (name "time") :callee (name "sleep") :capture "smell"))))))
+                      (call :callee (name "sleep") :capture "smell"))))))
             (language java
               (inside-decl (for_loop :capture "region") (call :receiver (name "Thread") :callee (name "sleep") :capture "smell")))
             (language rust
