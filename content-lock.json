@@ -4612,7 +4612,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "570f67b92d3d75b1ff76e6c5a53fce37351bcf3479bba4d95e660830fe808654",
+      "sha256": "cff903392b6d510f27717f5a6a63b53472b0272f9201b4761124be50c83b184c",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -4655,6 +4655,13 @@
       "path": "rules/bifrost.code-smells/policies/empty-failure-handler.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/empty-failure-handler.rqlp",
       "sha256": "a009742387fcae9c48c5ac5035ce7d509acba5de690162c0243ece925a0fd0e4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/excessive-nesting.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/excessive-nesting.rqlp",
+      "sha256": "c3c5f8026ad4036f4dd4e63841c39ef0b4b6329e4a46239625ec48e90a8d6f3e",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -4739,6 +4746,20 @@
       "path": "rules/bifrost.code-smells/policies/network-call-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/network-call-in-loop.rqlp",
       "sha256": "c8a792d61b558439d1cc463281c39ed432c37db34d2995162b2539a282392d2c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/oversized-function-complexity.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/oversized-function-complexity.rqlp",
+      "sha256": "de0700ce6381286a23d74366e61cbd79f304bfc6fec2a259464264eb171125a8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/oversized-function-span.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/oversized-function-span.rqlp",
+      "sha256": "826b568f507c00531e64d9a74bae3e342278b6ef393b8b4734abdbc680fb99ab",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7672,5 +7693,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "e53a03b839e60f55d5573043ebf5b383ecac3ddbffeb334d81717953696e5b80"
+  "aggregate_sha256": "538582ccf97521f92b06d2f9173a36506dd9f4f82fd56348ceec7489f293f4c8"
 }
