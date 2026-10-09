@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Lexical/CommentedOutCode.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Remove code left commented out in source comments.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.commented-out-code"
+  :name "Commented-out Python code"
+  :message "This comment block appears to contain commented-out code"
+  :severity warning
+  :description "Reports tree-sitter comment blocks classified using the CommentedOutCode query's scope, indentation, non-code and example heuristics."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (python-commented-out-code
+        (language python (comment))))))

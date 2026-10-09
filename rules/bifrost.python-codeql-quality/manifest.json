@@ -571,6 +571,636 @@
       ],
       "severity_rationale": "Raising outside a special method's protocol can replace the expected exception and make normal operations fail unexpectedly.",
       "remediation": "Raise an exception allowed by the special-method contract, or handle the underlying failure locally."
+    },
+    {
+      "path": "policies/assert-literal-constant.rqlp",
+      "id": "bifrost.python-codeql-quality.assert-literal-constant",
+      "authored_hash": "1bc39cd138837ff7ce9342ac0f00dffabcb5488ca8ae938be4fcd4125376cf72",
+      "resolved_semantic_hash": "1bc39cd138837ff7ce9342ac0f00dffabcb5488ca8ae938be4fcd4125376cf72",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "An assertion whose value is a literal constant either always passes or always fails and does not check the intended runtime condition.",
+      "remediation": "Replace the constant assertion with a condition that checks the required program state."
+    },
+    {
+      "path": "policies/commented-out-code.rqlp",
+      "id": "bifrost.python-codeql-quality.commented-out-code",
+      "authored_hash": "de4a5f1b5aaa7762a673eda54abd4caf24d1f8a689c24907f0ef55b5a7594407",
+      "resolved_semantic_hash": "de4a5f1b5aaa7762a673eda54abd4caf24d1f8a689c24907f0ef55b5a7594407",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Commented-out code becomes stale and distracts from the executable implementation.",
+      "remediation": "Delete obsolete code or replace it with a short comment that explains the intended behavior."
+    },
+    {
+      "path": "policies/comparison-missing-self.rqlp",
+      "id": "bifrost.python-codeql-quality.comparison-missing-self",
+      "authored_hash": "8d4f6a16e020bf5d31142c8142ce7a30516c6f5b4dc009c530d5bb92a4cf943b",
+      "resolved_semantic_hash": "8d4f6a16e020bf5d31142c8142ce7a30516c6f5b4dc009c530d5bb92a4cf943b",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "A comparison method that omits the instance receiver can compare its parameters instead of the objects being compared.",
+      "remediation": "Include self in the method signature and compare the intended instance attributes."
+    },
+    {
+      "path": "policies/comparison-of-identical-expressions.rqlp",
+      "id": "bifrost.python-codeql-quality.comparison-of-identical-expressions",
+      "authored_hash": "feb0ab10814f3807df5b26678720a2c71766c6e3d9efc365af99e953ed5c24d0",
+      "resolved_semantic_hash": "feb0ab10814f3807df5b26678720a2c71766c6e3d9efc365af99e953ed5c24d0",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Comparing an expression with itself has a fixed result and often indicates a mistaken operand.",
+      "remediation": "Compare the intended distinct values or remove the redundant comparison."
+    },
+    {
+      "path": "policies/conflicting-attributes.rqlp",
+      "id": "bifrost.python-codeql-quality.conflicting-attributes",
+      "authored_hash": "1b0c9318ceaea8e9f423cf95c58c033a9aa786871b19ebbb2d6490a3ec540aee",
+      "resolved_semantic_hash": "1b0c9318ceaea8e9f423cf95c58c033a9aa786871b19ebbb2d6490a3ec540aee",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "Competing inherited definitions of one public member can make behavior depend on base ordering.",
+      "remediation": "Rename the conflicting member or provide one deliberate override in the descendant."
+    },
+    {
+      "path": "policies/constant-conditional-expression.rqlp",
+      "id": "bifrost.python-codeql-quality.constant-conditional-expression",
+      "authored_hash": "b6eb55dc474d5f84818aa7f28780035bdd890d68bb0a1f16b0f139bf7a321908",
+      "resolved_semantic_hash": "b6eb55dc474d5f84818aa7f28780035bdd890d68bb0a1f16b0f139bf7a321908",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "A constant conditional always selects the same branch and may hide dead or unintended control flow.",
+      "remediation": "Replace the constant test with the intended runtime condition or remove the unreachable branch."
+    },
+    {
+      "path": "policies/explicit-call-to-delete.rqlp",
+      "id": "bifrost.python-codeql-quality.explicit-call-to-delete",
+      "authored_hash": "fed9fd62cba96099f5461f4d3e7a6e7b9c313b72c8e7724259f7e5eb0dbff4d9",
+      "resolved_semantic_hash": "fed9fd62cba96099f5461f4d3e7a6e7b9c313b72c8e7724259f7e5eb0dbff4d9",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Calling __del__ directly can run cleanup twice or at a surprising point in an object\u2019s lifetime.",
+      "remediation": "Use an explicit close method or context manager for deterministic cleanup."
+    },
+    {
+      "path": "policies/illegal-raise.rqlp",
+      "id": "bifrost.python-codeql-quality.illegal-raise",
+      "authored_hash": "cf0fb7d7dbb3eb7b1b9ec34391598cf3f6da0ecdb57eabfe2fa0d13f7a15b1ac",
+      "resolved_semantic_hash": "cf0fb7d7dbb3eb7b1b9ec34391598cf3f6da0ecdb57eabfe2fa0d13f7a15b1ac",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "exception-hierarchy",
+        "control-flow"
+      ],
+      "severity_rationale": "Raising a value that is not an exception class or instance causes a TypeError instead of the intended exception.",
+      "remediation": "Raise an exception class or an instance of BaseException."
+    },
+    {
+      "path": "policies/implicit-string-concatenation-in-list.rqlp",
+      "id": "bifrost.python-codeql-quality.implicit-string-concatenation-in-list",
+      "authored_hash": "5b7098c98e63ada6f22c0e89834e3558b86abeefa78a58ffe81384d1cd5b65bf",
+      "resolved_semantic_hash": "5b7098c98e63ada6f22c0e89834e3558b86abeefa78a58ffe81384d1cd5b65bf",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Adjacent string literals in a list can merge into one value when a separating comma is missing.",
+      "remediation": "Add a comma between list elements or join the intended text explicitly."
+    },
+    {
+      "path": "policies/import-deprecated-module.rqlp",
+      "id": "bifrost.python-codeql-quality.import-deprecated-module",
+      "authored_hash": "751f43b99dd7551eb82db0fadfa2383bdf7d34f3ef6bd534114a5e7d4b3ebbcb",
+      "resolved_semantic_hash": "751f43b99dd7551eb82db0fadfa2383bdf7d34f3ef6bd534114a5e7d4b3ebbcb",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-import-site"
+      ],
+      "severity_rationale": "A deprecated standard-library module may be removed or behave differently in a future Python version.",
+      "remediation": "Use the supported replacement module identified by the deprecation guidance."
+    },
+    {
+      "path": "policies/imprecise-assert.rqlp",
+      "id": "bifrost.python-codeql-quality.imprecise-assert",
+      "authored_hash": "07ec8c4322ef4b353129145e773f7ea5cba7f06dd79c6b9f578508a56131f6ac",
+      "resolved_semantic_hash": "07ec8c4322ef4b353129145e773f7ea5cba7f06dd79c6b9f578508a56131f6ac",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "A generic assertion around a comparison gives test failures less useful diagnostics than a comparison-specific assertion.",
+      "remediation": "Use an assertion helper that names the expected relationship, such as assertEqual or assertIs."
+    },
+    {
+      "path": "policies/incomplete-ordering.rqlp",
+      "id": "bifrost.python-codeql-quality.incomplete-ordering",
+      "authored_hash": "6ad706c8b444d8fd73d8a23ffbc3d961f0e54b3efd9e59fc3dfa205c73c3852d",
+      "resolved_semantic_hash": "6ad706c8b444d8fd73d8a23ffbc3d961f0e54b3efd9e59fc3dfa205c73c3852d",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "An incomplete set of rich ordering methods can make otherwise expected comparisons fail.",
+      "remediation": "Define the required strict and non-strict ordering pair, or use functools.total_ordering with a complete base comparison."
+    },
+    {
+      "path": "policies/inconsistent-equality.rqlp",
+      "id": "bifrost.python-codeql-quality.inconsistent-equality",
+      "authored_hash": "56927fc10741fa7ff82305ce1173deddf4e4cbad3e15d056634103f718ebc423",
+      "resolved_semantic_hash": "56927fc10741fa7ff82305ce1173deddf4e4cbad3e15d056634103f718ebc423",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "Inconsistent __eq__ and __ne__ behavior can make equality results depend on which operator a caller uses.",
+      "remediation": "Implement __eq__ and __ne__ consistently, delegating one to the other where appropriate."
+    },
+    {
+      "path": "policies/init-calls-subclass.rqlp",
+      "id": "bifrost.python-codeql-quality.init-calls-subclass",
+      "authored_hash": "ef60680a7162ae93aeb4698ede91934d086eddbb9a967f513a2f65a8707e2f8f",
+      "resolved_semantic_hash": "ef60680a7162ae93aeb4698ede91934d086eddbb9a967f513a2f65a8707e2f8f",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-class-hierarchy",
+        "python-call-relations",
+        "control-flow"
+      ],
+      "severity_rationale": "Calling an overridable method during initialization can dispatch to subclass code before the instance is ready.",
+      "remediation": "Initialize required state first or call a private helper that subclasses do not override."
+    },
+    {
+      "path": "policies/iter-returns-non-self.rqlp",
+      "id": "bifrost.python-codeql-quality.iter-returns-non-self",
+      "authored_hash": "8c0c9a3fd43e6217865a0766ea547d8215cfd2b1eaa802c9a9792c59c63ad8fd",
+      "resolved_semantic_hash": "8c0c9a3fd43e6217865a0766ea547d8215cfd2b1eaa802c9a9792c59c63ad8fd",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "An iterator\u2019s __iter__ method must return the iterator object itself to preserve the iterator protocol.",
+      "remediation": "Return self from __iter__ on iterator objects."
+    },
+    {
+      "path": "policies/missing-call-to-delete.rqlp",
+      "id": "bifrost.python-codeql-quality.missing-call-to-delete",
+      "authored_hash": "c42ca914baaa0e9fe6c5fb81c411651ed85233430394ddc5ee5bedf2ac9cc587",
+      "resolved_semantic_hash": "c42ca914baaa0e9fe6c5fb81c411651ed85233430394ddc5ee5bedf2ac9cc587",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-class-hierarchy",
+        "python-call-relations"
+      ],
+      "severity_rationale": "Skipping a non-trivial superclass finalizer can leave inherited resources uncleaned.",
+      "remediation": "Call the intended superclass finalizer once when the override owns that cleanup path."
+    },
+    {
+      "path": "policies/missing-call-to-init.rqlp",
+      "id": "bifrost.python-codeql-quality.missing-call-to-init",
+      "authored_hash": "0d1d0bef189f5819e2c1389dc74e77bf77b99928c1ee7e8219ae31325edfeff6",
+      "resolved_semantic_hash": "0d1d0bef189f5819e2c1389dc74e77bf77b99928c1ee7e8219ae31325edfeff6",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-class-hierarchy",
+        "python-call-relations"
+      ],
+      "severity_rationale": "Skipping a non-trivial superclass initializer can leave inherited state uninitialized.",
+      "remediation": "Call the intended superclass initializer once, usually through cooperative super().__init__()."
+    },
+    {
+      "path": "policies/missing-docstring.rqlp",
+      "id": "bifrost.python-codeql-quality.missing-docstring",
+      "authored_hash": "e13622d44dc11ef712e3072a1b3f118504e9247b6f9cc7588ca6820b1bbdb558",
+      "resolved_semantic_hash": "e13622d44dc11ef712e3072a1b3f118504e9247b6f9cc7588ca6820b1bbdb558",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Public declarations without documentation make their purpose and expected use harder for API consumers to discover.",
+      "remediation": "Add a concise docstring describing the declaration\u2019s purpose and relevant behavior."
+    },
+    {
+      "path": "policies/multiple-calls-to-delete.rqlp",
+      "id": "bifrost.python-codeql-quality.multiple-calls-to-delete",
+      "authored_hash": "a0bc0f508699b09f9be1964bccd505f3023670dc030355f51c0bb06a6c10918e",
+      "resolved_semantic_hash": "a0bc0f508699b09f9be1964bccd505f3023670dc030355f51c0bb06a6c10918e",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-class-hierarchy",
+        "python-call-relations",
+        "control-flow"
+      ],
+      "severity_rationale": "Calling a non-trivial superclass finalizer more than once can repeat cleanup and release resources twice.",
+      "remediation": "Ensure each intended superclass finalizer is called at most once."
+    },
+    {
+      "path": "policies/multiple-calls-to-init.rqlp",
+      "id": "bifrost.python-codeql-quality.multiple-calls-to-init",
+      "authored_hash": "edd838ca9b06a18d5d8b68f86da21fd34c7c9b90ea080a07d53ed4d2c9cad90b",
+      "resolved_semantic_hash": "edd838ca9b06a18d5d8b68f86da21fd34c7c9b90ea080a07d53ed4d2c9cad90b",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-class-hierarchy",
+        "python-call-relations",
+        "control-flow"
+      ],
+      "severity_rationale": "Calling a non-trivial superclass initializer more than once can duplicate state changes and side effects.",
+      "remediation": "Ensure each intended superclass initializer is called at most once."
+    },
+    {
+      "path": "policies/not-named-cls.rqlp",
+      "id": "bifrost.python-codeql-quality.not-named-cls",
+      "authored_hash": "1f76c34cd57036c400424d4795f6a97009edb923a85b4fc48bee14a6a9ef9652",
+      "resolved_semantic_hash": "1f76c34cd57036c400424d4795f6a97009edb923a85b4fc48bee14a6a9ef9652",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "A misleading receiver parameter name obscures class-method dispatch and makes method bodies harder to review.",
+      "remediation": "Name the first class-method parameter cls; use an accepted metaclass receiver name where applicable."
+    },
+    {
+      "path": "policies/not-named-self.rqlp",
+      "id": "bifrost.python-codeql-quality.not-named-self",
+      "authored_hash": "37fe92ff0de36dfbd10a9052bf455f7b55e0b55f5f13b5b814bc33dd5c967a45",
+      "resolved_semantic_hash": "37fe92ff0de36dfbd10a9052bf455f7b55e0b55f5f13b5b814bc33dd5c967a45",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "A conventional receiver name helps readers recognize instance methods and follow attribute access.",
+      "remediation": "Name the first ordinary instance-method parameter self."
+    },
+    {
+      "path": "policies/overly-large-range.rqlp",
+      "id": "bifrost.python-codeql-quality.overly-large-range",
+      "authored_hash": "c22a4cf11a562d8d510313ccbb7086198db7381a8e371a9afce38eb595c68bb1",
+      "resolved_semantic_hash": "c22a4cf11a562d8d510313ccbb7086198db7381a8e371a9afce38eb595c68bb1",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "An unintended broad or overlapping regex range can accept characters outside the intended set and make validation difficult to reason about.",
+      "remediation": "Narrow the character range to the intended characters and remove empty or overlapping ranges."
+    },
+    {
+      "path": "policies/percent-format-unsupported-character.rqlp",
+      "id": "bifrost.python-codeql-quality.percent-format-unsupported-character",
+      "authored_hash": "853209ca896648b574ad6beb538b36c739524c305c1becd8503dbe2dc3016295",
+      "resolved_semantic_hash": "853209ca896648b574ad6beb538b36c739524c305c1becd8503dbe2dc3016295",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An unsupported percent-format conversion can produce incorrect formatting or a runtime formatting error.",
+      "remediation": "Use a supported conversion character or escape a literal percent sign as %%."
+    },
+    {
+      "path": "policies/print-during-import.rqlp",
+      "id": "bifrost.python-codeql-quality.print-during-import",
+      "authored_hash": "2ca1e0710c676a1903a8e56abbcd3a981a39031573f6de24b274bc1f8c07bb7c",
+      "resolved_semantic_hash": "2ca1e0710c676a1903a8e56abbcd3a981a39031573f6de24b274bc1f8c07bb7c",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "binding-resolution"
+      ],
+      "severity_rationale": "Module-scope printing can write unexpected output when the module is imported by another part of the program.",
+      "remediation": "Move output into an explicit command entry point or use configurable logging."
+    },
+    {
+      "path": "policies/pythagorean.rqlp",
+      "id": "bifrost.python-codeql-quality.pythagorean",
+      "authored_hash": "3eea5308136643b976811b907939e9350d11d2ec0069da2c4315608c9c1f3e5f",
+      "resolved_semantic_hash": "3eea5308136643b976811b907939e9350d11d2ec0069da2c4315608c9c1f3e5f",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "local-value-flow",
+        "python-call-relations"
+      ],
+      "severity_rationale": "Squaring and adding coordinates before taking a square root can lose precision or overflow where the standard hypot operation handles scaling more robustly.",
+      "remediation": "Use math.hypot(a, b) instead of sqrt(a ** 2 + b ** 2)."
+    },
+    {
+      "path": "policies/raise-not-implemented.rqlp",
+      "id": "bifrost.python-codeql-quality.raise-not-implemented",
+      "authored_hash": "529339297c2d195e269725be55f5659d3030a977fdd840fc9fd865bfc57d11db",
+      "resolved_semantic_hash": "529339297c2d195e269725be55f5659d3030a977fdd840fc9fd865bfc57d11db",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "binding-resolution"
+      ],
+      "severity_rationale": "NotImplemented is a sentinel value, not an exception instance, and cannot be raised as an exception.",
+      "remediation": "Raise NotImplementedError for an unsupported operation, or return NotImplemented from a rich comparison method."
+    },
+    {
+      "path": "policies/regex-backspace-escape.rqlp",
+      "id": "bifrost.python-codeql-quality.regex-backspace-escape",
+      "authored_hash": "6e3d234ecc19702b22886adb3da62fceeee1854039193247469872fa250f51c4",
+      "resolved_semantic_hash": "6e3d234ecc19702b22886adb3da62fceeee1854039193247469872fa250f51c4",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Inside a character class, \\b denotes backspace rather than a word-boundary assertion.",
+      "remediation": "Use a word-boundary assertion outside the character class or spell backspace explicitly."
+    },
+    {
+      "path": "policies/regex-duplicate-in-character-class.rqlp",
+      "id": "bifrost.python-codeql-quality.regex-duplicate-in-character-class",
+      "authored_hash": "095205669224848dd291997af03327897ae05d2ea72facd778069dedc97bebb6",
+      "resolved_semantic_hash": "095205669224848dd291997af03327897ae05d2ea72facd778069dedc97bebb6",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Repeated characters in a regex character class add noise without changing which character is matched.",
+      "remediation": "Remove duplicate characters from the character class."
+    },
+    {
+      "path": "policies/regex-incomplete-special-group.rqlp",
+      "id": "bifrost.python-codeql-quality.regex-incomplete-special-group",
+      "authored_hash": "5db8f7ded88046e63c918d325e91014c7f0aa2b90492365a948fb19a2ab54192",
+      "resolved_semantic_hash": "5db8f7ded88046e63c918d325e91014c7f0aa2b90492365a948fb19a2ab54192",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "An incomplete special-group opener can be parsed differently than intended or make the regular expression invalid.",
+      "remediation": "Complete the special-group syntax, including the required question mark and group name."
+    },
+    {
+      "path": "policies/regex-unmatchable-caret.rqlp",
+      "id": "bifrost.python-codeql-quality.regex-unmatchable-caret",
+      "authored_hash": "831f0578b7f30457e6067bfd025e5a4277909b65b540650a294477c72a44010a",
+      "resolved_semantic_hash": "831f0578b7f30457e6067bfd025e5a4277909b65b540650a294477c72a44010a",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "A start anchor after a consuming expression cannot match at the current input position.",
+      "remediation": "Move the start anchor before consuming terms or escape it when a literal caret is intended."
+    },
+    {
+      "path": "policies/regex-unmatchable-dollar.rqlp",
+      "id": "bifrost.python-codeql-quality.regex-unmatchable-dollar",
+      "authored_hash": "0aac1775ff0ed8f0e016bfd2984acb83560540505286d47d1e8221bc682c281f",
+      "resolved_semantic_hash": "0aac1775ff0ed8f0e016bfd2984acb83560540505286d47d1e8221bc682c281f",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "An end anchor before a consuming expression cannot match the end of the input at that position.",
+      "remediation": "Move the end anchor after consuming terms or escape it when a literal dollar sign is intended."
+    },
+    {
+      "path": "policies/repeated-import.rqlp",
+      "id": "bifrost.python-codeql-quality.repeated-import",
+      "authored_hash": "103ffb744c4cb039e14e6548c1d229ab46c29c66a609954fd57a7ca5afdca8c5",
+      "resolved_semantic_hash": "103ffb744c4cb039e14e6548c1d229ab46c29c66a609954fd57a7ca5afdca8c5",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-import-site"
+      ],
+      "severity_rationale": "Repeated imports of one module in the same file add noise and can make binding behavior less clear.",
+      "remediation": "Remove the redundant import or combine its imported names into one statement."
+    },
+    {
+      "path": "policies/side-effect-in-assert.rqlp",
+      "id": "bifrost.python-codeql-quality.side-effect-in-assert",
+      "authored_hash": "ef4e18f59041533f5c314926ef24cff5c99d1df71d045cc88153d8dbb0912856",
+      "resolved_semantic_hash": "ef4e18f59041533f5c314926ef24cff5c99d1df71d045cc88153d8dbb0912856",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Python can remove assert statements under optimization, which also removes any side effects inside them.",
+      "remediation": "Perform the side effect separately, then assert on its result."
+    },
+    {
+      "path": "policies/special-method-wrong-signature.rqlp",
+      "id": "bifrost.python-codeql-quality.special-method-wrong-signature",
+      "authored_hash": "dbdbf306fc9d1998b01792dd43702f27e3f879a2c73c6fae11f47626d10e718e",
+      "resolved_semantic_hash": "dbdbf306fc9d1998b01792dd43702f27e3f879a2c73c6fae11f47626d10e718e",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts"
+      ],
+      "severity_rationale": "Python invokes special methods with protocol-defined arguments, so an incompatible signature can make ordinary language operations fail.",
+      "remediation": "Use the parameter count and binding shape required by the special method protocol."
+    },
+    {
+      "path": "policies/str-format-mixed-fields.rqlp",
+      "id": "bifrost.python-codeql-quality.str-format-mixed-fields",
+      "authored_hash": "44d8c231d649eb0537dea53cb2a60fc7081dafde46aaa35ac6beaa966937596d",
+      "resolved_semantic_hash": "44d8c231d649eb0537dea53cb2a60fc7081dafde46aaa35ac6beaa966937596d",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Mixing automatic and explicit positional field numbering is invalid for the supported str.format behavior.",
+      "remediation": "Use automatic numbering for every field or number every positional field explicitly."
+    },
+    {
+      "path": "policies/undefined-export.rqlp",
+      "id": "bifrost.python-codeql-quality.undefined-export",
+      "authored_hash": "53b8d11bf51e99df77af2ba5cbe62bcff33001d04daf2bdc3e5d1c06c0a18c7b",
+      "resolved_semantic_hash": "53b8d11bf51e99df77af2ba5cbe62bcff33001d04daf2bdc3e5d1c06c0a18c7b",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "lexical-environment"
+      ],
+      "severity_rationale": "A name listed in __all__ but not defined cannot be provided as part of the module\u2019s advertised export surface.",
+      "remediation": "Define the exported name or remove it from __all__."
+    },
+    {
+      "path": "policies/unnecessary-lambda.rqlp",
+      "id": "bifrost.python-codeql-quality.unnecessary-lambda",
+      "authored_hash": "0aa83ee8b76fb36672f1a0b35076004632fc6155512a71ac1f9e8486d4292961",
+      "resolved_semantic_hash": "0aa83ee8b76fb36672f1a0b35076004632fc6155512a71ac1f9e8486d4292961",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-call-relations"
+      ],
+      "severity_rationale": "A lambda that only forwards arguments adds indirection and can obscure the wrapped callable\u2019s signature.",
+      "remediation": "Pass the wrapped callable directly when no transformation is needed."
     }
   ]
 }

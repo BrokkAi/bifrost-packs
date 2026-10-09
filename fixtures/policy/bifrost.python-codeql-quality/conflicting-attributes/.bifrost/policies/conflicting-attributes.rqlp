@@ -1,0 +1,20 @@
+; CodeQL: python/ql/src/Classes/ConflictingAttributesInBaseClasses.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Resolve conflicting public member definitions inherited through different base branches.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.conflicting-attributes"
+  :name "Conflicting attributes in Python base classes"
+  :message "Multiple inherited definitions of a public member can make behavior depend on C3 base order."
+  :severity warning
+  :description "CodeQL parity policy adapted from the engine-proven Python hierarchy relations."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq member)
+                      (coverage eq complete)
+                      (mro_rank gt 0)
+                      (base_branch_definition_count gt 1)
+                      (member_name regex "^(_[^_]|[^_]).*")
+                      (member_name ne "process_request"))
+        (mro-members (enclosing-decl (language python (class))))))))

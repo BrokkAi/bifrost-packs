@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Functions/SignatureSpecialMethods.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Use a parameter signature compatible with each Python special method.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.special-method-wrong-signature"
+  :name "Python special method has an incompatible signature"
+  :message "The special method signature does not match its protocol."
+  :severity error
+  :description "CodeQL parity policy using filterable Python special-method signature status."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((special_method_status in [too_few too_many required_optional_second required_optional_third]))
+        (callable-signature (enclosing-decl (language python (method))))))))

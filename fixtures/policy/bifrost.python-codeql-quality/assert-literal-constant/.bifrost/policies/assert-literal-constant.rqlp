@@ -1,0 +1,11 @@
+; CodeQL: python/ql/src/Statements/AssertLiteralConstant.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Remove assertions whose truth value is a literal constant.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.assert-literal-constant" :name "Assert of literal constant" :message "Avoid assertions whose truth is a literal constant." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Statements/AssertLiteralConstant.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Remove assertions whose truth value is a literal constant."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((test_scope eq no) (terminal_elif_else eq no)
+                    (proof eq proven) (completeness eq complete))
+                    (python-assertion-context
+        (language python (assertion :test (literal :not-kind tuple_literal))))))))

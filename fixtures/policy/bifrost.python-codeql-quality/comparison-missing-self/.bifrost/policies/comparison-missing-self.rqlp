@@ -1,0 +1,8 @@
+; CodeQL: python/ql/src/Expressions/CompareIdenticalValuesMissingSelf.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Review comparisons in methods that appear to omit the instance receiver.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.comparison-missing-self" :name "Maybe missing self in comparison" :message "This comparison may be missing self." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Expressions/CompareIdenticalValuesMissingSelf.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Review comparisons in methods that appear to omit the instance receiver."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (python-missing-self (language python (comparison))))))
