@@ -234,7 +234,8 @@
         "absent-member"
       ],
       "severity_rationale": "A fully classified receiver includes a Proven class whose complete member surface lacks this access; unknown receivers and open member models are excluded.",
-      "remediation": "Pass a receiver with the required member, correct the member name, or guard the access using a condition the analyzer can prove. Inspect the class origin and retained witness before changing the caller."
+      "remediation": "Pass a receiver with the required member, correct the member name, or guard the access using a condition the analyzer can prove. Inspect the class origin and retained witness before changing the caller.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/go-data-race.rqlp",
