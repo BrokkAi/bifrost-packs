@@ -6,6 +6,23 @@
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
     {
+      "path": "policies/pending-cleanup-flow.rqlp",
+      "id": "bifrost.correctness.pending-cleanup-flow",
+      "authored_hash": "5dec41270002b1f022ad9bcdc7a3aa2513bf6d1f66bc06c5212e000dbf02fff6",
+      "resolved_semantic_hash": "5dec41270002b1f022ad9bcdc7a3aa2513bf6d1f66bc06c5212e000dbf02fff6",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "ruby"
+      ],
+      "required_capabilities": [
+        "pending-cleanup-flow"
+      ],
+      "severity_rationale": "An exact exhaustive cleanup outcome that replaces a pending control transfer changes the procedure's externally visible control flow.",
+      "remediation": "Review the cleanup body and the pending transfer together; preserve the intended return, throw, break or continue explicitly when the cleanup should not replace it.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/contradictory-condition.rqlp",
       "id": "bifrost.correctness.contradictory-condition",
       "authored_hash": "f0a0b7d900c669e7c88ca343739781a291cfd25ab0431130d9961a513894b3e8",
