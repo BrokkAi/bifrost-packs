@@ -11,6 +11,83 @@ import release
 
 
 class DiscoveryTests(unittest.TestCase):
+    def test_offline_v3_discovery_forwards_independent_host_profile(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archive = root / 'pack.zip'
+            archive.write_bytes(b'bytes')
+            config = dict(
+                pack_id='test.public',
+                repository='https://github.com/test/public',
+                visibility='public',
+                release_version='1.0.0',
+                artifact_role='source',
+            )
+            content = dict(
+                kind='policy',
+                identity='synthetic.policy',
+                path='rules/synthetic.rqlp',
+                sha256='c' * 64,
+                languages=['python'],
+                dependencies=[],
+                schemas=release.empty_schemas(),
+                host_schemas={'policy_bundle': [1]},
+                required_capabilities=[],
+            )
+            manifest = release.make_manifest(
+                config,
+                'b' * 40,
+                [content],
+                archive,
+                manifest_schema_version=3,
+                host_compatibility={
+                    'contract_version': 1,
+                    'schemas': {'policy_bundle': [1]},
+                    'required_routes': ['premium-policy-zip'],
+                },
+            )
+            manifest['qualification'] = {
+                'integrity': {'status': 'verified', 'evidence': ['archive hash verified']},
+                'behavior': {'status': 'limited', 'evidence': ['synthetic route fixture']},
+            }
+            raw = json.dumps(manifest).encode()
+            cached = root / 'test--public' / release.digest(raw)
+            cached.mkdir(parents=True)
+            (cached / 'pack-release.json').write_bytes(raw)
+            artifact_cache = root / release.digest(archive.read_bytes())
+            artifact_cache.mkdir()
+            (artifact_cache / archive.name).write_bytes(archive.read_bytes())
+            (root / 'test--public' / 'discovery.json').write_text(json.dumps({
+                'repository': 'test/public',
+                'visibility': 'public',
+                'manifests': [{'sha256': release.digest(raw), 'commit': 'b' * 40, 'tag': 'v1.0.0'}],
+                'assets': {},
+            }))
+            engine = root / 'engine.json'
+            engine.write_text(json.dumps({
+                'engine_version': '0.12.0',
+                'build_identity': 'test-only-build',
+                'model_set_sha256': 'a' * 64,
+                'capability_contract_version': 1,
+                'schemas': {key: [1] for key in release.SCHEMA_KEYS},
+                'capabilities': [],
+            }))
+            host = root / 'host.json'
+            host.write_text(json.dumps({
+                'contract_version': 1,
+                'schemas': {'policy_bundle': [1]},
+                'provided_routes': ['premium-policy-zip'],
+            }))
+            receipt = root / 'receipt.json'
+            argv = [
+                'discover.py', '--repository', 'test/public', '--visibility', 'public',
+                '--cache-dir', str(root), '--offline', '--engine-profile', str(engine),
+                '--host-profile', str(host), '--pack-id', 'test.public', '--receipt', str(receipt),
+            ]
+            with patch.object(sys, 'argv', argv):
+                self.assertEqual(discover.main(), 0)
+            self.assertEqual(json.loads(receipt.read_text())['manifest_schema_version'], 3)
+
     def test_pagination_tag_binding_and_offline(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory); archive=root/'pack.zip';archive.write_bytes(b'bytes')

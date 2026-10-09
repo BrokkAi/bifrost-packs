@@ -1,14 +1,15 @@
 ; D3: excessive parameters over the persisted callable_signature relation.
 ; The seven-parameter budget follows the common review threshold used by
 ; maintainability linters. This policy intentionally reports only exact rows:
-; an unrecorded signature remains open rather than being treated as zero.
+; an unrecorded signature remains outside the exact-only claim rather than being
+; treated as zero.
 (policy
   :schema-version 1
   :id "bifrost.maintainability.excessive-parameters"
   :name "Excessive callable parameters"
   :message "Callable declares more than seven parameters"
   :severity warning
-  :description "Reports exact callable_signature rows whose parameter_count exceeds the fixed seven-parameter review budget. Defaulted, keyword-only, and variadic parameters count once; an implicit receiver is not a formal parameter; and a destructured formal counts once at its declaration level. Structured site identity preserves overload sites while collapsing repeated declaration and definition rows. Unrecorded coverage stays outside this exact-only result and makes the policy inconclusive through the structured query diagnostic rather than clean. Go, JavaScript, PHP, Ruby, Rust, and TypeScript callable_signature producers currently publish no exact CallableArity for the reviewed declarations, so they are outside this claim. The row has no override or generated-code marker, so this policy does not claim to suppress those declarations."
+  :description "Reports exact callable_signature rows whose parameter_count exceeds the fixed seven-parameter review budget. Defaulted, keyword-only, and variadic parameters count once; an implicit receiver is not a formal parameter; and a destructured formal counts once at its declaration level. Structured site identity preserves overload sites while collapsing repeated declaration and definition rows. RQLP can filter scalar coverage, but it cannot map a non-exact coverage value to an inconclusive policy verdict, so this exact-only result leaves non-exact rows outside the claim. In the 2026-10-09 local corpus census, non-exact rows were C cJSON: 0, C++ fmt: at least 18 in the first 1,000-row capped scan, C# commandline: 20, Kotlin colormath: 22, Python Bifrost Python fixtures: 2, Java Bifrost Java fixtures: 1, and Scala scopt: 106. The six filtered counts were not truncated; fmt is a lower bound because its exhaustive filtered run exceeded 45 minutes and was stopped. This is a sample limit, not a producer guarantee. Go, JavaScript, PHP, Ruby, Rust, and TypeScript callable_signature producers currently publish no exact CallableArity for the reviewed declarations, so they are outside this claim. The row has no override or generated-code marker, so this policy does not claim to suppress those declarations."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
   :tags ["maintainability" "parameters" "callable-signature" "code-smell"]
   :analysis (analysis
