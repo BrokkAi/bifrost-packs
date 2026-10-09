@@ -15,9 +15,24 @@
           :schema-version 1
           (union
             (language python
-              (inside-decl (loop :capture "region") (call :receiver (name "requests") :callee (name "get") :capture "smell")))
-            (language python
-              (inside-decl (loop :capture "region") (call :receiver (name "requests") :callee (name "post") :capture "smell")))
+              (filter :where ((effect_id eq "bifrost.network_io")
+                              (derivation eq declared)
+                              (certainty eq definite)
+                              (proof eq proven)
+                              (coverage eq exhaustive)
+                              (terminal eq false)
+                              (execution_timing eq same_invocation)
+                              (timing eq immediate))
+                (call-effects
+                    (call-shape
+                    (union
+                      (inside-decl
+                        (loop :capture "region")
+                        (call :callee (name "urlopen") :capture "smell"))
+                      (inside-decl
+                        (loop :capture "region")
+                        (call :receiver (identifier :capture "target")
+                              :callee (name "request") :capture "smell")))))))
             (language java
               (inside-decl (loop :capture "region") (call :receiver (name "client") :callee (name "send") :capture "smell")))
             (language javascript
