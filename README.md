@@ -1,12 +1,11 @@
 # Bifrost packs
 
 Public policy and native semantic-pack content for
-[Bifrost](https://github.com/BrokkAi/bifrost), copied from reviewed public paths
+[Bifrost](https://github.com/BrokkAi/bifrost), initially copied from reviewed public paths
 at canonical source `aa291b97e55e48efc931ea89a16068404c3aad3e`.
 
-This is an additive copy. Bifrost still owns its existing built-in selection and
-release artifacts. A future v0.13.0 consumer transition is not implemented or
-qualified here. Pack versions are independent of engine versions.
+Product rules are delivered in external packs; the engine's built-in product
+rule catalog is empty. Pack versions are independent of engine versions.
 
 - `rules/`: public policy packs, with unchanged IDs, authored/resolved
   semantic hashes, queries, and endpoint documents.
@@ -29,12 +28,12 @@ qualified here. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**184 unique rules across 12 policy packs.**
+**183 unique rules across 12 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
 | Pack | bifrost.c-jpl | 4 |
-| Pack | bifrost.code-smells | 33 |
+| Pack | bifrost.code-smells | 32 |
 | Pack | bifrost.correctness | 1 |
 | Pack | bifrost.cpp-jsf | 14 |
 | Pack | bifrost.cpp-power-of-10 | 2 |
@@ -45,25 +44,25 @@ qualified here. Pack versions are independent of engine versions.
 | Pack | bifrost.python-codeql-quality | 34 |
 | Pack | bifrost.rust-codeql-quality | 1 |
 | Pack | bifrost.security | 45 |
-| Category | correctness | 78 |
+| Category | correctness | 77 |
 | Category | effects | 10 |
 | Category | maintainability | 1 |
 | Category | performance | 10 |
 | Category | quality | 38 |
 | Category | security | 47 |
-| Severity | error | 61 |
+| Severity | error | 60 |
 | Severity | note | 20 |
 | Severity | warning | 103 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 377 rule-language pairs.
+13 declared languages; 376 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 15 |
 | cpp | 34 |
 | csharp | 29 |
-| go | 18 |
+| go | 17 |
 | java | 48 |
 | javascript | 37 |
 | kotlin | 14 |
@@ -74,7 +73,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 14 |
 | typescript | 34 |
 
-Activation labels: opt-in 29, unspecified 155. Omitted labels remain unspecified.
+Activation labels: opt-in 29, unspecified 154. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -107,7 +106,11 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-The next public streams are `packs/v0.2.1` and `rules/v0.1.4`. The published
+Published `packs/v0.3.0` and `rules/v0.2.0` are immutable. The next proposed
+rules stream is `rules/v0.2.1`, a source-authoring identity metadata correction
+with unchanged policy bytes and the same `bifrost.public.packs@0.3.0` dependency.
+Its independent production authoring checks and publication are pending.
+Historical `packs/v0.2.1` and `rules/v0.1.4` also remain immutable. The published
 `packs/v0.2.0` release contains 8 native model entries using schema 8, with
 behavior qualification pending. Its source archive pins the authored inputs
 present at commit `8711584116169d94475cc8dd4a18caebd5a9e8e4`; later Go, Rust,
@@ -116,21 +119,14 @@ pinned schema-8 producer removes native engine-version gates while
 retaining legacy compatibility. The [recorded blocker](docs/native-publication-blocker.json)
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
-`bifrost.public.packs@0.2.1`.
+`bifrost.public.packs@0.3.0`.
 The version choices recorded below predate this policy. Preserve already
 published releases; reassess unpublished candidate versions and dependency pins
 together against all included changes before tagging.
-The next packs source archive carries the newly authored Go embed declarations,
-the expanded Python typeshed import closure used by the selected Python native
-input, and Rust and Python standard-library models. The Go, Rust, and other
-Python models remain outside the existing native recipe with pending consumer
-qualification. The intended
-rules release packages the current locked policy inventory. The published
-`rules/v0.1.3` release remains the historical 105-rule, 113-content stream
-across 8 policy packs with limited narrow-smoke evidence. Research probes
-remain research and are not enabled policies.
-See [release streams](docs/release-streams.md) and
-[generation](docs/generation.md) for exact pins and behavioral evidence limits.
+The next packs source archive adds Node FS JavaScript and Python `str` models
+and revises C, PHP, Ruby and Rust models. The selected native recipe inputs are
+unchanged; catalog changes outside those recipes remain source-only and require
+separate consumer qualification.
 
 For the standalone LSP engine/content tuple, use the
 [qualification and handoff procedure](docs/standalone-qualification.md).
