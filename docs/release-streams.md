@@ -28,7 +28,7 @@ revisions outside those recipes remain source-only; their presence does not
 imply native delivery.
 
 The recipe uses public generator-only source
-`6a3f2c4d0c658b49ffc983bb224954eef88425f1`, version `0.13.1`, with Rust
+`3da8301ffe81477388d175fcd463384825f46cbf`, version `0.13.1`, with Rust
 `1.97.1`. `native-generation.json` pins its source archive and Cargo.lock; the
 build receipt must pin the actual generator executable. This source preparation
 is not a qualified or published engine release.

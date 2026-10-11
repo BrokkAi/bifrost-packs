@@ -16,11 +16,17 @@ qualification remains pending. Published `packs/v0.2.1` also remains immutable;
 this preparation does not overwrite that archive. The intended next `packs/v0.3.0` recipe builds
 the public `bifrost-semantic-pack`
 producer version `0.13.1` from the generator-only preparation source
-`6a3f2c4d0c658b49ffc983bb224954eef88425f1` with Rust `1.97.1`.
+`3da8301ffe81477388d175fcd463384825f46cbf` with Rust `1.97.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
 source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
+
+The refreshed producer retains Scala declarations whose repeated parameters
+span multiple parameter lists, but withholds the unrepresentable executable
+signature and its flows. The native artifact retains a scoped warning and
+partial completeness. Successful generation and schema compatibility do not
+turn that bounded result into complete analysis.
 
 The JVM, Python, TypeScript and Rust specifications have been reconciled with
 the reviewed schema-8 producer inputs. They no longer declare an inner engine
