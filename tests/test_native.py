@@ -16,7 +16,7 @@ spec.loader.exec_module(native)
 class NativeIntegrityTests(unittest.TestCase):
     def test_copied_native_inventory(self):
         result = native.verify(ROOT)
-        self.assertEqual((result['manifests'], result['shards']), (43, 49))
+        self.assertEqual((result['manifests'], result['shards']), (51, 62))
         self.assertEqual(result['semantics'], 'not-qualified')
 
     def test_go_embed_pack_identity_and_content(self):
