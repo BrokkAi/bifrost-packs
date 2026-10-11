@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 183 unique rule IDs from 12 manifest packs.
+This catalog lists 182 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -18,7 +18,6 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Expensive operation inside nested loops](../rules/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp) | `bifrost.performance.expensive-operation-in-nested-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Failed local swap](../rules/bifrost.code-smells/policies/failed-swap.rqlp) | `bifrost.correctness.failed-swap` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [File read inside a loop](../rules/bifrost.code-smells/policies/file-read-in-loop.rqlp) | `bifrost.performance.file-read-in-loop` | java, javascript, python, rust, typescript | performance | note |
-| [Go data race](../rules/bifrost.code-smells/policies/go-data-race.rqlp) | `bifrost.correctness.go-data-race` | go | correctness | error |
 | [Go nil dereference](../rules/bifrost.code-smells/policies/go-nil-dereference.rqlp) | `bifrost.correctness.go-nil-dereference` | go | correctness | error |
 | [Go failure path returns the wrong error](../rules/bifrost.code-smells/policies/go-wrong-error-on-failure-path.rqlp) | `bifrost.correctness.go-wrong-error-on-failure-path` | go | correctness | error |
 | [Identical conditional branches](../rules/bifrost.code-smells/policies/identical-conditional-branches.rqlp) | `bifrost.correctness.identical-conditional-branches` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
