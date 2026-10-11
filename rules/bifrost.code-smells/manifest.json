@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.code-smells",
-  "version": "2.18.0",
+  "version": "3.0.0",
   "name": "Bifrost code smells",
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
@@ -38,8 +38,8 @@
     {
       "path": "policies/discarded-pure-result.rqlp",
       "id": "bifrost.correctness.discarded-pure-result",
-      "authored_hash": "bf524f44426ea49e4aa038838cf7bf1db3d904d2c9ec24cba14100d7ba73a1f9",
-      "resolved_semantic_hash": "bf524f44426ea49e4aa038838cf7bf1db3d904d2c9ec24cba14100d7ba73a1f9",
+      "authored_hash": "8e9413798007f39a88810c709794631037e38e8895e4de892e1b12e0ee035523",
+      "resolved_semantic_hash": "8e9413798007f39a88810c709794631037e38e8895e4de892e1b12e0ee035523",
       "category": "correctness",
       "supported_languages": [
         "java",
@@ -119,8 +119,8 @@
     {
       "path": "policies/ignored-status-result.rqlp",
       "id": "bifrost.correctness.ignored-status-result",
-      "authored_hash": "49267bdec5005ea9f3205749a25850f9ae8610e94b5643291cf39b14906054fa",
-      "resolved_semantic_hash": "49267bdec5005ea9f3205749a25850f9ae8610e94b5643291cf39b14906054fa",
+      "authored_hash": "e472421155030eb6a2ec167bfe445d3b31862e034c1d5d4f451378b5b8869ecc",
+      "resolved_semantic_hash": "e472421155030eb6a2ec167bfe445d3b31862e034c1d5d4f451378b5b8869ecc",
       "category": "correctness",
       "supported_languages": [
         "java",
@@ -211,9 +211,7 @@
       "authored_hash": "04fe7a69f28ebc3d702bf909b01b29bad3def6fe5d6072351337fcd17c0ed867",
       "resolved_semantic_hash": "04fe7a69f28ebc3d702bf909b01b29bad3def6fe5d6072351337fcd17c0ed867",
       "category": "correctness",
-      "supported_languages": [
-        "python"
-      ],
+      "supported_languages": ["python"],
       "required_capabilities": [
         "structural-match",
         "normalized-call-roles"
@@ -236,26 +234,6 @@
       "severity_rationale": "A fully classified receiver includes a Proven class whose complete member surface lacks this access; unknown receivers and open member models are excluded.",
       "remediation": "Pass a receiver with the required member, correct the member name, or guard the access using a condition the analyzer can prove. Inspect the class origin and retained witness before changing the caller.",
       "activation": "opt-in"
-    },
-    {
-      "path": "policies/go-data-race.rqlp",
-      "id": "bifrost.correctness.go-data-race",
-      "authored_hash": "4e2a3cc7715440600870e968765ec8b8b503b43f13c84845ecc0d78e4e79636f",
-      "resolved_semantic_hash": "4e2a3cc7715440600870e968765ec8b8b503b43f13c84845ecc0d78e4e79636f",
-      "category": "correctness",
-      "supported_languages": [
-        "go"
-      ],
-      "required_capabilities": [
-        "structural-match",
-        "normalized-concurrent-spawn",
-        "concurrent-access-conflicts",
-        "canonical-workspace-dispatch",
-        "heap-location-identity",
-        "reviewed-concurrency-models"
-      ],
-      "severity_rationale": "Two exact conflicting accesses without ordering or compatible protection violate Go's data-race-free execution contract and can produce undefined program behavior.",
-      "remediation": "Order the accesses with a channel or completed task group, protect both accesses with the same compatible mutex, use an appropriate atomic operation consistently, or stop sharing the location."
     },
     {
       "path": "policies/go-nil-dereference.rqlp",
