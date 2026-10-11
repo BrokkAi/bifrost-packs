@@ -5,10 +5,7 @@ Public policy and native semantic-pack content for
 at canonical source `aa291b97e55e48efc931ea89a16068404c3aad3e`.
 
 Product rules are delivered in external packs; the engine's built-in product
-rule catalog is empty. Engine capabilities, pack admission and completed analysis
-are separate contracts. See [capability admission and completion](docs/capability-admission-and-completion.md)
-for source links and a reproducible artifact/admission check. Pack versions are
-independent of engine versions; source availability does not qualify a consumer.
+rule catalog is empty. Pack versions are independent of engine versions.
 
 - `rules/`: public policy packs, with unchanged IDs, authored/resolved
   semantic hashes, queries, and endpoint documents.
