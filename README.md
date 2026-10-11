@@ -105,8 +105,11 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-The next public streams are `packs/v0.3.0` and `rules/v0.2.0`. Published
-`packs/v0.2.1` and `rules/v0.1.4` remain immutable. The published
+Published `packs/v0.3.0` and `rules/v0.2.0` are immutable. The next proposed
+rules stream is `rules/v0.2.1`, a source-authoring identity metadata correction
+with unchanged policy bytes and the same `bifrost.public.packs@0.3.0` dependency.
+Its independent production authoring checks and publication are pending.
+Historical `packs/v0.2.1` and `rules/v0.1.4` also remain immutable. The published
 `packs/v0.2.0` release contains 8 native model entries using schema 8, with
 behavior qualification pending. Its source archive pins the authored inputs
 present at commit `8711584116169d94475cc8dd4a18caebd5a9e8e4`; later Go, Rust,

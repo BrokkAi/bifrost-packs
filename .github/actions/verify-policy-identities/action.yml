@@ -1,0 +1,58 @@
+name: Verify public policy authoring identities
+description: Build the production authoring CLI from immutable public source and compare every locked policy identity.
+runs:
+  using: composite
+  steps:
+    - id: pins
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 - <<'PYTHON'
+        import sys
+        from pathlib import Path
+        sys.path.insert(0, str(Path('release-contract').resolve()))
+        import native_generation
+        native_generation._validate_config(Path('.').resolve(), Path('native-generation.json'))
+        PYTHON
+        echo "toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)" >> "$GITHUB_OUTPUT"
+        echo "source=$(jq -r .generator.asset_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
+        echo "lock=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
+    - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
+      with:
+        toolchain: ${{ steps.pins.outputs.toolchain }}
+    - name: Compile exact public authoring source without executable reuse
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        CARGO_BUILD_JOBS: '2'
+        CARGO_INCREMENTAL: '0'
+      run: |
+        set -euo pipefail
+        repo=$(jq -r .generator.repository native-generation.json)
+        repo=${repo#https://github.com/}
+        commit=$(jq -r .generator.commit native-generation.json)
+        timeout --signal=TERM --kill-after=30s 120s gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/policy-source.tar.gz"
+        echo "${{ steps.pins.outputs.source }}  $RUNNER_TEMP/policy-source.tar.gz" | sha256sum -c -
+        mkdir "$RUNNER_TEMP/policy-source"
+        tar -xzf "$RUNNER_TEMP/policy-source.tar.gz" -C "$RUNNER_TEMP/policy-source" --strip-components=1
+        echo "${{ steps.pins.outputs.lock }}  $RUNNER_TEMP/policy-source/Cargo.lock" | sha256sum -c -
+        BIFROST_BUILD_IDENTITY_OVERRIDE="$commit" timeout --signal=TERM --kill-after=30s 60m cargo +"${{ steps.pins.outputs.toolchain }}" build \
+          --locked --release --manifest-path "$RUNNER_TEMP/policy-source/Cargo.toml" --bin bifrost
+        mkdir -p "$RUNNER_TEMP/policy-authoring-cli"
+        cp "$RUNNER_TEMP/policy-source/target/release/bifrost" "$RUNNER_TEMP/policy-authoring-cli/bifrost"
+    - name: Compare source authoring identities
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 -B scripts/verify-policy-identities.py \
+          --binary "$RUNNER_TEMP/policy-authoring-cli/bifrost" \
+          --output "$RUNNER_TEMP/policy-identities" \
+          --engine-version "$(jq -r .generator.version native-generation.json)" \
+          --build-identity "$(jq -r .generator.commit native-generation.json)"
+        cp native-generation.json "$RUNNER_TEMP/policy-identities/public-source-pins.json"
+    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      if: ${{ always() }}
+      with:
+        name: policy-authoring-identities-${{ github.sha }}
+        path: ${{ runner.temp }}/policy-identities
+        if-no-files-found: error

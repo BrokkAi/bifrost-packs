@@ -28,7 +28,7 @@ revisions outside those recipes remain source-only; their presence does not
 imply native delivery.
 
 The recipe uses public generator-only source
-`3da8301ffe81477388d175fcd463384825f46cbf`, version `0.13.1`, with Rust
+`778bc8d1dd9a050092c4cb3ea3c1b78fc1b2b63e`, version `0.13.1`, with Rust
 `1.97.1`. `native-generation.json` pins its source archive and Cargo.lock; the
 build receipt must pin the actual generator executable. This source preparation
 is not a qualified or published engine release.
@@ -39,13 +39,15 @@ of stripping it; historical schemas retain their original requirements. The
 publication guard independently checks the generated payload. Compatibility
 neither implies complete analysis in a particular run nor qualifies behavior.
 
-The next rules stream is `rules/v0.2.0`, containing the locked Go-free policy
-inventory and requiring exactly `bifrost.public.packs@0.3.0`. The retired Go
-race analysis is excluded. Resolve the exact dependency and qualify the actual
-consumer before publication; the old 0.2.1 dependency is not silently reused.
+Published `rules/v0.2.0` contains the locked Go-free policy inventory and
+requires exactly the published `bifrost.public.packs@0.3.0`. The retired Go
+race analysis is excluded. Both published streams remain immutable.
 
-Both streams remain preparation. Generate and verify the actual archives, then
-retain separate integrity, compatibility, completeness and behavior evidence.
+The proposed `rules/v0.2.1` corrects source-authoring identities without changing
+policy bytes, language scopes, capabilities or the native dependency. It must
+pass independent production-CLI authoring checks before publication. Keep
+separate integrity, compatibility, completeness and runtime behavior evidence;
+none of these metadata changes qualify an engine candidate.
 The narrow dynamic-evaluation smoke does not qualify the entire policy set.
 
 ## Legacy baseline
