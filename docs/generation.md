@@ -8,19 +8,21 @@ for a release or enable it in a scanner.
 
 ## Pinned native candidate
 
-The published `packs/v0.2.0` artifact contains 8 native model entries using
-schema 8. Its source archive pins the authored inputs present at commit
-`8711584116169d94475cc8dd4a18caebd5a9e8e4`; later Go, Rust, Python, and
-expanded typeshed additions belong to the next source archive. Its behavior
-qualification remains pending. Published `packs/v0.2.1` also remains immutable;
-this preparation does not overwrite that archive. The intended next `packs/v0.3.0` recipe builds
-the public `bifrost-semantic-pack`
-producer version `0.13.1` from the generator-only preparation source
-`3da8301ffe81477388d175fcd463384825f46cbf` with Rust `1.97.1`.
+The published `packs/v0.3.0` and `rules/v0.2.1` releases remain immutable.
+The proposed next `packs/v0.4.0` recipe builds the public
+`bifrost-semantic-pack` producer version `0.13.1` from the generator-only
+preparation source
+`76d1e16c5ad68b5b2918e3206aecbeeb359dfbb2` with Rust `1.97.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
 source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
+
+The plan contains eight reviewed direct result-use jobs and four existing
+recipes. The successor preserves the full generated bundle, including schema-8
+and schema-16 content, and this preparation does not rewrite model or policy
+bytes. Generation, integrity, compatibility and consumer behavior remain
+separate outcomes.
 
 The refreshed producer retains Scala declarations whose repeated parameters
 span multiple parameter lists, but withholds the unrepresentable executable
@@ -28,17 +30,12 @@ signature and its flows. The native artifact retains a scoped warning and
 partial completeness. Successful generation and schema compatibility do not
 turn that bounded result into complete analysis.
 
-The JVM, Python, TypeScript and Rust specifications have been reconciled with
-the reviewed schema-8 producer inputs. They no longer declare an inner engine
-version gate. The producer and reader enforce compatibility by actual schemas;
-legacy artifacts keep their original engine gates. Newer Python standard-library
-authoring models are retained here with exact import provenance, including a
-schema-14 summary model. The schema-8 recipe does not compile that summary model
-into the native archive. The `packs/v0.3.0` source archive adds Node FS JavaScript and Python `str`
-models and revises C, PHP, Ruby and Rust models relative to 0.2.1. These source
-catalog changes do not alter the selected native recipe inputs. Go embed,
-expanded typeshed and other existing Rust/Python inputs remain retained;
-models outside the recipe require separately qualified producers and consumers.
+The eight selected specifications use the version-independent schema-8 native
+compatibility shape and retain their activation, artifact, toolchain, target,
+configuration and provenance pins. The producer and reader enforce
+compatibility by actual schemas; legacy artifacts keep their original engine
+gates. Models outside the selected jobs remain retained in the source catalog
+and require separate producer and consumer qualification when used.
 Never lower its schema label or remove fields to fit this release.
 
 The earlier public `62fc36c09ddb96746e716c1c3456a99957521d91` generation
@@ -54,7 +51,7 @@ python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
   --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
-  --config release-config.packs.json --version 0.3.0 \
+  --config release-config.packs.json --version 0.4.0 \
   --archive /absolute/scratch/native/native.tar.gz \
   --receipt /absolute/scratch/native/generation.json --output /absolute/scratch/dist
 ```
@@ -86,6 +83,9 @@ inner engine gates. A successful integrity run does not authorize a tag or
 publication. The release contract permits pending behavior with verified integrity;
 engine/library witnesses and live external-content/offline Docker acceptance
 remain required before claiming a qualified consumer tuple or default cutover.
+The pack prerequisite may retain pending behavior after its exact archive,
+receipt, checksum and dependency guards pass; this does not authorize engine
+default activation or its final proof gates.
 
 The authored unittest assertion input retains its upstream CPython v3.13.5
 provenance and notice. Its engine-version keys were removed from both the

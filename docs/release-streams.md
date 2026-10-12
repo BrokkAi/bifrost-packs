@@ -17,18 +17,19 @@ rules and compatibility boundaries.
 
 ## Intended next releases
 
-Published `packs/v0.2.1` and `rules/v0.1.4` remain immutable. Their artifact
-integrity does not establish consumer behavior or complete analysis.
+Published `packs/v0.3.0` and `rules/v0.2.1` remain immutable. Their artifact
+integrity does not establish consumer behavior or complete analysis. Earlier
+published streams, including `packs/v0.2.1` and `rules/v0.1.4`, remain
+immutable as well.
 
-The next semantic-pack stream is `packs/v0.3.0`. Its source catalog adds and
-changes authored models relative to 0.2.1, so the versioning policy requires a
-minor bump. The selected JVM, Python, TypeScript and Rust native recipe inputs
-remain unchanged. Node FS JavaScript and Python `str` additions and C, PHP, Ruby and Rust
-revisions outside those recipes remain source-only; their presence does not
-imply native delivery.
+The proposed next semantic-pack stream is `packs/v0.4.0`. It delivers the
+eight reviewed direct result-use model families in the native bundle and
+preserves the full generated bundle, including schema-8 and schema-16 content.
+The source preparation retains all model and policy bytes; it does not activate
+the content or qualify consumer behavior.
 
 The recipe uses public generator-only source
-`778bc8d1dd9a050092c4cb3ea3c1b78fc1b2b63e`, version `0.13.1`, with Rust
+`76d1e16c5ad68b5b2918e3206aecbeeb359dfbb2`, version `0.13.1`, with Rust
 `1.97.1`. `native-generation.json` pins its source archive and Cargo.lock; the
 build receipt must pin the actual generator executable. This source preparation
 is not a qualified or published engine release.
@@ -39,15 +40,12 @@ of stripping it; historical schemas retain their original requirements. The
 publication guard independently checks the generated payload. Compatibility
 neither implies complete analysis in a particular run nor qualifies behavior.
 
-Published `rules/v0.2.0` contains the locked Go-free policy inventory and
-requires exactly the published `bifrost.public.packs@0.3.0`. The retired Go
-race analysis is excluded. Both published streams remain immutable.
-
-The proposed `rules/v0.2.1` corrects source-authoring identities without changing
-policy bytes, language scopes, capabilities or the native dependency. It must
-pass independent production-CLI authoring checks before publication. Keep
-separate integrity, compatibility, completeness and runtime behavior evidence;
-none of these metadata changes qualify an engine candidate.
+The current rules stream `rules/v0.2.1` contains the locked Go-free policy
+inventory and remains immutable. The proposed `rules/v0.2.2` keeps the policy
+bytes, IDs, language scopes and required capabilities unchanged and depends
+exactly on `bifrost.public.packs@0.4.0`. The retired Go race analysis remains
+excluded. Keep separate integrity, compatibility, completeness and runtime
+behavior evidence; none of these metadata changes qualify an engine candidate.
 The narrow dynamic-evaluation smoke does not qualify the entire policy set.
 
 ## Legacy baseline

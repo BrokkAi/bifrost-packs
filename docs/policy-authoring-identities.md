@@ -1,8 +1,10 @@
 # Policy authoring identity verification
 
-Rules 0.2.1 is prepared as a metadata correction. All 181 policy source files,
-policy IDs, language scopes and required engine capabilities remain unchanged.
-Rules 0.2.0 and native packs 0.3.0 remain immutable published releases.
+Rules 0.2.2 is prepared as a metadata and dependency successor. It carries the
+same 181 policy source files, policy IDs, language scopes, required engine
+capabilities and policy bytes as the immutable `rules/v0.2.1` release. Native
+`packs/v0.3.0` also remains immutable; the successor depends exactly on
+`bifrost.public.packs@0.4.0`.
 The correction changes 84 authored fields, 43 available resolved fields and
 15 stale resolved values to explicit null. The other 26 workspace-dependent
 policies already have null fields; all 41 retain a workspace-required outcome.
@@ -25,5 +27,5 @@ verification.
 Source authoring verification does not execute policies, establish findings,
 complete workspace binding, advertise engine contracts or qualify an engine
 release. Runtime semantic hashes and positive, near-miss and incomplete witnesses
-remain separate requirements. The proposed metadata is pending the independent
-public producer check; no successor release is claimed here.
+remain separate requirements. The 0.2.2 preparation remains pending the
+independent public producer check; no successor release is claimed here.

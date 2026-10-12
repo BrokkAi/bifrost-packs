@@ -105,10 +105,14 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-Published `packs/v0.3.0` and `rules/v0.2.0` are immutable. The next proposed
-rules stream is `rules/v0.2.1`, a source-authoring identity metadata correction
-with unchanged policy bytes and the same `bifrost.public.packs@0.3.0` dependency.
-Its independent production authoring checks and publication are pending.
+Published `packs/v0.3.0` and `rules/v0.2.1` are immutable. The proposed
+successor streams are `packs/v0.4.0` and `rules/v0.2.2`. The pack successor
+delivers the eight reviewed direct result-use model families in the native
+bundle and preserves the full generated schema-8 and schema-16 bundle; the
+rules successor preserves all policy bytes and depends exactly on
+`bifrost.public.packs@0.4.0`. Integrity, compatibility, completeness and
+consumer behavior remain separate qualification requirements, and this
+preparation does not authorize a tag or publication.
 Historical `packs/v0.2.1` and `rules/v0.1.4` also remain immutable. The published
 `packs/v0.2.0` release contains 8 native model entries using schema 8, with
 behavior qualification pending. Its source archive pins the authored inputs
@@ -118,14 +122,11 @@ pinned schema-8 producer removes native engine-version gates while
 retaining legacy compatibility. The [recorded blocker](docs/native-publication-blocker.json)
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
-`bifrost.public.packs@0.3.0`.
-The version choices recorded below predate this policy. Preserve already
-published releases; reassess unpublished candidate versions and dependency pins
-together against all included changes before tagging.
-The next packs source archive adds Node FS JavaScript and Python `str` models
-and revises C, PHP, Ruby and Rust models. The selected native recipe inputs are
-unchanged; catalog changes outside those recipes remain source-only and require
-separate consumer qualification.
+`bifrost.public.packs@0.4.0`.
+The eight direct result-use jobs are the native additions in the proposed pack
+successor. The full generated bundle and all model and policy bytes remain
+retained in this source preparation; source-only catalog content outside the
+selected native jobs still requires separate consumer qualification.
 
 For the standalone LSP engine/content tuple, use the
 [qualification and handoff procedure](docs/standalone-qualification.md).
