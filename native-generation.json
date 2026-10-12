@@ -12,6 +12,48 @@
       "cargo_lock_sha256": "f89ea3c0fd5aaa8ba2984023915becfc13fa80b17656c1c1b6071235cc1acfd3"
     }
   },
+  "jobs": [
+    {
+      "name": "c-libc-result-use",
+      "spec": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/c/c-libc-result-use-obligations.json"
+    },
+    {
+      "name": "csharp-result-use",
+      "spec": "semantic-packs/csharp/csharp-bcl-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/csharp/csharp-bcl-result-use-obligations.json"
+    },
+    {
+      "name": "php-result-use",
+      "spec": "semantic-packs/php/php-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/php/php-result-use-obligations.json"
+    },
+    {
+      "name": "ruby-result-use",
+      "spec": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/ruby/ruby-core-result-use-obligations.json"
+    },
+    {
+      "name": "javascript-string-result-use",
+      "spec": "semantic-packs/javascript/javascript-string-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/javascript/javascript-string-result-use-obligations.json"
+    },
+    {
+      "name": "typescript-string-result-use",
+      "spec": "semantic-packs/typescript/typescript-string-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/typescript/typescript-string-result-use-obligations.json"
+    },
+    {
+      "name": "python-str-result-use",
+      "spec": "semantic-packs/python/python-str-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/python/python-str-result-use-obligations.json"
+    },
+    {
+      "name": "python-status-result-use",
+      "spec": "semantic-packs/python/python-status-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/python/python-status-result-use-obligations.json"
+    }
+  ],
   "recipes": [
     {
       "name": "jvm",
