@@ -1,10 +1,74 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "pack_id": "bifrost.typescript.string-result-use-obligations",
   "pack_version": "1.0.0",
   "ecosystem": "npm",
   "kind": {
-    "artifact_kind": "authored_semantic_model"
+    "artifact_kind": "authored_semantic_model",
+    "shard_activation_pins": [
+      {
+        "shard_id": "typescript.string.reviewed-result-use",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es5",
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      },
+      {
+        "shard_id": "typescript.string.reviewed-declarations",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es5",
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      },
+      {
+        "shard_id": "typescript.string.es2019.reviewed-result-use",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      },
+      {
+        "shard_id": "typescript.string.es2019.reviewed-declarations",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "artifact": {
     "file_name": "typescript-string-result-use-obligations.json",
