@@ -124,6 +124,8 @@ def _payload(identity: dict, cache: Path):
     binary_sha = generation._sha256_bytes(_regular_file(binary))
     if not os.access(binary, os.X_OK):
         generation._fail("cached producer must be executable")
+    if identity["generator"]["binary_sha256"] not in (None, binary_sha):
+        generation._fail("cached producer differs from the configured binary pin")
     receipt_bytes = _regular_file(cache / "build.json")
     receipt = generation._load_json(receipt_bytes, "cached build receipt")
     generation._validate_build_attestation(identity["generator"], receipt, binary_sha)

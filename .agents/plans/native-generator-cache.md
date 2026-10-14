@@ -12,7 +12,8 @@ The native pack workflow currently compiles a pinned producer executable, then g
 - [x] Implement an exact build identity and separate cache manifest with strict restore verification. The expected identity is recomputed before recording and verification to detect changed build inputs.
 - [x] Replace the producer combined cache action with pinned restore and verified early save steps. Verification checks the copied executable against the unchanged six-field build receipt before saving.
 - [x] Prove exact-hit acceptance, changed identity/corruption rejection and execution order, including a later generation failure. All 12 focused tests pass in 10.077 seconds; the harness executes actual checked-in shell bodies with local producer/tool fixtures and action storage.
-- [ ] Run complete local Python/content/tool and workflow validation, checkpoint only owned files, and open the separate PR.
+- [x] Run complete local validation: 149 Python tests pass in 65.951 seconds, including 13 cache/workflow cases; 11 tool tests pass. Content verifies all 1,010 locked files, and native integrity verifies 43 manifests/49 shards with semantics explicitly unqualified. Shell/JavaScript syntax and actionlint 1.7.12 across all workflows pass. A regression run against the exact base workflow rejects its absent early-save contract as expected. The optional source-build binary pin is also checked before recording.
+- [ ] Checkpoint only owned files and open the separate PR.
 - [ ] Inspect current-head hosted checks and integration order; merge only after required checks pass or failures are verified inherited from exact base, and only if merging cannot publish a release.
 
 ## Context and Orientation
@@ -66,7 +67,9 @@ Use exact main as the independent base, confirmed with the release owner. Preser
 
 ## Outcomes & Retrospective
 
-The initial implementation and 12 focused regressions pass. The harness saves a verified producer before a deliberately differing second generation pass fails; a later data-only source commit restores that exact build, preserves its origin and creates fresh two-pass generation evidence with qualification still pending. Failed builds, corrupt exact restores and incomplete evidence never reach save or generation. A partial hit rebuilds and discards stale extra files. Full validation and ordinary PR delivery remain open; no hosted cache hit, release qualification, time saving or merge is yet claimed.
+The final local implementation passes 149 complete Python tests and 11 tool tests. The harness saves a verified producer before a deliberately differing second generation pass fails; a later data-only source commit restores that exact build, preserves its origin and creates fresh two-pass generation evidence with qualification still pending. Failed builds, corrupt exact restores and incomplete evidence never reach save or generation. A partial hit rebuilds and discards stale extra files. Ordinary PR delivery and current-head hosted checks remain open; no hosted cache hit, release qualification, time saving or merge is yet claimed.
+
+Exact comparisons confirm `native-generation.json`, `release-config.packs.json`, `content-lock.json`, `release-contract/native_generation.py` and `release-contract/native_release.py` are byte-identical to base `9883b35`. The workflow suffix from generation through publication is byte-identical too. Cache reuse remains restricted by GitHub's existing cache scopes; an entry from one PR is not promised to be available in a different PR. No trigger, permission, release version or credential change is needed.
 
 ## Interfaces and Dependencies
 
@@ -75,3 +78,5 @@ The new Python module provides identity construction, record and verify function
 Plan created for the separately authorized cache optimization; changes to its decisions and validation will be recorded here before delivery.
 
 Initial implementation checkpoint: record focused behavior, the preserved first test expectation error and the remaining full-validation/hosted steps.
+
+Validated checkpoint: record all local checks, explicit optional-binary-pin coverage, exact base preservation and the cache-scope limit before normal PR submission.

@@ -235,6 +235,16 @@ class ProducerCacheTests(unittest.TestCase):
             self.record()
         self.assertFalse((self.payload / "cache.json").exists())
 
+    def test_optional_binary_pin_is_verified_before_recording(self):
+        config = json.loads(self.config.read_text())
+        config["generator"]["binary_sha256"] = "0" * 64
+        self.config.write_text(json.dumps(config))
+        self.commit()
+        self.make_identity()
+        with self.assertRaisesRegex(generation.NativeGenerationError, "configured binary pin"):
+            self.record()
+        self.assertFalse((self.payload / "cache.json").exists())
+
     def test_missing_corrupt_symlinked_and_nonexecutable_payloads_fail_closed(self):
         self.record()
         for name in ("bifrost-semantic-pack", "build.json", "cache.json"):
