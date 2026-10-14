@@ -9,8 +9,10 @@ from __future__ import annotations
 
 import copy
 import hashlib
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+import stat
 import sys
+import tempfile
 import unittest
 from typing import Any
 
@@ -208,6 +210,36 @@ def _validate_authored_model_source(spec: Any, model: Any, description: str) -> 
     _require(seen == set(shard_by_id), f"{description} shard pins are incomplete")
 
 
+def _validate_spec_notice_assets(spec: Any, spec_path: Path, description: str) -> None:
+    _require(isinstance(spec, dict), f"{description} spec must be an object")
+    notices = spec.get("notices")
+    _require(isinstance(notices, list) and bool(notices),
+             f"{description} notices must name at least one asset")
+    seen_notices: set[str] = set()
+    for index, notice in enumerate(notices):
+        field = f"{description} notices[{index}]"
+        _require(isinstance(notice, str) and bool(notice), f"{field} must be a nonempty path")
+        _require(notice not in seen_notices, f"{field} duplicates a notice path")
+        seen_notices.add(notice)
+        relative = PurePosixPath(notice)
+        _require(not relative.is_absolute() and relative.as_posix() == notice
+                 and "\\" not in notice and ":" not in notice and "\x00" not in notice
+                 and all(part not in ("", ".", "..") for part in notice.split("/")),
+                 f"{field} must be a safe normalized spec-relative path")
+
+        current = spec_path.parent
+        final_mode = None
+        for part in relative.parts:
+            current = current / part
+            try:
+                final_mode = current.lstat().st_mode
+            except OSError as error:
+                raise SourceInputError(f"{field} is missing or unreadable: {error}") from error
+            _require(not stat.S_ISLNK(final_mode), f"{field} must not traverse a symlink")
+        _require(final_mode is not None and stat.S_ISREG(final_mode),
+                 f"{field} must resolve to a regular file")
+
+
 def _spec_and_model(spec_activation: Any, shard_activations: list[Any], *,
                     schema_version: int = 1) -> tuple[dict[str, Any], dict[str, Any]]:
     shards = [
@@ -250,6 +282,48 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
                     self.assertEqual(spec[field], model[field], f"{job['name']} {field}")
 
         self.assertEqual(shard_count, 17)
+
+    def test_configured_direct_jobs_name_real_safe_spec_relative_notice_assets(self):
+        config = _load_json("native-generation.json")
+        jobs = config.get("jobs")
+        self.assertIsInstance(jobs, list)
+        for job in jobs:
+            with self.subTest(job=job.get("name")):
+                spec_path = ROOT / job["spec"]
+                spec = _load_json_bytes(spec_path.read_bytes(), job["spec"])
+                _validate_spec_notice_assets(spec, spec_path, job["name"])
+
+    def test_notice_preflight_rejects_empty_unsafe_missing_nonfiles_and_symlinks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            pack_root = Path(directory) / "pack"
+            notice_dir = pack_root / "notices"
+            notice_dir.mkdir(parents=True)
+            spec_path = pack_root / "model.spec.json"
+            license_path = notice_dir / "LICENSE.txt"
+            license_path.write_text("license fixture\n", encoding="utf-8")
+            valid = {"notices": ["notices/LICENSE.txt"]}
+            _validate_spec_notice_assets(valid, spec_path, "fixture")
+
+            for notices, expected in [
+                ([], "at least one asset"),
+                (["/absolute/LICENSE.txt"], "safe normalized spec-relative path"),
+                (["C:/outside/LICENSE.txt"], "safe normalized spec-relative path"),
+                ([r"notices\LICENSE.txt"], "safe normalized spec-relative path"),
+                (["../outside.txt"], "safe normalized spec-relative path"),
+                (["./notices/LICENSE.txt"], "safe normalized spec-relative path"),
+                (["notices/missing.txt"], "missing or unreadable"),
+                (["notices"], "regular file"),
+                (["notices/LICENSE.txt", "notices/LICENSE.txt"], "duplicates a notice path"),
+            ]:
+                with self.subTest(notices=notices):
+                    with self.assertRaisesRegex(SourceInputError, expected):
+                        _validate_spec_notice_assets({"notices": notices}, spec_path, "fixture")
+
+            symlink_path = notice_dir / "linked-LICENSE.txt"
+            symlink_path.symlink_to(license_path)
+            with self.assertRaisesRegex(SourceInputError, "must not traverse a symlink"):
+                _validate_spec_notice_assets({"notices": ["notices/linked-LICENSE.txt"]},
+                                             spec_path, "fixture")
 
     def test_duplicate_json_keys_are_rejected_by_the_shared_runner_reader(self):
         with self.assertRaisesRegex(SourceInputError, "duplicate JSON key"):

@@ -21,6 +21,8 @@ BASE_JOBS = {
     "python-status-result-use",
 }
 RECIPES = {"jvm", "python", "php-builtin", "typescript", "rust"}
+GO_NOTICE_PATH = "semantic-packs/go/notices/go-1.26.0-BSD-3-Clause.txt"
+GO_NOTICE_SHA256 = "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
 GO_INPUTS = {
     "go-stdlib-os-result-contracts": {
         "spec": "semantic-packs/go/go-stdlib-os-result-contracts.spec.json",
@@ -128,6 +130,24 @@ class GoNativeGenerationInputTests(unittest.TestCase):
             self.assertEqual(row["license"], "BSD-3-Clause")
             self.assertEqual(row["source_path"], expected["spec"])
             self.assertEqual(row["sha256"], _sha256((ROOT / expected["spec"]).read_bytes()))
+
+    def test_go_1260_license_notice_is_exact_and_referenced_by_both_specs(self):
+        notice_bytes = (ROOT / GO_NOTICE_PATH).read_bytes()
+        self.assertEqual(len(notice_bytes), 1453)
+        self.assertEqual(_sha256(notice_bytes), GO_NOTICE_SHA256)
+        for expected in GO_INPUTS.values():
+            spec = _load(expected["spec"])
+            self.assertEqual(spec["notices"], ["notices/go-1.26.0-BSD-3-Clause.txt"])
+
+        lock = _load("content-lock.json")
+        entries = {row["path"]: row for row in lock["files"]}
+        self.assertEqual(entries[GO_NOTICE_PATH], {
+            "path": GO_NOTICE_PATH,
+            "source_path": GO_NOTICE_PATH,
+            "sha256": GO_NOTICE_SHA256,
+            "classification": "public",
+            "license": "BSD-3-Clause",
+        })
 
 
 if __name__ == "__main__":
