@@ -14,7 +14,9 @@ The native pack workflow currently compiles a pinned producer executable, then g
 - [x] Prove exact-hit acceptance, changed identity/corruption rejection and execution order, including a later generation failure. All 12 focused tests pass in 10.077 seconds; the harness executes actual checked-in shell bodies with local producer/tool fixtures and action storage.
 - [x] Run complete local validation: 149 Python tests pass in 65.951 seconds, including 13 cache/workflow cases; 11 tool tests pass. Content verifies all 1,010 locked files, and native integrity verifies 43 manifests/49 shards with semantics explicitly unqualified. Shell/JavaScript syntax and actionlint 1.7.12 across all workflows pass. A regression run against the exact base workflow rejects its absent early-save contract as expected. The optional source-build binary pin is also checked before recording.
 - [x] Checkpoint owned source and open independent [PR #93](https://github.com/BrokkAi/bifrost-packs/pull/93). Initial source head is `2c2cdc50618b7ba089712ea396010927960c7f1e`; only normal automatic checks ran. All initial hosted identification/preflight stages pass and compilation is active.
-- [ ] Submit the reviewed flag-identity correction and inspect fresh current-head checks. Do not qualify the earlier head or change producer/spec pins.
+- [x] Submit the flag-identity correction at `6165deac8781133c133a6b2fc35b8a65c305b94a` through normal source push. Its hosted pre-build Python and identity gates pass; compilation is active. No workflow retry occurred.
+- [x] Prove that absent or differing executed-workflow evidence was accepted by the earlier implementation, then reject both. The complete 151-test Python gate, including 15 cache/workflow cases, passes locally in 142.615 seconds; all workflow actionlint and whitespace checks pass.
+- [ ] Submit the executed-workflow correction and inspect fresh current-head checks. Do not qualify an earlier head or change producer/spec pins.
 - [ ] Inspect current-head hosted checks and integration order; merge only after required checks pass or failures are verified inherited from exact base, and only if merging cannot publish a release.
 
 ## Context and Orientation
@@ -64,9 +66,13 @@ The first local pass rejected a missing cache manifest with the intended integri
 
 Further source review found that the first environment list omitted `CARGO_INCREMENTAL`, target-specific C compiler flags and the producer's `BIFROST_BUILD_IDENTITY_OVERRIDE`. A real first-red regression changes each and observes the same key; retain `/tmp/native-generator-cache-flag-first-red.log`. Bind these, native archiver controls, Rust compiler controls and target-specific compiler/linker/pkg-config environment before merge. The pinned public producer's `build.rs` explicitly declares `BIFROST_BUILD_IDENTITY_OVERRIDE` as a build input. This is an actual source correction, so fresh normal source-push validation is necessary; the earlier run is not retried or used to qualify the correction.
 
+The native job explicitly checks out PR HEAD, but GitHub may execute its workflow from the PR merge revision. Hashing only checkout HEAD's file cannot prove the executed recipe. New regressions construct a distinct Git workflow object and show that both differing and absent execution revisions were accepted; retain `/tmp/native-generator-cache-workflow-first-red.log`. Fetch the exact `GITHUB_WORKFLOW_SHA` object without changing checkout HEAD, compare its workflow bytes with the recipe actually validated in the checkout, and fail closed on a mismatch. Hash bytes, not the whole workflow commit, so a later content-only commit with identical workflow bytes still restores the same producer.
+
 ## Decision Log
 
 Use exact main as the independent base, confirmed with the release owner. Preserve every main producer/spec pin and default version. Use a separate manifest rather than changing published generation receipts. Hash build recipe bytes rather than the entire pack commit or generation plan so content-only repairs can reuse an unchanged producer. Origin provenance records the original build source and workflow run but does not require a later content commit to equal the origin commit.
+
+Bind the executed workflow's bytes explicitly and require equality with the checked-out recipe. A changed merge workflow cannot silently qualify an older PR-head recipe. The fetch is a read of the same public repository under existing access; no credentials or permissions change. Identical workflow bytes under a new content commit retain the same key, proven by updating the workflow revision in the data-only reuse regression.
 
 ## Outcomes & Retrospective
 
@@ -85,3 +91,5 @@ Initial implementation checkpoint: record focused behavior, the preserved first 
 Validated checkpoint: record all local checks, explicit optional-binary-pin coverage, exact base preservation and the cache-scope limit before normal PR submission.
 
 Flag identity correction: preserve the reproduced key-collision evidence, identify the separately opened PR, and require current-head validation after binding the omitted compiler/provenance inputs.
+
+Executed-workflow correction: record the merge-tree fingerprint gap, two first-red controls and the 151-test passing local result before the next genuine source push.

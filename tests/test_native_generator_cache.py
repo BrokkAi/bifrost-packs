@@ -93,6 +93,8 @@ class ProducerCacheTests(unittest.TestCase):
                 del self.env[key]
         Path(self.env["RUNNER_TEMP"]).mkdir()
         self.commit()
+        self.env["GITHUB_WORKFLOW_SHA"] = subprocess.check_output(
+            ["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip()
         self.expected_path = self.base / "expected.json"
         self.identity = self.make_identity()
         self.payload = self.base / "payload"
@@ -198,9 +200,28 @@ class ProducerCacheTests(unittest.TestCase):
         (self.root / "inputs/artifact.bin").write_bytes(b"new generation input")
         self.env["GITHUB_RUN_ID"] = "456"
         self.commit()
+        self.env["GITHUB_WORKFLOW_SHA"] = generation._source_provenance(self.root)["commit"]
         self.assertEqual(cache.cache_key(cache.build_identity(self.root, self.config, self.env)), cache.cache_key(self.identity))
         self.assertEqual(self.verify()["origin"], original["origin"])
         self.assertNotEqual(generation._source_provenance(self.root)["commit"], original["origin"]["source_commit"])
+
+    def test_missing_executed_workflow_revision_fails_closed(self):
+        self.env["GITHUB_WORKFLOW_SHA"] = "e" * 40
+        with self.assertRaises((generation.NativeGenerationError, subprocess.CalledProcessError)):
+            cache.build_identity(self.root, self.config, self.env)
+
+    def test_different_executed_merge_workflow_cannot_reuse_head_recipe_identity(self):
+        def git_input(arguments, data):
+            return subprocess.check_output(["git", "-C", str(self.root), *arguments], input=data).strip().decode()
+        # Model an executed merge revision whose workflow differs from checkout HEAD.
+        blob = git_input(["hash-object", "-w", "--stdin"], self.workflow.encode() + b"\n# different executed recipe\n")
+        workflows = git_input(["mktree"], f"100644 blob {blob}\tnative-packs.yml\n".encode())
+        github = git_input(["mktree"], f"040000 tree {workflows}\tworkflows\n".encode())
+        tree = git_input(["mktree"], f"040000 tree {github}\t.github\n".encode())
+        revision = git_input(["commit-tree", tree, "-m", "different executed workflow"], b"")
+        self.env["GITHUB_WORKFLOW_SHA"] = revision
+        with self.assertRaisesRegex(generation.NativeGenerationError, "executed workflow"):
+            cache.build_identity(self.root, self.config, self.env)
 
     def test_actual_source_pins_and_toolchain_bytes_change_key(self):
         self.record()
@@ -311,7 +332,8 @@ class ProducerCacheTests(unittest.TestCase):
         runner = self.base / f"attempt-{number}"
         runner.mkdir()
         environment = {**self.env, "RUNNER_TEMP": str(runner), "GITHUB_OUTPUT": str(runner / "outputs"),
-                       "GITHUB_ENV": str(runner / "env"), "GITHUB_RUN_ID": str(1000 + number)}
+                       "GITHUB_ENV": str(runner / "env"), "GITHUB_RUN_ID": str(1000 + number),
+                       "GITHUB_WORKFLOW_SHA": generation._source_provenance(self.root)["commit"]}
         if build_fail:
             environment["FAKE_BUILD_FAIL"] = "1"
         if generation_fail:
@@ -352,10 +374,12 @@ class ProducerCacheTests(unittest.TestCase):
         return events, result, key, payload
 
     def test_workflow_orders_verified_save_before_generation_with_exact_guards(self):
-        markers = ["id: generator-identity", "id: generator-cache", "id: generator-build",
+        markers = ["name: Fetch exact executing workflow revision", "id: generator-identity", "id: generator-cache", "id: generator-build",
                    "id: generator-verify", "id: generator-save", "name: Generate twice, verify and compare native content"]
         positions = [self.workflow.index(marker) for marker in markers]
         self.assertEqual(positions, sorted(positions))
+        self.assertIn('run: git fetch --no-tags origin "$GITHUB_WORKFLOW_SHA"',
+                      self.step("name: Fetch exact executing workflow revision"))
         restore = self.step("id: generator-cache")
         save = self.step("id: generator-save")
         self.assertIn("actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9", restore)

@@ -76,6 +76,14 @@ def build_identity(root: Path, config: Path, environment) -> dict:
     generator, _, _, _ = generation._validate_config(root.resolve(), config)
     if "build" not in generator:
         generation._fail("producer cache requires a source-built generator")
+    workflow_sha = _required(environment, "GITHUB_WORKFLOW_SHA")
+    if not generation.COMMIT_RE.fullmatch(workflow_sha):
+        generation._fail("executed workflow revision must be a full commit id")
+    recipe_bytes = {path: _regular_file(root / path) for path in RECIPE_PATHS}
+    executed_workflow = subprocess.check_output(
+        ["git", "-C", str(root), "show", f"{workflow_sha}:{RECIPE_PATHS[0]}"], stderr=subprocess.PIPE)
+    if executed_workflow != recipe_bytes[RECIPE_PATHS[0]]:
+        generation._fail("checked-out producer recipe differs from the executed workflow revision")
     toolchain = generator["build"]["rust_toolchain"]
     rustc = subprocess.check_output(["rustc", f"+{toolchain}", "-vV"], env=environment, text=True).strip()
     cargo = subprocess.check_output(["cargo", f"+{toolchain}", "-V"], env=environment, text=True).strip()
@@ -106,7 +114,7 @@ def build_identity(root: Path, config: Path, environment) -> dict:
             if key in BUILD_ENVIRONMENT or key.startswith(BUILD_ENVIRONMENT_PREFIXES)
         },
         "cargo_configs": _cargo_configs(environment),
-        "recipe": {path: generation._sha256_bytes(_regular_file(root / path)) for path in RECIPE_PATHS},
+        "recipe": {path: generation._sha256_bytes(data) for path, data in recipe_bytes.items()},
     }
 
 
