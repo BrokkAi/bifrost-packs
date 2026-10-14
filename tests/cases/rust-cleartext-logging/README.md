@@ -13,6 +13,11 @@ using it as evidence that a program is clean.
 - `name-lookalike`: ordinary functions named `println`, `eprintln` and
   `panic_fmt`, a user writer, and a shadowing `println!` macro are not standard
   sinks. A genuine standard macro prints a constant. Expected: zero findings.
+- `string-as-str`: an explicitly typed `String` receiver passes its sensitive
+  contents through `as_str` to standard output; an encrypted-name control
+  uses the same method. The return is stored in a neutral `message` local.
+  Expected: one finding for the sensitive input. This remains an unqualified
+  engine-gap witness on the tested development executable.
 - `barrier-near-miss`: CodeQL's boolean and fieldless-enum barriers prevent
   logging those values from being reported. Expected: zero findings. This is
   an explicit engine-gap witness, not a passing qualification claim.
@@ -55,12 +60,13 @@ Behavioral validation used a development Bifrost 0.13.0 executable with SHA-256
 The core declaration model compiled without validation errors. Its manifest
 receipt is `4596d3193525def0f8f6db3f96c0fbd53bb8221aba26bd8e79da47af167a0519`;
 the I/O model receipt is
-`ae9de7854a4dc1e314a0fc18746762185946f21106219c95a040c3ba7e9ce8f6`.
+`93d8c4b5ed26308ca734b9ba85ccae0af9f194eb854e1f9eda9b81c42cd746c0`.
 
 | Gate | Findings | Completion |
 | --- | --- | --- |
 | positive | all 3 expected, definite | inconclusive: partial discovery |
 | near-miss | 0 | proven by summary |
+| string-as-str through a neutral local | 0; 1 expected | inconclusive: partial discovery |
 | name-lookalike | 0 | inconclusive: partial discovery |
 | barrier-near-miss | 2 unexpected, definite | inconclusive: partial discovery |
 | upstream standard sinks | 4 of 19 expected; 0 extras | inconclusive: partial discovery and incomplete capabilities |
@@ -70,8 +76,15 @@ Missing lines are 199, 202, 205, 208, 211, 214, 217, 220, 223, 226, 229, 242,
 245, 248 and 251. Core panic/assert macros produce `unknown_macro_derived`
 call-shape coverage and unavailable formal bindings. `Option::expect` and
 locked I/O write calls do not establish complete receiver/call bindings.
+The I/O model source version 0.3.0 adds the CodeQL-derived `String::as_str`
+flow needed by line 229. That line remains unqualified until macro
+`format!` result typing and `Option::expect` dispatch are established.
 The barrier fixture confirms the missing boolean and fieldless-enum barriers.
-The shadowing macro also leaves incomplete selector discovery. Empty results
+The shadowing macro also leaves incomplete selector discovery. The focused
+`String::as_str` case does not yet establish receiver-to-return flow through
+a neutral local on this engine. An inline formatting-argument version reports
+a definite finding, but does not independently qualify the added summary.
+Empty results
 under these incomplete outcomes do not prove safety.
 
 This candidate is **not behavior-qualified for release**. Source authoring

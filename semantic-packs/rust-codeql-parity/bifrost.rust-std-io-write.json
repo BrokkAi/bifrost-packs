@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.rust-std-io-write",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "producer": {
     "name": "bifrost-reviewed-rust-codeql-parity-models",
     "version": "0.1.0"
@@ -13,10 +13,10 @@
     "toolchains": []
   },
   "provenance": {
-    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only.",
-    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19"
+    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes.",
+    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19; String::as_str CodeQL source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6"
   },
-  "license": "Apache-2.0",
+  "license": "Apache-2.0 AND MIT",
   "completeness": "complete",
   "safety": {
     "generated_code_only": false,
@@ -643,6 +643,27 @@
             }
           },
           {
+            "id": "member.rust-codeql.std-string-string-as-str",
+            "owner": "type.rust-codeql.std-string-string",
+            "name": "as_str",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "std.primitive.str"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/string.rs",
+              "symbol": "std.string.String.as_str"
+            }
+          },
+          {
             "id": "member.rust-codeql.std-string-string-new",
             "owner": "type.rust-codeql.std-string-string",
             "name": "new",
@@ -1224,6 +1245,29 @@
             "target": {
               "path": "library/alloc/src/string.rs",
               "symbol": "std.string.String.as_bytes",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-string-string-as-str",
+            "target": {
+              "path": "library/alloc/src/string.rs",
+              "symbol": "std.string.String.as_str",
               "has_receiver": true,
               "parameter_count": 0
             },

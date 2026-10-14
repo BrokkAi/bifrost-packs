@@ -3,7 +3,7 @@
 `bifrost.rust-core-logging.json` is a partial, reviewed declaration slice for
 `core::panicking::panic_fmt`, `core::panicking::assert_failed` and
 `core::option::Option::expect`. It supports the public Rust cleartext-logging
-policy together with `bifrost.rust-std-io-write` 0.2.0. It contains no procedure
+policy together with `bifrost.rust-std-io-write` 0.3.0. It contains no procedure
 body summaries and does not claim complete standard-library coverage.
 
 The general Rust stdlib pack is generated from an immutable rustdoc JSON pin;
