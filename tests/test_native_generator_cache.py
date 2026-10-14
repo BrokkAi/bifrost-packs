@@ -163,10 +163,12 @@ class ProducerCacheTests(unittest.TestCase):
     def test_current_environment_and_recipe_changes_invalidate_key_and_restore(self):
         self.record()
         for key in ("RUNNER_OS", "RUNNER_ARCH", "ImageOS", "ImageVersion", "RUSTFLAGS",
-                    "CARGO_ENCODED_RUSTFLAGS", "CARGO_PROFILE_RELEASE_LTO", "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER"):
+                    "CARGO_ENCODED_RUSTFLAGS", "CARGO_PROFILE_RELEASE_LTO", "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER",
+                    "CARGO_INCREMENTAL", "CFLAGS_x86_64_unknown_linux_gnu", "ARFLAGS", "BIFROST_BUILD_IDENTITY_OVERRIDE"):
             with self.subTest(key=key):
                 old = self.env.get(key)
-                self.env[key] = "changed"
+                self.env[key] = {"CARGO_INCREMENTAL": "1", "CFLAGS_x86_64_unknown_linux_gnu": "-DIDENTITY_REGRESSION=1",
+                                 "ARFLAGS": "s", "BIFROST_BUILD_IDENTITY_OVERRIDE": "f" * 40}.get(key, "changed")
                 changed = cache.build_identity(self.root, self.config, self.env)
                 self.assertNotEqual(cache.cache_key(changed), cache.cache_key(self.identity))
                 with self.assertRaisesRegex(generation.NativeGenerationError, "inputs changed"):

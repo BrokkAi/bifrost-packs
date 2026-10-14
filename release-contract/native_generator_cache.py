@@ -30,11 +30,16 @@ ORIGIN_FIELDS = {
 }
 BUILD_ENVIRONMENT = {
     "RUSTFLAGS", "CARGO_ENCODED_RUSTFLAGS", "RUSTC", "RUSTDOC",
-    "RUSTC_WRAPPER", "RUSTC_WORKSPACE_WRAPPER", "CC", "CXX", "AR",
+    "RUSTC_WRAPPER", "RUSTC_WORKSPACE_WRAPPER", "CC", "CXX", "AR", "ARFLAGS", "RANLIB",
     "CFLAGS", "CXXFLAGS", "CPPFLAGS", "LDFLAGS", "HOST_CC", "HOST_CXX",
     "HOST_AR", "HOST_CFLAGS", "HOST_CXXFLAGS", "TARGET_CC", "TARGET_CXX",
-    "TARGET_AR", "TARGET_CFLAGS", "TARGET_CXXFLAGS", "SDKROOT",
+    "TARGET_AR", "TARGET_CFLAGS", "TARGET_CXXFLAGS", "SDKROOT", "CARGO_INCREMENTAL",
+    "RUSTC_BOOTSTRAP", "SOURCE_DATE_EPOCH", "BIFROST_BUILD_IDENTITY_OVERRIDE",
 }
+BUILD_ENVIRONMENT_PREFIXES = (
+    "CARGO_BUILD_", "CARGO_PROFILE_", "CARGO_TARGET_", "RUSTC_", "PKG_CONFIG_",
+    "CC_", "CXX_", "AR_", "ARFLAGS_", "RANLIB_", "CFLAGS_", "CXXFLAGS_", "CPPFLAGS_", "LDFLAGS_",
+)
 
 
 def _canonical(value) -> bytes:
@@ -98,7 +103,7 @@ def build_identity(root: Path, config: Path, environment) -> dict:
         },
         "environment": {
             key: value for key, value in environment.items()
-            if key in BUILD_ENVIRONMENT or key.startswith(("CARGO_BUILD_", "CARGO_PROFILE_", "CARGO_TARGET_"))
+            if key in BUILD_ENVIRONMENT or key.startswith(BUILD_ENVIRONMENT_PREFIXES)
         },
         "cargo_configs": _cargo_configs(environment),
         "recipe": {path: generation._sha256_bytes(_regular_file(root / path)) for path in RECIPE_PATHS},
