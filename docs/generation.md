@@ -9,6 +9,8 @@ for a release or enable it in a scanner.
 ## Pinned native candidate
 
 The published `packs/v0.3.0` and `rules/v0.2.1` releases remain immutable.
+The current rule-content baseline is `rules/v0.3.0`; the proposed `rules/v0.3.1`
+is a patch and dependency successor.
 The proposed next `packs/v0.4.0` recipe builds the public
 `bifrost-semantic-pack` producer version `0.13.1` from the generator-only
 preparation source
@@ -18,11 +20,22 @@ source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
 
-The plan contains eight reviewed direct result-use jobs and four existing
-recipes. The successor preserves the full generated bundle, including schema-8
-and schema-16 content, and this preparation does not rewrite model or policy
-bytes. Generation, integrity, compatibility and consumer behavior remain
-separate outcomes.
+The plan contains eight reviewed direct result-use jobs and five recipes: the
+four existing native recipes plus the existing pinned PHP builtin recipe. That
+recipe builds `bifrost.php-builtin` from
+`semantic-packs/php/phpstorm-stubs-2026.8.29.json`, pinned to phpstorm-stubs
+revision `748ab87d16253a5b5d648b5fe4dae1ff4152bb03` and its recorded source-set
+digest. It is distinct from the PHP result-use model among the eight direct jobs.
+The source specification and model bytes are unchanged. The existing PHP pack
+notes describe a prior partial output with 852 rejects (warnings) for the pinned
+source set. The selected 0.13.1 generator has not run this recipe here, so that count is
+historical; the current generation report
+remains unverified and must stay explicit. This bounded declaration slice does
+not claim complete PHP runtime coverage. See the
+[PHP pack notes](../semantic-packs/php/README.md). The successor also preserves
+the full generated bundle, including schema-8 and schema-16 content. Generation,
+integrity, compatibility and consumer behavior remain separate outcomes, and
+behavior qualification remains pending.
 
 The refreshed producer retains Scala declarations whose repeated parameters
 span multiple parameter lists, but withholds the unrepresentable executable

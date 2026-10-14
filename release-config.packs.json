@@ -5,7 +5,7 @@
   "visibility": "public",
   "release_version": "0.4.0",
   "artifact_role": "source",
-  "notes": "Prepare the 0.4.0 native successor with the eight reviewed direct result-use model families delivered in the schema-8 native bundle. Preserve the full generated bundle, including schema-8 and schema-16 content, and all model and policy bytes. Compatibility follows the actual native schemas and toolchain requirements; producer version is provenance. Integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
+  "notes": "Prepare the 0.4.0 native successor with the eight reviewed direct result-use model families and the existing pinned PHP builtin declaration generation recipe. The PHP declaration pack is generated from its existing pinned specification and source inputs; model and specification bytes are unchanged. Preserve the full generated bundle, including schema-8 and schema-16 content, and all model and policy bytes. Compatibility follows the actual native schemas and toolchain requirements; producer version is provenance. Integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
   "component": "packs",
   "baseline": "release-baseline.json"
 }

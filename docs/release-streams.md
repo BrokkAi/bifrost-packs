@@ -23,7 +23,13 @@ published streams, including `packs/v0.2.1` and `rules/v0.1.4`, remain
 immutable as well.
 
 The proposed next semantic-pack stream is `packs/v0.4.0`. It delivers the
-eight reviewed direct result-use model families in the native bundle and
+eight reviewed direct result-use model families plus `bifrost.php-builtin`,
+generated from the existing pinned PHP specification. The existing PHP pack documentation describes a prior partial output with 852
+rejects (warnings). The selected 0.13.1 generator has not run this recipe here,
+so its current completeness/reject report remains unverified. No complete PHP
+runtime coverage is claimed (see the
+[PHP pack notes](../semantic-packs/php/README.md)). This recipe addition changes
+no PHP model or specification bytes. The stream
 preserves the full generated bundle, including schema-8 and schema-16 content.
 The source preparation retains all model and policy bytes; it does not activate
 the content or qualify consumer behavior.
@@ -40,12 +46,12 @@ of stripping it; historical schemas retain their original requirements. The
 publication guard independently checks the generated payload. Compatibility
 neither implies complete analysis in a particular run nor qualifies behavior.
 
-The current rules stream `rules/v0.2.1` contains the locked Go-free policy
-inventory and remains immutable. The proposed `rules/v0.2.2` keeps the policy
-bytes, IDs, language scopes and required capabilities unchanged and depends
-exactly on `bifrost.public.packs@0.4.0`. The retired Go race analysis remains
-excluded. Keep separate integrity, compatibility, completeness and runtime
-behavior evidence; none of these metadata changes qualify an engine candidate.
+The `rules/v0.3.0` policy baseline is preserved by the proposed patch
+`rules/v0.3.1`: policy bytes, IDs, language scopes, required capabilities and
+typed incomplete outcomes remain unchanged. The patch depends exactly on
+`bifrost.public.packs@0.4.0`. The retired Go race analysis remains excluded.
+Keep separate integrity, compatibility, completeness and runtime behavior
+evidence; none of these metadata changes qualify an engine candidate.
 The narrow dynamic-evaluation smoke does not qualify the entire policy set.
 
 ## Legacy baseline

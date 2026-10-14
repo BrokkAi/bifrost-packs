@@ -105,14 +105,23 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-Published `packs/v0.3.0` and `rules/v0.2.1` are immutable. The proposed
-successor streams are `packs/v0.4.0` and `rules/v0.2.2`. The pack successor
-delivers the eight reviewed direct result-use model families in the native
-bundle and preserves the full generated schema-8 and schema-16 bundle; the
-rules successor preserves all policy bytes and depends exactly on
+Published `packs/v0.3.0` and `rules/v0.2.1` remain immutable. The proposed
+successor streams are `packs/v0.4.0` and `rules/v0.3.1`, based on the current
+`rules/v0.3.0` policy baseline. The native pack successor adds the eight
+reviewed direct result-use model families and the generated
+`bifrost.php-builtin` declaration pack from the existing pinned PHP specification.
+The existing PHP pack notes record an earlier partial output with 852
+rejects/warnings. The selected 0.13.1 generator has not run this recipe here, so
+that count is historical; the current generation report remains unverified and
+must stay explicit. No full PHP runtime coverage is claimed; see the
+[PHP pack notes](semantic-packs/php/README.md). This recipe addition leaves the
+PHP specification and model bytes unchanged. The generated bundle also retains
+its schema-8 and schema-16 content. The rules patch preserves the corrected
+`rules/v0.3.0` policy bytes, IDs, language scopes, required capabilities and
+typed incomplete outcomes, and depends exactly on
 `bifrost.public.packs@0.4.0`. Integrity, compatibility, completeness and
-consumer behavior remain separate qualification requirements, and this
-preparation does not authorize a tag or publication.
+consumer behavior remain separate qualification requirements; this preparation
+does not authorize a tag or publication.
 Historical `packs/v0.2.1` and `rules/v0.1.4` also remain immutable. The published
 `packs/v0.2.0` release contains 8 native model entries using schema 8, with
 behavior qualification pending. Its source archive pins the authored inputs
@@ -123,10 +132,10 @@ retaining legacy compatibility. The [recorded blocker](docs/native-publication-b
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
 `bifrost.public.packs@0.4.0`.
-The eight direct result-use jobs are the native additions in the proposed pack
-successor. The full generated bundle and all model and policy bytes remain
-retained in this source preparation; source-only catalog content outside the
-selected native jobs still requires separate consumer qualification.
+The eight direct result-use jobs and the generated PHP builtin declaration
+pack are the native additions in the proposed pack successor. The full generated
+bundle and all model and policy bytes remain retained in this source preparation;
+other source-only catalog content still requires separate consumer qualification.
 
 For the standalone LSP engine/content tuple, use the
 [qualification and handoff procedure](docs/standalone-qualification.md).
