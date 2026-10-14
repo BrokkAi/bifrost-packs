@@ -2,27 +2,38 @@
   "schema_version": 8,
   "pack_id": "bifrost.typescript.string-result-use-obligations",
   "version": "1.0.0",
-  "producer": { "name": "bifrost-reviewed-typescript-models", "version": "0.1.0" },
+  "producer": {
+    "name": "bifrost-reviewed-typescript-models",
+    "version": "0.1.0"
+  },
   "language": "typescript",
   "ecosystem": "npm",
   "compatibility": {
     "toolchains": []
   },
   "provenance": {
-    "source": "TypeScript lib/lib.es5.d.ts String interface; ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections",
-    "revision": "TypeScript 7.0.2 lib.es5.d.ts; ECMA-262 current edition; assumption: annotated or inferred string receivers use the builtin String implementation and builtin methods are not replaced; subclasses, unions, any, and unknown flows remain outside this claim"
+    "source": "TypeScript lib/lib.es5.d.ts and lib/lib.es2019.string.d.ts String interfaces; ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections",
+    "revision": "TypeScript 7.0.2: ES5 declarations for trim, toLowerCase, toUpperCase and replace; ES2019.String declarations for trimStart and trimEnd, selected through the ES2019 library closure including ES5; ECMA-262 current edition; assumption: annotated or inferred string receivers use the builtin String implementation and builtin methods are not replaced; subclasses, unions, any, and unknown flows remain outside this claim"
   },
   "license": "Apache-2.0",
   "completeness": "complete",
-  "safety": { "generated_code_only": false, "review_required": false },
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
   "shards": [
     {
       "id": "typescript.string.reviewed-result-use",
       "activation": [
         {
-          "package": { "name": "typescript", "version": "=7.0.2" },
+          "package": {
+            "name": "typescript",
+            "version": "=7.0.2"
+          },
           "targets": [],
-          "configurations": ["typescript-lib:es5"]
+          "configurations": [
+            "typescript-lib:es5"
+          ]
         }
       ],
       "payload": {
@@ -32,7 +43,7 @@
             "id": "typescript.string.trim.result-use",
             "target": {
               "path": "lib/lib.es5.d.ts",
-      "symbol": "String.trim()",
+              "symbol": "String.trim()",
               "has_receiver": true,
               "parameter_count": 0
             },
@@ -41,52 +52,29 @@
             "covers_overrides": true,
             "normal_result_count": 1,
             "transfers": [
-              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
             ],
             "effects": [],
-            "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
-          },
-          {
-            "id": "typescript.string.trim-start.result-use",
-            "target": {
-              "path": "lib/lib.es5.d.ts",
-      "symbol": "String.trimStart()",
-              "has_receiver": true,
-              "parameter_count": 0
-            },
-            "completeness": "complete",
-            "ordinary_heap_unchanged": true,
-            "covers_overrides": true,
-            "normal_result_count": 1,
-            "transfers": [
-              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
-            ],
-            "effects": [],
-            "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
-          },
-          {
-            "id": "typescript.string.trim-end.result-use",
-            "target": {
-              "path": "lib/lib.es5.d.ts",
-      "symbol": "String.trimEnd()",
-              "has_receiver": true,
-              "parameter_count": 0
-            },
-            "completeness": "complete",
-            "ordinary_heap_unchanged": true,
-            "covers_overrides": true,
-            "normal_result_count": 1,
-            "transfers": [
-              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
-            ],
-            "effects": [],
-            "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
           },
           {
             "id": "typescript.string.to-lower-case.result-use",
             "target": {
               "path": "lib/lib.es5.d.ts",
-      "symbol": "String.toLowerCase()",
+              "symbol": "String.toLowerCase()",
               "has_receiver": true,
               "parameter_count": 0
             },
@@ -95,16 +83,29 @@
             "covers_overrides": true,
             "normal_result_count": 1,
             "transfers": [
-              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
             ],
             "effects": [],
-            "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
           },
           {
             "id": "typescript.string.to-upper-case.result-use",
             "target": {
               "path": "lib/lib.es5.d.ts",
-      "symbol": "String.toUpperCase()",
+              "symbol": "String.toUpperCase()",
               "has_receiver": true,
               "parameter_count": 0
             },
@@ -113,16 +114,29 @@
             "covers_overrides": true,
             "normal_result_count": 1,
             "transfers": [
-              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
             ],
             "effects": [],
-            "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
           },
           {
             "id": "typescript.string.replace.result-use",
             "target": {
               "path": "lib/lib.es5.d.ts",
-      "symbol": "String.replace(old, new)",
+              "symbol": "String.replace(old, new)",
               "has_receiver": true,
               "parameter_count": 2
             },
@@ -131,10 +145,23 @@
             "covers_overrides": true,
             "normal_result_count": 1,
             "transfers": [
-              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
             ],
             "effects": [],
-            "result_use_obligations": [{ "result_ordinal": 0, "kind": "pure_transformation_value" }]
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
           }
         ]
       }
@@ -143,9 +170,14 @@
       "id": "typescript.string.reviewed-declarations",
       "activation": [
         {
-          "package": { "name": "typescript", "version": "=7.0.2" },
+          "package": {
+            "name": "typescript",
+            "version": "=7.0.2"
+          },
           "targets": [],
-          "configurations": ["typescript-lib:es5"]
+          "configurations": [
+            "typescript-lib:es5"
+          ]
         }
       ],
       "payload": {
@@ -179,32 +211,6 @@
               "kind": "artifact",
               "path": "lib/lib.es5.d.ts",
               "symbol": "String.trim"
-            }
-          },
-          {
-            "id": "typescript.string.member.trim-start",
-            "owner": "typescript.string.type",
-            "name": "trimStart",
-            "member_kind": "method",
-            "visibility": "public",
-            "is_static": false,
-            "locator": {
-              "kind": "artifact",
-              "path": "lib/lib.es5.d.ts",
-              "symbol": "String.trimStart"
-            }
-          },
-          {
-            "id": "typescript.string.member.trim-end",
-            "owner": "typescript.string.type",
-            "name": "trimEnd",
-            "member_kind": "method",
-            "visibility": "public",
-            "is_static": false,
-            "locator": {
-              "kind": "artifact",
-              "path": "lib/lib.es5.d.ts",
-              "symbol": "String.trimEnd"
             }
           },
           {
@@ -244,6 +250,136 @@
               "kind": "artifact",
               "path": "lib/lib.es5.d.ts",
               "symbol": "String.replace"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "typescript.string.es2019.reviewed-result-use",
+      "activation": [
+        {
+          "package": {
+            "name": "typescript",
+            "version": "=7.0.2"
+          },
+          "targets": [],
+          "configurations": [
+            "typescript-lib:es2019"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "typescript.string.trim-start.result-use",
+            "target": {
+              "path": "lib/lib.es2019.string.d.ts",
+              "symbol": "String.trimStart()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          },
+          {
+            "id": "typescript.string.trim-end.result-use",
+            "target": {
+              "path": "lib/lib.es2019.string.d.ts",
+              "symbol": "String.trimEnd()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "covers_overrides": true,
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "result_use_obligations": [
+              {
+                "result_ordinal": 0,
+                "kind": "pure_transformation_value"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "typescript.string.es2019.reviewed-declarations",
+      "activation": [
+        {
+          "package": {
+            "name": "typescript",
+            "version": "=7.0.2"
+          },
+          "targets": [],
+          "configurations": [
+            "typescript-lib:es2019"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [],
+        "members": [
+          {
+            "id": "typescript.string.member.trim-start",
+            "owner": "typescript.string.type",
+            "name": "trimStart",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "lib/lib.es2019.string.d.ts",
+              "symbol": "String.trimStart"
+            }
+          },
+          {
+            "id": "typescript.string.member.trim-end",
+            "owner": "typescript.string.type",
+            "name": "trimEnd",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "lib/lib.es2019.string.d.ts",
+              "symbol": "String.trimEnd"
             }
           }
         ],
