@@ -1,19 +1,82 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "pack_id": "bifrost.typescript.string-result-use-obligations",
   "pack_version": "1.0.0",
   "ecosystem": "npm",
   "kind": {
-    "artifact_kind": "authored_semantic_model"
+    "artifact_kind": "authored_semantic_model",
+    "shard_activation_pins": [
+      {
+        "shard_id": "typescript.string.reviewed-result-use",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es5",
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      },
+      {
+        "shard_id": "typescript.string.reviewed-declarations",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es5",
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      },
+      {
+        "shard_id": "typescript.string.es2019.reviewed-result-use",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      },
+      {
+        "shard_id": "typescript.string.es2019.reviewed-declarations",
+        "activation": [
+          {
+            "package": {
+              "name": "typescript",
+              "version": "=7.0.2"
+            },
+            "targets": [],
+            "configurations": [
+              "typescript-lib:es2019"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "artifact": {
     "file_name": "typescript-string-result-use-obligations.json",
-    "sha256": "6b6e2c79cf403d82c5307d04d28c2ebedd85b0d73821940fae0ed393a306f4ab",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/typescript/typescript-string-result-use-obligations.json",
+    "sha256": "bb3f08f380ef22901d9060b898ef56f8804f77474af630a9467b7214502282f3",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/016d32f5c4582da2f727e9f53e9af2f59ed85861/semantic-packs/typescript/typescript-string-result-use-obligations.json",
     "container": null
   },
   "compatibility": {
-    "bifrost": ">=0.12.0, <1.0.0",
     "toolchains": []
   },
   "activation": [
@@ -24,13 +87,14 @@
       },
       "targets": [],
       "configurations": [
-        "typescript-lib:es5"
+        "typescript-lib:es5",
+        "typescript-lib:es2019"
       ]
     }
   ],
   "provenance": {
-    "source": "TypeScript lib/lib.es5.d.ts String interface; ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections",
-    "revision": "TypeScript 7.0.2 lib.es5.d.ts; ECMA-262 current edition; assumption: annotated or inferred string receivers use the builtin String implementation and builtin methods are not replaced; subclasses, unions, any, and unknown flows remain outside this claim"
+    "source": "TypeScript lib/lib.es5.d.ts and lib/lib.es2019.string.d.ts String interfaces; ECMA-262 String.prototype.trim, trimStart, trimEnd, toLowerCase, toUpperCase, and replace sections",
+    "revision": "TypeScript 7.0.2: ES5 declarations for trim, toLowerCase, toUpperCase and replace; ES2019.String declarations for trimStart and trimEnd, selected through the ES2019 library closure including ES5; ECMA-262 current edition; assumption: annotated or inferred string receivers use the builtin String implementation and builtin methods are not replaced; subclasses, unions, any, and unknown flows remain outside this claim"
   },
   "license": "Apache-2.0",
   "safety": {
@@ -47,7 +111,7 @@
     },
     "targets": [],
     "configurations": [
-      "typescript-lib:es5"
+      "typescript-lib:es2019"
     ]
   },
   "measurement_queries": [
@@ -58,6 +122,46 @@
       "name": "trim",
       "has_receiver": true,
       "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "typescript",
+      "owner": "String",
+      "name": "trimStart",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "typescript",
+      "owner": "String",
+      "name": "trimEnd",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "typescript",
+      "owner": "String",
+      "name": "toLowerCase",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "typescript",
+      "owner": "String",
+      "name": "toUpperCase",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "typescript",
+      "owner": "String",
+      "name": "replace",
+      "has_receiver": true,
+      "parameter_count": 2
     }
   ]
 }

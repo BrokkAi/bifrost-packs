@@ -2,16 +2,68 @@
   "schema_version": 1,
   "generator": {
     "repository": "https://github.com/BrokkAi/bifrost",
-    "commit": "778bc8d1dd9a050092c4cb3ea3c1b78fc1b2b63e",
+    "commit": "8c64332281245b6ea3bfae343645f78d0faf2d23",
     "version": "0.13.1",
     "asset": "source.tar.gz",
-    "asset_sha256": "55655c83144fc277ffb78eec8c8e35edec16a875729a7542fb3acfbf5420174c",
+    "asset_sha256": "1dcbfb6136670f45cee1fa779cf9769b4860aaac2e6409f92ae5e3b6e393aa2d",
     "binary_sha256": null,
     "build": {
       "rust_toolchain": "1.97.1",
-      "cargo_lock_sha256": "f89ea3c0fd5aaa8ba2984023915becfc13fa80b17656c1c1b6071235cc1acfd3"
+      "cargo_lock_sha256": "b5d396c9b2cd0315ffdb6c85d694a2c88673592aa71f18251babf20898aaad72"
     }
   },
+  "jobs": [
+    {
+      "name": "c-libc-result-use",
+      "spec": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/c/c-libc-result-use-obligations.json"
+    },
+    {
+      "name": "csharp-result-use",
+      "spec": "semantic-packs/csharp/csharp-bcl-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/csharp/csharp-bcl-result-use-obligations.json"
+    },
+    {
+      "name": "php-result-use",
+      "spec": "semantic-packs/php/php-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/php/php-result-use-obligations.json"
+    },
+    {
+      "name": "ruby-result-use",
+      "spec": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/ruby/ruby-core-result-use-obligations.json"
+    },
+    {
+      "name": "javascript-string-result-use",
+      "spec": "semantic-packs/javascript/javascript-string-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/javascript/javascript-string-result-use-obligations.json"
+    },
+    {
+      "name": "typescript-string-result-use",
+      "spec": "semantic-packs/typescript/typescript-string-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/typescript/typescript-string-result-use-obligations.json"
+    },
+    {
+      "name": "python-str-result-use",
+      "spec": "semantic-packs/python/python-str-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/python/python-str-result-use-obligations.json"
+    },
+    {
+      "name": "python-status-result-use",
+      "spec": "semantic-packs/python/python-status-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/python/python-status-result-use-obligations.json"
+    },
+    {
+      "name": "go-stdlib-os-result-contracts",
+      "spec": "semantic-packs/go/go-stdlib-os-result-contracts.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-os.json"
+    },
+    {
+      "name": "go-stdlib-os-declarations",
+      "spec": "semantic-packs/go/go-stdlib-os-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-os-declarations.json"
+    }
+  ],
   "recipes": [
     {
       "name": "jvm",
@@ -20,6 +72,10 @@
     {
       "name": "python",
       "script": "scripts/upstream/public/build-pinned-python-semantic-packs.sh"
+    },
+    {
+      "name": "php-builtin",
+      "script": "scripts/upstream/public/build-pinned-php-semantic-packs.sh"
     },
     {
       "name": "typescript",

@@ -8,19 +8,35 @@ for a release or enable it in a scanner.
 
 ## Pinned native candidate
 
-The published `packs/v0.2.0` artifact contains 8 native model entries using
-schema 8. Its source archive pins the authored inputs present at commit
-`8711584116169d94475cc8dd4a18caebd5a9e8e4`; later Go, Rust, Python, and
-expanded typeshed additions belong to the next source archive. Its behavior
-qualification remains pending. Published `packs/v0.2.1` also remains immutable;
-this preparation does not overwrite that archive. The intended next `packs/v0.3.0` recipe builds
-the public `bifrost-semantic-pack`
-producer version `0.13.1` from the generator-only preparation source
-`3da8301ffe81477388d175fcd463384825f46cbf` with Rust `1.97.1`.
+The published `packs/v0.3.0` and `rules/v0.2.1` releases remain immutable.
+The current rule-content baseline is `rules/v0.3.0`; the proposed `rules/v0.3.1`
+is a patch and dependency successor.
+The proposed next `packs/v0.4.0` recipe builds the public
+`bifrost-semantic-pack` producer version `0.13.1` from the generator-only
+preparation source
+`8c64332281245b6ea3bfae343645f78d0faf2d23` with Rust `1.97.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
 source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
+
+The plan contains ten direct jobs: eight reviewed result-use models and the
+Go standard-library `os` procedure result-contract and declarations models. It
+retains five recipes: four existing native recipes plus the existing pinned PHP
+builtin recipe. That recipe builds `bifrost.php-builtin` from
+`semantic-packs/php/phpstorm-stubs-2026.8.29.json`, pinned to phpstorm-stubs
+revision `748ab87d16253a5b5d648b5fe4dae1ff4152bb03` and its recorded source-set
+digest. It is distinct from the PHP result-use model among the eight direct jobs.
+The source specification and model bytes are unchanged. The existing PHP pack
+notes describe a prior partial output with 852 rejects (warnings) for the pinned
+source set. The selected 0.13.1 generator has not run this recipe here, so that count is
+historical; the current generation report
+remains unverified and must stay explicit. This bounded declaration slice does
+not claim complete PHP runtime coverage. See the
+[PHP pack notes](../semantic-packs/php/README.md). The successor also preserves
+the full generated bundle, including schema-8 and schema-16 content. Generation,
+integrity, compatibility and consumer behavior remain separate outcomes, and
+behavior qualification remains pending.
 
 The refreshed producer retains Scala declarations whose repeated parameters
 span multiple parameter lists, but withholds the unrepresentable executable
@@ -28,18 +44,18 @@ signature and its flows. The native artifact retains a scoped warning and
 partial completeness. Successful generation and schema compatibility do not
 turn that bounded result into complete analysis.
 
-The JVM, Python, TypeScript and Rust specifications have been reconciled with
-the reviewed schema-8 producer inputs. They no longer declare an inner engine
-version gate. The producer and reader enforce compatibility by actual schemas;
-legacy artifacts keep their original engine gates. Newer Python standard-library
-authoring models are retained here with exact import provenance, including a
-schema-14 summary model. The schema-8 recipe does not compile that summary model
-into the native archive. The `packs/v0.3.0` source archive adds Node FS JavaScript and Python `str`
-models and revises C, PHP, Ruby and Rust models relative to 0.2.1. These source
-catalog changes do not alter the selected native recipe inputs. Go embed,
-expanded typeshed and other existing Rust/Python inputs remain retained;
-models outside the recipe require separately qualified producers and consumers.
-Never lower its schema label or remove fields to fit this release.
+The eight reviewed result-use specs and two Go `os` specs use the
+version-independent schema-8 native compatibility shape and retain their
+activation, artifact, toolchain, target, configuration and provenance pins. The
+Go migration changes only each model schema label from 2 to 8 and removes its
+`compatibility.bifrost` predicate; all shard payload bytes, toolchains, IDs,
+provenance, completeness and BSD-3-Clause licensing remain intact. The two Go
+models are explicit direct jobs, not recipe outputs or copied embedded assets.
+This source preparation does not establish a generated candidate. The producer
+and reader enforce compatibility by actual schemas; legacy artifacts keep their
+original engine gates. Models outside the selected jobs remain retained in the
+source catalog and require separate producer and consumer qualification when
+used. Never lower a schema label or remove fields to fit this release.
 
 The earlier public `62fc36c09ddb96746e716c1c3456a99957521d91` generation
 produced model schemas 2 and 5 with engine gates. The historical
@@ -54,7 +70,7 @@ python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
   --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
-  --config release-config.packs.json --version 0.3.0 \
+  --config release-config.packs.json --version 0.4.0 \
   --archive /absolute/scratch/native/native.tar.gz \
   --receipt /absolute/scratch/native/generation.json --output /absolute/scratch/dist
 ```
@@ -86,6 +102,9 @@ inner engine gates. A successful integrity run does not authorize a tag or
 publication. The release contract permits pending behavior with verified integrity;
 engine/library witnesses and live external-content/offline Docker acceptance
 remain required before claiming a qualified consumer tuple or default cutover.
+The pack prerequisite may retain pending behavior after its exact archive,
+receipt, checksum and dependency guards pass; this does not authorize engine
+default activation or its final proof gates.
 
 The authored unittest assertion input retains its upstream CPython v3.13.5
 provenance and notice. Its engine-version keys were removed from both the
@@ -94,3 +113,11 @@ authored model uses schema 8, whose compatibility shape supports this omission; 
 spec pins the exact bifrost-packs artifact commit and SHA-256. Assertion shards,
 toolchain requirements and activation conditions are unchanged. Historical
 embedded and published payloads retain their original compatibility metadata.
+
+The reviewed TypeScript String input separates its four ES5 methods from
+`trimStart` and `trimEnd`, whose TypeScript 7.0.2 declarations are in
+`lib/lib.es2019.string.d.ts`. The full ES2019 selection includes ES5 and
+activates all six summaries and their declarations; ES5 alone activates only
+the four ES5 methods. The direct generation measurement selects ES2019 and
+queries all six methods. This source correction still requires fresh native
+generation and engine behavior qualification.

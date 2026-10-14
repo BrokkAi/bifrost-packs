@@ -1,11 +1,22 @@
 # Policy authoring identity verification
 
-Rules 0.2.1 is prepared as a metadata correction. All 181 policy source files,
-policy IDs, language scopes and required engine capabilities remain unchanged.
-Rules 0.2.0 and native packs 0.3.0 remain immutable published releases.
-The correction changes 84 authored fields, 43 available resolved fields and
-15 stale resolved values to explicit null. The other 26 workspace-dependent
-policies already have null fields; all 41 retain a workspace-required outcome.
+Rules 0.3.1 is prepared as a patch and dependency successor to the corrected
+`rules/v0.3.0` policy baseline. It preserves the 181 policy source files, policy
+IDs, language scopes, required engine capabilities, policy bytes and typed
+incomplete outcomes, and depends exactly on
+`bifrost.public.packs@0.4.0`. The independent native successor adds eight
+direct result-use model families, two Go `os` model outputs, and the generated
+PHP builtin declaration slice. The existing PHP pack notes describe an earlier
+partial output with 852 rejects (warnings). The selected 0.13.1 generator has
+not run this recipe here,
+so its current completeness/reject report remains unverified and must stay
+explicit. Neither stream change claims complete PHP coverage or qualifies
+consumer behavior; see the [PHP pack notes](../semantic-packs/php/README.md).
+
+The earlier authoring-identity preparation corrected 84 authored fields, 43
+available resolved fields and 15 stale resolved values to explicit null. The
+other 26 workspace-dependent policies already had null fields; all 41 retain a
+workspace-required outcome.
 
 Each public policy is checked through the production `policy-source-identity`
 command. Its source ID is `builtin:bifrost.public.rules/` followed by the
@@ -25,5 +36,5 @@ verification.
 Source authoring verification does not execute policies, establish findings,
 complete workspace binding, advertise engine contracts or qualify an engine
 release. Runtime semantic hashes and positive, near-miss and incomplete witnesses
-remain separate requirements. The proposed metadata is pending the independent
-public producer check; no successor release is claimed here.
+remain separate requirements. The 0.3.1 preparation remains pending the
+independent public producer check; no successor release is claimed here.
