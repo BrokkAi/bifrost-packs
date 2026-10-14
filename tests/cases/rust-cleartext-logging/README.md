@@ -18,6 +18,9 @@ using it as evidence that a program is clean.
   uses the same method. The return is stored in a neutral `message` local.
   Expected: one finding for the sensitive input. This remains an unqualified
   engine-gap witness on the tested development executable.
+- `receiver-field`: a newtype-wrapped `self.api_key.inner()` reaches a
+  standard print directly and through a neutral local. Expected: two findings;
+  an encrypted-field control and an unused sensitive binder must add none.
 - `barrier-near-miss`: CodeQL's boolean and fieldless-enum barriers prevent
   logging those values from being reported. Expected: zero findings. This is
   an explicit engine-gap witness, not a passing qualification claim.
@@ -60,13 +63,14 @@ Behavioral validation used a development Bifrost 0.13.0 executable with SHA-256
 The core declaration model compiled without validation errors. Its manifest
 receipt is `4596d3193525def0f8f6db3f96c0fbd53bb8221aba26bd8e79da47af167a0519`;
 the I/O model receipt is
-`93d8c4b5ed26308ca734b9ba85ccae0af9f194eb854e1f9eda9b81c42cd746c0`.
+`cfe2ebacd45405ab0443b1b9765d5cdb1be28a086715f8cdf5fd8434b4ad3975`.
 
 | Gate | Findings | Completion |
 | --- | --- | --- |
 | positive | all 3 expected, definite | inconclusive: partial discovery |
 | near-miss | 0 | proven by summary |
-| string-as-str through a neutral local | 0; 1 expected | inconclusive: partial discovery |
+| string-as-str through a neutral local | 1 expected, possible with partial proof | inconclusive: partial discovery |
+| receiver-field newtype | 1 of 2 expected; direct macro definite/complete, local path missed | inconclusive: partial discovery |
 | name-lookalike | 0 | inconclusive: partial discovery |
 | barrier-near-miss | 2 unexpected, definite | inconclusive: partial discovery |
 | upstream standard sinks | 4 of 19 expected; 0 extras | inconclusive: partial discovery and incomplete capabilities |
@@ -76,19 +80,28 @@ Missing lines are 199, 202, 205, 208, 211, 214, 217, 220, 223, 226, 229, 242,
 245, 248 and 251. Core panic/assert macros produce `unknown_macro_derived`
 call-shape coverage and unavailable formal bindings. `Option::expect` and
 locked I/O write calls do not establish complete receiver/call bindings.
-The I/O model source version 0.3.0 adds the CodeQL-derived `String::as_str`
+The I/O model source version 0.3.0 added the CodeQL-derived `String::as_str`
 flow needed by line 229. That line remains unqualified until macro
 `format!` result typing and `Option::expect` dispatch are established.
 The barrier fixture confirms the missing boolean and fieldless-enum barriers.
-The shadowing macro also leaves incomplete selector discovery. The focused
-`String::as_str` case does not yet establish receiver-to-return flow through
-a neutral local on this engine. An inline formatting-argument version reports
-a definite finding, but does not independently qualify the added summary.
-Empty results
-under these incomplete outcomes do not prove safety.
+The shadowing macro also leaves incomplete selector discovery. With the
+receiver source-role correction, `String::as_str` through a neutral local
+reports one possible finding with partial proof; modeled reference-result
+drop classification remains incomplete. The newtype field receiver in the
+exact `println!("Honeycomb API key: {}", self.api_key.inner())` shape reports
+a definite, complete finding. Its additional local-variable path is missed
+with unknown access-path resolution for the wrapper method. Neither the
+encrypted-field control nor the unused sensitive binder adds a finding;
+overall receiver-field completion remains incomplete. These outcomes do not
+establish full workspace safety or Vector qualification.
 
 This candidate is **not behavior-qualified for release**. Source authoring
 identity verification certified all 182 policy identities with the separate
 public CI producer pinned in
 `native-generation.json` (0.13.1); those identities do not certify runtime
 coverage, and no complete released-engine compatibility claim is made here.
+
+See the [source role audit](ROLE_AUDIT.md) for all included/excluded roles.
+Source version 0.3.1 precisely declares borrowed string and byte-slice returns.
+The corrected variable selector includes receiver reads; these are separate
+from the remaining engine classification and dispatch gaps.

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.rust-std-io-write",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "producer": {
     "name": "bifrost-reviewed-rust-codeql-parity-models",
     "version": "0.1.0"
@@ -617,7 +617,17 @@
             "is_static": false,
             "callable_family_complete": true,
             "signature": {
-              "parameters": []
+              "parameters": [],
+              "returns": {
+                "kind": "by_ref",
+                "element": {
+                  "kind": "slice",
+                  "element": {
+                    "kind": "named",
+                    "name": "u8"
+                  }
+                }
+              }
             },
             "locator": {
               "kind": "artifact",
@@ -634,7 +644,17 @@
             "is_static": false,
             "callable_family_complete": true,
             "signature": {
-              "parameters": []
+              "parameters": [],
+              "returns": {
+                "kind": "by_ref",
+                "element": {
+                  "kind": "slice",
+                  "element": {
+                    "kind": "named",
+                    "name": "u8"
+                  }
+                }
+              }
             },
             "locator": {
               "kind": "artifact",
@@ -653,8 +673,11 @@
             "signature": {
               "parameters": [],
               "returns": {
-                "kind": "named",
-                "name": "std.primitive.str"
+                "kind": "by_ref",
+                "element": {
+                  "kind": "named",
+                  "name": "std.primitive.str"
+                }
               }
             },
             "locator": {
