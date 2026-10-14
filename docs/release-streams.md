@@ -33,7 +33,9 @@ runtime coverage is claimed (see the
 [PHP pack notes](../semantic-packs/php/README.md)). This recipe addition changes
 no PHP model or specification bytes. The stream
 preserves the full generated bundle, including schema-8 and schema-16 content.
-The source preparation retains all model and policy bytes; it does not activate
+The Go schema migration and TypeScript declaration correction preserve stable
+pack and procedure identities and retain policy bytes. Their corrected model
+records and content digests are explicit; source preparation does not activate
 the content or qualify consumer behavior.
 
 The recipe uses public generator-only source
