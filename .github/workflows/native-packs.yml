@@ -39,22 +39,27 @@ jobs:
         name: Read immutable generator build pins
         run: |
           echo "toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)" >> "$GITHUB_OUTPUT"
-          echo "source=$(jq -r .generator.asset_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
-          echo "lock=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        id: generator-cache
-        with:
-          path: ${{ runner.temp }}/generator-cache
-          key: native-generator-linux-${{ steps.generator-pin.outputs.source }}-${{ steps.generator-pin.outputs.lock }}-${{ steps.generator-pin.outputs.toolchain }}-v1
       - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
         with:
           toolchain: ${{ steps.generator-pin.outputs.toolchain }}
+      - id: generator-identity
+        name: Identify exact producer build inputs
+        run: |
+          python3 -B release-contract/native_generator_cache.py identity --root . \
+            --config native-generation.json --identity "$RUNNER_TEMP/generator-identity.json" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        id: generator-cache
+        with:
+          path: ${{ runner.temp }}/generator-cache
+          key: ${{ steps.generator-identity.outputs.key }}
       - name: Record runner disk before compilation
         run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"
       - name: Build generator from pinned public source
+        id: generator-build
         if: ${{ steps.generator-cache.outputs.cache-hit != 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
+          TARGET_TRIPLE: ${{ steps.generator-identity.outputs.target }}
         run: |
           set -euo pipefail
           repo=$(jq -r .generator.repository native-generation.json)
@@ -68,10 +73,14 @@ jobs:
           lock_hash=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)
           echo "$lock_hash  $RUNNER_TEMP/generator-source/Cargo.lock" | sha256sum -c -
           toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)
+          cd "$RUNNER_TEMP/generator-source"
           cargo +"$toolchain" build --locked --release --features release-tooling \
             --manifest-path "$RUNNER_TEMP/generator-source/Cargo.toml" \
+            --target "$TARGET_TRIPLE" \
             -p brokk-bifrost-semantic-packs --bin bifrost-semantic-pack
-          binary="$RUNNER_TEMP/generator-source/target/release/bifrost-semantic-pack"
+          cd "$GITHUB_WORKSPACE"
+          binary="$RUNNER_TEMP/generator-source/target/$TARGET_TRIPLE/release/bifrost-semantic-pack"
+          rm -rf "$RUNNER_TEMP/generator-cache"
           mkdir "$RUNNER_TEMP/generator-cache"
           cp "$binary" "$RUNNER_TEMP/generator-cache/bifrost-semantic-pack"
           python3 - "$binary" "$RUNNER_TEMP/generator-cache/build.json" <<'PY'
@@ -85,6 +94,22 @@ jobs:
                          binary_sha256=hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest())
           Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2) + '\n')
           PY
+          python3 -B release-contract/native_generator_cache.py record --root . \
+            --config native-generation.json --identity "$RUNNER_TEMP/generator-identity.json" \
+            --cache "$RUNNER_TEMP/generator-cache"
+      - name: Verify exact producer cache identity and payload
+        id: generator-verify
+        run: |
+          python3 -B release-contract/native_generator_cache.py verify --root . \
+            --config native-generation.json --identity "$RUNNER_TEMP/generator-identity.json" \
+            --cache "$RUNNER_TEMP/generator-cache"
+      - name: Save completed verified producer before generation
+        id: generator-save
+        if: ${{ success() && steps.generator-build.outcome == 'success' && steps.generator-verify.outcome == 'success' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ runner.temp }}/generator-cache
+          key: ${{ steps.generator-cache.outputs.cache-primary-key }}
       - name: Record runner disk after compilation
         if: ${{ always() }}
         run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"
