@@ -113,3 +113,11 @@ authored model uses schema 8, whose compatibility shape supports this omission; 
 spec pins the exact bifrost-packs artifact commit and SHA-256. Assertion shards,
 toolchain requirements and activation conditions are unchanged. Historical
 embedded and published payloads retain their original compatibility metadata.
+
+The reviewed TypeScript String input separates its four ES5 methods from
+`trimStart` and `trimEnd`, whose TypeScript 7.0.2 declarations are in
+`lib/lib.es2019.string.d.ts`. The full ES2019 selection includes ES5 and
+activates all six summaries and their declarations; ES5 alone activates only
+the four ES5 methods. The direct generation measurement selects ES2019 and
+queries all six methods. This source correction still requires fresh native
+generation and engine behavior qualification.
