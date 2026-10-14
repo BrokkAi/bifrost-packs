@@ -8,7 +8,7 @@ on:
         required: true
       version:
         type: string
-        default: '0.2.1'
+        default: '0.3.0'
         required: true
   push:
     tags:
@@ -143,7 +143,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md
+          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md \
+            --context-notes "$(jq -r .notes release-config.rules.json)"
           cd dist
           sha256sum -c *.sha256
           flags=()

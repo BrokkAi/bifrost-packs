@@ -3,9 +3,9 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.2.1",
+  "release_version": "0.3.0",
   "artifact_role": "source",
-  "notes": "This stream publishes the current locked policy authoring copy selected by content-lock.json. Source-byte integrity is verified separately from consumer capability and behavioral qualification.",
+  "notes": "This 0.x minor release adds the required call-argument-conversion capability to the C# StringBuilder character rule so consumer selection fails closed without its structured conversion proof. The corrected rule covers the proven Char-to-Int32 capacity overload, preserves integer/string near misses, and leaves unsupported byte/short conversions incomplete. This stream publishes the current locked policy authoring copy selected by content-lock.json; source-byte integrity and its focused publication smoke do not qualify the full catalog or every engine capability. The JavaScript file-race rule declares its actual normalized-call-role, lexical-environment and literal-value-matching requirements; its existing same-procedure lexical/literal path contract and reassignment incompleteness are unchanged.",
   "component": "rules",
   "release_dependencies": [
     {
