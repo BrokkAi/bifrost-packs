@@ -5609,7 +5609,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "bf4e0a5c78141bd93f398f1146d02a4283adbf1cde9d918ba36963e060d0517e"
+      "sha256": "c88d8139401dd3f66f435b4b47ec2dc0b47aa8010aa0ef31f9992e490586c5b3"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -5918,6 +5918,13 @@
       "sha256": "645f888c99c5dc9be84427718b7093bd6ced57baef9a29a56dc7e0701c1f5a51",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
+      "sha256": "6ad3e239af70766f391c5913e31b934d5631ac3701dc2a46ee0b74b64cc87938",
+      "classification": "public",
+      "license": "MIT"
     },
     {
       "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
@@ -7444,6 +7451,20 @@
       "license": "Ruby"
     },
     {
+      "path": "semantic-packs/rust-codeql-parity/README-core-logging.md",
+      "source_path": "semantic-packs/rust-codeql-parity/README-core-logging.md",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "395a73d70d258a8cfb5d02dad2d3ce78608d3c191207a11bba53c5fbe1ba2d0e"
+    },
+    {
+      "path": "semantic-packs/rust-codeql-parity/bifrost.rust-core-logging.json",
+      "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-core-logging.json",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "23910f3ec06c6a13b20e162ef8348d4b40f4b139e43da98d7d6cffcd29de722c"
+    },
+    {
       "path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
       "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
       "sha256": "ad38ee71783692abc226714ef982c949d9a8012b28f837d6e272ec0bb57ad6df",
@@ -7686,5 +7707,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "9f4f4b115802fea7c5427c0b4e855ffb13dd501270b9dd1972493ddcb26d1bd4"
+  "aggregate_sha256": "8d8ba1aafcb81c5e7dbca15471a5688c7b80f31eea266c6f44870b953549097c"
 }

@@ -1,0 +1,181 @@
+; SPDX-License-Identifier: MIT
+; Copyright (c) GitHub, Inc.
+; Derived from github/codeql (MIT, Copyright GitHub, Inc.), revision
+; dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6:
+; rust/ql/src/queries/security/CWE-312/CleartextLogging.ql,
+; rust/ql/lib/codeql/rust/security/{SensitiveData,CleartextLoggingExtensions}.qll,
+; shared/concepts/codeql/concepts/internal/SensitiveDataHeuristics.qll,
+; rust/ql/lib/codeql/rust/frameworks/log.model.yml.
+; See licenses/CodeQL-MIT.txt. Third-party logging sinks are deliberately omitted.
+; Engine deviations: boolean/fieldless-enum flow barriers, closest-source
+; barrier-in, and recursive field-parent sources are not expressible by the
+; current endpoint schema. Call-result sources use structured callee names;
+; they do not add CodeQL's resolved Function/Variant target guard. Unresolved
+; call and recursive field-parent source coverage still needs engine support.
+; Do not interpret incomplete coverage as clean.
+; In addition to CodeQL's locked-stream rows, this policy includes direct
+; Stdout/Stderr write/write_all calls through the public I/O model.
+; Sinks require resolver-proven standard-library identities. Formatting macro
+; calls are normalized to their runtime callees and formal argument slots; no
+; receiver spelling assumption is needed for prelude imports or qualified calls.
+; CodeQL projects assert_failed Argument[3].Option::Some(0). The endpoint
+; schema exposes the formal Option argument, not a variant payload port; this
+; rule binds argument 3 and relies on the native Some/content flow relation.
+; The declaration model retains Option<fmt::Arguments> at that slot. Exact
+; parity of implicit content reads must be checked by the upstream gate.
+; There is no name-only hash_password sanitizer: CodeQL does not define one.
+; Source names follow the pinned CodeQL SensitiveData.qll and
+; SensitiveDataHeuristics.qll. Look-around filters are translated into bounded
+; name regexes because the RQL Rust regex engine has no look-around. These
+; regexes classify names on structured identifier, field, and call nodes; they
+; do not scan source text. The selected identifiers are value references,
+; matching CodeQL's variable-access source shape rather than declarations.
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.cleartext-logging"
+  :name "Cleartext logging of sensitive information"
+  :message "sensitive data reaches a cleartext logging operation"
+  :severity warning
+  :description "Sensitive variable reads, field accesses and call results reaching standard-library logging operations may expose secrets. Names use CodeQL SensitiveData heuristics; incomplete engine coverage is explicit."
+  :tags ["security" "rust" "cleartext-logging" "cwe-312" "cwe-359" "cwe-532"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id sensitive-variable
+        :display-name "Sensitive variable value (CodeQL names)"
+        :categories [data.sensitive]
+        :selector (rql :schema-version 1 (except (union (language rust (occurrences-in :role [value_reference] :namespace value (identifier :name/regex "(?:(?is:(?:(?:^|.*[^s_]|(?:^|.*[^i])s|(?:^|.*[^s]|(?:^|.*[^i])s)_)secret.*|(?:^|.*[^n_s]|(?:^|.*[^u])n|(?:^|.*[^ns]|(?:^|.*[^u])n|(?:^|.*[^i])s)_|(?:^|.*[^i])s)trusted(?:$|[^_].*|_(?:$|[^i].*|i(?:$|[^t].*|t(?:$|[^e].*|e(?:$|[^r].*)))))|.*confidential.*))|(?:(?is:.*(?:acc(ou)?nt|puid|user.?(?:name|id)|session.?(id|key)).*)|(?s:.*(?:[uU][uU][iI][dD]|(?:^|_)[uU][iI][dD]|[a-z]U[iI][dD]).*))|(?is:.*(?:pass(?:wd|word|code|.?phrase)(?:(?:(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|t)|u)|[^einoqstu])|q(?:(?:q|u(?:q|e(?:q|s(?:q|t(?:q|i(?:q|oq)))))))*(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|t)|[^einoqstu])|u(?:(?:(?:(?:(?:(?:(?:i|n)|o)|s)|t)|u)|[^einoqstu])|e(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|t)|u)|[^einoqstu])|s(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|u)|[^einoqstu])|t(?:(?:(?:(?:(?:(?:(?:e|n)|o)|s)|t)|u)|[^einoqstu])|i(?:(?:(?:(?:(?:(?:(?:e|i)|n)|s)|t)|u)|[^einoqstu])|o(?:(?:(?:(?:(?:(?:e|i)|o)|s)|t)|u)|[^einoqstu])))))))))*(?:|q(?:(?:q|u(?:q|e(?:q|s(?:q|t(?:q|i(?:q|oq)))))))*(?:|u(?:|e(?:|s(?:|t(?:|i(?:|o)))))))|auth(?:entication|ori[sz]ation)?.?key.*|oauth.*|api.?(?:key|tok).*|(?:[_-]|\\b)mfa(?:[_-]|\\b).*))|(?is:.*(?:social.?security|employer.?identification|national.?insurance|resident.?id|passport.?(num|no)|(?:[_-]|\\b)ssn(?:[_-]|\\b)|post.?code|zip.?code|home.?addr|(mob(ile)?|home).?(num|no|tel|phone)|(tel|fax|phone).?(num|no)|telephone|emergency.?contact|latitude|longitude|nationality|(credit|debit|bank|visa).?(card|num|no|acc(ou)?nt)|(card|acc(ou)?nt).?(no|num|credit)|routing.?num|salary|billing|beneficiary|credit.?(rating|score)|(?:[_-]|\\b)(ccn|cvv|iban)(?:[_-]|\\b)|security.?code|birth.?da(te|y)|da(te|y).?(of.?)?birth|gender|(?:[_-]|\\b)sex(?:[_-]|\\b)|medical|(health|care).?plan|healthkit|appointment|prescription|patient.?(id|record)|blood.?(type|alcohol|glucose|pressure)|heart.?(rate|rhythm)|body.?(mass|fat)|menstrua|pregnan|insulin|inhaler|employ(er|ee)|spouse|maiden.?name|mac.?addr).*))"))) (intersect (language rust (occurrences-in :role [value_reference] :namespace value (identifier :name/regex "(?is).*cert(?:(?:(?:(?:(?:(?:(?:a|m)|o)|r)|t)|[^afmort])|f(?:(?:f|o(?:f|r(?:f|m(?:f|af)))))*(?:(?:(?:(?:(?:a|m)|r)|t)|[^afmort])|o(?:(?:(?:(?:(?:a|m)|o)|t)|[^afmort])|r(?:(?:(?:(?:(?:a|o)|r)|t)|[^afmort])|m(?:(?:(?:(?:(?:m|o)|r)|t)|[^afmort])|a(?:(?:(?:(?:a|m)|o)|r)|[^afmort])))))))*(?:|f(?:(?:f|o(?:f|r(?:f|m(?:f|af)))))*(?:|o(?:|r(?:|m(?:|a)))))"))) (language rust (occurrences-in :role [value_reference] :namespace value (identifier :name/regex "(?is).*cert(?:(?:(?:(?:(?:a|e)|m)|[^aemn])|n(?:(?:n|a(?:n|mn)))*(?:(?:(?:e|m)|[^aemn])|a(?:(?:(?:a|e)|[^aemn])|m(?:(?:a|m)|[^aemn])))))*(?:|n(?:(?:n|a(?:n|mn)))*(?:|a(?:|m)))"))) (language rust (occurrences-in :role [value_reference] :namespace value (identifier :name/regex "(?is).*cert(?:(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:i|f(?:i(?:f|catif))*i(?:i|c(?:i|a(?:i|ti(?:i|oi))))))*(?:(?:(?:(?:(?:(?:a|c)|n)|o)|t)|[^acfinot])|f(?:i(?:f|catif))*(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:(?:(?:(?:a|n)|o)|t)|[^acfinot])|c(?:(?:(?:(?:(?:(?:c|f)|n)|o)|t)|[^acfinot])|a(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|[^acfinot])|t(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:(?:(?:(?:a|c)|n)|t)|[^acfinot])|o(?:(?:(?:(?:(?:a|c)|f)|o)|t)|[^acfinot]))))))))))*(?:|i(?:(?:i|f(?:i(?:f|catif))*i(?:i|c(?:i|a(?:i|ti(?:i|oi))))))*(?:|f(?:i(?:f|catif))*(?:|i(?:|c(?:|a(?:|t(?:|i(?:|o))))))))"))))) (language rust (occurrences-in :role [value_reference] :namespace value (identifier :name/regex "(?is)(?:.*(?:[^\\w$.-]|redact|censor|obfuscate|hash|md5|sha|random|certain|concert|secretar|wildcard|coauthor|account(?:ant|ab|ing|ed)|path|(?:[_-]|\\b)url).*|(?:^|.*[^n]|(?:^|.*[^e]|(?:^|.*[^n]|(?:^|.*[^u])n)e)n)crypt.*|(?:^|.*[^n]|(?:^|.*[^u])n)encode.*|(?:^|.*[^o]|(?:^|.*[^r]|(?:^|.*[^p])r)o)file.*)")))))
+        :bind matched-value :labels [sensitive])
+      (source :id sensitive-field
+        :display-name "Sensitive field value (CodeQL names)"
+        :categories [data.sensitive]
+        :selector (rql :schema-version 1 (except (union (language rust (field_access :name/regex "(?:(?is:(?:(?:^|.*[^s_]|(?:^|.*[^i])s|(?:^|.*[^s]|(?:^|.*[^i])s)_)secret.*|(?:^|.*[^n_s]|(?:^|.*[^u])n|(?:^|.*[^ns]|(?:^|.*[^u])n|(?:^|.*[^i])s)_|(?:^|.*[^i])s)trusted(?:$|[^_].*|_(?:$|[^i].*|i(?:$|[^t].*|t(?:$|[^e].*|e(?:$|[^r].*)))))|.*confidential.*))|(?:(?is:.*(?:acc(ou)?nt|puid|user.?(?:name|id)|session.?(id|key)).*)|(?s:.*(?:[uU][uU][iI][dD]|(?:^|_)[uU][iI][dD]|[a-z]U[iI][dD]).*))|(?is:.*(?:pass(?:wd|word|code|.?phrase)(?:(?:(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|t)|u)|[^einoqstu])|q(?:(?:q|u(?:q|e(?:q|s(?:q|t(?:q|i(?:q|oq)))))))*(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|t)|[^einoqstu])|u(?:(?:(?:(?:(?:(?:(?:i|n)|o)|s)|t)|u)|[^einoqstu])|e(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|t)|u)|[^einoqstu])|s(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|u)|[^einoqstu])|t(?:(?:(?:(?:(?:(?:(?:e|n)|o)|s)|t)|u)|[^einoqstu])|i(?:(?:(?:(?:(?:(?:(?:e|i)|n)|s)|t)|u)|[^einoqstu])|o(?:(?:(?:(?:(?:(?:e|i)|o)|s)|t)|u)|[^einoqstu])))))))))*(?:|q(?:(?:q|u(?:q|e(?:q|s(?:q|t(?:q|i(?:q|oq)))))))*(?:|u(?:|e(?:|s(?:|t(?:|i(?:|o)))))))|auth(?:entication|ori[sz]ation)?.?key.*|oauth.*|api.?(?:key|tok).*|(?:[_-]|\\b)mfa(?:[_-]|\\b).*))|(?is:.*(?:social.?security|employer.?identification|national.?insurance|resident.?id|passport.?(num|no)|(?:[_-]|\\b)ssn(?:[_-]|\\b)|post.?code|zip.?code|home.?addr|(mob(ile)?|home).?(num|no|tel|phone)|(tel|fax|phone).?(num|no)|telephone|emergency.?contact|latitude|longitude|nationality|(credit|debit|bank|visa).?(card|num|no|acc(ou)?nt)|(card|acc(ou)?nt).?(no|num|credit)|routing.?num|salary|billing|beneficiary|credit.?(rating|score)|(?:[_-]|\\b)(ccn|cvv|iban)(?:[_-]|\\b)|security.?code|birth.?da(te|y)|da(te|y).?(of.?)?birth|gender|(?:[_-]|\\b)sex(?:[_-]|\\b)|medical|(health|care).?plan|healthkit|appointment|prescription|patient.?(id|record)|blood.?(type|alcohol|glucose|pressure)|heart.?(rate|rhythm)|body.?(mass|fat)|menstrua|pregnan|insulin|inhaler|employ(er|ee)|spouse|maiden.?name|mac.?addr).*))")) (intersect (language rust (field_access :name/regex "(?is).*cert(?:(?:(?:(?:(?:(?:(?:a|m)|o)|r)|t)|[^afmort])|f(?:(?:f|o(?:f|r(?:f|m(?:f|af)))))*(?:(?:(?:(?:(?:a|m)|r)|t)|[^afmort])|o(?:(?:(?:(?:(?:a|m)|o)|t)|[^afmort])|r(?:(?:(?:(?:(?:a|o)|r)|t)|[^afmort])|m(?:(?:(?:(?:(?:m|o)|r)|t)|[^afmort])|a(?:(?:(?:(?:a|m)|o)|r)|[^afmort])))))))*(?:|f(?:(?:f|o(?:f|r(?:f|m(?:f|af)))))*(?:|o(?:|r(?:|m(?:|a)))))")) (language rust (field_access :name/regex "(?is).*cert(?:(?:(?:(?:(?:a|e)|m)|[^aemn])|n(?:(?:n|a(?:n|mn)))*(?:(?:(?:e|m)|[^aemn])|a(?:(?:(?:a|e)|[^aemn])|m(?:(?:a|m)|[^aemn])))))*(?:|n(?:(?:n|a(?:n|mn)))*(?:|a(?:|m)))")) (language rust (field_access :name/regex "(?is).*cert(?:(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:i|f(?:i(?:f|catif))*i(?:i|c(?:i|a(?:i|ti(?:i|oi))))))*(?:(?:(?:(?:(?:(?:a|c)|n)|o)|t)|[^acfinot])|f(?:i(?:f|catif))*(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:(?:(?:(?:a|n)|o)|t)|[^acfinot])|c(?:(?:(?:(?:(?:(?:c|f)|n)|o)|t)|[^acfinot])|a(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|[^acfinot])|t(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:(?:(?:(?:a|c)|n)|t)|[^acfinot])|o(?:(?:(?:(?:(?:a|c)|f)|o)|t)|[^acfinot]))))))))))*(?:|i(?:(?:i|f(?:i(?:f|catif))*i(?:i|c(?:i|a(?:i|ti(?:i|oi))))))*(?:|f(?:i(?:f|catif))*(?:|i(?:|c(?:|a(?:|t(?:|i(?:|o))))))))")))) (language rust (field_access :name/regex "(?is)(?:.*(?:[^\\w$.-]|redact|censor|obfuscate|hash|md5|sha|random|certain|concert|secretar|wildcard|coauthor|account(?:ant|ab|ing|ed)|path|(?:[_-]|\\b)url).*|(?:^|.*[^n]|(?:^|.*[^e]|(?:^|.*[^n]|(?:^|.*[^u])n)e)n)crypt.*|(?:^|.*[^n]|(?:^|.*[^u])n)encode.*|(?:^|.*[^o]|(?:^|.*[^r]|(?:^|.*[^p])r)o)file.*)"))))
+        :bind matched-value :labels [sensitive])
+      (source :id sensitive-call
+        :display-name "Sensitive call value (CodeQL names)"
+        :categories [data.sensitive]
+        :selector (rql :schema-version 1 (except (union (language rust (call :callee (name/regex "(?:(?is:(?:(?:^|.*[^s_]|(?:^|.*[^i])s|(?:^|.*[^s]|(?:^|.*[^i])s)_)secret.*|(?:^|.*[^n_s]|(?:^|.*[^u])n|(?:^|.*[^ns]|(?:^|.*[^u])n|(?:^|.*[^i])s)_|(?:^|.*[^i])s)trusted(?:$|[^_].*|_(?:$|[^i].*|i(?:$|[^t].*|t(?:$|[^e].*|e(?:$|[^r].*)))))|.*confidential.*))|(?:(?is:.*(?:acc(ou)?nt|puid|user.?(?:name|id)|session.?(id|key)).*)|(?s:.*(?:[uU][uU][iI][dD]|(?:^|_)[uU][iI][dD]|[a-z]U[iI][dD]).*))|(?is:.*(?:pass(?:wd|word|code|.?phrase)(?:(?:(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|t)|u)|[^einoqstu])|q(?:(?:q|u(?:q|e(?:q|s(?:q|t(?:q|i(?:q|oq)))))))*(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|t)|[^einoqstu])|u(?:(?:(?:(?:(?:(?:(?:i|n)|o)|s)|t)|u)|[^einoqstu])|e(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|t)|u)|[^einoqstu])|s(?:(?:(?:(?:(?:(?:(?:e|i)|n)|o)|s)|u)|[^einoqstu])|t(?:(?:(?:(?:(?:(?:(?:e|n)|o)|s)|t)|u)|[^einoqstu])|i(?:(?:(?:(?:(?:(?:(?:e|i)|n)|s)|t)|u)|[^einoqstu])|o(?:(?:(?:(?:(?:(?:e|i)|o)|s)|t)|u)|[^einoqstu])))))))))*(?:|q(?:(?:q|u(?:q|e(?:q|s(?:q|t(?:q|i(?:q|oq)))))))*(?:|u(?:|e(?:|s(?:|t(?:|i(?:|o)))))))|auth(?:entication|ori[sz]ation)?.?key.*|oauth.*|api.?(?:key|tok).*|(?:[_-]|\\b)mfa(?:[_-]|\\b).*))|(?is:.*(?:social.?security|employer.?identification|national.?insurance|resident.?id|passport.?(num|no)|(?:[_-]|\\b)ssn(?:[_-]|\\b)|post.?code|zip.?code|home.?addr|(mob(ile)?|home).?(num|no|tel|phone)|(tel|fax|phone).?(num|no)|telephone|emergency.?contact|latitude|longitude|nationality|(credit|debit|bank|visa).?(card|num|no|acc(ou)?nt)|(card|acc(ou)?nt).?(no|num|credit)|routing.?num|salary|billing|beneficiary|credit.?(rating|score)|(?:[_-]|\\b)(ccn|cvv|iban)(?:[_-]|\\b)|security.?code|birth.?da(te|y)|da(te|y).?(of.?)?birth|gender|(?:[_-]|\\b)sex(?:[_-]|\\b)|medical|(health|care).?plan|healthkit|appointment|prescription|patient.?(id|record)|blood.?(type|alcohol|glucose|pressure)|heart.?(rate|rhythm)|body.?(mass|fat)|menstrua|pregnan|insulin|inhaler|employ(er|ee)|spouse|maiden.?name|mac.?addr).*))"))) (intersect (language rust (call :callee (name/regex "(?is).*cert(?:(?:(?:(?:(?:(?:(?:a|m)|o)|r)|t)|[^afmort])|f(?:(?:f|o(?:f|r(?:f|m(?:f|af)))))*(?:(?:(?:(?:(?:a|m)|r)|t)|[^afmort])|o(?:(?:(?:(?:(?:a|m)|o)|t)|[^afmort])|r(?:(?:(?:(?:(?:a|o)|r)|t)|[^afmort])|m(?:(?:(?:(?:(?:m|o)|r)|t)|[^afmort])|a(?:(?:(?:(?:a|m)|o)|r)|[^afmort])))))))*(?:|f(?:(?:f|o(?:f|r(?:f|m(?:f|af)))))*(?:|o(?:|r(?:|m(?:|a)))))"))) (language rust (call :callee (name/regex "(?is).*cert(?:(?:(?:(?:(?:a|e)|m)|[^aemn])|n(?:(?:n|a(?:n|mn)))*(?:(?:(?:e|m)|[^aemn])|a(?:(?:(?:a|e)|[^aemn])|m(?:(?:a|m)|[^aemn])))))*(?:|n(?:(?:n|a(?:n|mn)))*(?:|a(?:|m)))"))) (language rust (call :callee (name/regex "(?is).*cert(?:(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:i|f(?:i(?:f|catif))*i(?:i|c(?:i|a(?:i|ti(?:i|oi))))))*(?:(?:(?:(?:(?:(?:a|c)|n)|o)|t)|[^acfinot])|f(?:i(?:f|catif))*(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:(?:(?:(?:a|n)|o)|t)|[^acfinot])|c(?:(?:(?:(?:(?:(?:c|f)|n)|o)|t)|[^acfinot])|a(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|[^acfinot])|t(?:(?:(?:(?:(?:(?:(?:a|c)|f)|n)|o)|t)|[^acfinot])|i(?:(?:(?:(?:(?:a|c)|n)|t)|[^acfinot])|o(?:(?:(?:(?:(?:a|c)|f)|o)|t)|[^acfinot]))))))))))*(?:|i(?:(?:i|f(?:i(?:f|catif))*i(?:i|c(?:i|a(?:i|ti(?:i|oi))))))*(?:|f(?:i(?:f|catif))*(?:|i(?:|c(?:|a(?:|t(?:|i(?:|o))))))))"))))) (language rust (call :callee (name/regex "(?is)(?:.*(?:[^\\w$.-]|redact|censor|obfuscate|hash|md5|sha|random|certain|concert|secretar|wildcard|coauthor|account(?:ant|ab|ing|ed)|path|(?:[_-]|\\b)url).*|(?:^|.*[^n]|(?:^|.*[^e]|(?:^|.*[^n]|(?:^|.*[^u])n)e)n)crypt.*|(?:^|.*[^n]|(?:^|.*[^u])n)encode.*|(?:^|.*[^o]|(?:^|.*[^r]|(?:^|.*[^p])r)o)file.*)")))))
+        :bind return-value :labels [sensitive])])
+    :sinks (endpoint-set :entries [
+      (sink :id stdout-write
+        :display-name "std::io::Stdout::write"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.Stdout.write" :proof declared
+                (call-bindings (call-shape (call :callee (name "write"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stdout-write-all
+        :display-name "std::io::Stdout::write_all"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.Stdout.write_all" :proof declared
+                (call-bindings (call-shape (call :callee (name "write_all"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stderr-write
+        :display-name "std::io::Stderr::write"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.Stderr.write" :proof declared
+                (call-bindings (call-shape (call :callee (name "write"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stderr-write-all
+        :display-name "std::io::Stderr::write_all"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.Stderr.write_all" :proof declared
+                (call-bindings (call-shape (call :callee (name "write_all"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stdoutlock-write
+        :display-name "std::io::StdoutLock::write"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.StdoutLock.write" :proof declared
+                (call-bindings (call-shape (call :callee (name "write"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stdoutlock-write-all
+        :display-name "std::io::StdoutLock::write_all"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.StdoutLock.write_all" :proof declared
+                (call-bindings (call-shape (call :callee (name "write_all"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stderrlock-write
+        :display-name "std::io::StderrLock::write"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.StderrLock.write" :proof declared
+                (call-bindings (call-shape (call :callee (name "write"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id stderrlock-write-all
+        :display-name "std::io::StderrLock::write_all"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.StderrLock.write_all" :proof declared
+                (call-bindings (call-shape (call :callee (name "write_all"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id std-print
+        :display-name "std::io::stdio::_print"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.stdio._print" :proof declared
+                (call-bindings (call-shape (call :callee (name/regex "^(print|println|_print)$"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id std-eprint
+        :display-name "std::io::stdio::_eprint"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "std.io.stdio._eprint" :proof declared
+                (call-bindings (call-shape (call :callee (name/regex "^(eprint|eprintln|dbg|_eprint)$"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id core-panic-format
+        :display-name "core::panicking::panic_fmt"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "core.panicking.panic_fmt" :proof declared
+                (call-bindings (call-shape (call :callee (name/regex "^(panic|todo|unimplemented|unreachable|assert|debug_assert|panic_fmt)$"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+      (sink :id core-assert-failed
+        :display-name "core::panicking::assert_failed"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 3
+              (resolved-call :resolves-to "core.panicking.assert_failed" :proof declared
+                (call-bindings (call-shape (call :callee (name/regex "^(assert_eq|assert_ne|debug_assert_eq|debug_assert_ne|assert_failed)$"))))))))
+        :dangerous-operand (argument :index 3) :accepts [sensitive])
+      (sink :id option-expect
+        :display-name "core::option::Option::expect"
+        :categories [logging.cleartext]
+        :selector (rql :schema-version 1
+          (language rust
+            (call-argument :formal-index 0
+              (resolved-call :resolves-to "core.option.Option.expect" :proof declared
+                (call-bindings (call-shape (call :callee (name "expect"))))))))
+        :dangerous-operand (argument :index 0) :accepts [sensitive])
+    ]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "312")))

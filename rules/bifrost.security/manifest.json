@@ -726,6 +726,25 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/rust/cleartext-logging.rqlp",
+      "id": "bifrost.security.rust.cleartext-logging",
+      "authored_hash": "091d568542b6701fd4f52fc55eac9b95e91ae8c287b46f1e01ae174e5c2e5e3b",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Sensitive data written to standard output, standard error or panic messages can expose credentials and private information to readers of captured logs.",
+      "remediation": "Omit sensitive values from log messages, or replace them with a reviewed non-sensitive representation before formatting."
+    },
+    {
       "path": "policies/rust/non-https-url.rqlp",
       "id": "bifrost.security.rust.non-https-url",
       "authored_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
