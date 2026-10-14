@@ -39,7 +39,7 @@ records and content digests are explicit; source preparation does not activate
 the content or qualify consumer behavior.
 
 The recipe uses public generator-only source
-`b06449c9179511c6af85aeb2a2d1046e9016ba3c`, version `0.13.1`, with Rust
+`8c64332281245b6ea3bfae343645f78d0faf2d23`, version `0.13.1`, with Rust
 `1.97.1`. `native-generation.json` pins its source archive and Cargo.lock; the
 build receipt must pin the actual generator executable. This source preparation
 is not a qualified or published engine release.
