@@ -107,9 +107,11 @@ existing engine-range and qualification semantics. See the
 
 Published `packs/v0.3.0` and `rules/v0.2.1` remain immutable. The proposed
 successor streams are `packs/v0.4.0` and `rules/v0.3.1`, based on the current
-`rules/v0.3.0` policy baseline. The native pack successor adds the eight
-reviewed direct result-use model families and the generated
-`bifrost.php-builtin` declaration pack from the existing pinned PHP specification.
+`rules/v0.3.0` policy baseline. The native pack successor adds eight reviewed
+direct result-use model families, two Go standard-library `os` model outputs
+(procedure result contracts and declarations), and the generated
+`bifrost.php-builtin` declaration pack from the existing pinned PHP
+specification.
 The existing PHP pack notes record an earlier partial output with 852
 rejects/warnings. The selected 0.13.1 generator has not run this recipe here, so
 that count is historical; the current generation report remains unverified and
@@ -132,10 +134,11 @@ retaining legacy compatibility. The [recorded blocker](docs/native-publication-b
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
 `bifrost.public.packs@0.4.0`.
-The eight direct result-use jobs and the generated PHP builtin declaration
-pack are the native additions in the proposed pack successor. The full generated
-bundle and all model and policy bytes remain retained in this source preparation;
-other source-only catalog content still requires separate consumer qualification.
+The eight direct result-use jobs, two Go `os` model jobs, and generated PHP
+builtin declaration pack are the native additions in the proposed pack successor.
+The full generated bundle and all model and policy bytes remain retained in this
+source preparation. Other source-only catalog content still requires separate
+consumer qualification.
 
 For the standalone LSP engine/content tuple, use the
 [qualification and handoff procedure](docs/standalone-qualification.md).

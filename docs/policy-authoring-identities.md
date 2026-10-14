@@ -5,9 +5,10 @@ Rules 0.3.1 is prepared as a patch and dependency successor to the corrected
 IDs, language scopes, required engine capabilities, policy bytes and typed
 incomplete outcomes, and depends exactly on
 `bifrost.public.packs@0.4.0`. The independent native successor adds eight
-direct result-use model families and the generated PHP builtin declaration
-slice. The existing PHP pack notes describe an earlier partial output with 852
-rejects (warnings). The selected 0.13.1 generator has not run this recipe here,
+direct result-use model families, two Go `os` model outputs, and the generated
+PHP builtin declaration slice. The existing PHP pack notes describe an earlier
+partial output with 852 rejects (warnings). The selected 0.13.1 generator has
+not run this recipe here,
 so its current completeness/reject report remains unverified and must stay
 explicit. Neither stream change claims complete PHP coverage or qualifies
 consumer behavior; see the [PHP pack notes](../semantic-packs/php/README.md).

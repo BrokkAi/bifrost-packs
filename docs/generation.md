@@ -20,9 +20,10 @@ source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
 
-The plan contains eight reviewed direct result-use jobs and five recipes: the
-four existing native recipes plus the existing pinned PHP builtin recipe. That
-recipe builds `bifrost.php-builtin` from
+The plan contains ten direct jobs: eight reviewed result-use models and the
+Go standard-library `os` procedure result-contract and declarations models. It
+retains five recipes: four existing native recipes plus the existing pinned PHP
+builtin recipe. That recipe builds `bifrost.php-builtin` from
 `semantic-packs/php/phpstorm-stubs-2026.8.29.json`, pinned to phpstorm-stubs
 revision `748ab87d16253a5b5d648b5fe4dae1ff4152bb03` and its recorded source-set
 digest. It is distinct from the PHP result-use model among the eight direct jobs.
@@ -43,13 +44,18 @@ signature and its flows. The native artifact retains a scoped warning and
 partial completeness. Successful generation and schema compatibility do not
 turn that bounded result into complete analysis.
 
-The eight selected specifications use the version-independent schema-8 native
-compatibility shape and retain their activation, artifact, toolchain, target,
-configuration and provenance pins. The producer and reader enforce
-compatibility by actual schemas; legacy artifacts keep their original engine
-gates. Models outside the selected jobs remain retained in the source catalog
-and require separate producer and consumer qualification when used.
-Never lower its schema label or remove fields to fit this release.
+The eight reviewed result-use specs and two Go `os` specs use the
+version-independent schema-8 native compatibility shape and retain their
+activation, artifact, toolchain, target, configuration and provenance pins. The
+Go migration changes only each model schema label from 2 to 8 and removes its
+`compatibility.bifrost` predicate; all shard payload bytes, toolchains, IDs,
+provenance, completeness and BSD-3-Clause licensing remain intact. The two Go
+models are explicit direct jobs, not recipe outputs or copied embedded assets.
+This source preparation does not establish a generated candidate. The producer
+and reader enforce compatibility by actual schemas; legacy artifacts keep their
+original engine gates. Models outside the selected jobs remain retained in the
+source catalog and require separate producer and consumer qualification when
+used. Never lower a schema label or remove fields to fit this release.
 
 The earlier public `62fc36c09ddb96746e716c1c3456a99957521d91` generation
 produced model schemas 2 and 5 with engine gates. The historical

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.os-declarations",
+  "pack_version": "1.0.0",
+  "ecosystem": "go",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-os-declarations.json",
+    "sha256": "8cbbe71c9ea6950fe7cd1661be523d8520ece91c8ab4e91da1bbbe3a1bf75ea4",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/6b3b8405dcc74aac46e756e55ca8de6673dd22be/semantic-packs/models/go-stdlib-os-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://go.dev/src/os/",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "os.File"
+    },
+    {
+      "kind": "member",
+      "owner": "os.File",
+      "name": "Close"
+    }
+  ]
+}

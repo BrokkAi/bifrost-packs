@@ -22,9 +22,11 @@ integrity does not establish consumer behavior or complete analysis. Earlier
 published streams, including `packs/v0.2.1` and `rules/v0.1.4`, remain
 immutable as well.
 
-The proposed next semantic-pack stream is `packs/v0.4.0`. It delivers the
-eight reviewed direct result-use model families plus `bifrost.php-builtin`,
-generated from the existing pinned PHP specification. The existing PHP pack documentation describes a prior partial output with 852
+The proposed next semantic-pack stream is `packs/v0.4.0`. It delivers eight
+reviewed direct result-use model families, two migrated Go standard-library
+`os` model outputs (procedure result contracts and declarations), and
+`bifrost.php-builtin`, generated from the existing pinned PHP specification.
+The existing PHP pack documentation describes a prior partial output with 852
 rejects (warnings). The selected 0.13.1 generator has not run this recipe here,
 so its current completeness/reject report remains unverified. No complete PHP
 runtime coverage is claimed (see the

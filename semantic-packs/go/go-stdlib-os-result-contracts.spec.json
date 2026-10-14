@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.os",
+  "pack_version": "1.0.0",
+  "ecosystem": "go",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-os.json",
+    "sha256": "8aa30592c539939fcd34e8d53fcfb74798f0e4c903eb5d5813cf171665f9ea79",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/6b3b8405dcc74aac46e756e55ca8de6673dd22be/semantic-packs/models/go-stdlib-os.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://go.dev/src/os/",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "go",
+      "owner": "os",
+      "name": "Create",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}
