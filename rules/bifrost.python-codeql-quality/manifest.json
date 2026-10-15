@@ -1201,6 +1201,24 @@
       ],
       "severity_rationale": "A lambda that only forwards arguments adds indirection and can obscure the wrapped callable\u2019s signature.",
       "remediation": "Pass the wrapped callable directly when no transformation is needed."
+    },
+    {
+      "path": "policies/uninitialized-local-variable.rqlp",
+      "id": "codeql.verify.py-uninitialized-local-variable",
+      "authored_hash": "d50e9e22f51cc165b4f32571da653aab883196073ead2988949c2287942b081c",
+      "resolved_semantic_hash": "d50e9e22f51cc165b4f32571da653aab883196073ead2988949c2287942b081c",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "control-flow",
+        "binding-resolution"
+      ],
+      "severity_rationale": "Reading a local variable on a feasible procedure path before initialization can raise an exception at runtime.",
+      "remediation": "Initialize the local variable on every path before the read, or restructure the conditional logic."
     }
   ]
 }
