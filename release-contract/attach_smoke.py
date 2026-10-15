@@ -3,9 +3,13 @@
 import argparse
 import json
 import io
+import re
 import zipfile
 from pathlib import Path
 import release
+
+
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 def attach(manifest_path, evidence, output):
@@ -14,28 +18,63 @@ def attach(manifest_path, evidence, output):
     smoke, raw = release.load_json(evidence / 'smoke.json')
     if manifest['manifest_schema_version'] != 2:
         release.fail('unsupported-manifest-schema', 'smoke attachment requires schema 2')
+    if smoke.get('schema_version') != 2:
+        release.fail('integrity-error', 'unsupported smoke evidence schema')
+    authored_hash = smoke.get('policy_authored_hash')
+    resolved_semantic_hash = smoke.get('policy_resolved_semantic_hash')
+    if not isinstance(authored_hash, str) or not SHA256_RE.fullmatch(authored_hash):
+        release.fail('integrity-error', 'smoke authored policy hash is missing or invalid')
+    if not isinstance(resolved_semantic_hash, str) or not SHA256_RE.fullmatch(resolved_semantic_hash):
+        release.fail('integrity-error', 'smoke resolved policy hash is missing or invalid')
     policies = [item for item in manifest['contents'] if item['kind'] == 'policy' and item['identity'] == smoke['policy_id']]
-    if len(policies) != 1 or policies[0]['authored_hash'] != smoke['policy_authored_hash']:
+    if len(policies) != 1 or policies[0]['authored_hash'] != authored_hash:
         release.fail('integrity-error', 'smoke policy differs from released policy')
+    released_resolved_hash = policies[0].get('resolved_semantic_hash') if len(policies) == 1 else None
+    if not isinstance(released_resolved_hash, str) or not SHA256_RE.fullmatch(released_resolved_hash):
+        release.fail('integrity-error', 'released policy resolved hash is missing or invalid')
+    if released_resolved_hash != resolved_semantic_hash:
+        release.fail('integrity-error', 'smoke resolved policy differs from released policy')
     if smoke.get('status') != 'passed':
         release.fail('integrity-error', 'smoke did not pass')
     if {item['case'] for item in smoke['runs']} != {'positive', 'near-miss'} or len(smoke['runs']) != 2:
         release.fail('integrity-error', 'both positive and near-miss smoke evidence are required')
     for item in smoke['runs']:
         expected = 1 if item['case'] == 'positive' else 0
-        if item.get('status') != 'passed' or not isinstance(item['completion'], dict) or item['completion'].get('type') != 'complete' or item['finding_count'] != expected or item['exit_code'] != expected:
+        if (item.get('status') != 'passed'
+                or item.get('policy_authored_hash') != authored_hash
+                or item.get('policy_resolved_semantic_hash') != resolved_semantic_hash
+                or not isinstance(item['completion'], dict)
+                or item['completion'].get('type') != 'complete'
+                or item['finding_count'] != expected
+                or item['exit_code'] != expected):
             release.fail('integrity-error', 'smoke incomplete or unexpected findings')
         report_path = release.safe_path(item['raw_report'])
         report, report_bytes = release.load_json(evidence / report_path)
         if release.digest(report_bytes) != item['raw_report_sha256']:
             release.fail('integrity-error', 'smoke raw report hash differs')
+        rules = report.get('rules', [])
+        if not isinstance(rules, list):
+            release.fail('integrity-error', 'smoke raw report has no rules array')
+        selected_rules = [rule for rule in rules if isinstance(rule, dict) and rule.get('policy_id') == smoke['policy_id']]
         runs = report.get('runs', [])
-        if (len(runs) != 1 or runs[0].get('policy_id') != smoke['policy_id']
-                or runs[0].get('policy_hash') != smoke['policy_authored_hash']
+        if not isinstance(runs, list):
+            release.fail('integrity-error', 'smoke raw report has no runs array')
+        if (len(selected_rules) != 1
+                or selected_rules[0].get('policy_hash') != resolved_semantic_hash
+                or len(runs) != 1
+                or runs[0].get('policy_id') != smoke['policy_id']
+                or runs[0].get('policy_hash') != resolved_semantic_hash
+                or item.get('reported_policy_resolved_semantic_hash') != runs[0].get('policy_hash')
                 or not isinstance(runs[0].get('completion'), dict) or runs[0]['completion'].get('type') != 'complete'
                 or len(runs[0].get('findings', [])) != expected
                 or runs[0].get('diagnostics') != [] or report.get('diagnostics') != []):
             release.fail('integrity-error', 'smoke raw report is incomplete or differs')
+        findings = runs[0].get('findings', [])
+        if any(not isinstance(finding, dict)
+               or finding.get('policy_id') != smoke['policy_id']
+               or finding.get('policy_hash') != resolved_semantic_hash
+               for finding in findings):
+            release.fail('integrity-error', 'smoke finding identity differs')
         fixture = evidence / 'inputs' / (item['case'] + '.py')
         if release.digest(fixture.read_bytes()) != smoke['fixture_hashes'][item['case']]:
             release.fail('integrity-error', 'smoke fixture hash differs')
