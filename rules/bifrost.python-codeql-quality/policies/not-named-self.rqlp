@@ -1,0 +1,33 @@
+; CodeQL: python/ql/src/Functions/NonSelf.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Name the first ordinary instance-method parameter self.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.not-named-self"
+  :name "First parameter of an instance method is not named self"
+  :message "Instance methods should use self for their first parameter"
+  :severity warning
+  :description "Select an ordinary instance method with a first formal other than self, excluding static/class methods, metaclass and Zope interface methods, class-body initialization uses, and zero-argument decorated methods. Zero-parameter undecorated methods are reported."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (union
+        (filter :where ((coverage ne unrecorded)
+                        (parameter_count eq 0)
+                        (python_method_kind eq instance)
+                        (python_owner_is_metaclass eq false)
+                        (python_owner_is_zope_interface eq false)
+                        (python_used_in_class_body eq false)
+                        (python_no_args_with_decorator eq false))
+          (callable-signature
+            (enclosing-decl (language python (method)))))
+        (filter :where ((coverage ne unrecorded)
+                        (python_method_kind eq instance)
+                        (python_owner_is_metaclass eq false)
+                        (python_owner_is_zope_interface eq false)
+                        (python_used_in_class_body eq false)
+                        (python_no_args_with_decorator eq false)
+                        (first_parameter ne "self"))
+          (callable-signature
+            (enclosing-decl (language python (method)))))))))

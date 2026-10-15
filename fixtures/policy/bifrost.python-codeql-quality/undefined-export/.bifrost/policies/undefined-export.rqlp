@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Variables/UndefinedExport.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Define every statically exported name listed in __all__.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.undefined-export"
+  :name "Name exported by __all__ is not defined"
+  :message "The name listed in __all__ has no local definition"
+  :severity warning
+  :description "Select a static Python __all__ export whose local binding is structurally absent."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((definition_status eq undefined))
+        (language python (exports :form python_all))))))

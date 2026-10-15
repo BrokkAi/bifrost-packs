@@ -1,0 +1,10 @@
+; CodeQL: python/ql/src/Testing/ImpreciseAssert.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Use an assertion helper that expresses the compared relationship.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.imprecise-assert" :name "Imprecise assert" :message "Use an assertion specific to this comparison." :severity note
+  :description "Mirrors CodeQL python/ql/src/Testing/ImpreciseAssert.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Use an assertion helper that expresses the compared relationship."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (language python
+      (call :callee (name/regex "^assert(True|False)$")
+        :args [(comparison :not-kind comparison_chain)] :arity 1)))))
