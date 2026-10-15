@@ -4152,6 +4152,56 @@
       }
     },
     {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/.bifrost/policies/uninitialized-local-variable.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "e1bbee29c6954cb0c1cb300f2b05a5fc759356436bbb61236fb1b23eb249ce8b"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/README.md",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "a474c48d726e1bb82041276a4c457f28c38636c5afbe3cf89a15c7f5625b9ef6"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/UninitializedLocal.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/UninitializedLocal.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "b3f075a4309161070961b3472faada23126895a311374ff4ba32e95d44cd35ae",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/UninitializedLocal.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/odasa3987.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/odasa3987.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "255041ab4c53d693a4ed260f3560624ca440b137967b1efb894842a074a78b14",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/odasa3987.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/odasa6800.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/odasa6800.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "a55d815d43568e73ff785291893dc40ce90b2e0d99dd178d265a7fbaa313af52",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/odasa6800.py"
+      }
+    },
+    {
       "path": "fixtures/policy/bifrost.python-codeql-quality/unnecessary-lambda/.bifrost/policies/unnecessary-lambda.rqlp",
       "source_path": "rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp",
       "sha256": "90d98654e264500946344404750bd0a14461fa01ab747e334310952572475906",
@@ -7058,7 +7108,7 @@
     {
       "path": "rules/bifrost.python-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.python-codeql-quality/manifest.json",
-      "sha256": "5475ad63d1df54b497e16e591bb699b19811e37c818b96cfe5377499ba2dac03",
+      "sha256": "9a3aa7eec3ae24fdfe693fcf0f586facfa7c6de987cc8ddb3656fa1bfcaca584",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7530,6 +7580,13 @@
       "sha256": "2498de107f53841195c2518f4a2be36a576b938f210e0baabd812e53d6ce9d3f",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "e1bbee29c6954cb0c1cb300f2b05a5fc759356436bbb61236fb1b23eb249ce8b"
     },
     {
       "path": "rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp",
@@ -9691,5 +9748,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "b14e74f8529f1b70a5c0982ef0a656a8d8eb2542994bb81fef8c8a5c3b16253d"
+  "aggregate_sha256": "4924a002a0586a3b4cb05e3ec89f07d5819bcdeff041a2e88ec7e49c72b8dd55"
 }
