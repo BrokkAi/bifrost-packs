@@ -16,11 +16,15 @@ using it as evidence that a program is clean.
 - `string-as-str`: an explicitly typed `String` receiver passes its sensitive
   contents through `as_str` to standard output; an encrypted-name control
   uses the same method. The return is stored in a neutral `message` local.
-  Expected: one finding for the sensitive input. This remains an unqualified
-  engine-gap witness on the tested development executable.
+  Expected: one finding for the sensitive input; qualification below records
+  the measured certainty and completion.
 - `receiver-field`: a newtype-wrapped `self.api_key.inner()` reaches a
   standard print directly and through a neutral local. Expected: two findings;
   an encrypted-field control and an unused sensitive binder must add none.
+- [`string-conversions`](string-conversions/README.md): one local-result
+  witness per requested conversion, explicit-trait witnesses and a distinct
+  same-named trait control. Source models retain standard trait identities;
+  unsupported native impl binding is not replaced with inherent methods.
 - `barrier-near-miss`: CodeQL's boolean and fieldless-enum barriers prevent
   logging those values from being reported. Expected: zero findings. This is
   an explicit engine-gap witness, not a passing qualification claim.
@@ -56,52 +60,60 @@ sinks. Thirty-seven use `log` or `log_err`, which require a separate premium
 follow-up and are deliberately absent from this public rule. Locations marked
 `MISSING` in upstream comments are not expected results.
 
-## Qualification results (2026-10-14)
+## Qualification results (2026-10-15)
 
 Behavioral validation used a development Bifrost 0.13.0 executable with SHA-256
-`c9d33c6a2e1498e93a58f43c2c207b74531c569a8b3fac43644e53eda1c17e5d`.
-The core declaration model compiled without validation errors. Its manifest
-receipt is `4596d3193525def0f8f6db3f96c0fbd53bb8221aba26bd8e79da47af167a0519`;
-the I/O model receipt is
-`cfe2ebacd45405ab0443b1b9765d5cdb1be28a086715f8cdf5fd8434b4ad3975`.
+`79ef45ef153a4f113d4cba46e75e0d9ff837804125ca0cf6f4e2a191bf699f4f`,
+built with the pending macro, reference-result and binding fixes. The public
+CI-pinned 0.13.1 producer was used separately for authoring identities only.
+Both model inputs validated and compiled. Reviewed manifest receipts:
+
+- I/O source 0.4.0: `82e103499418fc720cd9b7811fad5c9f4ced365284a330e90b63e7cb5acf82df`.
+- Core declarations: `4596d3193525def0f8f6db3f96c0fbd53bb8221aba26bd8e79da47af167a0519`.
 
 | Gate | Findings | Completion |
 | --- | --- | --- |
-| positive | all 3 expected, definite | inconclusive: partial discovery |
+| positive | all 3 expected, definite/complete | inconclusive: partial discovery |
 | near-miss | 0 | proven by summary |
-| string-as-str through a neutral local | 1 expected, possible with partial proof | inconclusive: partial discovery |
-| receiver-field newtype | 1 of 2 expected; direct macro definite/complete, local path missed | inconclusive: partial discovery |
+| string-as-str through a neutral local | 1 expected, definite/complete | proven by summary |
+| receiver-field newtype | 0 of 2 expected | inconclusive: partial discovery |
 | name-lookalike | 0 | inconclusive: partial discovery |
-| barrier-near-miss | 2 unexpected, definite | inconclusive: partial discovery |
-| upstream standard sinks | 4 of 19 expected; 0 extras | inconclusive: partial discovery and incomplete capabilities |
+| barrier-near-miss | 2 unexpected, definite/complete | inconclusive: partial discovery |
+| upstream standard sinks | 18 of 19 expected; 0 extras | inconclusive: partial discovery and incomplete capabilities |
 
-The upstream standard-sink results found are lines 192, 193, 194 and 195.
-Missing lines are 199, 202, 205, 208, 211, 214, 217, 220, 223, 226, 229, 242,
-245, 248 and 251. Core panic/assert macros produce `unknown_macro_derived`
-call-shape coverage and unavailable formal bindings. `Option::expect` and
-locked I/O write calls do not establish complete receiver/call bindings.
-The I/O model source version 0.3.0 added the CodeQL-derived `String::as_str`
-flow needed by line 229. That line remains unqualified until macro
-`format!` result typing and `Option::expect` dispatch are established.
-The barrier fixture confirms the missing boolean and fieldless-enum barriers.
-The shadowing macro also leaves incomplete selector discovery. With the
-receiver source-role correction, `String::as_str` through a neutral local
-reports one possible finding with partial proof; modeled reference-result
-drop classification remains incomplete. The newtype field receiver in the
-exact `println!("Honeycomb API key: {}", self.api_key.inner())` shape reports
-a definite, complete finding. Its additional local-variable path is missed
-with unknown access-path resolution for the wrapper method. Neither the
-encrypted-field control nor the unused sensitive binder adds a finding;
-overall receiver-field completion remains incomplete. These outcomes do not
-establish full workspace safety or Vector qualification.
+The sole missing upstream standard-sink result is line **229**, the
+`Option::expect(format!(...).as_str())` message. Its sink selector retains
+unproven dispatch and no complete bindings. Every other expected standard
+result is reported as definite/complete. Comparison uses unique overlapping
+call ranges: multiline I/O calls start at lines 240 and 243 while CodeQL's
+selected method spans are at lines 242 and 245. No finding is matched twice.
+All 37 third-party results remain expected premium omissions.
 
-This candidate is **not behavior-qualified for release**. Source authoring
-identity verification certified all 182 policy identities with the separate
-public CI producer pinned in
-`native-generation.json` (0.13.1); those identities do not certify runtime
-coverage, and no complete released-engine compatibility claim is made here.
+The boolean and fieldless-enum barriers still produce two false positives.
+The receiver-field fixture is a development-engine regression: both the direct
+`println!("Honeycomb API key: {}", self.api_key.inner())` and local-result
+paths are missed, with `inner` reporting invalid-location/no materialized
+workspace target. Repeating it with the previous I/O 0.3.1 source and its
+review receipt also yields zero. No pack alias or selector workaround is
+introduced. Neither result qualifies the actual Vector workspace.
+
+Conversion witnesses and their encrypted-name controls run separately; see
+[the per-method table](string-conversions/README.md). Native call bindings for
+Clone, both ToString receivers, ToOwned and From remain unproven with zero
+conversion targets, including explicit trait-qualified Clone and From calls.
+ToOwned's positive nevertheless reports a definite finding with the old model
+too, so it is not evidence that the added trait summary bound successfully.
+Zero results under incomplete coverage do not establish clean programs.
+
+This candidate is **not behavior-qualified for release**. All 182 source
+policy identities were certified using the public producer pinned in
+`native-generation.json` (0.13.1). The rule authored hash remains
+`b7fddb06e44b9823848d5fb0d7142ad47c1f52dbba9f5cd2f101f709c1520545`.
+Authoring certification does not establish runtime coverage or complete
+released-engine compatibility. No release or native recipe change is included.
 
 See the [source role audit](ROLE_AUDIT.md) for all included/excluded roles.
-Source version 0.3.1 precisely declares borrowed string and byte-slice returns.
-The corrected variable selector includes receiver reads; these are separate
-from the remaining engine classification and dispatch gaps.
+Source version 0.3.1 precisely declared borrowed string and byte-slice returns.
+Version 0.4.0 adds CodeQL-derived standard trait conversion source models beside
+those string-view carriers; no new pack is introduced. Generic Into element
+projections and unmodeled into_bytes remain explicitly omitted.

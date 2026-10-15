@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.rust-std-io-write",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "producer": {
     "name": "bifrost-reviewed-rust-codeql-parity-models",
     "version": "0.1.0"
@@ -13,8 +13,8 @@
     "toolchains": []
   },
   "provenance": {
-    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes.",
-    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19; String::as_str CodeQL source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6"
+    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes. Conversion summaries translate pinned CodeQL core.model.yml:87 (Clone value flow),92 (From taint), and alloc.model.yml:53 (ToString),61 (ToOwned), MIT Copyright (c) GitHub, Inc. They retain trait-owner identities and logical receiver/parameter-to-return flow; Clone adds no alias or copy-identity claim. Into element projections are not flattened into whole-value transfers; into_bytes has no row in the pinned stdlib models.",
+    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19; String::as_str CodeQL source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6; conversion source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6"
   },
   "license": "Apache-2.0 AND MIT",
   "completeness": "complete",
@@ -175,7 +175,25 @@
               "kind": "artifact",
               "path": "library/core/src/str/mod.rs",
               "symbol": "std.primitive.str"
-            }
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.string.ToString",
+                  "arguments": []
+                }
+              },
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.borrow.ToOwned",
+                  "arguments": []
+                }
+              }
+            ]
           },
           {
             "id": "type.rust-codeql.std-string",
@@ -197,7 +215,41 @@
               "kind": "artifact",
               "path": "library/alloc/src/string.rs",
               "symbol": "std.string.String"
-            }
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.clone.Clone",
+                  "arguments": []
+                }
+              },
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.string.ToString",
+                  "arguments": []
+                }
+              },
+              {
+                "hierarchy_kind": "implements",
+                "target": {
+                  "kind": "named",
+                  "name": "std.convert.From",
+                  "arguments": [
+                    {
+                      "kind": "by_ref",
+                      "element": {
+                        "kind": "named",
+                        "name": "std.primitive.str"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "type.rust-codeql.std-io-write",
@@ -232,6 +284,94 @@
                   "nullable": false
                 }
               }
+            ]
+          },
+          {
+            "id": "type.rust-codeql.std-clone",
+            "name": "std.clone",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/clone.rs",
+              "symbol": "std.clone"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-borrow",
+            "name": "std.borrow",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/borrow.rs",
+              "symbol": "std.borrow"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-convert",
+            "name": "std.convert",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/convert/mod.rs",
+              "symbol": "std.convert"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-clone-clone",
+            "name": "std.clone.Clone",
+            "type_kind": "trait",
+            "visibility": "public",
+            "is_abstract": true,
+            "callable_surface_complete": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/clone.rs",
+              "symbol": "std.clone.Clone"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-string-tostring",
+            "name": "std.string.ToString",
+            "type_kind": "trait",
+            "visibility": "public",
+            "is_abstract": true,
+            "callable_surface_complete": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/string.rs",
+              "symbol": "std.string.ToString"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-borrow-toowned",
+            "name": "std.borrow.ToOwned",
+            "type_kind": "trait",
+            "visibility": "public",
+            "is_abstract": true,
+            "callable_surface_complete": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/borrow.rs",
+              "symbol": "std.borrow.ToOwned"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-convert-from",
+            "name": "std.convert.From",
+            "type_kind": "trait",
+            "visibility": "public",
+            "is_abstract": true,
+            "callable_surface_complete": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/convert/mod.rs",
+              "symbol": "std.convert.From"
+            },
+            "type_parameters": [
+              "T"
             ]
           }
         ],
@@ -1010,6 +1150,90 @@
               "path": "library/std/src/io/stdio.rs",
               "symbol": "std.io.StderrLock.write_fmt"
             }
+          },
+          {
+            "id": "member.rust-codeql.std-clone-clone-clone",
+            "owner": "type.rust-codeql.std-clone-clone",
+            "name": "clone",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": []
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/clone.rs",
+              "symbol": "std.clone.Clone.clone"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-string-tostring-to-string",
+            "owner": "type.rust-codeql.std-string-tostring",
+            "name": "to_string",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "std.string.String"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/string.rs",
+              "symbol": "std.string.ToString.to_string"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-borrow-toowned-to-owned",
+            "owner": "type.rust-codeql.std-borrow-toowned",
+            "name": "to_owned",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": []
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/borrow.rs",
+              "symbol": "std.borrow.ToOwned.to_owned"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-convert-from-from",
+            "owner": "type.rust-codeql.std-convert-from",
+            "name": "from",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "T"
+                  }
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/convert/mod.rs",
+              "symbol": "std.convert.From.from"
+            }
           }
         ],
         "relations": []
@@ -1470,6 +1694,99 @@
             "completeness": "complete",
             "locations": [],
             "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-clone-clone-clone",
+            "target": {
+              "path": "library/core/src/clone.rs",
+              "symbol": "std.clone.Clone.clone",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-string-tostring-to-string",
+            "target": {
+              "path": "library/alloc/src/string.rs",
+              "symbol": "std.string.ToString.to_string",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-borrow-toowned-to-owned",
+            "target": {
+              "path": "library/alloc/src/borrow.rs",
+              "symbol": "std.borrow.ToOwned.to_owned",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-convert-from-from",
+            "target": {
+              "path": "library/core/src/convert/mod.rs",
+              "symbol": "std.convert.From.from",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
             "effects": []
           }
         ]

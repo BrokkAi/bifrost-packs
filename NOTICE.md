@@ -28,8 +28,9 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   heuristics and standard-library sink definitions from `github/codeql` at
   `dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6`, MIT, Copyright (c) GitHub, Inc.;
   see `licenses/CodeQL-MIT.txt` and the policy provenance comments.
-- The `String::as_str` receiver-to-return summary in the Rust I/O model
-  translates `codeql/rust/frameworks/stdlib/alloc.model.yml` at
+- The Rust I/O model's `String::as_str`, Clone, ToString, ToOwned and From
+  summaries translate `codeql/rust/frameworks/stdlib/alloc.model.yml` and
+  `core.model.yml` at
   `dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6`, MIT, Copyright (c) GitHub, Inc.;
   see `licenses/CodeQL-MIT.txt`. Other authored entries retain Apache-2.0.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
@@ -48,4 +49,4 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 The source archive is a mixed-license source distribution, not an Apache-only
 relicensing and not an installable native semantic-pack release bundle.
 
-Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19. Public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0 except the explicitly attributed MIT-derived String::as_str summary. Those semantic models do not copy CodeQL query implementation or third-party library source. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.
+Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19. Public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0 except the explicitly attributed MIT-derived String view/conversion summaries. Those semantic models do not copy CodeQL query implementation or third-party library source. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.
