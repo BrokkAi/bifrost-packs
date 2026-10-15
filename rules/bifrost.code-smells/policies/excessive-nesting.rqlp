@@ -1,0 +1,24 @@
+; A callable whose structured control-flow nesting exceeds four is harder to
+; review. Incomplete and unrecorded metric rows are excluded from findings and
+; remain visible through the policy run's coverage diagnostics.
+(policy
+  :schema-version 1
+  :id "bifrost.code-smells.excessive-nesting"
+  :name "Excessive callable nesting"
+  :message "callable exceeds the maximum nesting budget"
+  :severity warning
+  :description "Reports a source-backed callable whose exact structured cognitive metrics show more than four nested executable control constructs. Nested named and anonymous callable bodies are owned by their own rows; parser, ownership, or provider gaps remain incomplete rather than clean."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["code-smell" "complexity" "nesting"]
+  :analysis (analysis
+    :type assertion
+    (bind :name nesting
+      :query (rql :schema-version 1
+        (filter :where ((coverage eq exact)
+                        (max_nesting gt 4))
+          (language java javascript typescript python csharp kotlin go rust php scala ruby c cpp
+            (callable-metrics
+              (enclosing-decl (callable)))))))
+    (group :name by-callable :by (nesting.id)
+      (aggregate :name violations :op count))
+    (assert :group by-callable :value violations :cardinality (exactly 0))))

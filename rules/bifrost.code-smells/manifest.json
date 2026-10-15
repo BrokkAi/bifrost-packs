@@ -211,9 +211,7 @@
       "authored_hash": "04fe7a69f28ebc3d702bf909b01b29bad3def6fe5d6072351337fcd17c0ed867",
       "resolved_semantic_hash": "04fe7a69f28ebc3d702bf909b01b29bad3def6fe5d6072351337fcd17c0ed867",
       "category": "correctness",
-      "supported_languages": [
-        "python"
-      ],
+      "supported_languages": ["python"],
       "required_capabilities": [
         "structural-match",
         "normalized-call-roles"
@@ -227,9 +225,7 @@
       "authored_hash": "0018b743fcf3cd82084af3ae2cdd6f8f59573934ed5f1d33297827911b113287",
       "resolved_semantic_hash": "0018b743fcf3cd82084af3ae2cdd6f8f59573934ed5f1d33297827911b113287",
       "category": "correctness",
-      "supported_languages": [
-        "python"
-      ],
+      "supported_languages": ["python"],
       "required_capabilities": [
         "class-set-type-flow",
         "python-declaration-models",
@@ -776,6 +772,84 @@
       "severity_rationale": "An exact exhaustive cleanup outcome that replaces a pending control transfer changes the procedure's externally visible control flow.",
       "remediation": "Review the cleanup body and the pending transfer together; preserve the intended return, throw, break or continue explicitly when the cleanup should not replace it.",
       "activation": "opt-in"
+    },
+    {
+      "path": "policies/excessive-nesting.rqlp",
+      "id": "bifrost.code-smells.excessive-nesting",
+      "authored_hash": "46a957e1b4f92c646f9dfb7fce75fa40e13d7f52ce0e482eb24cdec574f40378",
+      "resolved_semantic_hash": "46a957e1b4f92c646f9dfb7fce75fa40e13d7f52ce0e482eb24cdec574f40378",
+      "category": "maintainability",
+      "activation": "opt-in",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": ["structural-match", "callable-metrics"],
+      "severity_rationale": "Deeply nested executable control flow increases review and maintenance cost.",
+      "remediation": "Reduce control-flow nesting with guard clauses, extracted callables, or a reviewed state abstraction while preserving behavior."
+    },
+    {
+      "path": "policies/oversized-function-span.rqlp",
+      "id": "bifrost.code-smells.oversized-function-span",
+      "authored_hash": "0d84b9b852fe9f1ab55bddad8d1ced65b567f3de22a47811cb594e961302f909",
+      "resolved_semantic_hash": "0d84b9b852fe9f1ab55bddad8d1ced65b567f3de22a47811cb594e961302f909",
+      "category": "maintainability",
+      "activation": "opt-in",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": ["structural-match", "callable-metrics"],
+      "severity_rationale": "A wide executable span makes a callable harder to understand and review as one unit.",
+      "remediation": "Extract cohesive operations into separately named callables and keep each callable's responsibilities bounded."
+    },
+    {
+      "path": "policies/oversized-function-complexity.rqlp",
+      "id": "bifrost.code-smells.oversized-function-complexity",
+      "authored_hash": "ea4c0829d02d622da459267582334d14ce0c82a62b469da11d1435330a13cb4d",
+      "resolved_semantic_hash": "ea4c0829d02d622da459267582334d14ce0c82a62b469da11d1435330a13cb4d",
+      "category": "maintainability",
+      "activation": "opt-in",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": ["structural-match", "callable-metrics"],
+      "severity_rationale": "High structured cognitive complexity indicates a callable with too many interacting control-flow decisions.",
+      "remediation": "Split the decision structure into cohesive helpers or simplify the control flow after reviewing behavior and error paths."
     }
   ]
 }

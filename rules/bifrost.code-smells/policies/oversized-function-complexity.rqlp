@@ -1,0 +1,23 @@
+; Cognitive complexity is the shared structured AST score, not the legacy
+; source-text cyclomatic heuristic.
+(policy
+  :schema-version 1
+  :id "bifrost.code-smells.oversized-function-complexity"
+  :name "Oversized callable complexity"
+  :message "callable exceeds the cognitive complexity budget"
+  :severity warning
+  :description "Reports a source-backed callable whose exact shared cognitive-complexity score exceeds fifteen. The score follows each language adapter's structured AST configuration and stops at nested callable ownership boundaries; incomplete evidence remains open."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["code-smell" "complexity" "function-size"]
+  :analysis (analysis
+    :type assertion
+    (bind :name complexity
+      :query (rql :schema-version 1
+        (filter :where ((coverage eq exact)
+                        (cognitive_complexity gt 15))
+          (language java javascript typescript python csharp kotlin go rust php scala ruby c cpp
+            (callable-metrics
+              (enclosing-decl (callable)))))))
+    (group :name by-callable :by (complexity.id)
+      (aggregate :name violations :op count))
+    (assert :group by-callable :value violations :cardinality (exactly 0))))
