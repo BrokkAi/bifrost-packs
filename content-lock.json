@@ -5609,7 +5609,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "bf4e0a5c78141bd93f398f1146d02a4283adbf1cde9d918ba36963e060d0517e"
+      "sha256": "edb60ef02153e28fb6c1a33588ab9f882a97f0642695d683615529f76a5179c6"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -5918,6 +5918,13 @@
       "sha256": "645f888c99c5dc9be84427718b7093bd6ced57baef9a29a56dc7e0701c1f5a51",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
+      "sha256": "238e5f69772d38e924f1657866b3b466d8862986c1c54d5360bdb98d1d13cfbf",
+      "classification": "public",
+      "license": "MIT"
     },
     {
       "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
@@ -7444,11 +7451,25 @@
       "license": "Ruby"
     },
     {
-      "path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
-      "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
-      "sha256": "ad38ee71783692abc226714ef982c949d9a8012b28f837d6e272ec0bb57ad6df",
+      "path": "semantic-packs/rust-codeql-parity/README-core-logging.md",
+      "source_path": "semantic-packs/rust-codeql-parity/README-core-logging.md",
       "classification": "public",
       "license": "Apache-2.0",
+      "sha256": "f25c5b0c3c2bf08d3d6df51ae575b4c48e1db822f24855a27c7462391d0c1c26"
+    },
+    {
+      "path": "semantic-packs/rust-codeql-parity/bifrost.rust-core-logging.json",
+      "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-core-logging.json",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "23910f3ec06c6a13b20e162ef8348d4b40f4b139e43da98d7d6cffcd29de722c"
+    },
+    {
+      "path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
+      "source_path": "semantic-packs/rust-codeql-parity/bifrost.rust-std-io-write.json",
+      "sha256": "9a85d5f88e5523ce9c89b5ec7ba2e8ba9c6bed883e5503852908f87a1f0a8d7b",
+      "classification": "public",
+      "license": "Apache-2.0 AND MIT",
       "source_revision": "217109df44f6b166d6dd779a7f2b7743365b79cc"
     },
     {
@@ -7686,5 +7707,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "9f4f4b115802fea7c5427c0b4e855ffb13dd501270b9dd1972493ddcb26d1bd4"
+  "aggregate_sha256": "a14bdb0b70b612921edb9814b0ce0f888f2dcbbcf907ee436fe12fb64d696ff6"
 }
