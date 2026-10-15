@@ -297,10 +297,10 @@ declarationMembers.sort((left, right) => left.id.localeCompare(right.id, "en"));
 const pack = {
   schema_version: 2,
   pack_id: "bifrost.go.stdlib.sync-atomic",
-  version: "1.0.0",
+  version: "2.0.0",
   producer: { name: "bifrost", version: "0.10.7" },
   language: "go",
-  ecosystem: "go",
+  ecosystem: "go-stdlib",
   compatibility: { bifrost: ">=0.10.7, <1.0.0", toolchains: [] },
   provenance: {
     source: "https://go.dev/src/sync/atomic/",
@@ -321,10 +321,10 @@ const rendered = `${JSON.stringify(pack, null, 2)}\n`;
 const declarationPack = {
   schema_version: 2,
   pack_id: "bifrost.go.stdlib.sync-atomic-declarations",
-  version: "1.0.0",
+  version: "2.0.0",
   producer: { name: "bifrost", version: "0.10.7" },
   language: "go",
-  ecosystem: "go",
+  ecosystem: "go-stdlib",
   compatibility: { bifrost: ">=0.10.7, <1.0.0", toolchains: [] },
   provenance: {
     source: "https://go.dev/src/sync/atomic/",
