@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Classes/InitCallsSubclass/InitCallsSubclassMethod.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Avoid calling an overridable public method while initialization is incomplete.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.init-calls-subclass"
+  :name "Python initializer calls an overridden method"
+  :message "Calling an overridable public method during initialization can expose a partially initialized instance."
+  :severity warning
+  :description "CodeQL parity policy adapted from the engine-proven Python hierarchy relations."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq call_lifecycle) (outcome eq init_calls_subclass) (coverage eq complete) (target_reads_self eq true) (member_name regex "^[^_].*"))
+        (python-call-relations (enclosing-decl (language python (class))))))))

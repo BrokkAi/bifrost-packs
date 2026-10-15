@@ -28,7 +28,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**183 unique rules across 12 policy packs.**
+**221 unique rules across 12 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -41,21 +41,21 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.effects | 10 |
 | Pack | bifrost.java-codeql-quality | 19 |
 | Pack | bifrost.javascript-codeql-quality | 12 |
-| Pack | bifrost.python-codeql-quality | 34 |
+| Pack | bifrost.python-codeql-quality | 72 |
 | Pack | bifrost.rust-codeql-quality | 1 |
 | Pack | bifrost.security | 45 |
-| Category | correctness | 77 |
+| Category | correctness | 105 |
 | Category | effects | 10 |
 | Category | maintainability | 1 |
 | Category | performance | 10 |
-| Category | quality | 38 |
+| Category | quality | 48 |
 | Category | security | 47 |
-| Severity | error | 60 |
-| Severity | note | 20 |
-| Severity | warning | 103 |
+| Severity | error | 65 |
+| Severity | note | 21 |
+| Severity | warning | 135 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 376 rule-language pairs.
+13 declared languages; 414 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -67,13 +67,13 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | javascript | 37 |
 | kotlin | 14 |
 | php | 15 |
-| python | 76 |
+| python | 114 |
 | ruby | 15 |
 | rust | 28 |
 | scala | 14 |
 | typescript | 34 |
 
-Activation labels: opt-in 29, unspecified 154. Omitted labels remain unspecified.
+Activation labels: opt-in 29, unspecified 192. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
