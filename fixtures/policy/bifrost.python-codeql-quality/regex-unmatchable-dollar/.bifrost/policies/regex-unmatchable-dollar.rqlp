@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Expressions/Regex/UnmatchableDollar.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Place the end anchor after consuming regular-expression terms.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.regex-unmatchable-dollar"
+  :name "Python regex dollar cannot match at this position"
+  :message "Move the end anchor after consuming terms or use a literal dollar."
+  :severity warning
+  :description "Selects the Python regex risk fact used by the CodeQL-compatible regex-unmatchable-dollar rule."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (regex_risk_unmatchable_dollar)))))

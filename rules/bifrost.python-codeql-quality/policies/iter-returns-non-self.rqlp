@@ -1,0 +1,29 @@
+; CodeQL: python/ql/src/Functions/IterReturnsNonSelf.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Return the iterator instance itself from its __iter__ method.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.iter-returns-non-self"
+  :name "Python iterator does not return itself"
+  :message "An iterator's __iter__ method should return self."
+  :severity error
+  :description "Candidate based on exact direct receiver identity and complete iterator protocol facts."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq iterator_return_protocol)
+                      (outcome eq iterator)
+                      (proof eq proven)
+                      (completeness eq complete)
+                      (returns_receiver eq false)
+                      (owner_id is-not-null))
+        (python-iterator-return-protocol
+          (procedure-of
+            (filter :where ((fq_name regex ".*\\.__iter__$"))
+              (members
+                (enclosing-decl
+                  (language python
+                    (class
+                      (and
+                        (has (method :name "__iter__"))
+                        (has (method :name "__next__"))))))))))))))

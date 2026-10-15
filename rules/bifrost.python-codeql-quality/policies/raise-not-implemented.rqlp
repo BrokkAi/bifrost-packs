@@ -1,0 +1,10 @@
+; CodeQL: python/ql/src/Exceptions/NotImplementedIsNotAnException.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Raise NotImplementedError instead of the NotImplemented singleton.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.raise-not-implemented" :name "Raise NotImplemented" :message "Raise NotImplemented to indicate unsupported operation." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Exceptions/NotImplementedIsNotAnException.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Raise NotImplementedError instead of the NotImplemented singleton."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq raise_not_implemented) (outcome eq builtin)
+                    (proof eq proven) (completeness eq complete))
+      (python-raise-not-implemented (language python (throw)))))))
