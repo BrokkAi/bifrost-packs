@@ -196,7 +196,9 @@
         "structural-match",
         "exact-call-target",
         "semantic-model-provenance",
-        "value-flow",
+        "normalized-call-roles",
+        "lexical-environment",
+        "literal-value-matching",
         "control-flow"
       ],
       "severity_rationale": "Checking a path before using it can expose a time-of-check/time-of-use race.",

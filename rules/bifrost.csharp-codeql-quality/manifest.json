@@ -96,11 +96,11 @@
     {
       "path": "policies/stringbuilder-initialized-with-character.rqlp",
       "id": "bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character",
-      "authored_hash": "8a4d9e6d36c193428a5c81d48b445d5eeeff5cf3330868f4416c7ba55fe3da41",
+      "authored_hash": "f94fc204243ca673f6618a1cd7b278967ea9a40100611fa1554679e9e9cb464e",
       "resolved_semantic_hash": null,
       "category": "correctness",
       "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "expression-kind-facts"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "expression-kind-facts", "call-argument-conversion"],
       "severity_rationale": "Passing a character to the one-argument StringBuilder constructor selects the integer-capacity overload and often creates an unexpectedly large or invalid buffer.",
       "remediation": "Convert the character to a string when text initialization is intended, or pass an explicit capacity when capacity initialization is intended."
     }

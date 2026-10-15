@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 
@@ -67,6 +68,23 @@ class ReleaseTests(unittest.TestCase):
         path = self.root / (version + '.json')
         path.write_text(json.dumps(manifest))
         return path
+
+    def test_publication_notes_include_reviewed_context_without_promoting_pending_behavior(self):
+        manifest = self.candidate('0.3.0', qualification={
+            'integrity': {'status': 'verified', 'evidence': ['synthetic artifact hash']},
+            'behavior': {'status': 'pending', 'evidence': ['full qualification remains pending']},
+        })
+        original = manifest.read_bytes()
+        notes = self.root / 'release-notes.md'
+        context = json.loads((ROOT / 'release-config.rules.json').read_text())['notes']
+        subprocess.run([sys.executable, str(ROOT / 'release-contract/release_notes.py'),
+            '--manifest', str(manifest), '--output', str(notes), '--context-notes', context], check=True)
+        actual = notes.read_text()
+        self.assertIn(context, actual)
+        self.assertIn('Behavior evidence: pending.', actual)
+        self.assertIn('full qualification remains pending', actual)
+        self.assertIn('`' + 'b' * 40 + '`', actual)
+        self.assertEqual(manifest.read_bytes(), original)
 
     def v1_candidate(self, version, *, minimum='0.11.0', maximum='0.13.0', status='qualified', role='policy'):
         manifest = release.make_manifest(dict(self.config, release_version=version), 'b' * 40, [], self.archive)
