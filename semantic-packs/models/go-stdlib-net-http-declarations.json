@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.go.stdlib.net-http-declarations",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "producer": { "name": "bifrost", "version": "0.11.3" },
   "language": "go",
-  "ecosystem": "go",
+  "ecosystem": "go-stdlib",
   "compatibility": { "bifrost": ">=0.11.3, <1.0.0", "toolchains": [] },
   "provenance": {
     "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get)",
