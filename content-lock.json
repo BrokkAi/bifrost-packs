@@ -6274,7 +6274,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "ccac7e4917e7f194e353610c4758b36deff88f612e8282f74ee9128f397bcab0",
+      "sha256": "b79acdb5708e31fa02476a3ba4d9ea475888b7bf20f7d82c726831f09bff7915",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -6466,6 +6466,13 @@
       "sha256": "f5e59782c8936951cbbca6837a0f2fa2af1bfdcbf805a8e6779b58b03840e101",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/repeated-literal.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/repeated-literal.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "103937def4710f80d6cc28f36c30b0539aea10bb8ed51e43862cad1f49115d49"
     },
     {
       "path": "rules/bifrost.code-smells/policies/rust-input-recursion-without-bound.rqlp",
@@ -9663,5 +9670,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "bd4fa7be0e8baf843c59dda8c0244d996efe4bd5d15454c03fcae55d5f0dbee9"
+  "aggregate_sha256": "db320ad5748f84907dfb9fccb12ca19458e5ed445a8288fa69a821e38e345a8a"
 }

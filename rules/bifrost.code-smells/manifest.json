@@ -732,6 +732,31 @@
       "remediation": "Review the recursive progress and available depth limits; add a deliberate budget or convert the traversal to an iterative form when input can grow without a safe bound."
     },
     {
+      "path": "policies/repeated-literal.rqlp",
+      "id": "bifrost.code-smells.repeated-literal",
+      "authored_hash": "c95b8fa15ef290ba8c2cf48a1d10360be7808b38552f8219897be387c0a8ee4a",
+      "resolved_semantic_hash": "c95b8fa15ef290ba8c2cf48a1d10360be7808b38552f8219897be387c0a8ee4a",
+      "category": "maintainability",
+      "supported_languages": [
+        "c",
+        "cpp",
+        "csharp",
+        "php",
+        "python",
+        "ruby",
+        "javascript",
+        "typescript",
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "literal-occurrences"
+      ],
+      "severity_rationale": "Repeated non-trivial scalar identities increase drift risk when a value must be updated consistently.",
+      "remediation": "Name the value once or centralize the shared constant after reviewing whether the repetitions intentionally diverge.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/excessive-nesting.rqlp",
       "id": "bifrost.code-smells.excessive-nesting",
       "authored_hash": "46a957e1b4f92c646f9dfb7fce75fa40e13d7f52ce0e482eb24cdec574f40378",
