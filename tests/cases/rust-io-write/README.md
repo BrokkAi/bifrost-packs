@@ -29,10 +29,10 @@ existing logical receiver and normal-return ports. The declaration returns `by_r
 the linked qualification table records the measured upstream line 229 result.
 
 Version 0.3.1 corrects these return declarations without adding a new capability.
-The 0.4.0 checkout validation receipt is
-`82e103499418fc720cd9b7811fad5c9f4ced365284a330e90b63e7cb5acf82df`.
-Accept this exact digest when enabling the updated source model; earlier
-receipts do not review the added conversion models.
+Enable the model in workspace configuration as described in the
+[core declaration notes](../../../semantic-packs/rust-codeql-parity/README-core-logging.md).
+A complete summary from an active pack can close a proof when its callable
+and arguments bind exactly; no separate workspace approval is required.
 
 The focused receiver cases are described in
 [`rust-cleartext-logging`](../rust-cleartext-logging/README.md).

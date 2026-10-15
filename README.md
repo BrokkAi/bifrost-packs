@@ -98,6 +98,15 @@ happens here. Compatibility declarations are separate from exact-build
 behavior evidence; see [validation](validation.json) and
 [transition sequencing](docs/v013-transition.md).
 
+Workspace configuration selects semantic packs with `enable` in
+`.bifrost/packs.json`. A complete, exactly bound summary from an active pack
+can prove a finding without separate workspace approval. Manifest hashes
+still identify and verify artifacts; they are not a runtime approval step.
+Incomplete discovery or bindings remain explicit. See the
+[Rust checkout example](semantic-packs/rust-codeql-parity/README-core-logging.md)
+for source-model validation and enablement; storing authored source here does
+not install or enable it automatically.
+
 New release manifests use contract schema 2: they match declared schema axes,
 actual required capabilities, and exact release dependencies without an engine
 version bound. Integrity and behavior qualification remain separate, and

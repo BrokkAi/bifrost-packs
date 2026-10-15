@@ -13,8 +13,7 @@ These core logging declarations have their own scope and identity. The
 `Option` type and `expect` member retain the `std::option::Option` reexport
 aliases used by the Rust prelude. The declaration retains the `T` type
 parameter and the `expect` return type `T`. The activation selector deliberately covers
-all Rust Cargo targets; enabling the pack and reviewing its exact receipt are
-separate workspace decisions. The compiler lint reports this broad selector
+all Rust Cargo targets; workspace configuration explicitly enables the pack. The compiler lint reports this broad selector
 as an advisory.
 
 Argument positions follow
@@ -33,15 +32,22 @@ does not assert that this projection is implemented or qualified. The upstream
 gate records the resulting engine coverage separately.
 
 For checkout validation, install both authored model JSON files under the
-workspace's `.bifrost/semantic-models/`, enable both pack IDs in
-`.bifrost/packs.json`, and accept the exact compiled manifest digests for the
-reviewed inputs. Obtain the digest with the semantic-pack compiler:
+workspace's `.bifrost/semantic-models/` and enable both IDs in
+`.bifrost/packs.json`:
 
-```sh
-bifrost-semantic-pack compile semantic-packs/rust-codeql-parity/bifrost.rust-core-logging.json compiled-core-logging --format json
+```json
+{
+  "schema_version": 1,
+  "ecosystems": ["cargo"],
+  "enable": ["bifrost.rust-core-logging", "bifrost.rust-std-io-write"]
+}
 ```
 
-The `manifest_content_sha256` field is the receipt's `manifest_digest`.
-Declarations, activation, reviewed summaries and behavior qualification remain
-separate. This source addition does not select the model in a native release
-recipe, publish an artifact, or enable it for arbitrary workspaces.
+A complete, exactly bound summary from an active pack can prove a finding
+without a separate workspace approval. Activation does not make incomplete
+bindings or declarations-only models complete. Compiler manifest hashes are
+integrity and provenance data, not a runtime authorization step.
+
+Declarations, activation, summary applicability and behavior qualification
+remain separate. This source addition does not select the model in a native
+release recipe, publish an artifact, or enable it for arbitrary workspaces.

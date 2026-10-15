@@ -31,35 +31,37 @@ associated `Owned` returns remain unspecified where the schema cannot encode
 the concrete substitution accurately; ToString's String return is declared.
 
 The current checkout gate table and exact binary provenance are recorded in
-the parent [fixture README](../README.md). Run with both public model receipts
-accepted, as described there. A zero finding under incomplete coverage does
+the parent [fixture README](../README.md). Enable both public models as described there. A zero finding under incomplete coverage does
 not prove the positive or control safe.
 
 ## Measured results (2026-10-15)
 
-The development executable and both receipts are identified in the
-[parent qualification table](../README.md). Every positive stores its result
-in a neutral local. No encrypted-name control added a finding.
+The fresh current-master release executable and enabled models are identified
+in the [parent qualification table](../README.md). All workspaces use the
+current activation contract with `enable` only. Each positive stores its
+conversion result in a neutral local; no encrypted-name control adds a finding.
 
 | Witness | Found / expected | Finding certainty | Run completion |
 | --- | --- | --- | --- |
-| String Clone method and explicit trait call | 0 / 2 | no finding | inconclusive: partial discovery |
-| str ToString | 0 / 1 | no finding | inconclusive: partial discovery |
-| String ToString | 0 / 1 | no finding | inconclusive: partial discovery |
-| str ToOwned | 1 / 1 | definite, complete | proven by summary |
-| From<&str> for String, normal and explicit trait call | 0 / 2 | no finding | inconclusive: partial discovery |
-| String into_bytes (no upstream model) | 0 / 1 | no finding | inconclusive: partial discovery |
-| Into<String> (projection omitted) | 0 / 1 | no finding | inconclusive: partial discovery |
-| Unrelated Redacted trait lookalikes | 0 / 0 | no finding | inconclusive: partial discovery |
+| String Clone method | 0 / 1 | none | inconclusive: partial discovery |
+| String Clone explicit trait call | 0 / 1 | none | inconclusive: partial discovery |
+| str ToString | 0 / 1 | none | inconclusive: partial discovery |
+| String ToString | 0 / 1 | none | inconclusive: partial discovery |
+| str ToOwned | 1 / 1 | definite/complete | proven by summary |
+| String::from(&str) | 0 / 1 | none | inconclusive: partial discovery |
+| From<&str> explicit trait call | 0 / 1 | none | inconclusive: partial discovery |
+| String into_bytes, no upstream model | 0 / 1 | none | inconclusive: partial discovery |
+| Into<String>, projection omitted | 0 / 1 | none | inconclusive: partial discovery |
+| Unrelated Redacted trait lookalikes | 0 / 0 | none | inconclusive: partial discovery |
 
-Activated `call_shape`/`call_bindings` queries show all five modeled conversion
-families with unproven dispatch, zero targets and incomplete actual/formal
-mapping. `dispatch_targets` returns the genuine `_print` sinks but no
-conversion target, including the explicit Clone/From trait-qualified forms.
+Activated `call_shape`/`call_bindings` queries show unproven dispatch, zero
+conversion targets and incomplete actual/formal mapping for all modeled
+families. Ordinary concrete-impl lookup and explicit UFCS lookup remain
+separate engine gaps. No inherent aliases or spelling-based fallback are used.
 The source format stores trait-owned summaries and typed implements edges;
-this tested native engine does not establish their concrete impl binding.
-No inherent aliases or spelling-based fallback are added.
+valid source compilation does not qualify runtime binding.
 
-The old I/O 0.3.1 model control also finds ToOwned's positive with the same
-definite/complete finding and proven-by-summary completion. That result must
-not be attributed to the newly authored, natively unbound trait summary.
+The prior I/O 0.3.1 source control also reports ToOwned's positive as
+definite/complete with proven-by-summary run completion. That finding must
+not be attributed to a newly bound trait summary. Incomplete zero-result
+controls retain their uncertainty.

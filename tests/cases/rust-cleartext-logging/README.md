@@ -31,14 +31,14 @@ using it as evidence that a program is clean.
 
 Install a byte-identical copy of the policy under
 `.bifrost/policies/cleartext-logging.rqlp` in each project, and configure the
-models and reviewed receipts as described in the
+enabled models as described in the
 [core declaration notes](../../../semantic-packs/rust-codeql-parity/README-core-logging.md).
 Run the CLI over the whole project:
 
 ```sh
 bifrost --root CASE --policy --no-builtin-policies \
   --policy-file .bifrost/policies/cleartext-logging.rqlp \
-  --evaluation-date 2026-10-14 --fail-on never --format json
+  --evaluation-date 2026-10-15 --fail-on never --format json
 ```
 
 A nonzero reliability status or an inconclusive completion must be retained
@@ -62,58 +62,67 @@ follow-up and are deliberately absent from this public rule. Locations marked
 
 ## Qualification results (2026-10-15)
 
-Behavioral validation used a development Bifrost 0.13.0 executable with SHA-256
-`79ef45ef153a4f113d4cba46e75e0d9ff837804125ca0cf6f4e2a191bf699f4f`,
-built with the pending macro, reference-result and binding fixes. The public
-CI-pinned 0.13.1 producer was used separately for authoring identities only.
-Both model inputs validated and compiled. Reviewed manifest receipts:
+Fresh validation used a release build of current development Bifrost 0.13.0,
+executable SHA-256
+`29ce5752eaf9108e3f286b7549d58617756f9143ac08c0189797a46b536f743a`.
+Every workspace enables both public models with the configuration in the
+[core declaration notes](../../../semantic-packs/rust-codeql-parity/README-core-logging.md).
+Complete, exactly bound active summaries require no separate workspace
+approval. All runs use fresh caches and the current activation contract.
 
-- I/O source 0.4.0: `82e103499418fc720cd9b7811fad5c9f4ced365284a330e90b63e7cb5acf82df`.
-- Core declarations: `4596d3193525def0f8f6db3f96c0fbd53bb8221aba26bd8e79da47af167a0519`.
-
-| Gate | Findings | Completion |
+| Gate | Findings | Run completion |
 | --- | --- | --- |
-| positive | all 3 expected, definite/complete | inconclusive: partial discovery |
+| positive | 3 expected, definite/complete | inconclusive: partial discovery |
 | near-miss | 0 | proven by summary |
-| string-as-str through a neutral local | 1 expected, definite/complete | proven by summary |
-| receiver-field newtype | 0 of 2 expected | inconclusive: partial discovery |
 | name-lookalike | 0 | inconclusive: partial discovery |
 | barrier-near-miss | 2 unexpected, definite/complete | inconclusive: partial discovery |
-| upstream standard sinks | 18 of 19 expected; 0 extras | inconclusive: partial discovery and incomplete capabilities |
+| upstream standard sinks | **19 of 19**, 0 extras; 14 definite/complete, 5 possible/partial | inconclusive: partial discovery and incomplete capabilities |
+| String::as_str through a neutral local | 1 expected, possible/partial | proven by summary |
+| field receiver directly in print, line 15 | 1 expected, reported definite/complete | proven by summary |
+| field receiver through a local, line 20 | 1 expected, possible/partial | proven by summary |
 
-The sole missing upstream standard-sink result is line **229**, the
-`Option::expect(format!(...).as_str())` message. Its sink selector retains
-unproven dispatch and no complete bindings. Every other expected standard
-result is reported as definite/complete. Comparison uses unique overlapping
-call ranges: multiline I/O calls start at lines 240 and 243 while CodeQL's
-selected method spans are at lines 242 and 245. No finding is matched twice.
-All 37 third-party results remain expected premium omissions.
+Run completion and individual finding certainty are separate. A run marked
+`proven_by_summary` can retain possible findings whose proof is unproven.
+The five possible upstream findings are **229, 242, 245, 248 and 251**;
+line 229 is now found. The remaining receiver-path proof closure is an engine
+gap. All 37 third-party results remain expected premium omissions.
+Comparison matches unique overlapping call ranges: multiline I/O calls start
+at lines 240 and 243 while CodeQL's selected spans are at 242 and 245. No
+finding matches multiple expected rows.
 
-The boolean and fieldless-enum barriers still produce two false positives.
-The receiver-field fixture is a development-engine regression: both the direct
-`println!("Honeycomb API key: {}", self.api_key.inner())` and local-result
-paths are missed, with `inner` reporting invalid-location/no materialized
-workspace target. Repeating it with the previous I/O 0.3.1 source and its
-review receipt also yields zero. No pack alias or selector workaround is
-introduced. Neither result qualifies the actual Vector workspace.
+The boolean and fieldless-enum barrier cases still produce two false positives
+and require native value-type barriers plus a rule follow-up. Macro operand
+evaluation also remains incomplete: the small counterexample
+`println!("{}", password.len())` reports a definite sensitive-string flow.
+The direct field receiver result shares this current macro-lowering behavior;
+proper call evaluation and dispatch within formatting operands still need
+qualification. The additional counterexample is separate from the unchanged
+upstream oracle, which has zero extra results.
 
-Conversion witnesses and their encrypted-name controls run separately; see
-[the per-method table](string-conversions/README.md). Native call bindings for
+The field-receiver fixture now finds both expected lines. Its previous-model
+control gives the same definite direct and possible local findings. No
+conversion model alias or selector workaround is introduced. These focused
+results do not qualify the actual Vector workspace.
+
+Conversion witnesses and encrypted-name controls run separately; see
+[the per-method table](string-conversions/README.md). Native bindings for
 Clone, both ToString receivers, ToOwned and From remain unproven with zero
 conversion targets, including explicit trait-qualified Clone and From calls.
-ToOwned's positive nevertheless reports a definite finding with the old model
-too, so it is not evidence that the added trait summary bound successfully.
-Zero results under incomplete coverage do not establish clean programs.
+ToOwned nevertheless produces a definite finding with both current and prior
+model sources, so that positive is not evidence that the new trait summary
+bound. Zero findings under incomplete discovery do not establish safety.
 
 This candidate is **not behavior-qualified for release**. All 182 source
-policy identities were certified using the public producer pinned in
-`native-generation.json` (0.13.1). The rule authored hash remains
+policy identities were certified separately using the public producer pinned
+in `native-generation.json` (0.13.1); it was used only for identities. The rule
+authored hash remains
 `b7fddb06e44b9823848d5fb0d7142ad47c1f52dbba9f5cd2f101f709c1520545`.
-Authoring certification does not establish runtime coverage or complete
-released-engine compatibility. No release or native recipe change is included.
+Authoring certification does not establish released-engine coverage. No
+release, native recipe change or model/policy byte change is included in this
+activation-documentation update.
 
-See the [source role audit](ROLE_AUDIT.md) for all included/excluded roles.
-Source version 0.3.1 precisely declared borrowed string and byte-slice returns.
-Version 0.4.0 adds CodeQL-derived standard trait conversion source models beside
-those string-view carriers; no new pack is introduced. Generic Into element
-projections and unmodeled into_bytes remain explicitly omitted.
+See the [source role audit](ROLE_AUDIT.md). I/O source version 0.4.0 keeps the
+precise borrowed string/byte-slice returns and CodeQL standard trait conversion
+models. Generic Into element projections and unmodeled into_bytes remain
+explicit omissions. Workspace enablement and summary binding/completeness
+remain separate from storing this source catalog.
