@@ -3,9 +3,9 @@
   "pack_id": "bifrost.public.packs",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.3.0",
+  "release_version": "0.4.0",
   "artifact_role": "source",
-  "notes": "Prepare the 0.3.0 stream with the corrected public schema-8 generator and unchanged reviewed native recipes. The source catalog adds Node FS JavaScript and Python str models and revises C, PHP, Ruby and Rust models since 0.2.1, requiring a minor version. Catalog changes outside the selected native recipes remain source-only. Compatibility follows the actual native schemas and toolchain requirements; producer version is provenance. Integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
+  "notes": "Prepare the 0.4.0 native successor with eight reviewed direct result-use model families, two explicitly configured Go os procedure-contract/declaration outputs, and the existing pinned PHP builtin declaration recipe. Go source models migrate to schema8; the TypeScript String model separates actual ES5 and ES2019.String declarations without dropping any of its six methods. Stable pack/procedure identities and policy bytes remain unchanged. The PHP recipe retains its pinned specification and source inputs. Preserve the full generated bundle, including schema8 and schema16 content. Compatibility follows actual native schemas and toolchain requirements; producer version is provenance. Fresh generation, artifact integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
   "component": "packs",
   "baseline": "release-baseline.json"
 }
