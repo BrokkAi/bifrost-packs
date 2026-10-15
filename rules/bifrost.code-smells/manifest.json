@@ -6,23 +6,6 @@
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
     {
-      "path": "policies/pending-cleanup-flow.rqlp",
-      "id": "bifrost.correctness.pending-cleanup-flow",
-      "authored_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
-      "resolved_semantic_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
-      "category": "correctness",
-      "supported_languages": [
-        "javascript",
-        "ruby"
-      ],
-      "required_capabilities": [
-        "pending-cleanup-flow"
-      ],
-      "severity_rationale": "An exact exhaustive cleanup outcome that replaces a pending control transfer changes the procedure's externally visible control flow.",
-      "remediation": "Review the cleanup body and the pending transfer together; preserve the intended return, throw, break or continue explicitly when the cleanup should not replace it.",
-      "activation": "opt-in"
-    },
-    {
       "path": "policies/contradictory-condition.rqlp",
       "id": "bifrost.correctness.contradictory-condition",
       "authored_hash": "f0a0b7d900c669e7c88ca343739781a291cfd25ab0431130d9961a513894b3e8",
@@ -228,7 +211,9 @@
       "authored_hash": "04fe7a69f28ebc3d702bf909b01b29bad3def6fe5d6072351337fcd17c0ed867",
       "resolved_semantic_hash": "04fe7a69f28ebc3d702bf909b01b29bad3def6fe5d6072351337fcd17c0ed867",
       "category": "correctness",
-      "supported_languages": ["python"],
+      "supported_languages": [
+        "python"
+      ],
       "required_capabilities": [
         "structural-match",
         "normalized-call-roles"
@@ -242,7 +227,9 @@
       "authored_hash": "0018b743fcf3cd82084af3ae2cdd6f8f59573934ed5f1d33297827911b113287",
       "resolved_semantic_hash": "0018b743fcf3cd82084af3ae2cdd6f8f59573934ed5f1d33297827911b113287",
       "category": "correctness",
-      "supported_languages": ["python"],
+      "supported_languages": [
+        "python"
+      ],
       "required_capabilities": [
         "class-set-type-flow",
         "python-declaration-models",
@@ -747,6 +734,48 @@
       ],
       "severity_rationale": "Direct recursion reachable from public text or byte input can make stack depth depend on input size, but this selector does not prove input progress or exclude explicit budgets.",
       "remediation": "Review the recursive progress and available depth limits; add a deliberate budget or convert the traversal to an iterative form when input can grow without a safe bound."
+    },
+    {
+      "path": "policies/repeated-literal.rqlp",
+      "id": "bifrost.code-smells.repeated-literal",
+      "authored_hash": "c95b8fa15ef290ba8c2cf48a1d10360be7808b38552f8219897be387c0a8ee4a",
+      "resolved_semantic_hash": "c95b8fa15ef290ba8c2cf48a1d10360be7808b38552f8219897be387c0a8ee4a",
+      "category": "maintainability",
+      "supported_languages": [
+        "c",
+        "cpp",
+        "csharp",
+        "php",
+        "python",
+        "ruby",
+        "javascript",
+        "typescript",
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "literal-occurrences"
+      ],
+      "severity_rationale": "Repeated non-trivial scalar identities increase drift risk when a value must be updated consistently.",
+      "remediation": "Name the value once or centralize the shared constant after reviewing whether the repetitions intentionally diverge.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/pending-cleanup-flow.rqlp",
+      "id": "bifrost.correctness.pending-cleanup-flow",
+      "authored_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
+      "resolved_semantic_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "ruby"
+      ],
+      "required_capabilities": [
+        "pending-cleanup-flow"
+      ],
+      "severity_rationale": "An exact exhaustive cleanup outcome that replaces a pending control transfer changes the procedure's externally visible control flow.",
+      "remediation": "Review the cleanup body and the pending transfer together; preserve the intended return, throw, break or continue explicitly when the cleanup should not replace it.",
+      "activation": "opt-in"
     }
   ]
 }
