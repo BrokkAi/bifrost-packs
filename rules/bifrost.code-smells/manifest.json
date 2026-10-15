@@ -757,6 +757,23 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/pending-cleanup-flow.rqlp",
+      "id": "bifrost.correctness.pending-cleanup-flow",
+      "authored_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
+      "resolved_semantic_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "ruby"
+      ],
+      "required_capabilities": [
+        "pending-cleanup-flow"
+      ],
+      "severity_rationale": "An exact exhaustive cleanup outcome that replaces a pending control transfer changes the procedure's externally visible control flow.",
+      "remediation": "Review the cleanup body and the pending transfer together; preserve the intended return, throw, break or continue explicitly when the cleanup should not replace it.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/excessive-nesting.rqlp",
       "id": "bifrost.code-smells.excessive-nesting",
       "authored_hash": "46a957e1b4f92c646f9dfb7fce75fa40e13d7f52ce0e482eb24cdec574f40378",

@@ -1,0 +1,25 @@
+; An exact JavaScript finally or Ruby ensure can replace a pending control transfer.
+; Unknown and incomplete cleanup outcomes are deliberately excluded.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.pending-cleanup-flow"
+  :name "Cleanup overrides pending control flow"
+  :message "cleanup replaces a pending return, throw, break or continue"
+  :severity warning
+  :description "Reports only exact, exhaustive JavaScript finally and Ruby ensure rows where cleanup overrides a pending return, throw, break or continue. Python finally remains incomplete because the current lowering does not publish an exhaustive cleanup-local outcome for every path, even for ordinary finally blocks; Python context managers are also open because __exit__ effects are not proven. C# finally/using and PHP finally remain incomplete because their lowered cleanup paths do not publish an exhaustive cleanup outcome. Unknown or incomplete evidence is never treated as a finding."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "control-flow" "cleanup"]
+  :analysis (analysis
+    :type assertion
+    (bind :name cleanup
+      :query (rql :schema-version 1
+        (filter :where ((verdict eq overrides)
+                        (proof eq exact)
+                        (coverage eq exhaustive))
+          (language javascript ruby
+            (pending-cleanup-flows
+              (procedure-of
+                (callable)))))))
+    (group :name by-cleanup :by (cleanup.id)
+      (aggregate :name violations :op count))
+    (assert :group by-cleanup :value violations :cardinality (exactly 0))))
