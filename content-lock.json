@@ -6274,7 +6274,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "01386f260445ae13794b04c3a5fcc992349de8d4bdef9c6dba3fb92421178a43",
+      "sha256": "4851ee9e4625bca0a89b03f4f14554f32988bed3e838c633820273947ce4c241",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -6415,6 +6415,13 @@
       "path": "rules/bifrost.code-smells/policies/parsing-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/parsing-in-loop.rqlp",
       "sha256": "2d6e2caf4c27f74c3361b2db61350d4b6e0920e4411e7e84728a127c4b498ac0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/pending-cleanup-flow.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/pending-cleanup-flow.rqlp",
+      "sha256": "5dec41270002b1f022ad9bcdc7a3aa2513bf6d1f66bc06c5212e000dbf02fff6",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -9663,5 +9670,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "b705c33491dc97bcebd76056666463cea2db737542f47ab87791fbfe2819f92d"
+  "aggregate_sha256": "e56df6bfd137561e75e15ec5ff4031e9789f755578491ac2446704c70215fbff"
 }
