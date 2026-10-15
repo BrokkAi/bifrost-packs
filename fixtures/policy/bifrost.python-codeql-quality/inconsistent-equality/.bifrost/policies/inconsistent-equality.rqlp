@@ -1,0 +1,36 @@
+; CodeQL: python/ql/src/Classes/Comparisons/EqualsOrNotEquals.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Keep __eq__ and __ne__ implementations consistent across the class hierarchy.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.inconsistent-equality"
+  :name "Inconsistent Python equality and inequality"
+  :message "A class that defines inequality without equality, or defines equality while inheriting a non-delegating inequality implementation, can behave inconsistently."
+  :severity warning
+  :description "Test-derived policy using Python C3 hierarchy facts from engine tests."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (union
+      (filter :where ((fact_kind eq member)
+                      (member_name eq "__ne__")
+                      (mro_rank eq 0)
+                      (coverage eq complete))
+        (mro-members
+          (enclosing-decl
+            (language python
+              (class
+                (has (method :name "__ne__"))
+                (not-has (method :name "__eq__")))))))
+      (filter :where ((fact_kind eq member)
+                      (member_name eq "__eq__")
+                      (mro_rank eq 0)
+                      (inherited_ne_present eq true)
+                      (inherited_ne_delegates eq false)
+                      (coverage eq complete))
+        (mro-members
+          (enclosing-decl
+            (language python
+              (class
+                (has (method :name "__eq__"))
+                (not-has (method :name "__ne__")))))))))))
