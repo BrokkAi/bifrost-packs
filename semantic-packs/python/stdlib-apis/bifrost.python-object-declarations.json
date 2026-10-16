@@ -1,0 +1,350 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-object-declarations",
+  "version": "1.0.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-stdlib-models",
+    "version": "1.0.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.12.0, <3.14.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "CPython builtins.object runtime introspection (dir(object), vars(object))",
+    "revision": "CPython 3.12.15 and 3.13.5; inspected with dir(object) and vars(object)"
+  },
+  "license": "PSF-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-builtins-object",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "cpython",
+            "version": ">=3.12.0, <3.14.0"
+          },
+          "targets": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.builtins.object",
+            "name": "builtins.object",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.builtins.object.class",
+            "owner": "type.python.builtins.object",
+            "name": "__class__",
+            "member_kind": "field",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__class__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.delattr",
+            "owner": "type.python.builtins.object",
+            "name": "__delattr__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__delattr__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.dir",
+            "owner": "type.python.builtins.object",
+            "name": "__dir__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__dir__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.doc",
+            "owner": "type.python.builtins.object",
+            "name": "__doc__",
+            "member_kind": "field",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__doc__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.eq",
+            "owner": "type.python.builtins.object",
+            "name": "__eq__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__eq__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.format",
+            "owner": "type.python.builtins.object",
+            "name": "__format__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__format__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.ge",
+            "owner": "type.python.builtins.object",
+            "name": "__ge__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__ge__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.getattribute",
+            "owner": "type.python.builtins.object",
+            "name": "__getattribute__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__getattribute__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.getstate",
+            "owner": "type.python.builtins.object",
+            "name": "__getstate__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__getstate__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.gt",
+            "owner": "type.python.builtins.object",
+            "name": "__gt__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__gt__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.hash",
+            "owner": "type.python.builtins.object",
+            "name": "__hash__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__hash__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.init",
+            "owner": "type.python.builtins.object",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__init__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.init-subclass",
+            "owner": "type.python.builtins.object",
+            "name": "__init_subclass__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__init_subclass__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.le",
+            "owner": "type.python.builtins.object",
+            "name": "__le__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__le__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.lt",
+            "owner": "type.python.builtins.object",
+            "name": "__lt__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__lt__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.ne",
+            "owner": "type.python.builtins.object",
+            "name": "__ne__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__ne__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.new",
+            "owner": "type.python.builtins.object",
+            "name": "__new__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__new__"
+            },
+            "is_static": true
+          },
+          {
+            "id": "member.python.builtins.object.reduce",
+            "owner": "type.python.builtins.object",
+            "name": "__reduce__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__reduce__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.reduce-ex",
+            "owner": "type.python.builtins.object",
+            "name": "__reduce_ex__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__reduce_ex__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.repr",
+            "owner": "type.python.builtins.object",
+            "name": "__repr__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__repr__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.setattr",
+            "owner": "type.python.builtins.object",
+            "name": "__setattr__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__setattr__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.sizeof",
+            "owner": "type.python.builtins.object",
+            "name": "__sizeof__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__sizeof__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.str",
+            "owner": "type.python.builtins.object",
+            "name": "__str__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__str__"
+            }
+          },
+          {
+            "id": "member.python.builtins.object.subclasshook",
+            "owner": "type.python.builtins.object",
+            "name": "__subclasshook__",
+            "member_kind": "method",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins",
+              "symbol": "object.__subclasshook__"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
