@@ -1201,6 +1201,23 @@
       ],
       "severity_rationale": "A lambda that only forwards arguments adds indirection and can obscure the wrapped callable\u2019s signature.",
       "remediation": "Pass the wrapped callable directly when no transformation is needed."
+    },
+    {
+      "path": "policies/iter-returns-non-iterator.rqlp",
+      "id": "bifrost.python-codeql-quality.iter-returns-non-iterator",
+      "authored_hash": "c61ea985019a390419f604c1c0e2fa1e6143aee20d37c1cd58d3eaa5d1d6ea93",
+      "resolved_semantic_hash": "c61ea985019a390419f604c1c0e2fa1e6143aee20d37c1cd58d3eaa5d1d6ea93",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "python-class-hierarchy"
+      ],
+      "severity_rationale": "An __iter__ method must return an object implementing both iterator protocol methods; otherwise iterating the value raises TypeError.",
+      "remediation": "Return a valid iterator, or implement both __iter__ and __next__ on the returned class."
     }
   ]
 }

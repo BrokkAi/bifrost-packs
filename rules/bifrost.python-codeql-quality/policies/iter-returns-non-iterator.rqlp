@@ -1,0 +1,21 @@
+; CodeQL: python/ql/src/Functions/IterReturnsNonIterator.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Flag classes returned by __iter__ that do not implement the iterator protocol.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.iter-returns-non-iterator"
+  :name "Python __iter__ returns a non-iterator"
+  :message "The value returned by __iter__ does not implement the iterator protocol."
+  :severity error
+  :description "CodeQL parity policy using complete Python iterator return protocol facts."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq iterator_return_protocol)
+                      (outcome eq non_iterator)
+                      (proof eq proven)
+                      (completeness eq complete)
+                      (owner_id is-not-null))
+        (python-iterator-return-protocol
+          (procedure-of
+            (enclosing-decl (language python (method :name "__iter__")))))))))
