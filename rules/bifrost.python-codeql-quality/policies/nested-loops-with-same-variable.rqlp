@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Statements/NestedLoopsSameVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a nested for target reused from an enclosing loop when the outer target is read outside the inner loop.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.nested-loops-with-same-variable"
+  :name "Python nested loops reuse a target"
+  :message "Nested loop reuses its enclosing loop target."
+  :severity warning
+  :description "Reports a nested for loop targeting the same resolved lexical variable as an enclosing for loop when the variable is read in the outer loop outside the inner loop."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq nested_loop_same_variable)
+                    (nested_loop_has_outer_use eq true))
+      (python-variable-nested-loops
+        (python-variable-of (language python (bindings))))))))
