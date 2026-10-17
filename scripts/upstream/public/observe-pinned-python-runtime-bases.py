@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import sys
 import tempfile
 
@@ -147,8 +148,15 @@ def collect_runtime_classes() -> list[dict[str, object]]:
 
 
 def stable_type_id(canonical_name: str) -> str:
-    # This follows the existing Python declaration identity convention.
-    return f"type.python.{canonical_name}"
+    # Stable model IDs are lowercase ASCII; Python names retain their case.
+    if not canonical_name.isascii():
+        raise ObservationError(f"non-ASCII runtime class name: {canonical_name!r}")
+    identifier = f"type.python.{canonical_name.lower()}"
+    if len(identifier) > 256 or re.fullmatch(
+        r"[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?", identifier
+    ) is None:
+        raise ObservationError(f"runtime class has no valid stable ID: {canonical_name!r}")
+    return identifier
 
 
 def build_outputs(
@@ -156,10 +164,18 @@ def build_outputs(
     executable_sha256: str,
     script_sha256: str,
 ) -> tuple[dict[str, object], dict[str, object]]:
-    id_by_name = {
-        record["canonical_name"]: stable_type_id(record["canonical_name"])
-        for record in records
-    }
+    id_by_name: dict[str, str] = {}
+    name_by_id: dict[str, str] = {}
+    for record in records:
+        name = record["canonical_name"]
+        identifier = stable_type_id(name)
+        if identifier in name_by_id:
+            raise ObservationError(
+                f"runtime class ID collision: {name_by_id[identifier]!r} and "
+                f"{name!r} map to {identifier!r}"
+            )
+        id_by_name[name] = identifier
+        name_by_id[identifier] = name
     source = (
         "CPython runtime observation of type objects exported by vars(builtins), "
         "closed over their actual ordered __bases__; no workspace imports"

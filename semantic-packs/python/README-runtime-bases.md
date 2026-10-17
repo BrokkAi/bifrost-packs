@@ -44,21 +44,26 @@ select a release version. The current pinned native producer predates schema
 before native release compilation can consume this exact generated source with
 its reviewed authored-model spec.
 
-Two isolated executions of the same corrected observer produced byte-identical
-model and raw-observation files. An independent file review compared both
-outputs with the earlier observation and accepted the exact alias and provenance
-changes. This is repeatability evidence from one observer implementation, not
-two independent implementations. The model contains 96 classes and 96 ordered
-base edges, with 98 builtin bindings including aliases. An independent
-calculation over the retained model graph reproduced all 96 observed MROs. This
-establishes retained graph correspondence; it is not execution of analyzed
-projects. Alias bindings remain recorded observations, not a claim that an
-engine consumer already resolves every alias.
+Stable model IDs encode the observed ASCII canonical name in lowercase, while
+class names, aliases and locator symbols preserve Python's case-sensitive
+spelling. The observer checks the shared identifier grammar and length and
+rejects ID collisions before writing either output. Definitions and declared
+base references use the same canonical-name-to-ID map.
+
+After the ID correction, one fresh isolated execution produced the current
+model and observations. A file comparison with the earlier observation found
+identical runtime classes, ordered bases, MROs and aliases; only the actual
+observer hash changed in the raw evidence. Model records changed only their
+IDs and declared references, with the new observer hash retained in provenance.
+All 96 IDs are unique and every base reference belongs to that set. The model
+contains 96 classes, 96 ordered base edges and 98 builtin bindings. These checks
+establish observation and derivation consistency, not semantic compiler or
+engine consumer acceptance.
 
 Corrected observer SHA-256:
-`794214eea07a214a1c7fd7975d9dee7cdd80466147ecaaf649b4b0b4575ac52e`. The
+`11e34218fd9650a138b48ea1b8c887ce36d260fae01acfc8db6cdf6734b8b979`. The
 reviewed model SHA-256 is
-`f314ebb81d9bd6908f1fd66432a606f91d2a884e9d353e164988a89065f79e51`; its paired
+`31374ef33b33e8640eb89a309a852404ed088d2ab37af0fd6cac1c056715b240`; its paired
 raw-observation SHA-256 is
-`917774472d633900f95fc3ab7f9cec6896816816c13707584cc25f87895c298f`. Native
+`7a7e8dd21b40960d4e7f3cf433b425d0f60fbc92c6f0c342ed21716dc7d7a643`. Native
 schema-17 compiler and consumer qualification remain pending.
