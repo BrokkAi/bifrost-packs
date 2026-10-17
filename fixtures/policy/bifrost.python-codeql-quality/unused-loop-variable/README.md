@@ -1,6 +1,6 @@
 # `py/unused-loop-variable`
 
-Reports lexical variable cases covered by the pinned CodeQL query `Variables/SuspiciousUnusedLoopIterationVariable.ql`. The fixture contains an explicit positive and realistic near miss, plus the decisive CodeQL upstream test source(s).
+Reports lexical variable cases covered by the pinned CodeQL query `Variables/SuspiciousUnusedLoopIterationVariable.ql`. The fixture contains the decisive upstream positives and local near-miss controls. Despite its legacy filename, `positive.py` is an implicit-repeat control: its single `consume(1)` statement is excluded by the upstream query's `implicit_repeat` predicate and is expected to remain clean. `near_miss.py` reads the loop target and is also expected to remain clean.
 
 ## Validation
 
