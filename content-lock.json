@@ -1415,7 +1415,7 @@
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/README.md",
       "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/README.md",
-      "sha256": "c0be181f6338a0a17fe1ba6434075dc863a29368b03211166fb6f39ff68a6b93",
+      "sha256": "5656cb3bfc981507812e59642d096dc449252d75e6a22069bee0ecdb47c9fe72",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1435,19 +1435,29 @@
     },
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/upstream_expected.txt",
-      "source_path": "github/codeql/python/ql/test/query-tests/Expressions/Arguments/WrongNumberArgumentsInCall.expected",
+      "source_path": "python/ql/test/query-tests/Expressions/Arguments/WrongNumberArgumentsInCall.expected",
       "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
       "sha256": "f5494900d272e58d8defa8331aac194b3f1870be9fa7ff9ca7d1d12e26d2b1b4",
       "classification": "public",
-      "license": "MIT"
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/Arguments/WrongNumberArgumentsInCall.expected"
+      }
     },
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/upstream_wrong_arguments.py",
-      "source_path": "github/codeql/python/ql/test/query-tests/Expressions/Arguments/wrong_arguments.py",
+      "source_path": "python/ql/test/query-tests/Expressions/Arguments/wrong_arguments.py",
       "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
       "sha256": "586afabccc94cbf9eb06bff1031ccf10dd54a6cc86cbe682cbfc450da8434e6b",
       "classification": "public",
-      "license": "MIT"
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/Arguments/wrong_arguments.py"
+      }
     },
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/use_mox.py",
@@ -1466,7 +1476,7 @@
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/README.md",
       "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/README.md",
-      "sha256": "1995b36da82acee0d4a15904a0b9e360656f9ee29749bb91f1708ef359891e56",
+      "sha256": "c4018273aade03de91d20ace1b76985fd64fc06aba364d38ca68e45e2e7b6ee2",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -1486,19 +1496,29 @@
     },
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/upstream_expected.txt",
-      "source_path": "github/codeql/python/ql/test/query-tests/Classes/Arguments/WrongNumberArgumentsInClassInstantiation.expected",
+      "source_path": "python/ql/test/query-tests/Classes/Arguments/WrongNumberArgumentsInClassInstantiation.expected",
       "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
       "sha256": "c656a4f8146c7f3d7ae4d2760bf06377142cce39cc35611e15af419958a5c604",
       "classification": "public",
-      "license": "MIT"
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/Arguments/WrongNumberArgumentsInClassInstantiation.expected"
+      }
     },
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/upstream_wrong_arguments.py",
-      "source_path": "github/codeql/python/ql/test/query-tests/Classes/Arguments/wrong_arguments.py",
+      "source_path": "python/ql/test/query-tests/Classes/Arguments/wrong_arguments.py",
       "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
       "sha256": "4c683717a7e193d57f7d5b84a72d4b9948eb56e5b1cf589916238fe432e541d2",
       "classification": "public",
-      "license": "MIT"
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/Arguments/wrong_arguments.py"
+      }
     },
     {
       "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/use_mox.py",
@@ -10432,5 +10452,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "13f498c1e78ae0b09d2598d1fdda87f17abad1f4ae486a13ca1e030e21ce188a"
+  "aggregate_sha256": "d78f1e5e9f55eadd3593d9b3d0fa02e70d918a95756d360f3989714a3a7ee688"
 }

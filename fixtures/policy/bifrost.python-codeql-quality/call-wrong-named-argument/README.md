@@ -6,6 +6,8 @@ Validated with Bifrost 0.13.1, build identity 1cca9d2547b617630111c98c2d09ca01e7
 
 ## Upstream gate
 
+Run completion: Inconclusive (`partial_discovery`). The expected-row counts below do not establish complete coverage of the test workspace.
+
 - Expected: 5; found: 5; abstained: 0; false positives: 0.
 - Expected upstream finding lines: `upstream_wrong_arguments.py:59` (upstream line 57), `upstream_wrong_arguments.py:60` (upstream line 58), `upstream_wrong_arguments.py:61` (upstream line 59), `upstream_wrong_arguments.py:105` (upstream line 103), `upstream_wrong_arguments.py:117` (upstream line 115).
 - True positives beyond CodeQL: none among upstream cases; the authored local positive is a synthetic regression case.
@@ -15,6 +17,6 @@ Validated with Bifrost 0.13.1, build identity 1cca9d2547b617630111c98c2d09ca01e7
 
 `positive_and_near_misses.py:5` is the authored keyword-error positive.
 
-- `use_mox.py` imports `mox` and uses only supported keywords; it stays clean.
+- `use_mox.py` imports `mox` and calls a locally defined callable with supported keywords; the recorded run emits no finding for it. This control does not qualify Mox API or mocked-call behavior.
 - Accepted keyword calls in `positive_and_near_misses.py` stay clean.
 - `upstream_wrong_arguments.py` includes the decisive upstream test and realistic near misses. Its file header records the GitHub CodeQL source path, pinned commit, and MIT attribution.
