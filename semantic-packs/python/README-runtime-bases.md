@@ -14,7 +14,11 @@ records the interpreter and observer hashes in the existing provenance strings.
 The separate raw-observation file preserves each selected class's canonical
 runtime name, builtin aliases, ordered direct bases, and runtime MRO. It records
 object identity by grouping actual aliases, without serializing process memory
-addresses.
+addresses. In the authored model, each alias is emitted as the qualified name
+`builtins.<observed binding>` from the actual `vars(builtins)` entry, excluding
+an alias identical to the class's canonical name. Alias ownership is never
+inferred from the class basename. The raw observation keeps the original
+unqualified binding names and all observed bases/MRO unchanged.
 
 From the repository root, reproduce the observation with the pinned interpreter:
 
@@ -40,11 +44,21 @@ select a release version. The current pinned native producer predates schema
 before native release compilation can consume this exact generated source with
 its reviewed authored-model spec.
 
-Two isolated executions produced byte-identical model and raw-observation files.
-The model contains 96 classes and 96 ordered base edges, with 98 builtin
-bindings including aliases. An independent calculation over the retained model
-graph reproduced all 96 observed MROs. This establishes the retained graph
-correspondence; it is not execution of analyzed projects or two independent
-interpreter implementations. Alias bindings remain recorded observations, not a
-claim that an engine consumer already resolves every alias. Native schema-17
-compiler and consumer qualification are still pending.
+Two isolated executions of the same corrected observer produced byte-identical
+model and raw-observation files. An independent file review compared both
+outputs with the earlier observation and accepted the exact alias and provenance
+changes. This is repeatability evidence from one observer implementation, not
+two independent implementations. The model contains 96 classes and 96 ordered
+base edges, with 98 builtin bindings including aliases. An independent
+calculation over the retained model graph reproduced all 96 observed MROs. This
+establishes retained graph correspondence; it is not execution of analyzed
+projects. Alias bindings remain recorded observations, not a claim that an
+engine consumer already resolves every alias.
+
+Corrected observer SHA-256:
+`794214eea07a214a1c7fd7975d9dee7cdd80466147ecaaf649b4b0b4575ac52e`. The
+reviewed model SHA-256 is
+`f314ebb81d9bd6908f1fd66432a606f91d2a884e9d353e164988a89065f79e51`; its paired
+raw-observation SHA-256 is
+`917774472d633900f95fc3ab7f9cec6896816816c13707584cc25f87895c298f`. Native
+schema-17 compiler and consumer qualification remain pending.

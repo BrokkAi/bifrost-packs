@@ -176,8 +176,11 @@ def build_outputs(
     types = []
     for record in records:
         canonical_name = record["canonical_name"]
-        short_name = canonical_name.rsplit(".", 1)[-1]
-        aliases = [name for name in record["builtin_names"] if name != short_name]
+        aliases = [
+            qualified_alias
+            for name in record["builtin_names"]
+            if (qualified_alias := f"builtins.{name}") != canonical_name
+        ]
         types.append(
             {
                 "id": id_by_name[canonical_name],

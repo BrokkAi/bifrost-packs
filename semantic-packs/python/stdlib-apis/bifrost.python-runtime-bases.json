@@ -17,7 +17,7 @@
     "version": "1.0.0"
   },
   "provenance": {
-    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 58a0ce21d034a93d0e4f89ece33f1e1e38f57c11441450940e06088d5d3db7c1; input selection: vars(builtins) type bindings plus transitive actual __bases__",
+    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 794214eea07a214a1c7fd7975d9dee7cdd80466147ecaaf649b4b0b4575ac52e; input selection: vars(builtins) type bindings plus transitive actual __bases__",
     "source": "CPython runtime observation of type objects exported by vars(builtins), closed over their actual ordered __bases__; no workspace imports"
   },
   "safety": {
@@ -42,7 +42,7 @@
         "types": [
           {
             "aliases": [
-              "__loader__"
+              "builtins.__loader__"
             ],
             "id": "type.python._frozen_importlib.BuiltinImporter",
             "locator": {
@@ -830,8 +830,8 @@
           },
           {
             "aliases": [
-              "EnvironmentError",
-              "IOError"
+              "builtins.EnvironmentError",
+              "builtins.IOError"
             ],
             "id": "type.python.builtins.OSError",
             "locator": {
