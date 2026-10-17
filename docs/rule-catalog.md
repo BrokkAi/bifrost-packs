@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 226 unique rule IDs from 12 manifest packs.
+This catalog lists 233 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -139,6 +139,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python inconsistent method resolution order](../rules/bifrost.python-codeql-quality/policies/inconsistent-mro.rqlp) | `bifrost.python-codeql-quality.inconsistent-mro` | python | correctness | error |
 | [Python initializer calls an overridden method](../rules/bifrost.python-codeql-quality/policies/init-calls-subclass.rqlp) | `bifrost.python-codeql-quality.init-calls-subclass` | python | correctness | warning |
 | [Python iterator does not return itself](../rules/bifrost.python-codeql-quality/policies/iter-returns-non-self.rqlp) | `bifrost.python-codeql-quality.iter-returns-non-self` | python | correctness | error |
+| [Python local shadows a builtin](../rules/bifrost.python-codeql-quality/policies/local-shadows-builtin.rqlp) | `bifrost.python-codeql-quality.local-shadows-builtin` | python | quality | warning |
+| [Python local shadows a global](../rules/bifrost.python-codeql-quality/policies/local-shadows-global.rqlp) | `bifrost.python-codeql-quality.local-shadows-global` | python | quality | warning |
 | [Missing call to Python superclass __del__](../rules/bifrost.python-codeql-quality/policies/missing-call-to-delete.rqlp) | `bifrost.python-codeql-quality.missing-call-to-delete` | python | correctness | error |
 | [Missing call to Python superclass __init__](../rules/bifrost.python-codeql-quality/policies/missing-call-to-init.rqlp) | `bifrost.python-codeql-quality.missing-call-to-init` | python | correctness | error |
 | [Public Python declaration is missing a docstring](../rules/bifrost.python-codeql-quality/policies/missing-docstring.rqlp) | `bifrost.python-codeql-quality.missing-docstring` | python | quality | warning |
@@ -147,6 +149,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python mutable default modification](../rules/bifrost.python-codeql-quality/policies/modification-of-default-value.rqlp) | `bifrost.python-codeql-quality.modification-of-default-value` | python | quality | warning |
 | [Multiple calls to Python superclass __del__](../rules/bifrost.python-codeql-quality/policies/multiple-calls-to-delete.rqlp) | `bifrost.python-codeql-quality.multiple-calls-to-delete` | python | correctness | warning |
 | [Multiple calls to Python superclass __init__](../rules/bifrost.python-codeql-quality/policies/multiple-calls-to-init.rqlp) | `bifrost.python-codeql-quality.multiple-calls-to-init` | python | correctness | warning |
+| [Python nested loop target is reused](../rules/bifrost.python-codeql-quality/policies/nested-loops-with-same-variable-reused.rqlp) | `bifrost.python-codeql-quality.nested-loops-with-same-variable-reused` | python | quality | error |
+| [Python nested loops reuse a target](../rules/bifrost.python-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.python-codeql-quality.nested-loops-with-same-variable` | python | quality | warning |
 | [First parameter of a class method is not named cls](../rules/bifrost.python-codeql-quality/policies/not-named-cls.rqlp) | `bifrost.python-codeql-quality.not-named-cls` | python | quality | warning |
 | [First parameter of an instance method is not named self](../rules/bifrost.python-codeql-quality/policies/not-named-self.rqlp) | `bifrost.python-codeql-quality.not-named-self` | python | quality | warning |
 | [Python old-style octal literal](../rules/bifrost.python-codeql-quality/policies/old-style-octal-literal.rqlp) | `bifrost.python-codeql-quality.old-style-octal-literal` | python | quality | warning |
@@ -183,6 +187,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Unnecessary lambda](../rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp) | `bifrost.python-codeql-quality.unnecessary-lambda` | python | quality | warning |
 | [Python unsafe cyclic import](../rules/bifrost.python-codeql-quality/policies/unsafe-cyclic-import.rqlp) | `bifrost.python-codeql-quality.unsafe-cyclic-import` | python | correctness | error |
 | [Python unused global variable](../rules/bifrost.python-codeql-quality/policies/unused-global-variable.rqlp) | `bifrost.python-codeql-quality.unused-global-variable` | python | quality | warning |
+| [Python unused local variable](../rules/bifrost.python-codeql-quality/policies/unused-local-variable.rqlp) | `bifrost.python-codeql-quality.unused-local-variable` | python | quality | warning |
+| [Python unused loop variable](../rules/bifrost.python-codeql-quality/policies/unused-loop-variable.rqlp) | `bifrost.python-codeql-quality.unused-loop-variable` | python | quality | error |
+| [Python unused parameter](../rules/bifrost.python-codeql-quality/policies/unused-parameter.rqlp) | `bifrost.python-codeql-quality.unused-parameter` | python | quality | warning |
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | warning |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
