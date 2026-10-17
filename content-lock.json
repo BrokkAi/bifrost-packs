@@ -1406,6 +1406,108 @@
       }
     },
     {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/.bifrost/policies/call-wrong-named-argument.rqlp",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/.bifrost/policies/call-wrong-named-argument.rqlp",
+      "sha256": "d3b4c9ee2299089117582fb3fbec98111528f01efd0653182b6a0712c6f43df2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/README.md",
+      "sha256": "c0be181f6338a0a17fe1ba6434075dc863a29368b03211166fb6f39ff68a6b93",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/positive_and_near_misses.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/positive_and_near_misses.py",
+      "sha256": "c740ff768eadafb9cafe059da4f90c4fdc3625f81d0fe9bb74d0257406258ba7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/pyproject.toml",
+      "sha256": "6c42f737b8a4eed1dbd2f4f49cc017c2559daa3f9e598e914f0f260a740d432c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/upstream_expected.txt",
+      "source_path": "github/codeql/python/ql/test/query-tests/Expressions/Arguments/WrongNumberArgumentsInCall.expected",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+      "sha256": "f5494900d272e58d8defa8331aac194b3f1870be9fa7ff9ca7d1d12e26d2b1b4",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/upstream_wrong_arguments.py",
+      "source_path": "github/codeql/python/ql/test/query-tests/Expressions/Arguments/wrong_arguments.py",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+      "sha256": "586afabccc94cbf9eb06bff1031ccf10dd54a6cc86cbe682cbfc450da8434e6b",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/use_mox.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/use_mox.py",
+      "sha256": "a34f2f92a25292a547eebf940dc911baa7ca6c6b64e1de10025a23468604f3ec",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/.bifrost/policies/call-wrong-named-class-argument.rqlp",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/.bifrost/policies/call-wrong-named-class-argument.rqlp",
+      "sha256": "67ae02458f26ab63d0473feb8235cc48158b32b0d910dad56199fd3d36125e3c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/README.md",
+      "sha256": "1995b36da82acee0d4a15904a0b9e360656f9ee29749bb91f1708ef359891e56",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/positive_and_near_misses.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/positive_and_near_misses.py",
+      "sha256": "1f4d087b3cf2da83245bfd8eff01bb11bc13e78b9dfa701b965817617dccfdd2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/pyproject.toml",
+      "sha256": "6c42f737b8a4eed1dbd2f4f49cc017c2559daa3f9e598e914f0f260a740d432c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/upstream_expected.txt",
+      "source_path": "github/codeql/python/ql/test/query-tests/Classes/Arguments/WrongNumberArgumentsInClassInstantiation.expected",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+      "sha256": "c656a4f8146c7f3d7ae4d2760bf06377142cce39cc35611e15af419958a5c604",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/upstream_wrong_arguments.py",
+      "source_path": "github/codeql/python/ql/test/query-tests/Classes/Arguments/wrong_arguments.py",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+      "sha256": "4c683717a7e193d57f7d5b84a72d4b9948eb56e5b1cf589916238fe432e541d2",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/use_mox.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-class-argument/use_mox.py",
+      "sha256": "027faa3abfdb697bbc70c6568a27ea187f4d1296cc0369e8bf231232eda42000",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "fixtures/policy/bifrost.python-codeql-quality/commented-out-code/.bifrost/policies/commented-out-code.rqlp",
       "source_path": "rules/bifrost.python-codeql-quality/policies/commented-out-code.rqlp",
       "sha256": "378e62d9b9685d2af614de3c8790c1ea85daf145520d40e586c43caeba5d833a",
@@ -7627,7 +7729,7 @@
     {
       "path": "rules/bifrost.python-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.python-codeql-quality/manifest.json",
-      "sha256": "def36f3a3d545b20ad74785c461cc7ca569ef04e7fb6e3e2e604a422d44aa228",
+      "sha256": "69123fb06ea9cf9b2e256145b248874f0c35a5462a42952c812cc55327f35b41",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7649,6 +7751,20 @@
       "path": "rules/bifrost.python-codeql-quality/policies/attribute-shadows-method.rqlp",
       "source_path": "rules/bifrost.python-codeql-quality/policies/attribute-shadows-method.rqlp",
       "sha256": "8ca283ae7c93dafd0c0e53fc83648a38ea91acda2c1f310aaab484fa7e925a60",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.python-codeql-quality/policies/call-wrong-named-argument.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/call-wrong-named-argument.rqlp",
+      "sha256": "d3b4c9ee2299089117582fb3fbec98111528f01efd0653182b6a0712c6f43df2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.python-codeql-quality/policies/call-wrong-named-class-argument.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/call-wrong-named-class-argument.rqlp",
+      "sha256": "67ae02458f26ab63d0473feb8235cc48158b32b0d910dad56199fd3d36125e3c",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -10316,5 +10432,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "bd5fbf0260fac960569d38d3697bfe162406a2f3901aacd760ddd19e346cae45"
+  "aggregate_sha256": "13f498c1e78ae0b09d2598d1fdda87f17abad1f4ae486a13ca1e030e21ce188a"
 }

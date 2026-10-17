@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 233 unique rule IDs from 12 manifest packs.
+This catalog lists 235 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -116,6 +116,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Assert of literal constant](../rules/bifrost.python-codeql-quality/policies/assert-literal-constant.rqlp) | `bifrost.python-codeql-quality.assert-literal-constant` | python | correctness | warning |
 | [Python asserts a tuple](../rules/bifrost.python-codeql-quality/policies/asserts-tuple.rqlp) | `bifrost.python-codeql-quality.asserts-tuple` | python | correctness | warning |
 | [Superclass attribute shadows Python descendant method](../rules/bifrost.python-codeql-quality/policies/attribute-shadows-method.rqlp) | `bifrost.python-codeql-quality.attribute-shadows-method` | python | correctness | error |
+| [Python call keyword has no matching parameter](../rules/bifrost.python-codeql-quality/policies/call-wrong-named-argument.rqlp) | `bifrost.python-codeql-quality.call-wrong-named-argument` | python | correctness | error |
+| [Python constructor keyword has no matching parameter](../rules/bifrost.python-codeql-quality/policies/call-wrong-named-class-argument.rqlp) | `bifrost.python-codeql-quality.call-wrong-named-class-argument` | python | correctness | error |
 | [Commented-out Python code](../rules/bifrost.python-codeql-quality/policies/commented-out-code.rqlp) | `bifrost.python-codeql-quality.commented-out-code` | python | quality | warning |
 | [Maybe missing self in comparison](../rules/bifrost.python-codeql-quality/policies/comparison-missing-self.rqlp) | `bifrost.python-codeql-quality.comparison-missing-self` | python | correctness | warning |
 | [Python comparison of constants](../rules/bifrost.python-codeql-quality/policies/comparison-of-constants.rqlp) | `bifrost.python-codeql-quality.comparison-of-constants` | python | correctness | warning |
