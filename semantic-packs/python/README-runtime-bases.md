@@ -96,13 +96,25 @@ An independent native check verified the public/private identities, actual
 ordered bases and MROs, unchanged prior records, and absence of extra classes.
 The source now has 104 classes, 106 ordered base edges and 103 export bindings.
 
-The earlier 1.1.0 source passed local native-bundle verification and the same
-four-class consumer query: all three TestCase import forms were complete and
-the dict control remained complete. Its full Bottle replay removed 46 prior
-roots but retained 11; all six requests were incomplete and unscorable despite
-observed scoped 0/1/0 cold/warm counts. Those results do not qualify the new
-1.2.0 source: native compilation, bundle verification, consumer qualification
-and a new full-repository replay remain pending.
+The 1.2.0 source passed local native-bundle generation and integrity verification:
+all 104 class records agree with the authored model, all 97 prior compiled
+records remain exactly unchanged, and there are no rejected or suppressed
+records. The same seven-class consumer probe resolved all three MutableMapping
+import forms and both Thread import forms to their canonical classes with
+complete, ordered ancestry claims; the TestCase and dict controls remained
+complete. These checks used the admitted Bifrost consumer at
+`ba7a692dbd0b8a02d0d6e68ca03f823d9c5b52e7`.
+
+One unchanged full-repository Bottle replay qualified all three native variants
+and selected the local 1.2.0 pack in all six cold/warm policy requests. Compared
+with the corresponding 1.1.0 requests, each diagnostic set fell from 11 to 6:
+the same five roots were removed, the same six were retained, and none was
+added. Full retained diagnostic records were unchanged, with no diagnostic
+truncation. Observed scoped counts remained 0/1/0 in both modes, but all six
+requests were incomplete and none was scorable. This is bounded bundle and
+consumer evidence, not whole-repository Bottle policy qualification.
+
+The native bundle remains local and unpublished.
 
 This source update does not select a release version or generation job, modify
 `native-generation.json`, publish artifacts, or enable a scanner model by default.
