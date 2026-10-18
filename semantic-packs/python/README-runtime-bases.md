@@ -103,8 +103,24 @@ Their actual chain ends at the already observed `builtins.object`. The source
 now has 108 classes, 110 ordered base edges and 104 export bindings. All newly
 observed canonical owner modules passed the selected-source origin/hash guards.
 
-Compilation, native-bundle generation, consumer validation and full Bottle
-replay of 1.3.0 remain pending.
+Local 1.3.0 native-bundle generation and integrity verification completed with
+108 class records. All 104 prior compiled records are exactly unchanged, with
+no rejected or suppressed records. Two public consumer queries retained complete
+ancestry for module-level and function-local WSGI imports (five actual claims
+each) and a dict control (two claims), using Bifrost consumer
+`b55dfcfa8afa764748e7c1e259fec72ee3e42925`. The original final verifier rejected
+the supported function-local qualified-name format; a separately authorized
+file-only correction checked exact names against unchanged saved outputs. The
+original failed receipt remains preserved; no regeneration or requery occurred.
+
+One unchanged full-repository Bottle replay selected local 1.3.0 in all six
+cold/warm requests. Against the same-consumer 1.2.0 baseline, each diagnostic
+list fell from six to five: only `bottle.py:3425` was removed, no diagnostic was
+added, and the retained records were unchanged. Scoped counts remained 0/1/0
+in both modes, but every request was incomplete and none was scorable. Native
+qualification of the three variants and this bounded diagnostic reduction do
+not establish whole-repository policy qualification or runtime member coverage.
+The bundle remains local and unpublished.
 
 The following bounded consumer evidence belongs to the prior 1.2.0 source.
 The 1.2.0 source passed local native-bundle generation and integrity verification:
