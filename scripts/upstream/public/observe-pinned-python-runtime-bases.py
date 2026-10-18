@@ -3,7 +3,7 @@
 
 This script intentionally imports only the Python standard library. It inspects
 the executing interpreter's builtin type exports and selected TestCase,
-MutableMapping and Thread exports, closed over actual ordered ``__bases__``.
+MutableMapping, Thread and WSGIRequestHandler exports, closed over actual ordered ``__bases__``.
 It never selects workspace or typing classes. Frozen ABC modules are verified
 as frozen objects; companion file pins do not attest executed frozen code.
 """
@@ -28,9 +28,9 @@ EXPECTED_EXECUTABLE_SHA256 = (
     "889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9"
 )
 PACK_ID = "bifrost.python-runtime-bases"
-PACK_VERSION = "1.2.0"
+PACK_VERSION = "1.3.0"
 PRODUCER_NAME = "bifrost-cpython-runtime-base-observer"
-PRODUCER_VERSION = "1.2.0"
+PRODUCER_VERSION = "1.3.0"
 SHARD_ID = "declarations.python-runtime-bases"
 SELECTED_STDLIB_SOURCES = {
     "threading": (
@@ -44,6 +44,26 @@ SELECTED_STDLIB_SOURCES = {
     "unittest.case": (
         "unittest/case.py",
         "ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481",
+    ),
+    "wsgiref": (
+        "wsgiref/__init__.py",
+        "c30e144025a63d267778d92f2f066fa592b476e789d888f79b96c059bf0bef60",
+    ),
+    "socketserver": (
+        "socketserver.py",
+        "ecbbe1a633801460399a8f10b39007aa0e13cdbdad507e39414000f097b769b5",
+    ),
+    "http": (
+        "http/__init__.py",
+        "d5747ca51f40e43b2366ce430154af22ce02d8d5972a6e81afb54ca946f684c0",
+    ),
+    "http.server": (
+        "http/server.py",
+        "253cc04a379f2a42dc72c33a9a67218ecda13b54995b72c3f59e83d1abe8e9a3",
+    ),
+    "wsgiref.simple_server": (
+        "wsgiref/simple_server.py",
+        "d6b820a6addc837717989064565d5be0c18af67337700ad48b317825eb4a13d8",
     ),
 }
 FROZEN_COMPANION_SOURCES = {
@@ -62,6 +82,7 @@ SELECTED_EXPORTS = (
     ("collections.abc", "MutableMapping"),
     ("_collections_abc", "MutableMapping"),
     ("threading", "Thread"),
+    ("wsgiref.simple_server", "WSGIRequestHandler"),
 )
 SELECTION = (
     "all type exports in vars(builtins), plus exactly "
@@ -137,7 +158,7 @@ def verify_stdlib_sources(
 
 
 def inspect_selected_modules() -> tuple[dict[str, object], dict[str, object]]:
-    """Pin fresh TestCase/Thread sources before importing any selected module."""
+    """Pin fresh selected and canonical-owner sources before importing modules."""
     if not sys.flags.isolated or not sys.dont_write_bytecode:
         raise ObservationError("selected stdlib observation requires -I -B")
     # Importing sysconfig itself loads threading on the pinned interpreter.
@@ -152,7 +173,7 @@ def inspect_selected_modules() -> tuple[dict[str, object], dict[str, object]]:
 
     if Path(sysconfig.get_path("stdlib")).resolve(strict=True) != stdlib_root:
         raise ObservationError("CPython runtime stdlib directory and sysconfig root disagree")
-    for name in ("threading", "unittest"):
+    for name in ("threading", "unittest", "wsgiref", "socketserver", "http"):
         spec = importlib.util.find_spec(name)
         if spec is None or spec.origin is None or Path(spec.origin).resolve(strict=True) != paths[name]:
             raise ObservationError(f"import does not select the pinned stdlib module: {name}")
