@@ -3,14 +3,20 @@ CPython runtime-base observations
 Project: CPython
 Project URL: https://github.com/python/cpython
 Observed runtime: CPython 3.13.5
-Selected exports: all builtin type exports, unittest.TestCase, unittest.case.TestCase
+Selected exports: all builtin type exports, unittest.TestCase, unittest.case.TestCase, collections.abc.MutableMapping, _collections_abc.MutableMapping, threading.Thread
 Interpreter executable SHA-256: 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9
-Selected stdlib source unittest/__init__.py SHA-256: 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551
-Selected stdlib source unittest/case.py SHA-256: ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481
-Observer script SHA-256: f2abb5583565494b45c54ab356027f48d046b5916c3073d899e2f9430e4d90c5
-Authored model SHA-256: e5a8e0218accb4fbe3db597a9152e4ae585b8e66069e46ed57230b04012a93d4
-Raw observation SHA-256: 8150066fb6bd05758a4dc5bcb4e20f59a0f71a0116e774312a7b7753a33772b6
+Selected fresh stdlib source unittest/__init__.py SHA-256: 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551
+Selected fresh stdlib source unittest/case.py SHA-256: ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481
+Selected fresh stdlib source threading.py SHA-256: 61e1cd79adb93cfacf69dc3900ea99fbc8042d65f3742233c07c5707e39add84
+Retained companion _collections_abc.py SHA-256: 2cfe340c4cf54077f054cd366a2c7a515e9ee8da7d8b3fa071251f280034756d
+Retained companion collections/__init__.py SHA-256: 2347f647577b6c11b82fc48fa4a1744f7af1af87f15942f92b7cc4410f0a817b
+Observer script SHA-256: 64c5558ecbf09037e92cdb779d093ae357f48730bdafe6d70f517b70e700fc02
+Authored model SHA-256: 09dcf611a1c613fec2f772722fd073cce961d819a8c6231dc2277cf3a106609c
+Raw observation SHA-256: 5e87b0c8ec226b34744f0273b4dc11df176adb00ed4e916800fdc74ddf394686
 
 The runtime observations and authored model are attributed to the Python
-Software Foundation and licensed under PSF-2.0. Source pins cover the selected
-module files; they do not attest every transitive standard-library import.
+Software Foundation and licensed under PSF-2.0. Fresh selected module files are
+verified before import and against actual origins afterward. The ABC modules
+are observed as frozen, including their actual loader and preloaded identities;
+retained companion file pins do not establish executed frozen-code equivalence.
+These selected pins do not attest every transitive standard-library import.

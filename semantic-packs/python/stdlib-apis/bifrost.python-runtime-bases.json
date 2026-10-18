@@ -14,11 +14,11 @@
   "pack_id": "bifrost.python-runtime-bases",
   "producer": {
     "name": "bifrost-cpython-runtime-base-observer",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "provenance": {
-    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 f2abb5583565494b45c54ab356027f48d046b5916c3073d899e2f9430e4d90c5; input selection: all type exports in vars(builtins), plus exactly unittest.TestCase and unittest.case.TestCase, transitively closed over actual ordered __bases__; selected-module pins: unittest source unittest/__init__.py sha256 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551; unittest.case source unittest/case.py sha256 ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481",
-    "source": "CPython runtime observation: all type exports in vars(builtins), plus exactly unittest.TestCase and unittest.case.TestCase, transitively closed over actual ordered __bases__; no workspace imports"
+    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 64c5558ecbf09037e92cdb779d093ae357f48730bdafe6d70f517b70e700fc02; input selection: all type exports in vars(builtins), plus exactly unittest.TestCase, unittest.case.TestCase, collections.abc.MutableMapping, _collections_abc.MutableMapping, threading.Thread, transitively closed over actual ordered __bases__; selected-module file pins: threading fresh_module_source threading.py sha256 61e1cd79adb93cfacf69dc3900ea99fbc8042d65f3742233c07c5707e39add84; unittest fresh_module_source unittest/__init__.py sha256 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551; unittest.case fresh_module_source unittest/case.py sha256 ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481; _collections_abc retained_companion_file _collections_abc.py sha256 2cfe340c4cf54077f054cd366a2c7a515e9ee8da7d8b3fa071251f280034756d; collections retained_companion_file collections/__init__.py sha256 2347f647577b6c11b82fc48fa4a1744f7af1af87f15942f92b7cc4410f0a817b; ABC bindings verified against actual frozen origin/FrozenImporter; companion pins are not executed frozen-code equivalence",
+    "source": "CPython runtime observation: all type exports in vars(builtins), plus exactly unittest.TestCase, unittest.case.TestCase, collections.abc.MutableMapping, _collections_abc.MutableMapping, threading.Thread, transitively closed over actual ordered __bases__; no workspace imports"
   },
   "safety": {
     "generated_code_only": false,
@@ -1965,6 +1965,160 @@
             "visibility": "public"
           },
           {
+            "aliases": [],
+            "id": "type.python.collections.abc.collection",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Collection"
+            },
+            "name": "collections.abc.Collection",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.sized",
+                "kind": "declared",
+                "nullable": false
+              },
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.iterable",
+                "kind": "declared",
+                "nullable": false
+              },
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.container",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.container",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Container"
+            },
+            "name": "collections.abc.Container",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.iterable",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Iterable"
+            },
+            "name": "collections.abc.Iterable",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.mapping",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Mapping"
+            },
+            "name": "collections.abc.Mapping",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.collection",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [
+              "_collections_abc.MutableMapping"
+            ],
+            "id": "type.python.collections.abc.mutablemapping",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.MutableMapping"
+            },
+            "name": "collections.abc.MutableMapping",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.mapping",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.sized",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Sized"
+            },
+            "name": "collections.abc.Sized",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.threading.thread",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "threading.Thread"
+            },
+            "name": "threading.Thread",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
             "aliases": [
               "unittest.TestCase"
             ],
@@ -1990,5 +2144,5 @@
       }
     }
   ],
-  "version": "1.1.0"
+  "version": "1.2.0"
 }
