@@ -3,10 +3,14 @@ CPython runtime-base observations
 Project: CPython
 Project URL: https://github.com/python/cpython
 Observed runtime: CPython 3.13.5
+Selected exports: all builtin type exports, unittest.TestCase, unittest.case.TestCase
 Interpreter executable SHA-256: 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9
-Observer script SHA-256: 11e34218fd9650a138b48ea1b8c887ce36d260fae01acfc8db6cdf6734b8b979
-Authored model SHA-256: 31374ef33b33e8640eb89a309a852404ed088d2ab37af0fd6cac1c056715b240
-Raw observation SHA-256: 7a7e8dd21b40960d4e7f3cf433b425d0f60fbc92c6f0c342ed21716dc7d7a643
+Selected stdlib source unittest/__init__.py SHA-256: 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551
+Selected stdlib source unittest/case.py SHA-256: ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481
+Observer script SHA-256: f2abb5583565494b45c54ab356027f48d046b5916c3073d899e2f9430e4d90c5
+Authored model SHA-256: e5a8e0218accb4fbe3db597a9152e4ae585b8e66069e46ed57230b04012a93d4
+Raw observation SHA-256: 8150066fb6bd05758a4dc5bcb4e20f59a0f71a0116e774312a7b7753a33772b6
 
 The runtime observations and authored model are attributed to the Python
-Software Foundation and licensed under PSF-2.0.
+Software Foundation and licensed under PSF-2.0. Source pins cover the selected
+module files; they do not attest every transitive standard-library import.

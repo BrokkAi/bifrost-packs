@@ -14,11 +14,11 @@
   "pack_id": "bifrost.python-runtime-bases",
   "producer": {
     "name": "bifrost-cpython-runtime-base-observer",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "provenance": {
-    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 11e34218fd9650a138b48ea1b8c887ce36d260fae01acfc8db6cdf6734b8b979; input selection: vars(builtins) type bindings plus transitive actual __bases__",
-    "source": "CPython runtime observation of type objects exported by vars(builtins), closed over their actual ordered __bases__; no workspace imports"
+    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 f2abb5583565494b45c54ab356027f48d046b5916c3073d899e2f9430e4d90c5; input selection: all type exports in vars(builtins), plus exactly unittest.TestCase and unittest.case.TestCase, transitively closed over actual ordered __bases__; selected-module pins: unittest source unittest/__init__.py sha256 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551; unittest.case source unittest/case.py sha256 ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481",
+    "source": "CPython runtime observation: all type exports in vars(builtins), plus exactly unittest.TestCase and unittest.case.TestCase, transitively closed over actual ordered __bases__; no workspace imports"
   },
   "safety": {
     "generated_code_only": false,
@@ -1963,10 +1963,32 @@
             ],
             "type_kind": "class",
             "visibility": "public"
+          },
+          {
+            "aliases": [
+              "unittest.TestCase"
+            ],
+            "id": "type.python.unittest.case.testcase",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "unittest.case.TestCase"
+            },
+            "name": "unittest.case.TestCase",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
           }
         ]
       }
     }
   ],
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
