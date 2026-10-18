@@ -1313,6 +1313,38 @@
       ],
       "severity_rationale": "An unread parameter may indicate stale interface state or an omitted use.",
       "remediation": "Remove the parameter when the interface permits or use it as intended."
+    },
+    {
+      "path": "policies/call-wrong-named-argument.rqlp",
+      "id": "bifrost.python-codeql-quality.call-wrong-named-argument",
+      "authored_hash": "cc449acaf6adc1b4129a78f77f7222edd33f91d3fa68b9d5325b824920bdb1cb",
+      "resolved_semantic_hash": "cc449acaf6adc1b4129a78f77f7222edd33f91d3fa68b9d5325b824920bdb1cb",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-call-relations"
+      ],
+      "severity_rationale": "An unsupported keyword raises TypeError when the call executes, preventing the intended function or constructor behavior.",
+      "remediation": "Use a keyword accepted by the called function or constructor signature."
+    },
+    {
+      "path": "policies/call-wrong-named-class-argument.rqlp",
+      "id": "bifrost.python-codeql-quality.call-wrong-named-class-argument",
+      "authored_hash": "8145af5818252df7b80abb44b1d7b82d98869ff65e0930aa49aed48b8e57c2f1",
+      "resolved_semantic_hash": "8145af5818252df7b80abb44b1d7b82d98869ff65e0930aa49aed48b8e57c2f1",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-call-relations"
+      ],
+      "severity_rationale": "An unsupported keyword raises TypeError when the call executes, preventing the intended function or constructor behavior.",
+      "remediation": "Use a keyword accepted by the called function or constructor signature."
     }
   ]
 }
