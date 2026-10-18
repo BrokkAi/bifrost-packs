@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.3.1",
+  "release_version": "0.3.2",
   "artifact_role": "source",
-  "notes": "This patch preserves the corrected rules 0.3.0 policy bytes, required capabilities and typed incomplete outcomes while pinning their native pack dependency to 0.4.0. That independent native stream adds the reviewed result-use model families and PHP builtin declaration pack through its reproducible generation recipes. Source integrity and focused publication smoke remain separate from full engine and policy qualification.",
+  "notes": "This patch preserves the rules 0.3.1 policy bytes, required capabilities and typed incomplete outcomes while pinning their native pack dependency to 0.4.1, the 0.4.0 content regenerated with the Bifrost 0.13.1 release-candidate generator. Source integrity and focused publication smoke remain separate from full engine and policy qualification.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.4.0",
+      "release_version": "0.4.1",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

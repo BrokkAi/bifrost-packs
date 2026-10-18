@@ -14,7 +14,7 @@ is a patch and dependency successor.
 The proposed next `packs/v0.4.0` recipe builds the public
 `bifrost-semantic-pack` producer version `0.13.1` from the generator-only
 preparation source
-`8c64332281245b6ea3bfae343645f78d0faf2d23` with Rust `1.97.1`.
+`58c3792d1f4e9d1a5e047b31f5aa2218a5385988` with Rust `1.97.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
 source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
