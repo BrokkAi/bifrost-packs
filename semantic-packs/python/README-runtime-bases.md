@@ -39,10 +39,9 @@ attribution, and `partial` completeness. Its per-class ordered
 
 The authored JSON is preparation content. Native generation/release selection
 is separate; this README does not add the model to `native-generation.json` or
-select a release version. The current pinned native producer predates schema
-17 support. The engine carrier and reader must land and validate the model
-before native release compilation can consume this exact generated source with
-its reviewed authored-model spec.
+select a release version. The current release recipe's pinned native
+producer predates schema 17 support. Runtime consumer qualification and review
+of the authored-model spec remain prerequisites for native release selection.
 
 Stable model IDs encode the observed ASCII canonical name in lowercase, while
 class names, aliases and locator symbols preserve Python's case-sensitive
@@ -65,5 +64,9 @@ Corrected observer SHA-256:
 reviewed model SHA-256 is
 `31374ef33b33e8640eb89a309a852404ed088d2ab37af0fd6cac1c056715b240`; its paired
 raw-observation SHA-256 is
-`7a7e8dd21b40960d4e7f3cf433b425d0f60fbc92c6f0c342ed21716dc7d7a643`. Native
-schema-17 compiler and consumer qualification remain pending.
+`7a7e8dd21b40960d4e7f3cf433b425d0f60fbc92c6f0c342ed21716dc7d7a643`.
+
+A source-pinned schema-17 compiler accepted this exact full model and emitted
+one declaration shard containing all 96 class records. This establishes format
+and artifact-generation acceptance only. Runtime consumer qualification and
+native release selection remain pending.
