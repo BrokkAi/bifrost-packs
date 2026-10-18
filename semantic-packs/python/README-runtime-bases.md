@@ -70,11 +70,25 @@ that the two exports name the same class object, its canonical identity is
 is `[unittest.case.TestCase, builtins.object]`. The current source contains 97
 classes, 97 ordered direct-base edges and 100 qualified export bindings.
 
-The earlier 1.0.0 full96 model passed bounded compiler and local bundle generation
-checks. That acceptance does not qualify this expanded 1.1.0 source. Compilation,
-native packaging and runtime consumer qualification of 1.1.0 remain pending.
-This source update does not select a release version or generation job, modify
-`native-generation.json`, publish artifacts, or enable a scanner model.
+The 1.1.0 source passed local native-bundle generation and integrity verification:
+all 97 class records agree with the authored model, the original 96 compiled
+records remain exactly unchanged, and there are no rejected or suppressed
+records. The same four-class consumer probe resolved all three TestCase import
+forms to the canonical class with complete, ordered TestCase-to-object ancestry;
+the dict control remained resolved and complete. These checks used the admitted
+Bifrost consumer at `ba7a692dbd0b8a02d0d6e68ca03f823d9c5b52e7`.
+
+One unchanged full-repository Bottle replay qualified all three native variants
+and selected the local 1.1.0 pack in all six cold/warm policy requests. Each
+request removed the same 46 prior test-file hierarchy diagnostics, retained the
+same 11 Bottle diagnostics, and surfaced no new diagnostic roots. Observed scoped
+counts remained 0/1/0 in both modes, but all six requests were incomplete and
+none was scorable. This is bounded source, bundle and consumer evidence, not
+whole-repository policy qualification.
+
+The native bundle remains local and unpublished. This source update does not
+select a release version or generation job, modify `native-generation.json`,
+publish artifacts, or enable a scanner model by default.
 
 Observer SHA-256:
 `f2abb5583565494b45c54ab356027f48d046b5916c3073d899e2f9430e4d90c5`.
