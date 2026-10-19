@@ -1,0 +1,127 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.web-network-php",
+  "version": "1.0.0",
+  "producer": { "name": "bifrost-reviewed-web-models", "version": "1.0.0" },
+  "language": "php",
+  "ecosystem": "php",
+  "compatibility": {
+    "bifrost": ">=0.8.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "PHP cURL extension, curl_init() and curl_exec() (php.net manual; JetBrains phpstorm-stubs curl/curl.php)",
+    "revision": "php-8.4"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": { "generated_code_only": false, "review_required": false },
+  "shards": [
+    {
+      "id": "declarations.web-network.php",
+      "activation": [{ "targets": [], "configurations": [] }],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.web-network.php.global-namespace",
+            "name": "_php_global_",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "curl/curl.php",
+              "symbol": "_php_global_"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.web-network.php.curl-exec",
+            "owner": "type.web-network.php.global-namespace",
+            "name": "curl_exec",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                { "name": "handle", "type": { "kind": "named", "name": "CurlHandle" } }
+              ],
+              "returns": { "kind": "named", "name": "string|bool" }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "curl/curl.php",
+              "symbol": "_php_global_.curl_exec"
+            }
+          },
+          {
+            "id": "member.web-network.php.curl-init",
+            "owner": "type.web-network.php.global-namespace",
+            "name": "curl_init",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": { "kind": "named", "name": "?string" },
+                  "optional": true
+                }
+              ],
+              "returns": { "kind": "named", "name": "CurlHandle|false" }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "curl/curl.php",
+              "symbol": "_php_global_.curl_init"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.web-network.php",
+      "activation": [{ "targets": [], "configurations": [] }],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.web-network.php.curl-exec",
+            "target": {
+              "path": "curl/curl.php",
+              "symbol": "_php_global_.curl_exec",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.network_io", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.web-network.php.curl-init",
+            "target": {
+              "path": "curl/curl.php",
+              "symbol": "_php_global_.curl_init",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          }
+        ]
+      }
+    }
+  ]
+}
