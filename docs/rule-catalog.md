@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 236 unique rule IDs from 12 manifest packs.
+This catalog lists 237 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -78,6 +78,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Selected Java boundary reaches no network effect](../rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp) | `bifrost.effects.java.selected-boundary-no-network-io` | java | effects | error |
 | [Selected JavaScript boundary reaches no network effect](../rules/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.javascript.selected-boundary-no-network-io` | javascript | effects | error |
 | [Selected Kotlin boundary reaches no network effect](../rules/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp) | `bifrost.effects.kotlin.selected-boundary-no-network-io` | kotlin | effects | error |
+| [Selected PHP boundary reaches no network effect](../rules/bifrost.effects/policies/php/selected-boundary-no-network-io.rqlp) | `bifrost.effects.php.selected-boundary-no-network-io` | php | effects | error |
 | [Selected Python boundary reaches no network effect](../rules/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp) | `bifrost.effects.python.selected-boundary-no-network-io` | python | effects | error |
 | [Selected Ruby boundary reaches no network effect](../rules/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp) | `bifrost.effects.ruby.selected-boundary-no-network-io` | ruby | effects | error |
 | [Selected Rust boundary reaches no network effect](../rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp) | `bifrost.effects.rust.selected-boundary-no-network-io` | rust | effects | error |
