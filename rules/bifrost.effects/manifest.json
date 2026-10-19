@@ -111,6 +111,27 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/php/selected-boundary-no-network-io.rqlp",
+      "id": "bifrost.effects.php.selected-boundary-no-network-io",
+      "authored_hash": "c30994d02752469d2871a913c9b023b2ab13442fd3cf3f5db95e554d8dd0f8c9",
+      "resolved_semantic_hash": null,
+      "category": "effects",
+      "supported_languages": [
+        "php"
+      ],
+      "required_capabilities": [
+        "semantic-model-declared-effects",
+        "transitive-procedure-effects",
+        "exhaustive-effect-coverage",
+        "module-identity-declaration-selection",
+        "external-api-identity",
+        "declaration-selection-imports"
+      ],
+      "severity_rationale": "A declaration the repository reviewed as a pure calculation reaching network I/O breaks the boundary the review relied on and can turn a local computation into an externally visible side effect.",
+      "remediation": "Move the effect to the caller, or make the selected declaration's helper chain reach no declared network effect. Configure the reviewed declaration-selection document `.bifrost/effect-boundaries/php-network-io.rqlp` with the exact declarations this repository protects.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/python/selected-boundary-no-network-io.rqlp",
       "id": "bifrost.effects.python.selected-boundary-no-network-io",
       "authored_hash": "b1a633e6813513fd10b5e664690c67777002db0fc46280723882a24227b84ee8",
