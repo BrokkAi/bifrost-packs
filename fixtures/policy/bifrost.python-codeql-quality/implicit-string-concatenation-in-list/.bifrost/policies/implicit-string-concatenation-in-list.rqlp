@@ -1,0 +1,11 @@
+; CodeQL: python/ql/src/Expressions/UnintentionalImplicitStringConcatenation.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Separate adjacent string literals in list displays when a missing comma is unintended.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.implicit-string-concatenation-in-list" :name "Implicit string concatenation in list" :message "A missing comma may have concatenated these strings." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Expressions/UnintentionalImplicitStringConcatenation.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Separate adjacent string literals in list displays when a missing comma is unintended."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq implicit_string_concatenation)
+                    (proof eq proven) (completeness eq complete))
+      (python-implicit-string-concatenation
+        (language python (string_literal)))))))

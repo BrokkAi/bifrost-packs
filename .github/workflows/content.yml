@@ -1,6 +1,10 @@
 name: Content integrity and release contract
 on:
+  # A pull request runs this through `pull_request`; pushes run it only for
+  # main and for tags, so a PR branch is not verified twice per push.
   push:
+    branches: [main]
+    tags: ['**']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -8,6 +12,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -15,6 +20,10 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.12'
+      - name: Check authored native generation inputs
+        run: python3 -B tests/test_authored_native_generation_inputs.py
+      - name: Verify every source authoring identity
+        uses: ./.github/actions/verify-policy-identities
       - name: Test integrity and compatibility failure handling
         run: python3 -B -m unittest discover -s tests -p 'test_*.py' -v
       - name: Check generated rule inventory
@@ -29,25 +38,40 @@ jobs:
           node --check scripts/upstream/public/generate-go-atomic-semantic-pack.mjs
       - name: Build and compare source archives
         run: |
-          python3 scripts/content.py bundle --output "$RUNNER_TEMP/bifrost.public-0.1.0-source.tar.gz"
+          python3 scripts/content.py bundle --output "$RUNNER_TEMP/bifrost.public-source.tar.gz"
           python3 scripts/content.py bundle --output "$RUNNER_TEMP/repeated.tar.gz"
-          cmp "$RUNNER_TEMP/bifrost.public-0.1.0-source.tar.gz" "$RUNNER_TEMP/repeated.tar.gz"
+          cmp "$RUNNER_TEMP/bifrost.public-source.tar.gz" "$RUNNER_TEMP/repeated.tar.gz"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: bifrost-packs-source-${{ github.sha }}
-          path: ${{ runner.temp }}/bifrost.public-0.1.0-source.tar.gz
+          path: ${{ runner.temp }}/bifrost.public-source.tar.gz
           if-no-files-found: error
           retention-days: 30
       - name: Stage shared source-release metadata
         run: |
           python3 release-contract/release.py create \
-            --archive "$RUNNER_TEMP/bifrost.public-0.1.0-source.tar.gz" \
+            --archive "$RUNNER_TEMP/bifrost.public-source.tar.gz" \
             --output "$RUNNER_TEMP/pack-release.json" > "$RUNNER_TEMP/release-summary.json"
           python3 release-contract/release.py verify-artifact \
             --manifest "$RUNNER_TEMP/pack-release.json" \
-            --artifact "$RUNNER_TEMP/bifrost.public-0.1.0-source.tar.gz"
+            --artifact "$RUNNER_TEMP/bifrost.public-source.tar.gz"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: pack-release-contract-${{ github.sha }}
           path: ${{ runner.temp }}/pack-release.json
           if-no-files-found: error
+  # The single check the main ruleset requires, so auto-merge waits for it.
+  # Add every job a pull request must pass to `needs`.
+  required:
+    name: Required
+    if: ${{ always() }}
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify every required job succeeded
+        env:
+          VERIFY_RESULT: ${{ needs.verify.result }}
+        run: |
+          echo "Content verification finished as $VERIFY_RESULT"
+          test "$VERIFY_RESULT" = success

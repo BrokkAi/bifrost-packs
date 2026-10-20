@@ -1,0 +1,49 @@
+; Network-effect boundary for one explicitly selected PHP declaration.
+;
+; The rule body is shared; only the declaration-selection block below and the
+; activated language model differ per language. `total` is not pure because it
+; is named `total`: the reviewed configuration on this repository selects that
+; exact declaration, and a repository that configures nothing carries no
+; obligation at all.
+;
+; The PHP identity route is PHP's own function lookup: an unqualified
+; `curl_exec(...)` tries the caller's namespace first and binds the reviewed
+; global builtin only when the workspace declares no function of that name
+; there. A userland `App\curl_exec` resolves inside the workspace and never
+; borrows the reviewed API's effect.
+(policy
+  :schema-version 1
+  :id "bifrost.effects.php.selected-boundary-no-network-io"
+  :name "Selected PHP boundary reaches no network effect"
+  :message "the selected PHP boundary reaches the declared network effect"
+  :severity error
+  :description "One explicitly selected PHP declaration must not reach a declared network effect, directly or through workspace helpers. The effect is declared by a reviewed semantic model on the exact external API identity, never inferred from a function name, a file name, a comment, or an unqualified annotation."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#network-effect-boundary"
+  :tags ["effects" "network" "boundary" "php"]
+  :analysis
+    (analysis
+      :type assertion
+      ; ---------------------------------------------------------------------
+      ; Declaration-selection block (the repository's reviewed configuration).
+      ; Replace the pattern below with the exact declaration this repository
+      ; protects, for example:
+      ;   (language php
+      ;     (enclosing-decl
+      ;       (inside-decl (class :name "PriceCalculator")
+      ;         (method :name "total"))))
+      ; ---------------------------------------------------------------------
+      (bind :name selected
+        :query (rql :schema-version 1
+          (language php
+            (enclosing-decl (function :name "total")))))
+      (bind :name effect
+        :query (rql :schema-version 1
+          (language php
+            (procedure-effects
+              (enclosing-decl (function :name "total"))))))
+      (join :left selected :right effect :on ((id procedure_id)))
+      (group :name selected-boundary :by (selected.id)
+        (aggregate :name network-effects :op count
+          :where ((effect.effect_id eq "bifrost.network_io")
+                  (effect.derivation eq declared))))
+      (assert :group selected-boundary :value network-effects :cardinality (exactly 0))))

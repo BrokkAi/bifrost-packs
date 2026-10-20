@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Security/CWE-020/OverlyLargeRange.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Review broad, empty, or overlapping character ranges in regular expressions.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.overly-large-range"
+  :name "Overly large Python regex character range"
+  :message "Review a broad, empty, or overlapping range in a Python regular expression."
+  :severity warning
+  :description "Selects the Python regex risk fact used by the CodeQL-compatible overly-large-range rule."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (regex_risk_range)))))
