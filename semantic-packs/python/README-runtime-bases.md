@@ -4,14 +4,15 @@
 [`observe-pinned-python-runtime-bases.py`](../../scripts/upstream/public/observe-pinned-python-runtime-bases.py).
 The observer selects every actual type export in `vars(builtins)`, plus exactly
 `unittest.TestCase`, `unittest.case.TestCase`,
-`collections.abc.MutableMapping`, `_collections_abc.MutableMapping` and
-`threading.Thread`. It requires both TestCase exports to name one class object
+`collections.abc.MutableMapping`, `_collections_abc.MutableMapping`,
+`threading.Thread` and `wsgiref.simple_server.WSGIRequestHandler`. It requires
+both TestCase exports to name one class object
 and both MutableMapping exports to name one class object. It reads each
 canonical identity through `type.__getattribute__` and closes the selected
 classes over their actual ordered `__bases__`, recording actual `__mro__`
 values as observation evidence. It does not enumerate other module classes,
-inspect workspace or typing classes, instantiate a thread or test case, or
-invoke their methods.
+inspect workspace or typing classes, instantiate a thread, test case or request
+handler, open a server socket, or invoke their methods.
 
 The observer requires isolated CPython 3.13.5 with optimization off, bytecode
 writes disabled, and executable SHA-256
@@ -25,10 +26,16 @@ The selected file pins are:
 | `threading.py` | Fresh selected module | `61e1cd79adb93cfacf69dc3900ea99fbc8042d65f3742233c07c5707e39add84` |
 | `_collections_abc.py` | Retained companion file | `2cfe340c4cf54077f054cd366a2c7a515e9ee8da7d8b3fa071251f280034756d` |
 | `collections/__init__.py` | Retained companion file | `2347f647577b6c11b82fc48fa4a1744f7af1af87f15942f92b7cc4410f0a817b` |
+| `wsgiref/__init__.py` | Fresh selected/owner module | `c30e144025a63d267778d92f2f066fa592b476e789d888f79b96c059bf0bef60` |
+| `socketserver.py` | Fresh selected/owner module | `ecbbe1a633801460399a8f10b39007aa0e13cdbdad507e39414000f097b769b5` |
+| `http/__init__.py` | Fresh selected/owner module | `d5747ca51f40e43b2366ce430154af22ce02d8d5972a6e81afb54ca946f684c0` |
+| `http/server.py` | Fresh selected/owner module | `253cc04a379f2a42dc72c33a9a67218ecda13b54995b72c3f59e83d1abe8e9a3` |
+| `wsgiref/simple_server.py` | Fresh selected/owner module | `d6b820a6addc837717989064565d5be0c18af67337700ad48b317825eb4a13d8` |
 
 ## Fresh and frozen module identities
 
-Threading and both unittest modules must be absent before source verification.
+Threading, both unittest modules, wsgiref and its simple_server module, http
+and its server module, and socketserver must be absent before source verification.
 On this interpreter, importing `sysconfig` itself imports `threading`. The
 observer therefore first pins the fresh source files under CPython's runtime
 `sys._stdlib_dir`, then imports `sysconfig` and requires its actual stdlib root
@@ -86,16 +93,36 @@ sorted keys and a final newline. No addresses or timestamps are serialized.
 
 ## Bounded validation and delivery status
 
-Pack and observer-producer versions are `1.2.0`, a compatible source-catalog
-addition under the repository's release-versioning guidance. Two isolated
-observer runs produced identical model and raw bytes. All 97 prior declaration
-records, including IDs, aliases and ordered base edges, remain exactly unchanged.
-Only actual required base closure is added: `collections.abc.MutableMapping`,
-`Mapping`, `Collection`, `Sized`, `Iterable`, `Container`, and `threading.Thread`.
-An independent native check verified the public/private identities, actual
-ordered bases and MROs, unchanged prior records, and absence of extra classes.
-The source now has 104 classes, 106 ordered base edges and 103 export bindings.
+Pack and observer-producer versions are `1.3.0`, a compatible source-catalog
+addition under the repository's release-versioning guidance. Two successful
+isolated observations produced identical model and raw bytes, preserving all
+104 prior declaration records and all 103 prior export bindings exactly. Actual ordered base traversal added only
+`wsgiref.simple_server.WSGIRequestHandler`, `http.server.BaseHTTPRequestHandler`,
+`socketserver.StreamRequestHandler` and `socketserver.BaseRequestHandler`.
+Their actual chain ends at the already observed `builtins.object`. The source
+now has 108 classes, 110 ordered base edges and 104 export bindings. All newly
+observed canonical owner modules passed the selected-source origin/hash guards.
 
+Local 1.3.0 native-bundle generation and integrity verification completed with
+108 class records. All 104 prior compiled records are exactly unchanged, with
+no rejected or suppressed records. Two public consumer queries retained complete
+ancestry for module-level and function-local WSGI imports (five actual claims
+each) and a dict control (two claims), using Bifrost consumer
+`b55dfcfa8afa764748e7c1e259fec72ee3e42925`. The original final verifier rejected
+the supported function-local qualified-name format; a separately authorized
+file-only correction checked exact names against unchanged saved outputs. The
+original failed receipt remains preserved; no regeneration or requery occurred.
+
+One unchanged full-repository Bottle replay selected local 1.3.0 in all six
+cold/warm requests. Against the same-consumer 1.2.0 baseline, each diagnostic
+list fell from six to five: only `bottle.py:3425` was removed, no diagnostic was
+added, and the retained records were unchanged. Scoped counts remained 0/1/0
+in both modes, but every request was incomplete and none was scorable. Native
+qualification of the three variants and this bounded diagnostic reduction do
+not establish whole-repository policy qualification or runtime member coverage.
+The bundle remains local and unpublished.
+
+The following bounded consumer evidence belongs to the prior 1.2.0 source.
 The 1.2.0 source passed local native-bundle generation and integrity verification:
 all 104 class records agree with the authored model, all 97 prior compiled
 records remain exactly unchanged, and there are no rejected or suppressed
@@ -120,8 +147,8 @@ This source update does not select a release version or generation job, modify
 `native-generation.json`, publish artifacts, or enable a scanner model by default.
 
 Observer SHA-256:
-`64c5558ecbf09037e92cdb779d093ae357f48730bdafe6d70f517b70e700fc02`.
+`307c2dd4ae418fb24c212e81cc0f5888a8d3defe2010a36941375206a9be7d43`.
 Model SHA-256:
-`09dcf611a1c613fec2f772722fd073cce961d819a8c6231dc2277cf3a106609c`.
+`1f620fd98a659dd4a994c45a7c13e4e0f0887eb8a30db69365efa7a8ab4ad3a4`.
 Paired raw-observation SHA-256:
-`5e87b0c8ec226b34744f0273b4dc11df176adb00ed4e916800fdc74ddf394686`.
+`350ec3e853c2e88e1c3f3af839d078eaad06bffefe08d21b7f9137224aacf998`.
