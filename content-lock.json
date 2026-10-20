@@ -7693,7 +7693,14 @@
     {
       "path": "rules/bifrost.effects/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/manifest.json",
-      "sha256": "9216982fb7517989ebffa78a0c33da1270264a6c4e53fb91a3eff4a8c5aad913",
+      "sha256": "7ca3bf628686dab7286fbe5459dab116dc7442ae9a29e19d4d4fc033307b8acb",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp",
+      "source_path": "rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp",
+      "sha256": "19207d0d42996756fa2eadcc13d07482f791b438b472d6980c8ea6dd0caf559c",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -10662,6 +10669,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/web-network/cpp/bifrost.web-network-cpp.json",
+      "source_path": "semantic-packs/web-network/cpp/bifrost.web-network-cpp.json",
+      "sha256": "bc18a8007f63de089c0a1d26292a0a0512435bafd5925694c2004bd69557a423",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/web-network/csharp/bifrost.web-network-csharp.json",
       "source_path": "semantic-packs/web-network/csharp/bifrost.web-network-csharp.json",
       "sha256": "939ca9eaa6b751eec0d110ea25f71bddd6d7afd138abb85a441679be52fb4990",
@@ -10718,5 +10732,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "057ec357a4ad9a3e8aed7c427d922caaa85d499bd8cfccab9867bce3fcc845a6"
+  "aggregate_sha256": "8f6c6d89026711ec77bb4e6cece873b7281d3f7535b5cb6548c668982ab141d9"
 }

@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 236 unique rule IDs from 12 manifest packs.
+This catalog lists 237 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -72,6 +72,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# StringBuilder initialized with a character](../rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp) | `bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character` | csharp | correctness | warning |
 | [C# use number constant](../rules/bifrost.csharp-codeql-quality/policies/use-number-constant.rqlp) | `bifrost.csharp-codeql-quality.use-number-constant` | csharp | quality | warning |
 | [C# useless if statement](../rules/bifrost.csharp-codeql-quality/policies/useless-if-statement.rqlp) | `bifrost.csharp-codeql-quality.useless-if-statement` | csharp | correctness | warning |
+| [Selected C++ boundary reaches no network effect](../rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.cpp.selected-boundary-no-network-io` | cpp | effects | error |
 | [Selected C# boundary reaches no network effect](../rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.csharp.selected-boundary-no-network-io` | csharp | effects | error |
 | [Selected Go boundary reaches no network effect](../rules/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp) | `bifrost.effects.go.selected-boundary-no-network-io` | go | effects | error |
 | [Selected Java boundary reaches no network effect](../rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp) | `bifrost.effects.java.selected-boundary-no-network-io` | java | effects | error |
