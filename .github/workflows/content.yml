@@ -60,3 +60,18 @@ jobs:
           name: pack-release-contract-${{ github.sha }}
           path: ${{ runner.temp }}/pack-release.json
           if-no-files-found: error
+  # The single check the main ruleset requires, so auto-merge waits for it.
+  # Add every job a pull request must pass to `needs`.
+  required:
+    name: Required
+    if: ${{ always() }}
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify every required job succeeded
+        env:
+          VERIFY_RESULT: ${{ needs.verify.result }}
+        run: |
+          echo "Content verification finished as $VERIFY_RESULT"
+          test "$VERIFY_RESULT" = success
