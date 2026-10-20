@@ -1,0 +1,28 @@
+; CodeQL: python/ql/src/Variables/ShadowBuiltin.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a first function-local binding that shadows a builtin, excluding CodeQL allowlisted names and optimizing parameters.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.local-shadows-builtin"
+  :name "Python local shadows a builtin"
+  :message "Local variable shadows a builtin name."
+  :severity warning
+  :description "Reports the first function-local definition whose name is a Python builtin, excluding CodeQL's allowlist and optimizing parameters."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (except
+      (filter :where ((relation eq lexical_variable_definition)
+                      (scope_kind eq function)
+                      (first_definition eq true)
+                      (is_builtin eq true)
+                      (optimizing_parameter eq false))
+        (python-variable-definitions
+          (python-variable-of (language python (bindings)))))
+      (filter :where ((name regex "^(?:iter|next|input|file|apply|slice|buffer|coerce|intern|exit|quit|license|dir|id|max|min|sum|cmp|chr|ord|bytes|_)$"))
+        (filter :where ((relation eq lexical_variable_definition)
+                        (scope_kind eq function)
+                        (first_definition eq true)
+                        (is_builtin eq true)
+                        (optimizing_parameter eq false))
+          (python-variable-definitions
+            (python-variable-of (language python (bindings))))))))))

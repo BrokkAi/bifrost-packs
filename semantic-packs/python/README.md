@@ -350,6 +350,15 @@ contract only: it does not claim that generated dataclass members are modeled.
 
 ## Reviewed security API additions
 
+`stdlib-apis/bifrost.python-object-declarations.json` is a separate complete
+declaration pack scoped to the inherited `builtins.object` member surface. Its
+24 names were checked with both `dir(object)` and `vars(object)` under CPython
+3.12.15 and 3.13.5; the lists matched. The pack activates for CPython 3.12 and
+3.13, the two minor lines checked. This gives the engine complete evidence
+when a dunder such as `__iter__` is absent from `object`. The broader stdlib
+API pack remains partial. This source is directly authored and reviewed; no
+generator exists for this bounded declaration.
+
 The reviewed declarations follow the pinned Typeshed revision above and
 CPython 3.13.5 signatures. This addition set is:
 

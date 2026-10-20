@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 227 unique rule IDs from 12 manifest packs.
+This catalog lists 238 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -72,11 +72,13 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# StringBuilder initialized with a character](../rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp) | `bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character` | csharp | correctness | warning |
 | [C# use number constant](../rules/bifrost.csharp-codeql-quality/policies/use-number-constant.rqlp) | `bifrost.csharp-codeql-quality.use-number-constant` | csharp | quality | warning |
 | [C# useless if statement](../rules/bifrost.csharp-codeql-quality/policies/useless-if-statement.rqlp) | `bifrost.csharp-codeql-quality.useless-if-statement` | csharp | correctness | warning |
+| [Selected C++ boundary reaches no network effect](../rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.cpp.selected-boundary-no-network-io` | cpp | effects | error |
 | [Selected C# boundary reaches no network effect](../rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.csharp.selected-boundary-no-network-io` | csharp | effects | error |
 | [Selected Go boundary reaches no network effect](../rules/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp) | `bifrost.effects.go.selected-boundary-no-network-io` | go | effects | error |
 | [Selected Java boundary reaches no network effect](../rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp) | `bifrost.effects.java.selected-boundary-no-network-io` | java | effects | error |
 | [Selected JavaScript boundary reaches no network effect](../rules/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.javascript.selected-boundary-no-network-io` | javascript | effects | error |
 | [Selected Kotlin boundary reaches no network effect](../rules/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp) | `bifrost.effects.kotlin.selected-boundary-no-network-io` | kotlin | effects | error |
+| [Selected PHP boundary reaches no network effect](../rules/bifrost.effects/policies/php/selected-boundary-no-network-io.rqlp) | `bifrost.effects.php.selected-boundary-no-network-io` | php | effects | error |
 | [Selected Python boundary reaches no network effect](../rules/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp) | `bifrost.effects.python.selected-boundary-no-network-io` | python | effects | error |
 | [Selected Ruby boundary reaches no network effect](../rules/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp) | `bifrost.effects.ruby.selected-boundary-no-network-io` | ruby | effects | error |
 | [Selected Rust boundary reaches no network effect](../rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp) | `bifrost.effects.rust.selected-boundary-no-network-io` | rust | effects | error |
@@ -116,6 +118,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Assert of literal constant](../rules/bifrost.python-codeql-quality/policies/assert-literal-constant.rqlp) | `bifrost.python-codeql-quality.assert-literal-constant` | python | correctness | warning |
 | [Python asserts a tuple](../rules/bifrost.python-codeql-quality/policies/asserts-tuple.rqlp) | `bifrost.python-codeql-quality.asserts-tuple` | python | correctness | warning |
 | [Superclass attribute shadows Python descendant method](../rules/bifrost.python-codeql-quality/policies/attribute-shadows-method.rqlp) | `bifrost.python-codeql-quality.attribute-shadows-method` | python | correctness | error |
+| [Python call keyword has no matching parameter](../rules/bifrost.python-codeql-quality/policies/call-wrong-named-argument.rqlp) | `bifrost.python-codeql-quality.call-wrong-named-argument` | python | correctness | error |
+| [Python constructor keyword has no matching parameter](../rules/bifrost.python-codeql-quality/policies/call-wrong-named-class-argument.rqlp) | `bifrost.python-codeql-quality.call-wrong-named-class-argument` | python | correctness | error |
 | [Commented-out Python code](../rules/bifrost.python-codeql-quality/policies/commented-out-code.rqlp) | `bifrost.python-codeql-quality.commented-out-code` | python | quality | warning |
 | [Maybe missing self in comparison](../rules/bifrost.python-codeql-quality/policies/comparison-missing-self.rqlp) | `bifrost.python-codeql-quality.comparison-missing-self` | python | correctness | warning |
 | [Python comparison of constants](../rules/bifrost.python-codeql-quality/policies/comparison-of-constants.rqlp) | `bifrost.python-codeql-quality.comparison-of-constants` | python | correctness | warning |
@@ -139,6 +143,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python inconsistent method resolution order](../rules/bifrost.python-codeql-quality/policies/inconsistent-mro.rqlp) | `bifrost.python-codeql-quality.inconsistent-mro` | python | correctness | error |
 | [Python initializer calls an overridden method](../rules/bifrost.python-codeql-quality/policies/init-calls-subclass.rqlp) | `bifrost.python-codeql-quality.init-calls-subclass` | python | correctness | warning |
 | [Python iterator does not return itself](../rules/bifrost.python-codeql-quality/policies/iter-returns-non-self.rqlp) | `bifrost.python-codeql-quality.iter-returns-non-self` | python | correctness | error |
+| [Python local shadows a builtin](../rules/bifrost.python-codeql-quality/policies/local-shadows-builtin.rqlp) | `bifrost.python-codeql-quality.local-shadows-builtin` | python | quality | warning |
+| [Python local shadows a global](../rules/bifrost.python-codeql-quality/policies/local-shadows-global.rqlp) | `bifrost.python-codeql-quality.local-shadows-global` | python | quality | warning |
 | [Missing call to Python superclass __del__](../rules/bifrost.python-codeql-quality/policies/missing-call-to-delete.rqlp) | `bifrost.python-codeql-quality.missing-call-to-delete` | python | correctness | error |
 | [Missing call to Python superclass __init__](../rules/bifrost.python-codeql-quality/policies/missing-call-to-init.rqlp) | `bifrost.python-codeql-quality.missing-call-to-init` | python | correctness | error |
 | [Public Python declaration is missing a docstring](../rules/bifrost.python-codeql-quality/policies/missing-docstring.rqlp) | `bifrost.python-codeql-quality.missing-docstring` | python | quality | warning |
@@ -147,6 +153,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python mutable default modification](../rules/bifrost.python-codeql-quality/policies/modification-of-default-value.rqlp) | `bifrost.python-codeql-quality.modification-of-default-value` | python | quality | warning |
 | [Multiple calls to Python superclass __del__](../rules/bifrost.python-codeql-quality/policies/multiple-calls-to-delete.rqlp) | `bifrost.python-codeql-quality.multiple-calls-to-delete` | python | correctness | warning |
 | [Multiple calls to Python superclass __init__](../rules/bifrost.python-codeql-quality/policies/multiple-calls-to-init.rqlp) | `bifrost.python-codeql-quality.multiple-calls-to-init` | python | correctness | warning |
+| [Python nested loop target is reused](../rules/bifrost.python-codeql-quality/policies/nested-loops-with-same-variable-reused.rqlp) | `bifrost.python-codeql-quality.nested-loops-with-same-variable-reused` | python | quality | error |
+| [Python nested loops reuse a target](../rules/bifrost.python-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.python-codeql-quality.nested-loops-with-same-variable` | python | quality | warning |
 | [First parameter of a class method is not named cls](../rules/bifrost.python-codeql-quality/policies/not-named-cls.rqlp) | `bifrost.python-codeql-quality.not-named-cls` | python | quality | warning |
 | [First parameter of an instance method is not named self](../rules/bifrost.python-codeql-quality/policies/not-named-self.rqlp) | `bifrost.python-codeql-quality.not-named-self` | python | quality | warning |
 | [Python old-style octal literal](../rules/bifrost.python-codeql-quality/policies/old-style-octal-literal.rqlp) | `bifrost.python-codeql-quality.old-style-octal-literal` | python | quality | warning |
@@ -184,6 +192,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Unnecessary lambda](../rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp) | `bifrost.python-codeql-quality.unnecessary-lambda` | python | quality | warning |
 | [Python unsafe cyclic import](../rules/bifrost.python-codeql-quality/policies/unsafe-cyclic-import.rqlp) | `bifrost.python-codeql-quality.unsafe-cyclic-import` | python | correctness | error |
 | [Python unused global variable](../rules/bifrost.python-codeql-quality/policies/unused-global-variable.rqlp) | `bifrost.python-codeql-quality.unused-global-variable` | python | quality | warning |
+| [Python unused local variable](../rules/bifrost.python-codeql-quality/policies/unused-local-variable.rqlp) | `bifrost.python-codeql-quality.unused-local-variable` | python | quality | warning |
+| [Python unused loop variable](../rules/bifrost.python-codeql-quality/policies/unused-loop-variable.rqlp) | `bifrost.python-codeql-quality.unused-loop-variable` | python | quality | error |
+| [Python unused parameter](../rules/bifrost.python-codeql-quality/policies/unused-parameter.rqlp) | `bifrost.python-codeql-quality.unused-parameter` | python | quality | warning |
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | warning |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |

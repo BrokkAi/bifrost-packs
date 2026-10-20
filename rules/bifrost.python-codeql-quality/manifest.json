@@ -1203,6 +1203,150 @@
       "remediation": "Pass the wrapped callable directly when no transformation is needed."
     },
     {
+      "path": "policies/local-shadows-builtin.rqlp",
+      "id": "bifrost.python-codeql-quality.local-shadows-builtin",
+      "authored_hash": "66adddbef702488df758990afc6fd7a48503e5cbbc9c8affbc2fcfdc748e5120",
+      "resolved_semantic_hash": "66adddbef702488df758990afc6fd7a48503e5cbbc9c8affbc2fcfdc748e5120",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Shadowing a builtin can change name resolution and break code that expects the builtin.",
+      "remediation": "Rename the local binding so references to the builtin remain clear."
+    },
+    {
+      "path": "policies/local-shadows-global.rqlp",
+      "id": "bifrost.python-codeql-quality.local-shadows-global",
+      "authored_hash": "c76dc840931967cf1f1ad4187d6102d93ec8566464cf092fce43b354c4be902a",
+      "resolved_semantic_hash": "c76dc840931967cf1f1ad4187d6102d93ec8566464cf092fce43b354c4be902a",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "A function-local binding can hide a module-level value and change behavior within that function.",
+      "remediation": "Rename the local binding or use the module value explicitly when intended."
+    },
+    {
+      "path": "policies/nested-loops-with-same-variable.rqlp",
+      "id": "bifrost.python-codeql-quality.nested-loops-with-same-variable",
+      "authored_hash": "7ef74c4ad8411fea483b447ddd879569a7a4bbeb19dada92578822afa3dc70f1",
+      "resolved_semantic_hash": "7ef74c4ad8411fea483b447ddd879569a7a4bbeb19dada92578822afa3dc70f1",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Reusing an outer loop target in a nested loop overwrites the value observed by the outer loop.",
+      "remediation": "Use a distinct target name for the inner loop."
+    },
+    {
+      "path": "policies/nested-loops-with-same-variable-reused.rqlp",
+      "id": "bifrost.python-codeql-quality.nested-loops-with-same-variable-reused",
+      "authored_hash": "b7e75ced14471e1c477cc78c7cd7ebb69573027339bdec2b4543671668bb7ed5",
+      "resolved_semantic_hash": "b7e75ced14471e1c477cc78c7cd7ebb69573027339bdec2b4543671668bb7ed5",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "Reading a nested loop target afterward observes the inner loop value instead of the outer iteration value.",
+      "remediation": "Use distinct nested loop targets and retain the intended outer value."
+    },
+    {
+      "path": "policies/unused-local-variable.rqlp",
+      "id": "bifrost.python-codeql-quality.unused-local-variable",
+      "authored_hash": "11e36897075a2b224206b19fbd892371d114af880ffb4eadd4c003dcac68eea1",
+      "resolved_semantic_hash": "11e36897075a2b224206b19fbd892371d114af880ffb4eadd4c003dcac68eea1",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An unread local assignment may indicate stale code or a missed use.",
+      "remediation": "Remove the assignment or use the value as intended."
+    },
+    {
+      "path": "policies/unused-loop-variable.rqlp",
+      "id": "bifrost.python-codeql-quality.unused-loop-variable",
+      "authored_hash": "858f54f5edc4e25ebf5cb7d606e71f209d2ea40ed2e266d4d134c9ac6d81de11",
+      "resolved_semantic_hash": "858f54f5edc4e25ebf5cb7d606e71f209d2ea40ed2e266d4d134c9ac6d81de11",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An unread loop target may indicate discarded iteration data or a mistaken loop body.",
+      "remediation": "Use the loop value, or replace the iteration with an explicit count when that is the intent."
+    },
+    {
+      "path": "policies/unused-parameter.rqlp",
+      "id": "bifrost.python-codeql-quality.unused-parameter",
+      "authored_hash": "ed8bfb97b65ff134952f8e41fcc4496aa3c82db48b3b9df8631cfbfa1401559c",
+      "resolved_semantic_hash": "ed8bfb97b65ff134952f8e41fcc4496aa3c82db48b3b9df8631cfbfa1401559c",
+      "category": "quality",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An unread parameter may indicate stale interface state or an omitted use.",
+      "remediation": "Remove the parameter when the interface permits or use it as intended."
+    },
+    {
+      "path": "policies/call-wrong-named-argument.rqlp",
+      "id": "bifrost.python-codeql-quality.call-wrong-named-argument",
+      "authored_hash": "cc449acaf6adc1b4129a78f77f7222edd33f91d3fa68b9d5325b824920bdb1cb",
+      "resolved_semantic_hash": "cc449acaf6adc1b4129a78f77f7222edd33f91d3fa68b9d5325b824920bdb1cb",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-call-relations"
+      ],
+      "severity_rationale": "An unsupported keyword raises TypeError when the call executes, preventing the intended function or constructor behavior.",
+      "remediation": "Use a keyword accepted by the called function or constructor signature."
+    },
+    {
+      "path": "policies/call-wrong-named-class-argument.rqlp",
+      "id": "bifrost.python-codeql-quality.call-wrong-named-class-argument",
+      "authored_hash": "8145af5818252df7b80abb44b1d7b82d98869ff65e0930aa49aed48b8e57c2f1",
+      "resolved_semantic_hash": "8145af5818252df7b80abb44b1d7b82d98869ff65e0930aa49aed48b8e57c2f1",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "python-call-relations"
+      ],
+      "severity_rationale": "An unsupported keyword raises TypeError when the call executes, preventing the intended function or constructor behavior.",
+      "remediation": "Use a keyword accepted by the called function or constructor signature."
+    },
+    {
       "path": "policies/uninitialized-local-variable.rqlp",
       "id": "codeql.verify.py-uninitialized-local-variable",
       "authored_hash": "d50e9e22f51cc165b4f32571da653aab883196073ead2988949c2287942b081c",
