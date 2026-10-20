@@ -1345,6 +1345,24 @@
       ],
       "severity_rationale": "An unsupported keyword raises TypeError when the call executes, preventing the intended function or constructor behavior.",
       "remediation": "Use a keyword accepted by the called function or constructor signature."
+    },
+    {
+      "path": "policies/uninitialized-local-variable.rqlp",
+      "id": "codeql.verify.py-uninitialized-local-variable",
+      "authored_hash": "d50e9e22f51cc165b4f32571da653aab883196073ead2988949c2287942b081c",
+      "resolved_semantic_hash": "d50e9e22f51cc165b4f32571da653aab883196073ead2988949c2287942b081c",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "language-rule-facts",
+        "control-flow",
+        "binding-resolution"
+      ],
+      "severity_rationale": "Reading a local variable on a feasible procedure path before initialization can raise an exception at runtime.",
+      "remediation": "Initialize the local variable on every path before the read, or restructure the conditional logic."
     }
   ]
 }
