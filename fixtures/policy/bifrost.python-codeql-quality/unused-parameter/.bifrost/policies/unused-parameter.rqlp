@@ -1,0 +1,34 @@
+; CodeQL: python/ql/src/Variables/UnusedParameter.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report unread function parameters after CodeQL ignored-name, abstract and override exclusions.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.unused-parameter"
+  :name "Python unused parameter"
+  :message "Function parameter is never read."
+  :severity warning
+  :description "Reports an unread function parameter, including closure reads in the use set, while excluding self, accepted ignored-name patterns, abstract methods, and overriding or overridden methods."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (except
+      (filter :where ((relation eq lexical_variable_definition)
+                      (definition_kind eq parameter)
+                      (scope_kind eq function)
+                      (has_read eq false)
+                      (is_abstract eq false)
+                      (is_overriding_method eq false)
+                      (is_overridden_method eq false))
+        (python-variable-definitions
+          (python-variable-of
+            (language python (bindings :kind [parameter])))))
+      (filter :where ((name regex "^(?:self|_+|empty|.*unused.*|dummy|__.*)$"))
+        (filter :where ((relation eq lexical_variable_definition)
+                        (definition_kind eq parameter)
+                        (scope_kind eq function)
+                        (has_read eq false)
+                        (is_abstract eq false)
+                        (is_overriding_method eq false)
+                        (is_overridden_method eq false))
+          (python-variable-definitions
+            (python-variable-of
+              (language python (bindings :kind [parameter]))))))))))
