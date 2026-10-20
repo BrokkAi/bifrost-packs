@@ -1,6 +1,10 @@
 name: Content integrity and release contract
 on:
+  # A pull request runs this through `pull_request`; pushes run it only for
+  # main and for tags, so a PR branch is not verified twice per push.
   push:
+    branches: [main]
+    tags: ['**']
   pull_request:
   workflow_dispatch:
 permissions:
