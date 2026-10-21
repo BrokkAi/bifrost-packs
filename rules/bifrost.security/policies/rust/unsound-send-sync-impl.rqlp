@@ -1,0 +1,24 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.unsound-send-sync-impl"
+  :name "Stored type parameter lacks a Send or Sync bound"
+  :message "An unsafe Send/Sync impl stores a type parameter without the marker bound it needs"
+  :severity error
+  :description "Review unsafe Send and Sync impls whose stored type parameter lacks a marker bound. Only complete rust_marker_impls_of rows qualify, and the finding anchors on the impl header. Read the impl header the finding points at to identify the stored type parameter and the marker bound it needs. A Send impl needs Send, except when all stored uses are shared references and the parameter has Sync. A Sync impl with only a Send bound is deliberately accepted: lock-like types such as std::sync::Mutex can protect a value that is Send without requiring Sync. This precision choice can miss unsound Sync impls whose wrapper does not provide protection. PhantomData-only and function-type-only uses are excluded. Coverage is limited to impls in the selected declaration's file; incomplete rows and empty results do not establish program soundness. Inspired by Zhang et al., arXiv 2610.21373, Fig. 11, mined row M77."
+  :tags ["security" "rust" "concurrency" "cwe-362"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (union
+      (filter :where ((trait eq "send") (stored eq true)
+                      (has_send_bound eq false) (has_sync_bound eq false)
+                      (completeness eq "complete"))
+        (rust-marker-impls-of (language rust (class))))
+      (filter :where ((trait eq "send") (stored eq true)
+                      (has_send_bound eq false) (shared_ref_only eq false)
+                      (completeness eq "complete"))
+        (rust-marker-impls-of (language rust (class))))
+      (filter :where ((trait eq "sync") (stored eq true)
+                      (has_sync_bound eq false) (has_send_bound eq false)
+                      (completeness eq "complete"))
+        (rust-marker-impls-of (language rust (class)))))))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "362")))

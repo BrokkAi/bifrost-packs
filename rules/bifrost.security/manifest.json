@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -856,6 +856,42 @@
       ],
       "severity_rationale": "A request value persisted through the declared store and read back into SQL text can change the executed statement and compromise application data.",
       "remediation": "Pass untrusted values through the driver's parameter-binding contract instead of adding them to the SQL text.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/rust/unsound-send-sync-impl.rqlp",
+      "id": "bifrost.security.rust.unsound-send-sync-impl",
+      "authored_hash": "83f1c54e1edf2f88959dade1267fd480a3c1344c1cfff2710ea48202df0edc6b",
+      "resolved_semantic_hash": "83f1c54e1edf2f88959dade1267fd480a3c1344c1cfff2710ea48202df0edc6b",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "rust-marker-impls-of"
+      ],
+      "severity_rationale": "An unsafe marker impl lacking a necessary bound can permit cross-thread races on stored values.",
+      "remediation": "Add the required Send or Sync bound to the impl parameter, including through a reviewed supertrait, or remove the unsafe impl.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/rust/callback-after-invalid-state.rqlp",
+      "id": "bifrost.security.rust.callback-after-invalid-state",
+      "authored_hash": "b82cfb7f71d76ec9419311d1edec505f2a84adabfc340559cceb6971b64be07b",
+      "resolved_semantic_hash": "b82cfb7f71d76ec9419311d1edec505f2a84adabfc340559cceb6971b64be07b",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "call-shape-callee-provenance",
+        "call-results",
+        "control-relations-dominance"
+      ],
+      "severity_rationale": "Caller-supplied code may panic while memory invariants are temporarily broken; this name-based ordering heuristic requires review.",
+      "remediation": "Initialize or restore memory invariants before calling caller-supplied code and make unwinding safe.",
       "activation": "opt-in"
     }
   ]
