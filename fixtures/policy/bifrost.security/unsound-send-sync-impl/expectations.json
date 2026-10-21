@@ -1,0 +1,67 @@
+{
+  "policy_id": "bifrost.security.rust.unsound-send-sync-impl",
+  "cases": [
+    {
+      "case": "unbounded-send",
+      "findings": 1,
+      "anchor_line": 4
+    },
+    {
+      "case": "unbounded-sync",
+      "findings": 1,
+      "anchor_line": 4
+    },
+    {
+      "case": "raw-pointer",
+      "findings": 1,
+      "anchor_line": 4
+    },
+    {
+      "case": "box-field",
+      "findings": 1,
+      "anchor_line": 4
+    },
+    {
+      "case": "enum-field",
+      "findings": 1,
+      "anchor_line": 4
+    },
+    {
+      "case": "mut-ref-sync-bound",
+      "findings": 1,
+      "anchor_line": 4
+    },
+    {
+      "case": "matching-send",
+      "findings": 0
+    },
+    {
+      "case": "matching-sync",
+      "findings": 0
+    },
+    {
+      "case": "where-bound",
+      "findings": 0
+    },
+    {
+      "case": "supertrait-bound",
+      "findings": 0
+    },
+    {
+      "case": "phantom-only",
+      "findings": 0
+    },
+    {
+      "case": "phantom-fn",
+      "findings": 0
+    },
+    {
+      "case": "shared-ref-sync-bound",
+      "findings": 0
+    },
+    {
+      "case": "lock-like-send-bound",
+      "findings": 0
+    }
+  ]
+}

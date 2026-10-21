@@ -1,0 +1,65 @@
+{
+  "policy_id": "bifrost.security.rust.callback-after-invalid-state",
+  "cases": [
+    {
+      "case": "generic-init",
+      "findings": 1
+    },
+    {
+      "case": "clone-after-read",
+      "findings": 1
+    },
+    {
+      "case": "reader-buffer",
+      "findings": 1
+    },
+    {
+      "case": "callback-before",
+      "findings": 0
+    },
+    {
+      "case": "local-closure",
+      "findings": 0
+    },
+    {
+      "case": "named-helper",
+      "findings": 0
+    },
+    {
+      "case": "different-functions",
+      "findings": 0
+    },
+    {
+      "case": "assume-init",
+      "findings": 1
+    },
+    {
+      "case": "ptr-copy",
+      "findings": 1
+    },
+    {
+      "case": "ptr-copy-nonoverlapping",
+      "findings": 1
+    },
+    {
+      "case": "mem-uninitialized",
+      "findings": 1
+    },
+    {
+      "case": "slice-raw",
+      "findings": 1
+    },
+    {
+      "case": "unqualified-read",
+      "findings": 0
+    },
+    {
+      "case": "imported-ptr-read",
+      "findings": 1
+    },
+    {
+      "case": "raw-receiver-read",
+      "findings": 0
+    }
+  ]
+}
