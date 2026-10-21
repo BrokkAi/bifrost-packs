@@ -17,30 +17,38 @@ rules and compatibility boundaries.
 
 ## Intended next releases
 
-Published `packs/v0.3.0` and `rules/v0.2.1` remain immutable. Their artifact
+Published `packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1`
+remain immutable. Bifrost v0.14.0 rejects `packs/v0.4.0` because its generated
+productions use semantic-model schema 16, not the current schema 17. Their artifact
 integrity does not establish consumer behavior or complete analysis. Earlier
 published streams, including `packs/v0.2.1` and `rules/v0.1.4`, remain
 immutable as well.
 
-The proposed next semantic-pack stream is `packs/v0.4.0`. It delivers eight
+The proposed next semantic-pack stream is `packs/v0.5.0`, a minor successor
+that regenerates the `packs/v0.4.0` jobs and recipes with the Bifrost 0.14.0
+generator. It also carries the changes merged since 0.4.0: the Go `os` outputs
+activate on the corrected `go-stdlib` ecosystem at pack version 2.0.0, and the
+source catalog adds the CPython 3.13.5 runtime-base, bounded Python object, and
+PHP and C++ network-effect models, which the recipe does not select. It delivers eight
 reviewed direct result-use model families, two migrated Go standard-library
 `os` model outputs (procedure result contracts and declarations), and
 `bifrost.php-builtin`, generated from the existing pinned PHP specification.
 The existing PHP pack documentation describes a prior partial output with 852
-rejects (warnings). The selected 0.13.1 generator has not run this recipe here,
-so its current completeness/reject report remains unverified. No complete PHP
+rejects (warnings). A local generation with the selected 0.14.0 generator reported 854 rejects
+and partial completeness, as in `packs/v0.4.0`; the CI generation report remains
+the release record. No complete PHP
 runtime coverage is claimed (see the
 [PHP pack notes](../semantic-packs/php/README.md)). This recipe addition changes
 no PHP model or specification bytes. The stream
-preserves the full generated bundle, including schema-8 and schema-16 content.
+preserves the full generated bundle, including schema-8 and schema-17 content.
 The Go schema migration and TypeScript declaration correction preserve stable
 pack and procedure identities and retain policy bytes. Their corrected model
 records and content digests are explicit; source preparation does not activate
 the content or qualify consumer behavior.
 
 The recipe uses public generator-only source
-`8c64332281245b6ea3bfae343645f78d0faf2d23`, version `0.13.1`, with Rust
-`1.97.1`. `native-generation.json` pins its source archive and Cargo.lock; the
+`c11a13ffa03ebea154f587b899954e412b5b871e`, version `0.14.0`, with Rust
+`1.99.1`. `native-generation.json` pins its source archive and Cargo.lock; the
 build receipt must pin the actual generator executable. This source preparation
 is not a qualified or published engine release.
 
@@ -50,10 +58,10 @@ of stripping it; historical schemas retain their original requirements. The
 publication guard independently checks the generated payload. Compatibility
 neither implies complete analysis in a particular run nor qualifies behavior.
 
-The `rules/v0.3.0` policy baseline is preserved by the proposed patch
-`rules/v0.3.1`: policy bytes, IDs, language scopes, required capabilities and
-typed incomplete outcomes remain unchanged. The patch depends exactly on
-`bifrost.public.packs@0.4.0`. The retired Go race analysis remains excluded.
+The proposed minor `rules/v0.4.0` adds the 57 policies merged since
+`rules/v0.3.1` (181 to 238 policy source files). Existing policy bytes, IDs,
+language scopes, required capabilities and typed incomplete outcomes remain
+unchanged. It depends exactly on `bifrost.public.packs@0.5.0`. The retired Go race analysis remains excluded.
 Keep separate integrity, compatibility, completeness and runtime behavior
 evidence; none of these metadata changes qualify an engine candidate.
 The narrow dynamic-evaluation smoke does not qualify the entire policy set.
