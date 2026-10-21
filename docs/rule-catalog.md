@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 238 unique rule IDs from 12 manifest packs.
+This catalog lists 239 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -188,6 +188,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Name exported by __all__ is not defined](../rules/bifrost.python-codeql-quality/policies/undefined-export.rqlp) | `bifrost.python-codeql-quality.undefined-export` | python | correctness | warning |
 | [Python possibly uninitialized local](../rules/bifrost.python-codeql-quality/policies/undefined-placeholder-variable.rqlp) | `bifrost.python-codeql-quality.undefined-placeholder-variable` | python | correctness | error |
 | [Python special method raises an unexpected exception](../rules/bifrost.python-codeql-quality/policies/unexpected-raise-in-special-method.rqlp) | `bifrost.python-codeql-quality.unexpected-raise-in-special-method` | python | correctness | warning |
+| [CodeQL uninitialized local variable](../rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp) | `codeql.verify.py-uninitialized-local-variable` | python | correctness | error |
 | [Unnecessary lambda](../rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp) | `bifrost.python-codeql-quality.unnecessary-lambda` | python | quality | warning |
 | [Python unsafe cyclic import](../rules/bifrost.python-codeql-quality/policies/unsafe-cyclic-import.rqlp) | `bifrost.python-codeql-quality.unsafe-cyclic-import` | python | correctness | error |
 | [Python unused global variable](../rules/bifrost.python-codeql-quality/policies/unused-global-variable.rqlp) | `bifrost.python-codeql-quality.unused-global-variable` | python | quality | warning |
