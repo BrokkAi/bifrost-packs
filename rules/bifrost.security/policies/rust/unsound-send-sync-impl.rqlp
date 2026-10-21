@@ -2,9 +2,9 @@
   :schema-version 1
   :id "bifrost.security.rust.unsound-send-sync-impl"
   :name "Stored type parameter lacks a Send or Sync bound"
-  :message "A stored type parameter lacks its required Send or Sync bound; review the parameter and marker trait in the impl evidence"
+  :message "An unsafe Send/Sync impl stores a type parameter without the marker bound it needs"
   :severity error
-  :description "Review unsafe Send and Sync impls whose stored type parameter lacks a marker bound. Only complete rust_marker_impls_of rows qualify, and the finding anchors on the impl header. A Send impl needs Send, except when all stored uses are shared references and the parameter has Sync. A Sync impl with only a Send bound is deliberately accepted: lock-like types such as std::sync::Mutex can protect a value that is Send without requiring Sync. This precision choice can miss unsound Sync impls whose wrapper does not provide protection. PhantomData-only and function-type-only uses are excluded. Coverage is limited to impls in the selected declaration's file; incomplete rows and empty results do not establish program soundness. Inspired by Zhang et al., arXiv 2610.21373, Fig. 11, mined row M77."
+  :description "Review unsafe Send and Sync impls whose stored type parameter lacks a marker bound. Only complete rust_marker_impls_of rows qualify, and the finding anchors on the impl header. Read the impl header the finding points at to identify the stored type parameter and the marker bound it needs. A Send impl needs Send, except when all stored uses are shared references and the parameter has Sync. A Sync impl with only a Send bound is deliberately accepted: lock-like types such as std::sync::Mutex can protect a value that is Send without requiring Sync. This precision choice can miss unsound Sync impls whose wrapper does not provide protection. PhantomData-only and function-type-only uses are excluded. Coverage is limited to impls in the selected declaration's file; incomplete rows and empty results do not establish program soundness. Inspired by Zhang et al., arXiv 2610.21373, Fig. 11, mined row M77."
   :tags ["security" "rust" "concurrency" "cwe-362"]
   :analysis (analysis :type match :selector (rql :schema-version 1
     (union

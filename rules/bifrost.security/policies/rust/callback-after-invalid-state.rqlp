@@ -4,7 +4,7 @@
   :name "Caller-supplied code after an invalid-state API"
   :message "The callback may panic or observe invalid state before it is repaired; confirm that the state is valid at this callback"
   :severity warning
-  :description "Review a caller-supplied call dominated by an invalid-state API call in the same function. Calls are selected structurally, then API callee names are matched by name as a review heuristic, not by resolved standard-library identity. Recognized names are set_len, assume_init, ptr::copy, ptr::copy_nonoverlapping, mem::uninitialized, and slice::from_raw_parts_mut, plus read with an explicit std::ptr or core::ptr receiver path. Qualified APIs use the structurally exposed receiver role and its module-name spelling; no call text is parsed to locate structure. Unqualified read, raw-pointer receiver read, and the bare module spelling ptr::read are excluded because the current call shape does not distinguish a ptr module receiver from a value named ptr. Module aliases and reexports are not resolved by this name-based rule. Callback provenance may have any type shape, including generic trait methods, and the callback need not be inside unsafe. Dominance establishes ordering, not that memory is actually invalid or remains unrepaired: safe preinitialization and intervening repairs require review. Local closures, declared helpers, callbacks before the API and callbacks in different functions are excluded. Incomplete or unsupported analysis does not establish safety. Panic unwinding can expose uninitialized memory or cause a double drop."
+  :description "Review a caller-supplied call dominated by an invalid-state API call in the same function. Calls are selected structurally, then API callee names are matched by name as a review heuristic, not by resolved standard-library identity. Recognized names are set_len and assume_init, plus fully qualified std::ptr or core::ptr read, copy and copy_nonoverlapping, fully qualified std::mem or core::mem uninitialized, and fully qualified std::slice or core::slice from_raw_parts_mut. Qualified APIs use the structurally exposed receiver role and its module-name spelling; no call text is parsed to locate structure. Unqualified imported pointer APIs are not matched (#6247, BrokkAi/bifrost-dev); this accepted gap includes bare ptr::read. Value-receiver .read() is excluded. Module aliases and reexports are not resolved by this name-based review match, and user-defined modules with the selected fully qualified spellings remain an accepted residual. Callback provenance may have any type shape, including generic trait methods, and the callback need not be inside unsafe. Dominance establishes ordering, not that memory is actually invalid or remains unrepaired: safe preinitialization and intervening repairs require review. Local closures, declared helpers, callbacks before the API and callbacks in different functions are excluded. Incomplete or unsupported analysis does not establish safety. Panic unwinding can expose uninitialized memory or cause a double drop."
   :tags ["security" "rust" "panic-safety" "cwe-908" "cwe-457" "cwe-415"]
   :analysis (analysis
     :type assertion
@@ -22,11 +22,11 @@
               (call :callee (name "read")
                     :receiver (text/regex "^(std|core)::ptr$"))
               (call :callee (name/regex "^(copy|copy_nonoverlapping)$")
-                    :receiver (text/regex "^((std|core)::)?ptr$"))
+                    :receiver (text/regex "^(std|core)::ptr$"))
               (call :callee (name "uninitialized")
-                    :receiver (text/regex "^((std|core)::)?mem$"))
+                    :receiver (text/regex "^(std|core)::mem$"))
               (call :callee (name "from_raw_parts_mut")
-                    :receiver (text/regex "^((std|core)::)?slice$")))))))))
+                    :receiver (text/regex "^(std|core)::slice$")))))))))
     (bind :name dominance :query
       (rql :schema-version 1
         (control-relations :relation [dominates]

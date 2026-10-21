@@ -1,5 +1,5 @@
 {
-  "status": "focused-blocked",
+  "status": "focused-complete-integration-only",
   "released_engine_qualified": false,
   "scope": "Two opt-in Rust security rules; 29 isolated public positive and near-miss crates",
   "schemas": {
@@ -9,21 +9,22 @@
   },
   "semantic_models": "No third-party semantic models required; run with BIFROST_OPEN_PACKS_DISABLE=1 and isolated caches",
   "reproduction": "python3 scripts/rust-sast-gate.py --binary /path/to/integration-bifrost --output /empty/evidence/directory",
-  "release_blocker": "Keep the pack PR draft until an engine release includes rust_marker_impls_of, caller provenance, and the reviewed integration fixes. The pinned CI authoring build cannot parse the unreleased vocabulary; its source pins must be updated after that release.",
-  "message_blocker": "Match-policy messages are static. The marker policy cannot interpolate the actual parameter and missing bound; the current message directs reviewers to impl evidence. Exact per-parameter wording needs a parent decision and an engine presentation change.",
+  "release_blocker": "Keep the PR draft until an engine release includes vocabulary from BrokkAi/bifrost-dev PRs #6237 and #6239 and the reviewed integration fixes. Pinned CI authoring-source pins must be updated after that release; no released-engine qualification is claimed.",
   "name_matching": "Structurally selected callee terminal names and receiver module-name spellings are a review heuristic, not resolved standard-library identity. No call text is scanned to locate syntax. Module aliases and reexports are not resolved.",
   "coverage_limits": [
     "Marker impl enumeration is same-file only",
     "Incomplete marker rows are excluded",
     "Dominance proves ordering, not absence of repair or unsafe state",
-    "An empty incomplete result is not a clean result"
+    "An empty incomplete result is not a clean result",
+    "Unqualified imported pointer APIs are not matched (#6247)",
+    "Static generic messages require reviewing the anchored impl header",
+    "Qualified API names can identify user-defined modules with the same spelling"
   ],
   "versioning": "bifrost.security 1.4.0 -> 1.5.0 for two compatible opt-in policy additions. No stream release version or tag is selected here.",
-  "qualified_path_blocker": "The structural receiver role permits explicit std::ptr and core::ptr module spelling. Bare ptr::read remains indistinguishable from a value receiver named ptr without additional engine facts. The imported-ptr-read expected-positive fixture remains failing (0 findings, complete run, advisory empty selection). Raw receiver read is deliberately excluded.",
   "engine_version": "0.14.0",
   "build_identity": "efd25a06b34efd714f4e6ceac74b30b8114c5c1b",
   "binary_sha256": "f858f6c71461fe4f7939c03cc8d4b9e654890bec61ce5d5b2627fb9815070278",
-  "passed_cases": 28,
+  "passed_cases": 29,
   "total_cases": 29,
   "source_identity_verification": "Final production verifier passed all 240 policies against exact integration build efd25a06b34efd714f4e6ceac74b30b8114c5c1b; behavior qualification is separate.",
   "cases": [
@@ -46,11 +47,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "6a4ef0fba7080f8eb1d5f3ff5c15c949e0224bd1d3a82dd2d8df825b6e3eefad",
+      "report_sha256": "c793db7562736846a6d9054d7f33c840b5978684d709524e8759c9b158ce880b",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "1390c1767d4b3a233a57cc01bd09c610495caeef7c9ac90f5d4d901adc89d89a",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "6aa50edb75e8f5d8ed62ef0a77bd3bcedddf0b8e46ffa2621d1addd655037875"
       }
     },
@@ -73,11 +74,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "75602135a2a4d6e1b403ced43d21476ff9711e599ec1febf6acc5b7b1df917df",
+      "report_sha256": "bbe0d5f116f7a2a4c43e6bf276a8d23655c62e6492b1873d4084557d7f5338b7",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "e8ca74e9c5576ea1c7c9043a3e494c5ebe692dac10d3f35ee94446156a30b660",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "c822f6eaf8390d76ff1f6c05afc7fac75a7204291fca00db73600db88bde72e1"
       }
     },
@@ -100,11 +101,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "daab46c102919f59ac12615058b0e6e9828dacb9f6669021bb7047d541cddd0e",
+      "report_sha256": "f3ed2f23b5c0958f5275582f61428202e303abd168151c0908ef02b8f5363a5b",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "197e57bb34b95b4574e193dd106ccfcdef20bb60070ad3a5da19e15ecaed81b5",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "ae539867bb4a7c12cb088fe000c484b3a44303c004e69c535ed071f8fd88bbd0"
       }
     },
@@ -127,11 +128,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "7f649cecc2e4e74b10c0545f4c4c066b6d85017ca40d38192d0fd664f7d1f27a",
+      "report_sha256": "094ac370843dbfd8156fc34336ac0e67facd844cfc28b9b7048162e32fb6a057",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "7018ae8ac6d61de81eef65f6018de34f17a78564f192311f489cb27409fbecc6",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "270c1623fa4269be47d2a7bdb6ed5f530a00940368249d6b0dabe8ac4f78c836"
       }
     },
@@ -154,11 +155,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "d15dd84bbf0b3838b12469be343b486c17e79d5aefe65f11e7409a6efa20e8e2",
+      "report_sha256": "ca8886686e1d9fb900278d771f8edfd8df61311ac13212bdb9d6f7cc5d6c0023",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "6ac9fb9b030cfac185a89bd3cbf903a97489c427374811da54948f026de12135",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "c19440caa24aeb51b6a27d2f696832c7c684ac324f1ba78fa6078a4cfccc0318"
       }
     },
@@ -181,11 +182,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "065d73b52266900f251e0e30fd80d59e2e0c56e2d5f67e26b67f8ac51b26a468",
+      "report_sha256": "4f5d680896223dcdaa40a35d55acd1e6b3e096aba17a4e3c9e52c11fd8cd1ccd",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "3acea5b97d8047211a90179b486ebda427a4d7982845d380d84c8af64f9875f9",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "90098f15d50e54c7ac39212161d7251592b221165e5f093792415d63ce6ee742"
       }
     },
@@ -200,11 +201,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "c487ea68a8d2ccf6118c3953dfd1d7082727080d073188e1c3750ebd90e18733",
+      "report_sha256": "6bee8b6acdd1fb3449cbf22a884905fb9cbb35413468c6d4b72d8ad8435d354b",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "f2e46543554e1e5aee0b314b0b5f7442f0de9e40da157d7d121dbc27d3daf212",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "f4e3f5f8ae4e0fc4306299c85ece1d20429c46068bec3c435736985cc66f410d"
       }
     },
@@ -219,11 +220,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "15a6d46b8f8164e508f5d19684c7a3cbd057b279d7c2138432564e2eddf7f478",
+      "report_sha256": "4cf5192e010a4b530075edb2aa61d6f16e015e9abaa324f6a277180c3958f489",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "3508b0fccceb847697de87582b9aa59d00f31bc9befea8a6c6b824e5d79fe16f",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "858056b3fb2b3cde5e7cc9a2d253a67a0ecba96680614f3eabd78002041bce60"
       }
     },
@@ -238,11 +239,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "7d4c3441e57312eff9e1bd746c3406cfea35fb299efc6152777651c7a698a8b3",
+      "report_sha256": "92ea33f3f442e3b6f1024a6730ebdbef946b3ef8f410c5b1aa002fa911e2568f",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "e401eac4de7e7e5d2b272a0609dcbfc989fbaa536788d8ba54bf25dc7ef63211",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "698fff37e72306dd15dcd4c48eaef276a8efba37099e425653a411a994da30b7"
       }
     },
@@ -257,11 +258,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "6290a6765e1f350e852432fb8d86efafd49443e88b7adabf00c2ac1b2b7514c4",
+      "report_sha256": "1a6bdfc3bed037bbd184ae1143a71b590bbf9864f9c7ef903cb6d6507b2ee1e2",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "32da9075b54dcb89e168d7f99a00cda693cd53f7502a30ea3529ef5c84c7c191",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "66333deca12e7e555edd616cffc3d457da7aab495b3b422647a8b2c8495027ef"
       }
     },
@@ -276,11 +277,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "50db6773fca48343f68a07b8288b44430731415e7fe4b219263b8793dd2c02c6",
+      "report_sha256": "a35085a33edc9c7740e4ebbc6212bc8b08ca963ca3b3700e7b75c3d075f590b3",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "66f9ec49943e43d27b0a1461a528b87088bde210d9690127c8e683caf48731b2",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "1eb113744399c1ba067cccd863f8022342ea3ddd6a4c9a0d9ac66d020977ade7"
       }
     },
@@ -295,11 +296,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "54e2cabdbac1e107d26ebb8b1b41af915d3fa7b87824f92022c5444fb5c4e9b0",
+      "report_sha256": "64c7d3e9930551a78a9eb13ca8206fe7e8fd813d4c61c0a60c4fc3fad6c97b9f",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "bc8d87fa75019620e5979492f1706cecd35b4a2dc3c718a0363d464bfcc4ba8c",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "084ab6e687f52b91c23cf1e98c79681a3c8c25dbd484032888f802131f4537ab"
       }
     },
@@ -314,11 +315,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "bfb8c5f61dfa7d128db559dd9be78d3897345f9f327b26a350789c604bd0cf3f",
+      "report_sha256": "f10208defa530db1077fbc37c7fe5214eb49c9ebb381f9e1ad67169702082042",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "58b90ae244bb2033e47c6d879321eba39fa3e6cd1fd22f8a2c628cbe2258364e",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "1ca645ea2c6186713561a49691685e8e8e8a6c95698cb88242ee84f365206dbc"
       }
     },
@@ -333,11 +334,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "78846b0bbc97dfdab957c214364de89bac02ff2a3ef80bb554802d8d5d2daaa5",
+      "report_sha256": "a8440c1e0e4eb72b5a871c56332223ced6bb74b444e49273b2809adb6eb29680",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "047d3d29667f62372480039c7e96fba423cfa51803410bcc2436882d576579b6",
-        "rule.rqlp": "1b2bdc6361e79922059cd462ce681e956c152b997353348a03eb5b9291925c56",
+        "rule.rqlp": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
         "src/lib.rs": "368e52cd4ac46b7531ea6f701ec3191d13a3fdd93eb664d5810cb32f4d93cec9"
       }
     },
@@ -360,11 +361,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "00329d62681e2cb1cb95473fb292903bd232efac17da4dae68933a7899b4554e",
+      "report_sha256": "f387d0b94688e3fd42ff2f921e8b78f0b17c746715bf5f225c0cef2d96c3c621",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "85c9def90ff0023deceea03a39cab1d1c18656a8a51b8f0905c025c30ea87289",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "fffe75165f1be843c85a406a96d8060f8c560630b71eeb3fb3e70840780228b8"
       }
     },
@@ -387,11 +388,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "c782738253b07cd3703d460a96f7a15abe1ec3c4bb8464c277d3e07514a43ec3",
+      "report_sha256": "3437363915b44c0bb7f5cddc9b406f094103008470aece2efe06bdbecd49e641",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "0cba4c21b21ded1f0793222560b564c57099ad66686a9c0ea86e423dc3b80d76",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "a426ef5812ca68cdba146c8abd693c6bf79d6b29b00651118e7a73fd8de29f85"
       }
     },
@@ -414,11 +415,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "45f727579703e295be23395f05ac843e56661e2f7d3e0ab45c2bbbf933a3ae8d",
+      "report_sha256": "1668c9a0ca9f145a0236a5aa0cf4ba8379df6412a1d635dd6876e4954a241b31",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "a0f285f1a2f6e0269d0f401c86d33cd590923fd548f6ac9e47c59d848d4bb496",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "6167161ed49f50a7a203bef556c2eb48f50ac9b94478d62e5afc9912769ed37c"
       }
     },
@@ -433,11 +434,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "a24c94b2325490f91a5e376d2d1675a293af69126c4fd71ec87f9041d110b357",
+      "report_sha256": "ae322515291f288b0251bdbef766afe06aa2a1d48167de1f541419943002b8d9",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "fe9c9701ddb5f536fd3c3cfa0fb18230dfeafc1f9b77ae096c792f0a5919c750",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "145f69c948a55b99f300b0d0a4dffd45a9ca8b20a9f37c9848b462cfd23b4558"
       }
     },
@@ -452,11 +453,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "746f2dc34daeb8c7634aee38faaa6a9671c1d4ad8b427732c55ae19e1ad17687",
+      "report_sha256": "75cf47b2c79a09cdcc567d608932c6dd32793aa160281e7e25538547f87f34c9",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "1f0c053cc1a17aae2161ea661b5cd0e0f04fb20e7d6502d157d047a874e6f551",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "44b1401c1551d95285529620a89b31c715d857d38944a2c82ac8f982ea308608"
       }
     },
@@ -471,11 +472,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "8b0168f291a6289e3f47ccfcf4ded88611676c29d34f0e0fcf098fee15ec128a",
+      "report_sha256": "cd41d0cc7fe511164f8bce7f3a962167ad54cde0b9f066afbf4be239cbfbe6a1",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "18dd08914672234740d8afebbf5ba75db63687bd04231268bac45c3f5f61853c",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "c91c8c36e2dde840235d59fce01c46206973859b468abc6cebc9c26bb7e61248"
       }
     },
@@ -490,11 +491,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "e2bba4cb91d3056fa1303aeecedf976771a2f4f5649286b53c624e4cb6245ca7",
+      "report_sha256": "5d080263ec07aa13320fc7a9a9f391e7606b17b57b162dccc9f67ca58bc0518a",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "e43a4866d8f544209b18000283b1b97eb56fb86643de7f1aa46c72e494aec4f7",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "6cf402caa70df2c3ce31a60175729832ce84816bc5b0341949c6c1094e491a67"
       }
     },
@@ -517,11 +518,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "a24a08a65de8aa4f93379846fa2fea5951a16021bebccba217100537ed4e5359",
+      "report_sha256": "9bec0c343e7d4d5babf9ecbebb986f04e97c4a88ef8d0041854d68f345747df5",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "e396bd174a2e1cb30071f6cd47db2afd7f39eb0646836e0ef815b4d8618b8f4b",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "65c430b57187ff4567625cd4ba61bcbadbd8af4bb596c27978e6bc03063457b1"
       }
     },
@@ -544,11 +545,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "0eee128e9f3f813de4dd5dedd663b4469170ceae18e2a37f1674152588ace56d",
+      "report_sha256": "d210137e07491f79814ca5058d5620d9d7406196ccede5d845e47decea191ff7",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "99c545527b71c97fd4b9e1ea094908c7c42b69e3db8877c3cc043ec719a4d7d5",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "c817f98d28485affac7d6ef9565cfc9ed7c3cf0f5dc8adcd460ee7c170e074ea"
       }
     },
@@ -571,11 +572,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "f3cecd1cf1086e80b2bbd65acd8a579209f2f76e9568b871d368adde76e576a9",
+      "report_sha256": "d3ad3a9c473fd1f451b67ce6c7c6798e8030c8b2d8ae51cfc0420fcc46293440",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "3d123603e53c4055cea9d978aa8dad0540c5f64e085343f5d9e4804e61d51a9f",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "d2c1085b6ca9696c4aab17d32e0d122f26b8f8c6abb7d30ccfd5fae48ce0f1a9"
       }
     },
@@ -598,11 +599,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "1de0fb3c508b7aea506af3f450197c85797bc8a018173743fd63ce17c1a877c4",
+      "report_sha256": "eba2ee01d9cb2c15daa75b1fec1274928695c38e60718f1bbaa93ec1f51a24b1",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "bea692b2fd741c4b8b5357071c4be09a8e2269b506787c0e733d37a2891b8d06",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "67d0412fb6ceb97dcc4c312447323c9825f6a36395dd41312459e11541ce7960"
       }
     },
@@ -625,11 +626,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "18b343f45f040c3999c0638b0ae7208670aa83dc21a0b9abab26b53e0f1b4f4f",
+      "report_sha256": "b0cdb8d5a81a71d7d9d9c05bbc6a6aea448aad7a8fc2b7d4e6ec9a1664152c17",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "cb74b2fb3a6e7f0debb2bd2b695ff7cb02814cb4a2101c3eeee27d9e13bc7c87",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "ad752ed748bd3be5a8037bda3245a12908653cefced2f07c56e8cfebe6750d2e"
       }
     },
@@ -644,31 +645,31 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "b966a2e1fcae69380a610d8db5a4e65d6281913b7a1dbb5284d033a8d9f4abfb",
+      "report_sha256": "b0c567be41311359e2b5f1be69b51627af6c08f48df4d6051e106bb117eb5100",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "5ebc2a6c62116579561e3551ebedf13aafffbcfb87e3f8452b9f5298574d4ae1",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "22bda52cfbf9e2c93e2259ab840b0711aa7d4fc06ed8bc8adb6ed04b21128f56"
       }
     },
     {
       "rule": "callback-after-invalid-state",
       "case": "imported-ptr-read",
-      "status": "failed",
-      "expected_findings": 1,
+      "status": "passed",
+      "expected_findings": 0,
       "findings": 0,
       "completion": {
         "type": "complete"
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "33ec5845b3d9f3c6631d12f6b4574e54ef16cc6fd4f3667ed1a86ea44e3a0c96",
+      "report_sha256": "4ab4d7d4a8ef05188bc61ea23a3d3eccd4f708379f68e5061e63362ba4ec0fce",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "21229b1a510de0387ce7235c2d44fb96c975365b513e9cc5f0d923c3e1b35874",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
-        "src/lib.rs": "22a6b075573691f6c5b745439adae600836cb42d2d686b578f5bd21c664d1b92"
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "src/lib.rs": "691b389c9e9d862bc44b124a3b319f42674bdd4ea31a75d143b73c608166fcfe"
       }
     },
     {
@@ -682,23 +683,25 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "26e6e6218521d0b8f1cd8fc961c366e051a5ad5be157ba23e48dec52f323c0e5",
+      "report_sha256": "0cd54da101a977c6f52f98b25d478c2c1ed86d4fe031010e6d9636975e297e6d",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "ad5cfb497e0e74e74c88b7c9b629b30b4b438c65130d20215304c43111880a75",
-        "rule.rqlp": "4cf6c866b08183a26b857ecfa36258a5f118c33d4f5d1c674b329df871f33bcb",
+        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
         "src/lib.rs": "63a50c0c06f8a5653ecd2ef520c537ebc02a9311ca039d481959d192ed8e96f0"
       }
     }
   ],
   "policy_identities": {
     "bifrost.security.rust.unsound-send-sync-impl": {
-      "authored_hash": "ce477bfc4419fae7590e24a7051cdb26d93b56e3584d62a6cb36bd6c86f4d89d",
-      "resolved_semantic_hash": "ce477bfc4419fae7590e24a7051cdb26d93b56e3584d62a6cb36bd6c86f4d89d"
+      "authored_hash": "83f1c54e1edf2f88959dade1267fd480a3c1344c1cfff2710ea48202df0edc6b",
+      "resolved_semantic_hash": "83f1c54e1edf2f88959dade1267fd480a3c1344c1cfff2710ea48202df0edc6b"
     },
     "bifrost.security.rust.callback-after-invalid-state": {
-      "authored_hash": "4b79611afaffcef3d27c67148f36647e8667e30ab7acd945f6000156a39ab4ee",
-      "resolved_semantic_hash": "4b79611afaffcef3d27c67148f36647e8667e30ab7acd945f6000156a39ab4ee"
+      "authored_hash": "34932e216fda984afcf0d7930419232f1756cc1d20b3a26cc4cf00effd7a3971",
+      "resolved_semantic_hash": "34932e216fda984afcf0d7930419232f1756cc1d20b3a26cc4cf00effd7a3971"
     }
-  }
+  },
+  "message_presentation": "Accepted static generic marker message; reviewers read the impl header the finding points at. No engine presentation change is required.",
+  "accepted_gap": "Unqualified imported pointer APIs are not matched (BrokkAi/bifrost-dev#6247). imported-ptr-read is expected zero. Value-receiver read remains excluded; qualified API names are review heuristics."
 }
