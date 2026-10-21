@@ -1,7 +1,7 @@
 {
   "status": "focused-complete-integration-only",
   "released_engine_qualified": false,
-  "scope": "Two opt-in Rust security rules; 29 isolated public positive and near-miss crates",
+  "scope": "Two opt-in Rust security rules; 34 isolated public positive and near-miss crates",
   "schemas": {
     "policy": 1,
     "rql": 1,
@@ -24,8 +24,8 @@
   "engine_version": "0.14.0",
   "build_identity": "efd25a06b34efd714f4e6ceac74b30b8114c5c1b",
   "binary_sha256": "f858f6c71461fe4f7939c03cc8d4b9e654890bec61ce5d5b2627fb9815070278",
-  "passed_cases": 29,
-  "total_cases": 29,
+  "passed_cases": 34,
+  "total_cases": 34,
   "source_identity_verification": "Final production verifier passed all 240 policies against exact integration build efd25a06b34efd714f4e6ceac74b30b8114c5c1b; behavior qualification is separate.",
   "cases": [
     {
@@ -361,11 +361,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "f387d0b94688e3fd42ff2f921e8b78f0b17c746715bf5f225c0cef2d96c3c621",
+      "report_sha256": "45ec286dcc0e278ef60f8f2c14d7ce4a6b977b722dff985b698d7e025470dd2a",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "85c9def90ff0023deceea03a39cab1d1c18656a8a51b8f0905c025c30ea87289",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "fffe75165f1be843c85a406a96d8060f8c560630b71eeb3fb3e70840780228b8"
       }
     },
@@ -388,11 +388,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "3437363915b44c0bb7f5cddc9b406f094103008470aece2efe06bdbecd49e641",
+      "report_sha256": "57db39317b9a25bdfc2fbecd3e8b49692fd8d5e2ff3f8947cc56d4d901070e28",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "0cba4c21b21ded1f0793222560b564c57099ad66686a9c0ea86e423dc3b80d76",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "a426ef5812ca68cdba146c8abd693c6bf79d6b29b00651118e7a73fd8de29f85"
       }
     },
@@ -415,11 +415,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "1668c9a0ca9f145a0236a5aa0cf4ba8379df6412a1d635dd6876e4954a241b31",
+      "report_sha256": "6758eff8ce92879173b6779fdfae4b64d222e7d4c29995b3ececd1d5f13face3",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "a0f285f1a2f6e0269d0f401c86d33cd590923fd548f6ac9e47c59d848d4bb496",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "6167161ed49f50a7a203bef556c2eb48f50ac9b94478d62e5afc9912769ed37c"
       }
     },
@@ -434,11 +434,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "ae322515291f288b0251bdbef766afe06aa2a1d48167de1f541419943002b8d9",
+      "report_sha256": "8939a170a2015669ccd30b4ea2be18ae2db82251acdec1a99e7bbfaf4a08c09a",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "fe9c9701ddb5f536fd3c3cfa0fb18230dfeafc1f9b77ae096c792f0a5919c750",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "145f69c948a55b99f300b0d0a4dffd45a9ca8b20a9f37c9848b462cfd23b4558"
       }
     },
@@ -453,11 +453,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "75cf47b2c79a09cdcc567d608932c6dd32793aa160281e7e25538547f87f34c9",
+      "report_sha256": "192212e7822132da10eddccfc3e6b3c4cd334f9a1ccb00ba4bf85391d0186209",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "1f0c053cc1a17aae2161ea661b5cd0e0f04fb20e7d6502d157d047a874e6f551",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "44b1401c1551d95285529620a89b31c715d857d38944a2c82ac8f982ea308608"
       }
     },
@@ -472,11 +472,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "cd41d0cc7fe511164f8bce7f3a962167ad54cde0b9f066afbf4be239cbfbe6a1",
+      "report_sha256": "9cb6cf73c8bfdb020d040ef4f85f2a9b85f711dcdcc4ad351a3b0659cb1824dc",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "18dd08914672234740d8afebbf5ba75db63687bd04231268bac45c3f5f61853c",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "c91c8c36e2dde840235d59fce01c46206973859b468abc6cebc9c26bb7e61248"
       }
     },
@@ -491,11 +491,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "5d080263ec07aa13320fc7a9a9f391e7606b17b57b162dccc9f67ca58bc0518a",
+      "report_sha256": "ee61ecd120fab273515541ccf29e7416a2f9d5de1114ce601973306912ae1b69",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "e43a4866d8f544209b18000283b1b97eb56fb86643de7f1aa46c72e494aec4f7",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "6cf402caa70df2c3ce31a60175729832ce84816bc5b0341949c6c1094e491a67"
       }
     },
@@ -518,11 +518,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "9bec0c343e7d4d5babf9ecbebb986f04e97c4a88ef8d0041854d68f345747df5",
+      "report_sha256": "e066c62738fbc4861932c87020bcc1d309275e2e697c032bb93ae941f099952d",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "e396bd174a2e1cb30071f6cd47db2afd7f39eb0646836e0ef815b4d8618b8f4b",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "65c430b57187ff4567625cd4ba61bcbadbd8af4bb596c27978e6bc03063457b1"
       }
     },
@@ -545,11 +545,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "d210137e07491f79814ca5058d5620d9d7406196ccede5d845e47decea191ff7",
+      "report_sha256": "67cdbb750e2283e771ef1d5ff4c905684c5306d5fca79b7e886112ec904a5e65",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "99c545527b71c97fd4b9e1ea094908c7c42b69e3db8877c3cc043ec719a4d7d5",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "c817f98d28485affac7d6ef9565cfc9ed7c3cf0f5dc8adcd460ee7c170e074ea"
       }
     },
@@ -572,11 +572,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "d3ad3a9c473fd1f451b67ce6c7c6798e8030c8b2d8ae51cfc0420fcc46293440",
+      "report_sha256": "d9b4921ba85b0229a5de4bcbfe57cba0684bf8d5c2861184b30fc542a3393e65",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "3d123603e53c4055cea9d978aa8dad0540c5f64e085343f5d9e4804e61d51a9f",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "d2c1085b6ca9696c4aab17d32e0d122f26b8f8c6abb7d30ccfd5fae48ce0f1a9"
       }
     },
@@ -599,11 +599,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "eba2ee01d9cb2c15daa75b1fec1274928695c38e60718f1bbaa93ec1f51a24b1",
+      "report_sha256": "999172d82d8982d50b78e30b07cf2b37d9b592090b0948462922dc1d67974cf7",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "bea692b2fd741c4b8b5357071c4be09a8e2269b506787c0e733d37a2891b8d06",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "67d0412fb6ceb97dcc4c312447323c9825f6a36395dd41312459e11541ce7960"
       }
     },
@@ -626,11 +626,11 @@
           "type": "complete"
         }
       ],
-      "report_sha256": "b0cdb8d5a81a71d7d9d9c05bbc6a6aea448aad7a8fc2b7d4e6ec9a1664152c17",
+      "report_sha256": "765b294f27464436dee30ffc3e7826aec8cba2114ffc193a41c213113d5d411a",
       "advisory_empty_selection": false,
       "fixture_hashes": {
         "Cargo.toml": "cb74b2fb3a6e7f0debb2bd2b695ff7cb02814cb4a2101c3eeee27d9e13bc7c87",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "ad752ed748bd3be5a8037bda3245a12908653cefced2f07c56e8cfebe6750d2e"
       }
     },
@@ -645,11 +645,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "b0c567be41311359e2b5f1be69b51627af6c08f48df4d6051e106bb117eb5100",
+      "report_sha256": "39caede079be69b8484f8e033bd46c4c502bd098689e01ab57d4afe97f526309",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "5ebc2a6c62116579561e3551ebedf13aafffbcfb87e3f8452b9f5298574d4ae1",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "22bda52cfbf9e2c93e2259ab840b0711aa7d4fc06ed8bc8adb6ed04b21128f56"
       }
     },
@@ -664,11 +664,11 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "4ab4d7d4a8ef05188bc61ea23a3d3eccd4f708379f68e5061e63362ba4ec0fce",
+      "report_sha256": "4de9f6babdc1df4463ef4c6cc2f97b8cd30f5b6304cea92a5ca31e78be326684",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "21229b1a510de0387ce7235c2d44fb96c975365b513e9cc5f0d923c3e1b35874",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "691b389c9e9d862bc44b124a3b319f42674bdd4ea31a75d143b73c608166fcfe"
       }
     },
@@ -683,12 +683,131 @@
       },
       "certainty": [],
       "finding_completeness": [],
-      "report_sha256": "0cd54da101a977c6f52f98b25d478c2c1ed86d4fe031010e6d9636975e297e6d",
+      "report_sha256": "e0f4bdea69b55463bfa6b5a5b8d2cc84842f71fe3d6a4f224849e399c2d1ef95",
       "advisory_empty_selection": true,
       "fixture_hashes": {
         "Cargo.toml": "ad5cfb497e0e74e74c88b7c9b629b30b4b438c65130d20215304c43111880a75",
-        "rule.rqlp": "30145327e9c3eefb0cd6ead8c33e285ba798e9665a948093a16ce3b47a6ace3d",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
         "src/lib.rs": "63a50c0c06f8a5653ecd2ef520c537ebc02a9311ca039d481959d192ed8e96f0"
+      }
+    },
+    {
+      "rule": "callback-after-invalid-state",
+      "case": "generic-init-method",
+      "status": "passed",
+      "expected_findings": 1,
+      "findings": 1,
+      "completion": {
+        "type": "complete"
+      },
+      "certainty": [
+        {
+          "type": "definite"
+        }
+      ],
+      "finding_completeness": [
+        {
+          "type": "complete"
+        }
+      ],
+      "report_sha256": "3db89a46812b27dc712d844413c83e2d094aaef46b8a1f065fe493645a69ff8f",
+      "advisory_empty_selection": false,
+      "fixture_hashes": {
+        "Cargo.toml": "29eecfdfe34bc22215d5bbd06be4e637b10c811dde145346fd253747135f46ae",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+        "src/lib.rs": "05830d22d87171b2744f04e01ab00d0eec3852f32b75c385c5deb50bc06d91fe"
+      }
+    },
+    {
+      "rule": "callback-after-invalid-state",
+      "case": "immediately-invoked-closure",
+      "status": "passed",
+      "expected_findings": 1,
+      "findings": 1,
+      "completion": {
+        "type": "complete"
+      },
+      "certainty": [
+        {
+          "type": "definite"
+        }
+      ],
+      "finding_completeness": [
+        {
+          "type": "complete"
+        }
+      ],
+      "report_sha256": "2a08b9fd3c4acf9ba3896863c1f14c40174d187b21c67f80dd4fbfff161db609",
+      "advisory_empty_selection": false,
+      "fixture_hashes": {
+        "Cargo.toml": "531e26775f8612b108ffa35bb1b6083aed4958cc4bb28b89dcd8f08276d0ccd5",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+        "src/lib.rs": "a31d3bb5a12cdad03d98fd83feb61c709e9ac3783f5c9a19b122297f2efb7fd8"
+      }
+    },
+    {
+      "rule": "callback-after-invalid-state",
+      "case": "passed-closure",
+      "status": "passed",
+      "expected_findings": 1,
+      "findings": 1,
+      "completion": {
+        "type": "complete"
+      },
+      "certainty": [
+        {
+          "type": "definite"
+        }
+      ],
+      "finding_completeness": [
+        {
+          "type": "complete"
+        }
+      ],
+      "report_sha256": "172e136f7789860446ec89adf594191e69bf628f856f893251b04f329807ade7",
+      "advisory_empty_selection": false,
+      "fixture_hashes": {
+        "Cargo.toml": "abb6ba5a90fcd15200324f59e9ef24dc8f4843ec4a215e40b7e76740f102b637",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+        "src/lib.rs": "606c3ae9ed8e81d91e4f33127523fb7e4b20473547e3a36a6c9cebc477145125"
+      }
+    },
+    {
+      "rule": "callback-after-invalid-state",
+      "case": "outer-invalid-nested-callback",
+      "status": "passed",
+      "expected_findings": 0,
+      "findings": 0,
+      "completion": {
+        "type": "complete"
+      },
+      "certainty": [],
+      "finding_completeness": [],
+      "report_sha256": "77c4ed991772ad7cdc9f1d6511a490775f4b5051316dbe84139106f867d4aac8",
+      "advisory_empty_selection": true,
+      "fixture_hashes": {
+        "Cargo.toml": "d69f4f1a4b114bd4fa011528cce550edbab478ab888f4f4a4550e587ab571db5",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+        "src/lib.rs": "dcbe0e0ce258a2422c01961a56e8d8a45413dfe3599c69cc9f36d8715e2dd534"
+      }
+    },
+    {
+      "rule": "callback-after-invalid-state",
+      "case": "method-named-helper",
+      "status": "passed",
+      "expected_findings": 0,
+      "findings": 0,
+      "completion": {
+        "type": "complete"
+      },
+      "certainty": [],
+      "finding_completeness": [],
+      "report_sha256": "cc153348f322796b0808d386930f6572beb143a213fb402379639e98cf99e7b7",
+      "advisory_empty_selection": true,
+      "fixture_hashes": {
+        "Cargo.toml": "6083930002bb77d8c1616ec7f49ab779adf6e6d5470c242b014dd1d793c181c1",
+        "rule.rqlp": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+        "src/lib.rs": "12562cfa7b35c38bda37a94ccfd1eba805532fe7681cc084ffd08bb507d21626"
       }
     }
   ],
@@ -698,10 +817,11 @@
       "resolved_semantic_hash": "83f1c54e1edf2f88959dade1267fd480a3c1344c1cfff2710ea48202df0edc6b"
     },
     "bifrost.security.rust.callback-after-invalid-state": {
-      "authored_hash": "34932e216fda984afcf0d7930419232f1756cc1d20b3a26cc4cf00effd7a3971",
-      "resolved_semantic_hash": "34932e216fda984afcf0d7930419232f1756cc1d20b3a26cc4cf00effd7a3971"
+      "authored_hash": "b82cfb7f71d76ec9419311d1edec505f2a84adabfc340559cceb6971b64be07b",
+      "resolved_semantic_hash": "b82cfb7f71d76ec9419311d1edec505f2a84adabfc340559cceb6971b64be07b"
     }
   },
   "message_presentation": "Accepted static generic marker message; reviewers read the impl header the finding points at. No engine presentation change is required.",
-  "accepted_gap": "Unqualified imported pointer APIs are not matched (BrokkAi/bifrost-dev#6247). imported-ptr-read is expected zero. Value-receiver read remains excluded; qualified API names are review heuristics."
+  "accepted_gap": "Unqualified imported pointer APIs are not matched (BrokkAi/bifrost-dev#6247). imported-ptr-read is expected zero. Value-receiver read remains excluded; qualified API names are review heuristics.",
+  "procedure_scope": "Invalid-state and caller-supplied calls must belong to the same function, method or closure. callable selects all procedure kinds. An invalid-state call in an outer function does not match a callback inside a nested closure; the repaired-before-invocation near miss is qualified as zero."
 }
