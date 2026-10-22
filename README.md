@@ -28,7 +28,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**238 unique rules across 12 policy packs.**
+**239 unique rules across 12 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -43,19 +43,19 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.javascript-codeql-quality | 12 |
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
-| Pack | bifrost.security | 45 |
+| Pack | bifrost.security | 46 |
 | Category | correctness | 109 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 10 |
 | Category | quality | 55 |
-| Category | security | 47 |
+| Category | security | 48 |
 | Severity | error | 72 |
 | Severity | note | 21 |
-| Severity | warning | 145 |
+| Severity | warning | 146 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 476 rule-language pairs.
+13 declared languages; 477 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -69,11 +69,11 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | php | 20 |
 | python | 128 |
 | ruby | 20 |
-| rust | 32 |
+| rust | 33 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 46, unspecified 192. Omitted labels remain unspecified.
+Activation labels: opt-in 46, unspecified 193. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -98,6 +98,15 @@ installer. No runtime download, scanner enablement, or engine default change
 happens here. Compatibility declarations are separate from exact-build
 behavior evidence; see [validation](validation.json) and
 [transition sequencing](docs/v013-transition.md).
+
+Workspace configuration selects semantic packs with `enable` in
+`.bifrost/packs.json`. A complete, exactly bound summary from an active pack
+can prove a finding without separate workspace approval. Manifest hashes
+still identify and verify artifacts; they are not a runtime approval step.
+Incomplete discovery or bindings remain explicit. See the
+[Rust checkout example](semantic-packs/rust-codeql-parity/README-core-logging.md)
+for source-model validation and enablement; storing authored source here does
+not install or enable it automatically.
 
 New release manifests use contract schema 2: they match declared schema axes,
 actual required capabilities, and exact release dependencies without an engine

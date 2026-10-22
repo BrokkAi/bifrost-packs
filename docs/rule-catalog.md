@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 238 unique rule IDs from 12 manifest packs.
+This catalog lists 239 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -242,4 +242,5 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
+| [Cleartext logging of sensitive information](../rules/bifrost.security/policies/rust/cleartext-logging.rqlp) | `bifrost.security.rust.cleartext-logging` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
