@@ -8,8 +8,12 @@ on:
         default: '0.5.0'
   pull_request:
     paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+  # A pull request can restore only caches saved on its own merge ref or on main,
+  # so main saves the producer and upstream inputs for later pull requests.
   push:
+    branches: [main]
     tags: ['packs/v*.*.*']
+    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
 permissions:
   contents: read
 jobs:
@@ -33,10 +37,14 @@ jobs:
         run: |
           python3 -B scripts/content.py verify
           python3 -B -m unittest discover -s tests -p 'test_*.py'
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        id: inputs-cache
         with:
           path: ${{ runner.temp }}/native-input-cache
-          key: native-inputs-linux-${{ hashFiles('scripts/upstream/**', 'semantic-packs/**/*.json') }}-v1
+          key: native-inputs-linux-v1-${{ hashFiles('scripts/upstream/**', 'semantic-packs/**/*.json') }}
+          # Every cached archive is reused only after its pinned checksum matches, so an older
+          # input set is safe to start from; a missing or stale archive is fetched again.
+          restore-keys: native-inputs-linux-v1-
       - id: generator-pin
         name: Read immutable generator build pins
         run: |
@@ -124,6 +132,12 @@ jobs:
           python3 -B release-contract/native_generation.py --root . \
             --config native-generation.json --binary "$BIFROST_SEMANTIC_PACK_BIN" \
             --build-receipt "$RUNNER_TEMP/generator-cache/build.json" --output "$RUNNER_TEMP/native"
+      - name: Save upstream inputs for later pull requests
+        if: ${{ success() && github.ref == 'refs/heads/main' && steps.inputs-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ runner.temp }}/native-input-cache
+          key: ${{ steps.inputs-cache.outputs.cache-primary-key }}
       - name: Record runner disk after generation
         if: ${{ always() }}
         run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"

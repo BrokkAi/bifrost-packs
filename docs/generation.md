@@ -89,7 +89,9 @@ input plan and archive. Metadata binds that receipt and the archive.
 
 CI caches the producer by source archive, lock and toolchain pins. It also caches
 upstream inputs by the recipe/specification hashes; every reused input must pass
-its own pinned checksum. `SEMANTIC_PACK_SOURCE_CACHE` provides the same verified
+its own pinned checksum, so a pull request may start from main's latest input set
+when its own hashes differ. Pushes to main save both caches, since a pull request
+can restore only what its own merge ref or main saved. `SEMANTIC_PACK_SOURCE_CACHE` provides the same verified
 input reuse locally. It does not permit network-free consumer acceptance to rely
 on the generator's source cache. Consumer offline reuse has its own selected
 release receipt and isolated runtime cache.

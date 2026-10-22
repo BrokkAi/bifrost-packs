@@ -393,6 +393,24 @@ class ProducerCacheTests(unittest.TestCase):
         for marker in ("id: generator-verify", "name: Generate twice, verify and compare native content"):
             self.assertNotIn("        if:", self.step(marker))
 
+    def test_main_saves_producer_and_inputs_that_pull_requests_restore(self):
+        triggers = self.workflow[self.workflow.index("\non:\n"):self.workflow.index("\npermissions:\n")]
+        pull_request = triggers.partition("  pull_request:\n")[2].partition("\n  push:\n")[0]
+        push = triggers.partition("\n  push:\n")[2]
+        self.assertIn("    branches: [main]\n", push)
+        self.assertIn("    tags: ['packs/v*.*.*']\n", push)
+        pull_request_paths = [line for line in pull_request.splitlines() if line.startswith("    paths: ")]
+        self.assertEqual(len(pull_request_paths), 1)
+        self.assertIn(pull_request_paths[0], push.splitlines())
+        restore = self.step("id: inputs-cache")
+        save = self.step("name: Save upstream inputs for later pull requests")
+        self.assertIn("actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9", restore)
+        self.assertIn("          restore-keys: native-inputs-linux-v1-", restore.splitlines())
+        self.assertIn("if: ${{ success() && github.ref == 'refs/heads/main' && steps.inputs-cache.outputs.cache-hit != 'true' }}", save)
+        self.assertIn("key: ${{ steps.inputs-cache.outputs.cache-primary-key }}", save)
+        self.assertLess(self.workflow.index("name: Generate twice, verify and compare native content"),
+                        self.workflow.index("name: Save upstream inputs for later pull requests"))
+
     def test_successful_build_survives_later_generation_failure_and_exact_restore_still_generates(self):
         events, failed, key, _ = self.attempt(1, generation_fail=True)
         self.assertNotEqual(failed.returncode, 0)
