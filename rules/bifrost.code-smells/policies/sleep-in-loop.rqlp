@@ -15,7 +15,19 @@
           :schema-version 1
           (union
             (language python
-              (inside-decl (for_loop :capture "region") (call :receiver (name "time") :callee (name "sleep") :capture "smell")))
+              (filter :where ((effect_id eq "bifrost.performance.sleep")
+                              (derivation eq declared)
+                              (certainty eq definite)
+                              (proof eq proven)
+                              (coverage eq exhaustive)
+                              (terminal eq false)
+                              (execution_timing eq same_invocation)
+                              (timing eq immediate))
+                (call-effects
+                  (call-shape
+                    (inside-decl
+                      (for_loop :capture "region")
+                      (call :callee (name "sleep") :capture "smell"))))))
             (language java
               (inside-decl (for_loop :capture "region") (call :receiver (name "Thread") :callee (name "sleep") :capture "smell")))
             (language rust

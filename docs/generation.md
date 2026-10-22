@@ -8,13 +8,16 @@ for a release or enable it in a scanner.
 
 ## Pinned native candidate
 
-The published `packs/v0.3.0` and `rules/v0.2.1` releases remain immutable.
-The current rule-content baseline is `rules/v0.3.0`; the proposed `rules/v0.3.1`
-is a patch and dependency successor.
-The proposed next `packs/v0.4.0` recipe builds the public
-`bifrost-semantic-pack` producer version `0.13.1` from the generator-only
-preparation source
-`8c64332281245b6ea3bfae343645f78d0faf2d23` with Rust `1.97.1`.
+The published `packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and
+`rules/v0.2.1` releases remain immutable. Bifrost v0.14.0 rejects the
+`packs/v0.4.0` bundle because its generated productions use semantic-model
+schema 16 and the v0.14.0 installer requires current schema 17. The proposed
+`packs/v0.5.0` regenerates the same jobs and recipes, and the proposed
+`rules/v0.4.0` depends on it.
+The proposed next `packs/v0.5.0` recipe builds the public
+`bifrost-semantic-pack` producer version `0.14.0` from public source
+`c11a13ffa03ebea154f587b899954e412b5b871e`, the projection of the Bifrost
+v0.14.0 release candidate, with Rust `1.99.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
 source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
@@ -29,12 +32,13 @@ revision `748ab87d16253a5b5d648b5fe4dae1ff4152bb03` and its recorded source-set
 digest. It is distinct from the PHP result-use model among the eight direct jobs.
 The source specification and model bytes are unchanged. The existing PHP pack
 notes describe a prior partial output with 852 rejects (warnings) for the pinned
-source set. The selected 0.13.1 generator has not run this recipe here, so that count is
-historical; the current generation report
-remains unverified and must stay explicit. This bounded declaration slice does
+source set. A local two-run generation with the selected 0.14.0 generator
+produced a partial `bifrost.php-builtin` with 854 rejects, the same count as the
+published `packs/v0.4.0`; the CI generation report remains the release record
+and must stay explicit. This bounded declaration slice does
 not claim complete PHP runtime coverage. See the
 [PHP pack notes](../semantic-packs/php/README.md). The successor also preserves
-the full generated bundle, including schema-8 and schema-16 content. Generation,
+the full generated bundle, including schema-8 and schema-17 content. Generation,
 integrity, compatibility and consumer behavior remain separate outcomes, and
 behavior qualification remains pending.
 
@@ -70,7 +74,7 @@ python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
   --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
-  --config release-config.packs.json --version 0.4.0 \
+  --config release-config.packs.json --version 0.5.0 \
   --archive /absolute/scratch/native/native.tar.gz \
   --receipt /absolute/scratch/native/generation.json --output /absolute/scratch/dist
 ```
