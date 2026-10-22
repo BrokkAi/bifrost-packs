@@ -1,5 +1,5 @@
 {
-  "status": "focused-partial-pending-cross-file-ownership",
+  "status": "focused-complete-integration-only",
   "released_engine_qualified": false,
   "scope": "Shared-access refinement: 17 marker fixtures and 20 unchanged callback fixtures",
   "schemas": {
@@ -9,7 +9,7 @@
   },
   "semantic_models": "No third-party semantic models required; run with BIFROST_OPEN_PACKS_DISABLE=1 and isolated caches",
   "reproduction": "python3 scripts/rust-sast-gate.py --binary /path/to/integration-bifrost --output /empty/evidence/directory",
-  "release_blocker": "Keep PR #113 draft until a released engine includes #6385 and #6394, alongside the previously required Rust SAST vocabulary. This local debug build is preliminary integration evidence only.",
+  "release_blocker": "Keep PR #113 draft until a released engine includes #6385 and #6394. This qualification uses a local release-profile binary, not a published engine release.",
   "coverage_limits": [
     "Marker impl enumeration is same-file only",
     "Incomplete marker rows are excluded",
@@ -19,20 +19,20 @@
     "Static generic messages require reviewing the anchored impl header",
     "Qualified API names can identify user-defined modules with the same spelling",
     "Sync rows with shared_access=none are excluded; unavailable method access stays conservative",
-    "Cross-file shared methods require the #6394 language-hook change; the positive fixture remains enabled"
+    "Shared methods include cross-file inherent and trait impl methods through the #6457 resolved-owner language hook"
   ],
   "versioning": "bifrost.security 1.4.0 -> 1.5.0 for two compatible opt-in policy additions. No stream release version or tag is selected here.",
   "engine_version": "0.14.0",
-  "build_identity": "c4f06ed447ee5ca2ec99084226e8762d85f3b19d-dirty.196a112a1636f6d1896b132d57ecbe96adf1c2ce",
-  "production_source_checkpoint": "BrokkAi/bifrost-dev@30ee257526",
-  "binary_sha256": "c948b08e74b916ab2da700dc53c67992b634fcafb5ef0e5ce852748874e8b519",
-  "passed_cases": 36,
+  "build_identity": "33704f6074c4a41b54aefd63229ace52483de6eb",
+  "production_source_checkpoint": "BrokkAi/bifrost-dev@33704f6074c4",
+  "binary_sha256": "da99bcc36ceaf78cae5f7c8ea2150e3d5cdb714b4f8466e701d23dbcfa446567",
+  "passed_cases": 37,
   "total_cases": 37,
   "rule_results": [
     {
       "rule": "unsound-send-sync-impl",
       "total": 17,
-      "passed": 16
+      "passed": 17
     },
     {
       "rule": "callback-after-invalid-state",
@@ -40,15 +40,7 @@
       "passed": 20
     }
   ],
-  "pending": [
-    {
-      "rule": "unsound-send-sync-impl",
-      "case": "cross-file-shared-read",
-      "expected_findings": 1,
-      "actual_findings": 0,
-      "reason": "Indexed cross-file method is not returned by direct_children before #6394"
-    }
-  ],
+  "pending": [],
   "changed_policy_identity": {
     "id": "bifrost.security.rust.unsound-send-sync-impl",
     "source_sha256": "356f77c3ac75b0bc31d76a1d9ff0ad897d879123b97edb5812d8a6b016e740be",
@@ -62,5 +54,9 @@
     "engine_build_identity": "efd25a06b34efd714f4e6ceac74b30b8114c5c1b",
     "passed_cases": 34,
     "note": "Historical integration evidence before shared_access; full case observations remain in Git history."
+  },
+  "prerequisite": {
+    "pr": "BrokkAi/bifrost-dev#6457",
+    "head": "3707f713689748b70b2da903f8c56bff114889a6"
   }
 }
