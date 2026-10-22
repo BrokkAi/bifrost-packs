@@ -3,9 +3,9 @@
   "pack_id": "bifrost.public.packs",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.5.0",
+  "release_version": "0.6.0",
   "artifact_role": "source",
-  "notes": "Regenerate the native content with public Bifrost 0.14.0 release-candidate source c11a13ffa03ebea154f587b899954e412b5b871e, so generated productions use the engine's current semantic-model schema 17 and the 0.14.0 installer verifies the bundle. This is a minor release because it also carries the source and native changes merged since 0.4.0: the Go os procedure-contract and declaration outputs activate on the corrected go-stdlib ecosystem at pack version 2.0.0, and the source catalog adds the CPython 3.13.5 runtime-base and bounded Python object declaration models and the PHP and C++ network-effect boundary models. Jobs and recipes are unchanged from 0.4.0; the new source-only models are not selected by the release recipe and are not native additions. Fresh generation, artifact integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
+  "notes": "This minor release adds bifrost.python-performance-summaries 1.0.0 to the native recipe: reviewed CPython 3.13.5 declared performance effects for time.sleep, subprocess.run, pickle.dumps and pickle.loads (one-argument and full-signature forms), builtins sorted and list.sort, buffered reads, sqlite3 Cursor.execute and http.client HTTPConnection.request, which the Python arms of the rules 0.5.0 bifrost.performance loop policies read. The pack envelope is complete, matching its complete summaries, as the pinned producer requires. The source catalog also extends the CPython 3.13.5 runtime-base model with unittest.TestCase, MutableMapping and threading.Thread ancestry and adds declared performance effects to the CPython golden and Python security-sink summary sources; the recipe does not select those, so they are source additions, not native additions. Every other job and recipe and the Bifrost 0.14.0 generator are unchanged from 0.5.0. Fresh generation, artifact integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
   "component": "packs",
   "baseline": "release-baseline.json"
 }

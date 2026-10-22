@@ -17,34 +17,33 @@ rules and compatibility boundaries.
 
 ## Intended next releases
 
-Published `packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1`
-remain immutable. Bifrost v0.14.0 rejects `packs/v0.4.0` because its generated
-productions use semantic-model schema 16, not the current schema 17. Their artifact
-integrity does not establish consumer behavior or complete analysis. Earlier
-published streams, including `packs/v0.2.1` and `rules/v0.1.4`, remain
-immutable as well.
+Published `packs/v0.5.0`, `rules/v0.4.0`, `packs/v0.4.0`, `rules/v0.3.1`,
+`packs/v0.3.0` and `rules/v0.2.1` remain immutable. Bifrost v0.14.0 rejects
+`packs/v0.4.0` because its generated productions use semantic-model schema 16,
+not the current schema 17. Their artifact integrity does not establish consumer
+behavior or complete analysis. Earlier published streams, including
+`packs/v0.2.1` and `rules/v0.1.4`, remain immutable as well.
 
-The proposed next semantic-pack stream is `packs/v0.5.0`, a minor successor
-that regenerates the `packs/v0.4.0` jobs and recipes with the Bifrost 0.14.0
-generator. It also carries the changes merged since 0.4.0: the Go `os` outputs
-activate on the corrected `go-stdlib` ecosystem at pack version 2.0.0, and the
-source catalog adds the CPython 3.13.5 runtime-base, bounded Python object, and
-PHP and C++ network-effect models, which the recipe does not select. It delivers eight
-reviewed direct result-use model families, two migrated Go standard-library
-`os` model outputs (procedure result contracts and declarations), and
-`bifrost.php-builtin`, generated from the existing pinned PHP specification.
-The existing PHP pack documentation describes a prior partial output with 852
-rejects (warnings). A local generation with the selected 0.14.0 generator reported 854 rejects
-and partial completeness, as in `packs/v0.4.0`; the CI generation report remains
-the release record. No complete PHP
-runtime coverage is claimed (see the
-[PHP pack notes](../semantic-packs/php/README.md)). This recipe addition changes
-no PHP model or specification bytes. The stream
+The proposed next semantic-pack stream is `packs/v0.6.0`, a minor successor to
+`packs/v0.5.0`. Its native recipe adds one authored job,
+`bifrost.python-performance-summaries` 1.0.0: reviewed CPython 3.13.5 declared
+performance effects that the Python arms of the `bifrost.performance` loop
+policies read. The pinned producer requires a complete pack envelope around
+complete summaries, so the envelope is complete, and one-argument
+`pickle.dumps(obj)` and `pickle.loads(data)` summaries sit beside the
+full-signature ones because the engine matches summaries by call arity. The
+source catalog also extends the CPython 3.13.5 runtime-base model with
+`unittest.TestCase`, `MutableMapping` and `threading.Thread` ancestry and adds
+declared effects to the CPython golden and Python security-sink summary
+sources; the recipe does not select those, so they are not native additions.
+Every other job and recipe, and the generator, are unchanged from 0.5.0. The
+stream delivers eight reviewed direct result-use model families, two Go
+standard-library `os` model outputs, `bifrost.php-builtin` (854 rejects and
+partial completeness in a local generation, as in 0.5.0; the CI generation
+report remains the release record) and the new performance model, and
 preserves the full generated bundle, including schema-8 and schema-17 content.
-The Go schema migration and TypeScript declaration correction preserve stable
-pack and procedure identities and retain policy bytes. Their corrected model
-records and content digests are explicit; source preparation does not activate
-the content or qualify consumer behavior.
+No complete PHP runtime coverage is claimed (see the
+[PHP pack notes](../semantic-packs/php/README.md)).
 
 The recipe uses public generator-only source
 `c11a13ffa03ebea154f587b899954e412b5b871e`, version `0.14.0`, with Rust
@@ -58,10 +57,24 @@ of stripping it; historical schemas retain their original requirements. The
 publication guard independently checks the generated payload. Compatibility
 neither implies complete analysis in a particular run nor qualifies behavior.
 
-The proposed minor `rules/v0.4.0` adds the 57 policies merged since
-`rules/v0.3.1` (181 to 238 policy source files). Existing policy bytes, IDs,
-language scopes, required capabilities and typed incomplete outcomes remain
-unchanged. It depends exactly on `bifrost.public.packs@0.5.0`. The retired Go race analysis remains excluded.
+The proposed minor `rules/v0.5.0` keeps the 238 policy source files and their
+IDs and changes the consumer requirements of twenty existing policies. The
+Python arms of the ten `bifrost.performance` loop policies now report a call
+only when a reviewed model declares that exact operation's effect, so they
+require `exact-call-target`, `semantic-model-declared-effects` and
+`exhaustive-effect-coverage` (`bifrost.code-smells` 4.0.0); a call with no
+exact model stays structured-open instead of matching by name. With Bifrost
+0.14.0 and `packs/v0.6.0`, `time.sleep`, `subprocess.run`, `pickle.dumps(obj)`
+and `pickle.loads(data)` resolve to declared effects. `json.dumps`,
+`json.loads` and `re.compile` stay open because their effects live in source
+models that no native recipe delivers, and `sorted`, `list.sort`, buffered
+reads, `sqlite3.Cursor.execute` and `HTTPConnection.request` stay open because
+0.14.0 does not resolve those calls to an exact target. The ten
+`bifrost.effects` selected-boundary policies import their declaration selection
+from `.bifrost/effect-boundaries/<language>-network-io.rqlp`, require
+`declaration-selection-imports` and are opt-in (`bifrost.effects` 2.0.0): a host
+supplies that document and selects them by ID. The release depends exactly on
+`bifrost.public.packs@0.6.0`. The retired Go race analysis remains excluded.
 Keep separate integrity, compatibility, completeness and runtime behavior
 evidence; none of these metadata changes qualify an engine candidate.
 The narrow dynamic-evaluation smoke does not qualify the entire policy set.

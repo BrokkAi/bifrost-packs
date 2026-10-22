@@ -8,13 +8,12 @@ for a release or enable it in a scanner.
 
 ## Pinned native candidate
 
-The published `packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and
-`rules/v0.2.1` releases remain immutable. Bifrost v0.14.0 rejects the
-`packs/v0.4.0` bundle because its generated productions use semantic-model
-schema 16 and the v0.14.0 installer requires current schema 17. The proposed
-`packs/v0.5.0` regenerates the same jobs and recipes, and the proposed
-`rules/v0.4.0` depends on it.
-The proposed next `packs/v0.5.0` recipe builds the public
+The published `packs/v0.5.0`, `rules/v0.4.0`, `packs/v0.4.0`, `rules/v0.3.1`,
+`packs/v0.3.0` and `rules/v0.2.1` releases remain immutable. The proposed
+`packs/v0.6.0` keeps the 0.5.0 jobs and recipes and adds the authored
+`bifrost.python-performance-summaries` job; the proposed `rules/v0.5.0`
+depends on it.
+The proposed next `packs/v0.6.0` recipe builds the public
 `bifrost-semantic-pack` producer version `0.14.0` from public source
 `c11a13ffa03ebea154f587b899954e412b5b871e`, the projection of the Bifrost
 v0.14.0 release candidate, with Rust `1.99.1`.
@@ -23,8 +22,9 @@ source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
 
-The plan contains ten direct jobs: eight reviewed result-use models and the
-Go standard-library `os` procedure result-contract and declarations models. It
+The plan contains eleven direct jobs: eight reviewed result-use models, the
+Go standard-library `os` procedure result-contract and declarations models, and
+the reviewed Python performance summaries. It
 retains five recipes: four existing native recipes plus the existing pinned PHP
 builtin recipe. That recipe builds `bifrost.php-builtin` from
 `semantic-packs/php/phpstorm-stubs-2026.8.29.json`, pinned to phpstorm-stubs
@@ -34,7 +34,7 @@ The source specification and model bytes are unchanged. The existing PHP pack
 notes describe a prior partial output with 852 rejects (warnings) for the pinned
 source set. A local two-run generation with the selected 0.14.0 generator
 produced a partial `bifrost.php-builtin` with 854 rejects, the same count as the
-published `packs/v0.4.0`; the CI generation report remains the release record
+published `packs/v0.4.0` and `packs/v0.5.0`; the CI generation report remains the release record
 and must stay explicit. This bounded declaration slice does
 not claim complete PHP runtime coverage. See the
 [PHP pack notes](../semantic-packs/php/README.md). The successor also preserves
@@ -74,7 +74,7 @@ python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
   --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
-  --config release-config.packs.json --version 0.5.0 \
+  --config release-config.packs.json --version 0.6.0 \
   --archive /absolute/scratch/native/native.tar.gz \
   --receipt /absolute/scratch/native/generation.json --output /absolute/scratch/dist
 ```
