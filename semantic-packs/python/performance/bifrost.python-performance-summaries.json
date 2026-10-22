@@ -144,6 +144,23 @@
             ]
           },
           {
+            "id": "summary.python.pickle.dumps.obj",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.dumps(obj)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
             "id": "summary.python.pickle.dumps",
             "target": {
               "path": "pickle.pyi",
@@ -158,6 +175,23 @@
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads.data",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
             ]
           },
           {
