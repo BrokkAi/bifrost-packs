@@ -4834,6 +4834,56 @@
       }
     },
     {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/.bifrost/policies/uninitialized-local-variable.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "e1bbee29c6954cb0c1cb300f2b05a5fc759356436bbb61236fb1b23eb249ce8b"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/README.md",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "a474c48d726e1bb82041276a4c457f28c38636c5afbe3cf89a15c7f5625b9ef6"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/UninitializedLocal.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/UninitializedLocal.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "b3f075a4309161070961b3472faada23126895a311374ff4ba32e95d44cd35ae",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/UninitializedLocal.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/odasa3987.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/odasa3987.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "255041ab4c53d693a4ed260f3560624ca440b137967b1efb894842a074a78b14",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/odasa3987.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/odasa6800.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/odasa6800.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "a55d815d43568e73ff785291893dc40ce90b2e0d99dd178d265a7fbaa313af52",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/odasa6800.py"
+      }
+    },
+    {
       "path": "fixtures/policy/bifrost.python-codeql-quality/unnecessary-lambda/.bifrost/policies/unnecessary-lambda.rqlp",
       "source_path": "rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp",
       "sha256": "90d98654e264500946344404750bd0a14461fa01ab747e334310952572475906",
@@ -7217,7 +7267,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "17a5b2a52e7b009ecf19d248b72be3d24ba707a933660468465b18b187a58421",
+      "sha256": "541c2ba49a3ab9ace0932c8b8921862fbe7308afef6a467619f35bfafc7825c4",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7238,7 +7288,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/database-call-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/database-call-in-loop.rqlp",
-      "sha256": "17421a526ebe236b7cee44bb8f4b3f7e202fdb83963b126b5423ae444c09006d",
+      "sha256": "c1c274796c5936542babfd165fd538c40890c7484d788328c045e9c41850d98b",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7280,7 +7330,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/expensive-operation-in-nested-loop.rqlp",
-      "sha256": "6e59a5290af21439ec6377b3876a785913b008300a3c46478f03bbd0ef4f3124",
+      "sha256": "86f8bb68b3ae93dff36c15c793114da0c155783e9870a408d5ac64b4fb36953d",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7294,7 +7344,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/file-read-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/file-read-in-loop.rqlp",
-      "sha256": "c7d49bf344b512d7cb631c6aa8fe7c20b53034a55c7709ecd063dc702f8ac611",
+      "sha256": "08e2ced356292b9721c9f0a76e90fa2761a88549ccda102c5bda026973adfefc",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7343,14 +7393,14 @@
     {
       "path": "rules/bifrost.code-smells/policies/loop-invariant-sort.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/loop-invariant-sort.rqlp",
-      "sha256": "a0b9b05066408d7285a7954d9cf839f33780d213c5a0baa8cf138cf57cbf7582",
+      "sha256": "aa2edfdc35c4b5f1af3065bfbebeb1d3355c6b5633f034299b91bb06d39399cd",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.code-smells/policies/network-call-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/network-call-in-loop.rqlp",
-      "sha256": "c8a792d61b558439d1cc463281c39ed432c37db34d2995162b2539a282392d2c",
+      "sha256": "16e27e054c8c1d2502215d2c6b9ebfd3dc7e2a1eb442c7eba918937ed81a87b9",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7378,7 +7428,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/parsing-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/parsing-in-loop.rqlp",
-      "sha256": "2d6e2caf4c27f74c3361b2db61350d4b6e0920e4411e7e84728a127c4b498ac0",
+      "sha256": "a7bc8e1b8d746c494b1812067fbb60c1819a291698585ada6f9fcd7c3b98e11a",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7420,7 +7470,7 @@
     {
       "path": "rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/regex-compile-in-loop.rqlp",
-      "sha256": "ec609a11a0c3512d66bcb33bc4a9191424dcaaa7c2b86bc26228536c292204ab",
+      "sha256": "89c1bbe0aed288c1835fe87b548d52aaec87d0843602c61c1af0890b7627efb3",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7448,21 +7498,21 @@
     {
       "path": "rules/bifrost.code-smells/policies/serialization-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/serialization-in-loop.rqlp",
-      "sha256": "c1eab241a030ac3d6d59810f9483a5805b21f7f7901368543f40b91080b98220",
+      "sha256": "1dadbae0a3ca0480f229dc32bd466524cd231e2513332234e5f0339be13ad530",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.code-smells/policies/sleep-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/sleep-in-loop.rqlp",
-      "sha256": "9b108fe8c8aa6db2b6a16fb0c022247e1aaef57b310e4cf6da45ca88f4159023",
+      "sha256": "5e2d6a384dc9bd1b05c0de0304f0addb2629e3b1f5b3b86e0e1ce36c728947bb",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.code-smells/policies/subprocess-in-loop.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/policies/subprocess-in-loop.rqlp",
-      "sha256": "2dd875fe3995434be3d86cf1e051bde88729e300a71d297837353df9c66f9853",
+      "sha256": "78847cb8a6e2003b281080aea41b1b66f26950443930bfa0c8c1685d98eb6152",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7693,91 +7743,91 @@
     {
       "path": "rules/bifrost.effects/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/manifest.json",
-      "sha256": "7ca3bf628686dab7286fbe5459dab116dc7442ae9a29e19d4d4fc033307b8acb",
+      "sha256": "bf6aed5fa5fe8e4c76314c77c7b42ddb251c6e0e58085219efbd2f6acd5946af",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp",
       "source_path": "rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp",
-      "sha256": "19207d0d42996756fa2eadcc13d07482f791b438b472d6980c8ea6dd0caf559c",
+      "sha256": "a0e9cb5da2ad483a3803b6a584fc46aa08b1b909b8efb90ee9abf503dbc9261e",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp",
-      "sha256": "d3fe33c90fe2776d28fc8744483c487686361d341b69edde957d103e254232db",
+      "sha256": "32ba34f3f2c74006a21d3e80bfd0d8cec7ddd617694bb6a31fe4415ef7c9002f",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/go/selected-boundary-no-network-io.rqlp",
-      "sha256": "3b0915be4655ce70213b87c5c2728df15be6fabc8a2bdd39918f5b50a7e0e6e3",
+      "sha256": "b2f72ec0ebf700b46127c908ec823671aa00cd645a835bb9cab3e68e6e82fa55",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/java/selected-boundary-no-network-io.rqlp",
-      "sha256": "1d5e38e0b4ea1463e230c98dad562842ade061337c8ff19a83ae2bbcb64b0a9b",
+      "sha256": "2da8453c1db630f3fbbbead9af00a1fa561de14eddd3a77e455c1b49c3294924",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/javascript/selected-boundary-no-network-io.rqlp",
-      "sha256": "f0a7d628ccb9c8610cacb2c8938aa87d037c8d188d372026b33729acca6851b2",
+      "sha256": "4eb390981dfbe2f20f117ef39de7b3fa4a479d8b9fabd77e670642c621c60d86",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/kotlin/selected-boundary-no-network-io.rqlp",
-      "sha256": "58fe5931e1d2dfca44caf4bf55b3ab48d0fe80ac7f0c4a736934145af1262abc",
+      "sha256": "50fc7e02a6353c24c39519aacf3a93b2c1573bdb7ed2efd59ab7da93fdc883f6",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/php/selected-boundary-no-network-io.rqlp",
       "source_path": "rules/bifrost.effects/policies/php/selected-boundary-no-network-io.rqlp",
-      "sha256": "ba835f60845dddf34712a3c67fcebb01cdce6242128701389ff650b65f3f2e65",
+      "sha256": "187ccefe8c61159f789a328cabc15b83d4b6385fcd9eaecf6973c777c2edf781",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/python/selected-boundary-no-network-io.rqlp",
-      "sha256": "1a9a40514a756b5770408d8d0fc840ab885c378a214f1786b4078aea946279c1",
+      "sha256": "cbda056ac9fd615f60540d3fe17ccd4168e39a5f8721433786f211ce87077de6",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/ruby/selected-boundary-no-network-io.rqlp",
-      "sha256": "00372ab2aa8df449ea89a2cc15fe87b7650e26a1ff74dd3dc86f56b863dfad5f",
+      "sha256": "bb39e30dd5b83f1cdf2234b2d312ef0c166670d80e99553e7ff0236c732382de",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/rust/selected-boundary-no-network-io.rqlp",
-      "sha256": "4e54c2c6063be382d44a44b789886d0eb30665e7571e9c45e9e3669400270e7c",
+      "sha256": "90d2e92042f2ad1a4366ccf2125d1f2fd3120bf1e789ccd37ac09d44c5fa6e51",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/scala/selected-boundary-no-network-io.rqlp",
-      "sha256": "92c10c239ff198d8c947d8cee230e8bd89de750c4cf983734ba459807bf5af79",
+      "sha256": "461638a7bac35f8f08a4790951c71f34a3a06d2a916d477668b3554cda574dcd",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp",
-      "sha256": "64d37abcb2e61250dc3153b1adf6d191e3cf2671582d87d128abf8a382cd26ae",
+      "sha256": "d37dbbeef06e566aa0c845c59c685d460577c677c02780db3672d8d9944f4176",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -8015,7 +8065,7 @@
     {
       "path": "rules/bifrost.python-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.python-codeql-quality/manifest.json",
-      "sha256": "69123fb06ea9cf9b2e256145b248874f0c35a5462a42952c812cc55327f35b41",
+      "sha256": "8b82aec0793fca1c11ca87cedae3e3183377aebe52295e79151a128b9eaae303",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -8529,6 +8579,13 @@
       "sha256": "2498de107f53841195c2518f4a2be36a576b938f210e0baabd812e53d6ce9d3f",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "e1bbee29c6954cb0c1cb300f2b05a5fc759356436bbb61236fb1b23eb249ce8b"
     },
     {
       "path": "rules/bifrost.python-codeql-quality/policies/unnecessary-lambda.rqlp",
@@ -9797,7 +9854,7 @@
     {
       "path": "semantic-packs/golden-core/cpython/bifrost.cpython-golden-summaries.json",
       "source_path": "semantic-packs/golden-core/cpython/bifrost.cpython-golden-summaries.json",
-      "sha256": "0af0cefda24067f53eac36ea431fc08d2a65e6a2857ad286719903a1e611cc96",
+      "sha256": "0e3b238e0b6434dac3e05777e61f57da9fb1d35eb5e51ab40e73264c8eceb3fe",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -10326,9 +10383,9 @@
     {
       "path": "semantic-packs/python/README.md",
       "source_path": "semantic-packs/python/README.md",
-      "sha256": "002d3968abfef98a4a2b195d54ec98899a288ab270d52a8dc758d528f4bc9788",
       "classification": "public",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "sha256": "002d3968abfef98a4a2b195d54ec98899a288ab270d52a8dc758d528f4bc9788"
     },
     {
       "path": "semantic-packs/python/notices/cpython-runtime-bases-3.13.5.txt",
@@ -10381,6 +10438,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/python/performance/bifrost.python-performance-summaries.json",
+      "source_path": "semantic-packs/python/performance/bifrost.python-performance-summaries.json",
+      "sha256": "1c24a1727707313963ccce9cfa207ce427bf658a4962d0f83a01e8ffa5a5ca9d",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
       "path": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json",
       "source_path": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json",
       "sha256": "8a529461d24767829f9c7abb19efa6668b54968aba5ce259a138df9944c4cc9c",
@@ -10427,7 +10491,7 @@
       "path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
       "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
       "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
-      "sha256": "1dfab973536dd05c84aa2fa64071448588d3ff1484fc6110714fd97c21cf3087",
+      "sha256": "681e8742502fbdf7deb32100e1aaafe2faf4e3ac7df7496956202a6187bb47ff",
       "classification": "public",
       "license": "PSF-2.0"
     },
@@ -10760,5 +10824,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "924f7bfee8690c123af07f24bd1f7f8fa3fb9e808657d5830e8139050768a516"
+  "aggregate_sha256": "37090c2e4f4b51168c7ca901229703428694e2d48c8d1a0b186a73fd36e4d5db"
 }

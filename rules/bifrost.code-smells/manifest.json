@@ -478,8 +478,8 @@
     {
       "path": "policies/loop-invariant-sort.rqlp",
       "id": "bifrost.performance.loop-invariant-sort",
-      "authored_hash": "933ab0a333030b76e26fdc97b8139797a6d388fa258cabc9f7fdb50d1222fcf1",
-      "resolved_semantic_hash": "933ab0a333030b76e26fdc97b8139797a6d388fa258cabc9f7fdb50d1222fcf1",
+      "authored_hash": "a3925165d67e57a71ef24fdfe1d1d03201f881d81237edc6ec68aa355b30aa9f",
+      "resolved_semantic_hash": "a3925165d67e57a71ef24fdfe1d1d03201f881d81237edc6ec68aa355b30aa9f",
       "category": "performance",
       "supported_languages": [
         "rust",
@@ -493,7 +493,10 @@
         "normalized-call-roles",
         "lexical-environment",
         "reaching-binding-assertion",
-        "value-origin-assertion"
+        "value-origin-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "The receiver's value is established outside the loop and no assignment inside re-establishes it, so the loop provably re-sorts one unchanged-identity value on every pass.",
       "remediation": "Sort once before the loop or maintain order incrementally. Calls in deferred bodies are reported lexically; verify how often the body runs before restructuring."
@@ -501,8 +504,8 @@
     {
       "path": "policies/regex-compile-in-loop.rqlp",
       "id": "bifrost.performance.regex-compile-in-loop",
-      "authored_hash": "c7347566fe5db86bf385d136b9585da5be6f8e3e8f4ef57922aadd22b306b165",
-      "resolved_semantic_hash": "c7347566fe5db86bf385d136b9585da5be6f8e3e8f4ef57922aadd22b306b165",
+      "authored_hash": "a022ec8e7a02edc56f6fabfaced00a754536a51889b5395508af7d4bf056f232",
+      "resolved_semantic_hash": "a022ec8e7a02edc56f6fabfaced00a754536a51889b5395508af7d4bf056f232",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -516,7 +519,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Compiling the same regular expression repeatedly adds avoidable parser and automaton construction work.",
       "remediation": "Compile loop-invariant expressions once and reuse the compiled pattern."
@@ -524,8 +530,8 @@
     {
       "path": "policies/file-read-in-loop.rqlp",
       "id": "bifrost.performance.file-read-in-loop",
-      "authored_hash": "4f0b625d3cdef7c80700d6e72e997428321ec4afacc99fe89a246169a4acb3f1",
-      "resolved_semantic_hash": "4f0b625d3cdef7c80700d6e72e997428321ec4afacc99fe89a246169a4acb3f1",
+      "authored_hash": "429b4216451e1418a5bfeb360e790baa6d4eceba75d3e39f6cae9f6211f906ac",
+      "resolved_semantic_hash": "429b4216451e1418a5bfeb360e790baa6d4eceba75d3e39f6cae9f6211f906ac",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -539,7 +545,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Synchronous or whole-file reads inside a loop can multiply I/O and allocation cost.",
       "remediation": "Read once, stream or batch inputs, and cache loop-invariant content where semantics permit."
@@ -547,8 +556,8 @@
     {
       "path": "policies/serialization-in-loop.rqlp",
       "id": "bifrost.performance.serialization-in-loop",
-      "authored_hash": "aa047adba257c80f10812f857e4fd647344dab04d60ba1935f2fc4b13bf2e74c",
-      "resolved_semantic_hash": "aa047adba257c80f10812f857e4fd647344dab04d60ba1935f2fc4b13bf2e74c",
+      "authored_hash": "e8f66500650cdf6d6b06ca48ebb85be6b45d628d8874feb2541c08e3c84816c9",
+      "resolved_semantic_hash": "e8f66500650cdf6d6b06ca48ebb85be6b45d628d8874feb2541c08e3c84816c9",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -562,7 +571,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Repeated serialization can dominate loops through traversal, encoding, and allocation.",
       "remediation": "Move loop-invariant serialization out of the loop or batch records into one encoder call."
@@ -570,8 +582,8 @@
     {
       "path": "policies/parsing-in-loop.rqlp",
       "id": "bifrost.performance.parsing-in-loop",
-      "authored_hash": "1b5b748be4794ffb11a0924d228346c63403dc4e4dfade76ed93655f5cd469c4",
-      "resolved_semantic_hash": "1b5b748be4794ffb11a0924d228346c63403dc4e4dfade76ed93655f5cd469c4",
+      "authored_hash": "c3d33dbbc771adfc00412d382b67953c2812d1ef0461b63f7c086fc327de9bbf",
+      "resolved_semantic_hash": "c3d33dbbc771adfc00412d382b67953c2812d1ef0461b63f7c086fc327de9bbf",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -585,7 +597,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Parsing the same representation per iteration repeats validation, tokenization, and object construction.",
       "remediation": "Parse loop-invariant data once or use an incremental/batched parser for per-item input."
@@ -593,8 +608,8 @@
     {
       "path": "policies/database-call-in-loop.rqlp",
       "id": "bifrost.performance.database-call-in-loop",
-      "authored_hash": "f184707c0021d42dde7e6c4a77985a3854e5b7db970ec30ff109856ebd74da21",
-      "resolved_semantic_hash": "f184707c0021d42dde7e6c4a77985a3854e5b7db970ec30ff109856ebd74da21",
+      "authored_hash": "0dc51f9ec1777734554d0abb9efa09f4c75d945bd9f449fd8c5b95d83bff404b",
+      "resolved_semantic_hash": "0dc51f9ec1777734554d0abb9efa09f4c75d945bd9f449fd8c5b95d83bff404b",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -607,7 +622,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "A database round trip per iteration is a common N+1 query pattern.",
       "remediation": "Batch the operation, prefetch required rows, or use one set-oriented query."
@@ -615,8 +633,8 @@
     {
       "path": "policies/network-call-in-loop.rqlp",
       "id": "bifrost.performance.network-call-in-loop",
-      "authored_hash": "b48032b76b82c4c449aa2d2fa45aff95b36350314e4cbcefd6f4ed86de47cd83",
-      "resolved_semantic_hash": "b48032b76b82c4c449aa2d2fa45aff95b36350314e4cbcefd6f4ed86de47cd83",
+      "authored_hash": "3115d828b37932cc4cac7445f65733604b17dccc3d63dacdf0cbb8e1ab72de4e",
+      "resolved_semantic_hash": "3115d828b37932cc4cac7445f65733604b17dccc3d63dacdf0cbb8e1ab72de4e",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -630,7 +648,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "A serial network request per iteration amplifies latency and remote-service load.",
       "remediation": "Batch requests, prefetch data, or use explicitly bounded concurrency with backpressure."
@@ -638,8 +659,8 @@
     {
       "path": "policies/subprocess-in-loop.rqlp",
       "id": "bifrost.performance.subprocess-in-loop",
-      "authored_hash": "0c264195a730138def1054723dffb3ec40ad13a0bc7c3bb7b74b72ea5996fd37",
-      "resolved_semantic_hash": "0c264195a730138def1054723dffb3ec40ad13a0bc7c3bb7b74b72ea5996fd37",
+      "authored_hash": "058f86f37482968a5d6c7b9a344c927269d94f266c10910f1dfc8db5a8ef24b5",
+      "resolved_semantic_hash": "058f86f37482968a5d6c7b9a344c927269d94f266c10910f1dfc8db5a8ef24b5",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -652,7 +673,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Process creation is expensive and repeated launches can exhaust OS resources.",
       "remediation": "Move invariant work outside the loop, use one long-lived process, or batch subprocess input."
@@ -660,8 +684,8 @@
     {
       "path": "policies/sleep-in-loop.rqlp",
       "id": "bifrost.performance.sleep-in-loop",
-      "authored_hash": "16b1be4131f57ee9dff8c34d8a083241bbfbd0992cc0a6e215e9b142d7e551ab",
-      "resolved_semantic_hash": "16b1be4131f57ee9dff8c34d8a083241bbfbd0992cc0a6e215e9b142d7e551ab",
+      "authored_hash": "bd4f2371ff873042c809dc2ee8cd696dbc5893f9714a897847f250edd188e498",
+      "resolved_semantic_hash": "bd4f2371ff873042c809dc2ee8cd696dbc5893f9714a897847f250edd188e498",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -673,7 +697,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Sleeping for every iterated item throttles the whole batch in lockstep.",
       "remediation": "Prefer rate limiters or batching over per-item sleeps; keep deliberate poll and backoff sleeps in condition-controlled loops, which this rule does not flag."
@@ -681,8 +708,8 @@
     {
       "path": "policies/expensive-operation-in-nested-loop.rqlp",
       "id": "bifrost.performance.expensive-operation-in-nested-loop",
-      "authored_hash": "2bf75d3cc91deae0675196ee82c530b82f96096430aeafa2a2642faf7583bbc5",
-      "resolved_semantic_hash": "2bf75d3cc91deae0675196ee82c530b82f96096430aeafa2a2642faf7583bbc5",
+      "authored_hash": "63d75d550e2d5bf9cd31972232dfc45022f930f31a25f4d62d92993f84f65690",
+      "resolved_semantic_hash": "63d75d550e2d5bf9cd31972232dfc45022f930f31a25f4d62d92993f84f65690",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -696,7 +723,10 @@
         "descendant-match",
         "normalized-call",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "I/O, parsing, serialization, sorting, or remote work under two loop levels can grow multiplicatively.",
       "remediation": "Hoist invariant work, precompute indexes, batch external operations, or reduce the nested iteration space."

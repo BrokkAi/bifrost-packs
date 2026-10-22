@@ -28,7 +28,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**237 unique rules across 12 policy packs.**
+**238 unique rules across 12 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -41,21 +41,21 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.effects | 12 |
 | Pack | bifrost.java-codeql-quality | 19 |
 | Pack | bifrost.javascript-codeql-quality | 12 |
-| Pack | bifrost.python-codeql-quality | 81 |
+| Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
 | Pack | bifrost.security | 45 |
-| Category | correctness | 108 |
+| Category | correctness | 109 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 10 |
 | Category | quality | 55 |
 | Category | security | 47 |
-| Severity | error | 71 |
+| Severity | error | 72 |
 | Severity | note | 21 |
 | Severity | warning | 145 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 475 rule-language pairs.
+13 declared languages; 476 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -67,13 +67,13 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | javascript | 42 |
 | kotlin | 17 |
 | php | 20 |
-| python | 127 |
+| python | 128 |
 | ruby | 20 |
 | rust | 32 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 34, unspecified 203. Omitted labels remain unspecified.
+Activation labels: opt-in 46, unspecified 192. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -106,23 +106,25 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-Published `packs/v0.3.0` and `rules/v0.2.1` remain immutable. The proposed
-successor streams are `packs/v0.4.0` and `rules/v0.3.1`, based on the current
-`rules/v0.3.0` policy baseline. The native pack successor adds eight reviewed
+Published `packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1`
+remain immutable. Bifrost v0.14.0 rejects `packs/v0.4.0` because its generated
+productions use semantic-model schema 16, not the current schema 17. The
+proposed successor streams are `packs/v0.5.0`, regenerated with the Bifrost
+0.14.0 generator, and `rules/v0.4.0`, which adds 57 policies to the
+`rules/v0.3.1` set. The native pack stream carries eight reviewed
 direct result-use model families, two Go standard-library `os` model outputs
 (procedure result contracts and declarations), and the generated
 `bifrost.php-builtin` declaration pack from the existing pinned PHP
 specification.
 The existing PHP pack notes record an earlier partial output with 852
-rejects/warnings. The selected 0.13.1 generator has not run this recipe here, so
-that count is historical; the current generation report remains unverified and
-must stay explicit. No full PHP runtime coverage is claimed; see the
+rejects/warnings; a local generation with the selected 0.14.0 generator
+reported 854, as in `packs/v0.4.0`. The CI generation report remains the
+release record and must stay explicit. No full PHP runtime coverage is claimed; see the
 [PHP pack notes](semantic-packs/php/README.md). This recipe addition leaves the
 PHP specification and model bytes unchanged. The generated bundle also retains
-its schema-8 and schema-16 content. The rules patch preserves the corrected
-`rules/v0.3.0` policy bytes, IDs, language scopes, required capabilities and
-typed incomplete outcomes, and depends exactly on
-`bifrost.public.packs@0.4.0`. Integrity, compatibility, completeness and
+its schema-8 and schema-17 content. The rules release preserves the existing
+policy bytes, IDs, language scopes, required capabilities and typed incomplete
+outcomes, and depends exactly on `bifrost.public.packs@0.5.0`. Integrity, compatibility, completeness and
 consumer behavior remain separate qualification requirements; this preparation
 does not authorize a tag or publication.
 Historical `packs/v0.2.1` and `rules/v0.1.4` also remain immutable. The published
@@ -134,7 +136,7 @@ pinned schema-8 producer removes native engine-version gates while
 retaining legacy compatibility. The [recorded blocker](docs/native-publication-blocker.json)
 describes historical generator output. New publication verifies the actual
 archive and exact dependency: the intended rules release pins
-`bifrost.public.packs@0.4.0`.
+`bifrost.public.packs@0.5.0`.
 The eight direct result-use jobs, two Go `os` model jobs, and generated PHP
 builtin declaration pack are the native additions in the proposed pack successor.
 The full generated bundle and all model and policy bytes remain retained in this
