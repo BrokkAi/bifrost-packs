@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-performance-summaries",
+  "pack_version": "1.0.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-performance-summaries.json",
+    "sha256": "30337660d38206eceba138c427587011874cec2b5f8231e584b1c2102640a49c",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/51e1f7f47dce9b3245f73c27cdc5275cf9df198c/semantic-packs/python/performance/bifrost.python-performance-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.13.5, <3.13.6"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.13.5, <3.13.6"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "CPython standard-library reference and pinned Typeshed stubs for exact performance-operation identities",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5"
+  },
+  "license": "PSF-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-performance-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.13.5"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "time",
+      "name": "sleep",
+      "has_receiver": false,
+      "parameter_count": 1
+    },
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "subprocess",
+      "name": "run",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

@@ -19,6 +19,7 @@ BASE_JOBS = {
     "typescript-string-result-use",
     "python-str-result-use",
     "python-status-result-use",
+    "python-performance-summaries",
 }
 RECIPES = {"jvm", "python", "php-builtin", "typescript", "rust"}
 GO_NOTICE_PATH = "semantic-packs/go/notices/go-1.26.0-BSD-3-Clause.txt"
@@ -53,7 +54,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
         jobs = {row["name"]: row for row in config["jobs"]}
         self.assertEqual(set(jobs), BASE_JOBS | set(GO_INPUTS))
         self.assertEqual({row["name"] for row in config["recipes"]}, RECIPES)
-        self.assertEqual(len(config["jobs"]), 10)
+        self.assertEqual(len(config["jobs"]), 11)
         self.assertEqual(len(config["recipes"]), 5)
 
         for name, expected in GO_INPUTS.items():

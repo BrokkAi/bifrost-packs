@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.4.0",
+  "release_version": "0.5.0",
   "artifact_role": "source",
-  "notes": "This minor release adds the 57 policies merged since rules 0.3.1, growing the stream from 181 to 238 policy source files: opt-in code-smell policies (nesting, parameters, function size and complexity, cleanup flow, repeated literals, Python assert-true), PHP and C++ selected-boundary network-effect policies, and Python CodeQL quality policies. Existing policy bytes, IDs, required capabilities and typed incomplete outcomes are unchanged. It pins its native pack dependency to 0.5.0, the native content regenerated with the Bifrost 0.14.0 release-candidate generator. Source integrity and focused publication smoke remain separate from full engine and policy qualification.",
+  "notes": "This minor release keeps all 238 policy IDs and changes the consumer requirements of twenty existing policies. The Python arms of the ten bifrost.performance loop policies (bifrost.code-smells 4.0.0) now report a call only when a reviewed model declares that exact operation's effect, and require the exact-call-target, semantic-model-declared-effects and exhaustive-effect-coverage capabilities; a call with no exact model stays structured-open instead of matching by name. With Bifrost 0.14.0 and packs 0.6.0, time.sleep, subprocess.run, pickle.dumps(obj) and pickle.loads(data) resolve; json, re.compile, list.sort, buffered reads, sqlite3 and http.client calls stay open. The ten bifrost.effects selected-boundary-no-network-io policies (bifrost.effects 2.0.0) import their declaration selection from .bifrost/effect-boundaries/<language>-network-io.rqlp, require declaration-selection-imports and are opt-in: a host supplies that document and selects them by ID. It pins its native pack dependency to 0.6.0. Source integrity and focused publication smoke remain separate from full engine and policy qualification.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.5.0",
+      "release_version": "0.6.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

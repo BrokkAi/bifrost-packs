@@ -21,7 +21,7 @@
     "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5"
   },
   "license": "PSF-2.0",
-  "completeness": "partial",
+  "completeness": "complete",
   "safety": {
     "generated_code_only": false,
     "review_required": false
@@ -144,6 +144,23 @@
             ]
           },
           {
+            "id": "summary.python.pickle.dumps.obj",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.dumps(obj)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
             "id": "summary.python.pickle.dumps",
             "target": {
               "path": "pickle.pyi",
@@ -158,6 +175,23 @@
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads.data",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
             ]
           },
           {
