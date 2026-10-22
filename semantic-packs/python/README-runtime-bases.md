@@ -2,23 +2,32 @@
 
 `stdlib-apis/bifrost.python-runtime-bases.json` is prepared by
 [`observe-pinned-python-runtime-bases.py`](../../scripts/upstream/public/observe-pinned-python-runtime-bases.py).
-The observer reads only the active interpreter's `vars(builtins)` and actual
-class `__bases__`/`__mro__` objects. It does not import or execute workspace
-projects, infer ancestry from names, or include classes discovered through
-`typing`.
+The observer selects every actual type export in `vars(builtins)`, plus exactly
+`unittest.TestCase` and `unittest.case.TestCase`. It requires those two selected
+exports to be the same class object, reads each canonical identity through
+`type.__getattribute__` and closes the selected classes over their actual ordered
+`__bases__`. It records actual `__mro__` values as observation evidence. It does
+not enumerate other unittest classes, inspect workspace or typing classes,
+instantiate a test case, or invoke test methods.
 
-The observer refuses to run unless it is CPython 3.13.5, optimization is off,
-and the executable SHA-256 is
-`889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9`. The model
-records the interpreter and observer hashes in the existing provenance strings.
-The separate raw-observation file preserves each selected class's canonical
-runtime name, builtin aliases, ordered direct bases, and runtime MRO. It records
-object identity by grouping actual aliases, without serializing process memory
-addresses. In the authored model, each alias is emitted as the qualified name
-`builtins.<observed binding>` from the actual `vars(builtins)` entry, excluding
-an alias identical to the class's canonical name. Alias ownership is never
-inferred from the class basename. The raw observation keeps the original
-unqualified binding names and all observed bases/MRO unchanged.
+The observer requires isolated CPython 3.13.5 with optimization off, bytecode
+writes disabled, and executable SHA-256
+`889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9`.
+Before importing either selected module it resolves the actual standard-library
+root through `sysconfig` and verifies both selected source files:
+
+| Stdlib-relative file | SHA-256 |
+| --- | --- |
+| `unittest/__init__.py` | `7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551` |
+| `unittest/case.py` | `ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481` |
+
+The import must select that stdlib package. After import, both actual module
+origins, names and source hashes must still match. Preloaded selected modules,
+workspace/shadow origins and changed selected source bytes fail observation;
+there is no fallback or `sys.path` modification. These are selected-module
+source pins, not a hermetic attestation of every transitive stdlib import or
+bytecode cache. `-B` suppresses bytecode writes; it does not claim to disable
+all existing stdlib bytecode-cache reads.
 
 From the repository root, reproduce the observation with the pinned interpreter:
 
@@ -29,44 +38,61 @@ python3 -I -B scripts/upstream/public/observe-pinned-python-runtime-bases.py \
   "$PWD/.agents/scratch/python-runtime-bases/observations.json"
 ```
 
-`-I -B` isolates Python startup and suppresses bytecode writes; the observer
-independently checks the executable hash, version, and optimization setting.
-The command does not download an interpreter or depend on a particular host
-path. It fails closed if the active `python3` does not match the pinned binary.
-The model draft uses schema 17, exact `=3.13.5` applicability, PSF-2.0
-attribution, and `partial` completeness. Its per-class ordered
-`runtime_bases` claims do not assert member inventory completeness.
+The command does not download an interpreter. It fails closed when the runtime
+or selected module source identities do not match. Model provenance retains the
+executable, observer and both selected-module hashes. Raw observations also
+record the actual stdlib root and module origins.
 
-The authored JSON is preparation content. Native generation/release selection
-is separate; this README does not add the model to `native-generation.json` or
-select a release version. The current release recipe's pinned native
-producer predates schema 17 support. Runtime consumer qualification and review
-of the authored-model spec remain prerequisites for native release selection.
+The model uses schema 17, exact `=3.13.5` applicability, PSF-2.0 attribution,
+`partial` completeness and review-required safety. Its per-class ordered
+`runtime_bases` claims do not assert member inventory or complete stdlib coverage.
+Stable IDs encode canonical ASCII names in lowercase; names, locator symbols
+and qualified aliases preserve Python case. ID collisions are rejected.
 
-Stable model IDs encode the observed ASCII canonical name in lowercase, while
-class names, aliases and locator symbols preserve Python's case-sensitive
-spelling. The observer checks the shared identifier grammar and length and
-rejects ID collisions before writing either output. Definitions and declared
-base references use the same canonical-name-to-ID map.
+The raw observation format is now schema 2: per-class `exports` and the top-level
+`exports` mapping contain module-qualified bindings, replacing builtin-only
+names. Alias ownership is grouped by actual object identity, never inferred
+from a basename. An export identical to its canonical name remains in raw
+evidence but is omitted from the model's aliases. Canonical
+`unittest.case.TestCase` therefore has alias `unittest.TestCase`, with no duplicate
+class identity. This is an observation-format change, not a new product schema.
+Records and exports are sorted; canonical JSON has sorted keys and a final
+newline. No process object addresses or timestamps are serialized.
 
-After the ID correction, one fresh isolated execution produced the current
-model and observations. A file comparison with the earlier observation found
-identical runtime classes, ordered bases, MROs and aliases; only the actual
-observer hash changed in the raw evidence. Model records changed only their
-IDs and declared references, with the new observer hash retained in provenance.
-All 96 IDs are unique and every base reference belongs to that set. The model
-contains 96 classes, 96 ordered base edges and 98 builtin bindings. These checks
-establish observation and derivation consistency, not semantic compiler or
-engine consumer acceptance.
+Pack and observer-producer versions are `1.1.0`: a compatible source-catalog
+addition under the repository's release-versioning guidance. Two fresh isolated
+observer executions produced identical model and raw-observation bytes. All 96
+previous declaration records, including IDs, aliases and base edges, remain
+exactly unchanged. The only additional declaration is
+`type.python.unittest.case.testcase`. Independent native observation confirmed
+that the two exports name the same class object, its canonical identity is
+`unittest.case.TestCase`, its direct base is `builtins.object`, and its actual MRO
+is `[unittest.case.TestCase, builtins.object]`. The current source contains 97
+classes, 97 ordered direct-base edges and 100 qualified export bindings.
 
-Corrected observer SHA-256:
-`11e34218fd9650a138b48ea1b8c887ce36d260fae01acfc8db6cdf6734b8b979`. The
-reviewed model SHA-256 is
-`31374ef33b33e8640eb89a309a852404ed088d2ab37af0fd6cac1c056715b240`; its paired
-raw-observation SHA-256 is
-`7a7e8dd21b40960d4e7f3cf433b425d0f60fbc92c6f0c342ed21716dc7d7a643`.
+The 1.1.0 source passed local native-bundle generation and integrity verification:
+all 97 class records agree with the authored model, the original 96 compiled
+records remain exactly unchanged, and there are no rejected or suppressed
+records. The same four-class consumer probe resolved all three TestCase import
+forms to the canonical class with complete, ordered TestCase-to-object ancestry;
+the dict control remained resolved and complete. These checks used the admitted
+Bifrost consumer at `ba7a692dbd0b8a02d0d6e68ca03f823d9c5b52e7`.
 
-A source-pinned schema-17 compiler accepted this exact full model and emitted
-one declaration shard containing all 96 class records. This establishes format
-and artifact-generation acceptance only. Runtime consumer qualification and
-native release selection remain pending.
+One unchanged full-repository Bottle replay qualified all three native variants
+and selected the local 1.1.0 pack in all six cold/warm policy requests. Each
+request removed the same 46 prior test-file hierarchy diagnostics, retained the
+same 11 Bottle diagnostics, and surfaced no new diagnostic roots. Observed scoped
+counts remained 0/1/0 in both modes, but all six requests were incomplete and
+none was scorable. This is bounded source, bundle and consumer evidence, not
+whole-repository policy qualification.
+
+The native bundle remains local and unpublished. This source update does not
+select a release version or generation job, modify `native-generation.json`,
+publish artifacts, or enable a scanner model by default.
+
+Observer SHA-256:
+`f2abb5583565494b45c54ab356027f48d046b5916c3073d899e2f9430e4d90c5`.
+Model SHA-256:
+`e5a8e0218accb4fbe3db597a9152e4ae585b8e66069e46ed57230b04012a93d4`.
+Paired raw-observation SHA-256:
+`8150066fb6bd05758a4dc5bcb4e20f59a0f71a0116e774312a7b7753a33772b6`.
