@@ -67,9 +67,9 @@ exact model stays structured-open instead of matching by name. With Bifrost
 0.14.0 and `packs/v0.6.0`, `time.sleep`, `subprocess.run`, `pickle.dumps(obj)`
 and `pickle.loads(data)` resolve to declared effects. `json.dumps`,
 `json.loads` and `re.compile` stay open because their effects live in source
-models that no native recipe delivers, and `sorted`, `list.sort`, buffered
-reads, `sqlite3.Cursor.execute` and `HTTPConnection.request` stay open because
-0.14.0 does not resolve those calls to an exact target. The ten
+models that no native recipe delivers, and `list.sort`, buffered reads,
+`sqlite3.Cursor.execute` and `HTTPConnection.request` stay open because 0.14.0
+does not resolve those calls to an exact target. The ten
 `bifrost.effects` selected-boundary policies import their declaration selection
 from `.bifrost/effect-boundaries/<language>-network-io.rqlp`, require
 `declaration-selection-imports` and are opt-in (`bifrost.effects` 2.0.0): a host
