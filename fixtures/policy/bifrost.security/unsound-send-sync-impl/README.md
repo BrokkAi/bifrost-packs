@@ -6,6 +6,8 @@ Each isolated crate has one positive or near-miss in `expectations.json`. Findin
 
 The original 14 cases were qualified on integration build efd25a06b34efd714f4e6ceac74b30b8114c5c1b. That record predates the shared-access refinement; the current 17 cases are qualified against the combined #6385/#6394 local release-profile build 33704f6074c4. The accepted static message is generic; read the impl header the finding points at to identify the stored type parameter and required marker bound. See the focused qualification record; released-engine qualification remains pending.
 
-The #6385 fixtures also exercise shared-method access: metadata-only methods do not report a Sync impl; Debug through a helper and a shared method in a different file do. The engine change depends on #6394 for cross-file method inventory. The combined release-profile fixture gate passes all 17 cases.
+The #6385 fixtures also exercise shared-method access: methods that read only non-stored metadata fields do not report a Sync impl; Debug through a helper and a shared method in a different file do. The engine change depends on #6394 for cross-file method inventory. The combined release-profile fixture gate passes all 17 cases.
 
 Combined #6385/#6394 release-profile validation passes all 17 marker cases and all 20 callback cases. The cross-file-shared-read expectation remains one finding and now passes. This is local integration qualification; a published compatible engine is still required.
+
+The classifier conservatively counts every read of a field that stores the type parameter. A metadata-only operation on such a field (for example, the alternative Tokio scheduler Inner reading self.buffer.len()) can therefore still report a Sync impl. Distinguishing that case from value access requires a separate engine design decision.
