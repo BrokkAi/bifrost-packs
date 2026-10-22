@@ -7394,7 +7394,7 @@
     {
       "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/README.md",
       "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/README.md",
-      "sha256": "6685559d870bdea1d2dc99162274eaf889dd597ce230d02a8dcdbd7894c59614",
+      "sha256": "dd5971691820093c3671ed228ae6f6ed827ad87008f3930a92a889faddf9a2e2",
       "classification": "public",
       "license": "Apache-2.0",
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
@@ -7416,6 +7416,46 @@
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
     },
     {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/cross-file-shared-read/Cargo.toml",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/cross-file-shared-read/Cargo.toml",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "b17ff6f1155b7b81593c8b46753f05f8ffa1950fee3ed82dbeae92418f023891"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/cross-file-shared-read/src/lib.rs",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/cross-file-shared-read/src/lib.rs",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "705bdf59f627e86ba0d6be244f9c5651f5273475a144c5be5d5b29365e3ec5ee"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/cross-file-shared-read/src/reader.rs",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/cross-file-shared-read/src/reader.rs",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "d2c3b01ee047cb30a47adff19c10945cf865aa5990a50f6b47d89630d7713e97"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/debug-through-helper/Cargo.toml",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/debug-through-helper/Cargo.toml",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "9f256e6b4d2ee0a0dd44e232fc29d43e6d297fe4647a33627d2bd8712b83e74a"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/debug-through-helper/src/lib.rs",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/debug-through-helper/src/lib.rs",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "b7d6abc5e20b5edd4fcb46b08a2d1e2a875e79f7a1544089377694c88f23fc85"
+    },
+    {
       "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/enum-field/Cargo.toml",
       "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/enum-field/Cargo.toml",
       "sha256": "6ac9fb9b030cfac185a89bd3cbf903a97489c427374811da54948f026de12135",
@@ -7426,7 +7466,7 @@
     {
       "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/enum-field/src/lib.rs",
       "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/enum-field/src/lib.rs",
-      "sha256": "c19440caa24aeb51b6a27d2f696832c7c684ac324f1ba78fa6078a4cfccc0318",
+      "sha256": "5a2e1c575705b17bf08a4d898b59f27e283135698b8eb26472233fe066635a38",
       "classification": "public",
       "license": "Apache-2.0",
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
@@ -7434,7 +7474,7 @@
     {
       "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/expectations.json",
       "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/expectations.json",
-      "sha256": "012fe5370cb5d1157fe42884c58fbb11c7239cb55ac1efaaee2ba92b6abccdbf",
+      "sha256": "f915a0c75f5a52221c5970b26bdf8cd4d47cf54aab2138199cad1bb99e855ef0",
       "classification": "public",
       "license": "Apache-2.0",
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
@@ -7552,6 +7592,22 @@
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
     },
     {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/shared-method-no-value-access/Cargo.toml",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/shared-method-no-value-access/Cargo.toml",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "270e48d445ac92de2361c62c2f545eaae44bb398e2b251936bf86f453f10ee4b"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/shared-method-no-value-access/src/lib.rs",
+      "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/shared-method-no-value-access/src/lib.rs",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "provenance": "Authored in BrokkAi/bifrost-packs; no private source import",
+      "sha256": "f3d9625bc824caa7e1d4f15890592af007b480f5d733fca55b256378f1a92b93"
+    },
+    {
       "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/shared-ref-sync-bound/Cargo.toml",
       "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/shared-ref-sync-bound/Cargo.toml",
       "sha256": "58b90ae244bb2033e47c6d879321eba39fa3e6cd1fd22f8a2c628cbe2258364e",
@@ -7610,7 +7666,7 @@
     {
       "path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/unbounded-sync/src/lib.rs",
       "source_path": "fixtures/policy/bifrost.security/unsound-send-sync-impl/unbounded-sync/src/lib.rs",
-      "sha256": "c822f6eaf8390d76ff1f6c05afc7fac75a7204291fca00db73600db88bde72e1",
+      "sha256": "ebacf9453d72293210d9fb215b5715babcb5d3c6c0df933885d7ab0ab0077ed6",
       "classification": "public",
       "license": "Apache-2.0",
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
@@ -9239,7 +9295,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "cba07774b06e1a20fbe2fafedb42dc68427a4784477d94cf916fd08e019e18f0"
+      "sha256": "f5096fa40901d22027d2b549232550560f4d7592d8b24faa48c8a6345368e764"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -9568,7 +9624,7 @@
     {
       "path": "rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp",
-      "sha256": "91923521904cff6703a364d5e1dceffc2e0ca2f1f4e57345540b041dbc0f8377",
+      "sha256": "356f77c3ac75b0bc31d76a1d9ff0ad897d879123b97edb5812d8a6b016e740be",
       "classification": "public",
       "license": "Apache-2.0",
       "provenance": "Authored in BrokkAi/bifrost-packs; no private source import"
@@ -11409,5 +11465,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "fd1b80feb7e892c86ad2d1d368923a6ea088cc2dad103cc28f6a76b6ca1779f4"
+  "aggregate_sha256": "f59742c5b5292cd7ef01b499d609a000f6426e62801e6beee07dd285508caae3"
 }
