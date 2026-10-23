@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.java-codeql-quality",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Bifrost Java CodeQL quality",
   "description": "Public Java declaration, naming, generics, constructor, and Javadoc quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -128,7 +128,6 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "generic-type-facts",
         "language-rule-facts"
       ],
       "severity_rationale": "Constructing a generic type without type arguments discards compile-time type safety.",
@@ -145,7 +144,6 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "generic-type-facts",
         "language-rule-facts"
       ],
       "severity_rationale": "A raw generic return type weakens callers\u2019 type checking and can introduce unchecked conversions.",
@@ -162,7 +160,6 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "generic-type-facts",
         "language-rule-facts"
       ],
       "severity_rationale": "A raw generic field, local, or parameter weakens the type contract at the declaration boundary.",
@@ -179,7 +176,6 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "generic-type-facts",
         "language-rule-facts"
       ],
       "severity_rationale": "A type variable or wildcard bound that extends a final type cannot admit a meaningful subtype.",
@@ -196,7 +192,6 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "generic-type-facts",
         "language-rule-facts"
       ],
       "severity_rationale": "A type parameter that shadows a visible type name makes signatures and references ambiguous to readers.",

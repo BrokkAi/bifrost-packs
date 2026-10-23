@@ -4,7 +4,7 @@
   :name "JSF AV Rule 159"
   :message "logical or address-of operator overload requires review"
   :severity warning
-  :description "Mirrors CodeQL cpp/jsf/av-rule-159 (cpp/ql/src/jsf/4.21 Operators/AV Rule 159.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The forbidden logical and address-of operator overloads are selected by structured callable identity and arity."
+  :description "Mirrors CodeQL cpp/jsf/av-rule-159 (cpp/ql/src/jsf/4.21 Operators/AV Rule 159.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. The forbidden logical and unary address-of operator overloads are selected by structured callable identity and arity. A member function's declared parameters exclude the implicit object, so the unary member operator& has none; the CodeQL query's one-parameter test would instead select the binary member operator&."
   :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-159"]
   :analysis (analysis
     :type assertion
@@ -14,7 +14,7 @@
           (union
             (callable-signature (enclosing-decl (method :name "operator&&")))
             (callable-signature (enclosing-decl (method :name "operator||")))
-            (filter :where ((parameter_count eq 1))
+            (filter :where ((parameter_count eq 0))
               (callable-signature (enclosing-decl (method :name "operator&"))))))))
     (group :name by-operator :by (operators.id)
       (aggregate :name violations :op count))

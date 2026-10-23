@@ -17,14 +17,42 @@ rules and compatibility boundaries.
 
 ## Intended next releases
 
-Published `packs/v0.5.0`, `rules/v0.4.0`, `packs/v0.4.0`, `rules/v0.3.1`,
-`packs/v0.3.0` and `rules/v0.2.1` remain immutable. Bifrost v0.14.0 rejects
+Published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
+`packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1` remain
+immutable. Bifrost v0.14.0 rejects
 `packs/v0.4.0` because its generated productions use semantic-model schema 16,
 not the current schema 17. Their artifact integrity does not establish consumer
 behavior or complete analysis. Earlier published streams, including
 `packs/v0.2.1` and `rules/v0.1.4`, remain immutable as well.
 
-The proposed next semantic-pack stream is `packs/v0.6.0`, a minor successor to
+The proposed patch `rules/v0.5.1` keeps the 238 policy source files, their IDs
+and the exact dependency on `bifrost.public.packs@0.6.0`. Twenty-seven
+policies in the C#, Java, JavaScript, Python and security packs (each bumped
+one patch version) stop requiring synonym capability names that engines
+advertised only for compatibility (bifrost-packs#109). Each synonym becomes the
+canonical name it stood for, or is dropped when another listed capability
+already covers what the policy uses:
+
+| Synonym | Replacement |
+| --- | --- |
+| `control-flow` | `semantic-control-flow` (JavaScript `control-relations`); `python-cfg` (Python rule steps) |
+| `type-hierarchy`, `exception-hierarchy` | `python-class-hierarchy` (Python); dropped for C#, whose caught-type relation belongs to `failure-handler-state` |
+| `binding-resolution` | `lexical-environment` |
+| `literal-value-matching`, `python-syntax-diagnostics` | dropped; `structural-match` covers value and node-kind matching |
+| `expression-kind-facts`, `member-resolution`, `generic-type-facts` | dropped; `language-rule-facts` or `structural-match` covers them |
+| `local-value-flow` | dropped; `python-cfg` or `python-call-relations` covers it |
+| `exact-value-identity` | dropped; `exact-call-target`, `actual-to-formal-binding` and `semantic-model-provenance` cover it |
+
+Every replacement is advertised by Bifrost v0.14.0, so no policy asks more of
+a consumer and admission there is unchanged; an engine that stops advertising
+the synonyms keeps admitting these policies. `bifrost.cpp-jsf.av-rule-159`
+(`bifrost.cpp-jsf` 0.1.1) now selects the unary member `operator&`, which has
+no declared parameters because the implicit object is not one, instead of the
+binary member `operator&`. This restores the policy's stated unary address-of
+scope and changes its findings; free-function overloads remain out of its
+scope.
+
+The published `packs/v0.6.0` is a minor successor to
 `packs/v0.5.0`. Its native recipe adds one authored job,
 `bifrost.python-performance-summaries` 1.0.0: reviewed CPython 3.13.5 declared
 performance effects that the Python arms of the `bifrost.performance` loop
@@ -57,7 +85,7 @@ of stripping it; historical schemas retain their original requirements. The
 publication guard independently checks the generated payload. Compatibility
 neither implies complete analysis in a particular run nor qualifies behavior.
 
-The proposed minor `rules/v0.5.0` keeps the 238 policy source files and their
+The published minor `rules/v0.5.0` keeps the 238 policy source files and their
 IDs and changes the consumer requirements of twenty existing policies. The
 Python arms of the ten `bifrost.performance` loop policies now report a call
 only when a reviewed model declares that exact operation's effect, so they

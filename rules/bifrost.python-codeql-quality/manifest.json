@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.python-codeql-quality",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Bifrost Python CodeQL quality",
   "description": "Public Python structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -48,7 +48,7 @@
       "required_capabilities": [
         "structural-match",
         "python-call-relations",
-        "type-hierarchy"
+        "python-class-hierarchy"
       ],
       "severity_rationale": "An explicit super() class argument that differs from the enclosing class starts lookup at the wrong point in the MRO and can break cooperative method calls.",
       "remediation": "Pass the enclosing class as super()'s first argument, or use zero-argument super() where appropriate."
@@ -178,7 +178,7 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "control-flow"
+        "python-cfg"
       ],
       "severity_rationale": "Complex destructor control flow is difficult to reason about and runs during object finalization.",
       "remediation": "Simplify __del__; move cleanup into an explicit, idempotent method or context manager."
@@ -241,8 +241,7 @@
         "python"
       ],
       "required_capabilities": [
-        "structural-match",
-        "python-syntax-diagnostics"
+        "structural-match"
       ],
       "severity_rationale": "Python syntax errors prevent execution and make analysis of the affected code unreliable.",
       "remediation": "Correct the parser-reported syntax error before relying on analysis or running the module."
@@ -260,7 +259,7 @@
         "structural-match",
         "language-rule-facts",
         "python-import-cycles",
-        "control-flow"
+        "python-cfg"
       ],
       "severity_rationale": "A module can read a cyclically imported member before the target module executes its definition, causing import-time failure.",
       "remediation": "Break the import cycle or move the member use until after both modules finish initialization."
@@ -277,8 +276,8 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "control-flow",
-        "binding-resolution"
+        "python-cfg",
+        "lexical-environment"
       ],
       "severity_rationale": "Reading a local variable on a path before it is initialized can raise an exception at runtime.",
       "remediation": "Initialize the variable on every path before the read, or restructure the conditional logic."
@@ -549,8 +548,7 @@
       ],
       "required_capabilities": [
         "language-rule-facts",
-        "python-cfg",
-        "local-value-flow"
+        "python-cfg"
       ],
       "severity_rationale": "Different tuple lengths across return paths make callers handle an inconsistent result shape.",
       "remediation": "Return tuples with a consistent arity or use a named result type for varying data."
@@ -566,7 +564,7 @@
       ],
       "required_capabilities": [
         "language-rule-facts",
-        "exception-hierarchy",
+        "python-class-hierarchy",
         "python-cfg"
       ],
       "severity_rationale": "Raising outside a special method's protocol can replace the expected exception and make normal operations fail unexpectedly.",
@@ -696,8 +694,8 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "exception-hierarchy",
-        "control-flow"
+        "python-class-hierarchy",
+        "python-cfg"
       ],
       "severity_rationale": "Raising a value that is not an exception class or instance causes a TypeError instead of the intended exception.",
       "remediation": "Raise an exception class or an instance of BaseException."
@@ -797,7 +795,7 @@
         "structural-match",
         "python-class-hierarchy",
         "python-call-relations",
-        "control-flow"
+        "python-cfg"
       ],
       "severity_rationale": "Calling an overridable method during initialization can dispatch to subclass code before the instance is ready.",
       "remediation": "Initialize required state first or call a private helper that subclasses do not override."
@@ -882,7 +880,7 @@
         "structural-match",
         "python-class-hierarchy",
         "python-call-relations",
-        "control-flow"
+        "python-cfg"
       ],
       "severity_rationale": "Calling a non-trivial superclass finalizer more than once can repeat cleanup and release resources twice.",
       "remediation": "Ensure each intended superclass finalizer is called at most once."
@@ -900,7 +898,7 @@
         "structural-match",
         "python-class-hierarchy",
         "python-call-relations",
-        "control-flow"
+        "python-cfg"
       ],
       "severity_rationale": "Calling a non-trivial superclass initializer more than once can duplicate state changes and side effects.",
       "remediation": "Ensure each intended superclass initializer is called at most once."
@@ -984,7 +982,7 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "binding-resolution"
+        "lexical-environment"
       ],
       "severity_rationale": "Module-scope printing can write unexpected output when the module is imported by another part of the program.",
       "remediation": "Move output into an explicit command entry point or use configurable logging."
@@ -1001,7 +999,6 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "local-value-flow",
         "python-call-relations"
       ],
       "severity_rationale": "Squaring and adding coordinates before taking a square root can lose precision or overflow where the standard hypot operation handles scaling more robustly.",
@@ -1019,7 +1016,7 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "binding-resolution"
+        "lexical-environment"
       ],
       "severity_rationale": "NotImplemented is a sentinel value, not an exception instance, and cannot be raised as an exception.",
       "remediation": "Raise NotImplementedError for an unsupported operation, or return NotImplemented from a rich comparison method."
@@ -1358,8 +1355,8 @@
       "required_capabilities": [
         "structural-match",
         "language-rule-facts",
-        "control-flow",
-        "binding-resolution"
+        "python-cfg",
+        "lexical-environment"
       ],
       "severity_rationale": "Reading a local variable on a feasible procedure path before initialization can raise an exception at runtime.",
       "remediation": "Initialize the local variable on every path before the read, or restructure the conditional logic."

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.csharp-codeql-quality",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Bifrost C# CodeQL quality",
   "description": "Public C# structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -67,7 +67,7 @@
       "resolved_semantic_hash": "f73b6f34b391b3f967dbf7a669ef0e1107071d04551eeb2bb47e47a573f26754",
       "category": "quality",
       "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match", "failure-handler-state", "type-hierarchy"],
+      "required_capabilities": ["structural-match", "failure-handler-state"],
       "severity_rationale": "Catching System.Exception without filtering or rethrowing can hide failures and leave the program in an invalid state.",
       "remediation": "Catch the narrow exception types the operation can handle, or rethrow after recording context when a catch-all boundary is required."
     },
@@ -100,7 +100,7 @@
       "resolved_semantic_hash": null,
       "category": "correctness",
       "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "expression-kind-facts", "call-argument-conversion"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "call-argument-conversion"],
       "severity_rationale": "Passing a character to the one-argument StringBuilder constructor selects the integer-capacity overload and often creates an unexpectedly large or invalid buffer.",
       "remediation": "Convert the character to a string when text initialization is intended, or pass an explicit capacity when capacity initialization is intended."
     }

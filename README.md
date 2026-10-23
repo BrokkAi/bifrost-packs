@@ -106,12 +106,15 @@ partial completeness remains explicit. Legacy schema 1 releases retain their
 existing engine-range and qualification semantics. See the
 [shared release contract](release-contract/README.md).
 
-Published `packs/v0.5.0`, `rules/v0.4.0`, `packs/v0.4.0`, `rules/v0.3.1`,
-`packs/v0.3.0` and `rules/v0.2.1` remain immutable. The proposed successor
-streams are `packs/v0.6.0`, which adds the reviewed
+Published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
+`packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1` remain
+immutable. The proposed `rules/v0.5.1` patch replaces synonym capability names
+with the canonical names engines advertise and corrects the arity of
+`bifrost.cpp-jsf.av-rule-159` (see [release streams](docs/release-streams.md)).
+`packs/v0.6.0` added the reviewed
 `bifrost.python-performance-summaries` model to the native recipe, and
-`rules/v0.5.0`, whose Python performance arms read that model's declared
-effects and whose selected-boundary effects policies import their declaration
+`rules/v0.5.0` made its Python performance arms read that model's declared
+effects and its selected-boundary effects policies import their declaration
 selection. The native pack stream carries eight reviewed direct result-use
 model families, two Go standard-library `os` model outputs (procedure result
 contracts and declarations), the generated `bifrost.php-builtin` declaration
@@ -121,10 +124,8 @@ summaries. The existing PHP pack notes record an earlier partial output with
 reported 854. The CI generation report remains the release record and must
 stay explicit. No full PHP runtime coverage is claimed; see the
 [PHP pack notes](semantic-packs/php/README.md). The generated bundle also
-retains its schema-8 and schema-17 content. The rules release keeps every
-policy ID and changes the consumer requirements of twenty existing policies
-(see [release streams](docs/release-streams.md)), and depends exactly on
-`bifrost.public.packs@0.6.0`. Integrity, compatibility, completeness and
+retains its schema-8 and schema-17 content. Both rules releases keep every
+policy ID and depend exactly on `bifrost.public.packs@0.6.0`. Integrity, compatibility, completeness and
 consumer behavior remain separate qualification requirements; this preparation
 does not authorize a tag or publication.
 Historical `packs/v0.2.1` and `rules/v0.1.4` also remain immutable. The published

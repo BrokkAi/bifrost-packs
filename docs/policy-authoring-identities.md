@@ -1,6 +1,11 @@
 # Policy authoring identity verification
 
-Rules 0.5.0 is prepared as a minor successor to `rules/v0.4.0`. It keeps the
+Rules 0.5.1 is prepared as a patch successor to `rules/v0.5.0`. It changes the
+declared required capabilities of twenty-seven policies to canonical names and
+the arity filter of `bifrost.cpp-jsf.av-rule-159`; the av-rule-159 source and
+its fixture copy are the only policy files whose identities change.
+
+Rules 0.5.0 was a minor successor to `rules/v0.4.0`. It keeps the
 238 policy source files and their IDs. Twenty existing policies change their
 consumer requirements: the Python arms of the ten `bifrost.performance` loop
 policies require exact declared effects (`bifrost.code-smells` 4.0.0), and the

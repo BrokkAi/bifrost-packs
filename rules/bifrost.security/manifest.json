@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -546,7 +546,6 @@
         "python"
       ],
       "required_capabilities": [
-        "exact-value-identity",
         "exact-call-target",
         "actual-to-formal-binding",
         "semantic-model-provenance"
@@ -735,8 +734,7 @@
         "rust"
       ],
       "required_capabilities": [
-        "structural-match",
-        "literal-value-matching"
+        "structural-match"
       ],
       "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."

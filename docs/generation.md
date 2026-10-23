@@ -8,11 +8,11 @@ for a release or enable it in a scanner.
 
 ## Pinned native candidate
 
-The published `packs/v0.5.0`, `rules/v0.4.0`, `packs/v0.4.0`, `rules/v0.3.1`,
-`packs/v0.3.0` and `rules/v0.2.1` releases remain immutable. The proposed
-`packs/v0.6.0` keeps the 0.5.0 jobs and recipes and adds the authored
-`bifrost.python-performance-summaries` job; the proposed `rules/v0.5.0`
-depends on it.
+The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
+`packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1` releases
+remain immutable. `packs/v0.6.0` keeps the 0.5.0 jobs and recipes and adds the
+authored `bifrost.python-performance-summaries` job; `rules/v0.5.0` and the
+proposed `rules/v0.5.1` depend on it.
 The proposed next `packs/v0.6.0` recipe builds the public
 `bifrost-semantic-pack` producer version `0.14.0` from public source
 `c11a13ffa03ebea154f587b899954e412b5b871e`, the projection of the Bifrost
