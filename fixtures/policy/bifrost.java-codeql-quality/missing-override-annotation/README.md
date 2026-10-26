@@ -24,7 +24,10 @@ implementing method at lines 9, 25, 26, 32, 33, 34 and 35:
 | JdkTask.hashCode with @Override | 36 | No finding: annotated | No finding |
 
 The five JDK-backed declarations exercise the engine gap: the four unannotated
-methods are missed today; after #7179 the run reports partial for them. The
+methods are missed today. Fixing #7179 alone is not enough: member-family rows
+do not yet report their coverage to a policy run, so an unproven family is
+invisible to the run's completion. The rule stays unpublished until the engine
+reports these families as incomplete through the run's completion. The
 annotated hashCode is deliberately a near miss, not a missing expected alert.
 The pinned engines currently report proven empty families for these JDK
 supertypes; the rule has no spelling-based workaround. Do not treat their
