@@ -419,21 +419,24 @@ def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
         ]
         if any(policy.exists() for policy, _ in policies):
             raise GateError('policy basename reserved for analyzed-file probes')
-        for policy, contents in policies:
-            policy.write_text(contents)
-        output = run_dir / 'coverage-probe'
-        probe_env = dict(env)
-        probe_env.update(HOME=str(output / 'home'), USERPROFILE=str(output / 'home'),
-                         BIFROST_CACHE_ROOT=str(output / 'cache'),
-                         BIFROST_SEMANTIC_PACK_CACHE_ROOT=str(output / 'semantic-pack-cache'),
-                         XDG_CACHE_HOME=str(output / 'xdg'))
-        probe_env.update(stager.run_env(output, prepared))
-        (output / 'home').mkdir(parents=True)
-        command = [str(args.binary), '--root', str(root), '--no-builtin-policies']
-        for policy, _ in policies:
-            command += ['--policy-file', policy.relative_to(root).as_posix()]
-        command += ['--format', 'json']
+        # Write the probe policies inside the try so a failure part-way through
+        # setup still removes whatever was written; missing_ok keeps cleanup from
+        # masking that failure.
         try:
+            for policy, contents in policies:
+                policy.write_text(contents)
+            output = run_dir / 'coverage-probe'
+            probe_env = dict(env)
+            probe_env.update(HOME=str(output / 'home'), USERPROFILE=str(output / 'home'),
+                             BIFROST_CACHE_ROOT=str(output / 'cache'),
+                             BIFROST_SEMANTIC_PACK_CACHE_ROOT=str(output / 'semantic-pack-cache'),
+                             XDG_CACHE_HOME=str(output / 'xdg'))
+            probe_env.update(stager.run_env(output, prepared))
+            (output / 'home').mkdir(parents=True)
+            command = [str(args.binary), '--root', str(root), '--no-builtin-policies']
+            for policy, _ in policies:
+                command += ['--policy-file', policy.relative_to(root).as_posix()]
+            command += ['--format', 'json']
             rc, timeout = invoke(command, root, probe_env, output, args.timeout)
             if timeout:
                 raise GateError('analyzed-file probe timeout')
@@ -461,7 +464,7 @@ def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
             return set(paths), dict(evidence, cache_hit=False)
         finally:
             for policy, _ in policies:
-                policy.unlink()
+                policy.unlink(missing_ok=True)
 
 
 def execute(args, test_dir, query_path, stager):
