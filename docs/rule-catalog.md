@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 238 unique rule IDs from 12 manifest packs.
+This catalog lists 239 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -89,6 +89,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Java inconsistent Javadoc throws](../rules/bifrost.java-codeql-quality/policies/inconsistent-javadoc-throws.rqlp) | `bifrost.java-codeql-quality.inconsistent-javadoc-throws` | java | quality | warning |
 | [Java misnamed constant](../rules/bifrost.java-codeql-quality/policies/misnamed-constant.rqlp) | `bifrost.java-codeql-quality.misnamed-constant` | java | quality | warning |
 | [Java misnamed variable](../rules/bifrost.java-codeql-quality/policies/misnamed-variable.rqlp) | `bifrost.java-codeql-quality.misnamed-variable` | java | quality | warning |
+| [Missing Override annotation](../rules/bifrost.java-codeql-quality/policies/missing-override-annotation.rqlp) | `bifrost.java-codeql-quality.missing-override-annotation` | java | quality | warning |
 | [Java non-final immutable field](../rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp) | `bifrost.java-codeql-quality.non-final-immutable-field` | java | quality | warning |
 | [Java non-private field](../rules/bifrost.java-codeql-quality/policies/non-private-field.rqlp) | `bifrost.java-codeql-quality.non-private-field` | java | quality | warning |
 | [Raw generic constructor invocation](../rules/bifrost.java-codeql-quality/policies/raw-constructor-invocation.rqlp) | `bifrost.java-codeql-quality.raw-constructor-invocation` | java | quality | warning |

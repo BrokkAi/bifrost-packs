@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.java-codeql-quality",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "Bifrost Java CodeQL quality",
   "description": "Public Java declaration, naming, generics, constructor, and Javadoc quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -308,6 +308,21 @@
       ],
       "severity_rationale": "A public source type without Javadoc leaves its purpose and contract unexplained.",
       "remediation": "Add a Javadoc block describing the public type and its intended use."
+    },
+    {
+      "path": "policies/missing-override-annotation.rqlp",
+      "id": "bifrost.java-codeql-quality.missing-override-annotation",
+      "authored_hash": "8369c36b69b4e597afe8e7873afa4b2af652fad58544a64c4559ec3ae0e918f7",
+      "resolved_semantic_hash": "8369c36b69b4e597afe8e7873afa4b2af652fad58544a64c4559ec3ae0e918f7",
+      "category": "quality",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "An overriding or implementing method without an Override annotation loses compiler checks and makes the inheritance contract harder to read.",
+      "remediation": "Add @Override to the overriding or implementing method after checking its superclass or interface contract."
     }
   ]
 }
