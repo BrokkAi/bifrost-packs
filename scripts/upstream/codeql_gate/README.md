@@ -54,7 +54,8 @@ extra_policy_files(prepared) -> list[Path]
 ```
 
 `PreparedRoot` carries `root: Path` and `source_paths: tuple[str, ...]`, the
-complete staged source inventory used to check scanner work counts. An
+complete staged source inventory, retained as staging metadata. Coverage is
+measured independently by the core; this interface is unchanged. An
 optional `inline_oracle(test_dir)` supplies language-specific annotations.
 The core owns ordinary private file copies, policy placement, model copying,
 execution, process-group timeout, scoring, provenance and output. Prepared
@@ -129,7 +130,8 @@ python3 -I scripts/upstream/codeql_gate/gate.py run java/missing-override-annota
 ## Oracle and classes
 
 The first column of `#select` is the primary alert span. For a headerless
-problem query, rows before the first section header are selects. `edges`,
+problem query, rows before the first section header are selects. Bare headings
+(such as `models`) also end the select section; model rows never become alerts. `edges`,
 `nodes`, `subpaths`, model sections and `testFailures` never add alerts.
 Nonempty `testFailures` makes the oracle unreliable and the run ERROR.
 Locations are full test-directory-relative paths and start lines; duplicate
@@ -171,8 +173,8 @@ false positives unless at a MISSING site or explicitly reviewed via
 `start_line`. `span_overlap` permits overlap after the offset. It changes only
 matching, not the stored oracle. Anchor configuration and reviewed true
 positives are retained in the result. No automatic offset, basename matching,
-or semantic similarity heuristic is applied. The draft duplicate-branches
-acceptance run intentionally uses no anchor map.
+or semantic similarity heuristic is applied. The duplicate-branches acceptance uses the existing Go-capable
+`bifrost.code-smells` identical-conditional-branches rule without an anchor map.
 
 ## Completeness and compatibility
 
@@ -187,28 +189,70 @@ For an absent expected site, `completion.scope` can bound an inconclusive
 run to `{"type":"files","files":[...],"truncated":false}`. That typed,
 nonempty scope promises misses outside the named files have full coverage.
 Missing, run-wide, empty or truncated scopes abstain globally. Otherwise,
-`run_incomplete`, `run_unsupported`, and `report_incomplete` diagnostic impacts
+`declared_non_exhaustive`, `finding_partial`, `run_incomplete`, and
+`run_unsupported` diagnostic impacts
 abstain at the diagnostic's primary file/span; an unlocated diagnostic
 abstains globally. On a noncomplete run, typed completion scope is authoritative
 rather than unlocated summary diagnostics widening its promised scope.
 Diagnostics without an impact use conservative code-name checks. Advisory
 `empty_selection` stays visible in diagnostic counts and does not convert a
-complete empty run's misses to abstentions.
+complete empty run's misses to abstentions. A finding's own partial evidence
+prevents PASS but does not hide silent misses elsewhere in the same file.
 
 Report/run diagnostic or obligation truncation, omitted findings, interrupted
-execution, pending policy IDs, and insufficient scanner work prevent PASS.
-The report does not provide a complete analyzed-file manifest: the harness
-requires `work.scanned_files` in every run to cover the staged source count.
-Absent or lower counts mean unknown coverage and abstention. This deliberately
-fails closed for skipped build-tagged/vendor files; the count is an aggregate
-check, not per-file execution proof. Only a future analyzed-file manifest can
-remove that limitation. Pack activation's separate `packs.complete` flag is
-not treated as policy execution coverage: unrelated inactive packs do not
-invalidate a structural rule. Rule completion and diagnostics remain decisive.
+execution and pending policy IDs prevent PASS. Coverage asks only whether each
+file carrying an ordinary expected alert was analyzed. `work.scanned_files`
+is a work metric summed across selector queries, not a file inventory, and
+is never used for coverage. Staged vendor, stub and build-constrained files
+without expected alerts do not affect this check.
+
+An explicit `scope.analyzed_files` list can supply the inventory (top-level,
+or the intersection when every policy run provides one). Truncated lists
+are not accepted as inventory. This is distinct from `completion.scope.files`,
+which lists gaps and retains the run-level handling described above. The
+pinned schema-6 binary exposes examined procedures rather than analyzed files,
+so the core uses one isolated match probe over File rows:
+
+```lisp
+(file-of (text/regex "(?s).*"))
+```
+
+The universal predicate selects source facts without a language/path filter;
+`file-of` deduplicates them to files, each reported as an inventory finding.
+File-row duplicate provenance can be truncated without losing membership;
+only run completion and absence of omitted findings certify the inventory.
+This is a file-membership check, not a claim about a policy's semantic coverage.
+The probe selects text-bearing nodes before `file-of` deduplicates them, so an
+analyzed file that has no text-bearing node (an empty file) reads as
+unanalyzed. An expected alert in such a file abstains instead of counting as a
+silent miss, which errs in the safe direction.
+The measured policy's completion still determines whether analysis is complete.
+The probe runs on the same private staged root, with the same models and
+language environment and its own fresh caches/timeout. Its findings never
+enter the policy's score. A complete, untruncated probe is required; failure
+is ERROR. Probe stdout/stderr/exit status remain under `coverage-probe/`.
+
+The inventory is cached atomically under `<state-dir>/coverage`, keyed by
+prepared-root identity, binary SHA256, probe policy, model contents and the
+environment variables that can change what the probe sees: the keys the stager
+sets, `PATH`, and variables starting with `GO`, `BIFROST_`, `JAVA` or `RAYON_`.
+Shell state such as `PWD` or `SHLVL` is ignored. A lock prevents concurrent duplicate probes. Failed
+or incomplete probes are not cached. `coverage` records provenance and cache
+use; `analyzed_files` records membership; `unanalyzed_expected_files` lists
+expected-alert files missing from the inventory. `coverage_unknown` means
+that list is nonempty, never global abstention: only expected alerts in those
+files abstain. Every expected-alert file must be analyzed for `complete`.
+
+Pack activation's separate `packs.complete` flag is not treated as policy
+execution coverage: unrelated inactive packs do not invalidate a structural
+rule. Rule completion and diagnostics remain decisive.
 
 Each ordinary expected site is matched, a silent miss under complete coverage,
 or an abstention under withheld coverage. Missing runs, missing declared-policy
 runs, validation errors, crashes, malformed reports, and timeouts are ERROR.
+Exit code 2 is scored when the report has runs with known nonfailed completion
+types, no execution termination and no pending policies; incomplete reports
+normally yield abstentions. Other exit codes outside 0/1 are ERROR.
 A run passes only if complete and with zero false positives, silent misses,
 abstentions and errors. All directories must pass for the CLI to return 0.
 
