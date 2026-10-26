@@ -16,3 +16,22 @@ class ExpressDelivery extends Delivery {
     static { reset(); } // Near miss: generated class initializer is not a method.
 }
 enum DeliveryMode { STANDARD, EXPRESS } // Generated enum methods are not source methods.
+
+interface Shape {
+    default int area() { return 0; }
+    int perimeter();
+}
+class Square implements Shape {
+    public int area() { return 16; } // Positive: overrides an interface default.
+    public int perimeter() { return 16; } // Positive: implements an abstract method.
+}
+class AnnotatedDelivery extends Delivery {
+    @java.lang.Override String status() { return "delivered"; } // Qualified near miss.
+}
+class JdkTask implements Runnable, Comparable<JdkTask> {
+    public void run() {} // CodeQL positive; held for engine issue #7179.
+    public int compareTo(JdkTask other) { return 0; } // CodeQL positive; #7179.
+    public String toString() { return "task"; } // CodeQL positive; #7179.
+    public boolean equals(Object other) { return this == other; } // CodeQL positive; #7179.
+    @Override public int hashCode() { return 7; } // Annotated JDK near miss.
+}

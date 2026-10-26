@@ -312,8 +312,8 @@
     {
       "path": "policies/missing-override-annotation.rqlp",
       "id": "bifrost.java-codeql-quality.missing-override-annotation",
-      "authored_hash": "ca35df913bc8fc0a811a458c237976c914ea524737857e96a216a65ee38a2f70",
-      "resolved_semantic_hash": "ca35df913bc8fc0a811a458c237976c914ea524737857e96a216a65ee38a2f70",
+      "authored_hash": "8369c36b69b4e597afe8e7873afa4b2af652fad58544a64c4559ec3ae0e918f7",
+      "resolved_semantic_hash": "8369c36b69b4e597afe8e7873afa4b2af652fad58544a64c4559ec3ae0e918f7",
       "category": "quality",
       "supported_languages": [
         "java"
@@ -321,8 +321,8 @@
       "required_capabilities": [
         "structural-match"
       ],
-      "severity_rationale": "An override without an Override annotation loses compiler checks and makes the inheritance contract harder to read.",
-      "remediation": "Add @Override to the overriding method after checking its superclass contract."
+      "severity_rationale": "An overriding or implementing method without an Override annotation loses compiler checks and makes the inheritance contract harder to read.",
+      "remediation": "Add @Override to the overriding or implementing method after checking its superclass or interface contract."
     }
   ]
 }
