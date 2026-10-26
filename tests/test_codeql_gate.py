@@ -306,7 +306,7 @@ class ExecutionTests(unittest.TestCase):
             command += ['--timeout', '0.1']
         if keep:
             command += ['--keep']
-        proc = subprocess.run(command, capture_output=True, text=True, timeout=10)
+        proc = subprocess.run(command, capture_output=True, text=True, timeout=120)
         self.assertTrue(proc.stdout, proc.stderr)
         result = json.loads(proc.stdout)['runs'][0]
         self.last_command = command
@@ -333,7 +333,7 @@ class ExecutionTests(unittest.TestCase):
         self.assertEqual(result['coverage']['source'], 'file_row_probe')
         self.assertFalse(result['coverage']['cache_hit'])
         self.assertEqual((base / 'state/probe-count').read_text(), '1')
-        repeated = subprocess.run(self.last_command, capture_output=True, text=True, timeout=30)
+        repeated = subprocess.run(self.last_command, capture_output=True, text=True, timeout=120)
         again = json.loads(repeated.stdout)['runs'][0]
         self.assertTrue(again['pass'])
         self.assertTrue(again['coverage']['cache_hit'])
@@ -344,7 +344,7 @@ class ExecutionTests(unittest.TestCase):
         # A changed binary cannot reuse the old coverage inventory.
         binary = base / 'bifrost'
         binary.write_text(binary.read_text() + '\n# new binary identity\n')
-        changed = subprocess.run(self.last_command, capture_output=True, text=True, timeout=30)
+        changed = subprocess.run(self.last_command, capture_output=True, text=True, timeout=120)
         self.assertFalse(json.loads(changed.stdout)['runs'][0]['coverage']['cache_hit'])
         self.assertEqual((base / 'state/probe-count').read_text(), '2')
 

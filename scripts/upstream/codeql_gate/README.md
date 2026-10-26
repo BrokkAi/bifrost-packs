@@ -206,6 +206,10 @@ The universal predicate selects source facts without a language/path filter;
 File-row duplicate provenance can be truncated without losing membership;
 only run completion and absence of omitted findings certify the inventory.
 This is a file-membership check, not a claim about a policy's semantic coverage.
+The probe selects text-bearing nodes before `file-of` deduplicates them, so an
+analyzed file that has no text-bearing node (an empty file) reads as
+unanalyzed. An expected alert in such a file abstains instead of counting as a
+silent miss, which errs in the safe direction.
 The measured policy's completion still determines whether analysis is complete.
 The probe runs on the same private staged root, with the same models and
 language environment and its own fresh caches/timeout. Its findings never
@@ -213,8 +217,10 @@ enter the policy's score. A complete, untruncated probe is required; failure
 is ERROR. Probe stdout/stderr/exit status remain under `coverage-probe/`.
 
 The inventory is cached atomically under `<state-dir>/coverage`, keyed by
-prepared-root identity, binary SHA256, probe policy, model contents and stable
-execution environment. A lock prevents concurrent duplicate probes. Failed
+prepared-root identity, binary SHA256, probe policy, model contents and the
+environment variables that can change what the probe sees: the keys the stager
+sets, `PATH`, and variables starting with `GO`, `BIFROST_`, `JAVA` or `RAYON_`.
+Shell state such as `PWD` or `SHLVL` is ignored. A lock prevents concurrent duplicate probes. Failed
 or incomplete probes are not cached. `coverage` records provenance and cache
 use; `analyzed_files` records membership; `unanalyzed_expected_files` lists
 expected-alert files missing from the inventory. `coverage_unknown` means

@@ -369,9 +369,15 @@ def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
     digest = hashlib.sha256(PROBE_POLICY.encode())
     digest.update(str(prepared.root.resolve()).encode())
     digest.update(hashlib.sha256(args.binary.read_bytes()).digest())
-    # The stager may supply toolchain/dependency paths. Ignore only per-run
-    # environment values; all stable environment changes invalidate the probe.
-    stable_env = {k: v for k, v in env.items() if str(run_dir) not in v}
+    # Only variables that can change what the probe sees take part: the keys
+    # the stager sets, toolchain and Bifrost settings, and PATH. Shell state
+    # such as PWD, OLDPWD, SHLVL or `_` would only cause spurious cache misses.
+    # Per-run values (paths under the run directory) are excluded as well.
+    stager_keys = set(stager.run_env(run_dir, prepared))
+    def relevant(name):
+        return (name in stager_keys or name == 'PATH'
+                or name.startswith(('GO', 'BIFROST_', 'JAVA', 'RAYON_')))
+    stable_env = {k: v for k, v in env.items() if relevant(k) and str(run_dir) not in v}
     digest.update(json.dumps(stable_env, sort_keys=True).encode())
     models = root / '.bifrost/semantic-models'
     if models.exists():
