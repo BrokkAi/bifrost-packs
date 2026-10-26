@@ -6,7 +6,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.upstream.codeql_gate.core import GateError, load_oracle, parse_expected, score
+# Upstream scripts are content-locked; importing tests must not add bytecode.
+sys.dont_write_bytecode = True
+
+from scripts.upstream.codeql_gate.core import GateError, load_oracle, parse_expected, report_analyzed_paths, score
 from scripts.upstream.codeql_gate.stagers.go import GoStager
 from scripts.upstream.codeql_gate.compare_sarif import compare
 
@@ -15,7 +18,8 @@ GATE = Path(__file__).resolve().parents[1] / 'scripts/upstream/codeql_gate/gate.
 
 
 def report(*locations, complete=True):
-    return {'runs': [{'policy_id': 'example', 'completion': {'type': 'complete'} if complete else {'type': 'proven_subset', 'codes': ['branch_relation_derivation_incomplete']},
+    return {'scope': {'analyzed_files': ['sample.go', 'sink.go', 'tagged.go', 'classes.go']},
+            'runs': [{'policy_id': 'example', 'completion': {'type': 'complete'} if complete else {'type': 'proven_subset', 'codes': ['branch_relation_derivation_incomplete']},
                      'diagnostics': [], 'work': {'scanned_files': 1},
                      'findings': [{'primary': {'path': p, 'region': {'start_line': n, 'end_line': end}},
                                    'completeness': {'type': 'complete'}} for p, n, end in locations]}]}
@@ -31,6 +35,14 @@ class OracleTests(unittest.TestCase):
     def test_path_problem_first_column_only(self):
         self.assertEqual(self.oracle('path')['expected'][0]['path'], 'sink.go')
         self.assertEqual(len(self.oracle('path')['expected']), 1)
+
+    def test_bare_models_heading_stops_headerless_select(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'check.expected'
+            path.write_text('| example.go:3:1:3:2 | alert |\nmodels\n| example.package | model |\n')
+            rows, failures = parse_expected(path)
+            self.assertEqual([(r['path'], r['start']) for r in rows], [('example.go', 3)])
+            self.assertEqual(failures, [])
 
     def test_go_alerts_and_taint_ignore_path_ends_and_strings(self):
         oracle = self.oracle('inline')
@@ -77,10 +89,77 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(result['silent_misses'], [])
         self.assertFalse(result['pass'])
 
-    def test_unknown_or_short_scanning_abstains(self):
-        data = report()
+    def test_narrowed_selector_with_low_work_count_passes(self):
+        data = report(('sample.go', 3, 3))
         data['runs'][0]['work']['scanned_files'] = 0
+        self.assertTrue(score(data, self.oracle('problem'))['pass'])
+
+    def test_unanalyzed_file_abstains_without_hiding_analyzed_misses(self):
+        data = report()
+        data['scope']['analyzed_files'] = ['tagged.go']
+        # A large, duplicated selector work count cannot certify other.go.
+        data['runs'][0]['work']['scanned_files'] = 1000
+        oracle = self.oracle('inline')
+        oracle['expected'].append({'path': 'other.go', 'start': 7, 'end': 7})
+        result = score(data, oracle)
+        self.assertEqual(result['abstentions'], ['other.go:7'])
+        self.assertEqual(result['silent_misses'], ['tagged.go:3', 'tagged.go:4', 'tagged.go:5'])
+        self.assertFalse(result['complete'])
+        self.assertEqual(result['unanalyzed_expected_files'], ['other.go'])
+
+    def test_scope_inventory_uses_paths_not_completion_gap_scope(self):
+        data = report()
+        data.pop('scope')
+        data['runs'][0]['completion'] = {'type': 'inconclusive', 'reasons': ['capability_incomplete'],
+            'scope': {'type': 'files', 'files': ['sample.go'], 'truncated': False}}
+        self.assertIsNone(report_analyzed_paths(data))
+        data['runs'][0]['scope'] = {'analyzed_files': ['sample.go']}
+        self.assertEqual(report_analyzed_paths(data), {'sample.go'})
+        data['runs'][0]['scope']['analyzed_files_truncated'] = True
+        self.assertIsNone(report_analyzed_paths(data))
+
+    def test_missing_coverage_inventory_abstains(self):
+        data = report()
+        data.pop('scope')
         self.assertEqual(score(data, self.oracle('problem'))['abstentions'], ['sample.go:3'])
+
+    def test_diagnostic_impacts_abstain_only_in_their_region(self):
+        for impact in ('declared_non_exhaustive', 'finding_partial'):
+            with self.subTest(impact=impact):
+                data = report()
+                data['runs'][0]['diagnostics'] = [{'impact': impact, 'severity': 'warning',
+                    'primary': {'path': 'tagged.go', 'region': {'start_line': 3, 'end_line': 3}}}]
+                result = score(data, self.oracle('inline'))
+                self.assertEqual(result['abstentions'], ['tagged.go:3'])
+                self.assertEqual(result['silent_misses'], ['tagged.go:4', 'tagged.go:5'])
+                self.assertFalse(result['complete'])
+
+    def test_partial_finding_does_not_hide_unrelated_silent_misses(self):
+        data = report(('tagged.go', 3, 3))
+        data['runs'][0]['findings'][0]['completeness'] = {'type': 'partial'}
+        result = score(data, self.oracle('inline'))
+        self.assertEqual(result['matched'], ['tagged.go:3'])
+        self.assertEqual(result['silent_misses'], ['tagged.go:4', 'tagged.go:5'])
+        self.assertEqual(result['abstentions'], [])
+        self.assertFalse(result['complete'])
+
+
+    def test_exit_two_with_valid_incomplete_report_is_scored(self):
+        data = report(complete=False)
+        result = score(data, self.oracle('problem'), exit_code=2)
+        self.assertEqual(result['abstentions'], ['sample.go:3'])
+        self.assertEqual(result['verdict'], 'EXACT-INCOMPLETE')
+        self.assertEqual(result['errors'], [])
+        self.assertFalse(result['pass'])
+        for bad_execution in ({'termination': 'timeout'}, {'pending_policy_ids': ['example']}):
+            with self.subTest(execution=bad_execution):
+                data['execution'] = bad_execution
+                self.assertEqual(score(data, self.oracle('problem'), exit_code=2)['verdict'], 'ERROR')
+        data = report()
+        data['runs'][0]['completion'] = {'type': 'failed'}
+        self.assertEqual(score(data, self.oracle('problem'), exit_code=2)['verdict'], 'ERROR')
+        self.assertEqual(score({}, self.oracle('problem'), exit_code=2)['verdict'], 'ERROR')
+        self.assertEqual(score(report(), self.oracle('problem'), exit_code=3)['verdict'], 'ERROR')
 
     def test_typed_file_scope_limits_abstentions(self):
         oracle = self.oracle('inline')
@@ -192,7 +271,7 @@ class ExecutionTests(unittest.TestCase):
             "(pathlib.Path(os.environ['BIFROST_CACHE_ROOT'])).mkdir(parents=True, exist_ok=True)\n" +
             ("time.sleep(30)\n" if behavior == 'timeout' else '') +
             ("print('not json')\n" if behavior == 'malformed' else
-             "print(json.dumps(" + repr({'rules': [{'policy_id': 'example'}, {'policy_id': 'extra'}],
+             "print(json.dumps(" + repr({'scope': report()['scope'], 'rules': [{'policy_id': 'example'}, {'policy_id': 'extra'}],
                     'runs': report()['runs'] + report(('sample.go', 3, 3))['runs']}) + "))\n"))
         binary.chmod(0o755)
         policy = base / 'primary.rqlp'
@@ -201,6 +280,21 @@ class ExecutionTests(unittest.TestCase):
         extra.write_text('(policy)')
         # Give the second report run the second rule identity.
         binary.write_text(binary.read_text().replace("'policy_id': 'example', 'completion':", "'policy_id': 'extra', 'completion':", 1))
+        if behavior in ('probe', 'probe_timeout', 'probe_incomplete'):
+            # No analyzed-file scope: exercise the real core's separate probe.
+            text = binary.read_text().replace(repr(report()['scope']), 'None')
+            probe_report = report(('sample.go', 1, 1), complete=behavior != 'probe_incomplete')
+            probe_report['runs'][0]['policy_id'] = 'bifrost.upstream-gate.analyzed-files'
+            probe_report['runs'][0]['findings'][0]['primary']['region'] = None
+            probe_report['runs'][0]['findings'][0]['completeness'] = {'type': 'partial', 'reasons': ['query_provenance_truncated']}
+            guard = "if any('__codeql_gate_analyzed_files.rqlp' in a for a in sys.argv):\n"
+            guard += " count=root.parent.parent.parent/'probe-count'\n"
+            guard += " count.write_text(str(int(count.read_text())+1) if count.exists() else '1')\n"
+            if behavior == 'probe_timeout':
+                guard += ' time.sleep(30)\n'
+            guard += ' print(json.dumps(' + repr(probe_report) + '))\n sys.exit(1)\n'
+            text = text.replace("print(json.dumps(", guard + "print(json.dumps(", 1)
+            binary.write_text(text)
         models = base / 'models'
         models.mkdir()
         (models / 'example.json').write_text('{}')
@@ -208,13 +302,14 @@ class ExecutionTests(unittest.TestCase):
                    '--query-path', 'Example.ql', '--test-dir', str(test_dir), '--codeql-root', str(checkout),
                    '--binary', str(binary), '--state-dir', str(base / 'state'),
                    '--models', str(models), '--extra-policy', str(extra)]
-        if behavior == 'timeout':
+        if behavior in ('timeout', 'probe_timeout'):
             command += ['--timeout', '0.1']
         if keep:
             command += ['--keep']
         proc = subprocess.run(command, capture_output=True, text=True, timeout=10)
         self.assertTrue(proc.stdout, proc.stderr)
         result = json.loads(proc.stdout)['runs'][0]
+        self.last_command = command
         return proc, result, base
 
     def test_isolated_cli_models_bundles_and_cleanup(self):
@@ -230,6 +325,40 @@ class ExecutionTests(unittest.TestCase):
         self.assertFalse((shared / '.bifrost').exists())
         self.assertEqual(len(result['binary_sha256']), 64)
         self.assertEqual(len(result['codeql_commit']), 40)
+
+    def test_file_probe_cached_per_prepared_root_and_binary(self):
+        proc, result, base = self.run_gate('probe')
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertEqual(result['analyzed_files'], ['sample.go'])
+        self.assertEqual(result['coverage']['source'], 'file_row_probe')
+        self.assertFalse(result['coverage']['cache_hit'])
+        self.assertEqual((base / 'state/probe-count').read_text(), '1')
+        repeated = subprocess.run(self.last_command, capture_output=True, text=True, timeout=30)
+        again = json.loads(repeated.stdout)['runs'][0]
+        self.assertTrue(again['pass'])
+        self.assertTrue(again['coverage']['cache_hit'])
+        self.assertEqual((base / 'state/probe-count').read_text(), '1')
+        probe = Path(result['run_dir']) / 'coverage-probe'
+        self.assertTrue((probe / 'stdout.json').exists())
+        self.assertFalse((probe / 'cache').exists())
+        # A changed binary cannot reuse the old coverage inventory.
+        binary = base / 'bifrost'
+        binary.write_text(binary.read_text() + '\n# new binary identity\n')
+        changed = subprocess.run(self.last_command, capture_output=True, text=True, timeout=30)
+        self.assertFalse(json.loads(changed.stdout)['runs'][0]['coverage']['cache_hit'])
+        self.assertEqual((base / 'state/probe-count').read_text(), '2')
+
+    def test_incomplete_probe_cannot_certify_coverage(self):
+        proc, result, _ = self.run_gate('probe_incomplete')
+        self.assertEqual(proc.returncode, 1)
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertEqual(result['abstentions'], ['sample.go:3'])
+
+    def test_probe_timeout_is_error(self):
+        proc, result, _ = self.run_gate('probe_timeout')
+        self.assertEqual(proc.returncode, 1)
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertEqual(result['abstentions'], ['sample.go:3'])
 
     def test_keep_retains_private_root(self):
         _, result, _ = self.run_gate(keep=True)

@@ -61,6 +61,11 @@ def parse_expected(path):
         if stripped.startswith('#'):
             section = stripped[1:].strip().lower()
             continue
+        if stripped and not stripped.startswith('|') and section != 'testfailures':
+            # qltest also emits bare relation headings (notably models).
+            # A later section must never be interpreted as headerless select.
+            section = stripped.lower()
+            continue
         if section == 'testfailures' and stripped.strip('|').strip():
             failures.append(stripped)
         if section != 'select' or not stripped.startswith('|'):
@@ -141,15 +146,49 @@ def diagnostic_groups(diagnostics):
     return dict(counts), {k: v[:5] for k, v in messages.items()}, dict(families)
 
 
+def report_analyzed_paths(data, root=None):
+    """Read an explicit analyzed-file inventory, never completion's gap scope.
+
+    Current schema 6 only lists examined_procedures in a run scope, so it
+    needs a probe. Accept an explicit analyzed_files scope when provided by
+    a producer; a truncated or absent inventory cannot certify membership.
+    """
+    def inventory(scope):
+        if (not isinstance(scope, dict) or 'analyzed_files' not in scope
+                or scope.get('truncated') or scope.get('analyzed_files_truncated')):
+            return None
+        files = scope['analyzed_files']
+        if not isinstance(files, list) or any(not isinstance(p, str) for p in files):
+            raise GateError('scope.analyzed_files must be a list of paths')
+        return {relative_path(p, root) for p in files}
+    top = inventory(data.get('scope'))
+    if top is not None:
+        return top
+    inventories = [inventory(r.get('scope')) for r in data.get('runs', [])]
+    if not inventories or any(paths is None for paths in inventories):
+        return None
+    # Each policy run must have had the expected file available.
+    return set.intersection(*inventories)
+
+
 def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=(),
-          analyzed_paths=(), required_policy_ids=()):
+          analyzed_paths=None, required_policy_ids=()):
     runs = data.get('runs') or []
     errors = []
     if not runs:
         errors.append('missing runs')
     if any(r.get('completion', {}).get('type') == 'failed' for r in runs):
         errors.append('failed policy run')
-    if exit_code not in (0, 1):  # CLI 1 is the normal findings exit status.
+    # CLI 1 means findings; 2 can mean a valid incomplete report. Trust that
+    # report only if execution reached a terminal report without failed runs.
+    execution = data.get('execution', {})
+    valid_incomplete_exit = (exit_code == 2 and bool(runs)
+                             and all(r.get('completion', {}).get('type') in
+                                     {'complete', 'proven_subset', 'proven_by_summary',
+                                      'inconclusive', 'not_run', 'unsupported'} for r in runs)
+                             and not execution.get('termination')
+                             and not execution.get('pending_policy_ids'))
+    if exit_code not in (0, 1) and not valid_incomplete_exit:
         errors.append(f'binary exit {exit_code}')
     diagnostics = list(data.get('diagnostics', [])) + [d for r in runs for d in r.get('diagnostics', [])]
     if any(d.get('severity') == 'error' or 'validation' in str(d.get('code', '')).lower()
@@ -201,7 +240,8 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
     completion = next((r.get('completion', {}) for r in runs
                        if r.get('completion', {}).get('type') != 'complete'),
                       runs[0].get('completion', {}) if runs else {})
-    incomplete_impacts = {'run_incomplete', 'run_unsupported', 'report_incomplete'}
+    incomplete_impacts = {'declared_non_exhaustive', 'finding_partial',
+                          'run_incomplete', 'run_unsupported'}
     def bad_diagnostic(d):
         return (d.get('impact') in incomplete_impacts or
                 d.get('impact') is None and any(s in str(d.get('code', '')).lower() for s in
@@ -211,18 +251,18 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
                     d.get('work', {}).get('omitted_findings_lower_bound', 0) for d in [data] + runs)
     execution = data.get('execution', {})
     interrupted = bool(execution.get('termination') or execution.get('pending_policy_ids'))
-    # A count smaller than the staged source inventory cannot certify analysis.
-    source_paths = set(analyzed_paths) or {e['path'] for e in expected}
-    coverage_unknown = any(r.get('work', {}).get('scanned_files', 0) < len(source_paths) for r in runs)
+    # Work counts sum selector activity and cannot establish file membership.
+    # Only expected-alert files need coverage evidence; stager inventory is not
+    # analysis evidence (it includes vendor and build-constrained inputs).
+    source_paths = report_analyzed_paths(data, root) if analyzed_paths is None else set(analyzed_paths)
+    unanalyzed_files = sorted({e['path'] for e in expected} - (source_paths or set()))
+    coverage_unknown = bool(unanalyzed_files)
     complete = (bool(runs) and all(r.get('completion', {}).get('type') == 'complete' for r in runs)
                 and not incomplete_diagnostics and not truncated and not interrupted
                 and not coverage_unknown and not errors
                 and all(f['completeness'].get('type', 'complete') == 'complete' for f in findings))
     def abstained(e):
-        if coverage_unknown or truncated or interrupted or errors or not runs:
-            return True
-        if any(f['path'] == e['path'] and f['completeness'].get('type', 'complete') != 'complete'
-               for f in findings):
+        if e['path'] in unanalyzed_files or truncated or interrupted or errors or not runs:
             return True
         for run in runs:
             comp = run.get('completion', {})
@@ -266,6 +306,8 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
             'missing': {'sites': oracle['missing'], 'findings': [site(f) for f in got if listed(f, oracle['missing'])]},
             'oracle_sources': oracle['oracle_sources'], 'oracle_disagreement': oracle['oracle_disagreement'],
             'complete': complete, 'pass': passed, 'errors': errors, 'coverage_unknown': coverage_unknown,
+            'analyzed_files': sorted(source_paths) if source_paths is not None else None,
+            'unanalyzed_expected_files': unanalyzed_files,
             'anchors': anchors, 'true_positives': list(true_positives)}
 
 
@@ -284,6 +326,109 @@ def write_results(run_dir, result):
         f"Disagreement: {json.dumps(result['oracle_disagreement'])}\n"
         f"\nBinary SHA256: `{result['binary_sha256']}`\n"
         f"CodeQL commit: `{result['codeql_commit']}`\n")
+
+
+PROBE_ID = 'bifrost.upstream-gate.analyzed-files'
+PROBE_POLICY = """(policy
+  :schema-version 1
+  :id "bifrost.upstream-gate.analyzed-files"
+  :name "Upstream gate analyzed file inventory"
+  :message "Analyzed file"
+  :severity note
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (file-of (text/regex "(?s).*")))))
+"""
+
+
+def invoke(command, root, env, output_dir, timeout):
+    output_dir.mkdir(parents=True, exist_ok=True)
+    timed_out = False
+    with (output_dir / 'stdout.json').open('w') as stdout, (output_dir / 'stderr.txt').open('w') as stderr:
+        process = subprocess.Popen(['nice', '-n', '10', *command], cwd=root, env=env,
+                                   stdout=stdout, stderr=stderr, start_new_session=True)
+        try:
+            process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            os.killpg(process.pid, signal.SIGKILL)
+            process.wait()
+    (output_dir / 'exit-code.txt').write_text(str(process.returncode) + '\n')
+    return process.returncode, timed_out
+
+
+def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
+    """A File-row match policy emits one inventory finding per analyzed file.
+
+    The universal text predicate selects source facts without a language/path
+    restriction. FileOf deduplicates to File rows rather than emitting a
+    finding per source fact. Probe findings never enter the
+    measured policy's findings, diagnostics or scores.
+    """
+    digest = hashlib.sha256(PROBE_POLICY.encode())
+    digest.update(str(prepared.root.resolve()).encode())
+    digest.update(hashlib.sha256(args.binary.read_bytes()).digest())
+    # The stager may supply toolchain/dependency paths. Ignore only per-run
+    # environment values; all stable environment changes invalidate the probe.
+    stable_env = {k: v for k, v in env.items() if str(run_dir) not in v}
+    digest.update(json.dumps(stable_env, sort_keys=True).encode())
+    models = root / '.bifrost/semantic-models'
+    if models.exists():
+        for path in sorted(p for p in models.rglob('*') if p.is_file()):
+            digest.update(path.relative_to(models).as_posix().encode() + b'\0')
+            digest.update(hashlib.sha256(path.read_bytes()).digest())
+    cache_dir = args.state_dir / 'coverage'
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_file = cache_dir / (digest.hexdigest() + '.json')
+    with cache_file.with_suffix('.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if cache_file.exists():
+            cached = json.loads(cache_file.read_text())
+            return set(cached['analyzed_files']), dict(cached, cache_hit=True)
+        policy = root / '.bifrost/policies' / '__codeql_gate_analyzed_files.rqlp'
+        if policy.exists():
+            raise GateError('policy basename reserved for analyzed-file probe')
+        policy.write_text(PROBE_POLICY)
+        output = run_dir / 'coverage-probe'
+        probe_env = dict(env)
+        probe_env.update(HOME=str(output / 'home'), USERPROFILE=str(output / 'home'),
+                         BIFROST_CACHE_ROOT=str(output / 'cache'),
+                         BIFROST_SEMANTIC_PACK_CACHE_ROOT=str(output / 'semantic-pack-cache'),
+                         XDG_CACHE_HOME=str(output / 'xdg'))
+        probe_env.update(stager.run_env(output, prepared))
+        (output / 'home').mkdir(parents=True)
+        command = [str(args.binary), '--root', str(root), '--no-builtin-policies',
+                   '--policy-file', policy.relative_to(root).as_posix(), '--format', 'json']
+        try:
+            rc, timeout = invoke(command, root, probe_env, output, args.timeout)
+            if timeout:
+                raise GateError('analyzed-file probe timeout')
+            data = json.loads((output / 'stdout.json').read_text())
+            empty_oracle = {'expected': [], 'spurious': [], 'missing': [],
+                            'oracle_sources': {}, 'oracle_disagreement': None}
+            # File rows intentionally have no source region. Validate run
+            # completion with their findings removed, then read only paths;
+            # never invent line numbers or feed inventory rows to scoring.
+            inventory = [f for r in data.get('runs', []) if r.get('policy_id') == PROBE_ID
+                         for f in r.get('findings', [])]
+            status = dict(data, runs=[dict(r, findings=[]) for r in data.get('runs', [])])
+            checked = score(status, empty_oracle, root=root, exit_code=rc,
+                            analyzed_paths=(), required_policy_ids=[PROBE_ID])
+            if not checked['complete']:
+                raise GateError('analyzed-file probe did not complete; see coverage-probe logs')
+            # FileOf can truncate alternative source-node provenance while
+            # retaining every File row. Membership needs no full provenance;
+            # run completion and omitted-findings checks certify the list.
+            paths = sorted({relative_path(f['primary']['path'], root) for f in inventory})
+            evidence = {'source': 'file_row_probe', 'analyzed_files': paths,
+                        'report': str(output / 'stdout.json'), 'cache_file': str(cache_file)}
+            temporary = cache_file.with_suffix('.tmp')
+            temporary.write_text(json.dumps(evidence, indent=2) + '\n')
+            temporary.replace(cache_file)
+            return set(paths), dict(evidence, cache_hit=False)
+        finally:
+            policy.unlink()
 
 
 def execute(args, test_dir, query_path, stager):
@@ -319,27 +464,21 @@ def execute(args, test_dir, query_path, stager):
         env.update(stager.run_env(run_dir, prepared))
         env['BIFROST_WORKSPACE_SEMANTIC_MODELS'] = 'on' if args.models else 'off'
         (run_dir / 'home').mkdir()
-        timed_out = False
-        with (run_dir / 'stdout.json').open('w') as stdout, (run_dir / 'stderr.txt').open('w') as stderr:
-            process = subprocess.Popen(['nice', '-n', '10', *command], cwd=dest, env=env,
-                                       stdout=stdout, stderr=stderr, start_new_session=True)
-            try:
-                process.wait(timeout=args.timeout)
-            except subprocess.TimeoutExpired:
-                timed_out = True
-                os.killpg(process.pid, signal.SIGKILL)
-                process.wait()
-        rc = process.returncode
-        (run_dir / 'exit-code.txt').write_text(str(rc) + '\n')
+        rc, timed_out = invoke(command, dest, env, run_dir, args.timeout)
         parse_error = None
         try:
             data = json.loads((run_dir / 'stdout.json').read_text())
             if not isinstance(data, dict):
                 raise GateError('report is not an object')
+            analyzed = report_analyzed_paths(data, dest)
+            coverage = {'source': 'report_scope'}
+            if analyzed is None and oracle['expected'] and data.get('runs') and not timed_out:
+                analyzed, coverage = probe_analyzed_paths(args, prepared, stager, dest, env, run_dir)
             result = score(data, oracle, root=dest, exit_code=rc,
                            anchors=args.anchors.get(args.query), true_positives=args.true_positives,
-                           analyzed_paths=prepared.source_paths,
+                           analyzed_paths=analyzed,
                            required_policy_ids=[r['policy_id'] for r in data.get('rules', [])])
+            result['coverage'] = coverage
         except (ValueError, KeyError, TypeError, AttributeError) as exc:
             parse_error = str(exc)
             result = score({}, oracle, exit_code=rc)
@@ -362,5 +501,6 @@ def execute(args, test_dir, query_path, stager):
         return result
     finally:
         if not args.keep:
-            for name in ('root', 'cache', 'xdg', 'semantic-pack-cache', 'home'):
-                shutil.rmtree(run_dir / name, ignore_errors=True)
+            for base in (run_dir, run_dir / 'coverage-probe'):
+                for name in ('root', 'cache', 'xdg', 'semantic-pack-cache', 'home'):
+                    shutil.rmtree(base / name, ignore_errors=True)
