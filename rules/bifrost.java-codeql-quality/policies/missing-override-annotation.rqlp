@@ -1,0 +1,32 @@
+; CodeQL java/ql/src/Advisory/Declarations/MissingOverrideAnnotation.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Authored RQL implementation; no upstream query or fixture source is copied.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.missing-override-annotation"
+  :name "Missing Override annotation"
+  :message "This method overrides a superclass method; it is advisable to add an Override annotation."
+  :severity warning
+  :description "Reports source methods with proven overrides that lack an Override annotation. Functional expressions and compiler-generated constructs are outside the Java method declaration selection."
+  :tags ["java" "codeql" "quality" "maintainability" "readability" "java/missing-override-annotation"]
+  :analysis (analysis
+    :type assertion
+    :languages [java]
+    (bind :name method-declaration
+      :query (rql :schema-version 1
+        (language java
+          (enclosing-decl
+            (method (not-has (decorator :name "Override")))))))
+    (bind :name family
+      :query (rql :schema-version 1
+        (filter :where ((outcome eq proven) (overrides_count gt 0))
+          (language java
+            (member-family
+              (enclosing-decl (method)))))))
+    (join :left method-declaration :right family
+      :on ((id member_declaration_id)))
+    (group :name by-method :by (method-declaration.id)
+      (aggregate :name overrides :op count))
+    (assert :group by-method :value overrides :cardinality (exactly 0)))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CodeQL" :id "java/missing-override-annotation")))

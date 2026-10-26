@@ -945,6 +945,20 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/missing-override-annotation/Example.java",
+      "source_path": "fixtures/policy/bifrost.java-codeql-quality/missing-override-annotation/Example.java",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "f8628ea76db46986cee093d6c7b9e6ad006a7bbbfd1101aa737f2295507689a0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.java-codeql-quality/missing-override-annotation/README.md",
+      "source_path": "fixtures/policy/bifrost.java-codeql-quality/missing-override-annotation/README.md",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "5d3030d3bd39b4ea5c397c936b79da8434adab9e1f337a0c94d3aec2d937cd0c"
+    },
+    {
       "path": "fixtures/policy/bifrost.java-codeql-quality/non-final-immutable-field/.bifrost/policies/non-final-immutable-field.rqlp",
       "source_path": "rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp",
       "sha256": "099302ee6ac9f2f4946545d8539ba531703bc383d5cd76c1b051963153fbd4b2",
@@ -7834,7 +7848,7 @@
     {
       "path": "rules/bifrost.java-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.java-codeql-quality/manifest.json",
-      "sha256": "e736648b4ede6c9e1c6288f559ebeaca0c08a535d24aa4ac799d835c23d9aba7",
+      "sha256": "b10136714efc2169156378c54f9920ef248a7a7733f79e2fc9846a9c36f2bfeb",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7872,6 +7886,13 @@
       "sha256": "1f3191249a1cad1b9221768f6d3ebd109bd15cd35286c1df39004f73c522e990",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-quality/policies/missing-override-annotation.rqlp",
+      "source_path": "rules/bifrost.java-codeql-quality/policies/missing-override-annotation.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "eaa5dfed31624a40888533f5a8ab2b14e18ca07d61a5dc14d7ebe198d6767e25"
     },
     {
       "path": "rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp",
@@ -10838,5 +10859,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "d924032eabf3098ce570036273e2e055d2aca7f739aff5c31dc4a5bbb401c134"
+  "aggregate_sha256": "3b58d14d6e5d7c7984df14d709309b40f89d3e9ca6d8fd1c05d6a3f45861ed81"
 }
