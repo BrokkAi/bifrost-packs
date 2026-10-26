@@ -97,6 +97,43 @@ class JavaStagerTests(unittest.TestCase):
                 self.assertEqual(first.root, again.root)
                 self.assertTrue(artifacts[0].is_file())
 
+    def test_stub_source_change_rebuilds_coordinate_jar(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            stub = stub_root / 'HikariCP-3.4.5'
+            source = stub / 'com/example/Stub.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('package com.example; public class Stub { int value = 1; }\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home = base / 'jdk'
+            java_home.mkdir()
+            cache = base / 'cache'
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                output = Path(command[command.index('-d') + 1]) / 'com/example/Stub.class'
+                output.parent.mkdir(parents=True, exist_ok=True)
+                output.write_bytes(Path(command[-1]).read_bytes())
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac) as javac:
+                stager.prepare(test_dir, codeql, cache)
+                jar = cache / 'maven-home/.m2/repository/codeql/stubs/HikariCP-3.4.5/0/HikariCP-3.4.5-0.jar'
+                fingerprint_file = jar.with_name(jar.name + '.fingerprint')
+                first_fingerprint = fingerprint_file.read_text()
+                with zipfile.ZipFile(jar) as archive:
+                    first_class = archive.read('com/example/Stub.class')
+
+                source.write_text('package com.example; public class Stub { int value = 2; }\n')
+                stager.prepare(test_dir, codeql, cache)
+
+                self.assertEqual(javac.call_count, 2)
+                self.assertNotEqual(fingerprint_file.read_text(), first_fingerprint)
+                with zipfile.ZipFile(jar) as archive:
+                    self.assertNotEqual(archive.read('com/example/Stub.class'), first_class)
+
     @unittest.skipUnless(
         os.environ.get('JAVA_HOME') and
         (Path(os.environ['JAVA_HOME']) / 'bin' / ('javac.exe' if os.name == 'nt' else 'javac')).is_file(),
