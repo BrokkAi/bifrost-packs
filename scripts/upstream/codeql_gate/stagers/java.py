@@ -12,6 +12,10 @@ import zipfile
 from pathlib import Path
 
 from . import PreparedRoot
+try:
+    from core import GateError
+except ImportError:
+    from ..core import GateError
 
 
 class JavaStager:
@@ -38,15 +42,7 @@ class JavaStager:
             digest.update(path.relative_to(test_dir).as_posix().encode() + b'\0')
             digest.update(hashlib.sha256(path.read_bytes()).digest())
 
-        stub_dirs = []
-        options = test_dir / 'options'
-        if options.is_file():
-            for raw in re.findall(r'\$\{testdir\}/([^\s:]+)', options.read_text(errors='replace')):
-                stub = (test_dir / raw).resolve()
-                if stub.is_dir() and stub not in stub_dirs:
-                    stub_dirs.append(stub)
-        stub_dirs = [p for p in stub_dirs if p.parent == stub_root.resolve()
-                     and p.name in coordinates]
+        stub_dirs = self._option_stub_dirs(test_dir, stub_root, coordinates)
         stub_sources = {stub: sorted(stub.rglob('*.java')) for stub in stub_dirs}
         stub_sources = {stub: sources for stub, sources in stub_sources.items() if sources}
         for stub, sources in stub_sources.items():
@@ -64,9 +60,9 @@ class JavaStager:
                     dest = temporary / path.relative_to(test_dir)
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(path, dest)
-                dependencies = []
-                if stub_sources:
-                    dependencies = self._install_stubs(stub_sources, coordinates, cache_dir, fake_home)
+                dependencies = [(coordinates[stub.name]['groupId'],
+                                 coordinates[stub.name]['artifactId'],
+                                 coordinates[stub.name]['version']) for stub in stub_sources]
                 project = ET.Element('project')
                 for tag, value in (('modelVersion', '4.0.0'), ('groupId', 'codeql.test'),
                                    ('artifactId', re.sub(r'[^A-Za-z0-9_.-]+', '-', test_dir.name).strip('-')),
@@ -87,8 +83,50 @@ class JavaStager:
                         raise
             finally:
                 shutil.rmtree(temporary, ignore_errors=True)
+        # Artifact installation is deliberately checked on every call: a prepared-root
+        # cache hit must not hide a partially cleaned fake Maven repository.
+        if stub_sources:
+            self._install_stubs(stub_sources, coordinates, cache_dir, fake_home)
+        staged = tuple({key: row[key] for key in
+                        ('groupId', 'artifactId', 'version', 'confidence', 'evidence')} |
+                       {'stub_dir': stub.name}
+                       for stub in stub_dirs for row in (coordinates[stub.name],))
         return PreparedRoot(target, tuple(p.relative_to(test_dir).as_posix()
-                                          for p in files if p.suffix.lower() in ('.java', '.kt')))
+                                          for p in files if p.suffix.lower() in ('.java', '.kt')),
+                            staged)
+
+    def _option_stub_dirs(self, test_dir, stub_root, coordinates):
+        options = test_dir / 'options'
+        if not options.is_file():
+            return []
+        dirs = []
+        for raw in re.findall(r'\$\{testdir\}/([^\s:]+)', options.read_text(errors='replace')):
+            stub = (test_dir / raw).resolve()
+            if stub.parent != stub_root.resolve():
+                continue
+            if stub.name not in coordinates:
+                raise GateError(f'no Java stub coordinate mapping for {stub.name}')
+            if stub.is_dir() and stub not in dirs:
+                dirs.append(stub)
+        return dirs
+
+    @staticmethod
+    def _is_jdk_package(package, jdk_packages):
+        return package == 'java' or package.startswith('java.') or bool(jdk_packages.get(package))
+
+    @staticmethod
+    def _jar_files(base, stub_name, source_mode, package_roots):
+        for file in sorted(base.rglob('*.java' if source_mode else '*.class')):
+            relative = file.relative_to(base)
+            if source_mode:
+                if relative.parts[0] != stub_name:
+                    continue
+                relative = Path(*relative.parts[1:])
+            elif not any(relative.as_posix() == package + '.class'
+                         or relative.as_posix().startswith(package + '/')
+                         for package in package_roots):
+                continue
+            yield file, relative
 
     def _install_stubs(self, stub_sources, coordinates, cache_dir, fake_home):
         if self.java_home is None:
@@ -114,7 +152,7 @@ class JavaStager:
                 package = match.group(1) if match else ''
                 package_for_source[source] = package
                 owners = jdk_packages.get(package, ())
-                if package == 'java' or package.startswith('java.') or owners:
+                if self._is_jdk_package(package, jdk_packages):
                     dropped_sources[stub].append((source, package, sorted(owners)))
                 else:
                     retained_sources[stub].add(source)
@@ -122,14 +160,15 @@ class JavaStager:
         work, compile_work, classes = (artifact_cache / 'sources',
                                        artifact_cache / 'compile-sources',
                                        artifact_cache / 'classes')
-        if not classes.is_dir():
+        complete_marker = artifact_cache / 'compile.txt'
+        if not complete_marker.is_file():
             artifact_cache.mkdir(parents=True, exist_ok=True)
             shutil.rmtree(work, ignore_errors=True)
             shutil.rmtree(compile_work, ignore_errors=True)
             shutil.rmtree(classes, ignore_errors=True)
             work.mkdir()
             compile_work.mkdir()
-            classes.mkdir()
+            compiled_classes = Path(tempfile.mkdtemp(prefix='.classes-', dir=artifact_cache))
             for stub, sources in stub_sources.items():
                 for source in sources:
                     destination = work / stub.name / source.relative_to(stub)
@@ -150,13 +189,20 @@ class JavaStager:
                 for source, package, owners in dropped_sources[stub]:
                     records.append(f"  {stub.name}/{source.relative_to(stub).as_posix()} "
                                    f"package={package or '(default)'} modules={','.join(owners) or 'java.*'}")
-            for flags in attempts:
-                proc = subprocess.run([str(javac), *flags, '-d', str(classes), *map(str, compile_sources)],
-                                      capture_output=True, text=True)
-                records.append(f"$ javac {' '.join(flags)}\nexit={proc.returncode}\n{proc.stdout}{proc.stderr}")
-                if proc.returncode == 0:
-                    break
-            (artifact_cache / 'compile.txt').write_text('\n\n'.join(records) + '\n')
+            try:
+                for flags in attempts:
+                    proc = subprocess.run([str(javac), *flags, '-d', str(compiled_classes), *map(str, compile_sources)],
+                                          capture_output=True, text=True)
+                    records.append(f"$ javac {' '.join(flags)}\nexit={proc.returncode}\n{proc.stdout}{proc.stderr}")
+                    if proc.returncode == 0:
+                        break
+                shutil.rmtree(classes, ignore_errors=True)
+                compiled_classes.rename(classes)
+                marker_tmp = artifact_cache / '.compile.txt.tmp'
+                marker_tmp.write_text('\n\n'.join(records) + '\n')
+                marker_tmp.replace(complete_marker)
+            finally:
+                shutil.rmtree(compiled_classes, ignore_errors=True)
 
         package_roots = {
             stub: {package_for_source[source].replace('.', '/') for source in sources
@@ -172,21 +218,14 @@ class JavaStager:
             for suffix, base, source_mode in (('.jar', classes, False),
                                               ('-sources.jar', work, True)):
                 jar = destination / f'{artifact}-{version}{suffix}'
+                if jar.is_file():
+                    continue
                 fd, temporary_name = tempfile.mkstemp(prefix=f'.{jar.name}.', dir=destination)
                 os.close(fd)
                 try:
                     with zipfile.ZipFile(temporary_name, 'w', zipfile.ZIP_DEFLATED) as archive:
-                        for file in sorted(base.rglob('*.java' if source_mode else '*.class')):
-                            relative = file.relative_to(base)
-                            if source_mode:
-                                if relative.parts[0] != stub.name:
-                                    continue
-                                relative = Path(*relative.parts[1:])
-                            else:
-                                if not any(relative.as_posix() == p + '.class'
-                                           or relative.as_posix().startswith(p + '/')
-                                           for p in package_roots[stub]):
-                                    continue
+                        for file, relative in self._jar_files(base, stub.name, source_mode,
+                                                             package_roots[stub]):
                             archive.write(file, relative.as_posix())
                     os.replace(temporary_name, jar)
                 finally:
@@ -195,8 +234,9 @@ class JavaStager:
             for tag, value in (('modelVersion', '4.0.0'), ('groupId', group),
                                ('artifactId', artifact), ('version', version)):
                 ET.SubElement(pom, tag).text = value
-            ET.ElementTree(pom).write(destination / f'{artifact}-{version}.pom',
-                                      encoding='utf-8', xml_declaration=True)
+            pom_path = destination / f'{artifact}-{version}.pom'
+            if not pom_path.is_file():
+                ET.ElementTree(pom).write(pom_path, encoding='utf-8', xml_declaration=True)
             dependencies.append((group, artifact, version))
         return dependencies
 

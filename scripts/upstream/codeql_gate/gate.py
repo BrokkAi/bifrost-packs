@@ -24,7 +24,7 @@ def main(argv=None):
     parser.add_argument('--test-dir', action='append', type=Path, default=[], help='relative to CodeQL root; repeat for multi-dir queries')
     parser.add_argument('--query-path', help='query: value in .qlref; inferred from @id when omitted')
     parser.add_argument('--state-dir', type=Path,
-                        default=Path(os.environ.get('CODEQL_GATE_STATE', '.codeql-gate')))
+                        default=Path(os.environ.get('CODEQL_GATE_STATE', '/tmp/codeql-gate')))
     parser.add_argument('--binary', type=Path, default=os.environ.get('BIFROST_BINARY'))
     parser.add_argument('--java-home', type=Path, default=os.environ.get('JAVA_HOME'),
                         help='JDK used to compile Java stubs (defaults to JAVA_HOME)')

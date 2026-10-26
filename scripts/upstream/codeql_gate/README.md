@@ -21,7 +21,7 @@ python3 -I scripts/upstream/codeql_gate/gate.py expected go/duplicate-branches \
 python3 -I scripts/upstream/codeql_gate/gate.py run go/duplicate-branches \
   rules/bifrost.go-codeql-quality/policies/duplicate-branches.rqlp \
   --codeql-root "$CODEQL_ROOT" --binary "$BIFROST_BINARY" \
-  --state-dir "$CODEQL_GATE_STATE" --timeout 600
+  --state-dir "${CODEQL_GATE_STATE:-/tmp/codeql-gate}" --timeout 600
 ```
 
 Commands: `expected QUERY`, `prepare QUERY`, `run QUERY POLICY`, `summary`.
@@ -32,7 +32,8 @@ slash-delimited suffixes match references. Each reference uses its own
 basename's `.expected`, never a different query's output. Missing references
 or expected files are errors. `CODEQL_ROOT` and `BIFROST_BINARY` environment
 variables are alternatives to their flags. There are no default binary or
-checkout locations. Language defaults to Go.
+checkout locations. State defaults to `/tmp/codeql-gate`, overridden by
+`CODEQL_GATE_STATE` or `--state-dir`. Language defaults to Go.
 
 `--extra-policy FILE` is repeatable; all policy files run in one invocation
 and findings from **every** `runs[*]` are unioned for scoring. Policy basenames
@@ -53,10 +54,10 @@ run_env(run_dir, prepared) -> dict[str, str]
 extra_policy_files(prepared) -> list[Path]
 ```
 
-`PreparedRoot` carries `root: Path` and `source_paths: tuple[str, ...]`, the
-complete staged source inventory, retained as staging metadata. Coverage is
-measured independently by the core; this interface is unchanged. An
-optional `inline_oracle(test_dir)` supplies language-specific annotations.
+`PreparedRoot` carries `root: Path`, `source_paths: tuple[str, ...]`, and an
+optional `staged_artifacts` list for language-specific artifact coordinates and
+provenance. Coverage is measured independently by the core. An optional
+`inline_oracle(test_dir)` supplies language-specific annotations.
 The core owns ordinary private file copies, policy placement, model copying,
 execution, process-group timeout, scoring, provenance and output. Prepared
 Go roots are keyed by absolute test directory, staged paths/content hashes,
@@ -118,7 +119,8 @@ binary jar is staged even when empty because Maven coordinate discovery requires
 that path before it can attach the sources jar. Maven HOME and USERPROFILE point
 at the fake Maven home. Coordinate evidence is kept in
 `stagers/java_stub_coordinates.tsv`; unrecognized coordinates remain explicitly
-marked as unknown.
+marked as unknown. The per-run `result.json` records every selected artifact's
+coordinates, confidence and evidence, including unknown placeholder coordinates.
 
 ```sh
 python3 -I scripts/upstream/codeql_gate/gate.py run java/missing-override-annotation \
