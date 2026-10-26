@@ -1,0 +1,241 @@
+# CodeQL upstream-test gate
+
+A shared measuring instrument for policy parity, using Python 3.10+ and only
+its standard library. Run the scripts with `python3 -I`; no installed package,
+network, inventory file, or host-specific toolchain path is needed. Inputs are
+read-only. Upstream tests are read from a caller-supplied CodeQL checkout;
+none are vendored here. The small fixtures under `tests/fixtures/codeql_gate`
+are authored examples.
+
+The seed is the Java parity campaign's `gate.py` and `SPEC.md`, shared with
+permission by its owner (session `05d9cf1a`). This implementation generalizes
+that harness's oracle, run isolation, union of report runs, diagnostics,
+locked TSV summary, and cleanup. No Java stub content or coordinate data is
+imported. This harness and its authored fixtures are Apache-2.0.
+
+## Interface
+
+```sh
+python3 -I scripts/upstream/codeql_gate/gate.py expected go/duplicate-branches \
+  --codeql-root "$CODEQL_ROOT" \
+  --test-dir go/ql/test/query-tests/RedundantCode/DuplicateBranches
+
+python3 -I scripts/upstream/codeql_gate/gate.py run go/duplicate-branches \
+  rules/bifrost.go-codeql-quality/policies/duplicate-branches.rqlp \
+  --codeql-root "$CODEQL_ROOT" --binary "$BIFROST_BINARY" \
+  --state-dir /tmp/codeql-gate --timeout 600
+```
+
+Commands: `expected QUERY`, `prepare QUERY`, `run QUERY POLICY`, `summary`.
+`--test-dir` is relative to the checkout and repeatable; omitted directories
+are discovered from matching `.qlref` files. `--query-path` overrides query
+resolution by `@id` in `<language>/ql/src`. Only exact query paths or their
+slash-delimited suffixes match references. Each reference uses its own
+basename's `.expected`, never a different query's output. Missing references
+or expected files are errors. `CODEQL_ROOT` and `BIFROST_BINARY` environment
+variables are alternatives to their flags. There are no default binary or
+checkout locations. Language defaults to Go.
+
+`--extra-policy FILE` is repeatable; all policy files run in one invocation
+and findings from **every** `runs[*]` are unioned for scoring. Policy basenames
+must be distinct. `--models DIR` copies the complete tree into
+`.bifrost/semantic-models` and enables `BIFROST_WORKSPACE_SEMANTIC_MODELS=on`.
+Without it workspace models are explicitly disabled. `--keep` retains the
+private root and caches; otherwise they are removed even on timeout. Logs,
+exit status, `result.json`, and `result.md` remain in the unique run directory.
+`results.tsv` appends under a file lock. Exit status is 0 only for PASS, 1 for
+a scored failure, and 2 for setup/usage errors. `summary` lists the latest
+result per query/policy, optionally filtered by `--label`.
+
+The stager protocol is one class per language:
+
+```python
+prepare(test_dir, codeql_root, cache_dir) -> PreparedRoot
+run_env(run_dir, prepared) -> dict[str, str]
+extra_policy_files(prepared) -> list[Path]
+```
+
+`PreparedRoot` carries `root: Path` and `source_paths: tuple[str, ...]`, the
+complete staged source inventory used to check scanner work counts. An
+optional `inline_oracle(test_dir)` supplies language-specific annotations.
+The core owns ordinary private file copies, policy placement, model copying,
+execution, process-group timeout, scoring, provenance and output. Prepared
+Go roots are keyed by absolute test directory, staged paths/content hashes,
+and stager version, built in a temporary sibling and published by atomic
+rename. Concurrent preparations discard the losing temporary directory.
+Prepared roots are never modified by runs.
+
+## Go staging and module choice
+
+Go copies all non-CodeQL files recursively, excluding `*.expected`, `*.qlref`,
+`*.ql`, and files named `options`. Existing `go.mod`, `go.sum`, `vendor/`, and
+build-tagged Go sources are preserved byte for byte. A missing root `go.mod`
+gets this synthetic module:
+
+```go
+module codeql.test/fixture
+
+go 1.18
+```
+
+This prevents ambient parent modules from changing Bifrost's dependency
+selection and gives standalone tests a stable identity. Version 1.18 permits
+generic Go fixtures without requesting a toolchain download; an existing
+module's version always wins. This is a staging choice, not a claim that
+CodeQL uses this module identity. The pinned CodeQL checkout's
+`go/codeql-extractor.yml` explicitly enables `legacy_qltest_extraction: true`;
+its standalone DuplicateBranches test has neither `go.mod` nor `options`.
+These tests are accepted as legacy test directories rather than requiring a
+user module. The extractor implementation/CLI is not present in the supplied
+checkout or local toolchain, so its exact synthetic package/module naming
+could not be verified offline. Tests depending on that identity need explicit
+module staging before drawing parity conclusions. No extractor behavior is
+inferred from a successful Bifrost run.
+
+Runs set fresh `XDG_CACHE_HOME`, `BIFROST_CACHE_ROOT`, semantic-pack cache,
+HOME/USERPROFILE, `GOCACHE`, and `GOMODCACHE` under the run directory;
+`BIFROST_OPEN_PACKS_DISABLE=1`, `BIFROST_PARALLELISM=4`, and
+`RAYON_NUM_THREADS=4`. `GOFLAGS=-mod=vendor` when vendor exists, otherwise
+empty (ambient flags cannot change staging). `GOPROXY=off`, `GOSUMDB=off`, and
+`GOTOOLCHAIN=local` keep execution offline. The command runs with `nice -n 10`:
+
+```text
+<bifrost> --root <private-copy> --no-builtin-policies \
+  --policy-file .bifrost/policies/<name> [--policy-file ...] --format json
+```
+
+Java staging is deliberately unimplemented. Its owner will port stub jar
+preparation and Maven coordinates to `stagers/java.py` and
+`stagers/java_stub_coordinates.tsv`. JDK/toolchain locations must come from
+arguments or environment. The core has no Java-specific toolchain or stub
+knowledge.
+
+## Oracle and classes
+
+The first column of `#select` is the primary alert span. For a headerless
+problem query, rows before the first section header are selects. `edges`,
+`nodes`, `subpaths`, model sections and `testFailures` never add alerts.
+Nonempty `testFailures` makes the oracle unreliable and the run ERROR.
+Locations are full test-directory-relative paths and start lines; duplicate
+rows at a site collapse to a set, retaining the widest expected span.
+
+Go `//` annotations are lexed outside quoted strings, runes, raw strings and
+block comments. `$ Alert`, `$ Alert[...]` and `$ hasTaintFlow="..."` add an
+expected alert on their own line. `$ Source` and `$ Sink` are path endpoints
+and do not add alerts. Expected alerts are the union of select and inline
+sites. `oracle_sources` records the contributing rows per source;
+`oracle_disagreement` lists each direction's differences when inline tags
+and an expected file both exist. A disagreement is visible, never silently
+reconciled by dropping one source.
+
+`$ SPURIOUS: Alert` sites are negative examples, even if upstream `.expected`
+contains them. Reporting there is always a confirmed false positive;
+silence is correct. `$ MISSING: Alert` sites are known upstream omissions:
+reporting is a true positive and silence is not a silent miss. These sites
+are removed from the ordinary expected set and retained as separate scored
+classes. These overrides also apply to tagged `hasTaintFlow` annotations.
+
+Strict matching requires the same relative path and start line. Span overlap
+is reported separately as `loose_matches`, never promoted to a strict match.
+Matching is one-to-one between distinct alert sites. Unmatched findings are
+false positives unless at a MISSING site or explicitly reviewed via
+`--true-positives FILE`, a JSON list:
+
+```json
+[{"path":"sample.go","line":12,"justification":"Reviewed defect outside the upstream oracle"}]
+```
+
+`--anchors FILE` is a minimal, explicit per-query anchor map:
+
+```json
+{"go/example":{"line_offset":2},"go/other":{"relation":"span_overlap"}}
+```
+
+`line_offset` adds to the expected start/end lines; the default relation is
+`start_line`. `span_overlap` permits overlap after the offset. It changes only
+matching, not the stored oracle. Anchor configuration and reviewed true
+positives are retained in the result. No automatic offset, basename matching,
+or semantic similarity heuristic is applied. The draft duplicate-branches
+acceptance run intentionally uses no anchor map.
+
+## Completeness and compatibility
+
+The observed binary emits report schema 6. Findings come from
+`runs[*].findings[*].primary.path` and `primary.region.start_line/end_line`.
+A finding's `completeness.type` other than `complete` prevents PASS.
+`runs[*].completion.type` must be `complete` for the whole run to PASS.
+`proven_subset`, `proven_by_summary`, `inconclusive`, `unsupported`, `not_run`,
+missing/unknown completion types all withhold a complete verdict; `failed` is ERROR.
+
+For an absent expected site, `completion.scope` can bound an inconclusive
+run to `{"type":"files","files":[...],"truncated":false}`. That typed,
+nonempty scope promises misses outside the named files have full coverage.
+Missing, run-wide, empty or truncated scopes abstain globally. Otherwise,
+`run_incomplete`, `run_unsupported`, and `report_incomplete` diagnostic impacts
+abstain at the diagnostic's primary file/span; an unlocated diagnostic
+abstains globally. On a noncomplete run, typed completion scope is authoritative
+rather than unlocated summary diagnostics widening its promised scope.
+Diagnostics without an impact use conservative code-name checks. Advisory
+`empty_selection` stays visible in diagnostic counts and does not convert a
+complete empty run's misses to abstentions.
+
+Report/run diagnostic or obligation truncation, omitted findings, interrupted
+execution, pending policy IDs, and insufficient scanner work prevent PASS.
+The report does not provide a complete analyzed-file manifest: the harness
+requires `work.scanned_files` in every run to cover the staged source count.
+Absent or lower counts mean unknown coverage and abstention. This deliberately
+fails closed for skipped build-tagged/vendor files; the count is an aggregate
+check, not per-file execution proof. Only a future analyzed-file manifest can
+remove that limitation. Pack activation's separate `packs.complete` flag is
+not treated as policy execution coverage: unrelated inactive packs do not
+invalidate a structural rule. Rule completion and diagnostics remain decisive.
+
+Each ordinary expected site is matched, a silent miss under complete coverage,
+or an abstention under withheld coverage. Missing runs, missing declared-policy
+runs, validation errors, crashes, malformed reports, and timeouts are ERROR.
+A run passes only if complete and with zero false positives, silent misses,
+abstentions and errors. All directories must pass for the CLI to return 0.
+
+Java-compatible fields remain: `query`, `test_dir`, `policy`, `extra_policies`,
+`label`, `verdict`, `tp`, `fp`, `fn`, `findings`, `expected`, `loose_matches`,
+`completion`, `completion_type`, `diagnostics`, `diagnostic_messages`,
+`exit_code`, `wall_seconds`, `run_dir`. `fn` includes both kinds of absent
+expected site for compatibility; `silent_misses` and `abstentions` separate
+them. Existing EXACT/EXACT-INCOMPLETE/FP/MISS/FP+MISS/EMPTY/ERROR verdict names
+remain. The new `pass` boolean is the authoritative gate result, alongside
+`complete`, `query_ids`, `test_dirs`, oracle classes, `binary_sha256`, and
+`codeql_commit`. `diagnostics_by_family` additionally retains actual family
+counts. Multi-directory CLI output prefixes combined sites with test directory
+to avoid collisions.
+
+Changes from the seed SPEC: explicit checkout/binary arguments replace host
+paths and inventory; source annotation union and known-gap classes replace
+annotation count-only cross-checks; completeness-aware abstention and explicit
+PASS supplement FN; prepared roots are content-keyed; copies are private
+rather than hardlinked; per-run HOME replaces a shared default (a language
+stager may supply a dependency HOME); process groups enforce descendant
+cleanup on timeouts; models/extras/cleanup and legacy result fields remain.
+
+## Repository SARIF comparison
+
+```sh
+python3 -I scripts/upstream/codeql_gate/compare_sarif.py \
+  codeql.sarif bifrost.json mapping.json \
+  --codeql-commit "$REPOSITORY_COMMIT" --bifrost-commit "$REPOSITORY_COMMIT"
+```
+
+Mapping is `{"go/query-id":"bifrost.policy.id"}`. Reports must be from the
+same repository commit; callers provide both revisions and unequal values
+are rejected (neither format reliably embeds the analyzed revision). Results
+are per rule: matched, CodeQL-only and Bifrost-only path:start-line sets.
+`_test.go` files are excluded in both directions. SARIF rule/artifact indexes,
+URI escaping, and original URI bases are supported. `--repo-root` normalizes
+absolute paths; paths outside it are rejected. Unmapped rules are ignored.
+This is a result comparison, not a completeness/parity gate: absent results
+from an incomplete repository scan still need separate review.
+
+Run authored tests with:
+
+```sh
+python3 -B -m unittest discover -s tests -p test_codeql_gate.py -v
+```
