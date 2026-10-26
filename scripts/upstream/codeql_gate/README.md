@@ -7,11 +7,9 @@ read-only. Upstream tests are read from a caller-supplied CodeQL checkout;
 none are vendored here. The small fixtures under `tests/fixtures/codeql_gate`
 are authored examples.
 
-The seed is the Java parity campaign's `gate.py` and `SPEC.md`, shared with
-permission by its owner (session `05d9cf1a`). This implementation generalizes
-that harness's oracle, run isolation, union of report runs, diagnostics,
-locked TSV summary, and cleanup. No Java stub content or coordinate data is
-imported. This harness and its authored fixtures are Apache-2.0.
+The seed was a Java parity gate. This implementation generalizes its oracle,
+run isolation, union of report runs, diagnostics, locked TSV summary, and
+cleanup. This harness and its authored fixtures are Apache-2.0.
 
 ## Interface
 
@@ -23,7 +21,7 @@ python3 -I scripts/upstream/codeql_gate/gate.py expected go/duplicate-branches \
 python3 -I scripts/upstream/codeql_gate/gate.py run go/duplicate-branches \
   rules/bifrost.go-codeql-quality/policies/duplicate-branches.rqlp \
   --codeql-root "$CODEQL_ROOT" --binary "$BIFROST_BINARY" \
-  --state-dir /tmp/codeql-gate --timeout 600
+  --state-dir "$CODEQL_GATE_STATE" --timeout 600
 ```
 
 Commands: `expected QUERY`, `prepare QUERY`, `run QUERY POLICY`, `summary`.
@@ -104,11 +102,29 @@ empty (ambient flags cannot change staging). `GOPROXY=off`, `GOSUMDB=off`, and
   --policy-file .bifrost/policies/<name> [--policy-file ...] --format json
 ```
 
-Java staging is deliberately unimplemented. Its owner will port stub jar
-preparation and Maven coordinates to `stagers/java.py` and
-`stagers/java_stub_coordinates.tsv`. JDK/toolchain locations must come from
-arguments or environment. The core has no Java-specific toolchain or stub
-knowledge.
+## Java staging
+
+Java copies all non-CodeQL files recursively, reads stub paths from `options`,
+and stages each referenced stub coordinate as binary and sources jars in a
+fake Maven repository beneath the prepared-root cache. All stub sources go in
+the sources jars. Stub sources for one test are compiled together with
+`javac --release 21` from `JAVA_HOME` (or `--java-home`); compilation is best
+effort, with compiler failures recorded in `compile.txt` and any emitted class
+files retained in the binary jars. Sources in packages owned by the selected
+JDK are listed in the compile record and excluded from compilation. Each
+prepared root gets a `pom.xml` with compile dependencies for its stubs. The
+binary jar is staged even when empty because Maven coordinate discovery requires
+that path before it can attach the sources jar. Maven HOME and USERPROFILE point
+at the fake Maven home. Coordinate evidence is kept in
+`stagers/java_stub_coordinates.tsv`; unrecognized coordinates remain explicitly
+marked as unknown.
+
+```sh
+python3 -I scripts/upstream/codeql_gate/gate.py run java/missing-override-annotation \
+  rules/bifrost.java-codeql-quality/policies/missing-override-annotation.rqlp \
+  --language java --codeql-root "$CODEQL_ROOT" --binary "$BIFROST_BINARY" \
+  --java-home "$JAVA_HOME" --test-dir java/ql/test/query-tests/MissingOverrideAnnotation
+```
 
 ## Oracle and classes
 
