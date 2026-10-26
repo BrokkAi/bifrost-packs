@@ -231,7 +231,12 @@ The universal predicate selects source facts without a language/path filter;
 The core also runs a configuration-fact seed. Its fact findings carry paths for
 XML, JSON, properties, POM and other supported configuration documents. The
 current binary does not allow `file-of` to consume `configuration_fact`, so the
-seed is queried directly and its primary paths are deduplicated. Both probe
+seed is queried directly and its primary paths are deduplicated. Because the
+seed reports one finding per configuration fact rather than one per file, a
+large configuration tree can reach the report's findings cap; the omitted-findings
+check then fails the probe and the gate reports ERROR. That fails closed and does
+not occur on CodeQL test directories. Switch the seed to `file-of` over
+configuration facts once the engine accepts that domain. Both probe
 runs must complete without omission. These are file-membership checks, not
 claims about a policy's semantic coverage. The source probe selects
 text-bearing nodes before `file-of` deduplicates them, so an analyzed source
