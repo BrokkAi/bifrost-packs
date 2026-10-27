@@ -107,8 +107,9 @@ behavior evidence; see [validation](validation.json) and
 ## Locking content
 
 Every file under `rules/`, `semantic-packs/`, `fixtures/`, `scripts/upstream/`
-and `licenses/` has one lock entry. `content-lock.json` holds only the header
-and names the `content-lock/` shard directory. Each entry lives in the shard its
+and `licenses/` has one lock entry. `content-lock.json` holds only the header;
+its `file_shards` object names the `content-lock/` directory and how deeply each
+path prefix is sharded (longest prefix wins). Each entry lives in the shard its
 path selects, so changes to different packs or fixtures touch different files:
 
 | Path | Shard |
@@ -116,8 +117,8 @@ path selects, so changes to different packs or fixtures touch different files:
 | `fixtures/policy/<pack>/<fixture>/…` | `content-lock/fixtures/policy/<pack>/<fixture>.json` |
 | `fixtures/semantic/<area>/…` | `content-lock/fixtures/semantic/<area>.json` |
 | `semantic-packs/embedded/<pack>/…` | `content-lock/semantic-packs/embedded/<pack>.json` |
-| `semantic-packs/<area>/…`, `rules/<pack>/…`, `scripts/upstream/…` | `content-lock/<first two components>.json` |
 | `licenses/…` | `content-lock/licenses.json` |
+| anything else, such as `rules/<pack>/…`, `semantic-packs/<area>/…`, `scripts/upstream/…` | `content-lock/<first two components>.json` |
 
 A file directly inside a shallower directory uses that directory's shard. The
 aggregate SHA-256 is not stored: `verify` and `bundle` derive it from the

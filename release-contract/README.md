@@ -91,10 +91,14 @@ artifact, and SHA-256 sidecars. Archive names use
 `content-lock.json`; premium policy archives retain `policy-bundle.json`.
 The archived lock is always the single-file form: every entry plus an
 `aggregate_sha256` over the path-sorted `sha256  path` lines. An authoring
-checkout may instead shard its entries under `content-lock/` with only a header
-in `content-lock.json` and no stored aggregate. `release.load_content_lock(root)`
-joins either form into that single-file lock and its exact bytes, which
-`content_origin.lock_sha256` hashes.
+checkout may instead shard its entries, keeping only a header in
+`content-lock.json` with no stored aggregate. The header's `file_shards` object
+names the shard directory and the shard depth per path prefix.
+[`content_lock.py`](content_lock.py) reads, joins and regenerates such locks
+without repository-specific paths; callers supply the content inventory, new
+entry metadata and schema validation. `release.load_content_lock(root)` returns
+a single-file lock unchanged and joins a sharded one into the same single-file
+bytes, which `content_origin.lock_sha256` hashes.
 Native `index.json` and model schemas remain separate from release metadata.
 Source archives are review and reproduction inputs; they are not native
 installable bundles.

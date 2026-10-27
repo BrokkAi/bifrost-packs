@@ -446,34 +446,23 @@ def expected_tag(manifest):
     return prefix + 'v' + manifest['release_version']
 
 
-def content_module(root):
-    """Load the checkout's content builder from scripts/content.py."""
-    path = root / 'scripts' / 'content.py'
-    if path.is_symlink() or not path.is_file():
-        fail('invalid-manifest', 'packs source builder is missing from the clean checkout')
-    spec = importlib.util.spec_from_file_location('_bifrost_packs_release_content', path)
-    if spec is None or spec.loader is None:
-        fail('invalid-manifest', 'cannot load the packs source builder')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
 def load_content_lock(root):
-    """Return the single-file content lock and its bytes, joining shards when present.
+    """Return the single-file content lock and its exact bytes.
 
-    A sharded authoring lock stores no aggregate; the joined form computes it
-    and serializes exactly as the archived single-file lock does.
+    A sharded authoring lock (see content_lock.py) is joined into the archived
+    single-file form, so its bytes and lock_sha256 match the unsharded lock.
     """
     lock, raw = load_json(root / 'content-lock.json')
     if 'files' in lock:
         return lock, raw
-    module = content_module(root)
+    spec = importlib.util.spec_from_file_location('_bifrost_content_lock', Path(__file__).with_name('content_lock.py'))
+    content_lock = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(content_lock)
     try:
-        lock = module.read_lock(root)
-    except module.ContentError as error:
+        lock = content_lock.read_lock(root, 'content-lock.json')
+    except content_lock.LockError as error:
         fail('invalid-manifest', str(error))
-    return lock, module.lock_bytes(lock)
+    return lock, content_lock.lock_bytes(lock)
 
 
 def public_contents(root, lock, component=None):

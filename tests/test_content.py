@@ -202,7 +202,7 @@ class ContentToolTests(unittest.TestCase):
         header = json.loads((self.root / "content-lock.json").read_text())
         self.assertNotIn("files", header)
         self.assertNotIn("aggregate_sha256", header)
-        self.assertEqual(header["file_shards"], "content-lock")
+        self.assertEqual(header["file_shards"]["directory"], "content-lock")
         self.assertEqual(
             sorted(p.relative_to(self.root / "content-lock").as_posix() for p in (self.root / "content-lock").rglob("*.json")),
             ["fixtures/positive.json", "licenses.json", "rules.json", "scripts/upstream.json", "semantic-packs.json"],

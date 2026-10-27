@@ -12,5 +12,14 @@
     "default_enabled": false,
     "qualified_versions": []
   },
-  "file_shards": "content-lock"
+  "file_shards": {
+    "directory": "content-lock",
+    "depths": {
+      "": 2,
+      "fixtures/policy/": 4,
+      "fixtures/semantic/": 3,
+      "licenses/": 1,
+      "semantic-packs/embedded/": 3
+    }
+  }
 }

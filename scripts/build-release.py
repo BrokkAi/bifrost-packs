@@ -46,12 +46,12 @@ def rules_stage(root, source, baseline, stage):
         target = stage / entry['path']; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(data)
     for name in ('LICENSE', 'NOTICE.md', 'README.md'):
         shutil.copyfile(root / name, stage / name)
-    for name in ('scripts/smoke.py', 'scripts/content.py', 'tests/cases/dynamic-evaluation/positive.py', 'tests/cases/dynamic-evaluation/near-miss.py'):
+    for name in ('scripts/smoke.py', 'scripts/content.py', 'release-contract/content_lock.py', 'tests/cases/dynamic-evaluation/positive.py', 'tests/cases/dynamic-evaluation/near-miss.py'):
         if (root / name).is_file():
             target = stage / name; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(root / name, target)
     # Only the header is reused; a sharded header names its shards instead of files.
     lock, _ = release.load_json(root / 'content-lock.json')
-    lock.pop(content.SHARD_KEY, None)
+    lock.pop(content.content_lock.SHARD_KEY, None)
     lock.update(source=dict(repository=baseline['repository'], revision=baseline['commit']), files=entries)
     lock['aggregate_sha256'] = release.digest(''.join(f"{e['sha256']}  {e['path']}\n" for e in entries).encode())
     (stage / 'content-lock.json').write_bytes(content.lock_bytes(lock))
