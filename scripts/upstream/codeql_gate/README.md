@@ -154,9 +154,20 @@ locations and do not add alerts. A tag qualified with a query id, such as
 `Alert[go/command-injection]`, counts only for that query, and an
 unqualified tag counts for every query of the test directory, as in CodeQL;
 this matters where several queries share one directory and qualify their
-tags (Go CWE-078 has command-injection and stored-command together). Expected alerts are the union of select and inline
-sites. `oracle_sources` records the contributing rows per source;
-`oracle_disagreement` lists each direction's differences when inline tags
+tags (Go CWE-078 has command-injection and stored-command together).
+
+CodeQL matches a tag on line L to a result whose end line is L
+(`onSameLine` in `InlineExpectationsTest.qll`), so a multi-line alert such
+as a block or a method carries its tag on its last line. A tag therefore
+names the `#select` rows of its file that end on its line and adds no site
+of its own. A tag with no such row is a site known only by its end line; it
+matches a finding whose end line is L (or, under `span_overlap`, a finding
+that covers L), and it never merges with a row that starts on L. SPURIOUS
+and MISSING tags resolve the same way, so a SPURIOUS tag on a block's
+closing line marks that block's row. Expected alerts are the union of
+select rows and these end-line sites. `oracle_sources` records the
+contributing rows per source; `oracle_disagreement` lists `#select` rows
+whose end line carries no tag and tags that name no row, when inline tags
 and an expected file both exist. A disagreement is visible, never silently
 reconciled by dropping one source.
 

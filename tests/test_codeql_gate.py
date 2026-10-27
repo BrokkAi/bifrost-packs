@@ -19,7 +19,7 @@ GATE = Path(__file__).resolve().parents[1] / 'scripts/upstream/codeql_gate/gate.
 
 
 def report(*locations, complete=True):
-    return {'scope': {'analyzed_files': ['sample.go', 'sink.go', 'tagged.go', 'classes.go']},
+    return {'scope': {'analyzed_files': ['sample.go', 'sink.go', 'tagged.go', 'classes.go', 'block.go']},
             'runs': [{'policy_id': 'example', 'completion': {'type': 'complete'} if complete else {'type': 'proven_subset', 'codes': ['branch_relation_derivation_incomplete']},
                      'diagnostics': [], 'work': {'scanned_files': 1},
                      'findings': [{'primary': {'path': p, 'region': {'start_line': n, 'end_line': end}},
@@ -72,6 +72,19 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(parse(' $ Alert // remark $ Alert[go/a]'), [(None, 'Alert', None)])
         self.assertEqual(parse(' note $ Alert'), [])
         self.assertEqual(parse(' $Alert'), [])
+
+    def test_inline_tags_name_the_result_ending_on_their_line(self):
+        # CodeQL matches a tag to a result whose end line is the tag's line, so a
+        # tag on a block's closing line names that #select row, not a second site.
+        oracle = self.oracle('endline')
+        self.assertEqual([(r['start'], bool(r.get('end_line_only'))) for r in oracle['expected']],
+                         [(3, False), (14, True)])
+        self.assertEqual([r['start'] for r in oracle['spurious']], [8])
+        self.assertEqual(oracle['oracle_disagreement'], {'select_only': [], 'inline_only': ['block.go:14']})
+        self.assertTrue(score(report(('block.go', 3, 6), ('block.go', 12, 14)), oracle)['pass'])
+        result = score(report(('block.go', 3, 6), ('block.go', 8, 10), ('block.go', 13, 13)), oracle)
+        self.assertEqual(result['false_positives'], ['block.go:13', 'block.go:8'])
+        self.assertEqual(result['silent_misses'], ['block.go:14'])
 
     def test_missing_expected_is_error(self):
         with tempfile.TemporaryDirectory() as d:
