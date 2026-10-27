@@ -3,9 +3,9 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.5.2",
+  "release_version": "0.6.0",
   "artifact_role": "source",
-  "notes": "This patch keeps all 238 policy source files, IDs and consumer capabilities unchanged and updates the exact native dependency from bifrost.public.packs 0.6.0 to 0.6.1 so acquisition delivers the reviewed JDK 21 result-use obligations for existing policies. Publish packs/v0.6.1 first. This dependency repair does not qualify the full policy set or imply complete analysis.",
+  "notes": "This minor release adds the C# rethrown-exception-variable and todo-comment policies and corrects catch-of-all-exceptions to report exact catch-all handlers that do not use a bare throw;, including a throw of the caught variable. The C# policy component advances to 0.2.0. The new policies use capabilities already required by this component. The release retains the exact dependency on bifrost.public.packs 0.6.1 for the reviewed JDK 21 result-use models and does not imply full policy qualification or complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {

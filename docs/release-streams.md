@@ -15,15 +15,33 @@ existing manifest schema, engine range, and qualification semantics.
 See [release versioning](release-versioning.md) for the independent stream bump
 rules and compatibility boundaries.
 
-## Next packaging repair
+## Current release status
 
-Prepare `packs/v0.6.1`, then `rules/v0.5.2`. The pack patch adds the omitted
-reviewed JDK 21 result-use model for existing policies; the rules patch changes
-only the exact dependency from packs 0.6.0 to 0.6.1. The seven batch-10 models
-are already delivered in the published 0.6.0 native bundle. Consumer schema
-requirements stay the same. See the [repair plan](result-use-native-release.md)
-for compatibility evidence, release order and verification. Published rules
-0.5.1 remains immutable.
+As of 2026-10-27, the latest published streams are `packs/v0.6.1` and
+`rules/v0.5.1`. The planned `rules/v0.5.2` dependency-only follow-up was not
+published and is superseded by the next rules release, `rules/v0.6.0`: since
+0.5.1, the C# catalog adds `rethrown-exception-variable` and `todo-comment` and
+corrects `catch-of-all-exceptions` to report exact catch-all handlers that do
+not use a bare `throw;`, including a throw of the caught variable. The C# rules
+component is versioned `0.2.0`. The release retains the exact dependency on
+published `packs/v0.6.1`; these changes do not add consumer capability
+requirements or establish full policy qualification.
+
+The [v0.14.2 release checks](qualification/v0142-public-release.md) record
+all 240 source authoring identities, focused C# and Python outcomes, and the
+exact engine profile's acceptance of packs 0.6.1.
+
+No new native pack release is required. The native generation inputs and recipe
+are unchanged since `packs/v0.6.1`. The source pack
+`bifrost.jdk-golden-summaries` is now `0.2.1`, with fourteen reviewed
+receiver-return identity classifications. This is a source-only patch
+correction: it is not selected for native generation and does not change the
+independent release versions. See the [identity review](qualification/receiver-return-identity.md)
+and the [historical JDK result-use repair plan](result-use-native-release.md).
+
+The original preparation plan remains below as historical context. It records
+the planned order before `packs/v0.6.1` was published; its unreleased
+`rules/v0.5.2` follow-up is superseded as described above.
 
 ## Previous release preparation
 
