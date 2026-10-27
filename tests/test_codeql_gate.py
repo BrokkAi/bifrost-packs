@@ -86,6 +86,32 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(result['false_positives'], ['block.go:13', 'block.go:8'])
         self.assertEqual(result['silent_misses'], ['block.go:14'])
 
+    def test_inline_tags_count_only_for_post_processed_references(self):
+        # qltest reads tags only for a reference that post-processes with
+        # InlineExpectationsTestQuery; Plain.qlref's oracle is its .expected.
+        def sites(query_path, query_id):
+            oracle = load_oracle(FIXTURES / 'postprocess', query_path, GoStager(), query_id)
+            return [r['start'] for r in oracle['expected']]
+        self.assertEqual(sites('Tagged.ql', 'go/tagged'), [3])
+        self.assertEqual(sites('Plain.ql', 'go/plain'), [5])
+
+    def test_file_level_alert_matches_a_whole_file_finding(self):
+        root = FIXTURES / 'filelevel'
+        oracle = load_oracle(root, 'Example.ql', GoStager(), 'example')
+        size = (root / 'conf.xml').stat().st_size
+        def run(start, end, first_line, last_line):
+            return {'scope': {'analyzed_files': ['conf.xml']},
+                    'runs': [{'policy_id': 'example', 'completion': {'type': 'complete'},
+                              'diagnostics': [], 'work': {'scanned_files': 1},
+                              'findings': [{'primary': {'path': 'conf.xml',
+                                                        'byte_span': {'start': start, 'end': end},
+                                                        'region': {'start_line': first_line,
+                                                                   'end_line': last_line}},
+                                            'completeness': {'type': 'complete'}}]}]}
+        self.assertTrue(score(run(0, size, 1, 3), oracle, root=root)['pass'])
+        partial = score(run(16, 30, 2, 2), oracle, root=root)
+        self.assertEqual((partial['false_positives'], partial['silent_misses']), (['conf.xml:2'], ['conf.xml:0']))
+
     def test_missing_expected_is_error(self):
         with tempfile.TemporaryDirectory() as d:
             (Path(d) / 'check.qlref').write_text('query: Example.ql')
