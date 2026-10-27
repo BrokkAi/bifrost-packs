@@ -94,6 +94,10 @@ class OracleTests(unittest.TestCase):
             return [r['start'] for r in oracle['expected']]
         self.assertEqual(sites('Tagged.ql', 'go/tagged'), [3])
         self.assertEqual(sites('Plain.ql', 'go/plain'), [5])
+        # The post-process may be a block or flow list, with other entries around it.
+        self.assertEqual(sites('List.ql', 'go/list'), [3])
+        self.assertEqual(sites('Flow.ql', 'go/flow'), [3])
+        self.assertEqual(sites('Other.ql', 'go/other'), [])
 
     def test_file_level_alert_matches_a_whole_file_finding(self):
         root = FIXTURES / 'filelevel'

@@ -98,13 +98,33 @@ def qlref_query(path):
     return text
 
 
+def qlref_postprocess(path):
+    """The `postprocess` entries of a .qlref: a scalar, a flow list or a block list."""
+    lines = path.read_text().splitlines()
+    for index, line in enumerate(lines):
+        if not line.startswith('postprocess:'):
+            continue
+        value = line.split(':', 1)[1].strip()
+        if value.startswith('['):
+            return [item.strip() for item in value.strip('[]').split(',') if item.strip()]
+        if value:
+            return [value]
+        entries = []
+        for item in lines[index + 1:]:
+            if not item.strip():
+                continue
+            if not item[0].isspace() or not item.strip().startswith('- '):
+                break
+            entries.append(item.strip()[2:].strip())
+        return entries
+    return []
+
+
 def qlref_uses_inline_expectations(path):
     # qltest checks inline tags only for a query whose reference post-processes
     # its results with InlineExpectationsTestQuery; without it the .expected
     # file alone is the oracle, and tags in the directory belong to another query.
-    return any(line.strip().startswith('postprocess:')
-               and line.split(':', 1)[1].strip().endswith('InlineExpectationsTestQuery.ql')
-               for line in path.read_text().splitlines())
+    return any(entry.endswith('InlineExpectationsTestQuery.ql') for entry in qlref_postprocess(path))
 
 
 # CodeQL's inline expectation grammar (shared/util/codeql/util/test/

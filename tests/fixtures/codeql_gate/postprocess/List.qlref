@@ -1,0 +1,5 @@
+query: List.ql
+postprocess:
+  - utils/test/PrettyPrintModels.ql
+  - utils/test/InlineExpectationsTestQuery.ql
+  - ./FilterTestResults.ql
