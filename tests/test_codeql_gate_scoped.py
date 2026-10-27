@@ -48,6 +48,71 @@ class ScopedRecallTests(unittest.TestCase):
                 self.assertFalse(result['scoped_misses'])
                 self.assertTrue(self.result(language, [10, 20, 30], attribution=[])['pass'])
 
+    def test_allowlisted_ql_endpoint_is_attributed_per_route(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['sample.java:10', 'sample.java:20'], 'fp': [], 'errors': []}
+        attributions = [dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                             attribution='framework-endpoint-absent',
+                             ql_endpoint={'id': 'spring-servlet-input-parameter',
+                                          'nodes': [dict(path='sample.java', line=1, column=1)]},
+                             justification='Spring request parameter source is outside this catalog.')]
+        apply_scope(result, oracle, attributions, JavaStager.ql_endpoints)
+        self.assertEqual(result['deferred_misses'], ['sample.java:10'])
+        self.assertEqual(result['scoped_misses'], ['sample.java:20'])
+
+    def test_ql_endpoint_unknown_id_and_node_errors(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        base = dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                    attribution='framework-endpoint-absent',
+                    justification='Reviewed framework endpoint.')
+        for form, message in (
+                ({'id': 'unknown', 'nodes': [dict(path='sample.java', line=1, column=1)]},
+                 'unknown QL endpoint id'),
+                ({'id': 'spring-servlet-input-parameter',
+                  'nodes': [dict(path='sample.java', line=99, column=1)]},
+                 'QL endpoint node is not on an alert path')):
+            result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                      'fn': ['sample.java:10'], 'fp': [], 'errors': []}
+            apply_scope(result, oracle, [dict(base, ql_endpoint=form)], JavaStager.ql_endpoints)
+            self.assertEqual(result['verdict'], 'ERROR')
+            self.assertIn(message, result['errors'][0])
+
+    def test_ql_endpoint_wrong_role_is_an_error(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        attribution = dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                           attribution='framework-endpoint-absent',
+                           ql_endpoint={'id': 'spring-servlet-input-parameter',
+                                        'nodes': [dict(path='sample.java', line=10, column=1)]},
+                           justification='Reviewed framework endpoint.')
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['sample.java:10'], 'fp': [], 'errors': []}
+        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints)
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertIn('wrong role', result['errors'][0])
+
+    def test_java_ql_endpoint_allowlist_detects_moved_class(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            endpoint = JavaStager.ql_endpoints[0]
+            path = root / endpoint['file']
+            path.parent.mkdir(parents=True)
+            path.write_text('\n' * endpoint['end_line'] + 'class Moved {}\n')
+            with self.assertRaisesRegex(GateError, 'allow-list mismatch'):
+                JavaStager.validate_ql_endpoints(root)
+
+    def test_cli_rejects_moved_java_ql_endpoint_with_setup_error(self):
+        fake_root = FIXTURES / 'scoped-java-ql' / 'fake-codeql'
+        command = [sys.executable, '-I', str(GATE), 'expected', 'example', '--language', 'java',
+                   '--query-path', 'Example.ql', '--codeql-root', str(fake_root), '--test-dir', '.',
+                   '--scope-catalogs', str(FIXTURES / 'scoped-java' / 'catalog.json')]
+        proc = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn('allow-list mismatch', proc.stderr)
+
     def test_ql_endpoint_and_in_catalog_misses_block(self):
         for language in ('java', 'go'):
             for lines in ([10], [30]):

@@ -77,6 +77,8 @@ def main(argv=None):
                               args.nuget_source)
     else:
         stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
+    if hasattr(stager, 'validate_ql_endpoints'):
+        stager.validate_ql_endpoints(args.codeql_root)
     query_path = args.query_path
     if not query_path:
         import re

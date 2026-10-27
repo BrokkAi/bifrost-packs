@@ -650,7 +650,8 @@ def execute(args, test_dir, query_path, stager):
             except ImportError:
                 from scoped import apply_scope
             test_name = test_dir.relative_to(args.codeql_root).as_posix()
-            apply_scope(result, oracle, [a for a in args.scope_attributions if a['test_dir'] == test_name])
+            apply_scope(result, oracle, [a for a in args.scope_attributions if a['test_dir'] == test_name],
+                        getattr(stager, 'ql_endpoints', ()))
             result['scope_catalogs'] = sorted(args.scope_catalogs)
         result.update(query=args.query, query_ids=[args.query], test_dir=str(test_dir.relative_to(args.codeql_root)),
                       test_dirs=[str(test_dir.relative_to(args.codeql_root))], policy=str(args.policy),

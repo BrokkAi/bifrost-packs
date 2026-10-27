@@ -17,6 +17,8 @@ except ImportError:
 
 
 class CSharpStager:
+    ql_endpoints = ()
+
     @staticmethod
     def model_in_catalog(row, catalogs):
         # Exact printed rows preserve this language's signatures and access paths.

@@ -460,6 +460,44 @@ unique `(test_dir, path, line)` identities. The closed attribution enum is:
 
 - `framework-endpoint-absent`: the **only** deferrable attribution. `endpoint`
   must name an absent printed endpoint model explaining every path at the site.
+  For a reviewed QL-defined Java endpoint, use `ql_endpoint` instead:
+
+  ```json
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-090",
+    "path": "Example.java",
+    "line": 20,
+    "attribution": "framework-endpoint-absent",
+    "ql_endpoint": {
+      "id": "spring-servlet-input-parameter",
+      "nodes": [{"path": "Example.java", "line": 12, "column": 9}]
+    },
+    "justification": "The Spring request-mapping source is outside the supplied catalogs."
+  }
+  ```
+
+  QL endpoint ids come from the committed language stager allow-list. Java's
+  entries pin the QL class, file, inclusive line range, endpoint role and a
+  short description to CodeQL commit
+  `ae741615f3e178ce61289a651790dc67fcc18e19`. When a checkout is supplied,
+  the gate verifies every listed file and confirms that the range contains its
+  class declaration; a moved or renamed class is a setup error (exit 2).
+  Go and C# have empty allow-lists. An attribution must name the actual printed
+  path node as `path`, `line` and `column`; it must be the source or sink node
+  matching the allow-listed role, and it must have no MaD endpoint provenance.
+  Unknown ids, nodes outside the alert's paths, wrong roles, or MaD-proven
+  nodes are attribution errors. A MaD-proven endpoint continues to use the
+  exact printed-model `endpoint` form.
+
+  Deferral is checked path by path. Every route must be explained by its
+  attributed QL endpoint or by the named absent catalog endpoint. A route with
+  an unlisted or unattributed QL-defined endpoint remains in scope and blocks
+  deferral. Java's initial allow-list includes Spring and Micronaut request
+  parameter sources, the Spring RestTemplate URI-variable sink, and the dom4j
+  constructor branch of `DefaultXPathInjectionSink`. In that class,
+  `sinkNode(this, "xpath-injection")` is ordinary models-as-data and stays in
+  scope as a printed MaD row. `CliInput` is the only non-deferrable
+  QL-defined Java endpoint in the census.
 - `framework-summary-step`: blocks the scoped verdict.
 - `skipped-stdlib-summary`: blocks the scoped verdict (including skipped JDK
   summaries).
@@ -467,7 +505,9 @@ unique `(test_dir, path, line)` identities. The closed attribution enum is:
 
 Unknown values are rejected when reading attribution files or result reports
 in `summary`. Missing attribution for an out-of-subset miss fails with ERROR.
-An attribution cannot defer an in-scope or QL-defined endpoint obligation.
+An attribution cannot defer an in-scope endpoint obligation. A QL-defined
+endpoint remains in scope unless it is explicitly allow-listed and attributed
+to a path node as described above.
 
 Extras are always scored against the **full** expected suite. An observed
 out-of-subset expected alert remains a match; an unmatched finding remains a

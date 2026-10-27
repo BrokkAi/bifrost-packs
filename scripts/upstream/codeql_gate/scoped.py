@@ -38,8 +38,20 @@ def validate_attributions(entries):
             raise GateError(f'duplicate scope attribution: {identity}')
         seen.add(identity)
         if entry['attribution'] == Attribution.FRAMEWORK_ENDPOINT_ABSENT:
-            if not isinstance(entry.get('endpoint'), str) or not entry['endpoint'].strip():
-                raise GateError('framework-endpoint-absent requires a named printed endpoint model')
+            ql_endpoint = entry.get('ql_endpoint')
+            has_model = isinstance(entry.get('endpoint'), str) and bool(entry['endpoint'].strip())
+            if ql_endpoint is not None:
+                if (not isinstance(ql_endpoint, dict) or not isinstance(ql_endpoint.get('id'), str)
+                        or not ql_endpoint['id'].strip() or not isinstance(ql_endpoint.get('nodes'), list)
+                        or not ql_endpoint['nodes']):
+                    raise GateError('ql_endpoint requires an id and nonempty nodes list')
+                for node in ql_endpoint['nodes']:
+                    if (not isinstance(node, dict) or not isinstance(node.get('path'), str)
+                            or not node['path'] or any(not isinstance(node.get(k), int)
+                            or isinstance(node[k], bool) or node[k] < 1 for k in ('line', 'column'))):
+                        raise GateError('ql_endpoint nodes require path, positive line and column')
+            elif not has_model:
+                raise GateError('framework-endpoint-absent requires endpoint or ql_endpoint')
     return entries
 
 
@@ -113,8 +125,17 @@ def expected_scope(path, contains):
         source_models, sink_models = [], []
         universal_source, universal_sink = set(), set()
         source_known = sink_known = False
+        source_location = sink_location = None
         if len(cells) >= 6:
             source, sink = tuple(cells[2:4]), tuple(cells[4:6])
+            source_match = re.fullmatch(r'(.*):(\d+):(\d+):\d+:\d+', source[0])
+            sink_match = re.fullmatch(r'(.*):(\d+):(\d+):\d+:\d+', sink[0])
+            if not source_match or not sink_match:
+                raise GateError('invalid scoped endpoint node location')
+            source_location = dict(path=source_match[1], line=int(source_match[2]),
+                                   column=int(source_match[3]))
+            sink_location = dict(path=sink_match[1], line=int(sink_match[2]),
+                                 column=int(sink_match[3]))
             after_source, before_sink = reachable(source, forward), reachable(sink, backward)
             src = list(node_provenance.get(source, ()))
             dst = list(node_provenance.get(sink, ()))
@@ -146,11 +167,14 @@ def expected_scope(path, contains):
                         | (set() if sink_present else universal_sink))
         included = not source_known or not sink_known or (source_present and sink_present)
         result.setdefault(anchor, []).append(dict(included=included, source_models=source_models,
-                                                 sink_models=sink_models, absent_models=absent))
+                                                 sink_models=sink_models, absent_models=absent,
+                                                 source_known=source_known, sink_known=sink_known,
+                                                 source_present=source_present, sink_present=sink_present,
+                                                 source_node=source_location, sink_node=sink_location))
     return result
 
 
-def apply_scope(result, oracle, attributions):
+def apply_scope(result, oracle, attributions, ql_endpoints=()):
     """Retain the complete full-suite score and defer only reviewed endpoint misses."""
     validate_attributions(attributions)
     result['full_suite_verdict'] = result['verdict']
@@ -158,23 +182,72 @@ def apply_scope(result, oracle, attributions):
     result['scope_attributions'] = attributions
     result['recall_scope'] = oracle['recall_scope']
     by_site = {f"{a['path']}:{a['line']}": a for a in attributions}
+    ql_by_id = {item['id']: item for item in ql_endpoints}
     deferred, blocked, errors = [], [], []
     for absent in result['fn']:
         paths = oracle['recall_scope'].get(absent, [])
-        if not paths or any(p['included'] for p in paths):
+        if not paths:
             blocked.append(absent)
             continue
         attribution = by_site.get(absent)
         if attribution is None:
-            errors.append(f'out-of-subset miss requires attribution: {absent}')
+            if not any(p['included'] for p in paths):
+                errors.append(f'out-of-subset miss requires attribution: {absent}')
             blocked.append(absent)
         elif attribution['attribution'] != Attribution.FRAMEWORK_ENDPOINT_ABSENT:
             blocked.append(absent)
-        elif not all(attribution['endpoint'] in p['absent_models'] for p in paths):
-            errors.append(f'attributed endpoint does not explain every path at {absent}')
-            blocked.append(absent)
         else:
-            deferred.append(absent)
+            ql_form = attribution.get('ql_endpoint')
+            ql_item = None
+            if ql_form:
+                ql_item = ql_by_id.get(ql_form['id'])
+                if ql_item is None:
+                    errors.append(f'unknown QL endpoint id {ql_form["id"]!r} at {absent}')
+                    blocked.append(absent)
+                    continue
+            named_nodes = ({(n['path'], n['line'], n['column']) for n in ql_form['nodes']}
+                           if ql_form else set())
+            used_nodes = set()
+            failed_path = False
+            for path in paths:
+                if path['source_present'] and path['sink_present']:
+                    failed_path = True
+                    break
+                matched_ql = False
+                if ql_item:
+                    role = ql_item['role']
+                    node_key = path.get(f'{role}_node')
+                    if node_key and (node_key['path'], node_key['line'], node_key['column']) in named_nodes:
+                        if path[f'{role}_known']:
+                            errors.append(f'QL endpoint attribution names a MaD endpoint at {absent}')
+                            failed_path = True
+                            break
+                        used_nodes.add((node_key['path'], node_key['line'], node_key['column']))
+                        other_role = 'sink' if role == 'source' else 'source'
+                        matched_ql = path[f'{other_role}_known']
+                    other_role = 'sink' if role == 'source' else 'source'
+                    other_node = path.get(f'{other_role}_node')
+                    if other_node and (other_node['path'], other_node['line'], other_node['column']) in named_nodes:
+                        errors.append(f'QL endpoint attribution has the wrong role at {absent}')
+                        failed_path = True
+                        break
+                model_match = (isinstance(attribution.get('endpoint'), str)
+                               and attribution['endpoint'] in path['absent_models'])
+                if path['included'] and not matched_ql:
+                    failed_path = True
+                    break
+                if not matched_ql and not model_match:
+                    failed_path = True
+                    break
+            if ql_form and used_nodes != named_nodes:
+                errors.append(f'QL endpoint node is not on an alert path at {absent}')
+                failed_path = True
+            if failed_path:
+                if not errors or absent not in errors[-1]:
+                    errors.append(f'attributed endpoint does not explain every path at {absent}')
+                blocked.append(absent)
+            else:
+                deferred.append(absent)
     result['deferred_misses'] = deferred
     result['scoped_misses'] = blocked
     result['errors'].extend(errors)

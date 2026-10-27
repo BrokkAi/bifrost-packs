@@ -19,12 +19,47 @@ except ImportError:
 
 
 class JavaStager:
+    # Class locations are pinned to CodeQL ae741615f3e178ce61289a651790dc67fcc18e19.
+    # Keep this list limited to QL endpoints reviewed for catalog-only recall.
+    ql_endpoints = (
+        dict(id='spring-servlet-input-parameter', ql_class='SpringServletInputParameterSource',
+             file='java/ql/lib/semmle/code/java/dataflow/FlowSources.qll',
+             start_line=142, end_line=148, role='source',
+             description='Spring request-mapping parameter source.'),
+        dict(id='micronaut-http-input-parameter', ql_class='MicronautHttpInputParameterSource',
+             file='java/ql/lib/semmle/code/java/dataflow/FlowSources.qll',
+             start_line=184, end_line=190, role='source',
+             description='Micronaut request parameter source.'),
+        dict(id='spring-resttemplate-uri-variable', ql_class='SpringWebClientRestTemplateUriVariable',
+             file='java/ql/lib/semmle/code/java/frameworks/spring/SpringWebClient.qll',
+             start_line=70, end_line=106, role='sink',
+             description='Spring RestTemplate URI-variable sink.'),
+        dict(id='dom4j-xpath-constructor', ql_class='DefaultXPathInjectionSink',
+             file='java/ql/lib/semmle/code/java/security/XPath.qll',
+             start_line=17, end_line=28, role='sink',
+             description='DefaultXPathInjectionSink, dom4j constructor branch. The sinkNode(this, "xpath-injection") branch is ordinary models-as-data and remains in scope as a printed MaD row.'),
+    )
+
     @staticmethod
     def model_in_catalog(row, catalogs):
         # Exact printed rows preserve this language's signatures and access paths.
         return row in catalogs
 
     _jdk_packages_by_home = {}
+
+    @classmethod
+    def validate_ql_endpoints(cls, codeql_root):
+        root = Path(codeql_root)
+        for endpoint in cls.ql_endpoints:
+            path = root / endpoint['file']
+            if not path.is_file():
+                raise GateError(f"QL endpoint allow-list file is missing: {endpoint['file']}")
+            lines = path.read_text(errors='replace').splitlines()
+            selected = lines[endpoint['start_line'] - 1:endpoint['end_line']]
+            pattern = re.compile(r'\bclass\s+' + re.escape(endpoint['ql_class']) + r'\b')
+            if not pattern.search('\n'.join(selected)):
+                raise GateError(f"QL endpoint allow-list mismatch: {endpoint['id']} "
+                                f"({endpoint['file']}:{endpoint['start_line']}-{endpoint['end_line']})")
 
     def __init__(self, java_home=None):
         raw_java_home = java_home or os.environ.get('JAVA_HOME')
