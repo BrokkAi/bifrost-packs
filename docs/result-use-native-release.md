@@ -28,6 +28,14 @@ The retained historical embedded manifest and shard are not rewritten or merged
 into the release. The new spec pins the exact authored model SHA-256 and adds
 an Apache-2.0 notice for the Brokk-authored facts.
 
+The Bifrost engine still embeds its own schema-5 copy of
+`bifrost.jdk21.result-use-obligations@1.0.0`, with the engine gate. The native
+schema-8 copy has the same ID and version but a different manifest digest.
+`bifrost.python.str-result-use-obligations@1.0.0` already ships this way:
+embedded at schema 5 in the engine, native at schema 8 here. The engine's
+catalog keys rows by manifest digest, so both copies coexist, and their content
+is identical, so either selection gives the same answers.
+
 ## Other reviewed models
 
 The premise that batch 10 remains source-only is historical. The current
