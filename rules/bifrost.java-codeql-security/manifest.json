@@ -2,9 +2,28 @@
   "schema_version": 2,
   "id": "bifrost.java-codeql-security",
   "version": "0.1.0",
-  "name": "Bifrost Java CodeQL security catalogs",
-  "description": "Generated public Java taint source, sink, and barrier catalogs from CodeQL Models-as-Data.",
-  "policies": [],
+  "name": "Bifrost Java CodeQL security",
+  "description": "Public Java taint policies and generated CodeQL Models-as-Data endpoint catalogs.",
+  "policies": [
+    {
+      "path": "policies/path-injection.rqlp",
+      "id": "bifrost.java-codeql-security.path-injection",
+      "authored_hash": "f332944e090d0570b8833c7658b8c8c39dac65214250622f52cb70172647c5a8",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding"
+      ],
+      "severity_rationale": "Remote input in a filesystem path may access or overwrite files outside the intended directory.",
+      "remediation": "Validate and normalize paths within a trusted directory before filesystem access.",
+      "activation": "opt-in"
+    }
+  ],
   "catalogs": [
     {
       "path": "catalogs/codeql-jdk-barriers-regex-use.json",

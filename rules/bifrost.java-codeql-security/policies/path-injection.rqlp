@@ -1,0 +1,21 @@
+; CodeQL java/path-injection: remote input reaches a path read or write.
+; Guard-sensitive sanitization is not approximated by unconditional barriers.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-security.path-injection"
+  :name "Untrusted input reaches a filesystem path"
+  :message "Remote input reaches a filesystem path without proven path validation"
+  :severity error
+  :description "Tracks remote input to registered path-injection and path-injection-read sinks using classified library summaries. Branch-sensitive path validation requires separate engine support."
+  :help-uri "https://codeql.github.com/codeql-query-help/java/java-path-injection/"
+  :tags ["security" "java" "path-injection" "cwe-22"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :include-sets [
+      (catalog :any-registered true :categories (any [remote]))])
+    :sinks (endpoint-set :include-sets [
+      (catalog :any-registered true :categories (any [path-injection path-injection-read]))]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CodeQL" :id "java/path-injection")))
