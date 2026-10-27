@@ -745,7 +745,9 @@ def execute(args, test_dir, query_path, stager):
                 [result.get('completion_kind', result['completion_type']),
                  json.dumps(result.get('completion_kinds', []), separators=(',', ':')),
                  result['summary_counts']['verdicts'], result['summary_counts']['true_positives'],
-                 result['summary_counts']['false_positives']])
+                 result['summary_counts']['false_positives'],
+                 result['summary_attribution']['status'],
+                 result['summary_counts']['unattributable_verdicts']])
         return result
     finally:
         if not args.keep:

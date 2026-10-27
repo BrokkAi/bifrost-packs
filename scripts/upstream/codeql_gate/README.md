@@ -342,7 +342,10 @@ to avoid collisions.
 
 `results.tsv` retains existing columns in order and appends completion kind,
 the completion-kinds list, summary-backed verdict count, summary-backed
-true-positive count, and summary-backed false-positive count.
+true-positive count, summary-backed false-positive count, the summary
+attribution status (`attributable` or `unattributable`), and the
+unattributable verdict count. `summary` prints these rows verbatim, so it
+shows the attribution status and count as well.
 
 Changes from the seed SPEC: explicit checkout/binary arguments replace host
 paths and inventory; source annotation union and known-gap classes replace
