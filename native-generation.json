@@ -14,6 +14,11 @@
   },
   "jobs": [
     {
+      "name": "jdk21-result-use",
+      "spec": "semantic-packs/models/jdk21-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/models/jdk21-result-use-obligations.json"
+    },
+    {
       "name": "c-libc-result-use",
       "spec": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
       "artifact": "semantic-packs/c/c-libc-result-use-obligations.json"
