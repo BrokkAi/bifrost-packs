@@ -270,6 +270,10 @@ class JavaStager:
                             if root.is_dir()}
         stub_sources = {stub: all_stub_sources.get(stub, []) for stub in stub_dirs}
         stub_sources = {stub: sources for stub, sources in stub_sources.items() if sources}
+        for stub, sources in stub_sources.items():
+            digest.update(b'stub-selection\0' + stub.name.encode() + b'\0')
+            for source in sources:
+                digest.update(source.relative_to(stub).as_posix().encode() + b'\0')
         # Auxiliary provider selection depends on every candidate's source inventory.
         # Include those inputs so a changed winner cannot reuse stale prepared state.
         for stub, sources in all_stub_sources.items():
@@ -611,7 +615,7 @@ class JavaStager:
                 coordinate_dir.mkdir(parents=True, exist_ok=True)
                 sources_jar = coordinate_dir / f'{artifact}-{version}-sources.jar'
                 with zipfile.ZipFile(sources_jar, 'w', zipfile.ZIP_DEFLATED) as archive:
-                    for file, relative in self._jar_files(work, stub.name, True, ()):
+                    for file, relative in self._jar_files(compile_work, stub.name, True, ()):
                         archive.write(file, relative.as_posix())
                 pom_path = coordinate_dir / f'{artifact}-{version}.pom'
                 if not pom_path.is_file():
