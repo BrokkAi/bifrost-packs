@@ -1,6 +1,6 @@
 # Public C# CodeQL quality fixtures
 
-These fixtures exercise the eleven policies in
+These fixtures exercise the fourteen policies in
 `rules/bifrost.csharp-codeql-quality`. Each case contains a positive example
 and same-shaped near misses, with the expected structural boundary documented
 by the policy's CodeQL query path and pinned commit
@@ -9,4 +9,7 @@ by the policy's CodeQL query path and pinned commit
 The fixtures require the C# structural facts introduced by the unreleased
 Bifrost engine work for epic #4379. The StringBuilder case also activates the
 reviewed public BCL model in `semantic-packs/dotnet`; the catch-all case uses
-its modeled exception hierarchy as well.
+its modeled exception hierarchy as well. The call-to-gc and path-combine cases
+bind calls to its `System.GC.Collect` and `System.IO.Path.Combine` overloads,
+and the catch-nullreferenceexception and rethrown-exception-variable cases use
+it to resolve caught exception types.

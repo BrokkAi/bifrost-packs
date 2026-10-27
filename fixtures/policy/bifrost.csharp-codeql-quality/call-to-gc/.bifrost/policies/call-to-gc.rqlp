@@ -1,0 +1,29 @@
+; CodeQL query: API Abuse/CallToGCCollect.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report calls that bind exactly to the parameterless
+; System.GC.Collect() overload in the reviewed BCL model. Overloads taking a
+; generation, and same-named methods on other types, are near misses. Without
+; the model, the calls stay unresolved and the run is incomplete rather than
+; clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.call-to-gc"
+  :name "C# call to GC.Collect()"
+  :message "call to GC.Collect() forces a full blocking garbage collection"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/API Abuse/CallToGCCollect.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls that bind to the parameterless System.GC.Collect() overload declared by the reviewed BCL semantic model."
+  :tags ["csharp" "codeql" "quality" "performance"]
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (resolved-call
+        :resolves-to "System.GC.Collect"
+        :proof declared
+        (filter :where
+          ((model_id eq "member.dotnet.bcl-csharp.system-gc.collect"))
+          (call-bindings
+            (call-shape
+              (language csharp
+                (call :callee (name "Collect") (arity 0)))))))))
+    (group :name by-call :by (calls.site_id)
+      (aggregate :name selected-calls :op count))
+    (assert :group by-call :value selected-calls :cardinality (exactly 0))))
