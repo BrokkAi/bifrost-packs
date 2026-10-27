@@ -1,0 +1,65 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/.bifrost/policies/polynomial-redos.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/polynomial-redos.rqlp",
+      "sha256": "6ebe8aced2e1927120f8cea4aca6e8562260d9ed528fcc22d25f98601f14b159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/.bifrost/semantic-models/bifrost.python-security-sink-declarations.json",
+      "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-declarations.json",
+      "sha256": "156aedefd95f0560e9254523b6aa93b093a90cf18412615b33ec24496d9e1a15",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/.bifrost/semantic-models/bifrost.python-security-sink-summaries.json",
+      "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
+      "sha256": "1dfab973536dd05c84aa2fa64071448588d3ff1484fc6110714fd97c21cf3087",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "sha256": "d3f03a6510584e0af0019066298b9a8de1a2bc72199fb84318351f867b8d759d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-polynomial-redos/README.md",
+      "sha256": "cf15429e508f7f5876fd1dfea088b0db3116ca3a65d989e700a53842b62d1e17",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-polynomial-redos/main.py",
+      "sha256": "5112e80d1110be614e7fbe0876ecb2efa8fc2cdc1fc32b6fa18892cd3e3f43e0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-polynomial-redos/pyproject.toml",
+      "sha256": "0cb58a6c99adcdcd2957197443f97607dcf79deed887f5e1f3a72fde6bba77c9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-polynomial-redos/upstream/PolynomialReDoS.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-730-PolynomialReDoS/test.py",
+      "sha256": "44b8d30e8d173cbe0c03146f797c15e4312885d667516d18fb0db027fa00dbe0",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-730-PolynomialReDoS/test.py"
+      }
+    }
+  ]
+}

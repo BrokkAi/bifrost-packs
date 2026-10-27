@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/.bifrost/policies/incomplete-hostname-regexp.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp",
+      "sha256": "3626c9d0747a552fda07a54a52218c78a85d7d9016471170e75d69650eaced70",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/README.md",
+      "sha256": "c6b6ceb8e10014ab824ffa511c96ebd16db02ab2c2b5d8de9a6820c410453043",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/app.py",
+      "sha256": "bcb454abb86bb387a9aca33316d2bb18e8df512b5c31b4113c5d434ba8ec61ae",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/pyproject.toml",
+      "sha256": "2bf8b8ed4196461dd69bcdc4fc98c94bbf80cef7fd11f025f6ceb6f8536c33d6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-hostname-regexp/upstream/hosttest.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-020-IncompleteHostnameRegExp/hosttest.py",
+      "sha256": "be660a3b1852d3be9c17bfa914cf6bdbb51061ed7db8df15c13b52e3f6a3e445",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-020-IncompleteHostnameRegExp/hosttest.py"
+      }
+    }
+  ]
+}
