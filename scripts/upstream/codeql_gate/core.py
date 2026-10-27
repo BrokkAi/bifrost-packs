@@ -25,7 +25,8 @@ PROBE_IDS = (PROBE_ID, CONFIG_PROBE_ID)
 
 
 def key(row):
-    return row['path'], row['start']
+    # A site known only by its end line never merges with a row starting there.
+    return (row['path'], row['start']) + (('end',) if row.get('end_line_only') else ())
 
 
 def site(row):
@@ -154,16 +155,28 @@ def load_oracle(test_dir, query_path, stager, query_id):
         selected.extend(rows)
         failures.extend(unreliable)
     inline = stager.inline_oracle(test_dir, query_id) if hasattr(stager, 'inline_oracle') else {}
-    spurious, missing = unique(inline.get('spurious', [])), unique(inline.get('missing', []))
+    selected = unique(selected)
+    # CodeQL matches a tag on line L to a result whose END line is L
+    # (InlineExpectationsTest.qll, onSameLine). A tag therefore names the
+    # #select rows of its file that end on L; a tag with no such row is a site
+    # known only by its end line, matched against a finding's end line.
+    ending = {}
+    for row in selected:
+        ending.setdefault((row['path'], row['end']), []).append(row)
+    def resolve(tags):
+        return unique([row for tag in tags for row in
+                       ending.get((tag['path'], tag['start']),
+                                  [dict(tag, end=tag['start'], end_line_only=True)])])
+    spurious, missing = resolve(inline.get('spurious', [])), resolve(inline.get('missing', []))
     overrides = {key(r) for r in spurious + missing}
-    tags = unique(inline.get('inline_alert', []) + inline.get('inline_taint', []))
-    selected, tags = unique(selected), unique(tags)
+    raw_tags = inline.get('inline_alert', []) + inline.get('inline_taint', [])
+    tags = resolve(raw_tags)
     sources = {'select': selected, **inline}
     disagreement = None
-    if tags:
-        a, b = {key(r) for r in selected}, {key(r) for r in tags}
-        disagreement = {'select_only': [f'{p}:{n}' for p, n in sorted(a - b)],
-                        'inline_only': [f'{p}:{n}' for p, n in sorted(b - a)]}
+    if raw_tags:
+        tagged = {(t['path'], t['start']) for t in raw_tags + inline.get('spurious', [])}
+        disagreement = {'select_only': [site(r) for r in selected if (r['path'], r['end']) not in tagged],
+                        'inline_only': [site(r) for r in tags if r.get('end_line_only')]}
     return {'expected': [r for r in unique(selected + tags) if key(r) not in overrides],
             'spurious': spurious, 'missing': missing, 'oracle_sources': sources,
             'oracle_disagreement': disagreement, 'testFailures': failures}
@@ -261,6 +274,10 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
     def matches(e, f):
         if e['path'] != f['path']:
             return False
+        if e.get('end_line_only'):
+            # An inline tag without a #select row gives only the end line.
+            line = e['end'] + offset
+            return f['end'] == line if relation == 'start_line' else f['start'] <= line <= f['end']
         return (e['start'] + offset == f['start'] if relation == 'start_line' else
                 e['start'] + offset <= f['end'] and f['start'] <= e['end'] + offset)
     # Maximum one-to-one assignment avoids double counting with overlapping spans.
