@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/overly-large-range/.bifrost/policies/overly-large-range.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/overly-large-range.rqlp",
+      "sha256": "118ce969e00177696797b07154e222e838d6b8be86a326f19b09f8dbb619dcb0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/overly-large-range/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/overly-large-range/README.md",
+      "sha256": "6ce96d3a4d91a56fb6a00948d50d9c0f267ab667fb4a2a3d3f203b0b81a8da1a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/overly-large-range/upstream/Security/CWE-020-SuspiciousRegexpRange/test.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-020-SuspiciousRegexpRange/test.py",
+      "sha256": "54951f777aea8053840afc5d599aeba4503120f68f5cd3a1a3822b30d3e7d37e",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-020-SuspiciousRegexpRange/test.py"
+      }
+    }
+  ]
+}

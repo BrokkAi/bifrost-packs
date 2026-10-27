@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/raise-not-implemented/.bifrost/policies/raise-not-implemented.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/raise-not-implemented.rqlp",
+      "sha256": "7cd8de02c80354422b1aafeb5d24963786b2d4b12c9fba662a96e5dc35ccebf9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/raise-not-implemented/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/raise-not-implemented/README.md",
+      "sha256": "9217c9f120ec1c598b72826c3407e29876bbbcd48ff488945361a1a2234fb540",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/raise-not-implemented/upstream/Exceptions/general/exceptions_test.py",
+      "source_path": "python/ql/test/query-tests/Exceptions/general/exceptions_test.py",
+      "sha256": "2e8adb8e90ba049947c861e940121827fdfa289d49ea310cec34fbd1e0515383",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Exceptions/general/exceptions_test.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/raise-not-implemented/upstream/Exceptions/general/pypy_test.py",
+      "source_path": "python/ql/test/query-tests/Exceptions/general/pypy_test.py",
+      "sha256": "ec48081c86492e263320102c55c45ae5f185de884ba4a204f891e6af0ef0b2a1",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Exceptions/general/pypy_test.py"
+      }
+    }
+  ]
+}
