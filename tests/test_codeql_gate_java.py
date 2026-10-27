@@ -1,5 +1,6 @@
 """Java stager tests using authored temporary fixtures."""
 import os
+import subprocess
 import tempfile
 import unittest
 import zipfile
@@ -8,6 +9,18 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from scripts.upstream.codeql_gate.stagers.java import JavaStager
+
+
+def _javac_supports_release_21():
+    """The stager compiles stubs with `--release 21`; an older javac rejects it."""
+    java_home = os.environ.get('JAVA_HOME')
+    if not java_home:
+        return False
+    javac = Path(java_home) / 'bin' / ('javac.exe' if os.name == 'nt' else 'javac')
+    if not javac.is_file():
+        return False
+    proc = subprocess.run([str(javac), '--release', '21', '-version'], capture_output=True, text=True)
+    return proc.returncode == 0
 
 
 class JavaStagerTests(unittest.TestCase):
@@ -97,10 +110,7 @@ class JavaStagerTests(unittest.TestCase):
                 self.assertEqual(first.root, again.root)
                 self.assertTrue(artifacts[0].is_file())
 
-    @unittest.skipUnless(
-        os.environ.get('JAVA_HOME') and
-        (Path(os.environ['JAVA_HOME']) / 'bin' / ('javac.exe' if os.name == 'nt' else 'javac')).is_file(),
-        'requires JAVA_HOME with javac')
+    @unittest.skipUnless(_javac_supports_release_21(), 'requires JAVA_HOME with a JDK 21+ javac')
     def test_real_stub_compile_when_jdk_is_available(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
