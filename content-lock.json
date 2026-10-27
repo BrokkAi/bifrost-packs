@@ -422,7 +422,7 @@
     {
       "path": "fixtures/policy/bifrost.csharp-codeql-quality/README.md",
       "source_path": "bifrost-dev/tests/fixtures/codeql-csharp-parity/README.md",
-      "sha256": "510df28b9b1600f0db93c0773a52c875539308746cd572fc6be76fb6f1ac7a56",
+      "sha256": "d9e99e46c607ed8481d49c826272b284a4c5e2c6e66cb386a3677e0b01576fe4",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -532,6 +532,46 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/.bifrost/policies/rethrown-exception-variable.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp",
+      "sha256": "7c587788533cca75bfcc5a85e5368a605939440a2c6230d3bca1548a22dc2e48",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/.bifrost/semantic-models/bifrost.dotnet.bcl-csharp.json",
+      "source_path": "semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json",
+      "sha256": "7a0f801232ee542a4a0c8b2e4467f53d13cdbe7a4be26532136e6323cfc199b5",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/Probe.cs",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/Probe.cs",
+      "sha256": "e77fc680ab3430215df8976578e90d7e755d4cf5cb5e507d76698e26e04aff66",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/README.md",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/README.md",
+      "sha256": "092a6afc1a083083f701a161eb832dd23fd102c56033d297a0f25ddd1e4976d1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/upstream/Language Abuse/RethrowException/RethrowException.cs",
+      "source_path": "csharp/ql/test/query-tests/Language Abuse/RethrowException/RethrowException.cs",
+      "sha256": "10947d85dd8ead561399ec20cb116e97dc2568a95071ea115f0e4caab6f02e5e",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/csharp/ql/test/query-tests/Language%20Abuse/RethrowException/RethrowException.cs"
+      }
+    },
+    {
       "path": "fixtures/policy/bifrost.csharp-codeql-quality/static-array/.bifrost/policies/static-array.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp",
       "sha256": "396b89670bc525840ad85097286e8a41a04a008097fdbd86ef0b77a9ec1cc8b9",
@@ -579,6 +619,51 @@
       "sha256": "0d6e1ecaaf6408095946168599002f7118262c6580c70131c93e4b0f0534f147",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/.bifrost/policies/todo-comment.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/todo-comment.rqlp",
+      "sha256": "881b91ce3646efc25d01725aeb1557f181699498ca3479ce6a483978e72df7b2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/Probe.cs",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/Probe.cs",
+      "sha256": "185062dd7ff013314665ee7e5970088e62fc5a47638bb224848393aa96c11469",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/README.md",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/README.md",
+      "sha256": "4913dd428f8343a33fa6af2195aa929e181a59d29663cab7c4f9667656aadc3d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/upstream/Bad Practices/Comments/TodoComments/TodoComments.cs",
+      "source_path": "csharp/ql/test/query-tests/Bad Practices/Comments/TodoComments/TodoComments.cs",
+      "sha256": "a649bdb6bd4b3d50282eda614343c9b9e16aea342cb44baf1afa10bdeb15ebdc",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/csharp/ql/test/query-tests/Bad%20Practices/Comments/TodoComments/TodoComments.cs"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment/upstream/Bad Practices/Comments/TodoComments/TodoCommentsBad.cs",
+      "source_path": "csharp/ql/test/query-tests/Bad Practices/Comments/TodoComments/TodoCommentsBad.cs",
+      "sha256": "42d274722fa44b1ebaea269b80fc2403eb7122fb29584be6519322d32d08fb70",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/csharp/ql/test/query-tests/Bad%20Practices/Comments/TodoComments/TodoCommentsBad.cs"
+      }
     },
     {
       "path": "fixtures/policy/bifrost.csharp-codeql-quality/use-number-constant/.bifrost/policies/use-number-constant.rqlp",
@@ -7673,7 +7758,7 @@
     {
       "path": "rules/bifrost.csharp-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.csharp-codeql-quality/manifest.json",
-      "sha256": "f0090f5bcd73a2cd0c3e23b8746e79fb2723712f2e506fb0968855ce44887569",
+      "sha256": "3e67ad546e4f6107650a1c667a0ce108e4302dbc45efed49d1c3f751f899719f",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -7713,6 +7798,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp",
+      "sha256": "7c587788533cca75bfcc5a85e5368a605939440a2c6230d3bca1548a22dc2e48",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp",
       "sha256": "396b89670bc525840ad85097286e8a41a04a008097fdbd86ef0b77a9ec1cc8b9",
@@ -7723,6 +7815,13 @@
       "path": "rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp",
       "sha256": "b88d3ce5b0b95a34c22d68f2b938cfc47040d417695801731bc5a1fa53b44e56",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/todo-comment.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/todo-comment.rqlp",
+      "sha256": "881b91ce3646efc25d01725aeb1557f181699498ca3479ce6a483978e72df7b2",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -10838,5 +10937,5 @@
       "license": "Apache-2.0"
     }
   ],
-  "aggregate_sha256": "d924032eabf3098ce570036273e2e055d2aca7f739aff5c31dc4a5bbb401c134"
+  "aggregate_sha256": "06bcb222041b95744444e45b84ea10f31fb704029c7e80a101e4a3e8afee6bb2"
 }
