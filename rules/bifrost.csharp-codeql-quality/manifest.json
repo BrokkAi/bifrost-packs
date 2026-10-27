@@ -94,6 +94,39 @@
       "remediation": "Complete or remove the marked work, or move it to the issue tracker and delete the marker."
     },
     {
+      "path": "policies/call-to-gc.rqlp",
+      "id": "bifrost.csharp-codeql-quality.call-to-gc",
+      "authored_hash": "2f0512281437bc958337b37e3afb09c6457a958f2b2852e85f0c9278121d1a85",
+      "resolved_semantic_hash": null,
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance"],
+      "severity_rationale": "An explicit GC.Collect() forces a full blocking collection, which usually hurts throughput and latency more than the runtime's own scheduling.",
+      "remediation": "Remove the call and let the runtime schedule collections; if a collection is genuinely required, document why and use GC.Collect with an explicit generation and mode."
+    },
+    {
+      "path": "policies/path-combine.rqlp",
+      "id": "bifrost.csharp-codeql-quality.path-combine",
+      "authored_hash": "10cb56d8aa9f1b8abecd41d07c648d754848d7a33cc9ea3ec83ab9a2409ebb68",
+      "resolved_semantic_hash": null,
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance"],
+      "severity_rationale": "Path.Combine discards every earlier argument when a later one is rooted, so a user-supplied or misformatted segment can silently replace the intended base directory.",
+      "remediation": "Use Path.Join, which concatenates segments without resetting on rooted paths, or validate that later segments are relative."
+    },
+    {
+      "path": "policies/catch-nullreferenceexception.rqlp",
+      "id": "bifrost.csharp-codeql-quality.catch-nullreferenceexception",
+      "authored_hash": "f1b548efc0a2f6aa60d2e161299d66b602ce9e554671af5563a99b9437c852af",
+      "resolved_semantic_hash": "f1b548efc0a2f6aa60d2e161299d66b602ce9e554671af5563a99b9437c852af",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "failure-handler-state"],
+      "severity_rationale": "Catching NullReferenceException hides a programming error and lets execution continue from an unexpected state.",
+      "remediation": "Check for null before dereferencing, or use null-conditional operators, and remove the catch clause."
+    },
+    {
       "path": "policies/call-to-obsolete-method.rqlp",
       "id": "bifrost.csharp-codeql-quality.call-to-obsolete-method",
       "authored_hash": "66996b554cd9e25349829bac6fdce4adb94eb0703884d9f74cd419e50323486f",
