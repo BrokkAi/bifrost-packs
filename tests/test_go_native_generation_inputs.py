@@ -11,6 +11,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "230019e376d5c1198b079482d4334ed2d18217ba"
 BASE_JOBS = {
+    "jdk21-result-use",
     "c-libc-result-use",
     "csharp-result-use",
     "php-result-use",
@@ -54,7 +55,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
         jobs = {row["name"]: row for row in config["jobs"]}
         self.assertEqual(set(jobs), BASE_JOBS | set(GO_INPUTS))
         self.assertEqual({row["name"] for row in config["recipes"]}, RECIPES)
-        self.assertEqual(len(config["jobs"]), 11)
+        self.assertEqual(len(config["jobs"]), 12)
         self.assertEqual(len(config["recipes"]), 5)
 
         for name, expected in GO_INPUTS.items():

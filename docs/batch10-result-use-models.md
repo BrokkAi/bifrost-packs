@@ -1,5 +1,10 @@
 # Batch 10 reviewed result-use content
 
+Historical record: all seven models below are now explicit native-generation
+jobs and are present in the published packs 0.6.0 native bundle. The older
+producer blocker below is no longer current. See the
+[JDK delivery repair](result-use-native-release.md) for the remaining omission.
+
 This document records the source-only transition for the seven reviewed result-use
 models landed with the batch-10 policy arms. The model bytes are copied from the
 reviewed engine inputs without identity or provenance changes.

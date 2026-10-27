@@ -6,6 +6,15 @@ The engine copy remains for existing embedded sources and focused fixtures;
 new public content belongs here. Storing authoring content does not select it
 for a release or enable it in a scanner.
 
+## Next native packaging repair
+
+The proposed `packs/v0.6.1` keeps the generator and all existing inputs, and
+adds the reviewed JDK 21 result-use model as a schema-8 authored direct job.
+There are twelve direct jobs (nine result-use families) and five recipes.
+The companion rules 0.5.2 updates the exact packs dependency so acquisition
+selects the repaired bundle. See the [release repair plan](result-use-native-release.md).
+The eleven-job plan described below is the published 0.6.0 baseline.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
