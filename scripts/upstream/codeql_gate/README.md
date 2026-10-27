@@ -248,9 +248,9 @@ current binary does not allow `file-of` to consume `configuration_fact`, so the
 seed is queried directly and its primary paths are deduplicated. Because the
 seed reports one finding per configuration fact rather than one per file, a
 large configuration tree can reach the report's findings cap; the omitted-findings
-check then fails the probe and the gate reports ERROR. That fails closed. C# restore records can reach this cap even for a small
-test directory: the gate then reports ERROR although a measured structural
-policy may have completed. Switch the seed to `file-of` over
+check then fails the probe and the gate reports ERROR. That fails closed.
+C# staging excludes `bin/` and `obj/` from this inventory while retaining
+restore records for dependency discovery. Switch the seed to `file-of` over
 configuration facts once the engine accepts that domain. Both probe
 runs must complete without omission. These are file-membership checks, not
 claims about a policy's semantic coverage. The source probe selects
@@ -360,8 +360,14 @@ Unknown option tokens are errors.
 The NuGet configuration and restore log live beside the prepared root,
 not inside it: Bifrost ingests configuration files, so an injected
 `NuGet.Config` would contaminate tests about `Web.config`. Restore output
-such as `obj/project.assets.json` stays in the root. Prepared cache keys
-include sources, option tokens, stub bytes, package coordinates, selected
+such as `obj/project.assets.json` stays in the root. The stager appends
+`bin/` and `obj/` to the root's `.gitignore`, preserving existing entries.
+This matches a real checkout: Bifrost's analysis walk honors ignore rules
+even without a Git repository, keeping generated configuration facts out
+of the coverage probe. C# dependency discovery walks independently of
+ignore rules, so it still reads the restore record and selects assemblies.
+The staging version in prepared cache keys invalidates older layouts.
+Other cache inputs include sources, option tokens, stub bytes, package coordinates, selected
 SDK and targeting-pack versions, and source URL. Artifacts record package
 SHA512 checksums from the restore and the SDK/targeting-pack selection.
 

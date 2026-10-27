@@ -132,6 +132,7 @@ class CSharpStagerTests(unittest.TestCase):
             (stubs / 'ExampleApi.cs').write_text('namespace Probe { public class ExampleApi { public void Run() {} } }\n')
             (test / 'Main.cs').write_text('class MainClass { void Run(Probe.ExampleApi api) { api.Run(); } }\n')
             (test / 'Main.expected').write_text('excluded')
+            (test / '.gitignore').write_text('authored-output/')
             (test / 'options').write_text('semmle-extractor-options: /nostdlib /r:System.Runtime.dll /r:DoesNotExist.dll ../../resources/stubs/ExampleApi.cs\n')
             stager = CSharpStager(os.environ['CODEQL_GATE_DOTNET_ROOT'], base / 'packages',
                                   'https://api.nuget.org/v3/index.json')
@@ -142,6 +143,7 @@ class CSharpStagerTests(unittest.TestCase):
             self.assertFalse((first.root / 'Main.expected').exists())
             self.assertFalse(any(first.root.rglob('ExampleApi.cs')))
             self.assertFalse((first.root / 'NuGet.Config').exists())
+            self.assertEqual((first.root / '.gitignore').read_text(), 'authored-output/\nbin/\nobj/\n')
             self.assertTrue((first.root / 'obj/project.assets.json').is_file())
             artifacts = {a['id']: a for a in first.staged_artifacts}
             self.assertEqual(artifacts['System.Runtime.dll']['status'], 'found')

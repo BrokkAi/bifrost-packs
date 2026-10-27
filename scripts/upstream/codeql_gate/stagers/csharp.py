@@ -186,7 +186,7 @@ class CSharpStager:
         tokens, artifacts = self._options(test_dir, codeql_root)
         files = sorted(p for p in test_dir.rglob('*') if p.is_file()
                        and p.suffix not in ('.expected', '.qlref', '.ql') and p.name != 'options')
-        digest = hashlib.sha256(b'csharp-stager-v1\0' + str(test_dir).encode())
+        digest = hashlib.sha256(b'csharp-stager-v2\0' + str(test_dir).encode())
         for path in files:
             digest.update(path.relative_to(test_dir).as_posix().encode() + b'\0')
             digest.update(hashlib.sha256(path.read_bytes()).digest())
@@ -206,6 +206,10 @@ class CSharpStager:
                     dest = temporary / path.relative_to(test_dir)
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(path, dest)
+                ignore = temporary / '.gitignore'
+                existing = ignore.read_text() if ignore.is_file() else ''
+                ignore.write_text(existing + ('\n' if existing and not existing.endswith('\n') else '')
+                                  + 'bin/\nobj/\n')
                 self._project(temporary / 'CodeQLTest.csproj', artifacts)
                 config = cache_dir / (temporary.name + '.NuGet.Config')
                 feed = cache_dir / 'stub-feed' if any(a['kind'] == 'stub-package' and a['status'] == 'restored'
@@ -214,10 +218,13 @@ class CSharpStager:
                 proc = subprocess.run([str(dotnet), 'restore', 'CodeQLTest.csproj', '--configfile', str(config),
                                        '--packages', str(self.nuget_packages), '-v', 'minimal'],
                                       cwd=temporary, env=env, capture_output=True, text=True)
-                log = cache_dir / (digest.hexdigest() + '.restore.log')
+                # One log per attempt, so a concurrent preparation of the same
+                # root cannot overwrite the log of a failed restore.
+                log = cache_dir / (temporary.name + '.restore.log')
                 log.write_text(proc.stdout + proc.stderr)
                 if proc.returncode:
                     raise GateError(f'C# restore failed; see {log}')
+                os.replace(log, cache_dir / (digest.hexdigest() + '.restore.log'))
                 self._publish(temporary, target)
             finally:
                 shutil.rmtree(temporary, ignore_errors=True)
