@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.csharp-codeql-quality",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "Bifrost C# CodeQL quality",
   "description": "Public C# structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -158,6 +158,28 @@
       "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "call-argument-conversion"],
       "severity_rationale": "Passing a character to the one-argument StringBuilder constructor selects the integer-capacity overload and often creates an unexpectedly large or invalid buffer.",
       "remediation": "Convert the character to a string when text initialization is intended, or pass an explicit capacity when capacity initialization is intended."
+    },
+    {
+      "path": "policies/password-in-configuration.rqlp",
+      "id": "bifrost.csharp-codeql-quality.password-in-configuration",
+      "authored_hash": "70e56e48a736946fa3c1828519afaa63612512cfca0b697eab542a26c317533e",
+      "resolved_semantic_hash": "70e56e48a736946fa3c1828519afaa63612512cfca0b697eab542a26c317533e",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "configuration-facts"],
+      "severity_rationale": "Hard-coded configuration passwords can be exposed with source or deployment artifacts.",
+      "remediation": "Load secrets from a managed secret store or runtime-provided environment, and do not store plaintext passwords in configuration."
+    },
+    {
+      "path": "policies/empty-password-in-configuration.rqlp",
+      "id": "bifrost.csharp-codeql-quality.empty-password-in-configuration",
+      "authored_hash": "1907fd0a5d81b171d59ca50678fb5af9ba5e7af0ae66e1d02132b993caadb5ec",
+      "resolved_semantic_hash": "1907fd0a5d81b171d59ca50678fb5af9ba5e7af0ae66e1d02132b993caadb5ec",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "configuration-facts"],
+      "severity_rationale": "Empty configuration passwords can disable authentication or leave accounts protected only by defaults.",
+      "remediation": "Set a non-empty, securely managed password or remove the credential entry and rely on an appropriate authentication mechanism."
     }
   ]
 }

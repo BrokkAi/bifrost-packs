@@ -22,8 +22,11 @@ As of 2026-10-27, the latest published streams are `packs/v0.6.1` and
 published and is superseded by the next rules release, `rules/v0.6.0`: since
 0.5.1, the C# catalog adds `rethrown-exception-variable` and `todo-comment` and
 corrects `catch-of-all-exceptions` to report exact catch-all handlers that do
-not use a bare `throw;`, including a throw of the caught variable. The C# rules
-component is versioned `0.2.0`. The release retains the exact dependency on
+not use a bare `throw;`, including a throw of the caught variable, and adds
+`password-in-configuration` and `empty-password-in-configuration` aligned with
+CodeQL. These configuration rules exclude `xmlns` namespace declarations from
+XML attribute matches. The C# rules component is versioned `0.3.0`. The release
+retains the exact dependency on
 published `packs/v0.6.1`; these changes do not add consumer capability
 requirements or establish full policy qualification.
 

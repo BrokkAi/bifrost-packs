@@ -5,7 +5,7 @@
   "visibility": "public",
   "release_version": "0.6.0",
   "artifact_role": "source",
-  "notes": "This minor release adds the C# rethrown-exception-variable and todo-comment policies and corrects catch-of-all-exceptions to report exact catch-all handlers that do not use a bare throw;, including a throw of the caught variable. The C# policy component advances to 0.2.0. The new policies use capabilities already required by this component. The release retains the exact dependency on bifrost.public.packs 0.6.1 for the reviewed JDK 21 result-use models and does not imply full policy qualification or complete analysis.",
+  "notes": "This minor release adds the C# rethrown-exception-variable and todo-comment policies, corrects catch-of-all-exceptions to report exact catch-all handlers that do not use a bare throw;, including a throw of the caught variable, and adds C# password-in-configuration and empty-password-in-configuration policies aligned with CodeQL. The C# selectors exclude xmlns namespace declarations from XML attribute matches. The C# policy component advances to 0.3.0. The new policies use capabilities already required by this component. The release retains the exact dependency on bifrost.public.packs 0.6.1 for the reviewed JDK 21 result-use models and does not imply full policy qualification or complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
