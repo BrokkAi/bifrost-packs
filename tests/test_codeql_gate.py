@@ -98,6 +98,7 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(sites('List.ql', 'go/list'), [3])
         self.assertEqual(sites('Flow.ql', 'go/flow'), [3])
         self.assertEqual(sites('Other.ql', 'go/other'), [])
+        self.assertEqual(sites('Flush.ql', 'go/flush'), [3])
 
     def test_file_level_alert_matches_a_whole_file_finding(self):
         root = FIXTURES / 'filelevel'

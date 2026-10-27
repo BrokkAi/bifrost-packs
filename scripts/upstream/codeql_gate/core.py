@@ -113,7 +113,8 @@ def qlref_postprocess(path):
         for item in lines[index + 1:]:
             if not item.strip():
                 continue
-            if not item[0].isspace() or not item.strip().startswith('- '):
+            # YAML allows the items indented or at column 0 under the key.
+            if not item.strip().startswith('- '):
                 break
             entries.append(item.strip()[2:].strip())
         return entries
