@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/.bifrost/policies/incomplete-url-substring-sanitization.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/incomplete-url-substring-sanitization.rqlp",
+      "sha256": "b60d34dbddebbc5b8553f04b7730f9a5fdd5ffe9494c064a05525e1c0c6e3f71",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/README.md",
+      "sha256": "e4c306326b5338fa4c79b655ed0db9d1f305d7c77c8d8284ebbd175b7d41a4ec",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/helpers.py",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/helpers.py",
+      "sha256": "05ff0dab572bee681919760259397d8bdc21347e4a858da82ea5bd3f25e3915e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/main.py",
+      "sha256": "3c5a3e07628767ac67afe65602f8133b7991dc2102138f12416762f37d1f4792",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/pyproject.toml",
+      "sha256": "f3e2062e3395c8971801298f4aae42322e5c58afbd2b2df7ee1b8b226eb7a02e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-incomplete-url-substring-sanitization/upstream/urltest.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-020-IncompleteUrlSubstringSanitization/urltest.py",
+      "sha256": "8f3691a650b42dc731df33e86718080046abc97fee6ddd275359de1fde24b965",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-020-IncompleteUrlSubstringSanitization/urltest.py"
+      }
+    }
+  ]
+}

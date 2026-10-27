@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 import unittest
 
+from scripts.content import read_lock
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "230019e376d5c1198b079482d4334ed2d18217ba"
@@ -124,7 +126,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
         ])
 
     def test_new_spec_classification_is_public_and_license_matches(self):
-        lock = _load("content-lock.json")
+        lock = read_lock(ROOT)
         entries = {row["path"]: row for row in lock["files"]}
         for expected in GO_INPUTS.values():
             row = entries[expected["spec"]]
@@ -141,7 +143,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
             spec = _load(expected["spec"])
             self.assertEqual(spec["notices"], ["notices/go-1.26.0-BSD-3-Clause.txt"])
 
-        lock = _load("content-lock.json")
+        lock = read_lock(ROOT)
         entries = {row["path"]: row for row in lock["files"]}
         self.assertEqual(entries[GO_NOTICE_PATH], {
             "path": GO_NOTICE_PATH,

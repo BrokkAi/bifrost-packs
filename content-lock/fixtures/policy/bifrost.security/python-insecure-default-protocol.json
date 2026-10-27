@@ -1,0 +1,58 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/.bifrost/policies/insecure-default-protocol.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/insecure-default-protocol.rqlp",
+      "sha256": "f1af5c68f19c33656401c5a7d9c08246a826810299031b621c8092250144dca7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/.bifrost/semantic-models/bifrost.python-ssl-protocol-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-ssl-protocol-declarations.json",
+      "sha256": "02652bd197d656ff623d5bb668c80511ea2833dd02e0cebb7e5e188a6bffe311",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "sha256": "d3f03a6510584e0af0019066298b9a8de1a2bc72199fb84318351f867b8d759d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/README.md",
+      "sha256": "ab61e14e706a1cd5f50ddd1a6e259daa9c2a42e22b423b95158244699d174c66",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/main.py",
+      "sha256": "f781b13d1ee8040caff80d8a1f92159ae73ec8b81b19e7b912c75be47626adc5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/pyproject.toml",
+      "sha256": "17835091fe15e12c856f2b42f546c649e30706aebcdf3e31fd72be9a26922df4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-default-protocol/upstream/InsecureProtocol.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-327-InsecureDefaultProtocol/InsecureProtocol.py",
+      "sha256": "7b89e3fb465f720b9bfa4c56f66d35de48d3bf01aebe6ab4173267c22f8720ba",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-327-InsecureDefaultProtocol/InsecureProtocol.py"
+      }
+    }
+  ]
+}
