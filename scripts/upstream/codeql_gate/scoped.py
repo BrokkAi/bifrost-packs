@@ -95,6 +95,15 @@ def expected_scope(path, contains):
         if ids - models.keys():
             raise GateError('endpoint provenance references an absent model row')
         return sorted(models[i] for i in ids)
+    def universal_endpoint_models(node, alternatives, role):
+        # Node evidence applies to every route. Edge evidence must name the
+        # same model on every first/last edge; a union would let an attribution
+        # for one branch excuse another branch that never uses that endpoint.
+        common = set(endpoint_models(node_provenance.get(node, ()), role))
+        if alternatives:
+            common.update(set.intersection(*(set(endpoint_models([p], role))
+                                             for p in alternatives)))
+        return common
     result = {}
     for cells in sections.get('select', []):
         location = re.fullmatch(r'(.*):(\d+):\d+:\d+:\d+', cells[0])
@@ -102,6 +111,7 @@ def expected_scope(path, contains):
             raise GateError('invalid scoped select location')
         anchor = f'{location[1]}:{location[2]}'
         source_models, sink_models = [], []
+        universal_source, universal_sink = set(), set()
         source_known = sink_known = False
         if len(cells) >= 6:
             source, sink = tuple(cells[2:4]), tuple(cells[4:6])
@@ -125,13 +135,15 @@ def expected_scope(path, contains):
                 bool(source_edges) and all(endpoint_models([p], '(?:Src|Source)') for p in source_edges))
             sink_known = bool(endpoint_models(node_provenance.get(sink, ()), 'Sink')) or (
                 bool(sink_edges) and all(endpoint_models([p], 'Sink') for p in sink_edges))
+            universal_source = universal_endpoint_models(source, source_edges, '(?:Src|Source)')
+            universal_sink = universal_endpoint_models(sink, sink_edges, 'Sink')
         source_present = any(contains(m) for m in source_models)
         sink_present = any(contains(m) for m in sink_models)
         # Only a wholly absent endpoint can explain scope exclusion. If an
         # endpoint has both standard-library and framework models, its modeled
         # standard-library alternative keeps the obligation in scope.
-        absent = sorted(set(([] if source_present else source_models)
-                            + ([] if sink_present else sink_models)))
+        absent = sorted((set() if source_present else universal_source)
+                        | (set() if sink_present else universal_sink))
         included = not source_known or not sink_known or (source_present and sink_present)
         result.setdefault(anchor, []).append(dict(included=included, source_models=source_models,
                                                  sink_models=sink_models, absent_models=absent))

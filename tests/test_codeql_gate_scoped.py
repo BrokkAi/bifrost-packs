@@ -14,6 +14,7 @@ from scripts.upstream.codeql_gate.stagers.java import JavaStager
 
 FIXTURES = Path(__file__).parent / 'fixtures/codeql_gate'
 GATE = Path(__file__).resolve().parents[1] / 'scripts/upstream/codeql_gate/gate.py'
+BOUNDARIES = FIXTURES / 'scoped-boundaries'
 
 
 class ScopedRecallTests(unittest.TestCase):
@@ -87,6 +88,105 @@ class ScopedRecallTests(unittest.TestCase):
             validate_attributions([dict(entries[0], attribution='framework-magic')])
         with self.assertRaisesRegex(GateError, 'duplicate scope attribution'):
             validate_attributions(entries * 2)
+        for justification in (None, '', '   '):
+            entry = dict(entries[0], justification=justification)
+            if justification is None:
+                del entry['justification']
+            with self.subTest(justification=justification):
+                with self.assertRaisesRegex(GateError, 'requires .* justification'):
+                    validate_attributions([entry])
+
+    def boundary_result(self, scope, endpoint):
+        result = {'verdict': 'EMPTY', 'pass': False, 'complete': True,
+                  'fn': ['x.go:10'], 'fp': [], 'errors': []}
+        attribution = dict(test_dir='scoped-boundaries', path='x.go', line=10,
+                           attribution='framework-endpoint-absent', endpoint=endpoint,
+                           justification='Named framework endpoint is absent from the catalog.')
+        apply_scope(result, {'recall_scope': scope}, [attribution])
+        return result
+
+    def test_attribution_must_explain_both_routes_to_one_select(self):
+        scope = expected_scope(BOUNDARIES / 'branch.expected', lambda row: row == 'Sink: stdlib')
+        self.assertEqual(len(scope['x.go:10']), 1)
+        self.assertFalse(scope['x.go:10'][0]['included'])
+        self.assertEqual(scope['x.go:10'][0]['source_models'],
+                         ['Source: framework.A', 'Source: framework.B'])
+        for endpoint in ('Source: framework.A', 'Source: framework.B'):
+            with self.subTest(endpoint=endpoint):
+                result = self.boundary_result(scope, endpoint)
+                self.assertFalse(result['pass'])
+                self.assertEqual(result['deferred_misses'], [])
+                self.assertEqual(result['scoped_misses'], ['x.go:10'])
+                self.assertIn('does not explain every path', result['errors'][0])
+
+    def test_unproven_alternative_endpoint_blocks_framework_deferral(self):
+        for role, opposite in (('source', 'Sink'), ('sink', 'Source')):
+            with self.subTest(role=role):
+                scope = expected_scope(BOUNDARIES / f'unproven-{role}.expected',
+                                       lambda row: row == f'{opposite}: stdlib')
+                self.assertTrue(scope['x.go:10'][0]['included'])
+                result = self.boundary_result(scope, f'{role.title()}: framework.A')
+                self.assertFalse(result['pass'])
+                self.assertEqual(result['deferred_misses'], [])
+                self.assertEqual(result['scoped_misses'], ['x.go:10'])
+
+    def test_source_spellings_and_node_proof_apply_to_every_route(self):
+        original = (BOUNDARIES / 'branch.expected').read_text()
+        for spelling in ('Src', 'Source'):
+            with self.subTest(spelling=spelling), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / 'check.expected'
+                # A common source model on both first edges permits deferral.
+                text = original.replace('Source:MaD:2', f'{spelling}:MaD:1')
+                text = text.replace('Src:MaD:1', f'{spelling}:MaD:1')
+                path.write_text(text)
+                scope = expected_scope(path, lambda row: row == 'Sink: stdlib')
+                self.assertTrue(self.boundary_result(scope, 'Source: framework.A')['pass'])
+                # Node evidence also proves a common endpoint on divergent edges.
+                path.write_text(original + '\nnodes\n'
+                                f'| x.go:1:1:1:2 | source | provenance | {spelling}:MaD:1 |\n')
+                scope = expected_scope(path, lambda row: row == 'Sink: stdlib')
+                self.assertTrue(self.boundary_result(scope, 'Source: framework.A')['pass'])
+
+    def test_distinct_source_rows_at_one_alert_remain_independent(self):
+        scope = expected_scope(BOUNDARIES / 'distinct-sources.expected',
+                               lambda row: row == 'Sink: stdlib')
+        self.assertEqual(len(scope['x.go:10']), 2)
+        self.assertEqual([p['included'] for p in scope['x.go:10']], [False, True])
+        self.assertTrue(self.boundary_result({'x.go:10': scope['x.go:10'][:1]},
+                                            'Source: framework.A')['pass'])
+        result = self.boundary_result(scope, 'Source: framework.A')
+        self.assertFalse(result['pass'])
+        self.assertEqual(result['scoped_misses'], ['x.go:10'])
+        self.assertEqual(result['deferred_misses'], [])
+
+    def test_model_numbering_is_independent_per_expected_file(self):
+        catalogs = {'Source: stdlib', 'Sink: stdlib'}
+        oracle = load_oracle(BOUNDARIES / 'numbering', 'Example.ql', GoStager(), 'example', catalogs)
+        paths = oracle['recall_scope']['x.go:10']
+        self.assertEqual(len(paths), 2)
+        self.assertEqual(paths[0]['source_models'], ['Source: framework.A'])
+        self.assertEqual(paths[1]['source_models'], ['Source: stdlib'])
+        self.assertEqual([p['included'] for p in paths], [False, True])
+        result = self.boundary_result(oracle['recall_scope'], 'Source: framework.A')
+        self.assertFalse(result['pass'])
+        self.assertEqual(result['scoped_misses'], ['x.go:10'])
+
+    def test_go_catalog_requires_every_printed_field_to_match(self):
+        directory, _, _ = self.inputs('go')
+        catalogs = set(json.loads((directory / 'catalog.json').read_text()))
+        for row in catalogs:
+            self.assertTrue(GoStager.model_in_catalog(row, catalogs))
+            for index, field in enumerate(row.split(';')):
+                with self.subTest(row=row, field=index):
+                    fields = row.split(';')
+                    fields[index] = field + 'x'
+                    mismatch = ';'.join(fields)
+                    self.assertFalse(GoStager.model_in_catalog(mismatch, catalogs))
+                    with tempfile.TemporaryDirectory() as tmp:
+                        path = Path(tmp) / 'check.expected'
+                        path.write_text((directory / 'check.expected').read_text().replace(row, mismatch))
+                        scope = expected_scope(path, lambda model: GoStager.model_in_catalog(model, catalogs))
+                        self.assertFalse(scope['sample.go:10'][0]['included'])
 
     def test_missing_models_refused_even_with_inline_tags(self):
         with tempfile.TemporaryDirectory() as tmp:
