@@ -72,6 +72,28 @@
       "remediation": "Catch the narrow exception types the operation can handle, or rethrow after recording context when a catch-all boundary is required."
     },
     {
+      "path": "policies/rethrown-exception-variable.rqlp",
+      "id": "bifrost.csharp-codeql-quality.rethrown-exception-variable",
+      "authored_hash": "659d34a1fe1ef8afd6231460cb4d4cd5667786372a4ffcc9a3eb11d233b8d571",
+      "resolved_semantic_hash": "659d34a1fe1ef8afd6231460cb4d4cd5667786372a4ffcc9a3eb11d233b8d571",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "failure-handler-state"],
+      "severity_rationale": "Throwing the caught exception variable resets its stack trace, so the original failure location is lost and errors become harder to diagnose.",
+      "remediation": "Use a bare throw; to rethrow, or wrap the exception in a new exception that keeps it as the inner exception."
+    },
+    {
+      "path": "policies/todo-comment.rqlp",
+      "id": "bifrost.csharp-codeql-quality.todo-comment",
+      "authored_hash": "7767e9b93cb027276c301531c5e5bb8f3dbad4310c909e357ced3342efb28e6d",
+      "resolved_semantic_hash": "7767e9b93cb027276c301531c5e5bb8f3dbad4310c909e357ced3342efb28e6d",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "A TODO, FIXME or XXX marker usually records unfinished or knowingly broken behavior that the code still ships with.",
+      "remediation": "Complete or remove the marked work, or move it to the issue tracker and delete the marker."
+    },
+    {
       "path": "policies/call-to-obsolete-method.rqlp",
       "id": "bifrost.csharp-codeql-quality.call-to-obsolete-method",
       "authored_hash": "66996b554cd9e25349829bac6fdce4adb94eb0703884d9f74cd419e50323486f",
