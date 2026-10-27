@@ -212,8 +212,15 @@ An explicit `scope.analyzed_files` list can supply the inventory (top-level,
 or the intersection when every policy run provides one). Truncated lists
 are not accepted as inventory. This is distinct from `completion.scope.files`,
 which lists gaps and retains the run-level handling described above. The
-pinned schema-6 binary exposes examined procedures rather than analyzed files,
-so the core uses one isolated match probe over File rows:
+coverage set is that explicit inventory, or the File-row and configuration
+probe inventories when the report has none, unioned with paths carrying findings from every measured
+policy run in the bundle. A measured finding proves its file was analyzed, even
+when the probe cannot inventory that file type. This also means an unmatched
+expected alert in such a file is a silent miss on a complete run. Probe findings
+never contribute to measured-policy coverage. Files with neither inventory
+evidence nor a measured finding remain unanalyzed and their expected alerts
+abstain. The pinned schema-6 binary exposes examined procedures rather than
+analyzed files, so the core uses a source File-row probe:
 
 ```lisp
 (file-of (text/regex "(?s).*"))
@@ -221,27 +228,34 @@ so the core uses one isolated match probe over File rows:
 
 The universal predicate selects source facts without a language/path filter;
 `file-of` deduplicates them to files, each reported as an inventory finding.
-File-row duplicate provenance can be truncated without losing membership;
-only run completion and absence of omitted findings certify the inventory.
-This is a file-membership check, not a claim about a policy's semantic coverage.
-The probe selects text-bearing nodes before `file-of` deduplicates them, so an
-analyzed file that has no text-bearing node (an empty file) reads as
-unanalyzed. An expected alert in such a file abstains instead of counting as a
-silent miss, which errs in the safe direction.
+The core also runs a configuration-fact seed. Its fact findings carry paths for
+XML, JSON, properties, POM and other supported configuration documents. The
+current binary does not allow `file-of` to consume `configuration_fact`, so the
+seed is queried directly and its primary paths are deduplicated. Because the
+seed reports one finding per configuration fact rather than one per file, a
+large configuration tree can reach the report's findings cap; the omitted-findings
+check then fails the probe and the gate reports ERROR. That fails closed and does
+not occur on CodeQL test directories. Switch the seed to `file-of` over
+configuration facts once the engine accepts that domain. Both probe
+runs must complete without omission. These are file-membership checks, not
+claims about a policy's semantic coverage. The source probe selects
+text-bearing nodes before `file-of` deduplicates them, so an analyzed source
+file that has no text-bearing node (such as an empty file) still reads as
+unanalyzed unless a measured finding proves membership.
 The measured policy's completion still determines whether analysis is complete.
 The probe runs on the same private staged root, with the same models and
 language environment and its own fresh caches/timeout. Its findings never
 enter the policy's score. A complete, untruncated probe is required; failure
 is ERROR. Probe stdout/stderr/exit status remain under `coverage-probe/`.
 
-The inventory is cached atomically under `<state-dir>/coverage`, keyed by
+The probe inventory is cached atomically under `<state-dir>/coverage`, keyed by
 prepared-root identity, binary SHA256, probe policy, model contents and the
 environment variables that can change what the probe sees: the keys the stager
 sets, `PATH`, and variables starting with `GO`, `BIFROST_`, `JAVA` or `RAYON_`.
 Shell state such as `PWD` or `SHLVL` is ignored. A lock prevents concurrent duplicate probes. Failed
 or incomplete probes are not cached. `coverage` records provenance and cache
-use; `analyzed_files` records membership; `unanalyzed_expected_files` lists
-expected-alert files missing from the inventory. `coverage_unknown` means
+use; `analyzed_files` records membership in the union; `unanalyzed_expected_files` lists
+expected-alert files missing from that union. `coverage_unknown` means
 that list is nonempty, never global abstention: only expected alerts in those
 files abstain. Every expected-alert file must be analyzed for `complete`.
 

@@ -157,6 +157,7 @@ class JavaStager:
                 else:
                     retained_sources[stub].add(source)
         artifact_cache = cache_dir / 'java-stubs' / fingerprint.hexdigest()
+        stub_fingerprint = fingerprint.hexdigest()
         work, compile_work, classes = (artifact_cache / 'sources',
                                        artifact_cache / 'compile-sources',
                                        artifact_cache / 'classes')
@@ -218,7 +219,9 @@ class JavaStager:
             for suffix, base, source_mode in (('.jar', classes, False),
                                               ('-sources.jar', work, True)):
                 jar = destination / f'{artifact}-{version}{suffix}'
-                if jar.is_file():
+                fingerprint_file = jar.with_name(jar.name + '.fingerprint')
+                if (jar.is_file() and fingerprint_file.is_file()
+                        and fingerprint_file.read_text().strip() == stub_fingerprint):
                     continue
                 fd, temporary_name = tempfile.mkstemp(prefix=f'.{jar.name}.', dir=destination)
                 os.close(fd)
@@ -230,6 +233,13 @@ class JavaStager:
                     os.replace(temporary_name, jar)
                 finally:
                     Path(temporary_name).unlink(missing_ok=True)
+                fd, stamp_name = tempfile.mkstemp(prefix=f'.{fingerprint_file.name}.', dir=destination)
+                try:
+                    with os.fdopen(fd, 'w') as stamp:
+                        stamp.write(stub_fingerprint + '\n')
+                    os.replace(stamp_name, fingerprint_file)
+                finally:
+                    Path(stamp_name).unlink(missing_ok=True)
             pom = ET.Element('project')
             for tag, value in (('modelVersion', '4.0.0'), ('groupId', group),
                                ('artifactId', artifact), ('version', version)):

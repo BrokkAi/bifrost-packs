@@ -123,6 +123,51 @@ class OracleTests(unittest.TestCase):
         data.pop('scope')
         self.assertEqual(score(data, self.oracle('problem'))['abstentions'], ['sample.go:3'])
 
+    def test_measured_finding_covers_configuration_file_absent_from_probe(self):
+        data = report(('application.yml', 4, 4))
+        data['scope']['analyzed_files'] = ['Main.java']
+        oracle = {'expected': [{'path': 'application.yml', 'start': 4, 'end': 4}],
+                  'spurious': [], 'missing': [], 'oracle_sources': {},
+                  'oracle_disagreement': None, 'testFailures': []}
+        result = score(data, oracle, analyzed_paths={'Main.java'})
+        self.assertEqual(result['verdict'], 'EXACT')
+        self.assertTrue(result['complete'])
+        self.assertEqual(result['analyzed_files'], ['Main.java', 'application.yml'])
+
+    def test_unmatched_alert_in_measured_finding_file_is_a_silent_miss(self):
+        data = report(('application.yml', 4, 4))
+        data['scope']['analyzed_files'] = ['Main.java']
+        oracle = {'expected': [{'path': 'application.yml', 'start': 4, 'end': 4},
+                               {'path': 'application.yml', 'start': 9, 'end': 9}],
+                  'spurious': [], 'missing': [], 'oracle_sources': {},
+                  'oracle_disagreement': None, 'testFailures': []}
+        result = score(data, oracle, analyzed_paths={'Main.java'})
+        self.assertEqual(result['silent_misses'], ['application.yml:9'])
+        self.assertEqual(result['abstentions'], [])
+        self.assertTrue(result['complete'])
+
+    def test_configuration_probe_file_without_findings_has_silent_miss(self):
+        data = report()
+        oracle = {'expected': [{'path': 'application.yml', 'start': 4, 'end': 4}],
+                  'spurious': [], 'missing': [], 'oracle_sources': {},
+                  'oracle_disagreement': None, 'testFailures': []}
+        result = score(data, oracle, analyzed_paths={'application.yml'})
+        self.assertEqual(result['silent_misses'], ['application.yml:4'])
+        self.assertEqual(result['abstentions'], [])
+        self.assertTrue(result['complete'])
+
+    def test_probe_findings_do_not_extend_measured_file_coverage(self):
+        data = {'runs': [{'policy_id': 'bifrost.upstream-gate.analyzed-files',
+                          'completion': {'type': 'complete'},
+                          'findings': [{'primary': {'path': 'probe-only.java',
+                                                    'region': {'start_line': 4, 'end_line': 4}}}]}]}
+        oracle = {'expected': [{'path': 'application.yml', 'start': 4, 'end': 4}],
+                  'spurious': [], 'missing': [], 'oracle_sources': {},
+                  'oracle_disagreement': None, 'testFailures': []}
+        result = score(data, oracle, analyzed_paths=set())
+        self.assertNotIn('application.yml', result['analyzed_files'])
+        self.assertEqual(result['abstentions'], ['application.yml:4'])
+
     def test_diagnostic_impacts_abstain_only_in_their_region(self):
         for impact in ('declared_non_exhaustive', 'finding_partial'):
             with self.subTest(impact=impact):
@@ -287,7 +332,10 @@ class ExecutionTests(unittest.TestCase):
             probe_report['runs'][0]['policy_id'] = 'bifrost.upstream-gate.analyzed-files'
             probe_report['runs'][0]['findings'][0]['primary']['region'] = None
             probe_report['runs'][0]['findings'][0]['completeness'] = {'type': 'partial', 'reasons': ['query_provenance_truncated']}
-            guard = "if any('__codeql_gate_analyzed_files.rqlp' in a for a in sys.argv):\n"
+            config_probe_run = dict(probe_report['runs'][0],
+                                    policy_id='bifrost.upstream-gate.configuration-files', findings=[])
+            probe_report['runs'].append(config_probe_run)
+            guard = "if any('__codeql_gate_analyzed_files.rqlp' in a or '__codeql_gate_configuration_files.rqlp' in a for a in sys.argv):\n"
             guard += " count=root.parent.parent.parent/'probe-count'\n"
             guard += " count.write_text(str(int(count.read_text())+1) if count.exists() else '1')\n"
             if behavior == 'probe_timeout':
@@ -302,8 +350,10 @@ class ExecutionTests(unittest.TestCase):
                    '--query-path', 'Example.ql', '--test-dir', str(test_dir), '--codeql-root', str(checkout),
                    '--binary', str(binary), '--state-dir', str(base / 'state'),
                    '--models', str(models), '--extra-policy', str(extra)]
-        if behavior in ('timeout', 'probe_timeout'):
+        if behavior == 'timeout':
             command += ['--timeout', '0.1']
+        elif behavior == 'probe_timeout':
+            command += ['--timeout', '1']
         if keep:
             command += ['--keep']
         proc = subprocess.run(command, capture_output=True, text=True, timeout=120)
@@ -330,7 +380,7 @@ class ExecutionTests(unittest.TestCase):
         proc, result, base = self.run_gate('probe')
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertEqual(result['analyzed_files'], ['sample.go'])
-        self.assertEqual(result['coverage']['source'], 'file_row_probe')
+        self.assertEqual(result['coverage']['source'], 'file_row_and_configuration_probes')
         self.assertFalse(result['coverage']['cache_hit'])
         self.assertEqual((base / 'state/probe-count').read_text(), '1')
         repeated = subprocess.run(self.last_command, capture_output=True, text=True, timeout=120)

@@ -19,6 +19,11 @@ class GateError(ValueError):
     pass
 
 
+PROBE_ID = 'bifrost.upstream-gate.analyzed-files'
+CONFIG_PROBE_ID = 'bifrost.upstream-gate.configuration-files'
+PROBE_IDS = (PROBE_ID, CONFIG_PROBE_ID)
+
+
 def key(row):
     return row['path'], row['start']
 
@@ -252,9 +257,13 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
     execution = data.get('execution', {})
     interrupted = bool(execution.get('termination') or execution.get('pending_policy_ids'))
     # Work counts sum selector activity and cannot establish file membership.
-    # Only expected-alert files need coverage evidence; stager inventory is not
-    # analysis evidence (it includes vendor and build-constrained inputs).
+    # A measured-policy finding does establish that its file was analyzed, even
+    # when the generic File-row probe cannot inventory that file type.
     source_paths = report_analyzed_paths(data, root) if analyzed_paths is None else set(analyzed_paths)
+    finding_paths = {finding['path'] for finding in findings
+                     if finding['policy_id'] not in PROBE_IDS}
+    if source_paths is not None or finding_paths:
+        source_paths = (source_paths or set()) | finding_paths
     unanalyzed_files = sorted({e['path'] for e in expected} - (source_paths or set()))
     coverage_unknown = bool(unanalyzed_files)
     complete = (bool(runs) and all(r.get('completion', {}).get('type') == 'complete' for r in runs)
@@ -328,7 +337,6 @@ def write_results(run_dir, result):
         f"CodeQL commit: `{result['codeql_commit']}`\n")
 
 
-PROBE_ID = 'bifrost.upstream-gate.analyzed-files'
 PROBE_POLICY = """(policy
   :schema-version 1
   :id "bifrost.upstream-gate.analyzed-files"
@@ -339,6 +347,18 @@ PROBE_POLICY = """(policy
     :type match
     :selector (rql :schema-version 1
       (file-of (text/regex "(?s).*")))))
+"""
+
+CONFIG_PROBE_POLICY = """(policy
+  :schema-version 1
+  :id "bifrost.upstream-gate.configuration-files"
+  :name "Upstream gate configuration file inventory"
+  :message "Configuration fact inventory"
+  :severity note
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (configuration-facts))))
 """
 
 
@@ -359,14 +379,15 @@ def invoke(command, root, env, output_dir, timeout):
 
 
 def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
-    """A File-row match policy emits one inventory finding per analyzed file.
+    """Probe source File rows and configuration facts for analyzed file paths.
 
     The universal text predicate selects source facts without a language/path
-    restriction. FileOf deduplicates to File rows rather than emitting a
-    finding per source fact. Probe findings never enter the
-    measured policy's findings, diagnostics or scores.
+    restriction. FileOf deduplicates source facts to files. Configuration facts
+    are selected directly because this binary does not allow FileOf to consume
+    their domain. Probe findings never enter the measured policy's findings,
+    diagnostics or scores.
     """
-    digest = hashlib.sha256(PROBE_POLICY.encode())
+    digest = hashlib.sha256((PROBE_POLICY + CONFIG_PROBE_POLICY).encode())
     digest.update(str(prepared.root.resolve()).encode())
     digest.update(hashlib.sha256(args.binary.read_bytes()).digest())
     # Only variables that can change what the probe sees take part: the keys
@@ -392,49 +413,58 @@ def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
         if cache_file.exists():
             cached = json.loads(cache_file.read_text())
             return set(cached['analyzed_files']), dict(cached, cache_hit=True)
-        policy = root / '.bifrost/policies' / '__codeql_gate_analyzed_files.rqlp'
-        if policy.exists():
-            raise GateError('policy basename reserved for analyzed-file probe')
-        policy.write_text(PROBE_POLICY)
-        output = run_dir / 'coverage-probe'
-        probe_env = dict(env)
-        probe_env.update(HOME=str(output / 'home'), USERPROFILE=str(output / 'home'),
-                         BIFROST_CACHE_ROOT=str(output / 'cache'),
-                         BIFROST_SEMANTIC_PACK_CACHE_ROOT=str(output / 'semantic-pack-cache'),
-                         XDG_CACHE_HOME=str(output / 'xdg'))
-        probe_env.update(stager.run_env(output, prepared))
-        (output / 'home').mkdir(parents=True)
-        command = [str(args.binary), '--root', str(root), '--no-builtin-policies',
-                   '--policy-file', policy.relative_to(root).as_posix(), '--format', 'json']
+        policies = [
+            (root / '.bifrost/policies' / '__codeql_gate_analyzed_files.rqlp', PROBE_POLICY),
+            (root / '.bifrost/policies' / '__codeql_gate_configuration_files.rqlp', CONFIG_PROBE_POLICY),
+        ]
+        if any(policy.exists() for policy, _ in policies):
+            raise GateError('policy basename reserved for analyzed-file probes')
+        # Write the probe policies inside the try so a failure part-way through
+        # setup still removes whatever was written; missing_ok keeps cleanup from
+        # masking that failure.
         try:
+            for policy, contents in policies:
+                policy.write_text(contents)
+            output = run_dir / 'coverage-probe'
+            probe_env = dict(env)
+            probe_env.update(HOME=str(output / 'home'), USERPROFILE=str(output / 'home'),
+                             BIFROST_CACHE_ROOT=str(output / 'cache'),
+                             BIFROST_SEMANTIC_PACK_CACHE_ROOT=str(output / 'semantic-pack-cache'),
+                             XDG_CACHE_HOME=str(output / 'xdg'))
+            probe_env.update(stager.run_env(output, prepared))
+            (output / 'home').mkdir(parents=True)
+            command = [str(args.binary), '--root', str(root), '--no-builtin-policies']
+            for policy, _ in policies:
+                command += ['--policy-file', policy.relative_to(root).as_posix()]
+            command += ['--format', 'json']
             rc, timeout = invoke(command, root, probe_env, output, args.timeout)
             if timeout:
                 raise GateError('analyzed-file probe timeout')
             data = json.loads((output / 'stdout.json').read_text())
             empty_oracle = {'expected': [], 'spurious': [], 'missing': [],
                             'oracle_sources': {}, 'oracle_disagreement': None}
-            # File rows intentionally have no source region. Validate run
-            # completion with their findings removed, then read only paths;
-            # never invent line numbers or feed inventory rows to scoring.
-            inventory = [f for r in data.get('runs', []) if r.get('policy_id') == PROBE_ID
+            # Validate probe completion with findings removed, then read only
+            # primary paths; never feed inventory rows to scoring.
+            inventory = [f for r in data.get('runs', []) if r.get('policy_id') in PROBE_IDS
                          for f in r.get('findings', [])]
             status = dict(data, runs=[dict(r, findings=[]) for r in data.get('runs', [])])
             checked = score(status, empty_oracle, root=root, exit_code=rc,
-                            analyzed_paths=(), required_policy_ids=[PROBE_ID])
+                            analyzed_paths=(), required_policy_ids=PROBE_IDS)
             if not checked['complete']:
                 raise GateError('analyzed-file probe did not complete; see coverage-probe logs')
-            # FileOf can truncate alternative source-node provenance while
-            # retaining every File row. Membership needs no full provenance;
-            # run completion and omitted-findings checks certify the list.
+            # Probe rows can have many facts per file. Membership needs only
+            # their primary paths; run completion and omission checks certify
+            # both inventories.
             paths = sorted({relative_path(f['primary']['path'], root) for f in inventory})
-            evidence = {'source': 'file_row_probe', 'analyzed_files': paths,
+            evidence = {'source': 'file_row_and_configuration_probes', 'analyzed_files': paths,
                         'report': str(output / 'stdout.json'), 'cache_file': str(cache_file)}
             temporary = cache_file.with_suffix('.tmp')
             temporary.write_text(json.dumps(evidence, indent=2) + '\n')
             temporary.replace(cache_file)
             return set(paths), dict(evidence, cache_hit=False)
         finally:
-            policy.unlink()
+            for policy, _ in policies:
+                policy.unlink(missing_ok=True)
 
 
 def execute(args, test_dir, query_path, stager):
