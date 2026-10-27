@@ -1,0 +1,15 @@
+#select
+| sample.go:10:1:10:4 | sink1 | sample.go:1:1:1:4 | source1 | sample.go:10:1:10:4 | sink1 | alert |
+| sample.go:20:1:20:4 | sink2 | sample.go:2:1:2:4 | source2 | sample.go:20:1:20:4 | sink2 | alert |
+| sample.go:30:1:30:4 | sink3 | sample.go:3:1:3:4 | source3 | sample.go:30:1:30:4 | sink3 | alert |
+edges
+| sample.go:1:1:1:4 | source1 | sample.go:10:1:10:4 | sink1 | provenance | Src:MaD:1 MaD:4 Sink:MaD:2 |
+| sample.go:2:1:2:4 | source2 | sample.go:20:1:20:4 | sink2 | provenance | Src:MaD:1 Sink:MaD:3 |
+| sample.go:3:1:3:4 | source3 | sample.go:30:1:30:4 | sink3 | provenance | Sink:MaD:3 |
+models
+| 1 | Source: net/http; Request; true; URL; ; ; ; remote; manual |
+| 2 | Sink: os/exec; ; false; Command; ; ; Argument[0]; command-injection; manual |
+| 3 | Sink: example.org/web; Runner; true; Execute; ; ; Argument[0]; command-injection; manual |
+| 4 | Summary: example.org/web; ; false; Wrap; ; ; Argument[0]; ReturnValue; taint; manual |
+nodes
+| sample.go:1:1:1:4 | source1 | semmle.label | source1 |

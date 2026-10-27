@@ -175,17 +175,28 @@ def add_inline_expectations(result, location, contents, query_id, alert_keys):
             result[column.lower() if column else alert_keys[tag]].append(dict(location))
 
 
-def load_oracle(test_dir, query_path, stager, query_id):
+def load_oracle(test_dir, query_path, stager, query_id, scope_catalogs=None):
     refs = [p for p in sorted(test_dir.glob('*.qlref'))
             if qlref_query(p) == query_path or qlref_query(p).endswith('/' + query_path)]
     if not refs:
         raise GateError(f'no .qlref for {query_path} in {test_dir}')
     selected, failures = [], []
+    recall_scope = {}
     for ref in refs:
         expected_file = ref.with_suffix('.expected')
         if not expected_file.is_file():
             raise GateError(f'missing expected file: {expected_file}')
         rows, unreliable = parse_expected(expected_file)
+        if scope_catalogs is not None:
+            try:
+                from .scoped import expected_scope
+            except ImportError:
+                from scoped import expected_scope
+            if not hasattr(stager, 'model_in_catalog'):
+                raise GateError('stager does not supply catalog membership')
+            scopes = expected_scope(expected_file, lambda row: stager.model_in_catalog(row, scope_catalogs))
+            for anchor, paths in scopes.items():
+                recall_scope.setdefault(anchor, []).extend(paths)
         selected.extend(rows)
         failures.extend(unreliable)
     inline = (stager.inline_oracle(test_dir, query_id)
@@ -215,7 +226,8 @@ def load_oracle(test_dir, query_path, stager, query_id):
                         'inline_only': [site(r) for r in tags if r.get('end_line_only')]}
     return {'expected': [r for r in unique(selected + tags) if key(r) not in overrides],
             'spurious': spurious, 'missing': missing, 'oracle_sources': sources,
-            'oracle_disagreement': disagreement, 'testFailures': failures}
+            'oracle_disagreement': disagreement, 'testFailures': failures,
+            **({'recall_scope': recall_scope} if scope_catalogs is not None else {})}
 
 
 def report_findings(data, root=None):
@@ -435,7 +447,11 @@ def write_results(run_dir, result):
         rows.append(f"| {name} sites | {', '.join(site(r) for r in result[name]['sites']) or '—'} |")
         rows.append(f"| {name} findings | {', '.join(result[name]['findings']) or '—'} |")
     (run_dir / 'result.md').write_text(
-        f"{result['query']}: {'PASS' if result['pass'] else result['verdict']}\n\n" + '\n'.join(rows) +
+        f"{result['query']}: " +
+        (result['verdict'] if 'full_suite_verdict' in result else
+         'PASS' if result['pass'] else result['verdict']) +
+        (f"; full suite: {result['full_suite_verdict']}" if 'full_suite_verdict' in result else '') +
+        '\n\n' + '\n'.join(rows) +
         f"\n\nComplete: {result['complete']}. Errors: {result['errors']}\n"
         f"\nOracle sources: {', '.join(f'{k}={len(v)}' for k, v in result['oracle_sources'].items())}.\n"
         f"Disagreement: {json.dumps(result['oracle_disagreement'])}\n"
@@ -574,7 +590,8 @@ def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
 
 
 def execute(args, test_dir, query_path, stager):
-    oracle = load_oracle(test_dir, query_path, stager, args.query)
+    oracle = load_oracle(test_dir, query_path, stager, args.query,
+                         getattr(args, 'scope_catalogs', None))
     prepared = stager.prepare(test_dir, args.codeql_root, args.state_dir / 'roots')
     runs_dir = args.state_dir / 'runs'
     runs_dir.mkdir(parents=True, exist_ok=True)
@@ -627,6 +644,14 @@ def execute(args, test_dir, query_path, stager):
         if timed_out or parse_error:
             result.update(verdict='ERROR', complete=False, **{'pass': False})
             result['errors'].append('timeout' if timed_out else f'report parse failure: {parse_error}')
+        if 'recall_scope' in oracle:
+            try:
+                from .scoped import apply_scope
+            except ImportError:
+                from scoped import apply_scope
+            test_name = test_dir.relative_to(args.codeql_root).as_posix()
+            apply_scope(result, oracle, [a for a in args.scope_attributions if a['test_dir'] == test_name])
+            result['scope_catalogs'] = sorted(args.scope_catalogs)
         result.update(query=args.query, query_ids=[args.query], test_dir=str(test_dir.relative_to(args.codeql_root)),
                       test_dirs=[str(test_dir.relative_to(args.codeql_root))], policy=str(args.policy),
                       extra_policies=list(map(str, args.extra_policy)), label=args.label,
@@ -640,7 +665,8 @@ def execute(args, test_dir, query_path, stager):
             csv.writer(stream, delimiter='\t', lineterminator='\n').writerow([
                 datetime.now(timezone.utc).isoformat(), args.query, str(args.policy), args.label,
                 result['verdict'], len(result['tp']), len(result['fp']), len(result['fn']),
-                result['completion_type'], result['wall_seconds'], str(run_dir)])
+                result['completion_type'], result['wall_seconds'], str(run_dir)] +
+                ([result['full_suite_verdict']] if 'full_suite_verdict' in result else []))
         return result
     finally:
         if not args.keep:

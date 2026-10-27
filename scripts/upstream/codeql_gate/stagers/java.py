@@ -19,6 +19,11 @@ except ImportError:
 
 
 class JavaStager:
+    @staticmethod
+    def model_in_catalog(row, catalogs):
+        # Exact printed rows preserve this language's signatures and access paths.
+        return row in catalogs
+
     _jdk_packages_by_home = {}
 
     def __init__(self, java_home=None):

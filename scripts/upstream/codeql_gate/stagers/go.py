@@ -15,6 +15,11 @@ except ImportError:
 
 
 class GoStager:
+    @staticmethod
+    def model_in_catalog(row, catalogs):
+        # Exact printed rows preserve this language's signatures and access paths.
+        return row in catalogs
+
     def prepare(self, test_dir, codeql_root, cache_dir):
         test_dir, cache_dir = Path(test_dir), Path(cache_dir)
         files = sorted(p for p in test_dir.rglob('*') if p.is_file()

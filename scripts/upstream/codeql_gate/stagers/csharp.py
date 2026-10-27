@@ -17,6 +17,11 @@ except ImportError:
 
 
 class CSharpStager:
+    @staticmethod
+    def model_in_catalog(row, catalogs):
+        # Exact printed rows preserve this language's signatures and access paths.
+        return row in catalogs
+
     def __init__(self, dotnet_root, nuget_packages, nuget_source):
         self.dotnet_root = Path(dotnet_root).resolve() if dotnet_root else None
         self.nuget_packages = Path(nuget_packages).resolve()

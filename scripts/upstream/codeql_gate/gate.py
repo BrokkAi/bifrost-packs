@@ -10,6 +10,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from core import GateError, execute, load_oracle
+from scoped import validate_attributions
 from stagers.go import GoStager
 from stagers.java import JavaStager
 from stagers.csharp import CSharpStager
@@ -39,7 +40,22 @@ def main(argv=None):
     parser.add_argument('--keep', action='store_true')
     parser.add_argument('--anchors', type=Path)
     parser.add_argument('--true-positives', type=Path)
+    parser.add_argument('--scope-catalogs', action='append', type=Path,
+                        help='JSON list of exact printed model rows; repeat to union catalogs')
+    parser.add_argument('--scope-attributions', type=Path,
+                        help='JSON list of reviewed out-of-subset miss attributions')
     args = parser.parse_args(argv)
+    catalogs = None
+    for path in args.scope_catalogs or []:
+        rows = json.loads(path.read_text())
+        if not isinstance(rows, list) or any(not isinstance(r, str) or not r.strip() for r in rows):
+            raise GateError('scope catalogs must be JSON lists of nonempty printed model strings')
+        catalogs = (catalogs or set()) | set(rows)
+    args.scope_catalogs = catalogs
+    args.scope_attributions = validate_attributions(
+        json.loads(args.scope_attributions.read_text()) if args.scope_attributions else [])
+    if args.scope_attributions and catalogs is None:
+        raise GateError('--scope-attributions requires --scope-catalogs')
     args.state_dir = args.state_dir.resolve()
     if args.command == 'summary':
         latest = {}
@@ -47,9 +63,12 @@ def main(argv=None):
         for line in file.read_text().splitlines() if file.exists() else []:
             row = line.split('\t')
             if not args.label or row[3] == args.label:
+                report = Path(row[10]) / 'result.json'
+                if report.is_file():
+                    validate_attributions(json.loads(report.read_text()).get('scope_attributions', []))
                 latest[tuple(row[1:3])] = line
         print('\n'.join(latest.values()))
-        return 0 if all(line.split('\t')[4] == 'EXACT' for line in latest.values()) and latest else 1
+        return 0 if all(line.split('\t')[4] in ('EXACT', 'SCOPED-EXACT') for line in latest.values()) and latest else 1
     if not args.query or not args.codeql_root:
         parser.error('query and --codeql-root (or CODEQL_ROOT) are required')
     args.codeql_root = args.codeql_root.resolve()
@@ -79,7 +98,7 @@ def main(argv=None):
             raise GateError(f'test directory is outside checkout or missing: {directory}')
     if args.command == 'expected':
         print(json.dumps([dict(test_dir=str(d.relative_to(args.codeql_root)),
-                               **load_oracle(d, query_path, stager, args.query)) for d in test_dirs], indent=2))
+                               **load_oracle(d, query_path, stager, args.query, args.scope_catalogs)) for d in test_dirs], indent=2))
         return 0
     if args.command == 'prepare':
         print(json.dumps([str(stager.prepare(d, args.codeql_root, args.state_dir / 'roots').root)
@@ -103,7 +122,10 @@ def main(argv=None):
     for name in ('tp', 'fp', 'fn', 'silent_misses', 'abstentions'):
         combined[name] = [f"{r['test_dir']}/{s}" for r in results for s in r[name]]
     combined['verdict'] = ('ERROR' if any(r['verdict'] == 'ERROR' for r in results) else
-                           'EXACT' if combined['pass'] else 'FAIL')
+                           ('SCOPED-EXACT' if args.scope_catalogs is not None else 'EXACT') if combined['pass'] else 'FAIL')
+    if args.scope_catalogs is not None:
+        combined['full_suite_verdict'] = ('ERROR' if any(r['full_suite_verdict'] == 'ERROR' for r in results)
+                                          else 'EXACT' if all(r['full_suite_pass'] for r in results) else 'FAIL')
     print(json.dumps({'runs': results, 'combined': combined}, indent=2))
     return 0 if combined['pass'] else 1
 
