@@ -494,6 +494,7 @@ def execute(args, test_dir, query_path, stager):
         result.update(query=args.query, query_ids=[args.query], test_dir=str(test_dir.relative_to(args.codeql_root)),
                       test_dirs=[str(test_dir.relative_to(args.codeql_root))], policy=str(args.policy),
                       extra_policies=list(map(str, args.extra_policy)), label=args.label,
+                      staged_artifacts=list(getattr(prepared, 'staged_artifacts', ())),
                       binary_sha256=hashlib.sha256(args.binary.read_bytes()).hexdigest(),
                       codeql_commit=subprocess.check_output(['git', '-C', str(args.codeql_root), 'rev-parse', 'HEAD'], text=True).strip(),
                       exit_code=rc, wall_seconds=round(time.monotonic() - started, 3), run_dir=str(run_dir), command=command)

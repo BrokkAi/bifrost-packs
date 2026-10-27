@@ -23,8 +23,11 @@ def main(argv=None):
     parser.add_argument('--codeql-root', type=Path, default=os.environ.get('CODEQL_ROOT'))
     parser.add_argument('--test-dir', action='append', type=Path, default=[], help='relative to CodeQL root; repeat for multi-dir queries')
     parser.add_argument('--query-path', help='query: value in .qlref; inferred from @id when omitted')
-    parser.add_argument('--state-dir', type=Path, default=Path('/tmp/codeql-gate'))
+    parser.add_argument('--state-dir', type=Path,
+                        default=Path(os.environ.get('CODEQL_GATE_STATE', '/tmp/codeql-gate')))
     parser.add_argument('--binary', type=Path, default=os.environ.get('BIFROST_BINARY'))
+    parser.add_argument('--java-home', type=Path, default=os.environ.get('JAVA_HOME'),
+                        help='JDK used to compile Java stubs (defaults to JAVA_HOME)')
     parser.add_argument('--extra-policy', action='append', type=Path, default=[])
     parser.add_argument('--models', type=Path)
     parser.add_argument('--label', default='')
@@ -46,9 +49,7 @@ def main(argv=None):
     if not args.query or not args.codeql_root:
         parser.error('query and --codeql-root (or CODEQL_ROOT) are required')
     args.codeql_root = args.codeql_root.resolve()
-    stager = GoStager() if args.language == 'go' else JavaStager()
-    if args.language == 'java':
-        raise GateError('Java stager is reserved for its owner and not implemented')
+    stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
     query_path = args.query_path
     if not query_path:
         import re
