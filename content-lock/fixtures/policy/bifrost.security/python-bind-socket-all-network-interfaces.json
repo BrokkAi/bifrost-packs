@@ -1,0 +1,65 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/.bifrost/policies/bind-socket-all-network-interfaces.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
+      "sha256": "28905c34786ef3547b340cf5289a8661cf4115a5316ecba3d1554e53b3114560",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/.bifrost/semantic-models/bifrost.python-security-sink-declarations.json",
+      "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-declarations.json",
+      "sha256": "156aedefd95f0560e9254523b6aa93b093a90cf18412615b33ec24496d9e1a15",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/.bifrost/semantic-models/bifrost.python-security-sink-summaries.json",
+      "source_path": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
+      "sha256": "1dfab973536dd05c84aa2fa64071448588d3ff1484fc6110714fd97c21cf3087",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "sha256": "d3f03a6510584e0af0019066298b9a8de1a2bc72199fb84318351f867b8d759d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/README.md",
+      "sha256": "e6cf3782fa55470143f12b6d833bcfc2281cd761512b44abb5f5551db0fddb7b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/main.py",
+      "sha256": "0b4b3016981d684aa8cc593c94fa7a851fc2d15d983ccd751709cc110879550e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/pyproject.toml",
+      "sha256": "00ed2179b81dded1f9b4334ff7bdcdc2858799fd475e7a65a0880c52579cc3f3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-bind-socket-all-network-interfaces/upstream/BindToAllInterfaces_test.py",
+      "source_path": "python/ql/test/query-tests/Security/CVE-2018-1281/BindToAllInterfaces_test.py",
+      "sha256": "1604f81ffc96e1663d898462b03cb6346155b58cda4d0101aea3887d4f6c950d",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CVE-2018-1281/BindToAllInterfaces_test.py"
+      }
+    }
+  ]
+}
