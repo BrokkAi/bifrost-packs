@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.csharp-codeql-quality",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "Bifrost C# CodeQL quality",
   "description": "Public C# structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -63,8 +63,8 @@
     {
       "path": "policies/catch-of-all-exceptions.rqlp",
       "id": "bifrost.csharp-codeql-quality.catch-of-all-exceptions",
-      "authored_hash": "f73b6f34b391b3f967dbf7a669ef0e1107071d04551eeb2bb47e47a573f26754",
-      "resolved_semantic_hash": "f73b6f34b391b3f967dbf7a669ef0e1107071d04551eeb2bb47e47a573f26754",
+      "authored_hash": "2701152f1fa3b84ddbfaa3e489ff71d786356210da19f982b650c15e256887f4",
+      "resolved_semantic_hash": "2701152f1fa3b84ddbfaa3e489ff71d786356210da19f982b650c15e256887f4",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "failure-handler-state"],
