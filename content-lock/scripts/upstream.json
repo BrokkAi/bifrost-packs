@@ -3,7 +3,7 @@
     {
       "path": "scripts/upstream/codeql_gate/README.md",
       "source_path": "scripts/upstream/codeql_gate/README.md",
-      "sha256": "3f42d5b7f66523ec1d46216967f53e28a6c5b77a06e859204ad53aad9e4a6a8e",
+      "sha256": "222c22864df9217bcd295388be7c5670bddee7055f5401a2da3e6aeb96f8fa8b",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -24,21 +24,70 @@
     {
       "path": "scripts/upstream/codeql_gate/core.py",
       "source_path": "scripts/upstream/codeql_gate/core.py",
-      "sha256": "53c458baf9f260196291692e21d6e842c35e0e960d823661371f648fa6b6a906",
+      "sha256": "05fdff702aaf0f152b45301196db90ea5af3fceea0b4d08351f0f941081ee726",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "scripts/upstream/codeql_gate/gate.py",
       "source_path": "scripts/upstream/codeql_gate/gate.py",
-      "sha256": "4a312c2444fdc5f7f697443862fa764a8675a9ddc6874b0a18ae584c75d7cfd4",
+      "sha256": "23376826623f1f9b13a0b67e068f006f44b66acfad7eca1f46abc241b0700365",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
+      "path": "scripts/upstream/codeql_gate/ql_classes.py",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes.py",
+      "sha256": "d8413b1eec1518b48668a23027518556224f91b2716d59d7b917bf68152b00d8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-022--semmle--tests.json",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-022--semmle--tests.json",
+      "sha256": "b72fa40c79e625d7b86cfd50e7b04cbe0595971705f0bc8c482ede4a0811af29",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-074--XsltInjection.json",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-074--XsltInjection.json",
+      "sha256": "62feab0579dbbe2260a9bc64f49980842b72e3183e3abb380ba79e66e30d0252",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-078.json",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-078.json",
+      "sha256": "ab2606f1ce2748d1ad4b69ef23bb9ac5da8b841d745792da3eb68dd2a62f6cac",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-090.json",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-090.json",
+      "sha256": "348d36b9e0e71297b8b759e9efbb025b2e3f9647264fcf469447091fe755c62f",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-643.json",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-643.json",
+      "sha256": "233ed067caf9fe69731cf59700abc46cdaed3511a79ff7ddb24bf888860ba429",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-918.json",
+      "source_path": "scripts/upstream/codeql_gate/ql_classes/java/java--ql--test--query-tests--security--CWE-918.json",
+      "sha256": "5a66e5508bc2472068e2826327111ce5ddd985c1d42abfa2caab9fe115195f9f",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
       "path": "scripts/upstream/codeql_gate/scoped.py",
       "source_path": "scripts/upstream/codeql_gate/scoped.py",
-      "sha256": "e69a4809edfb3f1e4a6b03c464e9d631f244b66bf0419fb4b4b5eb12af8d8365",
+      "sha256": "4dfbe79055ccd11f055a1cd384dd625847fa14786a2bca0ee557ba3c65226e2f",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -52,21 +101,21 @@
     {
       "path": "scripts/upstream/codeql_gate/stagers/csharp.py",
       "source_path": "scripts/upstream/codeql_gate/stagers/csharp.py",
-      "sha256": "3619b6b2acb1c62ec170d4b5ca8a7a194bb9718d9229d7af08ebcbd2795505d7",
+      "sha256": "6ec828581a6fc166c76222cf4921fea446d9402ecf811a454cb48dcee13fdfc9",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "scripts/upstream/codeql_gate/stagers/go.py",
       "source_path": "scripts/upstream/codeql_gate/stagers/go.py",
-      "sha256": "cf7d0618a19f1566e29e11e36898861400e9d20b039ad46761126a3eca57ddf8",
+      "sha256": "ccfc7459a22af74ae3ef69033cba2849b959a191cba02fbd613ac55118802e69",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "scripts/upstream/codeql_gate/stagers/java.py",
       "source_path": "scripts/upstream/codeql_gate/stagers/java.py",
-      "sha256": "061cd9f115ef7211153db536d44404039b067d4256ed419b9be8af978661e884",
+      "sha256": "706127e9534fa09175e8e46ca84f68700c74ee89f0dc6cb054fc4d6e883c7a69",
       "classification": "public",
       "license": "Apache-2.0"
     },
