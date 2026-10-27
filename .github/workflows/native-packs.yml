@@ -5,15 +5,17 @@ on:
       version:
         description: Independent pack release version (raw generation evidence only until native migration)
         required: true
-        default: '0.6.0'
+        default: '0.6.1'
+  # Regenerate only when generator inputs or packs release tooling change; content.yml
+  # runs content verification and the unit tests on every pull request and push.
   pull_request:
-    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+    paths: ['native-generation.json', 'release-config.packs.json', 'semantic-packs/**', 'scripts/upstream/**', 'release-contract/**', 'scripts/content.py', 'scripts/audit_tuple.py', '.github/workflows/native-packs.yml']
   # A pull request can restore only caches saved on its own merge ref or on main,
   # so main saves the producer and upstream inputs for later pull requests.
   push:
     branches: [main]
     tags: ['packs/v*.*.*']
-    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+    paths: ['native-generation.json', 'release-config.packs.json', 'semantic-packs/**', 'scripts/upstream/**', 'release-contract/**', 'scripts/content.py', 'scripts/audit_tuple.py', '.github/workflows/native-packs.yml']
 permissions:
   contents: read
 jobs:
@@ -146,7 +148,7 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          version=${INPUT_VERSION:-0.6.0}
+          version=${INPUT_VERSION:-0.6.1}
           if [[ "$GITHUB_REF" == refs/tags/packs/* ]]; then
             version=${GITHUB_REF_NAME#packs/v}
             test "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" = "$GITHUB_SHA"
@@ -198,7 +200,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md
+          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md \
+            --context-notes "$(jq -r .notes release-config.packs.json)"
           cd dist
           sha256sum -c *.sha256
           flags=()

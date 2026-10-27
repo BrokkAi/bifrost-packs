@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.5.1",
+  "release_version": "0.5.2",
   "artifact_role": "source",
-  "notes": "This patch keeps all 238 policy IDs and the native pack dependency on 0.6.0. Twenty-seven policies in the C#, Java, JavaScript, Python and security packs replace synonym capability names with the canonical names that Bifrost 0.14.0 already advertises, or drop a name that another listed capability covers: control-flow becomes semantic-control-flow (JavaScript) or python-cfg (Python), type-hierarchy and exception-hierarchy become python-class-hierarchy, binding-resolution becomes lexical-environment, and literal-value-matching, expression-kind-facts, member-resolution, local-value-flow, python-syntax-diagnostics, exact-value-identity and the redundant generic-type-facts are dropped. No policy asks more of a consumer, so admission on Bifrost 0.14.0 is unchanged, and engines that stop advertising the synonyms keep admitting these policies. bifrost.cpp-jsf.av-rule-159 now selects the unary member operator& (no declared parameters) instead of the binary one, restoring its stated unary address-of scope. Source integrity and focused publication smoke remain separate from full engine and policy qualification.",
+  "notes": "This patch keeps all 238 policy source files, IDs and consumer capabilities unchanged and updates the exact native dependency from bifrost.public.packs 0.6.0 to 0.6.1 so acquisition delivers the reviewed JDK 21 result-use obligations for existing policies. Publish packs/v0.6.1 first. This dependency repair does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.6.0",
+      "release_version": "0.6.1",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]
