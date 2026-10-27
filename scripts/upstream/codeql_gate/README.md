@@ -123,8 +123,10 @@ from compilation and recorded.
 When javac reports a missing package, the stager can add an auxiliary root from
 the CodeQL stub tree. It chooses the root with the fewest source files, then by
 name; option roots keep type precedence. The auxiliary root and the missing
-package diagnostic that selected it are recorded and added to the prepared
-root's Maven dependencies. A root that remains unbuildable is marked
+package diagnostic that selected it are recorded as compile-only provenance.
+Auxiliary roots are available to javac, but are not published as Maven
+dependencies or staged into the measured workspace. A test import supplied
+only by an auxiliary root is a setup error. A root that remains unbuildable is marked
 `unstaged`, with its coordinate and first javac diagnostic in the prepared-root
 provenance and each run's `result.json` and `result.md`; it has no binary jar.
 Preparation fails if a test source imports a package supplied only by an

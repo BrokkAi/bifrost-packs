@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 import unittest
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -203,6 +204,34 @@ class JavaStagerTests(unittest.TestCase):
             record = next((cache / 'java-stubs').glob('*/compile.txt')).read_text()
             self.assertIn('HikariCP-3.4.5/javax/crypto/Stub.java package=javax.crypto modules=java.base', record)
 
+    def test_package_in_comment_does_not_hide_real_imported_class(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/real/Good.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('/*\npackage javax.crypto;\n*/\npackage real; public class Good {}\n')
+            (test_dir / 'Use.java').write_text('import real.Good; class Use {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                output = Path(command[command.index('-d') + 1]) / 'real/Good.class'
+                output.parent.mkdir(parents=True)
+                output.write_bytes(b'Good')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={'javax.crypto': {'java.base'}}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                prepared = stager.prepare(test_dir, codeql, cache)
+            jar = cache / 'maven-home/.m2/repository/codeql/stubs/HikariCP-3.4.5/0/HikariCP-3.4.5-0.jar'
+            self.assertEqual(prepared.staged_artifacts[0]['staging_status'], 'built')
+            with zipfile.ZipFile(jar) as archive:
+                self.assertIn('real/Good.class', archive.namelist())
+
+
     def test_compile_failure_marks_root_unstaged_without_binary_jar(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -373,7 +402,7 @@ class JavaStagerTests(unittest.TestCase):
             self.assertIn('file stem is not a valid Java identifier', record)
             self.assertEqual(prepared.staged_artifacts[0]['staging_status'], 'built')
 
-    def _prepare_missing_package_with_auxiliaries(self, base, candidates):
+    def _prepare_missing_package_with_auxiliaries(self, base, candidates, test_source=None):
         names = ('HikariCP-3.4.5',)
         codeql, test_dir, stub_root = self.fixture(base, names)
         consumer = stub_root / names[0] / 'consumer/Use.java'
@@ -381,6 +410,8 @@ class JavaStagerTests(unittest.TestCase):
         consumer.write_text('package consumer; import shared.api.Needed; public class Use {}\n')
         test_dir.joinpath('options').write_text(
             '--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+        if test_source:
+            (test_dir / 'Test.java').write_text(test_source)
         for root_name, package_sources in candidates.items():
             for relative, text in package_sources.items():
                 source = stub_root / root_name / relative
@@ -425,6 +456,62 @@ class JavaStagerTests(unittest.TestCase):
             self.assertEqual([item['stub_dir'] for item in auxiliaries], ['javafx-web'])
             self.assertEqual(auxiliaries[0]['auxiliary_package'], 'shared.api')
             self.assertIn('package shared.api does not exist', auxiliaries[0]['auxiliary_trigger'])
+
+    def test_changed_auxiliary_winner_rebuilds_dependencies_and_removes_stale_jar(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base, ('HikariCP-3.4.5', 'apache-hive', 'javafx-web'))
+            consumer = stub_root / 'HikariCP-3.4.5/consumer/Use.java'
+            consumer.parent.mkdir(parents=True)
+            consumer.write_text('package consumer; import shared.api.Needed; public class Use {}\n')
+            for root in ('apache-hive', 'javafx-web'):
+                source = stub_root / root / 'shared/api/Needed.java'
+                source.parent.mkdir(parents=True)
+                source.write_text('package shared.api; public class Needed {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                sources = [Path(value) for value in command if value.endswith('.java')]
+                if any(source.name == 'Use.java' for source in sources) and '-classpath' not in command:
+                    return SimpleNamespace(returncode=1, stdout='', stderr='package shared.api does not exist')
+                output = Path(command[command.index('-d') + 1])
+                for source in sources:
+                    relative = Path('consumer/Use.class' if source.name == 'Use.java'
+                                    else 'shared/api/Needed.class')
+                    target = output / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(b'class')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                first = stager.prepare(test_dir, codeql, cache)
+                (stub_root / 'apache-hive/shared/api/Extra.java').write_text(
+                    'package shared.api; public class Extra {}\n')
+                second = stager.prepare(test_dir, codeql, cache)
+            self.assertNotEqual(first.root, second.root)
+            auxiliaries = [item for item in second.staged_artifacts if item['staging_kind'] == 'auxiliary']
+            self.assertEqual([item['stub_dir'] for item in auxiliaries], ['javafx-web'])
+            self.assertTrue(auxiliaries[0]['compile_only'])
+            pom = ET.parse(second.root / 'pom.xml').getroot()
+            artifacts = [dep.findtext('artifactId') for dep in pom.findall('./dependencies/dependency')]
+            self.assertNotIn('apache-hive', artifacts)
+            self.assertNotIn('javafx-web', artifacts)
+            old_jar = cache / 'maven-home/.m2/repository/codeql/stubs/apache-hive/0/apache-hive-0.jar'
+            self.assertFalse(old_jar.exists())
+            self.assertFalse(list((cache / 'maven-home').rglob('javafx-web-0.jar')))
+
+    def test_import_from_compile_only_auxiliary_is_setup_error(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(GateError, 'import shared.api.Needed'):
+                self._prepare_missing_package_with_auxiliaries(Path(temporary), {
+                    'javafx-web': {
+                        'shared/api/Needed.java': 'package shared.api; public class Needed {}\n',
+                    },
+                }, 'import shared.api.Needed; class Test {}\n')
 
     def test_auxiliary_root_tie_breaks_by_name(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -156,6 +156,23 @@ def _java_imports(source):
     return imports
 
 
+def _java_package(source):
+    tokens = _java_tokens(source)
+    for index, token in enumerate(tokens):
+        if token[0] != 'package':
+            continue
+        parts = []
+        cursor = index + 1
+        while cursor < len(tokens) and tokens[cursor][0] != ';':
+            parts.append(tokens[cursor][0])
+            cursor += 1
+        if cursor < len(tokens) and parts and all(
+                (i % 2 == 0 and _valid_java_identifier(part)) or
+                (i % 2 == 1 and part == '.') for i, part in enumerate(parts)):
+            return ''.join(parts)
+    return ''
+
+
 _JAVA_KEYWORDS = frozenset('abstract assert boolean break byte case catch char class const continue '
                            'default do double else enum extends final finally float for goto if '
                            'implements import instanceof int interface long native new package '
@@ -249,9 +266,13 @@ class JavaStager:
             digest.update(hashlib.sha256(path.read_bytes()).digest())
 
         stub_dirs = self._option_stub_dirs(test_dir, stub_root, coordinates)
-        stub_sources = {stub: sorted(stub.rglob('*.java')) for stub in stub_dirs}
+        all_stub_sources = {root: sorted(root.rglob('*.java')) for root in sorted(stub_root.iterdir())
+                            if root.is_dir()}
+        stub_sources = {stub: all_stub_sources.get(stub, []) for stub in stub_dirs}
         stub_sources = {stub: sources for stub, sources in stub_sources.items() if sources}
-        for stub, sources in stub_sources.items():
+        # Auxiliary provider selection depends on every candidate's source inventory.
+        # Include those inputs so a changed winner cannot reuse stale prepared state.
+        for stub, sources in all_stub_sources.items():
             digest.update(stub.name.encode() + b'\0')
             for source in sources:
                 digest.update(source.relative_to(stub).as_posix().encode() + b'\0')
@@ -295,18 +316,19 @@ class JavaStager:
             statuses = self._install_stubs(stub_sources, coordinates, cache_dir, fake_home, files, stub_root)
         else:
             statuses = {}
-        if target.exists() and stub_sources:
+        if target.exists():
             pom_path = target / 'pom.xml'
             pom = ET.parse(pom_path)
             project = pom.getroot()
             deps = project.find('dependencies')
-            known = {(dep.findtext('groupId'), dep.findtext('artifactId'), dep.findtext('version'))
-                     for dep in deps.findall('dependency')}
+            if deps is not None:
+                project.remove(deps)
+            deps = ET.SubElement(project, 'dependencies')
             for stub in stub_sources:
+                if stub in statuses and statuses[stub].get('staging_kind') == 'auxiliary':
+                    continue
                 row = coordinates[stub.name]
                 coord = (row['groupId'], row['artifactId'], row['version'])
-                if coord in known:
-                    continue
                 dep = ET.SubElement(deps, 'dependency')
                 for tag, value in (('groupId', coord[0]), ('artifactId', coord[1]),
                                    ('version', coord[2]), ('scope', 'compile')):
@@ -368,9 +390,7 @@ class JavaStager:
         declared_package = {}
         for root, sources in all_stub_sources.items():
             for source in sources:
-                match = re.search(r'^\s*package\s+([\w.]+)\s*;',
-                                  source.read_text(errors='replace'), re.M)
-                package = match.group(1) if match else ''
+                package = _java_package(source.read_text(errors='replace'))
                 declared_package[source] = package
                 fingerprint.update(root.name.encode() + b'\0')
                 fingerprint.update(source.relative_to(root).as_posix().encode() + b'\0')
@@ -468,6 +488,13 @@ class JavaStager:
         flags = ('-proc:none', '-nowarn', '-encoding', 'UTF-8', '--release', '21')
         coordinate_dirs = {}
         built, unstaged, diagnostics, compile_records = set(), set(), {}, []
+        pending_markers = []
+        for stub in stub_sources:
+            row = coordinates[stub.name]
+            coordinate_dir = (fake_home / '.m2/repository' /
+                              Path(*row['groupId'].split('.')) / row['artifactId'] / row['version'])
+            (coordinate_dir / f"{row['artifactId']}-{row['version']}.jar.fingerprint").unlink(
+                missing_ok=True)
         pending = list(stub_sources)
         while pending:
             next_pending = []
@@ -527,6 +554,16 @@ class JavaStager:
                 built_this_pass.append(stub)
                 coordinate_dirs[stub] = output
                 row = coordinates[stub.name]
+                expected = {
+                    '/'.join(part for part in (package_for_source[source].replace('.', '/'),
+                                               source.stem + '.class') if part)
+                    for source in sources
+                }
+                missing = sorted(name for name in expected if not (output / name).is_file())
+                if missing:
+                    raise GateError(f'Java stub binary is missing expected classes for {stub.name}: {missing}')
+                if stub in auxiliary_triggers:
+                    continue
                 coordinate_dir = (fake_home / '.m2/repository' /
                                   Path(*row['groupId'].split('.')) / row['artifactId'] / row['version'])
                 coordinate_dir.mkdir(parents=True, exist_ok=True)
@@ -534,25 +571,28 @@ class JavaStager:
                 with zipfile.ZipFile(jar, 'w', zipfile.ZIP_DEFLATED) as archive:
                     for file in sorted(output.rglob('*.class')):
                         archive.write(file, file.relative_to(output).as_posix())
-                expected = {
-                    '/'.join(part for part in (package_for_source[source].replace('.', '/'),
-                                               source.stem + '.class') if part)
-                    for source in sources
-                }
                 with zipfile.ZipFile(jar) as archive:
                     missing = sorted(expected - set(archive.namelist()))
                 if missing:
                     jar.unlink(missing_ok=True)
                     jar.with_name(jar.name + '.fingerprint').unlink(missing_ok=True)
                     raise GateError(f'Java stub binary jar is missing expected classes for {stub.name}: {missing}')
-                stamp = jar.with_name(jar.name + '.fingerprint')
-                stamp.write_text(fingerprint.hexdigest() + '\n')
+                pending_markers.append((stamp := jar.with_name(jar.name + '.fingerprint')))
                 coordinate_dirs[stub] = jar
             if not built_this_pass and not added_auxiliary:
                 unstaged.update(next_pending)
                 break
             pending = added_auxiliary + next_pending
 
+        for stub in all_stub_sources:
+            if stub in stub_sources and stub not in auxiliary_triggers:
+                continue
+            row = coordinates.get(stub.name)
+            if row is None:
+                continue
+            coordinate_dir = (fake_home / '.m2/repository' /
+                              Path(*row['groupId'].split('.')) / row['artifactId'] / row['version'])
+            shutil.rmtree(coordinate_dir, ignore_errors=True)
         for stub in unstaged:
             row = coordinates[stub.name]
             coordinate_dir = (fake_home / '.m2/repository' /
@@ -565,22 +605,24 @@ class JavaStager:
         for stub in stub_sources:
             row = coordinates[stub.name]
             group, artifact, version = row['groupId'], row['artifactId'], row['version']
-            coordinate_dir = (fake_home / '.m2/repository' /
-                              Path(*group.split('.')) / artifact / version)
-            coordinate_dir.mkdir(parents=True, exist_ok=True)
-            sources_jar = coordinate_dir / f'{artifact}-{version}-sources.jar'
-            with zipfile.ZipFile(sources_jar, 'w', zipfile.ZIP_DEFLATED) as archive:
-                for file, relative in self._jar_files(work, stub.name, True, ()):
-                    archive.write(file, relative.as_posix())
-            pom_path = coordinate_dir / f'{artifact}-{version}.pom'
-            if not pom_path.is_file():
-                pom = ET.Element('project')
-                for tag, value in (('modelVersion', '4.0.0'), ('groupId', group),
-                                   ('artifactId', artifact), ('version', version)):
-                    ET.SubElement(pom, tag).text = value
-                ET.ElementTree(pom).write(pom_path, encoding='utf-8', xml_declaration=True)
+            if stub not in auxiliary_triggers:
+                coordinate_dir = (fake_home / '.m2/repository' /
+                                  Path(*group.split('.')) / artifact / version)
+                coordinate_dir.mkdir(parents=True, exist_ok=True)
+                sources_jar = coordinate_dir / f'{artifact}-{version}-sources.jar'
+                with zipfile.ZipFile(sources_jar, 'w', zipfile.ZIP_DEFLATED) as archive:
+                    for file, relative in self._jar_files(work, stub.name, True, ()):
+                        archive.write(file, relative.as_posix())
+                pom_path = coordinate_dir / f'{artifact}-{version}.pom'
+                if not pom_path.is_file():
+                    pom = ET.Element('project')
+                    for tag, value in (('modelVersion', '4.0.0'), ('groupId', group),
+                                       ('artifactId', artifact), ('version', version)):
+                        ET.SubElement(pom, tag).text = value
+                    ET.ElementTree(pom).write(pom_path, encoding='utf-8', xml_declaration=True)
             statuses[stub] = {'staging_status': 'built' if stub in built else 'unstaged',
-                              'staging_kind': 'auxiliary' if stub in auxiliary_triggers else 'options'}
+                              'staging_kind': 'auxiliary' if stub in auxiliary_triggers else 'options',
+                              'compile_only': stub in auxiliary_triggers}
             if stub in unstaged:
                 statuses[stub]['staging_diagnostic'] = diagnostics[stub]
             if stub in auxiliary_triggers:
@@ -612,7 +654,11 @@ class JavaStager:
 
         unstaged_packages = set().union(*(packages_by_stub[stub] for stub in unstaged)) if unstaged else set()
         built_packages = set().union(*(packages_by_stub[stub] for stub in built)) if built else set()
-        unavailable = unstaged_packages - built_packages
+        auxiliary_packages = set().union(*(packages_by_stub[stub]
+                                           for stub in auxiliary_triggers)) if auxiliary_triggers else set()
+        unavailable = (unstaged_packages - built_packages) | (auxiliary_packages -
+                       set().union(*(packages_by_stub[stub] for stub in stub_sources
+                                     if stub not in auxiliary_triggers)))
         import_errors = []
         for test_file in test_files:
             if test_file.suffix != '.java':
@@ -620,13 +666,16 @@ class JavaStager:
             for imported in _java_imports(test_file.read_text(errors='replace')):
                 for package in sorted(unavailable, key=len, reverse=True):
                     if imported == package or imported.startswith(package + '.'):
-                        owners = [stub.name for stub in stub_sources if stub in unstaged
+                        owners = [stub.name for stub in stub_sources
+                                  if stub in (unstaged | set(auxiliary_triggers))
                                   and package in packages_by_stub[stub]]
                         import_errors.append(f"{test_file.name}: import {imported} from unstaged stub roots {owners}")
                         break
         if import_errors:
             raise GateError('Java test imports packages available only from unstaged stubs:\n' +
                             '\n'.join(import_errors))
+        for marker in pending_markers:
+            marker.write_text(fingerprint.hexdigest() + '\n')
         return statuses
 
     def _jdk_packages(self, java_home):
