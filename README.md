@@ -15,8 +15,9 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - `fixtures/`: reviewed public policy and upstream semantic fixtures.
 - `scripts/upstream/`: byte-identical engine-bound generation/install recipes;
   read [generation instructions](docs/generation.md) before running them.
-- `content-lock.json`: exact source path, classification, license, and byte
-  hashes.
+- `content-lock.json` and `content-lock/`: the lock header (source, engine
+  qualification) and, in path-derived shards, each file's exact source path,
+  classification, license, and byte hash. See [Locking content](#locking-content).
 - `release-contract/`: shared public/premium release metadata and selection
   tools.
 - [Release versioning](docs/release-versioning.md): independent stream bump
@@ -28,7 +29,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**238 unique rules across 12 policy packs.**
+**240 unique rules across 12 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -37,7 +38,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.correctness | 1 |
 | Pack | bifrost.cpp-jsf | 14 |
 | Pack | bifrost.cpp-power-of-10 | 2 |
-| Pack | bifrost.csharp-codeql-quality | 9 |
+| Pack | bifrost.csharp-codeql-quality | 11 |
 | Pack | bifrost.effects | 12 |
 | Pack | bifrost.java-codeql-quality | 19 |
 | Pack | bifrost.javascript-codeql-quality | 12 |
@@ -48,20 +49,20 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 10 |
-| Category | quality | 55 |
+| Category | quality | 57 |
 | Category | security | 47 |
 | Severity | error | 72 |
-| Severity | note | 21 |
-| Severity | warning | 145 |
+| Severity | note | 22 |
+| Severity | warning | 146 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 476 rule-language pairs.
+13 declared languages; 478 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 19 |
 | cpp | 39 |
-| csharp | 33 |
+| csharp | 35 |
 | go | 20 |
 | java | 51 |
 | javascript | 42 |
@@ -73,7 +74,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 46, unspecified 192. Omitted labels remain unspecified.
+Activation labels: opt-in 46, unspecified 194. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -81,6 +82,10 @@ Metadata is an inventory, not evidence of enablement or behavior qualification.
 Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
+
+The next packaging repair prepares `packs/v0.6.1` and `rules/v0.5.2` to deliver
+the reviewed JDK 21 result-use model through normal acquisition. See the
+[release repair and verification plan](docs/result-use-native-release.md).
 
 ## Source verification
 
@@ -98,6 +103,53 @@ installer. No runtime download, scanner enablement, or engine default change
 happens here. Compatibility declarations are separate from exact-build
 behavior evidence; see [validation](validation.json) and
 [transition sequencing](docs/v013-transition.md).
+
+## Locking content
+
+Every file under `rules/`, `semantic-packs/`, `fixtures/`, `scripts/upstream/`
+and `licenses/` has one lock entry. `content-lock.json` holds only the header;
+its `file_shards` object names the `content-lock/` directory and how deeply each
+path prefix is sharded (longest prefix wins). Each entry lives in the shard its
+path selects, so changes to different packs or fixtures touch different files:
+
+| Path | Shard |
+| --- | --- |
+| `fixtures/policy/<pack>/<fixture>/…` | `content-lock/fixtures/policy/<pack>/<fixture>.json` |
+| `fixtures/semantic/<area>/…` | `content-lock/fixtures/semantic/<area>.json` |
+| `semantic-packs/embedded/<pack>/…` | `content-lock/semantic-packs/embedded/<pack>.json` |
+| `licenses/…` | `content-lock/licenses.json` |
+| anything else, such as `rules/<pack>/…`, `semantic-packs/<area>/…`, `scripts/upstream/…` | `content-lock/<first two components>.json` |
+
+A file directly inside a shallower directory uses that directory's shard. The
+aggregate SHA-256 is not stored: `verify` and `bundle` derive it from the
+path-sorted entries. Do not hand-edit digests or shard placement. After adding,
+changing or deleting content, regenerate the lock:
+
+```sh
+python3 scripts/content.py lock --license Apache-2.0 rules/bifrost.example fixtures/policy/bifrost.example
+python3 scripts/content.py verify
+```
+
+`lock` refreshes changed digests, drops entries for deleted files, moves
+entries into their shards and rewrites shards in canonical form. It keeps every
+other recorded field. A new file is added only with an explicit `--license`,
+optionally limited to the listed files or directories; run it once per license.
+New entries record `classification: public` and `source_path` equal to `path`.
+For content imported from elsewhere, edit the new entry's `source_path` and add
+`source_revision` or `external_source` as reviewed; later runs keep them.
+Without `--license`, `lock` reports unlisted files and fails.
+
+Two changes now conflict only when they edit the same shard at adjacent
+entries. Resolve such a conflict by keeping both sides' entries, then rerun
+`lock`. It merges identical duplicates and refreshes digests from the merged
+tree, and it refuses entries for one path that disagree on anything but the
+digest.
+
+Source and release archives still carry a single-file `content-lock.json` with
+every entry and its `aggregate_sha256`. Its bytes are unchanged by sharding, so
+`content_origin.lock_sha256` in release manifests still identifies the same
+joined lock. `verify` accepts that single-file form, which is how archive
+contents are checked; `lock` converts it to shards.
 
 New release manifests use contract schema 2: they match declared schema axes,
 actual required capabilities, and exact release dependencies without an engine

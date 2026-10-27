@@ -3,9 +3,9 @@
   "pack_id": "bifrost.public.packs",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.6.0",
+  "release_version": "0.6.1",
   "artifact_role": "source",
-  "notes": "This minor release adds bifrost.python-performance-summaries 1.0.0 to the native recipe: reviewed CPython 3.13.5 declared performance effects for time.sleep, subprocess.run, pickle.dumps and pickle.loads (one-argument and full-signature forms), builtins sorted and list.sort, buffered reads, sqlite3 Cursor.execute and http.client HTTPConnection.request, which the Python arms of the rules 0.5.0 bifrost.performance loop policies read. The pack envelope is complete, matching its complete summaries, as the pinned producer requires. The source catalog also extends the CPython 3.13.5 runtime-base model with unittest.TestCase, MutableMapping and threading.Thread ancestry and adds declared performance effects to the CPython golden and Python security-sink summary sources; the recipe does not select those, so they are source additions, not native additions. Every other job and recipe and the Bifrost 0.14.0 generator are unchanged from 0.5.0. Fresh generation, artifact integrity, per-run completeness and consumer behavior remain separate qualification requirements.",
+  "notes": "This patch restores the reviewed JDK 21 result-use obligations to the native bundle for the existing ignored-status-result and discarded-transformation policies. It adds an explicit authored job for bifrost.jdk21.result-use-obligations 1.0.0. Its schema-5 envelope migrates to version-independent schema 8; only the schema label and engine-version gate change, preserving reviewed summaries, IDs, JDK 21 activation, provenance, license and completeness. The seven batch-10 result-use models and Python String are already present in packs 0.6.0 and remain selected unchanged. Producer pins and all other jobs and recipes are unchanged. Generated schema requirements remain 8 and 17. Generation, integrity, compatibility and per-run completeness remain separate from behavior qualification; Files.deleteIfExists retains its partial summary. Rules 0.5.2 is needed for normal acquisition to select this pack release instead of the exact 0.6.0 dependency in rules 0.5.1.",
   "component": "packs",
   "baseline": "release-baseline.json"
 }

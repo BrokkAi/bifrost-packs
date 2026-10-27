@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 238 unique rule IDs from 12 manifest packs.
+This catalog lists 240 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -68,8 +68,10 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |
 | [C# nested loops reuse variable](../rules/bifrost.csharp-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.csharp-codeql-quality.nested-loops-with-same-variable` | csharp | correctness | warning |
 | [C# recursive Equals call](../rules/bifrost.csharp-codeql-quality/policies/recursive-equals-call.rqlp) | `bifrost.csharp-codeql-quality.recursive-equals-call` | csharp | correctness | warning |
+| [C# rethrown exception variable](../rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp) | `bifrost.csharp-codeql-quality.rethrown-exception-variable` | csharp | quality | warning |
 | [C# static array](../rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp) | `bifrost.csharp-codeql-quality.static-array` | csharp | quality | warning |
 | [C# StringBuilder initialized with a character](../rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp) | `bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character` | csharp | correctness | warning |
+| [C# TODO comment](../rules/bifrost.csharp-codeql-quality/policies/todo-comment.rqlp) | `bifrost.csharp-codeql-quality.todo-comment` | csharp | quality | note |
 | [C# use number constant](../rules/bifrost.csharp-codeql-quality/policies/use-number-constant.rqlp) | `bifrost.csharp-codeql-quality.use-number-constant` | csharp | quality | warning |
 | [C# useless if statement](../rules/bifrost.csharp-codeql-quality/policies/useless-if-statement.rqlp) | `bifrost.csharp-codeql-quality.useless-if-statement` | csharp | correctness | warning |
 | [Selected C++ boundary reaches no network effect](../rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.cpp.selected-boundary-no-network-io` | cpp | effects | error |

@@ -1,5 +1,10 @@
 # Batch 10 reviewed result-use content
 
+Historical record: all seven models below are now explicit native-generation
+jobs and are present in the published packs 0.6.0 native bundle. The older
+producer blocker below is no longer current. See the
+[JDK delivery repair](result-use-native-release.md) for the remaining omission.
+
 This document records the source-only transition for the seven reviewed result-use
 models landed with the batch-10 policy arms. The model bytes are copied from the
 reviewed engine inputs without identity or provenance changes.
@@ -63,8 +68,8 @@ Generation remains a separate, pinned transition:
 
 4. Review the generated `index.json`, manifests, shards, rejects, notices,
    measurements, and `SHA256SUMS`. Copy only the deterministic manifest and
-   shard outputs into `semantic-packs/embedded/`, then add their hashes to
-   `content-lock.json`. Run the two-pass native generation recipe from
+   shard outputs into `semantic-packs/embedded/`, then lock them with
+   `python3 scripts/content.py lock --license <license> semantic-packs/embedded`. Run the two-pass native generation recipe from
    [generation.md](generation.md) and retain both measurement records.
 
 Until that transition completes, source presence is not native installation or

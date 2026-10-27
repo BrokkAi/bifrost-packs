@@ -1,0 +1,65 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/.bifrost/policies/call-wrong-named-argument.rqlp",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/.bifrost/policies/call-wrong-named-argument.rqlp",
+      "sha256": "d3b4c9ee2299089117582fb3fbec98111528f01efd0653182b6a0712c6f43df2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/README.md",
+      "sha256": "5656cb3bfc981507812e59642d096dc449252d75e6a22069bee0ecdb47c9fe72",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/positive_and_near_misses.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/positive_and_near_misses.py",
+      "sha256": "c740ff768eadafb9cafe059da4f90c4fdc3625f81d0fe9bb74d0257406258ba7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/pyproject.toml",
+      "sha256": "6c42f737b8a4eed1dbd2f4f49cc017c2559daa3f9e598e914f0f260a740d432c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/upstream_expected.txt",
+      "source_path": "python/ql/test/query-tests/Expressions/Arguments/WrongNumberArgumentsInCall.expected",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+      "sha256": "f5494900d272e58d8defa8331aac194b3f1870be9fa7ff9ca7d1d12e26d2b1b4",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/Arguments/WrongNumberArgumentsInCall.expected"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/upstream_wrong_arguments.py",
+      "source_path": "python/ql/test/query-tests/Expressions/Arguments/wrong_arguments.py",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+      "sha256": "586afabccc94cbf9eb06bff1031ccf10dd54a6cc86cbe682cbfc450da8434e6b",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/Arguments/wrong_arguments.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/use_mox.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/call-wrong-named-argument/use_mox.py",
+      "sha256": "a34f2f92a25292a547eebf940dc911baa7ca6c6b64e1de10025a23468604f3ec",
+      "classification": "public",
+      "license": "Apache-2.0"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/comparison-using-is/.bifrost/policies/comparison-using-is.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/comparison-using-is.rqlp",
+      "sha256": "db3c3d19c9cb4f0bf5c851ecc8c8aea32efca0cc05d69bcca689fd38e65cc4c1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/comparison-using-is/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/comparison-using-is/README.md",
+      "sha256": "b83cda5bd7cc5c469e1efa9fb5001d917b764b0cb956092639e681a26cce6a4f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/comparison-using-is/lib.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/comparison-using-is/lib.py",
+      "sha256": "46de818c74c8818049ee871283bbc8ad90a137908dd8470a8a20843d2d871924",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/comparison-using-is/upstream_codeql.py",
+      "source_path": "python/ql/test/query-tests/Expressions/eq/expressions_test.py",
+      "sha256": "c3f909bbb7886f51a18c17112949f10bd00e46fff080dbc2ad642029dc11459f",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/eq/expressions_test.py"
+      }
+    }
+  ]
+}

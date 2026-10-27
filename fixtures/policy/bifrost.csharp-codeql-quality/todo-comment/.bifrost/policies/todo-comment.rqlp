@@ -1,0 +1,17 @@
+; CodeQL query: Bad Practices/Comments/TodoComments.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select C# comment nodes whose text contains the
+; case-sensitive markers TODO or FIXME, or XXX not directly preceded by `=`.
+; String literals that contain the same markers are not comments.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.todo-comment"
+  :name "C# TODO comment"
+  :message "comment contains a TODO, FIXME or XXX marker"
+  :severity note
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/Comments/TodoComments.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects C# comments containing the case-sensitive markers TODO or FIXME, or XXX not directly preceded by an equals sign."
+  :tags ["csharp" "codeql" "quality" "maintainability"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (comment (text/regex "TODO|FIXME|(^|[^=])XXX"))))))

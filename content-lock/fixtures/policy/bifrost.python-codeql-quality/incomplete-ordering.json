@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/incomplete-ordering/.bifrost/policies/incomplete-ordering.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/incomplete-ordering.rqlp",
+      "sha256": "7ac7f5ce94656b5a1cdd00c6f112b66390088020d228e757e2b52e8599989ad7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/incomplete-ordering/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/incomplete-ordering/README.md",
+      "sha256": "2e5fa2384e97ccdaf12346cfed4aad0052b88b85efe78365f41df0cdbca2d142",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/incomplete-ordering/upstream/Classes/incomplete-ordering/incomplete_ordering.py",
+      "source_path": "python/ql/test/query-tests/Classes/incomplete-ordering/incomplete_ordering.py",
+      "sha256": "b421ced1610ab747b7957d9678c202cd137332c6edb7bdc3e3b75c8df7994697",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/incomplete-ordering/incomplete_ordering.py"
+      }
+    }
+  ]
+}
