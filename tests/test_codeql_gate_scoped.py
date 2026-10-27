@@ -7,7 +7,10 @@ import unittest
 from pathlib import Path
 
 sys.dont_write_bytecode = True
-from scripts.upstream.codeql_gate.core import GateError, load_oracle, score
+from scripts.upstream.codeql_gate.core import GateError, load_oracle, score, write_results
+from scripts.upstream.codeql_gate.ql_classes import (CODEQL_CLI_ARCHIVE_SHA256, CODEQL_CLI_VERSION,
+                                                     CODEQL_COMMIT, cache_path, helper_query_sha256,
+                                                     load_cache)
 from scripts.upstream.codeql_gate.scoped import apply_scope, expected_scope, validate_attributions
 from scripts.upstream.codeql_gate.stagers.go import GoStager
 from scripts.upstream.codeql_gate.stagers.java import JavaStager
@@ -15,6 +18,25 @@ from scripts.upstream.codeql_gate.stagers.java import JavaStager
 FIXTURES = Path(__file__).parent / 'fixtures/codeql_gate'
 GATE = Path(__file__).resolve().parents[1] / 'scripts/upstream/codeql_gate/gate.py'
 BOUNDARIES = FIXTURES / 'scoped-boundaries'
+QL_CACHE_ROOT = FIXTURES / 'ql-classes'
+
+
+def scoped_java_cache():
+    return load_cache(QL_CACHE_ROOT, 'scoped-java-ql', JavaStager.ql_endpoints)
+
+
+def fake_cache_for_scope(scope, endpoint_id):
+    item = next(item for item in JavaStager.ql_endpoints if item['id'] == endpoint_id)
+    role = item['role']
+    rows = []
+    for paths in scope.values():
+        for path in paths:
+            node = path[f'{role}_node']
+            if node:
+                rows.append(dict(path=node['path'], start_line=node['line'],
+                                 start_column=node['column'], end_line=node['end_line'],
+                                 end_column=node['end_column'], ql_class=item['ql_class']))
+    return dict(rows=rows)
 
 
 class ScopedRecallTests(unittest.TestCase):
@@ -58,7 +80,7 @@ class ScopedRecallTests(unittest.TestCase):
                              ql_endpoint={'id': 'spring-servlet-input-parameter',
                                           'nodes': [dict(path='sample.java', line=1, column=1)]},
                              justification='Spring request parameter source is outside this catalog.')]
-        apply_scope(result, oracle, attributions, JavaStager.ql_endpoints)
+        apply_scope(result, oracle, attributions, JavaStager.ql_endpoints, scoped_java_cache())
         self.assertEqual(result['deferred_misses'], ['sample.java:10'])
         self.assertEqual(result['scoped_misses'], ['sample.java:20'])
 
@@ -76,9 +98,187 @@ class ScopedRecallTests(unittest.TestCase):
                  'QL endpoint node is not on an alert path')):
             result = {'verdict': 'MISS', 'pass': False, 'complete': True,
                       'fn': ['sample.java:10'], 'fp': [], 'errors': []}
-            apply_scope(result, oracle, [dict(base, ql_endpoint=form)], JavaStager.ql_endpoints)
+            apply_scope(result, oracle, [dict(base, ql_endpoint=form)], JavaStager.ql_endpoints,
+                        scoped_java_cache())
             self.assertEqual(result['verdict'], 'ERROR')
             self.assertIn(message, result['errors'][0])
+
+    def test_valid_ql_node_plus_unused_node_is_an_error_verdict(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        attribution = dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                           attribution='framework-endpoint-absent',
+                           ql_endpoint={'id': 'spring-servlet-input-parameter',
+                                        'nodes': [dict(path='sample.java', line=1, column=1),
+                                                  dict(path='sample.java', line=999, column=1)]},
+                           justification='Reviewed framework endpoint.')
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['sample.java:10'], 'fp': [], 'errors': []}
+        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints, scoped_java_cache())
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertFalse(result['pass'])
+        self.assertIn('not on an alert path', result['errors'][0])
+
+    def test_partial_source_or_sink_mad_evidence_rejects_ql_deferral(self):
+        cases = (
+            ('unproven-source.expected', lambda row: row == 'Sink: stdlib',
+             'spring-servlet-input-parameter', 'source_node', 'source_models'),
+            ('unproven-sink.expected', lambda row: row == 'Source: stdlib',
+             'dom4j-xpath-constructor', 'sink_node', 'sink_models'))
+        by_id = {item['id']: item for item in JavaStager.ql_endpoints}
+        for filename, contains, endpoint_id, node_key, models_key in cases:
+            with self.subTest(filename=filename):
+                scope = expected_scope(BOUNDARIES / filename, contains)
+                path = scope['x.go:10'][0]
+                self.assertFalse(path[node_key.replace('_node', '_known')])
+                self.assertTrue(path[models_key])
+                attribution = dict(test_dir='scoped-boundaries', path='x.go', line=10,
+                                   attribution='framework-endpoint-absent',
+                                   ql_endpoint={'id': endpoint_id, 'nodes': [path[node_key]]},
+                                   justification='Do not accept partial MaD provenance as a QL endpoint.')
+                result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                          'fn': ['x.go:10'], 'fp': [], 'errors': []}
+                apply_scope(result, {'recall_scope': scope}, [attribution], JavaStager.ql_endpoints,
+                            fake_cache_for_scope(scope, endpoint_id))
+                self.assertEqual(result['verdict'], 'ERROR')
+                self.assertFalse(result['deferred_misses'])
+                self.assertIn('names a MaD endpoint', result['errors'][0])
+
+    def test_cli_input_id_is_not_allowlisted(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        attribution = dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                           attribution='framework-endpoint-absent',
+                           ql_endpoint={'id': 'CliInput',
+                                        'nodes': [dict(path='sample.java', line=1, column=1)]},
+                           justification='CliInput is explicitly outside the deferrable allow-list.')
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['sample.java:10'], 'fp': [], 'errors': []}
+        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints, scoped_java_cache())
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertIn('unknown QL endpoint id', result['errors'][0])
+
+    def test_dom4j_xpath_mad_branch_cannot_be_attributed_as_ql(self):
+        path = expected_scope(BOUNDARIES / 'unproven-sink.expected',
+                              lambda row: row == 'Source: stdlib')['x.go:10'][0]
+        attribution = dict(test_dir='scoped-boundaries', path='x.go', line=10,
+                           attribution='framework-endpoint-absent',
+                           ql_endpoint={'id': 'dom4j-xpath-constructor',
+                                        'nodes': [path['sink_node']]},
+                           justification='The ordinary XPath MaD branch remains in scope.')
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['x.go:10'], 'fp': [], 'errors': []}
+        scope = {'x.go:10': [path]}
+        apply_scope(result, {'recall_scope': scope}, [attribution], JavaStager.ql_endpoints,
+                    fake_cache_for_scope(scope, 'dom4j-xpath-constructor'))
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertFalse(result['deferred_misses'])
+        self.assertIn('names a MaD endpoint', result['errors'][0])
+
+    def test_missing_and_stale_ql_class_caches_are_errors(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(GateError, 'QL-class cache is missing'):
+                load_cache(tmp, 'scoped-java-ql', JavaStager.ql_endpoints)
+            source = cache_path(QL_CACHE_ROOT, 'scoped-java-ql')
+            payload = json.loads(source.read_text())
+            payload['cli_version'] = '2.27.2'
+            destination = cache_path(tmp, 'scoped-java-ql')
+            destination.parent.mkdir(parents=True)
+            destination.write_text(json.dumps(payload))
+            with self.assertRaisesRegex(GateError, 'stale QL-class cache'):
+                load_cache(tmp, 'scoped-java-ql', JavaStager.ql_endpoints)
+
+    def test_cached_class_mismatch_blocks_ql_deferral(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        attribution = dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                           attribution='framework-endpoint-absent',
+                           ql_endpoint={'id': 'spring-servlet-input-parameter',
+                                        'nodes': [dict(path='sample.java', line=1, column=1)]},
+                           justification='The class cache must corroborate the asserted id.')
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['sample.java:10'], 'fp': [], 'errors': []}
+        cache = scoped_java_cache()
+        cache['rows'] = [dict(row, ql_class='CliInput') if row['path'] == 'sample.java'
+                         and row['start_line'] == 1 else row for row in cache['rows']]
+        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints, cache)
+        self.assertEqual(result['verdict'], 'ERROR')
+        self.assertIn('is not class SpringServletInputParameterSource', result['errors'][0])
+
+    def test_main_string_array_parameter_spellings_are_blocked(self):
+        spellings = ('String[] args', 'String... args', 'String args[]')
+        for declaration in spellings:
+            with self.subTest(declaration=declaration), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / 'Example.java'
+                source = f'class Example {{ void main({declaration}) {{}} }}\n'
+                path.write_text(source)
+                column = source.index('String') + 1
+                node = dict(path='Example.java', line=1, column=column,
+                            end_line=1, end_column=column + len(declaration))
+                self.assertTrue(JavaStager.is_main_string_array_parameter(tmp, node))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'Example.java'
+            source = 'class Example { void main(int args) {} }\n'
+            path.write_text(source)
+            node = dict(path='Example.java', line=1, column=source.index('int') + 1,
+                        end_line=1, end_column=source.index(')') + 1)
+            self.assertFalse(JavaStager.is_main_string_array_parameter(tmp, node))
+
+    def test_main_string_array_node_is_blocked_during_scope_application(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = 'class Example { void main(String[] args) {} }\n'
+            (Path(tmp) / 'Example.java').write_text(source)
+            column = source.index('String') + 1
+            node = dict(path='Example.java', line=1, column=column,
+                        end_line=1, end_column=column + len('String[] args'))
+            path = dict(included=True, source_models=[], sink_models=['Sink: model'],
+                        absent_models=[], source_known=False, sink_known=True,
+                        source_present=False, sink_present=True, source_node=node,
+                        sink_node=dict(path='Example.java', line=1, column=1,
+                                       end_line=1, end_column=2))
+            attribution = dict(test_dir='sample', path='Example.java', line=1,
+                               attribution='framework-endpoint-absent',
+                               ql_endpoint={'id': 'spring-servlet-input-parameter',
+                                            'nodes': [dict(path=node['path'], line=node['line'],
+                                                           column=node['column'])]},
+                               justification='Pin the main-parameter guard.')
+            cache = dict(rows=[dict(path=node['path'], start_line=node['line'],
+                                    start_column=node['column'], end_line=node['end_line'],
+                                    end_column=node['end_column'],
+                                    ql_class='SpringServletInputParameterSource')])
+            result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                      'fn': ['Example.java:1'], 'fp': [], 'errors': []}
+            apply_scope(result, {'recall_scope': {'Example.java:1': [path]}},
+                        [attribution], JavaStager.ql_endpoints, cache, tmp,
+                        JavaStager.is_main_string_array_parameter)
+            self.assertEqual(result['verdict'], 'ERROR')
+            self.assertIn('main String-array parameter', result['errors'][0])
+
+    def test_deferred_ql_assertion_is_recorded_in_json_and_markdown(self):
+        directory = FIXTURES / 'scoped-java-ql'
+        oracle = load_oracle(directory, 'Example.ql', JavaStager(), 'example', set())
+        attribution = dict(test_dir='scoped-java-ql', path='sample.java', line=10,
+                           attribution='framework-endpoint-absent',
+                           ql_endpoint={'id': 'spring-servlet-input-parameter',
+                                        'nodes': [dict(path='sample.java', line=1, column=1)]},
+                           justification='Spring request source is outside this catalog.')
+        result = {'verdict': 'MISS', 'pass': False, 'complete': True,
+                  'fn': ['sample.java:10'], 'fp': [], 'errors': []}
+        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints, scoped_java_cache())
+        recorded = result['deferred_attributions'][0]
+        self.assertEqual(recorded['ql_endpoint']['id'], 'spring-servlet-input-parameter')
+        self.assertEqual(recorded['ql_endpoint']['ql_class'], 'SpringServletInputParameterSource')
+        self.assertEqual(recorded['ql_endpoint']['nodes'], attribution['ql_endpoint']['nodes'])
+        with tempfile.TemporaryDirectory() as tmp:
+            write_results(Path(tmp), dict(
+                result, query='example', oracle_sources={}, oracle_disagreement={},
+                binary_sha256='digest', codeql_commit='commit', matched=[],
+                false_positives=[], silent_misses=[], abstentions=[],
+                spurious={'sites': [], 'findings': []}, missing={'sites': [], 'findings': []}))
+            markdown = (Path(tmp) / 'result.md').read_text()
+            self.assertIn('spring-servlet-input-parameter', markdown)
+            self.assertIn('SpringServletInputParameterSource', markdown)
+            self.assertIn('sample.java', markdown)
 
     def test_ql_endpoint_wrong_role_is_an_error(self):
         directory = FIXTURES / 'scoped-java-ql'
@@ -90,7 +290,7 @@ class ScopedRecallTests(unittest.TestCase):
                            justification='Reviewed framework endpoint.')
         result = {'verdict': 'MISS', 'pass': False, 'complete': True,
                   'fn': ['sample.java:10'], 'fp': [], 'errors': []}
-        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints)
+        apply_scope(result, oracle, [attribution], JavaStager.ql_endpoints, scoped_java_cache())
         self.assertEqual(result['verdict'], 'ERROR')
         self.assertIn('wrong role', result['errors'][0])
 

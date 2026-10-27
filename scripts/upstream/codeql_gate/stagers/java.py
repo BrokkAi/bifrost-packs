@@ -13,9 +13,126 @@ from pathlib import Path
 
 from . import PreparedRoot
 try:
-    from core import GateError
-except ImportError:
     from ..core import GateError
+except ImportError:
+    from core import GateError
+
+
+def _java_tokens(source):
+    tokens = []
+    index, line, column = 0, 1, 1
+
+    def advance():
+        nonlocal index, line, column
+        char = source[index]
+        index += 1
+        if char == '\n':
+            line, column = line + 1, 1
+        elif char == '\r':
+            if index < len(source) and source[index] == '\n':
+                index += 1
+            line, column = line + 1, 1
+        else:
+            column += 1
+        return char
+
+    while index < len(source):
+        char = source[index]
+        if char.isspace():
+            advance()
+            continue
+        if source.startswith('//', index):
+            while index < len(source) and source[index] not in '\r\n':
+                advance()
+            continue
+        if source.startswith('/*', index):
+            advance()
+            advance()
+            while index < len(source) and not source.startswith('*/', index):
+                advance()
+            if index < len(source):
+                advance()
+                advance()
+            continue
+        if source.startswith('"""', index):
+            for _ in range(3):
+                advance()
+            while index < len(source) and not source.startswith('"""', index):
+                if source[index] == '\\' and index + 1 < len(source):
+                    advance()
+                advance()
+            if index < len(source):
+                for _ in range(3):
+                    advance()
+            continue
+        if char in ('"', "'"):
+            quote = advance()
+            while index < len(source):
+                current = advance()
+                if current == '\\' and index < len(source):
+                    advance()
+                elif current == quote:
+                    break
+            continue
+        start = (line, column)
+        if char.isalpha() or char in '_$':
+            value = advance()
+            while index < len(source) and (source[index].isalnum() or source[index] in '_$'):
+                value += advance()
+        elif source.startswith('...', index):
+            value = ''.join(advance() for _ in range(3))
+        else:
+            value = advance()
+        tokens.append((value, start, (line, column)))
+    return tokens
+
+
+def _main_string_array_parameter_spans(source):
+    tokens = _java_tokens(source)
+    spans = []
+    for index, token in enumerate(tokens):
+        if token[0] != 'main' or index + 1 >= len(tokens) or tokens[index + 1][0] != '(':
+            continue
+        if index == 0 or tokens[index - 1][0] in ('.', 'return', 'throw', 'new', '=', '->'):
+            continue
+        if not (tokens[index - 1][0].isidentifier() or tokens[index - 1][0] in (']', '>', '?')):
+            continue
+        depth, closing = 0, None
+        for cursor in range(index + 1, len(tokens)):
+            if tokens[cursor][0] == '(':
+                depth += 1
+            elif tokens[cursor][0] == ')':
+                depth -= 1
+                if depth == 0:
+                    closing = cursor
+                    break
+        if closing is None or closing + 1 >= len(tokens):
+            continue
+        if tokens[closing + 1][0] not in ('{', ';', 'throws'):
+            continue
+        parameter = tokens[index + 2:closing]
+        if not parameter or any(item[0] == ',' for item in parameter):
+            continue
+        parameter_start = parameter[0][1]
+        if parameter[0][0] == 'final':
+            parameter = parameter[1:]
+        values = [item[0] for item in parameter]
+        if values[:5] == ['java', '.', 'lang', '.', 'String']:
+            type_tokens = 5
+        elif values and values[0] == 'String':
+            type_tokens = 1
+        else:
+            continue
+        rest = values[type_tokens:]
+        is_array = (len(rest) == 3 and rest[:2] == ['[', ']']
+                    and parameter[-1][0].isidentifier())
+        is_varargs = (len(rest) == 2 and rest[0] == '...'
+                      and parameter[-1][0].isidentifier())
+        is_postfix_array = (len(rest) == 3 and rest[0].isidentifier()
+                            and rest[1:] == ['[', ']'])
+        if is_array or is_varargs or is_postfix_array:
+            spans.append((parameter_start, parameter[-1][2]))
+    return spans
 
 
 class JavaStager:
@@ -23,18 +140,22 @@ class JavaStager:
     # Keep this list limited to QL endpoints reviewed for catalog-only recall.
     ql_endpoints = (
         dict(id='spring-servlet-input-parameter', ql_class='SpringServletInputParameterSource',
+             ql_module='semmle.code.java.dataflow.FlowSources',
              file='java/ql/lib/semmle/code/java/dataflow/FlowSources.qll',
              start_line=142, end_line=148, role='source',
              description='Spring request-mapping parameter source.'),
         dict(id='micronaut-http-input-parameter', ql_class='MicronautHttpInputParameterSource',
+             ql_module='semmle.code.java.dataflow.FlowSources',
              file='java/ql/lib/semmle/code/java/dataflow/FlowSources.qll',
              start_line=184, end_line=190, role='source',
              description='Micronaut request parameter source.'),
         dict(id='spring-resttemplate-uri-variable', ql_class='SpringWebClientRestTemplateUriVariable',
+             ql_module='semmle.code.java.frameworks.spring.SpringWebClient',
              file='java/ql/lib/semmle/code/java/frameworks/spring/SpringWebClient.qll',
              start_line=70, end_line=106, role='sink',
              description='Spring RestTemplate URI-variable sink.'),
         dict(id='dom4j-xpath-constructor', ql_class='DefaultXPathInjectionSink',
+             ql_module='semmle.code.java.security.XPath',
              file='java/ql/lib/semmle/code/java/security/XPath.qll',
              start_line=17, end_line=28, role='sink',
              description='DefaultXPathInjectionSink, dom4j constructor branch. The sinkNode(this, "xpath-injection") branch is ordinary models-as-data and remains in scope as a printed MaD row.'),
@@ -60,6 +181,18 @@ class JavaStager:
             if not pattern.search('\n'.join(selected)):
                 raise GateError(f"QL endpoint allow-list mismatch: {endpoint['id']} "
                                 f"({endpoint['file']}:{endpoint['start_line']}-{endpoint['end_line']})")
+
+    @staticmethod
+    def is_main_string_array_parameter(test_dir, node):
+        root = Path(test_dir).resolve()
+        source = (root / node['path']).resolve()
+        if not source.is_relative_to(root) or not source.is_file() or source.suffix != '.java':
+            return False
+        node_start = (node['line'], node['column'])
+        node_end = (node.get('end_line', node['line']), node.get('end_column', node['column']))
+        return any(start <= node_start <= end or node_start <= start <= node_end
+                   for start, end in _main_string_array_parameter_spans(
+                       source.read_text(errors='replace')))
 
     def __init__(self, java_home=None):
         raw_java_home = java_home or os.environ.get('JAVA_HOME')

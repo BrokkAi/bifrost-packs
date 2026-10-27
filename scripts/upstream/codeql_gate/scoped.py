@@ -50,6 +50,9 @@ def validate_attributions(entries):
                             or not node['path'] or any(not isinstance(node.get(k), int)
                             or isinstance(node[k], bool) or node[k] < 1 for k in ('line', 'column'))):
                         raise GateError('ql_endpoint nodes require path, positive line and column')
+                    if any(k in node and (not isinstance(node[k], int) or isinstance(node[k], bool)
+                                          or node[k] < 1) for k in ('end_line', 'end_column')):
+                        raise GateError('ql_endpoint node end coordinates must be positive integers')
             elif not has_model:
                 raise GateError('framework-endpoint-absent requires endpoint or ql_endpoint')
     return entries
@@ -128,14 +131,16 @@ def expected_scope(path, contains):
         source_location = sink_location = None
         if len(cells) >= 6:
             source, sink = tuple(cells[2:4]), tuple(cells[4:6])
-            source_match = re.fullmatch(r'(.*):(\d+):(\d+):\d+:\d+', source[0])
-            sink_match = re.fullmatch(r'(.*):(\d+):(\d+):\d+:\d+', sink[0])
+            source_match = re.fullmatch(r'(.*):(\d+):(\d+):(\d+):(\d+)', source[0])
+            sink_match = re.fullmatch(r'(.*):(\d+):(\d+):(\d+):(\d+)', sink[0])
             if not source_match or not sink_match:
                 raise GateError('invalid scoped endpoint node location')
             source_location = dict(path=source_match[1], line=int(source_match[2]),
-                                   column=int(source_match[3]))
+                                   column=int(source_match[3]), end_line=int(source_match[4]),
+                                   end_column=int(source_match[5]))
             sink_location = dict(path=sink_match[1], line=int(sink_match[2]),
-                                 column=int(sink_match[3]))
+                                 column=int(sink_match[3]), end_line=int(sink_match[4]),
+                                 end_column=int(sink_match[5]))
             after_source, before_sink = reachable(source, forward), reachable(sink, backward)
             src = list(node_provenance.get(source, ()))
             dst = list(node_provenance.get(sink, ()))
@@ -174,7 +179,8 @@ def expected_scope(path, contains):
     return result
 
 
-def apply_scope(result, oracle, attributions, ql_endpoints=()):
+def apply_scope(result, oracle, attributions, ql_endpoints=(), ql_class_cache=None,
+                test_dir=None, main_parameter_check=None):
     """Retain the complete full-suite score and defer only reviewed endpoint misses."""
     validate_attributions(attributions)
     result['full_suite_verdict'] = result['verdict']
@@ -184,6 +190,7 @@ def apply_scope(result, oracle, attributions, ql_endpoints=()):
     by_site = {f"{a['path']}:{a['line']}": a for a in attributions}
     ql_by_id = {item['id']: item for item in ql_endpoints}
     deferred, blocked, errors = [], [], []
+    deferred_attributions = []
     for absent in result['fn']:
         paths = oracle['recall_scope'].get(absent, [])
         if not paths:
@@ -205,6 +212,10 @@ def apply_scope(result, oracle, attributions, ql_endpoints=()):
                     errors.append(f'unknown QL endpoint id {ql_form["id"]!r} at {absent}')
                     blocked.append(absent)
                     continue
+                if ql_class_cache is None:
+                    errors.append(f'QL-class cache is required for QL endpoint deferral at {absent}')
+                    blocked.append(absent)
+                    continue
             named_nodes = ({(n['path'], n['line'], n['column']) for n in ql_form['nodes']}
                            if ql_form else set())
             used_nodes = set()
@@ -218,11 +229,27 @@ def apply_scope(result, oracle, attributions, ql_endpoints=()):
                     role = ql_item['role']
                     node_key = path.get(f'{role}_node')
                     if node_key and (node_key['path'], node_key['line'], node_key['column']) in named_nodes:
-                        if path[f'{role}_known']:
+                        used_nodes.add((node_key['path'], node_key['line'], node_key['column']))
+                        if path[f'{role}_models']:
                             errors.append(f'QL endpoint attribution names a MaD endpoint at {absent}')
                             failed_path = True
                             break
-                        used_nodes.add((node_key['path'], node_key['line'], node_key['column']))
+                        if main_parameter_check and main_parameter_check(test_dir, node_key):
+                            errors.append(f'Java main String-array parameter cannot be deferred at {absent}')
+                            failed_path = True
+                            break
+                        if not any(
+                                row.get('path') == node_key['path']
+                                and row.get('start_line') == node_key['line']
+                                and row.get('start_column') == node_key['column']
+                                and row.get('end_line') == node_key['end_line']
+                                and row.get('end_column') == node_key['end_column']
+                                and row.get('ql_class') == ql_item['ql_class']
+                                for row in ql_class_cache['rows']):
+                            errors.append(f"QL endpoint node is not class {ql_item['ql_class']} "
+                                          f"according to the pinned cache at {absent}")
+                            failed_path = True
+                            break
                         other_role = 'sink' if role == 'source' else 'source'
                         matched_ql = path[f'{other_role}_known']
                     other_role = 'sink' if role == 'source' else 'source'
@@ -248,7 +275,13 @@ def apply_scope(result, oracle, attributions, ql_endpoints=()):
                 blocked.append(absent)
             else:
                 deferred.append(absent)
+                if ql_item:
+                    deferred_attributions.append(dict(
+                        site=absent,
+                        ql_endpoint=dict(id=ql_item['id'], ql_class=ql_item['ql_class'],
+                                         role=ql_item['role'], nodes=ql_form['nodes'])))
     result['deferred_misses'] = deferred
+    result['deferred_attributions'] = deferred_attributions
     result['scoped_misses'] = blocked
     result['errors'].extend(errors)
     result['pass'] = result['complete'] and not (blocked or result['fp'] or result['errors'])

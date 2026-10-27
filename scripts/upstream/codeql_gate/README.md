@@ -485,14 +485,46 @@ unique `(test_dir, path, line)` identities. The closed attribution enum is:
   Go and C# have empty allow-lists. An attribution must name the actual printed
   path node as `path`, `line` and `column`; it must be the source or sink node
   matching the allow-listed role, and it must have no MaD endpoint provenance.
+  Any MaD model evidence on that endpoint rejects the QL attribution, even when
+  some alternate routes have no MaD evidence.
   Unknown ids, nodes outside the alert's paths, wrong roles, or MaD-proven
   nodes are attribution errors. A MaD-proven endpoint continues to use the
   exact printed-model `endpoint` form.
 
+  The gate binds each QL attribution to its asserted QL class through a
+  committed per-test-directory cache. Generate a cache with the pinned CLI:
+
+  ```sh
+  python3 -I scripts/upstream/codeql_gate/gate.py ql-classes java/ldap-injection \
+    --language java --codeql-root "$CODEQL_ROOT" --codeql-cli "$CODEQL_CLI" \
+    --test-dir java/ql/test/query-tests/security/CWE-090
+  ```
+
+  The required CLI is CodeQL 2.27.3; its linux64 archive SHA-256 is
+  `845075a2fa2fdf72629adc6cbde6264691b698d1f294bd27f10c6b579cd750a4`.
+  The command checks `codeql version`, copies the test sources and options to a
+  temporary workspace, adds a helper query, and runs `codeql test run --learn`
+  with the checkout as its search path. It records the checkout-relative node
+  path and full location plus `getAQlClass()` for every allow-listed class and
+  `CliInput`. Cache JSON includes the CodeQL commit, CLI version, archive pin,
+  helper-query SHA-256 and test directory. Commit the generated file under
+  `scripts/upstream/codeql_gate/ql_classes/java/`.
+
+  Every QL deferral requires a cache matching the pinned CodeQL commit, CLI
+  version and helper-query hash. A missing or stale cache is an error; the gate
+  never falls back to the attribution assertion. Each attributed node must
+  have a cached row for the allow-listed class at its expected path and full
+  coordinates. Independently, Java deferrals are blocked when the node is a
+  formal parameter of `main(String[] args)`, `main(String... args)` or
+  `main(String args[])`. The helper query includes `CliInput` so cache-backed
+  classification corroborates this guard.
+
   Deferral is checked path by path. Every route must be explained by its
   attributed QL endpoint or by the named absent catalog endpoint. A route with
   an unlisted or unattributed QL-defined endpoint remains in scope and blocks
-  deferral. Java's initial allow-list includes Spring and Micronaut request
+  deferral. For each deferred QL attribution, result JSON records the asserted
+  allow-list id, QL class and nodes; the Markdown report shows the same
+  assertion next to the deferred site. Java's initial allow-list includes Spring and Micronaut request
   parameter sources, the Spring RestTemplate URI-variable sink, and the dom4j
   constructor branch of `DefaultXPathInjectionSink`. In that class,
   `sinkNode(this, "xpath-injection")` is ordinary models-as-data and stays in

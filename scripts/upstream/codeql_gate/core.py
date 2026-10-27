@@ -446,12 +446,20 @@ def write_results(run_dir, result):
     for name in ('spurious', 'missing'):
         rows.append(f"| {name} sites | {', '.join(site(r) for r in result[name]['sites']) or '—'} |")
         rows.append(f"| {name} findings | {', '.join(result[name]['findings']) or '—'} |")
+    deferred_ql = result.get('deferred_attributions', [])
+    ql_report = ''
+    if deferred_ql:
+        ql_report = '\n\nDeferred QL endpoint assertions:\n' + '\n'.join(
+            f"- `{item['site']}`: `{item['ql_endpoint']['id']}` "
+            f"(`{item['ql_endpoint']['ql_class']}`, {item['ql_endpoint']['role']}); nodes "
+            f"`{json.dumps(item['ql_endpoint']['nodes'], sort_keys=True)}`"
+            for item in deferred_ql)
     (run_dir / 'result.md').write_text(
         f"{result['query']}: " +
         (result['verdict'] if 'full_suite_verdict' in result else
          'PASS' if result['pass'] else result['verdict']) +
         (f"; full suite: {result['full_suite_verdict']}" if 'full_suite_verdict' in result else '') +
-        '\n\n' + '\n'.join(rows) +
+        '\n\n' + '\n'.join(rows) + ql_report +
         f"\n\nComplete: {result['complete']}. Errors: {result['errors']}\n"
         f"\nOracle sources: {', '.join(f'{k}={len(v)}' for k, v in result['oracle_sources'].items())}.\n"
         f"Disagreement: {json.dumps(result['oracle_disagreement'])}\n"
@@ -650,8 +658,18 @@ def execute(args, test_dir, query_path, stager):
             except ImportError:
                 from scoped import apply_scope
             test_name = test_dir.relative_to(args.codeql_root).as_posix()
-            apply_scope(result, oracle, [a for a in args.scope_attributions if a['test_dir'] == test_name],
-                        getattr(stager, 'ql_endpoints', ()))
+            scoped_attributions = [a for a in args.scope_attributions if a['test_dir'] == test_name]
+            class_cache = None
+            if any(a.get('ql_endpoint') for a in scoped_attributions):
+                try:
+                    from .ql_classes import load_cache
+                except ImportError:
+                    from ql_classes import load_cache
+                class_cache = load_cache(Path(__file__).resolve().parent / 'ql_classes', test_name,
+                                         getattr(stager, 'ql_endpoints', ()))
+            apply_scope(result, oracle, scoped_attributions,
+                        getattr(stager, 'ql_endpoints', ()), class_cache, test_dir,
+                        getattr(stager, 'is_main_string_array_parameter', None))
             result['scope_catalogs'] = sorted(args.scope_catalogs)
         result.update(query=args.query, query_ids=[args.query], test_dir=str(test_dir.relative_to(args.codeql_root)),
                       test_dirs=[str(test_dir.relative_to(args.codeql_root))], policy=str(args.policy),
