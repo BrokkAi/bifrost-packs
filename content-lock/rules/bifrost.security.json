@@ -1,0 +1,327 @@
+{
+  "files": [
+    {
+      "path": "rules/bifrost.security/manifest.json",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "517b615a4807ae5f98a15757f4cceb3fd37c9169aa2914e6bb45c871a8245883"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
+      "sha256": "2c0f07f3bb9ef9c8990d1f09eda5eb3af856b121f60cf71004db3caeb0e30708",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/code-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/code-injection.rqlp",
+      "sha256": "f2106125a571cbff59cc18a40e6eacc4c663534eb28ab56604a5bb22533791ac",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
+      "sha256": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/xml-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/xml-injection.rqlp",
+      "sha256": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/xpath-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/xpath-injection.rqlp",
+      "sha256": "719b778a1a261f9a5eb22a8cfae732ac3c06153c8957a0fdd2a95a29df826853",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp",
+      "sha256": "8bcb66b67620d8ca393d7e8e9dd4b9a7c257603143a83cf37fbebcd51ec154b1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp",
+      "sha256": "e1a1a1d29572cf2525e270762a1e14905eed20c3cd0550a5e2fc04f577345e2f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/cpp-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/cpp-store-requires-validation.rqlp",
+      "sha256": "0fca71b2288e665cd003ec6de26f53f0ea01eaa9e86978a0b6c133fed5570dfd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/cpp-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/cpp-stored-request-to-sql.rqlp",
+      "sha256": "0a557867bd9679981a0c1ba5cad82de97f2450aeb40577b33004a07b1086f317",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/csharp-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/csharp-store-requires-validation.rqlp",
+      "sha256": "e6b5b83700492df0b0e842d1b5322d3b7baf6e5aa8acb9b98c6618d644288ed4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/csharp-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/csharp-stored-request-to-sql.rqlp",
+      "sha256": "82a879e92d2728d1621deb448ede6908dfd45d12d6446cc31392508e4918fde1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/go-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/go-store-requires-validation.rqlp",
+      "sha256": "e50dcffa8ae30177b100c193e2d8bbebb201b8b55efc18caa2c40150b661253d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/go-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/go-stored-request-to-sql.rqlp",
+      "sha256": "a82fcd163a2cc0d187d596b1a806678190aa9dde8cd4b32ff724b77f55c92b87",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/java-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/java-store-requires-validation.rqlp",
+      "sha256": "aaf5cddae7e6b56d2778cf9070a9d1921e7de9ebcec4d0dd7088906885e35d5a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/java-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/java-stored-request-to-sql.rqlp",
+      "sha256": "b07c700c6a135a46284a842a6481f2476c994968e7da06d5fc4027406386b78b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/javascript-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/javascript-store-requires-validation.rqlp",
+      "sha256": "abdcce89b0fe8d5d35cea8ed76f0270fdd852d2009bdd8a5a25d3e38404ff033",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/javascript-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/javascript-stored-request-to-sql.rqlp",
+      "sha256": "aea8f617ef2fb022cc446d34de9939bc0fbb563a40f0c16066f045f3c831a773",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/kotlin-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/kotlin-store-requires-validation.rqlp",
+      "sha256": "7f670f1c7b57e10c93788ec85797067af212199b3abe867dad382e811ef69043",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/kotlin-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/kotlin-stored-request-to-sql.rqlp",
+      "sha256": "a92e5e31e92dd8cb431591b1579eff309395e3ce3110bbe005bcbea5e21c21ab",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/php-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/php-store-requires-validation.rqlp",
+      "sha256": "ab69c81b133c9192b3fc9a68289ccff26f21dcfdce968cdb3a08668db54f26be",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/php-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/php-stored-request-to-sql.rqlp",
+      "sha256": "36671a0e9ca2f34275e6eb42f4675bac4905749180d3201e0a8ec7c848a16e75",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/python-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/python-store-requires-validation.rqlp",
+      "sha256": "e72fb3408766c07bd4c23e95b2125245fd9ce33326b75b1e634f2a44ae3808ea",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/python-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/python-stored-request-to-sql.rqlp",
+      "sha256": "5797e59c91c8ebdebc67ae043ca5014c7d5844e6ae7b5c82ae4d155fb6b3f932",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/ruby-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/ruby-store-requires-validation.rqlp",
+      "sha256": "3dc38e8afd3ebfa0bd4062e55f2b97edc330c36236d3e93fd9de07c3fe1d0c1c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/ruby-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/ruby-stored-request-to-sql.rqlp",
+      "sha256": "b654b81cef9cae9822204f335e5204563e7ccf888857faf91a5eedaa0d48ff77",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/rust-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/rust-store-requires-validation.rqlp",
+      "sha256": "a204923be72398d9bc8451fcb5d1d417dc59c3a78ba7e9cecf19dbea62a156f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/rust-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/rust-stored-request-to-sql.rqlp",
+      "sha256": "a78571ebea4920ce23da40b88650c3ce58170ff515d7145704efe38589a927b1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/scala-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/scala-store-requires-validation.rqlp",
+      "sha256": "0235ba6636af975550bf80973e56d5a42e40628b2121d8b0589ae0b744424371",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/scala-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/scala-stored-request-to-sql.rqlp",
+      "sha256": "0d380041ed47269282c0638b2551b9bcd7c3cee09b84e4030e18bbfe6fabb5f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp",
+      "sha256": "52b2ec87984b2929570d996d482dcbc8403b17bb04dd8412e56a6b724bb8fb23",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp",
+      "sha256": "f90f6cda083911e4f216afd394836278ac62085dbc4cd7e561f8f793d6f7a664",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp",
+      "sha256": "ed0bb56305f140ee203d6e6c5135d8d8943fc493eadc85a03f632a4cf1748f70",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp",
+      "sha256": "576d53fe2619e558eb64e64b4062a99ca745d28750ebc1a246c250f0688189dc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
+      "sha256": "28905c34786ef3547b340cf5289a8661cf4115a5316ecba3d1554e53b3114560",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/hardcoded-credentials.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/hardcoded-credentials.rqlp",
+      "sha256": "06f0d81b84a98b308f12decb7832d9d9dfebbfe0b3ac50aaf501353c9809c89e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp",
+      "sha256": "3626c9d0747a552fda07a54a52218c78a85d7d9016471170e75d69650eaced70",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/incomplete-url-substring-sanitization.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/incomplete-url-substring-sanitization.rqlp",
+      "sha256": "b60d34dbddebbc5b8553f04b7730f9a5fdd5ffe9494c064a05525e1c0c6e3f71",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/insecure-default-protocol.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/insecure-default-protocol.rqlp",
+      "sha256": "f1af5c68f19c33656401c5a7d9c08246a826810299031b621c8092250144dca7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/insecure-protocol.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/insecure-protocol.rqlp",
+      "sha256": "e306cc2b8857c5702f9451bc631ef4285c4bbaf9a4be4172ffcdacf3308a6365",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/insecure-temporary-file.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/insecure-temporary-file.rqlp",
+      "sha256": "40c326b98bb2e6e28bd8b8ba7bdf059301f57c7ed33e99f5b58ae1d608743d64",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/overly-permissive-file.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/overly-permissive-file.rqlp",
+      "sha256": "8deedfe9d1891eae173c44277d7c4b9cbb396e7df8d439e4cb1a985e39e2c148",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/polynomial-redos.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/polynomial-redos.rqlp",
+      "sha256": "6ebe8aced2e1927120f8cea4aca6e8562260d9ed528fcc22d25f98601f14b159",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/process-input-to-os-system.rqlp",
+      "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/python/process-input-to-os-system.rqlp",
+      "sha256": "f73b6d623ca7e15f2666c23e1f1c98a2faa33b8296f2151fefdd5521f419bd4e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/xml-bomb.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/xml-bomb.rqlp",
+      "sha256": "645f888c99c5dc9be84427718b7093bd6ced57baef9a29a56dc7e0701c1f5a51",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
+      "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/policies/non-https-url.rqlp",
+      "sha256": "584265b59c2c21360fa59829f996b0e5cbf3a8788092eb88135b84bd1ccd5a6d",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    }
+  ]
+}
