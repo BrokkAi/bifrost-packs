@@ -82,6 +82,10 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
+The next packaging repair prepares `packs/v0.6.1` and `rules/v0.5.2` to deliver
+the reviewed JDK 21 result-use model through normal acquisition. See the
+[release repair and verification plan](docs/result-use-native-release.md).
+
 ## Source verification
 
 Verify and create a reproducible **source** archive offline:
