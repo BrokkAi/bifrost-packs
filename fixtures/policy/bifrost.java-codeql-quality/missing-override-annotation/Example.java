@@ -35,3 +35,11 @@ class JdkTask implements Runnable, Comparable<JdkTask> {
     public boolean equals(Object other) { return this == other; } // CodeQL positive; #7179.
     @Override public int hashCode() { return 7; } // Annotated JDK near miss.
 }
+class AuditedDelivery extends Delivery implements Runnable {
+    String status() { return "audited"; } // Positive: established edge in a family with an unread JDK ancestor.
+    @Override public void run() {}
+}
+class RetriedDelivery extends Delivery {
+    String status() { return "retrying"; } // Positive: first overload.
+    String status(int attempts) { return "again"; } // CodeQL positive; second overload, missed until engine issue #7505.
+}
