@@ -1,0 +1,28 @@
+{
+  "scope": {"analyzed_files": ["sample.go"]},
+  "packs": {
+    "complete": true,
+    "decisions": [
+      {"pack": "bifrost.example-summaries", "status": "selected", "reason": "pack version 1.2.3"},
+      {"pack": "bifrost.example-summaries@1.2.3", "status": "selected"},
+      {"pack": "bifrost.unused", "status": "inactive"}
+    ]
+  },
+  "runs": [
+    {
+      "policy_id": "summary-policy",
+      "completion": {"type": "proven_by_summary"},
+      "findings": [
+        {"primary": {"path": "sample.go", "region": {"start_line": 1, "end_line": 1}}, "completeness": {"type": "complete"}},
+        {"primary": {"path": "sample.go", "region": {"start_line": 2, "end_line": 2}}, "completeness": {"type": "complete"}}
+      ]
+    },
+    {
+      "policy_id": "source-policy",
+      "completion": {"type": "complete"},
+      "findings": [
+        {"primary": {"path": "sample.go", "region": {"start_line": 3, "end_line": 3}}, "completeness": {"type": "complete"}}
+      ]
+    }
+  ]
+}

@@ -246,6 +246,7 @@ def report_findings(data, root=None):
                           and span.get('end') == (Path(root) / path).stat().st_size)
             findings.append({'path': path, 'start': start, 'end': end, 'whole_file': whole_file,
                              'policy_id': run.get('policy_id') or finding.get('policy_id'),
+                             'completion_kind': run.get('completion', {}).get('type', 'unknown'),
                              'completeness': finding.get('completeness', {})})
     return findings
 
@@ -360,8 +361,9 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
     false_positives = sorted(set(spurious + [site(f) for j, f in enumerate(got)
                               if j not in owners and not listed(f, oracle['missing'])
                               and key(f) not in {key(p) for p in allowed}]))
+    scorable_completion_types = {'complete', 'proven_by_summary'}
     completion = next((r.get('completion', {}) for r in runs
-                       if r.get('completion', {}).get('type') != 'complete'),
+                       if r.get('completion', {}).get('type') not in scorable_completion_types),
                       runs[0].get('completion', {}) if runs else {})
     incomplete_impacts = {'declared_non_exhaustive', 'finding_partial',
                           'run_incomplete', 'run_unsupported'}
@@ -384,7 +386,7 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
         source_paths = (source_paths or set()) | finding_paths
     unanalyzed_files = sorted({e['path'] for e in expected} - (source_paths or set()))
     coverage_unknown = bool(unanalyzed_files)
-    complete = (bool(runs) and all(r.get('completion', {}).get('type') == 'complete' for r in runs)
+    complete = (bool(runs) and all(r.get('completion', {}).get('type') in scorable_completion_types for r in runs)
                 and not incomplete_diagnostics and not truncated and not interrupted
                 and not coverage_unknown and not errors
                 and all(f['completeness'].get('type', 'complete') == 'complete' for f in findings))
@@ -393,7 +395,7 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
             return True
         for run in runs:
             comp = run.get('completion', {})
-            if comp.get('type') == 'complete':
+            if comp.get('type') in scorable_completion_types:
                 continue
             scope = comp.get('scope', {})
             # Only a nontruncated, nonempty typed Files scope promises that
@@ -404,7 +406,7 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
             if e['path'] in {relative_path(p, root) for p in scope['files']}:
                 return True
         relevant = list(data.get('diagnostics', [])) + [d for r in runs
-                    if r.get('completion', {}).get('type') == 'complete'
+                    if r.get('completion', {}).get('type') in scorable_completion_types
                     for d in r.get('diagnostics', [])]
         for d in (d for d in relevant if bad_diagnostic(d)):
             primary = d.get('primary')
@@ -423,9 +425,35 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
                'MISS' if silent else 'EXACT' if complete else 'EXACT-INCOMPLETE')
     passed = complete and not (false_positives or silent or abstentions or errors)
     dcounts, dmsgs, families = diagnostic_groups(diagnostics)
+    summary_findings = [f for f in got if f['completion_kind'] == 'proven_by_summary']
+    summary_finding_sites = {site(f) for f in summary_findings}
+    summary_tp = [s for s in matched if s in summary_finding_sites]
+    summary_fp = [s for s in false_positives if s in summary_finding_sites]
+    completion_kinds = sorted({r.get('completion', {}).get('type', 'unknown') for r in runs})
+    summary_counts = {'verdicts': sum(r.get('completion', {}).get('type') == 'proven_by_summary' for r in runs),
+                      'true_positives': len(summary_tp), 'false_positives': len(summary_fp)}
+    packs = data.get('packs', {}).get('decisions', [])
+    activated_packs = []
+    for decision in packs:
+        if decision.get('status') != 'selected' or not decision.get('pack'):
+            continue
+        pack = decision['pack']
+        versioned = re.fullmatch(r'(.+)@([^@]+)', pack)
+        reason = decision.get('reason', '')
+        version = (versioned[2] if versioned else
+                   re.search(r'\bpack version ([^;]+)', reason)[1]
+                   if re.search(r'\bpack version ([^;]+)', reason) else None)
+        activated_packs.append(dict(pack=pack, status='selected',
+                                    **({'version': version} if version else {}),
+                                    **({'digest': decision['digest']} if decision.get('digest') else {}),
+                                    **({'reason': reason} if reason else {})))
     return {'verdict': verdict, 'tp': matched, 'fp': false_positives,
             'fn': [site(e) for e in absent], 'loose_matches': loose,
             'completion': completion, 'completion_type': completion.get('type', 'no_runs'),
+            'completion_kinds': completion_kinds,
+            'completion_kind': completion_kinds[0] if len(completion_kinds) == 1 else 'mixed',
+            'summary_counts': summary_counts,
+            'activated_packs': activated_packs,
             'diagnostics': dcounts, 'diagnostic_messages': dmsgs, 'diagnostics_by_family': families,
             'expected': expected, 'findings': findings, 'matched': matched,
             'false_positives': false_positives, 'silent_misses': silent, 'abstentions': abstentions,
@@ -472,6 +500,9 @@ def write_results(run_dir, result):
         '\n\n' + '\n'.join(rows) + stub_report + ql_report +
         f"\n\nComplete: {result['complete']}. Errors: {result['errors']}\n"
         f"\nOracle sources: {', '.join(f'{k}={len(v)}' for k, v in result['oracle_sources'].items())}.\n"
+        f"Completion kind: {result.get('completion_kind', ', '.join(result.get('completion_kinds', [result.get('completion_type', 'no_runs')])))}.\n"
+        f"Summary-backed counts: {json.dumps(result.get('summary_counts', {}), sort_keys=True)}.\n"
+        f"Activated semantic packs: {json.dumps(result.get('activated_packs', []), sort_keys=True)}.\n"
         f"Disagreement: {json.dumps(result['oracle_disagreement'])}\n"
         f"\nBinary SHA256: `{result['binary_sha256']}`\n"
         f"CodeQL commit: `{result['codeql_commit']}`\n")
@@ -695,7 +726,11 @@ def execute(args, test_dir, query_path, stager):
                 datetime.now(timezone.utc).isoformat(), args.query, str(args.policy), args.label,
                 result['verdict'], len(result['tp']), len(result['fp']), len(result['fn']),
                 result['completion_type'], result['wall_seconds'], str(run_dir)] +
-                ([result['full_suite_verdict']] if 'full_suite_verdict' in result else []))
+                ([result['full_suite_verdict']] if 'full_suite_verdict' in result else []) +
+                [result.get('completion_kind', result['completion_type']),
+                 json.dumps(result.get('completion_kinds', []), separators=(',', ':')),
+                 result['summary_counts']['verdicts'], result['summary_counts']['true_positives'],
+                 result['summary_counts']['false_positives']])
         return result
     finally:
         if not args.keep:

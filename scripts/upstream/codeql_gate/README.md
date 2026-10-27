@@ -231,8 +231,15 @@ or semantic similarity heuristic is applied. The duplicate-branches acceptance u
 The observed binary emits report schema 6. Findings come from
 `runs[*].findings[*].primary.path` and `primary.region.start_line/end_line`.
 A finding's `completeness.type` other than `complete` prevents PASS.
-`runs[*].completion.type` must be `complete` for the whole run to PASS.
-`proven_subset`, `proven_by_summary`, `inconclusive`, `unsupported`, `not_run`,
+`runs[*].completion.type` may be `complete` or `proven_by_summary` for the
+whole run to be scored as complete. `proven_by_summary` means completion was
+established under activated semantic-pack summaries and is scored on the same
+footing as CodeQL models-as-data. Every finding records its run's completion
+kind; the result records completion kinds and counts summary-backed verdicts,
+true positives, and false positives separately. It also records selected
+semantic-pack decisions, including their activation reasons (which carry the
+pack version when supplied by the CLI), to make summary-backed results
+traceable to models. `proven_subset`, `inconclusive`, `unsupported`, `not_run`,
 missing/unknown completion types all withhold a complete verdict; `failed` is ERROR.
 
 For an absent expected site, `completion.scope` can bound an inconclusive
@@ -332,6 +339,10 @@ remain. The new `pass` boolean is the authoritative gate result, alongside
 `codeql_commit`. `diagnostics_by_family` additionally retains actual family
 counts. Multi-directory CLI output prefixes combined sites with test directory
 to avoid collisions.
+
+`results.tsv` retains existing columns in order and appends completion kind,
+the completion-kinds list, summary-backed verdict count, summary-backed
+true-positive count, and summary-backed false-positive count.
 
 Changes from the seed SPEC: explicit checkout/binary arguments replace host
 paths and inventory; source annotation union and known-gap classes replace
