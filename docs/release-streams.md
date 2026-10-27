@@ -15,7 +15,17 @@ existing manifest schema, engine range, and qualification semantics.
 See [release versioning](release-versioning.md) for the independent stream bump
 rules and compatibility boundaries.
 
-## Intended next releases
+## Next packaging repair
+
+Prepare `packs/v0.6.1`, then `rules/v0.5.2`. The pack patch adds the omitted
+reviewed JDK 21 result-use model for existing policies; the rules patch changes
+only the exact dependency from packs 0.6.0 to 0.6.1. The seven batch-10 models
+are already delivered in the published 0.6.0 native bundle. Consumer schema
+requirements stay the same. See the [repair plan](result-use-native-release.md)
+for compatibility evidence, release order and verification. Published rules
+0.5.1 remains immutable.
+
+## Previous release preparation
 
 Published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
 `packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1` remain
@@ -151,8 +161,14 @@ the generator version. Per-content completeness remains explicit, including
 
 The existing release baseline remains available for historical baseline builds and
 continues to pin source commits, policy files, and the native archive checksum.
-The current rules stream is selected from `content-lock.json`; release-building
-verifies its locked bytes and archive contents. Manual dispatch stages raw
+The current rules stream is selected from the content lock; release-building
+joins the `content-lock.json` header and its `content-lock/` shards into the
+single-file lock, computes its aggregate, and verifies its locked bytes and
+archive contents. The archived `content-lock.json` keeps the single-file format,
+and `content_origin.lock_sha256` is the digest of that joined lock, so sharding
+the authoring lock changes no archive bytes and needs no stream version bump.
+Contributors regenerate shards with `scripts/content.py lock`; see
+[Locking content](../README.md#locking-content). Manual dispatch stages raw
 generation evidence. A stream tag can publish after the exact dependency and
 verified-integrity checks; schema-2 behavior may remain pending or limited.
 Consumer capability and behavior proof remains required before default

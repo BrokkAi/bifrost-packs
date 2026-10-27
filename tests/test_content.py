@@ -5,7 +5,15 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.content import ContentError, build_bundle, check_engine, verify_content
+from scripts.content import (
+    ContentError,
+    build_bundle,
+    check_engine,
+    lock_bytes,
+    read_lock,
+    update_lock,
+    verify_content,
+)
 
 
 def _aggregate(files):
@@ -171,6 +179,110 @@ class ContentToolTests(unittest.TestCase):
         with tarfile.open(output, "r:gz") as archive:
             self.assertIn("validation.json", archive.getnames())
 
+
+    def _shard(self, name):
+        return self.root / "content-lock" / f"{name}.json"
+
+    def _write_shard(self, name, files):
+        files = sorted(files, key=lambda entry: entry["path"])
+        self._shard(name).write_text(json.dumps({"files": files}, indent=2) + "\n")
+
+    def _write_sorted_lock(self):
+        # Joined shards are path-sorted, as the repository's lock always was.
+        self.entries.sort(key=lambda entry: entry["path"])
+        self._write_lock()
+
+    def test_lock_converts_single_file_lock_to_identical_shards(self):
+        self._write_sorted_lock()
+        original = (self.root / "content-lock.json").read_bytes()
+        single = self.root.parent / "single.tar.gz"
+        build_bundle(single, self.root)
+        changes = update_lock(self.root)
+        self.assertEqual(changes, {"added": [], "updated": [], "removed": [], "unlisted": []})
+        header = json.loads((self.root / "content-lock.json").read_text())
+        self.assertNotIn("files", header)
+        self.assertNotIn("aggregate_sha256", header)
+        self.assertEqual(header["file_shards"]["directory"], "content-lock")
+        self.assertEqual(
+            sorted(p.relative_to(self.root / "content-lock").as_posix() for p in (self.root / "content-lock").rglob("*.json")),
+            ["fixtures/positive.json", "licenses.json", "rules.json", "scripts/upstream.json", "semantic-packs.json"],
+        )
+        self.assertEqual(lock_bytes(read_lock(self.root)), original)
+        sharded = self.root.parent / "sharded.tar.gz"
+        build_bundle(sharded, self.root)
+        self.assertEqual(single.read_bytes(), sharded.read_bytes())
+
+    def test_lock_adds_refreshes_and_drops_entries(self):
+        update_lock(self.root)
+        (self.root / "rules/example.rql").write_text("changed\n", encoding="utf-8")
+        (self.root / "scripts/upstream/build.py").unlink()
+        (self.root / "rules/new.rql").write_text("new\n", encoding="utf-8")
+        (self.root / "rules/other.rql").write_text("other\n", encoding="utf-8")
+        with self.assertRaisesRegex(ContentError, "missing: scripts/upstream/build.py"):
+            verify_content(self.root)
+        changes = update_lock(self.root)
+        self.assertEqual(changes["updated"], ["rules/example.rql"])
+        self.assertEqual(changes["removed"], ["scripts/upstream/build.py"])
+        self.assertEqual(changes["unlisted"], ["rules/new.rql", "rules/other.rql"])
+        changes = update_lock(self.root, license_name="MIT", paths=["rules/new.rql"])
+        self.assertEqual(changes["added"], ["rules/new.rql"])
+        self.assertEqual(changes["unlisted"], ["rules/other.rql"])
+        changes = update_lock(self.root, license_name="Apache-2.0")
+        self.assertEqual(changes["added"], ["rules/other.rql"])
+        lock = verify_content(self.root)
+        entries = {entry["path"]: entry for entry in lock["files"]}
+        self.assertEqual(entries["rules/new.rql"]["license"], "MIT")
+        self.assertEqual(entries["rules/new.rql"]["source_path"], "rules/new.rql")
+        self.assertEqual(entries["rules/example.rql"]["source_path"], "source/rules/example.rql")
+        self.assertNotIn("scripts/upstream/build.py", entries)
+        self.assertFalse((self.root / "content-lock/scripts").exists())
+
+    def test_lock_merges_duplicate_entries_and_rejects_conflicting_ones(self):
+        update_lock(self.root)
+        shard = json.loads(self._shard("rules").read_text())
+        self._write_shard("rules", shard["files"] + [dict(shard["files"][0], sha256="0" * 64)])
+        with self.assertRaisesRegex(ContentError, "duplicate locked path"):
+            verify_content(self.root)
+        update_lock(self.root)
+        verify_content(self.root)
+        shard = json.loads(self._shard("rules").read_text())
+        self._write_shard("rules", shard["files"] + [dict(shard["files"][0], license="MIT")])
+        with self.assertRaisesRegex(ContentError, "conflicting entries for rules/example.rql"):
+            update_lock(self.root)
+
+    def test_verify_rejects_stored_aggregate_misplaced_and_noncanonical_shards(self):
+        update_lock(self.root)
+        header = json.loads((self.root / "content-lock.json").read_text())
+        (self.root / "content-lock.json").write_text(json.dumps(dict(header, aggregate_sha256="0" * 64)))
+        with self.assertRaisesRegex(ContentError, "must not store aggregate_sha256"):
+            verify_content(self.root)
+        (self.root / "content-lock.json").write_text(json.dumps(header))
+        rules = self._shard("rules").read_text()
+        self._shard("rules").write_text(rules.replace("  ", "    "))
+        with self.assertRaisesRegex(ContentError, "not in canonical form"):
+            verify_content(self.root)
+        self._shard("rules").unlink()
+        self._shard("other").write_text(rules)
+        with self.assertRaisesRegex(ContentError, "belongs in content-lock/rules.json"):
+            verify_content(self.root)
+        update_lock(self.root)
+        verify_content(self.root)
+        self.assertFalse(self._shard("other").exists())
+
+    def test_verify_rejects_shards_beside_a_single_file_lock(self):
+        self._shard("rules").parent.mkdir()
+        self._shard("rules").write_text('{"files": []}\n')
+        with self.assertRaisesRegex(ContentError, "does not declare file_shards"):
+            verify_content(self.root)
+
+    def test_component_bundle_from_shards_matches_single_file_lock(self):
+        self._write_sorted_lock()
+        single = self.root.parent / "single-rules.tar.gz"
+        build_bundle(single, self.root, "rules")
+        update_lock(self.root)
+        sharded = self.root.parent / "sharded-rules.tar.gz"
+        build_bundle(sharded, self.root, "rules")
+        self.assertEqual(single.read_bytes(), sharded.read_bytes())
 
 if __name__ == "__main__":
     unittest.main()
