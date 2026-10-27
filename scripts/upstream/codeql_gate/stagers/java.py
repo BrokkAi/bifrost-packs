@@ -135,6 +135,39 @@ def _main_string_array_parameter_spans(source):
     return spans
 
 
+def _java_imports(source):
+    tokens = _java_tokens(source)
+    imports = []
+    index = 0
+    while index < len(tokens):
+        if tokens[index][0] != 'import':
+            index += 1
+            continue
+        index += 1
+        if index < len(tokens) and tokens[index][0] == 'static':
+            index += 1
+        values = []
+        while index < len(tokens) and tokens[index][0] != ';':
+            values.append(tokens[index][0])
+            index += 1
+        if index < len(tokens):
+            imports.append(''.join(values))
+        index += 1
+    return imports
+
+
+_JAVA_KEYWORDS = frozenset('abstract assert boolean break byte case catch char class const continue '
+                           'default do double else enum extends final finally float for goto if '
+                           'implements import instanceof int interface long native new package '
+                           'private protected public return short static strictfp super switch '
+                           'synchronized this throw throws transient try void volatile while '
+                           'true false null _'.split())
+
+
+def _valid_java_identifier(value):
+    return value not in _JAVA_KEYWORDS and value.replace('$', 'a').isidentifier()
+
+
 class JavaStager:
     # Class locations are pinned to CodeQL ae741615f3e178ce61289a651790dc67fcc18e19.
     # Keep this list limited to QL endpoints reviewed for catalog-only recall.
@@ -259,11 +292,30 @@ class JavaStager:
         # Artifact installation is deliberately checked on every call: a prepared-root
         # cache hit must not hide a partially cleaned fake Maven repository.
         if stub_sources:
-            self._install_stubs(stub_sources, coordinates, cache_dir, fake_home)
+            statuses = self._install_stubs(stub_sources, coordinates, cache_dir, fake_home, files, stub_root)
+        else:
+            statuses = {}
+        if target.exists() and stub_sources:
+            pom_path = target / 'pom.xml'
+            pom = ET.parse(pom_path)
+            project = pom.getroot()
+            deps = project.find('dependencies')
+            known = {(dep.findtext('groupId'), dep.findtext('artifactId'), dep.findtext('version'))
+                     for dep in deps.findall('dependency')}
+            for stub in stub_sources:
+                row = coordinates[stub.name]
+                coord = (row['groupId'], row['artifactId'], row['version'])
+                if coord in known:
+                    continue
+                dep = ET.SubElement(deps, 'dependency')
+                for tag, value in (('groupId', coord[0]), ('artifactId', coord[1]),
+                                   ('version', coord[2]), ('scope', 'compile')):
+                    ET.SubElement(dep, tag).text = value
+            pom.write(pom_path, encoding='utf-8', xml_declaration=True)
         staged = tuple({key: row[key] for key in
                         ('groupId', 'artifactId', 'version', 'confidence', 'evidence')} |
-                       {'stub_dir': stub.name}
-                       for stub in stub_dirs for row in (coordinates[stub.name],))
+                       {'stub_dir': stub.name} | statuses.get(stub, {'staging_status': 'no-sources'})
+                       for stub in stub_sources for row in (coordinates[stub.name],))
         return PreparedRoot(target, tuple(p.relative_to(test_dir).as_posix()
                                           for p in files if p.suffix.lower() in ('.java', '.kt')),
                             staged)
@@ -285,7 +337,7 @@ class JavaStager:
 
     @staticmethod
     def _is_jdk_package(package, jdk_packages):
-        return package == 'java' or package.startswith('java.') or bool(jdk_packages.get(package))
+        return package in jdk_packages
 
     @staticmethod
     def _jar_files(base, stub_name, source_mode, package_roots):
@@ -301,127 +353,281 @@ class JavaStager:
                 continue
             yield file, relative
 
-    def _install_stubs(self, stub_sources, coordinates, cache_dir, fake_home):
+    def _install_stubs(self, stub_sources, coordinates, cache_dir, fake_home, test_files, stub_root):
         if self.java_home is None:
             raise ValueError('Java staging requires --java-home or JAVA_HOME')
         java_home = self.java_home.resolve()
         jdk_packages = self._jdk_packages(java_home)
-        fingerprint = hashlib.sha256(b'java-stub-compile-v3\0' + str(java_home).encode())
+        fingerprint = hashlib.sha256(b'java-stub-compile-v5\0' + str(java_home).encode())
         for package, modules in sorted(jdk_packages.items()):
             fingerprint.update(package.encode() + b'\0')
             fingerprint.update(','.join(sorted(modules)).encode() + b'\0')
-        for stub, sources in sorted(stub_sources.items(), key=lambda item: item[0].name):
-            fingerprint.update(stub.name.encode() + b'\0')
-            for source in sources:
-                fingerprint.update(source.relative_to(stub).as_posix().encode() + b'\0')
-                fingerprint.update(hashlib.sha256(source.read_bytes()).digest())
-        retained_sources, dropped_sources = {}, {}
-        package_for_source = {}
-        for stub, sources in stub_sources.items():
-            retained_sources[stub], dropped_sources[stub] = set(), []
+        all_stub_sources = {root: sorted(root.rglob('*.java')) for root in sorted(stub_root.iterdir())
+                            if root.is_dir()}
+        package_roots = {}
+        declared_package = {}
+        for root, sources in all_stub_sources.items():
             for source in sources:
                 match = re.search(r'^\s*package\s+([\w.]+)\s*;',
                                   source.read_text(errors='replace'), re.M)
                 package = match.group(1) if match else ''
-                package_for_source[source] = package
-                owners = jdk_packages.get(package, ())
-                if self._is_jdk_package(package, jdk_packages):
-                    dropped_sources[stub].append((source, package, sorted(owners)))
-                else:
-                    retained_sources[stub].add(source)
-        artifact_cache = cache_dir / 'java-stubs' / fingerprint.hexdigest()
-        stub_fingerprint = fingerprint.hexdigest()
-        work, compile_work, classes = (artifact_cache / 'sources',
-                                       artifact_cache / 'compile-sources',
-                                       artifact_cache / 'classes')
-        complete_marker = artifact_cache / 'compile.txt'
-        if not complete_marker.is_file():
-            artifact_cache.mkdir(parents=True, exist_ok=True)
-            shutil.rmtree(work, ignore_errors=True)
-            shutil.rmtree(compile_work, ignore_errors=True)
-            shutil.rmtree(classes, ignore_errors=True)
-            work.mkdir()
-            compile_work.mkdir()
-            compiled_classes = Path(tempfile.mkdtemp(prefix='.classes-', dir=artifact_cache))
-            for stub, sources in stub_sources.items():
-                for source in sources:
-                    destination = work / stub.name / source.relative_to(stub)
-                    destination.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(source, destination)
-                    if source in retained_sources[stub]:
-                        compile_destination = compile_work / stub.name / source.relative_to(stub)
-                        compile_destination.parent.mkdir(parents=True, exist_ok=True)
-                        shutil.copy2(source, compile_destination)
-            javac = java_home / 'bin' / ('javac.exe' if os.name == 'nt' else 'javac')
-            compile_sources = sorted(compile_work.rglob('*.java'))
-            attempts = [('-proc:none', '-nowarn', '-encoding', 'UTF-8', '--release', '21')]
-            records = []
-            records.append('Dropped JDK-owned stub sources:')
-            for stub in sorted(dropped_sources, key=lambda path: path.name):
-                if not dropped_sources[stub]:
-                    records.append(f'  {stub.name}: none')
-                for source, package, owners in dropped_sources[stub]:
-                    records.append(f"  {stub.name}/{source.relative_to(stub).as_posix()} "
-                                   f"package={package or '(default)'} modules={','.join(owners) or 'java.*'}")
-            try:
-                for flags in attempts:
-                    proc = subprocess.run([str(javac), *flags, '-d', str(compiled_classes), *map(str, compile_sources)],
-                                          capture_output=True, text=True)
-                    records.append(f"$ javac {' '.join(flags)}\nexit={proc.returncode}\n{proc.stdout}{proc.stderr}")
-                    if proc.returncode == 0:
-                        break
-                shutil.rmtree(classes, ignore_errors=True)
-                compiled_classes.rename(classes)
-                marker_tmp = artifact_cache / '.compile.txt.tmp'
-                marker_tmp.write_text('\n\n'.join(records) + '\n')
-                marker_tmp.replace(complete_marker)
-            finally:
-                shutil.rmtree(compiled_classes, ignore_errors=True)
+                declared_package[source] = package
+                fingerprint.update(root.name.encode() + b'\0')
+                fingerprint.update(source.relative_to(root).as_posix().encode() + b'\0')
+                fingerprint.update(hashlib.sha256(source.read_bytes()).digest())
+                if (package and _valid_java_identifier(source.stem)
+                        and not self._is_jdk_package(package, jdk_packages)):
+                    package_roots.setdefault(package, []).append(root)
 
-        package_roots = {
-            stub: {package_for_source[source].replace('.', '/') for source in sources
-                   if package_for_source.get(source)}
-            for stub, sources in retained_sources.items()
-        }
-        dependencies = []
+        selected, package_for_source, dropped_jdk = {}, {}, {}
+        duplicates, misplaced, skipped = [], [], []
+        first_source_by_type = {}
+        packages_by_stub = {}
+        for stub, sources in list(stub_sources.items()):
+            selected[stub], dropped_jdk[stub], packages_by_stub[stub] = [], [], set()
+            for source in sources:
+                relative = source.relative_to(stub)
+                path_package = '.'.join(relative.parent.parts) if relative.parent.parts else ''
+                package = declared_package[source]
+                package_for_source[source] = package
+                if not _valid_java_identifier(source.stem):
+                    skipped.append((stub, source, 'file stem is not a valid Java identifier'))
+                    continue
+                type_name = '.'.join(part for part in (package, source.stem) if part)
+                if package != path_package:
+                    misplaced.append((stub, source, path_package, package))
+                if self._is_jdk_package(package, jdk_packages):
+                    dropped_jdk[stub].append((source, package, sorted(jdk_packages[package])))
+                    continue
+                previous = first_source_by_type.get(type_name)
+                if previous:
+                    duplicates.append((type_name, previous[0], previous[1], stub, source))
+                    continue
+                first_source_by_type[type_name] = (stub, source)
+                selected[stub].append(source)
+                if package:
+                    packages_by_stub[stub].add(package)
+
+        auxiliary_triggers = {}
+
+        def add_auxiliary_root(root, package, triggering_diagnostic):
+            if root in stub_sources:
+                return False
+            if root.name not in coordinates:
+                raise GateError(f'no Java stub coordinate mapping for auxiliary root {root.name}')
+            sources = all_stub_sources[root]
+            stub_sources[root] = sources
+            selected[root], dropped_jdk[root], packages_by_stub[root] = [], [], set()
+            auxiliary_triggers[root] = (package, triggering_diagnostic)
+            for source in sources:
+                relative = source.relative_to(root)
+                path_package = '.'.join(relative.parent.parts) if relative.parent.parts else ''
+                declared = declared_package[source]
+                package_for_source[source] = declared
+                if not _valid_java_identifier(source.stem):
+                    skipped.append((root, source, 'file stem is not a valid Java identifier'))
+                    continue
+                if declared != path_package:
+                    misplaced.append((root, source, path_package, declared))
+                if self._is_jdk_package(declared, jdk_packages):
+                    dropped_jdk[root].append((source, declared, sorted(jdk_packages[declared])))
+                    continue
+                type_name = '.'.join(part for part in (declared, source.stem) if part)
+                previous = first_source_by_type.get(type_name)
+                if previous:
+                    duplicates.append((type_name, previous[0], previous[1], root, source))
+                    continue
+                first_source_by_type[type_name] = (root, source)
+                selected[root].append(source)
+                if declared:
+                    packages_by_stub[root].add(declared)
+            return True
+
+        artifact_cache = cache_dir / 'java-stubs' / fingerprint.hexdigest()
+        work = artifact_cache / 'sources'
+        compile_work = artifact_cache / 'compile-sources'
+        class_root = artifact_cache / 'classes'
+        artifact_cache.mkdir(parents=True, exist_ok=True)
+        shutil.rmtree(work, ignore_errors=True)
+        shutil.rmtree(compile_work, ignore_errors=True)
+        shutil.rmtree(class_root, ignore_errors=True)
+        work.mkdir()
+        compile_work.mkdir()
+        class_root.mkdir()
+        for stub, sources in stub_sources.items():
+            for source in sources:
+                destination = work / stub.name / source.relative_to(stub)
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, destination)
+            for source in selected[stub]:
+                destination = compile_work / stub.name / source.relative_to(stub)
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, destination)
+
+        javac = java_home / 'bin' / ('javac.exe' if os.name == 'nt' else 'javac')
+        flags = ('-proc:none', '-nowarn', '-encoding', 'UTF-8', '--release', '21')
+        coordinate_dirs = {}
+        built, unstaged, diagnostics, compile_records = set(), set(), {}, []
+        pending = list(stub_sources)
+        while pending:
+            next_pending = []
+            built_this_pass = []
+            added_auxiliary = []
+            for stub in pending:
+                sources = selected[stub]
+                output = class_root / stub.name
+                shutil.rmtree(output, ignore_errors=True)
+                output.mkdir(parents=True)
+                command = [str(javac), *flags]
+                built_classpath = [str(coordinate_dirs[ready]) for ready in stub_sources if ready in built]
+                if built_classpath:
+                    command.extend(('-classpath', os.pathsep.join(built_classpath)))
+                command.extend(('-d', str(output)))
+                command.extend(str(compile_work / stub.name / source.relative_to(stub))
+                               for source in sources)
+                if sources:
+                    proc = subprocess.run(command, capture_output=True, text=True)
+                    output_text = proc.stdout + proc.stderr
+                    compile_records.append(f"{stub.name}: javac exit={proc.returncode}\n{output_text}")
+                    if proc.returncode:
+                        next_pending.append(stub)
+                        diagnostics[stub] = next((line.strip() for line in output_text.splitlines()
+                                                  if ' error:' in line),
+                                                 next((line.strip() for line in output_text.splitlines()
+                                                       if line.strip()),
+                                                      'javac failed without diagnostics'))
+                        shutil.rmtree(output, ignore_errors=True)
+                        for package in sorted(set(re.findall(
+                                r'package ([\w.$]+) does not exist', output_text))):
+                            if any(package in packages_by_stub[auxiliary]
+                                   for auxiliary in auxiliary_triggers):
+                                continue
+                            candidates = [candidate for candidate in package_roots.get(package, ())
+                                          if candidate not in stub_sources]
+                            if not candidates:
+                                continue
+                            candidate = min(candidates,
+                                            key=lambda path: (len(all_stub_sources[path]), path.name))
+                            matching_diagnostic = next(
+                                (line.strip() for line in output_text.splitlines()
+                                 if f'package {package} does not exist' in line), diagnostics[stub])
+                            if add_auxiliary_root(candidate, package, matching_diagnostic):
+                                added_auxiliary.append(candidate)
+                                for source in all_stub_sources[candidate]:
+                                    destination = work / candidate.name / source.relative_to(candidate)
+                                    destination.parent.mkdir(parents=True, exist_ok=True)
+                                    shutil.copy2(source, destination)
+                                for source in selected[candidate]:
+                                    destination = compile_work / candidate.name / source.relative_to(candidate)
+                                    destination.parent.mkdir(parents=True, exist_ok=True)
+                                    shutil.copy2(source, destination)
+                        continue
+                    diagnostics.pop(stub, None)
+                built.add(stub)
+                built_this_pass.append(stub)
+                coordinate_dirs[stub] = output
+                row = coordinates[stub.name]
+                coordinate_dir = (fake_home / '.m2/repository' /
+                                  Path(*row['groupId'].split('.')) / row['artifactId'] / row['version'])
+                coordinate_dir.mkdir(parents=True, exist_ok=True)
+                jar = coordinate_dir / f"{row['artifactId']}-{row['version']}.jar"
+                with zipfile.ZipFile(jar, 'w', zipfile.ZIP_DEFLATED) as archive:
+                    for file in sorted(output.rglob('*.class')):
+                        archive.write(file, file.relative_to(output).as_posix())
+                expected = {
+                    '/'.join(part for part in (package_for_source[source].replace('.', '/'),
+                                               source.stem + '.class') if part)
+                    for source in sources
+                }
+                with zipfile.ZipFile(jar) as archive:
+                    missing = sorted(expected - set(archive.namelist()))
+                if missing:
+                    jar.unlink(missing_ok=True)
+                    jar.with_name(jar.name + '.fingerprint').unlink(missing_ok=True)
+                    raise GateError(f'Java stub binary jar is missing expected classes for {stub.name}: {missing}')
+                stamp = jar.with_name(jar.name + '.fingerprint')
+                stamp.write_text(fingerprint.hexdigest() + '\n')
+                coordinate_dirs[stub] = jar
+            if not built_this_pass and not added_auxiliary:
+                unstaged.update(next_pending)
+                break
+            pending = added_auxiliary + next_pending
+
+        for stub in unstaged:
+            row = coordinates[stub.name]
+            coordinate_dir = (fake_home / '.m2/repository' /
+                              Path(*row['groupId'].split('.')) / row['artifactId'] / row['version'])
+            for suffix in ('.jar', '.jar.fingerprint'):
+                (coordinate_dir / f"{row['artifactId']}-{row['version']}{suffix}").unlink(missing_ok=True)
+
+        # Sources jars and Maven metadata remain available for every selected coordinate.
+        statuses = {}
         for stub in stub_sources:
             row = coordinates[stub.name]
             group, artifact, version = row['groupId'], row['artifactId'], row['version']
-            destination = fake_home / '.m2/repository' / Path(*group.split('.')) / artifact / version
-            destination.mkdir(parents=True, exist_ok=True)
-            for suffix, base, source_mode in (('.jar', classes, False),
-                                              ('-sources.jar', work, True)):
-                jar = destination / f'{artifact}-{version}{suffix}'
-                fingerprint_file = jar.with_name(jar.name + '.fingerprint')
-                if (jar.is_file() and fingerprint_file.is_file()
-                        and fingerprint_file.read_text().strip() == stub_fingerprint):
-                    continue
-                fd, temporary_name = tempfile.mkstemp(prefix=f'.{jar.name}.', dir=destination)
-                os.close(fd)
-                try:
-                    with zipfile.ZipFile(temporary_name, 'w', zipfile.ZIP_DEFLATED) as archive:
-                        for file, relative in self._jar_files(base, stub.name, source_mode,
-                                                             package_roots[stub]):
-                            archive.write(file, relative.as_posix())
-                    os.replace(temporary_name, jar)
-                finally:
-                    Path(temporary_name).unlink(missing_ok=True)
-                fd, stamp_name = tempfile.mkstemp(prefix=f'.{fingerprint_file.name}.', dir=destination)
-                try:
-                    with os.fdopen(fd, 'w') as stamp:
-                        stamp.write(stub_fingerprint + '\n')
-                    os.replace(stamp_name, fingerprint_file)
-                finally:
-                    Path(stamp_name).unlink(missing_ok=True)
-            pom = ET.Element('project')
-            for tag, value in (('modelVersion', '4.0.0'), ('groupId', group),
-                               ('artifactId', artifact), ('version', version)):
-                ET.SubElement(pom, tag).text = value
-            pom_path = destination / f'{artifact}-{version}.pom'
+            coordinate_dir = (fake_home / '.m2/repository' /
+                              Path(*group.split('.')) / artifact / version)
+            coordinate_dir.mkdir(parents=True, exist_ok=True)
+            sources_jar = coordinate_dir / f'{artifact}-{version}-sources.jar'
+            with zipfile.ZipFile(sources_jar, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for file, relative in self._jar_files(work, stub.name, True, ()):
+                    archive.write(file, relative.as_posix())
+            pom_path = coordinate_dir / f'{artifact}-{version}.pom'
             if not pom_path.is_file():
+                pom = ET.Element('project')
+                for tag, value in (('modelVersion', '4.0.0'), ('groupId', group),
+                                   ('artifactId', artifact), ('version', version)):
+                    ET.SubElement(pom, tag).text = value
                 ET.ElementTree(pom).write(pom_path, encoding='utf-8', xml_declaration=True)
-            dependencies.append((group, artifact, version))
-        return dependencies
+            statuses[stub] = {'staging_status': 'built' if stub in built else 'unstaged',
+                              'staging_kind': 'auxiliary' if stub in auxiliary_triggers else 'options'}
+            if stub in unstaged:
+                statuses[stub]['staging_diagnostic'] = diagnostics[stub]
+            if stub in auxiliary_triggers:
+                package, diagnostic = auxiliary_triggers[stub]
+                statuses[stub]['auxiliary_package'] = package
+                statuses[stub]['auxiliary_trigger'] = diagnostic
+
+        records = ['Dropped JDK-owned stub sources:']
+        records.extend(f"  {stub.name}/{source.relative_to(stub).as_posix()} package={package or '(default)'} "
+                       f"modules={','.join(owners)}"
+                       for stub, rows in dropped_jdk.items() for source, package, owners in rows)
+        records.append('Dropped duplicate stub types:')
+        records.extend(f"  {name}: kept {first_stub.name}/{first_source.relative_to(first_stub).as_posix()}; "
+                       f"dropped {stub.name}/{source.relative_to(stub).as_posix()}"
+                       for name, first_stub, first_source, stub, source in duplicates)
+        records.append('Sources whose package path disagrees with declaration:')
+        records.extend(f"  {stub.name}/{source.relative_to(stub).as_posix()} path={path_package or '(default)'} "
+                       f"declared={package or '(default)'}"
+                       for stub, source, path_package, package in misplaced)
+        records.append('Skipped sources with invalid Java file stems:')
+        records.extend(f"  {stub.name}/{source.relative_to(stub).as_posix()}: {reason}"
+                       for stub, source, reason in skipped)
+        records.append('Auxiliary roots:')
+        records.extend(f"  {stub.name}: package {package}; triggered by {diagnostic}"
+                       for stub, (package, diagnostic) in auxiliary_triggers.items())
+        records.extend(compile_records)
+        records.extend(f"UNSTAGED {stub.name}: {diagnostics[stub]}" for stub in stub_sources if stub in unstaged)
+        (artifact_cache / 'compile.txt').write_text('\n\n'.join(records) + '\n')
+
+        unstaged_packages = set().union(*(packages_by_stub[stub] for stub in unstaged)) if unstaged else set()
+        built_packages = set().union(*(packages_by_stub[stub] for stub in built)) if built else set()
+        unavailable = unstaged_packages - built_packages
+        import_errors = []
+        for test_file in test_files:
+            if test_file.suffix != '.java':
+                continue
+            for imported in _java_imports(test_file.read_text(errors='replace')):
+                for package in sorted(unavailable, key=len, reverse=True):
+                    if imported == package or imported.startswith(package + '.'):
+                        owners = [stub.name for stub in stub_sources if stub in unstaged
+                                  and package in packages_by_stub[stub]]
+                        import_errors.append(f"{test_file.name}: import {imported} from unstaged stub roots {owners}")
+                        break
+        if import_errors:
+            raise GateError('Java test imports packages available only from unstaged stubs:\n' +
+                            '\n'.join(import_errors))
+        return statuses
 
     def _jdk_packages(self, java_home):
         cache_key = str(java_home)

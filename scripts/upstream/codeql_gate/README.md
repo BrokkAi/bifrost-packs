@@ -108,17 +108,29 @@ empty (ambient flags cannot change staging). `GOPROXY=off`, `GOSUMDB=off`, and
 ## Java staging
 
 Java copies all non-CodeQL files recursively, reads stub paths from `options`,
-and stages each referenced stub coordinate as binary and sources jars in a
-fake Maven repository beneath the prepared-root cache. All stub sources go in
-the sources jars. Stub sources for one test are compiled together with
-`javac --release 21` from `JAVA_HOME` (or `--java-home`); compilation is best
-effort, with compiler failures recorded in `compile.txt` and any emitted class
-files retained in the binary jars. Sources in packages owned by the selected
-JDK are listed in the compile record and excluded from compilation. Each
-prepared root gets a `pom.xml` with compile dependencies for its stubs. The
-binary jar is staged even when empty because Maven coordinate discovery requires
-that path before it can attach the sources jar. Maven HOME and USERPROFILE point
-at the fake Maven home. Coordinate evidence is kept in
+and stages stub coordinates as binary and sources jars in a fake Maven
+repository beneath the prepared-root cache. All selected stub sources go in
+the sources jars. Stub roots compile independently with `javac --release 21`
+from `JAVA_HOME` (or `--java-home`), retrying failed roots until a pass builds
+no new roots. Each compile uses JDK classes and binaries built in earlier
+passes. When roots declare the same type, the source from the first root in
+`options` wins; type identity uses the declared package and file stem. Sources
+with invalid Java identifier stems are skipped. Duplicate types, skipped
+sources, and source paths that disagree with declared packages are recorded in
+`compile.txt`. Sources in packages owned by the selected JDK image are excluded
+from compilation and recorded.
+
+When javac reports a missing package, the stager can add an auxiliary root from
+the CodeQL stub tree. It chooses the root with the fewest source files, then by
+name; option roots keep type precedence. The auxiliary root and the missing
+package diagnostic that selected it are recorded and added to the prepared
+root's Maven dependencies. A root that remains unbuildable is marked
+`unstaged`, with its coordinate and first javac diagnostic in the prepared-root
+provenance and each run's `result.json` and `result.md`; it has no binary jar.
+Preparation fails if a test source imports a package supplied only by an
+unstaged root. Each built binary jar is checked for every selected source's
+expected class. Maven HOME and USERPROFILE point at the fake Maven home.
+Coordinate evidence is kept in
 `stagers/java_stub_coordinates.tsv`; unrecognized coordinates remain explicitly
 marked as unknown. The per-run `result.json` records every selected artifact's
 coordinates, confidence and evidence, including unknown placeholder coordinates.

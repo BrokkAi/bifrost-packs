@@ -10,7 +10,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 
 from scripts.upstream.codeql_gate.core import (GateError, inline_expectations, load_oracle, parse_expected,
-                                               report_analyzed_paths, score)
+                                               report_analyzed_paths, score, write_results)
 from scripts.upstream.codeql_gate.stagers.go import GoStager
 from scripts.upstream.codeql_gate.compare_sarif import compare
 
@@ -24,6 +24,32 @@ def report(*locations, complete=True):
                      'diagnostics': [], 'work': {'scanned_files': 1},
                      'findings': [{'primary': {'path': p, 'region': {'start_line': n, 'end_line': end}},
                                    'completeness': {'type': 'complete'}} for p, n, end in locations]}]}
+
+
+class ResultTests(unittest.TestCase):
+    def test_java_stub_status_is_reported_in_json_and_markdown(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            run_dir = Path(temporary)
+            result = dict(query='example', verdict='EXACT-INCOMPLETE', **{'pass': False}, complete=True,
+                          matched=[], false_positives=[], silent_misses=[], abstentions=[],
+                          spurious={'sites': [], 'findings': []}, missing={'sites': [], 'findings': []},
+                          errors=[], oracle_sources={}, oracle_disagreement={}, binary_sha256='digest',
+                          codeql_commit='commit', staged_artifacts=[{
+                              'stub_dir': 'broken-stub', 'staging_status': 'unstaged',
+                              'staging_diagnostic': 'broken.java:3: error: unresolved type'
+                          }, {
+                              'stub_dir': 'auxiliary-stub', 'staging_status': 'built',
+                              'staging_kind': 'auxiliary', 'auxiliary_package': 'shared.api',
+                              'auxiliary_trigger': 'Use.java:1: package shared.api does not exist'
+                          }])
+            write_results(run_dir, result)
+            payload = json.loads((run_dir / 'result.json').read_text())
+            markdown = (run_dir / 'result.md').read_text()
+            self.assertEqual(payload['staged_artifacts'][0]['staging_status'], 'unstaged')
+            self.assertIn('broken-stub', markdown)
+            self.assertIn('broken.java:3: error: unresolved type', markdown)
+            self.assertIn('auxiliary package `shared.api`', markdown)
+            self.assertIn('package shared.api does not exist', markdown)
 
 
 class OracleTests(unittest.TestCase):

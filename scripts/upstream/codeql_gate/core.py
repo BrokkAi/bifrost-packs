@@ -447,6 +447,16 @@ def write_results(run_dir, result):
         rows.append(f"| {name} sites | {', '.join(site(r) for r in result[name]['sites']) or '—'} |")
         rows.append(f"| {name} findings | {', '.join(result[name]['findings']) or '—'} |")
     deferred_ql = result.get('deferred_attributions', [])
+    staged = result.get('staged_artifacts', [])
+    stub_status = [item for item in staged if item.get('staging_status')]
+    stub_report = ''
+    if stub_status:
+        stub_report = '\n\nJava stub staging:\n' + '\n'.join(
+            f"- `{item['stub_dir']}`: {item['staging_status']}" +
+            (f"; auxiliary package `{item['auxiliary_package']}` triggered by "
+             f"`{item['auxiliary_trigger']}`" if item.get('auxiliary_package') else '') +
+            (f"; `{item['staging_diagnostic']}`" if item.get('staging_diagnostic') else '')
+            for item in stub_status)
     ql_report = ''
     if deferred_ql:
         ql_report = '\n\nDeferred QL endpoint assertions:\n' + '\n'.join(
@@ -459,7 +469,7 @@ def write_results(run_dir, result):
         (result['verdict'] if 'full_suite_verdict' in result else
          'PASS' if result['pass'] else result['verdict']) +
         (f"; full suite: {result['full_suite_verdict']}" if 'full_suite_verdict' in result else '') +
-        '\n\n' + '\n'.join(rows) + ql_report +
+        '\n\n' + '\n'.join(rows) + stub_report + ql_report +
         f"\n\nComplete: {result['complete']}. Errors: {result['errors']}\n"
         f"\nOracle sources: {', '.join(f'{k}={len(v)}' for k, v in result['oracle_sources'].items())}.\n"
         f"Disagreement: {json.dumps(result['oracle_disagreement'])}\n"
