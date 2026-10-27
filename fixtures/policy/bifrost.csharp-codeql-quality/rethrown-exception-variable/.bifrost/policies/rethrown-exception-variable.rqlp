@@ -1,0 +1,24 @@
+; CodeQL query: Language Abuse/RethrowException.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a catch clause whose own body throws its declared
+; catch variable (`throw e;`). Throws inside nested catch clauses, lambdas,
+; anonymous methods and local functions belong to those scopes; a bare
+; `throw;` preserves the stack and is not reported.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.rethrown-exception-variable"
+  :name "C# rethrown exception variable"
+  :message "catch clause rethrows its exception variable, losing the original stack trace"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Language Abuse/RethrowException.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports catch clauses whose body throws the caught exception variable rather than using a bare throw; the finding is anchored on the catch clause."
+  :tags ["csharp" "codeql" "quality" "exceptions"]
+  :analysis (analysis
+    :type assertion
+    (bind :name catch
+      :query (rql :schema-version 1
+        (filter :where ((rethrow_kind in [caught_variable both]))
+          (failure-handler-state
+            (language csharp (catch))))))
+    (group :name by-catch :by (catch.id)
+      (aggregate :name variable-rethrows :op count))
+    (assert :group by-catch :value variable-rethrows :cardinality (exactly 0))))

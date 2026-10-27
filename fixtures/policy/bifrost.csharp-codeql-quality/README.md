@@ -1,6 +1,6 @@
 # Public C# CodeQL quality fixtures
 
-These fixtures exercise the nine policies in
+These fixtures exercise the eleven policies in
 `rules/bifrost.csharp-codeql-quality`. Each case contains a positive example
 and same-shaped near misses, with the expected structural boundary documented
 by the policy's CodeQL query path and pinned commit
