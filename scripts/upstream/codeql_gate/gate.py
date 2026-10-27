@@ -71,7 +71,7 @@ def main(argv=None):
             raise GateError(f'test directory is outside checkout or missing: {directory}')
     if args.command == 'expected':
         print(json.dumps([dict(test_dir=str(d.relative_to(args.codeql_root)),
-                               **load_oracle(d, query_path, stager)) for d in test_dirs], indent=2))
+                               **load_oracle(d, query_path, stager, args.query)) for d in test_dirs], indent=2))
         return 0
     if args.command == 'prepare':
         print(json.dumps([str(stager.prepare(d, args.codeql_root, args.state_dir / 'roots').root)

@@ -9,7 +9,8 @@ from pathlib import Path
 # Upstream scripts are content-locked; importing tests must not add bytecode.
 sys.dont_write_bytecode = True
 
-from scripts.upstream.codeql_gate.core import GateError, load_oracle, parse_expected, report_analyzed_paths, score
+from scripts.upstream.codeql_gate.core import (GateError, inline_expectations, load_oracle, parse_expected,
+                                               report_analyzed_paths, score)
 from scripts.upstream.codeql_gate.stagers.go import GoStager
 from scripts.upstream.codeql_gate.compare_sarif import compare
 
@@ -27,7 +28,7 @@ def report(*locations, complete=True):
 
 class OracleTests(unittest.TestCase):
     def oracle(self, name):
-        return load_oracle(FIXTURES / name, 'Example.ql', GoStager())
+        return load_oracle(FIXTURES / name, 'Example.ql', GoStager(), 'example')
 
     def test_problem_first_section_only(self):
         self.assertEqual([r['start'] for r in self.oracle('problem')['expected']], [3])
@@ -50,11 +51,33 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(oracle['oracle_disagreement']['inline_only'], ['tagged.go:4', 'tagged.go:5'])
         self.assertEqual(len(oracle['oracle_sources']['inline_taint']), 1)
 
+    def test_qualified_tags_count_only_for_their_query(self):
+        # Shaped like CodeQL's Go CWE-078 directory, where command-injection and
+        # stored-command share one test directory and qualify their tags.
+        def classes(query_path, query_id):
+            oracle = load_oracle(FIXTURES / 'qualified', query_path, GoStager(), query_id)
+            return [sorted(r['start'] for r in oracle[name]) for name in ('expected', 'missing', 'spurious')]
+        self.assertEqual(classes('CommandInjection.ql', 'go/command-injection'), [[3, 5, 6], [7], []])
+        self.assertEqual(classes('StoredCommand.ql', 'go/stored-command'), [[4, 5, 6, 7], [], [8]])
+
+    def test_expectation_tag_lists_columns_and_remarks(self):
+        def parse(contents):
+            return list(inline_expectations(contents))
+        self.assertEqual(parse(' $ Source Alert'), [(None, 'Source', None), (None, 'Alert', None)])
+        self.assertEqual(parse(' $ Alert[go/a], Alert[go/b]=r1 Sink'),
+                         [(None, 'Alert', 'go/a'), (None, 'Alert', 'go/b'), (None, 'Sink', None)])
+        self.assertEqual(parse(' $ Alert MISSING: Alert[go/a] SPURIOUS: hasTaintFlow="x y" MISSING: Sink'),
+                         [(None, 'Alert', None), ('MISSING', 'Alert', 'go/a'), ('SPURIOUS', 'hasTaintFlow', None),
+                          ('MISSING', 'Sink', None)])
+        self.assertEqual(parse(' $ Alert // remark $ Alert[go/a]'), [(None, 'Alert', None)])
+        self.assertEqual(parse(' note $ Alert'), [])
+        self.assertEqual(parse(' $Alert'), [])
+
     def test_missing_expected_is_error(self):
         with tempfile.TemporaryDirectory() as d:
             (Path(d) / 'check.qlref').write_text('query: Example.ql')
             with self.assertRaises(GateError):
-                load_oracle(Path(d), 'Example.ql', GoStager())
+                load_oracle(Path(d), 'Example.ql', GoStager(), 'example')
 
     def test_testfailures_are_unreliable(self):
         with tempfile.TemporaryDirectory() as d:

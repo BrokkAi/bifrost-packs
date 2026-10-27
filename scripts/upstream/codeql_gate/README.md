@@ -57,7 +57,8 @@ extra_policy_files(prepared) -> list[Path]
 `PreparedRoot` carries `root: Path`, `source_paths: tuple[str, ...]`, and an
 optional `staged_artifacts` list for language-specific artifact coordinates and
 provenance. Coverage is measured independently by the core. An optional
-`inline_oracle(test_dir)` supplies language-specific annotations.
+`inline_oracle(test_dir, query_id)` supplies language-specific annotations
+for the query being scored.
 The core owns ordinary private file copies, policy placement, model copying,
 execution, process-group timeout, scoring, provenance and output. Prepared
 Go roots are keyed by absolute test directory, staged paths/content hashes,
@@ -140,9 +141,20 @@ Locations are full test-directory-relative paths and start lines; duplicate
 rows at a site collapse to a set, retaining the widest expected span.
 
 Go `//` annotations are lexed outside quoted strings, runes, raw strings and
-block comments. `$ Alert`, `$ Alert[...]` and `$ hasTaintFlow="..."` add an
-expected alert on their own line. `$ Source` and `$ Sink` are path endpoints
-and do not add alerts. Expected alerts are the union of select and inline
+block comments. Each stager finds its language's comments; the core reads
+their contents with CodeQL's inline expectation grammar
+(`shared/util/codeql/util/test/InlineExpectationsTest.qll`): a comment whose
+contents start with `$ ` holds expectations up to a `//` or `#` remark, each
+`MISSING:` or `SPURIOUS:` opens a column that runs to the next one, and a
+column holds whitespace-separated `tag(,tag)*(=value)?` items, so
+`$ Source Alert` and `$ Alert[go/a], Alert[go/b]` carry two tags each.
+`Alert` and `hasTaintFlow` add an expected alert on their own line;
+`Source`, `Sink` and `RelatedLocation` are path endpoints or related
+locations and do not add alerts. A tag qualified with a query id, such as
+`Alert[go/command-injection]`, counts only for that query, and an
+unqualified tag counts for every query of the test directory, as in CodeQL;
+this matters where several queries share one directory and qualify their
+tags (Go CWE-078 has command-injection and stored-command together). Expected alerts are the union of select and inline
 sites. `oracle_sources` records the contributing rows per source;
 `oracle_disagreement` lists each direction's differences when inline tags
 and an expected file both exist. A disagreement is visible, never silently
@@ -153,7 +165,9 @@ contains them. Reporting there is always a confirmed false positive;
 silence is correct. `$ MISSING: Alert` sites are known upstream omissions:
 reporting is a true positive and silence is not a silent miss. These sites
 are removed from the ordinary expected set and retained as separate scored
-classes. These overrides also apply to tagged `hasTaintFlow` annotations.
+classes. These overrides also apply to tagged `hasTaintFlow` annotations,
+and qualified `SPURIOUS: Alert[...]` and `MISSING: Alert[...]` tags follow
+the same query-id rule.
 
 Strict matching requires the same relative path and start line. Span overlap
 is reported separately as `loose_matches`, never promoted to a strict match.

@@ -8,6 +8,10 @@ import tempfile
 from pathlib import Path
 
 from . import PreparedRoot
+try:
+    from core import add_inline_expectations
+except ImportError:
+    from ..core import add_inline_expectations
 
 
 class GoStager:
@@ -53,7 +57,7 @@ class GoStager:
     def extra_policy_files(self, prepared):
         return []
 
-    def inline_oracle(self, test_dir):
+    def inline_oracle(self, test_dir, query_id):
         result = {'inline_alert': [], 'inline_taint': [], 'spurious': [], 'missing': []}
         # Lex strings/runes/raw strings and block comments before recognizing //.
         # This avoids treating source text such as `// $ Alert` as an annotation.
@@ -64,11 +68,9 @@ class GoStager:
                 comment = token.group()
                 if not comment.startswith('//'):
                     continue
-                location = {'path': path.relative_to(test_dir).as_posix(),
-                            'start': text.count('\n', 0, token.start()) + 1,
-                            'end': text.count('\n', 0, token.start()) + 1}
-                for tag in re.finditer(r'\$\s*(?:(SPURIOUS|MISSING):\s*)?(Alert(?:\[[^\]]*\])?|hasTaintFlow\s*=\s*"[^"]*")(?!\w)', comment):
-                    kind = tag.group(1)
-                    key = kind.lower() if kind else ('inline_taint' if tag.group(2).startswith('hasTaintFlow') else 'inline_alert')
-                    result[key].append(dict(location))
+                line = text.count('\n', 0, token.start()) + 1
+                add_inline_expectations(result, {'path': path.relative_to(test_dir).as_posix(),
+                                                 'start': line, 'end': line},
+                                        comment[2:], query_id,
+                                        {'Alert': 'inline_alert', 'hasTaintFlow': 'inline_taint'})
         return result
