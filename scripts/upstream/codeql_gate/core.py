@@ -666,7 +666,7 @@ def execute(args, test_dir, query_path, stager):
                 except ImportError:
                     from ql_classes import load_cache
                 class_cache = load_cache(Path(__file__).resolve().parent / 'ql_classes', test_name,
-                                         getattr(stager, 'ql_endpoints', ()))
+                                         getattr(stager, 'ql_endpoints', ()), args.codeql_root)
             apply_scope(result, oracle, scoped_attributions,
                         getattr(stager, 'ql_endpoints', ()), class_cache, test_dir,
                         getattr(stager, 'is_main_string_array_parameter', None))

@@ -143,7 +143,32 @@ def generate_cache(codeql_root, test_dir, cli, cache_root, scratch_root, ql_endp
     return output
 
 
-def load_cache(cache_root, test_dir, ql_endpoints):
+def verify_checkout_revision(codeql_root, cache_commit):
+    try:
+        actual = subprocess.check_output(
+            ['git', '-C', str(Path(codeql_root).resolve()), 'rev-parse', 'HEAD'],
+            text=True, stderr=subprocess.PIPE).strip()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        detail = exc.stderr.strip() if isinstance(exc, subprocess.CalledProcessError) else str(exc)
+        raise GateError(f'cannot read CodeQL checkout HEAD: {detail}') from exc
+    if actual != cache_commit:
+        raise GateError(f'CodeQL checkout HEAD {actual} does not match QL-class cache commit {cache_commit}')
+
+
+def verify_allowlist_files_clean(codeql_root, ql_endpoints):
+    root = Path(codeql_root).resolve()
+    files = sorted({endpoint['file'] for endpoint in ql_endpoints})
+    try:
+        proc = subprocess.run(['git', '-C', str(root), 'status', '--porcelain', '--', *files],
+                              capture_output=True, text=True, check=True)
+    except (OSError, subprocess.CalledProcessError) as exc:
+        detail = exc.stderr.strip() if isinstance(exc, subprocess.CalledProcessError) else str(exc)
+        raise GateError(f'cannot check CodeQL allow-list file status: {detail}') from exc
+    if proc.stdout.strip():
+        raise GateError('CodeQL allow-list class files have local changes')
+
+
+def load_cache(cache_root, test_dir, ql_endpoints, codeql_root):
     path = cache_path(cache_root, test_dir)
     if not path.is_file():
         raise GateError(f'QL-class cache is missing for {test_dir}: {path.name}')
@@ -157,6 +182,8 @@ def load_cache(cache_root, test_dir, ql_endpoints):
     for key, value in expected.items():
         if cache.get(key) != value:
             raise GateError(f'stale QL-class cache for {test_dir}: {key} does not match the pin')
+    verify_checkout_revision(codeql_root, cache.get('codeql_commit'))
+    verify_allowlist_files_clean(codeql_root, ql_endpoints)
     if not isinstance(cache.get('rows'), list):
         raise GateError(f'invalid QL-class cache rows for {test_dir}')
     row_keys = {'path', 'start_line', 'start_column', 'end_line', 'end_column', 'ql_class'}

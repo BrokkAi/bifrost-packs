@@ -10,7 +10,7 @@ sys.dont_write_bytecode = True
 from scripts.upstream.codeql_gate.core import GateError, load_oracle, score, write_results
 from scripts.upstream.codeql_gate.ql_classes import (CODEQL_CLI_ARCHIVE_SHA256, CODEQL_CLI_VERSION,
                                                      CODEQL_COMMIT, cache_path, helper_query_sha256,
-                                                     load_cache)
+                                                     load_cache, verify_allowlist_files_clean)
 from scripts.upstream.codeql_gate.scoped import apply_scope, expected_scope, validate_attributions
 from scripts.upstream.codeql_gate.stagers.go import GoStager
 from scripts.upstream.codeql_gate.stagers.java import JavaStager
@@ -22,7 +22,14 @@ QL_CACHE_ROOT = FIXTURES / 'ql-classes'
 
 
 def scoped_java_cache():
-    return load_cache(QL_CACHE_ROOT, 'scoped-java-ql', JavaStager.ql_endpoints)
+    return json.loads(cache_path(QL_CACHE_ROOT, 'scoped-java-ql').read_text())
+
+
+def init_git_repo(root):
+    subprocess.run(['git', 'init', '--quiet', str(root)], check=True)
+    subprocess.run(['git', '-C', str(root), 'config', 'user.email', 'test@example.invalid'], check=True)
+    subprocess.run(['git', '-C', str(root), 'config', 'user.name', 'Test'], check=True)
+    return root
 
 
 def fake_cache_for_scope(scope, endpoint_id):
@@ -178,7 +185,7 @@ class ScopedRecallTests(unittest.TestCase):
     def test_missing_and_stale_ql_class_caches_are_errors(self):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(GateError, 'QL-class cache is missing'):
-                load_cache(tmp, 'scoped-java-ql', JavaStager.ql_endpoints)
+                load_cache(tmp, 'scoped-java-ql', JavaStager.ql_endpoints, tmp)
             source = cache_path(QL_CACHE_ROOT, 'scoped-java-ql')
             payload = json.loads(source.read_text())
             payload['cli_version'] = '2.27.2'
@@ -186,7 +193,39 @@ class ScopedRecallTests(unittest.TestCase):
             destination.parent.mkdir(parents=True)
             destination.write_text(json.dumps(payload))
             with self.assertRaisesRegex(GateError, 'stale QL-class cache'):
-                load_cache(tmp, 'scoped-java-ql', JavaStager.ql_endpoints)
+                load_cache(tmp, 'scoped-java-ql', JavaStager.ql_endpoints, tmp)
+
+    def test_actual_checkout_head_mismatch_rejects_unchanged_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'codeql'
+            root.mkdir()
+            init_git_repo(root)
+            marker = root / 'README'
+            marker.write_text('different CodeQL checkout\n')
+            subprocess.run(['git', '-C', str(root), 'add', 'README'], check=True)
+            subprocess.run(['git', '-C', str(root), 'commit', '--quiet', '-m', 'checkout'], check=True)
+            cache = scoped_java_cache()
+            self.assertEqual(cache['codeql_commit'], CODEQL_COMMIT)
+            destination = cache_path(Path(tmp) / 'cache', 'scoped-java-ql')
+            destination.parent.mkdir(parents=True)
+            destination.write_text(json.dumps(cache))
+            with self.assertRaisesRegex(GateError, 'CodeQL checkout HEAD .* does not match QL-class cache commit'):
+                load_cache(Path(tmp) / 'cache', 'scoped-java-ql', JavaStager.ql_endpoints, root)
+
+    def test_dirty_allowlisted_class_file_rejects_cache_inputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'codeql'
+            root.mkdir()
+            init_git_repo(root)
+            for endpoint in JavaStager.ql_endpoints:
+                path = root / endpoint['file']
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(f'class {endpoint["ql_class"]} {{}}\n')
+            subprocess.run(['git', '-C', str(root), 'add', '.'], check=True)
+            subprocess.run(['git', '-C', str(root), 'commit', '--quiet', '-m', 'classes'], check=True)
+            (root / JavaStager.ql_endpoints[0]['file']).write_text('class changed {}\n')
+            with self.assertRaisesRegex(GateError, 'allow-list class files have local changes'):
+                verify_allowlist_files_clean(root, JavaStager.ql_endpoints)
 
     def test_cached_class_mismatch_blocks_ql_deferral(self):
         directory = FIXTURES / 'scoped-java-ql'
