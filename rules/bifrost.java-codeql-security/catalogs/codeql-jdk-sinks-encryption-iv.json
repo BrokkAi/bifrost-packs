@@ -1,0 +1,116 @@
+{
+  "categories": [
+    "encryption-iv"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-encryption-iv",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "encryption-iv"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "javax.crypto.Cipher.init(int,java.security.Key,java.security.spec.AlgorithmParameterSpec,java.security.SecureRandom)",
+      "id": "codeql-8c839ce5b16dce68f385a34b1e25db44ca9aa5ad9b7db5a5cb1f4ad1e0cd731e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "init"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.71d4f68636c782cffd349cb9061d98ae9070aa41dd6466b97c4a417d2c157c9a"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "encryption-iv"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "javax.crypto.Cipher.init(int,java.security.Key,java.security.spec.AlgorithmParameterSpec)",
+      "id": "codeql-b2b70f8a29d4b82a6fcc8269923af2c0f1968389a271ff2773fe01b9ab6c149c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "init"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.7e7b30a4324825e47697ff522dc47da220ab4d8da2a25092ee8ea4d6acb89be4"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

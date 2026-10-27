@@ -1,0 +1,60 @@
+{
+  "categories": [
+    "regex-use"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-barriers-regex-use",
+  "sanitizers": [
+    {
+      "categories": [
+        "regex-use"
+      ],
+      "id": "codeql-734d5609d53c4f42a1e6e388fe5dd1a7208b69b08aa97e39cb2b2ed73c5a2cd1",
+      "input": {
+        "type": "return_value"
+      },
+      "output": {
+        "type": "return_value"
+      },
+      "removes": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "quote"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.4fc5d1927a69a48886541e83002d316c6323b2e42a9142a47b65ee28e52dfe93"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      }
+    }
+  ],
+  "schema_version": 1,
+  "sinks": [],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

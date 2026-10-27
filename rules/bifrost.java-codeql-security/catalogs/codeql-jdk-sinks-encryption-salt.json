@@ -1,0 +1,206 @@
+{
+  "categories": [
+    "encryption-salt"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-encryption-salt",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "encryption-salt"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.crypto.spec.PBEKeySpec.<init>(char[],byte[],int,int)",
+      "id": "codeql-2dd73add6a541836bf7803369f346c6ca2ed764c2f06100f378b9d83e0de1bba",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.e7d56680e0514baff14d9dc308e968d7b2cfa9161af7eeffa6af97b7652adb91"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "encryption-salt"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.crypto.spec.PBEKeySpec.<init>(char[],byte[],int)",
+      "id": "codeql-3bd2644e88efa57d28c7adce74893e2f462130a1fcad1de68deccf8a1b99dbed",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.422fa2dd848799aa7811cd44709f7c59e626e5b43a79750ca2091e1b93c2ef2f"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "encryption-salt"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.crypto.spec.PBEParameterSpec.<init>(byte[],int,java.security.spec.AlgorithmParameterSpec)",
+      "id": "codeql-7fb4a77714173a8690cd0af9434d1599aec765ae59a4eae47701d3a9abbe4468",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.bca8b1891c2dfe954dabb0a7da7822d7fd8536a3b3700179590240efe7b42fec"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "encryption-salt"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.crypto.spec.PBEParameterSpec.<init>(byte[],int)",
+      "id": "codeql-c99909f55884a887abd8edc43492f54fcc57a5f308dca00c66d503f9c40ac208",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.b39940409dd875ccab982e98ab076d6f4e596bef1255bcf79bc95191c58b5820"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

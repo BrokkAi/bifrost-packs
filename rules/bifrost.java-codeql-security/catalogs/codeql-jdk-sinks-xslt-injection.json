@@ -1,0 +1,60 @@
+{
+  "categories": [
+    "xslt-injection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-xslt-injection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xslt-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.xml.transform.Transformer.transform(javax.xml.transform.Source,javax.xml.transform.Result)",
+      "id": "codeql-cbe9415763b08782af2a2756d0df826c4c54df0130eb558a68aade50ea5e52d7",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "transform"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9ea910f583dc03225f66828f3369e9c301c52a0ef7bb5f138f7b660f54c7b678"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

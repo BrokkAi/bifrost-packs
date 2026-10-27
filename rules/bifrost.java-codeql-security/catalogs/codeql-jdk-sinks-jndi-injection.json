@@ -1,0 +1,1422 @@
+{
+  "categories": [
+    "jndi-injection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-jndi-injection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.list(java.lang.String)",
+      "id": "codeql-0bb5bb50e205e066a23752ed8d72da7d29797c180e8bb1eed7ae03b36b116622",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "list"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.46aa87ad9f095d83f02f1f8aeee4495d15f29f8ef38f12cb15babe083730dc11"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.list(javax.naming.Name)",
+      "id": "codeql-1c13cf976dcb800da2eebdc46d04618c4852a2d90d31b888eadb39d89955922c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "list"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.14a25bf9959a25cbfd9985361f3896bf0b238bf594650a0ea6c531483b3bc143"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.lookupLink(javax.naming.Name)",
+      "id": "codeql-285942132bedd1639975c1dd96ee05a8158e938865f50b076fb602998e27920e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookupLink"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.a29d1bf74967d611dfd8ebd02a448e25638fff1588ae9950e66d116409853b04"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.management.remote.JMXConnector.connect(java.util.Map)",
+      "id": "codeql-2ae3992a803ade4558bf045674ed4d15acec59b10849ea398d52448381a5ab33",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "connect"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5e68db216d56b5b3cb5697b1a2e1bf3da27af9c100038ed011980fba5e22659b"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.lookup(javax.naming.Name)",
+      "id": "codeql-33c55f928d7e098ccfaf0b1797ac87554f2083e2bf76a4a6aa84f1936b0cad39",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookup"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.210f51fe5dc3c2a6c414484dbdae8f6bb57ad66bba175a3b5886c54f8985a49f"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.management.remote.JMXConnector.connect()",
+      "id": "codeql-401eae4c7e2c3b559b315eb6db88959754d5bba353e6efaed9d266359a8c5f85",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "connect"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9e3e473207cdd1bd49271388b7dd0b59692c51bdeb701a3b464c71deddb89d08"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.doLookup(java.lang.String)",
+      "id": "codeql-4269586d167034244c8b219704a1bad389b0d49d1899e373d2dd5c1506e2b745",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "doLookup"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.97e139cc3da8923416ffd5af6883814e4ac6f4829373d634d39cb00e1f99b2ef"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.lookup(javax.naming.Name)",
+      "id": "codeql-5307c770dac1ee0d2b3631c5de655e72aadd7231a6237763230e86902094b418",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookup"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.304fc5c513dd7785313832f5443e53618261de364a5dc01ee1b079b5b35467d8"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.lookupLink(javax.naming.Name)",
+      "id": "codeql-5f7caf880978405a15e070818dd9aaaf492d6622c87f7d564743dffb6685ca25",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookupLink"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.e8db1dd619b4ae12bcbc30e91a613466f3621042ecb02660034b1fd7155e2aa4"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.rename(java.lang.String,java.lang.String)",
+      "id": "codeql-63203d04ebf094bac6fc8263271e04e7425592d9b8f151b57014f88bba6a605d",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "rename"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1c1577a6c85659dd8af218f4a3497419f9bd9aa039fa3253b190d66001120b1e"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.management.remote.rmi.RMIConnector.connect(java.util.Map)",
+      "id": "codeql-63a1d7b3f13e4730090629818031376e7cf02fb333c57bef0c98bdbfe2b1fc7d",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "connect"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d4cb56467f49e5c546b8f830c0f93c3c72cdccfb280bb1740b14eb3fcaa3bdcf"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.listBindings(javax.naming.Name)",
+      "id": "codeql-6c86b284af3d22809b156b59f8af36c9eba7ef37dd54f1838deca92c58457085",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "listBindings"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.32ea6e0b2603ea5000fabd5498061695d503239eedb9e6337a6aeda38c54275a"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.doLookup(javax.naming.Name)",
+      "id": "codeql-801bde4e5bbb5d6431fcb8c1a1be5fdec95bde1fcfbbd6c516b9eab482565a7e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "doLookup"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.50e4f39649f29c324628bf778955dcb3ce30ab5e4402f9a02d582f095326b19a"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.listBindings(java.lang.String)",
+      "id": "codeql-881046ffda0865670eb81396bacedd16268afc6a3dde9a4ed69a060a7e1da020",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "listBindings"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.997cff04097d5a440fec64057c4dd86f9dd1da23191da2164c6aaec223477591"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.rename(javax.naming.Name,javax.naming.Name)",
+      "id": "codeql-8837823bd2fc7e7ff474a157c05c6048bc4c445e4b184e05decb3f506aee71f8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "rename"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.ded2b21b2be82d1cf517124354f8b0968b312c15be011e451f5904f4b1053532"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.listBindings(javax.naming.Name)",
+      "id": "codeql-8c8fc066b6922b64535640a11063efac076bb06ba279aaec9c259d52df3947f6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "listBindings"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.92363ea5fb3f1b81d271b77eaab08d910631887f7792d456a88e10f1076afbab"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.lookup(java.lang.String)",
+      "id": "codeql-92c42b72fa39afeb7b62007304392dbc3e68456515074125eb1cded64a0bb5cd",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookup"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c24599635be8e0478aa77a4d87fb81e9613490660edabbd37036ffd2d6e25c8e"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.rename(javax.naming.Name,javax.naming.Name)",
+      "id": "codeql-9fa00843991d637fdc5abd3e67350039a1379a7199c9bd916a1240d58259e73a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "rename"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0e87741cd49aa8c5a11b75adf31fc0d99b6b20e428d322aa7ce103d2576fb9c8"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.lookupLink(java.lang.String)",
+      "id": "codeql-abb74b825e4699d16c9d64b8eee782dad172d1571f9e0dedea3537e76e1c0bf3",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookupLink"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.3db03e536d8b8be9891bf051fd6edd245eb65122589332ab9562bfa144fbed16"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.management.remote.JMXConnectorFactory.connect(javax.management.remote.JMXServiceURL)",
+      "id": "codeql-ce2bf0e2bddfa4990a22001fe5c155e4bd3f4783fec1851f353aa5ee58b7efc9",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "connect"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.08e2f34a6cfce2487d5cb9acf2810f0b07caf7f0e95b213ae0d462d4e081db3c"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.lookup(java.lang.String)",
+      "id": "codeql-d62e3cfc0f15bb07b4335375b70eb6bce1b7464818734fa54339d0bbc3b83d26",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookup"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d1dbe801f72b19e10af169e168bef08f7633ed3da54536f4fbb2a163a72c5988"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.management.remote.JMXConnectorFactory.connect(javax.management.remote.JMXServiceURL,java.util.Map)",
+      "id": "codeql-d6cd6a64078512a28812c1bc729de49cc9b1268f66fe070cb93fcdb3c1e3667b",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "connect"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.25b630176ac44addacfa5644b616f0ba495ef2bfdc2252f9aa00e376c58dd784"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.management.remote.rmi.RMIConnector.connect()",
+      "id": "codeql-db1b77105f61798fa8d2e49345a55c07c889b7ecd0b34bc14ab0e52f264d5a4c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "connect"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.931f3a5a3b71bc24664b43b0ecc1e05f1c627beef0cc820619068114d3eb0bad"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.rename(java.lang.String,java.lang.String)",
+      "id": "codeql-df72122974d80dc95159f98e89d40137af9e86356ec2df9832bf636cabc49fa8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "rename"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d1e19b99a3dc8d09f7a5470cee879c0bcd854702ae223a49307e76da3aec24b1"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.list(java.lang.String)",
+      "id": "codeql-dfeca9a14bb71e41c0635b61f14998cde21822eb42d92a4ed4fa2116745dabdb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "list"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.cc3a17d73f99e65f77176963bdcd8db90d171d382767cc69f2a35880c69f381e"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.InitialContext.lookupLink(java.lang.String)",
+      "id": "codeql-e06ca6c7caf9e926b5f0bf8897661415a6d798e3c421da002e4bba6c8272d954",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "lookupLink"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.98497520eadd3d35e83fdcb1c6a0d7f305fcd1d51a246c1dae1362c98a7e4ae6"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.listBindings(java.lang.String)",
+      "id": "codeql-e4e59761343361af9619a47d16e5dfa437c49fabcf1cb3c8b2136c0a4f19908f",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "listBindings"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.13f2370d4f9cc8aa1b6462855e0f79ab074d754e5c8c6d4d497713f6f50aa2eb"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "jndi-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.Context.list(javax.naming.Name)",
+      "id": "codeql-fe86d847f7cd22739671a8f6fe859dddf4fdef8f9917a29702ccded5d10120a7",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "list"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.83ab5f90d8dcb5296984cd79c7bb17ae8aea0f2a31ac3f4c2bad7a8eae521c90"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

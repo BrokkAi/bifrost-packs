@@ -1,0 +1,2222 @@
+{
+  "categories": [
+    "remote"
+  ],
+  "external_models": [],
+  "name": "codeql-servlet-sources-remote",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [],
+  "sources": [
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.ServletRequest.getParameterValues(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-06844c6d2bff41944d3c70eba989b487d1316b685299a46eff0eced914768ff5",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameterValues"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1ce8744a56feeffc0700d8dea715d05a87d7ce3fff60c9c1694202c588d5a52a"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.ServletRequest.getParameterValues(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-07cec46d33680f0c0ef6332b4d6134fe15e8f1279b77465abe6c201dad34e048",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameterValues"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.22d5bd8f0af9c57cabe5a1acaf691cf8a9b6ccbd2f76ffc0682a7c9c16a4e066"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getInputStream()",
+      "evidence": null,
+      "id": "codeql-0b811be618690fc720ecd4694a8406ececc743d9cac8540c85d0b8e761570b74",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getInputStream"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5c6fe2e6ce64590162c0113946d5a2364802fd7cea3a12e2db6ba0dbb86c2989"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getRequestURI()",
+      "evidence": null,
+      "id": "codeql-0c8a9e2226a2fa73c46241fc4a79629ce11919a6979538230d5c3ee60f934d15",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getRequestURI"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.770f6202c09c234f286958d2c5bea7524755cdcc2a87620408f1db1d38bc5d6f"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getHeader(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-0ea50022aa789351619dd4f3825e9ab70ee99d86fadf652238f8ed4e9b01a823",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeader"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.42278e20f2fd1f3ba221d77bff2302534310c4aec90b28401bf10291f9dfdceb"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.ServletRequest.getParameter(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-0f02e5086476c47546b2e3d82231cf2c11bc308c3aa60fe97a08359e8d922052",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameter"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.37411473c8205b46f537d2dd45f5068265365b0c2ed02640496ffd7e025f18cc"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getName()",
+      "evidence": null,
+      "id": "codeql-14ed59a68f7626f0e577654e4d7c4a382a219b78b4f3f52c3a32ed830587ed3f",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getName"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.3780bcf5c75f152f701c9c038adf75632b6ca74b0c2435c4408b9de7be7e7238"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequestWrapper.getServletPath()",
+      "evidence": null,
+      "id": "codeql-1714c1b4f906f233feb34a6be81f1953754440fe9684b01567b8281ec0659322",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getServletPath"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.b412c3ef508b5e851624dc957afefdda7b83038c79ac259db4a3093afc70e568"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getName()",
+      "evidence": null,
+      "id": "codeql-18f48c8b00b8c287b04d072dbcf1917397aba6e4c05607d278df35387d062c92",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getName"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.ed14c77a032002b8b88f79a3aecc1e704c58f01dec7ecf616d24d4dbbafe56b9"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getServletPath()",
+      "evidence": null,
+      "id": "codeql-2688921aab891bca15829a22e7021738c67c056db2c1036f0b6ca6ba17b9e785",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getServletPath"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c9d48dcf8b13d6af037ed71d316e20e6a7c5b045ef6d70da1ef8c1c9c3c4b6d9"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getServletPath()",
+      "evidence": null,
+      "id": "codeql-2b8608eada9cffb74a053267ba4e98b6c728d363b1eb44a2983a6872bd8716c9",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getServletPath"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c91196d2863e538b7fe03204c423511bc92b0e0a0ddd0c954cf9db731b11eb93"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getHeaders(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-39299c697bb9f6a27d6aac9af0ef8c85d01ed88c5e8d92a6f5afcf4363660227",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaders"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d0c32c286548e4f5f822d4c42fc01a83a916b411e41cc009e34f97f7fe141162"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.ServletRequest.getParameterMap()",
+      "evidence": null,
+      "id": "codeql-4019f912bcfcf8fb1f19f4f123b4fb0da09014129c9129367bdb92a43625ee27",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameterMap"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.01040e45efb095ababc608f289422088290eee4471dd8e1f333b1119aabb49c6"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getRequestURL()",
+      "evidence": null,
+      "id": "codeql-494d458efa6cd6dc128a49d82c56830e7bed1e71f2064b49c6947f7455b18dfc",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getRequestURL"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.4e951e77fd0974fc4b1836de745df0ed09071a958392eeb51d6b6c40be5ef14e"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getHeaders(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-49eb2e51865ff561c254d000ea14c88c7fa0778a417ec3cdc8e65901fb06dd0a",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaders"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.dfe6e562145d67f87086954a82b966247b8f7598b4ac26eb5eefa397333d35a0"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getRemoteUser()",
+      "evidence": null,
+      "id": "codeql-4fa53677464a0c28bb97cb448b57ac8b9f81cc6681cc74592f8cf568d0edca6c",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getRemoteUser"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.19a748b1d518b449f8172a5c14e08f830a734bc28ea2a606da95b78a6271b547"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getRequestURI()",
+      "evidence": null,
+      "id": "codeql-501575bbfe0f7e838a9484d5ccc0aa45fe8340b33f2b02a6add457075d5ed6e4",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getRequestURI"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.36470b3b47842f1f536b719be5eff0680da0ae927bfd4bf4800925984b5962f5"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.ServletRequest.getParameterMap()",
+      "evidence": null,
+      "id": "codeql-517f5488a264065df4ff1f5f6ee518d2bef58d6436d8a4e267137d3fbf7319d8",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameterMap"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.6913d0a3a37dd870e43ec531b4e7f1a8c32b490db432556aff6e28fae22f0f3f"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getHeaders(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-5b5dc604414ce78f10ee800d5814d58cf037626c1b4b26975d50ff0527170749",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaders"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.b58c28e837179c1d66f5451aafaeeb9906c17b3d038f12e6c289235255939969"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Cookie.getComment()",
+      "evidence": null,
+      "id": "codeql-5f700edccbc83ee98655d01617cf67cfd147245c2fadcf4fe8c52cb43d8ae4fd",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getComment"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fbe253842dd129e5674bce2a3b6e19ec7b288af4a7ce2bb5d225234bb18764bd"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getQueryString()",
+      "evidence": null,
+      "id": "codeql-62faddfa9dc95e874398ddfe9c03ad47fe7b33cc8e80b7c88836562800a93dcb",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getQueryString"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.76c947a7d6ec4eabf35e42a1aa3c6aa1be46831a07c5869b9dbd6665b0094868"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getInputStream()",
+      "evidence": null,
+      "id": "codeql-65fdd3d6c145aa3b8e9de0f9260cf11365aad72b6111fcd031106bb4742d52b0",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getInputStream"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9bb962f617f87a5ddbc2757538898f21c3b8ac1a6d089a115eca687fce88d942"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Cookie.getValue()",
+      "evidence": null,
+      "id": "codeql-6b0405c3256f2d3fb4a9683401b69e12536e607ff508a8fd2520ff529b401aac",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getValue"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fe37ed55cd99a2b0e7d4dd2e3faeb39a34ad3a8c734b4f9bc16db239d9f010f5"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.ServletRequest.getParameterNames()",
+      "evidence": null,
+      "id": "codeql-6ca4ab21cf38f9967f50358c3c0800c6ddde94fc2a9012779bf9439cd0981b62",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameterNames"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.cb599ee4ef841751732d0238fee4794911632d1d9d380c240ff803cfb44810f9"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getRemoteUser()",
+      "evidence": null,
+      "id": "codeql-6e8dfb5681283622a0c15518f5d1b8040e50859ba239d6b969564e15e4d763ee",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getRemoteUser"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2cf4d67ff526b1bea252fff3f04baed93fa90323e14487d64f63401df709a536"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Cookie.getName()",
+      "evidence": null,
+      "id": "codeql-703157db21e8226c5c3d23b6359f9cbdd9b4c5087133a91f9994a4886ee2a36d",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getName"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.edd6dc9d92d3bd887f3347503ed1f1afddb6cb4cb91f4825190b542ed89f0a9a"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getContentType()",
+      "evidence": null,
+      "id": "codeql-76392e642e661387bf9c2740864b17111f7caed2ccbad033e6591731aaf9c986",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getContentType"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.17f5f971436d2a50f649981c53ebd28b9052ddc26df5ba7470ea8ec2bb5ec6cd"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getHeader(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-7ce12d990010982ba7b3e927885d0e9f91dc913942aa6e69f218c07510943d25",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeader"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.db6ec0e12a790b85c62b357a0c4b88a158552ef88a92e4711327f1dba9fc72a8"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getSubmittedFileName()",
+      "evidence": null,
+      "id": "codeql-7e8418d89c0f9d67825d8bbb869e6c1e0d556a170f4b9f52340428b410fa97c6",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getSubmittedFileName"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.032e81f5558653c701ff0f780dedf908c9fec1d5e498ad5320ac4a9f0efc28b4"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.ServletRequest.getReader()",
+      "evidence": null,
+      "id": "codeql-7ec131d05d1c638f3f6b27d0a47285d5926742b872c6f972cb24e85454237012",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getReader"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5b3c1cb922084e941993cb0ee8e380a5ea6f7dc9c631f09476e88aca7b7a5ed2"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getContentType()",
+      "evidence": null,
+      "id": "codeql-871ba973bfcc55766faa4d6deb87fa2e27e3c498e45dd30c40034697cbeecd44",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getContentType"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.b70514941b6452cb3e76618c11cb4d1e797bf447d847676b867a6813f598f637"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getQueryString()",
+      "evidence": null,
+      "id": "codeql-8e5a8247b71a5fdbf198942223239f79092e1718fe448084f7633b109f822993",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getQueryString"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.29903132d95c00b80c90291e2fb6813c184273eba0cd273867e0822e2eb57111"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.ServletRequest.getReader()",
+      "evidence": null,
+      "id": "codeql-95c2726e10549e81091dbd211000c78588f5e3bb2bf69b9c46bd45f0bceaa2fc",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getReader"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c2163e395c714767034033c480a1969ad77eb6adedc61e0bb5034dd4fce15f6c"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.ServletRequest.getParameter(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-9b6a2b74f58706a9788ca86ee5d34f45b2e4bcb6e9580414ed27f047e0434d5b",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameter"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1768447cc46c6dd9ff62a1d0c098b5b48a263bec29dabb624b348887172fcb08"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getHeaderNames()",
+      "evidence": null,
+      "id": "codeql-9e9ed0776d84146619ea5fb82bbb76049381be03a386d73639a64f9e335cd4b7",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaderNames"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.8790f199a2f6977542271a99b577a18775a62d409f783bfea95bca39bdb1dcb0"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.ServletRequest.getInputStream()",
+      "evidence": null,
+      "id": "codeql-a12d80640d58af55c84718b4a3b72f3c24bd3fd40f942dcb5e54e78c2ad19b18",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getInputStream"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.db6f58c663c9edf4c75f47e11513c6e849deb94b595732a6fbafb8915d579dad"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getHeaderNames()",
+      "evidence": null,
+      "id": "codeql-a41ad78f57c9bdc8480252776f766f328ce57ef37243691939e59405109ee57c",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaderNames"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.76984fd364e10340782330f64620d4b975dfcb29664268feba009516737b0b56"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.Part.getHeaderNames()",
+      "evidence": null,
+      "id": "codeql-aa4714b2a824c9a3592bb50e42fd076b6454753c96143b4253f3bef2b4bec47f",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaderNames"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c5fdf333cdee4bd00e56fc986cdd8d0c0585a834fd012e38db23538db8b920f3"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getHeaderNames()",
+      "evidence": null,
+      "id": "codeql-b2a15d00b63d31ebd8eca6dd114a68454d081da0aa6c20b5c0b59b5192b91b82",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaderNames"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.67c2740964eb7c267fb784364a81b49bc393517dae2d4f6e76a8d5ace107d9c2"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getPathInfo()",
+      "evidence": null,
+      "id": "codeql-b942b69353283e9e9c974f54f98eba7a63167560812bf5430152a39e6a507374",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getPathInfo"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.cf9ec2d453d898279ebe6317b0dc122b0a2060e2c55f2a7c8a5678edc4ddd751"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.Part.getSubmittedFileName()",
+      "evidence": null,
+      "id": "codeql-c5ec19ac46c0fe52c38401a0987923796fa80d0de5a0b03e6ceaddb9d25fe2da",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getSubmittedFileName"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.05e8f1c2cb56849bcc369e8d95368a03c227a386ccee990845991460224a5b43"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getPathInfo()",
+      "evidence": null,
+      "id": "codeql-c6364224e09a7c46746826b606685d86751f753f8ac8f5bfc946f0e8ee20a951",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getPathInfo"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.50baec5595166b8b79f3e13b71b90517754a6a65e4667f6b2b3852a8cc7284f4"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getHeader(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-cb363b0d9232f95358863852b99a5fc5a3f60542f7683cb132fab9d0fb023c2a",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeader"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c73335fa62f48e67bfa377ffc0b50aefbf43713d251cf01e88dd02dcc8c4a6bc"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.ServletRequest.getInputStream()",
+      "evidence": null,
+      "id": "codeql-dab3c3dcfdac052241c9aa6ca2d221560a641684a2876de5349e57f070ecaaf4",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getInputStream"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.50ddb0bab26c21ef148a67688f24bc9a103d5eb357fb23a14fa39e0aff42ded6"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getHeader(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-e41ad7c60eca877aa5ee426080baf84181438c9cb79172379d3684f3658c3503",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeader"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.224200ee640d4d9beaf028775181205e518b7791b1aed078def3d976bc422433"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.http.HttpServletRequest.getHeaders(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-e8d4181a8d7c99fd51783ed3c329b1ededa73b2d9e6c04cc7eb89667196391f5",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getHeaders"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.86934b51f20a031f00b9466ffd791bddda269947dd04fd5bd0e3bbc5c0c48a55"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "jakarta.servlet.ServletRequest.getParameterNames()",
+      "evidence": null,
+      "id": "codeql-f66745f61556064b412f22e2e8398dfd517fc9df833050375fd9f49ad3194a47",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getParameterNames"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.aa2ed4362b8961bddcca179ee34fdaf5fdd2fb73287c134e8c98fa1dff2d965d"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "javax.servlet.http.HttpServletRequest.getRequestURL()",
+      "evidence": null,
+      "id": "codeql-fb642eae5f474175bfceee0b1499078b64236a813d7ae983d74e2da290a16084",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getRequestURL"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1549d39a7f359d2fe71efec9cd7b9ba9a577b97f8fdcbf7d7674301771cb8e08"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    }
+  ],
+  "transforms": [],
+  "version": 1
+}
