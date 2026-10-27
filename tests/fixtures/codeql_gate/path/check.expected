@@ -1,0 +1,10 @@
+#select
+| sink.go:3:2:4:8 | source.go:99:1:99:5 | message |
+models
+| example.package | ignored model row |
+#edges
+| sink.go:10:1:10:8 | ignored |
+#nodes
+| sink.go:12:1:12:8 | ignored |
+#subpaths
+| sink.go:14:1:14:8 | ignored |

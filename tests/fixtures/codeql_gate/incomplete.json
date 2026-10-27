@@ -1,0 +1,44 @@
+{
+  "schema_version": 6,
+  "diagnostics": [],
+  "runs": [
+    {
+      "policy_id": "example",
+      "completion": {
+        "type": "proven_subset",
+        "codes": [
+          "branch_relation_derivation_incomplete"
+        ]
+      },
+      "findings": [],
+      "diagnostics": [
+        {
+          "code": {
+            "type": "code_query",
+            "code": "branch_relation_derivation_incomplete"
+          },
+          "severity": "warning",
+          "impact": "run_incomplete",
+          "family": "code_query/branch_relation_derivation_incomplete",
+          "message": "unsupported branch",
+          "family_count": 1,
+          "primary": {
+            "path": "sample.go",
+            "region": {
+              "start_line": 2,
+              "end_line": 4
+            }
+          },
+          "related": []
+        }
+      ],
+      "diagnostics_truncated": false,
+      "obligations": [],
+      "obligations_truncated": false,
+      "work": {
+        "scanned_files": 1,
+        "omitted_findings_lower_bound": 0
+      }
+    }
+  ]
+}
