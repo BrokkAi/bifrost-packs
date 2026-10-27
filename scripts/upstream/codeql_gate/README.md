@@ -402,3 +402,83 @@ Razor comments are not ASP comments. Only `Alert` tags add alert sites;
 `MISSING` and `SPURIOUS` columns retain their shared override semantics.
 Run the optional real-SDK preparation/restore test with
 `CODEQL_GATE_DOTNET_ROOT` naming a suitable SDK installation.
+
+## Scoped recall for catalog-only rules
+
+`--scope-catalogs FILE` opts `expected` or `run` into scoped recall. Repeat it
+to union catalog sets. A catalog file is a JSON list of **exact printed model
+strings**, without the numeric id or table delimiters. For example:
+
+```json
+[
+  "Source: net/http; Request; true; URL; ; ; ; remote; manual",
+  "Sink: os/exec; ; false; Command; ; ; Argument[0]; command-injection; manual"
+]
+```
+
+Use the corresponding `Source: ...` and `Sink: ...` rows from Java's printed
+models for Java catalogs. Preserve the language's type names, signatures,
+receiver/access-path spelling, empty fields, and provenance. This explicit
+row-list format is independent of generated semantic-catalog JSON; it is not
+a claim that every model in a generated catalog was enabled. Export only rows
+actually supplied to the measured rule. Membership is exact string equality,
+provided by `stager.model_in_catalog(printed_row, catalogs) -> bool`; the core
+never interprets Java, Go or C# model fields or parses QL. These flags do not
+install models; `--models` retains its separate staging role.
+
+Each selected expected file must have a `models` section, even if empty.
+Absence is a setup error. The core follows the printed `(location, label)`
+path nodes and edges between each select row's source and sink. It resolves
+`Src:MaD:N` (also `Source:MaD:N`) and `Sink:MaD:N` endpoint provenance to the
+numbered models. Ordinary `MaD:N` summary steps never establish endpoints.
+Provenance on endpoint nodes is supported as well. Unknown endpoint model ids
+are errors. An endpoint without MaD provenance, a select without path
+endpoints, or an inline-only alert stays **in scope** and can block the gate.
+A site with multiple paths stays in scope if any path is in scope.
+
+Recall's subset contains alerts with both endpoint models in the catalogs,
+plus the conservative obligations above. An out-of-subset **miss** requires
+one reviewed attribution via `--scope-attributions FILE`, a JSON list:
+
+```json
+[
+  {
+    "test_dir": "go/ql/test/query-tests/Security/Example",
+    "path": "sample.go",
+    "line": 20,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: example.org/web; Runner; true; Execute; ; ; Argument[0]; command-injection; manual",
+    "justification": "The framework Runner endpoint is absent from the supplied standard-library catalogs."
+  }
+]
+```
+
+`test_dir` is checkout-relative; `path` and `line` identify the original
+expected alert, before anchor offsets. Keep this file next to the rule or
+in its validation evidence. Entries must have nonempty justifications and
+unique `(test_dir, path, line)` identities. The closed attribution enum is:
+
+- `framework-endpoint-absent`: the **only** deferrable attribution. `endpoint`
+  must name an absent printed endpoint model explaining every path at the site.
+- `framework-summary-step`: blocks the scoped verdict.
+- `skipped-stdlib-summary`: blocks the scoped verdict (including skipped JDK
+  summaries).
+- `ql-only-logic`: blocks the scoped verdict.
+
+Unknown values are rejected when reading attribution files or result reports
+in `summary`. Missing attribution for an out-of-subset miss fails with ERROR.
+An attribution cannot defer an in-scope or QL-defined endpoint obligation.
+
+Extras are always scored against the **full** expected suite. An observed
+out-of-subset expected alert remains a match; an unmatched finding remains a
+false positive unless classified by the existing `--true-positives` or
+inline MISSING mechanism. SPURIOUS findings still fail. Scope never waives
+incomplete analysis, unknown file coverage, test failures or execution errors.
+
+Success is labeled **SCOPED-EXACT**, including when the full suite also matches;
+it is never labeled EXACT. JSON records `full_suite_verdict`, `full_suite_pass`,
+`recall_scope`, `scope_catalogs`, `scope_attributions`, `deferred_misses` and
+`scoped_misses`. Existing counts and site classes remain full-suite metrics.
+The Markdown report prints both verdicts together; TSV appends the full-suite
+verdict as its final column. The combined JSON verdict and `summary` recognize
+SCOPED-EXACT as success. All test directories must pass.

@@ -1,0 +1,7 @@
+#select
+| x.go:10:1:10:2 | sink | x.go:1:1:1:2 | source | x.go:10:1:10:2 | sink | alert |
+edges
+| x.go:1:1:1:2 | source | x.go:10:1:10:2 | sink | provenance | Source:MaD:99 Sink:MaD:1 |
+models
+| 99 | Source: stdlib |
+| 1 | Sink: stdlib |

@@ -1,0 +1,11 @@
+#select
+| x.go:10:1:10:2 | sink | x.go:1:1:1:2 | source | x.go:10:1:10:2 | sink | alert |
+edges
+| x.go:1:1:1:2 | source | x.go:2:1:2:2 | a | provenance | Src:MaD:3 |
+| x.go:2:1:2:2 | a | x.go:10:1:10:2 | sink | provenance | Sink:MaD:1 |
+| x.go:1:1:1:2 | source | x.go:3:1:3:2 | b | provenance | Src:MaD:3 |
+| x.go:3:1:3:2 | b | x.go:10:1:10:2 | sink | provenance |  |
+models
+| 1 | Sink: framework.A |
+| 2 | Sink: framework.B |
+| 3 | Source: stdlib |
