@@ -93,7 +93,54 @@ def qlref_query(path):
     return text
 
 
-def load_oracle(test_dir, query_path, stager):
+# CodeQL's inline expectation grammar (shared/util/codeql/util/test/
+# InlineExpectationsTest.qll): a comment whose contents start with `$ ` holds
+# expectations up to a `//` or `#` remark. Each `MISSING:` or `SPURIOUS:` opens
+# a column that runs to the next one. A column holds `tag(,tag)*(=value)?`
+# items separated by whitespace, and a tag may carry a bracketed query id, as
+# in `Alert[go/command-injection]`.
+_EXPECTATION_COMMENT = re.compile(r'\s*\$ ((?:[^/]|/[^/])*)(?:(//|#).*)?', re.S)
+_EXPECTATION_TAG = r'[A-Za-z\-_](?:[A-Za-z\-_0-9]|\[[^\]\]]*\])*'
+_EXPECTATION = re.compile(r'((?:{0})(?:\s*,\s*{0})*)(?:=((?:[bru]*"[^"]*"|[bru]*\'[^\']*\'|\S+)*))?'
+                          .format(_EXPECTATION_TAG))
+_COLUMN_NAME = re.compile(r'(MISSING|SPURIOUS):')
+
+
+def inline_expectations(contents):
+    """Yield (column, tag, qualifier) for each expectation in one comment's contents.
+
+    `column` is None, 'MISSING' or 'SPURIOUS'; `qualifier` is the bracketed text
+    of a tag such as `Alert[go/sql-injection]`, or None.
+    """
+    match = _EXPECTATION_COMMENT.fullmatch(contents)
+    if not match:
+        return
+    content = match.group(1)
+    marks = list(_COLUMN_NAME.finditer(content))
+    columns = [(None, 0, marks[0].start() if marks else len(content))]
+    columns += [(mark.group(1), mark.end(), marks[i + 1].start() if i + 1 < len(marks) else len(content))
+                for i, mark in enumerate(marks)]
+    for column, start, end in columns:
+        for expectation in _EXPECTATION.finditer(content, start, end):
+            for tag in re.split(r'\s*,\s*', expectation.group(1)):
+                name, qualifier = re.fullmatch(r'([^\[]*)(?:\[(.*)\])?', tag, re.S).groups()
+                yield column, name, qualifier
+
+
+def add_inline_expectations(result, location, contents, query_id, alert_keys):
+    """Add one comment's alert expectations for `query_id` to an inline oracle.
+
+    `alert_keys` maps each tag that marks an alert to its oracle key, for example
+    {'Alert': 'inline_alert'}; other tags (Source, Sink, RelatedLocation) add
+    nothing. As in CodeQL, an unqualified tag applies to every query of the test
+    directory and a tag qualified with another query's id is dropped.
+    """
+    for column, tag, qualifier in inline_expectations(contents):
+        if tag in alert_keys and qualifier in (None, query_id):
+            result[column.lower() if column else alert_keys[tag]].append(dict(location))
+
+
+def load_oracle(test_dir, query_path, stager, query_id):
     refs = [p for p in sorted(test_dir.glob('*.qlref'))
             if qlref_query(p) == query_path or qlref_query(p).endswith('/' + query_path)]
     if not refs:
@@ -106,7 +153,7 @@ def load_oracle(test_dir, query_path, stager):
         rows, unreliable = parse_expected(expected_file)
         selected.extend(rows)
         failures.extend(unreliable)
-    inline = stager.inline_oracle(test_dir) if hasattr(stager, 'inline_oracle') else {}
+    inline = stager.inline_oracle(test_dir, query_id) if hasattr(stager, 'inline_oracle') else {}
     spurious, missing = unique(inline.get('spurious', [])), unique(inline.get('missing', []))
     overrides = {key(r) for r in spurious + missing}
     tags = unique(inline.get('inline_alert', []) + inline.get('inline_taint', []))
@@ -468,7 +515,7 @@ def probe_analyzed_paths(args, prepared, stager, root, env, run_dir):
 
 
 def execute(args, test_dir, query_path, stager):
-    oracle = load_oracle(test_dir, query_path, stager)
+    oracle = load_oracle(test_dir, query_path, stager, args.query)
     prepared = stager.prepare(test_dir, args.codeql_root, args.state_dir / 'roots')
     runs_dir = args.state_dir / 'runs'
     runs_dir.mkdir(parents=True, exist_ok=True)
