@@ -16,6 +16,17 @@
     :sources (endpoint-set :include-sets [
       (catalog :any-registered true :categories (any [remote]))])
     :sinks (endpoint-set :include-sets [
-      (catalog :any-registered true :categories (any [path-injection path-injection-read]))]))
+      (catalog :any-registered true :categories (any [path-injection path-injection-read]))])
+    :sanitizers (endpoint-set :entries [
+      ; Removing dot, slash, and backslash in one class or alternation is unconditional.
+      ; Match decoded literal values only after the AST selected the arguments.
+      (sanitizer :id replace-directory-characters
+        :selector (rql :schema-version 1
+          (resolved-call :resolves-to "java.lang.String.replaceAll" :proof declared
+            (call-bindings (call-shape (language java
+              (call :callee "replaceAll"
+                :args [(string_literal :string-value/regex "^(?:\\[\\./\\\\\\\\\\]|\\[\\.\\\\\\\\/\\]|\\[/\\.\\\\\\\\\\]|\\[/\\\\\\\\\\.\\]|\\[\\\\\\\\\\./\\]|\\[\\\\\\\\/\\.\\]|\\[\\\\\\./\\\\\\\\\\]|\\[\\\\\\.\\\\\\\\/\\]|\\[/\\\\\\.\\\\\\\\\\]|\\[/\\\\\\\\\\\\\\.\\]|\\[\\\\\\\\\\\\\\./\\]|\\[\\\\\\\\/\\\\\\.\\]|\\[\\.\\]\\|/\\|\\\\\\\\|\\[\\.\\]\\|\\\\\\\\\\|/|/\\|\\[\\.\\]\\|\\\\\\\\|/\\|\\\\\\\\\\|\\[\\.\\]|\\\\\\\\\\|\\[\\.\\]\\|/|\\\\\\\\\\|/\\|\\[\\.\\]|\\\\\\.\\|/\\|\\\\\\\\|\\\\\\.\\|\\\\\\\\\\|/|/\\|\\\\\\.\\|\\\\\\\\|/\\|\\\\\\\\\\|\\\\\\.|\\\\\\\\\\|\\\\\\.\\|/|\\\\\\\\\\|/\\|\\\\\\.)$")
+                       (string_literal :string-value/regex "^[_-]?$")]))))))
+        :input receiver :output return-value :removes [attacker-controlled])]))
   :classification (classification
     :fallback (classification-id :taxonomy "CodeQL" :id "java/path-injection")))

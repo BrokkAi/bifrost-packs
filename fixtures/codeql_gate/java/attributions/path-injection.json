@@ -150,5 +150,22 @@
     "attribution": "framework-endpoint-absent",
     "endpoint": "Sink: org.openjdk.jmh.runner.options; ChainedOptionsBuilder; true; result; (String); ; Argument[0]; path-injection; ai-manual",
     "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "SanitizationTests2.java",
+    "line": 16,
+    "attribution": "framework-endpoint-absent",
+    "ql_endpoint": {
+      "id": "spring-servlet-input-parameter",
+      "nodes": [
+        {
+          "path": "SanitizationTests2.java",
+          "line": 14,
+          "column": 59
+        }
+      ]
+    },
+    "justification": "The Spring request-mapping parameter source is outside the supplied public JDK and servlet catalogs."
   }
 ]
