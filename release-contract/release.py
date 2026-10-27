@@ -2,6 +2,7 @@
 """Shared, offline-first pack release contract. No engine defaults are changed."""
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import subprocess
@@ -445,6 +446,36 @@ def expected_tag(manifest):
     return prefix + 'v' + manifest['release_version']
 
 
+def content_module(root):
+    """Load the checkout's content builder from scripts/content.py."""
+    path = root / 'scripts' / 'content.py'
+    if path.is_symlink() or not path.is_file():
+        fail('invalid-manifest', 'packs source builder is missing from the clean checkout')
+    spec = importlib.util.spec_from_file_location('_bifrost_packs_release_content', path)
+    if spec is None or spec.loader is None:
+        fail('invalid-manifest', 'cannot load the packs source builder')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_content_lock(root):
+    """Return the single-file content lock and its bytes, joining shards when present.
+
+    A sharded authoring lock stores no aggregate; the joined form computes it
+    and serializes exactly as the archived single-file lock does.
+    """
+    lock, raw = load_json(root / 'content-lock.json')
+    if 'files' in lock:
+        return lock, raw
+    module = content_module(root)
+    try:
+        lock = module.read_lock(root)
+    except module.ContentError as error:
+        fail('invalid-manifest', str(error))
+    return lock, module.lock_bytes(lock)
+
+
 def public_contents(root, lock, component=None):
     entries = lock['files']
     expected = digest(''.join(f"{e['sha256']}  {e['path']}\n" for e in sorted(entries, key=lambda e: e['path'])).encode())
@@ -522,7 +553,7 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == 'create':
-            root = args.root.resolve(); config, _ = load_json(args.config); lock, raw = load_json(root / 'content-lock.json')
+            root = args.root.resolve(); config, _ = load_json(args.config); lock, raw = load_content_lock(root)
             if args.version: config['release_version'] = args.version
             status = subprocess.run(['git', '-C', str(root), 'status', '--porcelain'], capture_output=True, text=True, check=True)
             if status.stdout.strip(): fail('invalid-manifest', 'release creation requires clean source checkout')

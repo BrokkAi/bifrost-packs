@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-delete/.bifrost/policies/multiple-calls-to-delete.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/multiple-calls-to-delete.rqlp",
+      "sha256": "fbb68ec986d94ba8eb8becf204f3d46fc183bbe0b602e0664179c52e503598c1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-delete/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-delete/README.md",
+      "sha256": "98d2b760fc49c56e4f3e2a979b5cb3b15d73f2d653e1a3a0a2a2daf2809caed4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-delete/upstream/Classes/multiple/multiple-del/multiple_del.py",
+      "source_path": "python/ql/test/query-tests/Classes/multiple/multiple-del/multiple_del.py",
+      "sha256": "ee6f4835d5a04068cefd0622852b0cc51c2adad52eb7a3da1a7fa2f01420438e",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/multiple/multiple-del/multiple_del.py"
+      }
+    }
+  ]
+}

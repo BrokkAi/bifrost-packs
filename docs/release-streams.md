@@ -161,8 +161,14 @@ the generator version. Per-content completeness remains explicit, including
 
 The existing release baseline remains available for historical baseline builds and
 continues to pin source commits, policy files, and the native archive checksum.
-The current rules stream is selected from `content-lock.json`; release-building
-verifies its locked bytes and archive contents. Manual dispatch stages raw
+The current rules stream is selected from the content lock; release-building
+joins the `content-lock.json` header and its `content-lock/` shards into the
+single-file lock, computes its aggregate, and verifies its locked bytes and
+archive contents. The archived `content-lock.json` keeps the single-file format,
+and `content_origin.lock_sha256` is the digest of that joined lock, so sharding
+the authoring lock changes no archive bytes and needs no stream version bump.
+Contributors regenerate shards with `scripts/content.py lock`; see
+[Locking content](../README.md#locking-content). Manual dispatch stages raw
 generation evidence. A stream tag can publish after the exact dependency and
 verified-integrity checks; schema-2 behavior may remain pending or limited.
 Consumer capability and behavior proof remains required before default

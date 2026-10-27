@@ -7,13 +7,13 @@ on:
         required: true
         default: '0.6.1'
   pull_request:
-    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'content-lock/**', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
   # A pull request can restore only caches saved on its own merge ref or on main,
   # so main saves the producer and upstream inputs for later pull requests.
   push:
     branches: [main]
     tags: ['packs/v*.*.*']
-    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'content-lock/**', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
 permissions:
   contents: read
 jobs:

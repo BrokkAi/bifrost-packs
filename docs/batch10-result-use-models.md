@@ -68,8 +68,8 @@ Generation remains a separate, pinned transition:
 
 4. Review the generated `index.json`, manifests, shards, rejects, notices,
    measurements, and `SHA256SUMS`. Copy only the deterministic manifest and
-   shard outputs into `semantic-packs/embedded/`, then add their hashes to
-   `content-lock.json`. Run the two-pass native generation recipe from
+   shard outputs into `semantic-packs/embedded/`, then lock them with
+   `python3 scripts/content.py lock --license <license> semantic-packs/embedded`. Run the two-pass native generation recipe from
    [generation.md](generation.md) and retain both measurement records.
 
 Until that transition completes, source presence is not native installation or

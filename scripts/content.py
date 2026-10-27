@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify and create reproducible source bundles for public pack content."""
+"""Verify, lock and create reproducible source bundles for public pack content."""
 
 from __future__ import annotations
 
@@ -21,6 +21,23 @@ from typing import Any
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 LOCK_NAME = "content-lock.json"
+# The authoring tree stores the lock header in LOCK_NAME and its file entries in
+# path-derived shards under SHARD_DIRECTORY, so independent changes touch
+# different files. Archives keep the single-file form with an aggregate digest.
+SHARD_DIRECTORY = "content-lock"
+SHARD_KEY = "file_shards"
+# Shard depth by path prefix; the first match wins. A file directly inside a
+# shallower directory belongs to that directory's shard.
+SHARD_DEPTHS = (
+    ("fixtures/policy/", 4),
+    ("fixtures/semantic/", 3),
+    ("semantic-packs/embedded/", 3),
+    ("semantic-packs/", 2),
+    ("rules/", 2),
+    ("scripts/upstream/", 2),
+    ("licenses/", 1),
+    ("", 2),
+)
 CONTENT_ROOTS = ("rules", "semantic-packs", "fixtures", "scripts/upstream", "licenses")
 BUNDLE_METADATA = ("LICENSE", "NOTICE.md", "README.md", LOCK_NAME)
 OPTIONAL_BUNDLE_METADATA = ("validation.json", "release-config.json", "scripts/content.py", "scripts/verify-native.py", "scripts/smoke.py")
@@ -143,32 +160,148 @@ def _validate_lock(lock: Any) -> dict[str, Any]:
     aggregate = lock.get("aggregate_sha256")
     if not isinstance(aggregate, str) or not SHA256_RE.fullmatch(aggregate):
         raise ContentError("aggregate_sha256 must be a lowercase SHA-256 digest")
-    lines = [
-        f"{entry['sha256']}  {entry['path']}\n"
-        for entry in sorted(files, key=lambda entry: entry["path"])
-    ]
-    expected_aggregate = hashlib.sha256("".join(lines).encode("utf-8")).hexdigest()
-    if aggregate != expected_aggregate:
+    if aggregate != aggregate_sha256(files):
         raise ContentError(
             "aggregate_sha256 does not match the path-sorted 'sha256  path' file entries"
         )
     return lock
 
 
-def _read_lock(repository_root: Path) -> dict[str, Any]:
-    lock_path = repository_root / LOCK_NAME
+def aggregate_sha256(files: list[dict[str, Any]]) -> str:
+    """Return the digest of the path-sorted 'sha256  path' lines."""
+    lines = [
+        f"{entry['sha256']}  {entry['path']}\n"
+        for entry in sorted(files, key=lambda entry: entry["path"])
+    ]
+    return hashlib.sha256("".join(lines).encode("utf-8")).hexdigest()
+
+
+def lock_bytes(lock: dict[str, Any]) -> bytes:
+    """Serialize a single-file lock exactly as archives carry it."""
+    return (json.dumps(lock, indent=2) + "\n").encode("utf-8")
+
+
+def shard_name(path: str) -> str:
+    """Return the shard, relative to SHARD_DIRECTORY without .json, for a path."""
+    for prefix, depth in SHARD_DEPTHS:
+        if path.startswith(prefix):
+            parts = path.split("/")
+            return "/".join(parts[: min(depth, len(parts) - 1)])
+    raise AssertionError("SHARD_DEPTHS ends with a catch-all prefix")
+
+
+def _shard_bytes(entries: list[dict[str, Any]]) -> bytes:
+    return (json.dumps({"files": entries}, indent=2) + "\n").encode("utf-8")
+
+
+def _read_json(repository_root: Path, relative: str) -> Any:
+    path = _regular_file(repository_root, relative)
     try:
-        if lock_path.is_symlink():
-            raise ContentError(f"{LOCK_NAME} must not be a symlink")
-        with lock_path.open("r", encoding="utf-8") as stream:
-            data = json.load(stream, object_pairs_hook=_object_without_duplicate_keys)
-    except FileNotFoundError as error:
-        raise ContentError(f"required file is missing: {LOCK_NAME}") from error
+        return json.loads(
+            path.read_text(encoding="utf-8"),
+            object_pairs_hook=_object_without_duplicate_keys,
+        )
     except json.JSONDecodeError as error:
-        raise ContentError(f"invalid JSON in {LOCK_NAME}: {error}") from error
-    except OSError as error:
-        raise ContentError(f"cannot read {LOCK_NAME}: {error}") from error
-    return _validate_lock(data)
+        raise ContentError(f"invalid JSON in {relative}: {error}") from error
+    except (OSError, UnicodeDecodeError) as error:
+        raise ContentError(f"cannot read {relative}: {error}") from error
+
+
+def _read_header(repository_root: Path) -> dict[str, Any]:
+    lock_path = repository_root / LOCK_NAME
+    if lock_path.is_symlink():
+        raise ContentError(f"{LOCK_NAME} must not be a symlink")
+    if not lock_path.exists():
+        raise ContentError(f"required file is missing: {LOCK_NAME}")
+    return _require_mapping(_read_json(repository_root, LOCK_NAME), "lock")
+
+
+def _is_sharded(header: dict[str, Any]) -> bool:
+    return SHARD_KEY in header
+
+
+def _list_shards(repository_root: Path) -> list[str]:
+    """Return shard names, rejecting anything but regular .json files."""
+    base = repository_root / SHARD_DIRECTORY
+    try:
+        mode = base.lstat().st_mode
+    except FileNotFoundError:
+        return []
+    if stat.S_ISLNK(mode) or not stat.S_ISDIR(mode):
+        raise ContentError(f"{SHARD_DIRECTORY} must be a real directory")
+    names = []
+    for current_dir, directory_names, file_names in os.walk(base, followlinks=False):
+        current = Path(current_dir)
+        for name in directory_names:
+            if (current / name).is_symlink():
+                relative = (current / name).relative_to(repository_root).as_posix()
+                raise ContentError(f"symlink directory is not allowed: {relative}")
+        for name in file_names:
+            relative = (current / name).relative_to(base).as_posix()
+            if not relative.endswith(".json"):
+                raise ContentError(f"unexpected file in {SHARD_DIRECTORY}: {relative}")
+            names.append(relative[: -len(".json")])
+    return sorted(names)
+
+
+def _read_shard_entries(repository_root: Path, *, strict: bool) -> list[dict[str, Any]]:
+    """Read every shard. Strict reads also require canonical placement and form."""
+    entries = []
+    for name in _list_shards(repository_root):
+        relative = f"{SHARD_DIRECTORY}/{name}.json"
+        shard = _require_mapping(_read_json(repository_root, relative), relative)
+        if set(shard) != {"files"} or not isinstance(shard["files"], list):
+            raise ContentError(f"{relative} must contain only a files list")
+        files = shard["files"]
+        for index, item in enumerate(files):
+            entry = _require_mapping(item, f"{relative} files[{index}]")
+            path = _safe_relative_path(entry.get("path"), f"{relative} files[{index}].path")
+            if strict and shard_name(path) != name:
+                raise ContentError(
+                    f"{path} belongs in {SHARD_DIRECTORY}/{shard_name(path)}.json, "
+                    f"not {relative}; run scripts/content.py lock"
+                )
+        if strict:
+            if not files:
+                raise ContentError(f"{relative} is empty; run scripts/content.py lock")
+            canonical = sorted(files, key=lambda entry: entry["path"])
+            if (repository_root / relative).read_bytes() != _shard_bytes(canonical):
+                raise ContentError(
+                    f"{relative} is not in canonical form; run scripts/content.py lock"
+                )
+        entries.extend(files)
+    return entries
+
+
+def _logical_lock(header: dict[str, Any], files: list[dict[str, Any]]) -> dict[str, Any]:
+    """Join a shard header and its entries into the single-file lock form."""
+    lock = {key: value for key, value in header.items() if key != SHARD_KEY}
+    lock["files"] = sorted(files, key=lambda entry: entry["path"])
+    lock["aggregate_sha256"] = aggregate_sha256(lock["files"])
+    return lock
+
+
+def read_lock(repository_root: Path = REPOSITORY_ROOT) -> dict[str, Any]:
+    """Return the validated single-file lock, joining shards when present.
+
+    This does not check file bytes; verify_content does.
+    """
+    repository_root = Path(repository_root)
+    header = _read_header(repository_root)
+    if not _is_sharded(header):
+        if (repository_root / SHARD_DIRECTORY).exists():
+            raise ContentError(
+                f"{SHARD_DIRECTORY} is present but {LOCK_NAME} does not declare {SHARD_KEY}"
+            )
+        return _validate_lock(header)
+    if header[SHARD_KEY] != SHARD_DIRECTORY:
+        raise ContentError(f"{SHARD_KEY} must be {SHARD_DIRECTORY!r}")
+    for key in ("files", "aggregate_sha256"):
+        if key in header:
+            raise ContentError(
+                f"a sharded {LOCK_NAME} must not store {key}; it is derived from the shards"
+            )
+    return _validate_lock(_logical_lock(header, _read_shard_entries(repository_root, strict=True)))
 
 
 def _check_repository_root(repository_root: Path) -> None:
@@ -312,7 +445,7 @@ def verify_content(repository_root: Path = REPOSITORY_ROOT) -> dict[str, Any]:
     """Validate lock schema, file digests, and complete content-root coverage."""
     repository_root = Path(repository_root)
     _check_repository_root(repository_root)
-    lock = _read_lock(repository_root)
+    lock = read_lock(repository_root)
     expected_paths = {entry["path"] for entry in lock["files"]}
     actual_paths = _list_content_files(repository_root)
 
@@ -369,14 +502,16 @@ def build_bundle(output: Path, repository_root: Path = REPOSITORY_ROOT, componen
             raise ContentError('component must be rules or packs')
         prefixes = ('rules/', 'fixtures/policy/', 'licenses/') if component == 'rules' else ('semantic-packs/', 'fixtures/semantic/', 'scripts/upstream/', 'licenses/')
         lock = dict(lock, files=[e for e in lock['files'] if e['path'].startswith(prefixes)])
-        lock['aggregate_sha256'] = hashlib.sha256(''.join(f"{e['sha256']}  {e['path']}\n" for e in sorted(lock['files'], key=lambda e: e['path'])).encode()).hexdigest()
+        lock['aggregate_sha256'] = aggregate_sha256(lock['files'])
+    if component is not None or _is_sharded(_read_header(repository_root)):
+        # Archives carry the single-file lock, so stage it beside the inputs.
         with tempfile.TemporaryDirectory() as directory:
             stage = Path(directory)
             for relative, source in _bundle_inputs(repository_root, lock):
                 target = stage / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(source, target)
-            (stage / LOCK_NAME).write_text(json.dumps(lock, indent=2) + '\n')
+            (stage / LOCK_NAME).write_bytes(lock_bytes(lock))
             return build_bundle(Path(output).absolute(), stage)
     bundle_inputs = _bundle_inputs(repository_root, lock)
     output = Path(output).expanduser()
@@ -453,6 +588,93 @@ def check_engine(engine_version: str, repository_root: Path = REPOSITORY_ROOT) -
     return lock
 
 
+def _under(path: str, selectors: list[str]) -> bool:
+    return any(path == selector or path.startswith(selector.rstrip("/") + "/") for selector in selectors)
+
+
+def update_lock(
+    repository_root: Path = REPOSITORY_ROOT,
+    *,
+    license_name: str | None = None,
+    paths: list[str] | None = None,
+) -> dict[str, list[str]]:
+    """Rewrite the sharded lock from the content tree.
+
+    Entries for deleted files are dropped and changed digests are refreshed;
+    every other recorded field is kept. Unlisted files are added only with an
+    explicit license, optionally limited to ``paths``. A single-file lock is
+    converted to shards. The written lock is then verified.
+    """
+    repository_root = Path(repository_root)
+    _check_repository_root(repository_root)
+    header = _read_header(repository_root)
+    if _is_sharded(header):
+        entries = _read_shard_entries(repository_root, strict=False)
+    else:
+        entries = header.get("files")
+        if not isinstance(entries, list):
+            raise ContentError("files must be a list")
+    header = {key: value for key, value in header.items() if key not in ("files", "aggregate_sha256", SHARD_KEY)}
+    header[SHARD_KEY] = SHARD_DIRECTORY
+
+    by_path: dict[str, dict[str, Any]] = {}
+    for index, item in enumerate(entries):
+        entry = _require_mapping(item, f"files[{index}]")
+        path = _safe_relative_path(entry.get("path"), f"files[{index}].path")
+        previous = by_path.get(path)
+        if previous is not None:
+            # Both sides of a merge may keep the same entry; only the digest may differ.
+            if {k: v for k, v in previous.items() if k != "sha256"} != {k: v for k, v in entry.items() if k != "sha256"}:
+                raise ContentError(f"conflicting entries for {path}; keep one and rerun")
+            continue
+        by_path[path] = entry
+
+    actual = _list_content_files(repository_root)
+    changes: dict[str, list[str]] = {"added": [], "updated": [], "removed": [], "unlisted": []}
+    for path in sorted(set(by_path) - actual):
+        del by_path[path]
+        changes["removed"].append(path)
+    for path, entry in sorted(by_path.items()):
+        digest = _sha256_file(_regular_file(repository_root, path))
+        if entry.get("sha256") != digest:
+            entry["sha256"] = digest
+            changes["updated"].append(path)
+    for path in sorted(actual - set(by_path)):
+        if license_name is None or (paths and not _under(path, paths)):
+            changes["unlisted"].append(path)
+            continue
+        by_path[path] = {
+            "path": path,
+            "source_path": path,
+            "sha256": _sha256_file(_regular_file(repository_root, path)),
+            "classification": "public",
+            "license": license_name,
+        }
+        changes["added"].append(path)
+
+    shards: dict[str, list[dict[str, Any]]] = {}
+    for path, entry in sorted(by_path.items()):
+        shards.setdefault(shard_name(path), []).append(entry)
+    _validate_lock(_logical_lock(header, list(by_path.values())))
+
+    base = repository_root / SHARD_DIRECTORY
+    for name in set(_list_shards(repository_root)) - set(shards):
+        (base / f"{name}.json").unlink()
+    for name, shard_entries in shards.items():
+        target = base / f"{name}.json"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        data = _shard_bytes(shard_entries)
+        if not target.exists() or target.read_bytes() != data:
+            target.write_bytes(data)
+    for directory, _, _ in sorted(os.walk(base), reverse=True):
+        if directory != str(base) and not os.listdir(directory):
+            os.rmdir(directory)
+    (repository_root / LOCK_NAME).write_text(json.dumps(header, indent=2) + "\n", encoding="utf-8")
+    if not changes["unlisted"]:
+        verify_content(repository_root)
+    return changes
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -460,6 +682,16 @@ def _parser() -> argparse.ArgumentParser:
     bundle = commands.add_parser("bundle", help="write a reproducible source tar.gz bundle")
     bundle.add_argument("--output", required=True, type=Path, help="output .tar.gz path")
     bundle.add_argument("--component", choices=("rules", "packs"))
+    lock = commands.add_parser(
+        "lock", help="rewrite the sharded lock: add, refresh and drop entries"
+    )
+    lock.add_argument(
+        "--license",
+        help="license for new entries; without it, unlisted files are only reported",
+    )
+    lock.add_argument(
+        "paths", nargs="*", help="limit new entries to these files or directories"
+    )
     check = commands.add_parser("check", help="check content against an engine qualification")
     check.add_argument("--engine-version", required=True, help="exact engine semantic version")
     return parser
@@ -472,6 +704,23 @@ def main(argv: list[str] | None = None) -> int:
             lock = verify_content()
             print(
                 f"verified {len(lock['files'])} locked file(s); "
+                f"aggregate SHA-256 {lock['aggregate_sha256']}"
+            )
+        elif args.command == "lock":
+            changes = update_lock(license_name=args.license, paths=args.paths)
+            for kind in ("added", "updated", "removed"):
+                for path in changes[kind]:
+                    print(f"{kind}: {path}")
+            if changes["unlisted"]:
+                print(
+                    "unlisted content file(s) need an explicit --license: "
+                    + ", ".join(changes["unlisted"]),
+                    file=sys.stderr,
+                )
+                return 1
+            lock = read_lock()
+            print(
+                f"locked {len(lock['files'])} file(s); "
                 f"aggregate SHA-256 {lock['aggregate_sha256']}"
             )
         elif args.command == "bundle":

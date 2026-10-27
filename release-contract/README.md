@@ -89,6 +89,12 @@ Each GitHub release contains `pack-release.json`, its source, native, or policy
 artifact, and SHA-256 sidecars. Archive names use
 `<pack-id>-<independent-semver>-<role>.<format>`. Public source archives include
 `content-lock.json`; premium policy archives retain `policy-bundle.json`.
+The archived lock is always the single-file form: every entry plus an
+`aggregate_sha256` over the path-sorted `sha256  path` lines. An authoring
+checkout may instead shard its entries under `content-lock/` with only a header
+in `content-lock.json` and no stored aggregate. `release.load_content_lock(root)`
+joins either form into that single-file lock and its exact bytes, which
+`content_origin.lock_sha256` hashes.
 Native `index.json` and model schemas remain separate from release metadata.
 Source archives are review and reproduction inputs; they are not native
 installable bundles.

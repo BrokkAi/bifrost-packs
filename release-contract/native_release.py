@@ -2,7 +2,6 @@
 """Index independently generated native packs without inferring consumer compatibility."""
 import argparse
 import hashlib
-import importlib.util
 import json
 from pathlib import Path
 import shutil
@@ -82,15 +81,7 @@ def native_contents(archive, baseline=None, generator_version=None):
 
 def _content_module(root):
     """Load the checkout's content builder without importing build-release.py."""
-    path = root / 'scripts' / 'content.py'
-    if path.is_symlink() or not path.is_file():
-        release.fail('invalid-manifest', 'packs source builder is missing from the clean checkout')
-    spec = importlib.util.spec_from_file_location('_bifrost_packs_release_content', path)
-    if spec is None or spec.loader is None:
-        release.fail('invalid-manifest', 'cannot load the packs source builder')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    return release.content_module(root)
 
 
 def _packs_content_lock(root, content_module):
@@ -100,11 +91,7 @@ def _packs_content_lock(root, content_module):
         entry for entry in full_lock['files']
         if entry['path'].startswith(PACK_CONTENT_PREFIXES)
     ])
-    aggregate = ''.join(
-        f"{entry['sha256']}  {entry['path']}\n"
-        for entry in sorted(lock['files'], key=lambda entry: entry['path'])
-    )
-    lock['aggregate_sha256'] = release.digest(aggregate.encode())
+    lock['aggregate_sha256'] = content_module.aggregate_sha256(lock['files'])
     return lock
 
 
@@ -117,7 +104,7 @@ def verify_source_archive(root, archive, content_module=None):
         name: path.read_bytes()
         for name, path in content_module._bundle_inputs(root, expected_lock)
     }
-    expected['content-lock.json'] = (json.dumps(expected_lock, indent=2) + '\n').encode()
+    expected['content-lock.json'] = content_module.lock_bytes(expected_lock)
     if actual != expected:
         release.fail('integrity-error', 'source archive members differ from the current packs inputs')
     try:
