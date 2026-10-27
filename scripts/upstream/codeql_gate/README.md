@@ -259,8 +259,9 @@ current binary does not allow `file-of` to consume `configuration_fact`, so the
 seed is queried directly and its primary paths are deduplicated. Because the
 seed reports one finding per configuration fact rather than one per file, a
 large configuration tree can reach the report's findings cap; the omitted-findings
-check then fails the probe and the gate reports ERROR. That fails closed and does
-not occur on CodeQL test directories. Switch the seed to `file-of` over
+check then fails the probe and the gate reports ERROR. That fails closed.
+C# staging excludes `bin/` and `obj/` from this inventory while retaining
+restore records for dependency discovery. Switch the seed to `file-of` over
 configuration facts once the engine accepts that domain. Both probe
 runs must complete without omission. These are file-membership checks, not
 claims about a policy's semantic coverage. The source probe selects
@@ -340,3 +341,55 @@ Run authored tests with:
 ```sh
 python3 -B -m unittest discover -s tests -p test_codeql_gate.py -v
 ```
+
+## C# staging
+
+C# requires a .NET SDK that can target `net10.0`. Pass `--dotnet-root` (or
+set `DOTNET_ROOT`); the executable and its bundled targeting-pack selection
+are validated during preparation. Oracle-only `expected` needs no SDK.
+`--nuget-packages` defaults to `<state-dir>/nuget-packages` and
+`--nuget-source` to `https://api.nuget.org/v3/index.json`. First restore may
+use the network; later restores can reuse the filled package cache offline
+with a local feed as the source. Keep the SDK and package cache available
+at their original paths: runs copy the restore record to a private root
+and explicitly supply `DOTNET_ROOT` and `NUGET_PACKAGES` despite fresh HOME.
+
+The stager copies non-CodeQL files as the Go stager does, synthesizes an
+SDK project with unsafe blocks allowed and implicit usings disabled, then
+runs real `dotnet restore`. It does not add framework stub sources to the
+workspace. Options are split before expanding `${testdir}`, so paths with
+spaces work. `/nostdlib`, `/noconfig` and `--standalone` are recorded flags;
+`/r:Name.dll` records whether the selected targeting packs contain that
+assembly. Base-framework stub projects use the SDK's implicit framework;
+ASP.NET Core stub projects add a framework reference. Versioned stub
+projects become real NuGet package references with exact versions.
+Single-file stubs are packed as content-addressed `CodeQL.Stub` packages
+in a local feed. Failed stub compiles remain visible as `compile_failed`
+artifacts and are skipped; failed project restores stop with a log path.
+Unknown option tokens are errors.
+
+The NuGet configuration and restore log live beside the prepared root,
+not inside it: Bifrost ingests configuration files, so an injected
+`NuGet.Config` would contaminate tests about `Web.config`. Restore output
+such as `obj/project.assets.json` stays in the root. The stager appends
+`bin/` and `obj/` to the root's `.gitignore`, preserving existing entries.
+This matches a real checkout: Bifrost's analysis walk honors ignore rules
+even without a Git repository, keeping generated configuration facts out
+of the coverage probe. C# dependency discovery walks independently of
+ignore rules, so it still reads the restore record and selects assemblies.
+The staging version in prepared cache keys invalidates older layouts.
+Other cache inputs include sources, option tokens, stub bytes, package coordinates, selected
+SDK and targeting-pack versions, and source URL. Artifacts record package
+SHA512 checksums from the restore and the SDK/targeting-pack selection.
+
+The oracle uses the shared CodeQL expectation grammar and filters qualified
+tags by query id. C# single-line comments count; `///` documentation and
+`/* */` comments do not. The lexer skips escaped, verbatim, interpolated
+(including nested expression literals), raw and character literals. XML
+comments count in `.config`, `.csproj`, `.props` and `.xml` files. ASP.NET
+markup comments (`<!-- -->` and `<%-- --%>`) count in Web Forms files.
+Razor's explicit `@{ ... }` blocks carry C# comments, while markup and
+Razor comments are not ASP comments. Only `Alert` tags add alert sites;
+`MISSING` and `SPURIOUS` columns retain their shared override semantics.
+Run the optional real-SDK preparation/restore test with
+`CODEQL_GATE_DOTNET_ROOT` naming a suitable SDK installation.

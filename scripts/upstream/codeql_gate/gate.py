@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from core import GateError, execute, load_oracle
 from stagers.go import GoStager
 from stagers.java import JavaStager
+from stagers.csharp import CSharpStager
 
 
 def main(argv=None):
@@ -19,7 +20,7 @@ def main(argv=None):
     parser.add_argument('command', choices=('expected', 'prepare', 'run', 'summary'))
     parser.add_argument('query', nargs='?')
     parser.add_argument('policy', nargs='?', type=Path)
-    parser.add_argument('--language', choices=('go', 'java'), default='go')
+    parser.add_argument('--language', choices=('go', 'java', 'csharp'), default='go')
     parser.add_argument('--codeql-root', type=Path, default=os.environ.get('CODEQL_ROOT'))
     parser.add_argument('--test-dir', action='append', type=Path, default=[], help='relative to CodeQL root; repeat for multi-dir queries')
     parser.add_argument('--query-path', help='query: value in .qlref; inferred from @id when omitted')
@@ -28,6 +29,9 @@ def main(argv=None):
     parser.add_argument('--binary', type=Path, default=os.environ.get('BIFROST_BINARY'))
     parser.add_argument('--java-home', type=Path, default=os.environ.get('JAVA_HOME'),
                         help='JDK used to compile Java stubs (defaults to JAVA_HOME)')
+    parser.add_argument('--dotnet-root', type=Path, default=os.environ.get('DOTNET_ROOT'))
+    parser.add_argument('--nuget-packages', type=Path)
+    parser.add_argument('--nuget-source', default='https://api.nuget.org/v3/index.json')
     parser.add_argument('--extra-policy', action='append', type=Path, default=[])
     parser.add_argument('--models', type=Path)
     parser.add_argument('--label', default='')
@@ -49,7 +53,11 @@ def main(argv=None):
     if not args.query or not args.codeql_root:
         parser.error('query and --codeql-root (or CODEQL_ROOT) are required')
     args.codeql_root = args.codeql_root.resolve()
-    stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
+    if args.language == 'csharp':
+        stager = CSharpStager(args.dotnet_root, args.nuget_packages or args.state_dir / 'nuget-packages',
+                              args.nuget_source)
+    else:
+        stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
     query_path = args.query_path
     if not query_path:
         import re
