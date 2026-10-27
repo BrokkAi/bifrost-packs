@@ -132,15 +132,21 @@ version-independent schema-2 guard against the actual archive and exact
 dependency manifests; see [generation](../docs/generation.md) and the
 [v0.13 transition](../docs/v013-transition.md).
 
-New publication also runs `publication.py` against the actual archive bytes and
-verified exact dependency manifests. The publication guard rejects an archive
-with remaining inner `compatibility.bifrost` or `engine` declarations; the
-published schema-8 `packs/v0.2.0` artifact is the current live baseline. The
-[recorded reproduction](../docs/native-publication-blocker.json) preserves the
-earlier pre-schema-8 blocker and does not classify other generation or
-publication failures. Manual and pull-request native
-workflows generate and stage the candidate `pack-release.json`, native archive,
-sidecars, and raw generation evidence without creating a published GitHub
-release. Rules smoke runs attach checksum-indexed inputs, raw reports and
-executable identity with `behavior.status = limited`; release notes are
-generated from the manifest's actual requirements.
+New publication also runs `publication.py` against the actual artifact bytes
+and verified exact dependency manifests. It accepts schema 2 under the existing
+rules and rejects schema 1. Schema 3 publication requires an explicit
+`--host-profile`; the guard validates that closed profile and checks the
+release's required host schemas and routes separately from engine compatibility.
+An engine `policy_bundle` schema declaration never substitutes for host support.
+Exact schema 3 dependencies are checked against that same host profile, and
+nested dependencies remain unsupported. The guard also rejects an archive with
+remaining inner `compatibility.bifrost` or `engine` declarations; the published
+schema-8 `packs/v0.2.0` artifact is the current live baseline. The [recorded
+reproduction](../docs/native-publication-blocker.json) preserves the earlier
+pre-schema-8 blocker and does not classify other generation or publication
+failures. Manual and pull-request native workflows generate and stage the
+candidate `pack-release.json`, native archive, sidecars, and raw generation
+evidence without creating a published GitHub release. Rules smoke runs attach
+checksum-indexed inputs, raw reports and executable identity with
+`behavior.status = limited`; release notes are generated from the manifest's
+actual requirements.
