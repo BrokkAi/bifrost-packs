@@ -139,6 +139,15 @@ problem query, rows before the first section header are selects. Bare headings
 Nonempty `testFailures` makes the oracle unreliable and the run ERROR.
 Locations are full test-directory-relative paths and start lines; duplicate
 rows at a site collapse to a set, retaining the widest expected span.
+CodeQL locates an alert on a whole file as `path:0:0:0:0`; such a row
+matches a finding whose byte span covers the whole file, which is how
+Bifrost anchors a file-level finding, and nothing else.
+
+Inline tags are read only for a query whose `.qlref` has
+`postprocess: utils/test/InlineExpectationsTestQuery.ql`, as qltest does.
+Without that line the `.expected` file alone is the oracle, and tags in the
+directory belong to another query sharing it (for example a test-local
+helper query next to the product query).
 
 Go `//` annotations are lexed outside quoted strings, runes, raw strings and
 block comments. Each stager finds its language's comments; the core reads

@@ -80,9 +80,13 @@ def parse_expected(path):
         match = re.fullmatch(r'(.*):(\d+):(\d+):(\d+):(\d+)', column)
         if not match:
             raise GateError(f'invalid select location in {path}: {column}')
-        rows.append({'path': relative_path(match[1]), 'start': int(match[2]),
-                     'end': int(match[4]), 'column': int(match[3]),
-                     'end_column': int(match[5])})
+        row = {'path': relative_path(match[1]), 'start': int(match[2]),
+               'end': int(match[4]), 'column': int(match[3]),
+               'end_column': int(match[5])}
+        if row['start'] == 0:
+            # CodeQL locates an alert on a whole file as path:0:0:0:0.
+            row['file_level'] = True
+        rows.append(row)
     return unique(rows), failures
 
 
@@ -92,6 +96,36 @@ def qlref_query(path):
         if line.strip().startswith('query:'):
             return line.split(':', 1)[1].strip()
     return text
+
+
+def qlref_postprocess(path):
+    """The `postprocess` entries of a .qlref: a scalar, a flow list or a block list."""
+    lines = path.read_text().splitlines()
+    for index, line in enumerate(lines):
+        if not line.startswith('postprocess:'):
+            continue
+        value = line.split(':', 1)[1].strip()
+        if value.startswith('['):
+            return [item.strip() for item in value.strip('[]').split(',') if item.strip()]
+        if value:
+            return [value]
+        entries = []
+        for item in lines[index + 1:]:
+            if not item.strip():
+                continue
+            # YAML allows the items indented or at column 0 under the key.
+            if not item.strip().startswith('- '):
+                break
+            entries.append(item.strip()[2:].strip())
+        return entries
+    return []
+
+
+def qlref_uses_inline_expectations(path):
+    # qltest checks inline tags only for a query whose reference post-processes
+    # its results with InlineExpectationsTestQuery; without it the .expected
+    # file alone is the oracle, and tags in the directory belong to another query.
+    return any(entry.endswith('InlineExpectationsTestQuery.ql') for entry in qlref_postprocess(path))
 
 
 # CodeQL's inline expectation grammar (shared/util/codeql/util/test/
@@ -154,7 +188,9 @@ def load_oracle(test_dir, query_path, stager, query_id):
         rows, unreliable = parse_expected(expected_file)
         selected.extend(rows)
         failures.extend(unreliable)
-    inline = stager.inline_oracle(test_dir, query_id) if hasattr(stager, 'inline_oracle') else {}
+    inline = (stager.inline_oracle(test_dir, query_id)
+              if hasattr(stager, 'inline_oracle') and any(map(qlref_uses_inline_expectations, refs))
+              else {})
     selected = unique(selected)
     # CodeQL matches a tag on line L to a result whose END line is L
     # (InlineExpectationsTest.qll, onSameLine). A tag therefore names the
@@ -191,8 +227,12 @@ def report_findings(data, root=None):
             start, end = region['start_line'], region['end_line']
             if not isinstance(start, int) or not isinstance(end, int) or not 0 < start <= end:
                 raise GateError('invalid finding region')
-            findings.append({'path': relative_path(primary['path'], root),
-                             'start': start, 'end': end,
+            path = relative_path(primary['path'], root)
+            span = primary.get('byte_span') or {}
+            # Bifrost anchors a file-level finding on the whole file.
+            whole_file = (root is not None and span.get('start') == 0
+                          and span.get('end') == (Path(root) / path).stat().st_size)
+            findings.append({'path': path, 'start': start, 'end': end, 'whole_file': whole_file,
                              'policy_id': run.get('policy_id') or finding.get('policy_id'),
                              'completeness': finding.get('completeness', {})})
     return findings
@@ -274,6 +314,8 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
     def matches(e, f):
         if e['path'] != f['path']:
             return False
+        if e.get('file_level'):
+            return f.get('whole_file', False)
         if e.get('end_line_only'):
             # An inline tag without a #select row gives only the end line.
             line = e['end'] + offset
