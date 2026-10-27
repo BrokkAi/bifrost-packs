@@ -37,7 +37,8 @@ class ResultTests(unittest.TestCase):
         self.assertTrue(result['complete'])
         self.assertEqual(result['completion_kinds'], ['complete', 'proven_by_summary'])
         self.assertEqual(result['summary_counts'], {'verdicts': 1, 'true_positives': 1,
-                                                    'false_positives': 1})
+                                                    'false_positives': 1,
+                                                    'unattributable_verdicts': 0})
         summary_finding = next(f for f in result['findings'] if f['start'] == 1)
         self.assertEqual(summary_finding['completion_kind'], 'proven_by_summary')
         self.assertEqual(len(result['activated_packs']), 2)
@@ -58,7 +59,7 @@ class ResultTests(unittest.TestCase):
     def test_only_complete_and_summary_completion_are_scorable(self):
         oracle = {'expected': [], 'spurious': [], 'missing': [], 'testFailures': [],
                   'oracle_sources': {}, 'oracle_disagreement': None}
-        for kind in ('partial', 'inconclusive', 'proven_subset', 'unsupported', 'not_run'):
+        for kind in ('partial', 'inconclusive', 'proven_subset', 'unsupported', 'not_run', 'future_kind'):
             with self.subTest(kind=kind):
                 result = score({'runs': [{'completion': {'type': kind}, 'findings': []}]}, oracle)
                 self.assertFalse(result['complete'])
@@ -68,6 +69,30 @@ class ResultTests(unittest.TestCase):
             {'primary': {'path': 'sample.go', 'region': {'start_line': 1, 'end_line': 1}},
              'completeness': {'type': 'incomplete'}}]}]}, oracle)
         self.assertFalse(incomplete['complete'])
+
+    def test_summary_counts_follow_finding_assignment_not_overlapping_sites(self):
+        oracle = {'expected': [{'path': 'sample.go', 'start': 10, 'end': 20}],
+                  'spurious': [], 'missing': [], 'testFailures': [],
+                  'oracle_sources': {}, 'oracle_disagreement': None}
+        data = {'scope': {'analyzed_files': ['sample.go']}, 'runs': [
+            {'completion': {'type': 'proven_by_summary'}, 'findings': [
+                {'primary': {'path': 'sample.go', 'region': {'start_line': 10, 'end_line': 10}}}]},
+            {'completion': {'type': 'complete'}, 'findings': [
+                {'primary': {'path': 'sample.go', 'region': {'start_line': 8, 'end_line': 20}}}]}]}
+        result = score(data, oracle, anchors={'relation': 'span_overlap'})
+        self.assertEqual(result['summary_counts']['true_positives'], 0)
+        self.assertEqual(result['summary_counts']['false_positives'], 1)
+
+    def test_unversioned_pack_marks_summary_verdicts_unattributable(self):
+        oracle = {'expected': [], 'spurious': [], 'missing': [], 'testFailures': [],
+                  'oracle_sources': {}, 'oracle_disagreement': None}
+        data = {'packs': {'decisions': [{'pack': 'bifrost.unknown', 'status': 'selected'}]},
+                'runs': [{'completion': {'type': 'proven_by_summary'}, 'findings': []}]}
+        result = score(data, oracle)
+        self.assertEqual(result['activated_packs'], [])
+        self.assertEqual(result['summary_attribution'],
+                         {'status': 'unattributable', 'missing_pack_provenance': 1})
+        self.assertEqual(result['summary_counts']['unattributable_verdicts'], 1)
 
     def test_java_stub_status_is_reported_in_json_and_markdown(self):
         with tempfile.TemporaryDirectory() as temporary:

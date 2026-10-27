@@ -358,9 +358,11 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
         return any(matches(e, row) for e in entries)
     allowed = [{'path': p['path'], 'start': p['line'], 'end': p['line']} for p in true_positives]
     spurious = [site(f) for f in got if listed(f, oracle['spurious'])]
-    false_positives = sorted(set(spurious + [site(f) for j, f in enumerate(got)
-                              if j not in owners and not listed(f, oracle['missing'])
-                              and key(f) not in {key(p) for p in allowed}]))
+    false_positive_indices = {j for j, finding in enumerate(got)
+                              if listed(finding, oracle['spurious']) or
+                              j not in owners and not listed(finding, oracle['missing'])
+                              and key(finding) not in {key(p) for p in allowed}}
+    false_positives = sorted(set(spurious + [site(got[j]) for j in false_positive_indices]))
     scorable_completion_types = {'complete', 'proven_by_summary'}
     completion = next((r.get('completion', {}) for r in runs
                        if r.get('completion', {}).get('type') not in scorable_completion_types),
@@ -425,13 +427,21 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
                'MISS' if silent else 'EXACT' if complete else 'EXACT-INCOMPLETE')
     passed = complete and not (false_positives or silent or abstentions or errors)
     dcounts, dmsgs, families = diagnostic_groups(diagnostics)
-    summary_findings = [f for f in got if f['completion_kind'] == 'proven_by_summary']
-    summary_finding_sites = {site(f) for f in summary_findings}
-    summary_tp = [s for s in matched if s in summary_finding_sites]
-    summary_fp = [s for s in false_positives if s in summary_finding_sites]
+    summary_findings = {j for j, finding in enumerate(got)
+                        if finding['completion_kind'] == 'proven_by_summary'}
+    summary_tp = {j for j in summary_findings if j in owners}
+    summary_fp = summary_findings & false_positive_indices
     completion_kinds = sorted({r.get('completion', {}).get('type', 'unknown') for r in runs})
-    summary_counts = {'verdicts': sum(r.get('completion', {}).get('type') == 'proven_by_summary' for r in runs),
-                      'true_positives': len(summary_tp), 'false_positives': len(summary_fp)}
+    summary_verdicts = sum(r.get('completion', {}).get('type') == 'proven_by_summary' for r in runs)
+    missing_pack_provenance = sum(
+        decision.get('status') == 'selected' and bool(decision.get('pack'))
+        and not (re.fullmatch(r'(.+)@([^@]+)', decision['pack']) or
+                 decision.get('digest') or re.search(r'\bpack version ([^;]+)', decision.get('reason', '')))
+        for decision in data.get('packs', {}).get('decisions', []))
+    unattributable_verdicts = summary_verdicts if missing_pack_provenance else 0
+    summary_counts = {'verdicts': summary_verdicts,
+                      'true_positives': len(summary_tp), 'false_positives': len(summary_fp),
+                      'unattributable_verdicts': unattributable_verdicts}
     packs = data.get('packs', {}).get('decisions', [])
     activated_packs = []
     for decision in packs:
@@ -443,9 +453,12 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
         version = (versioned[2] if versioned else
                    re.search(r'\bpack version ([^;]+)', reason)[1]
                    if re.search(r'\bpack version ([^;]+)', reason) else None)
+        digest = decision.get('digest')
+        if not version and not digest:
+            continue
         activated_packs.append(dict(pack=pack, status='selected',
                                     **({'version': version} if version else {}),
-                                    **({'digest': decision['digest']} if decision.get('digest') else {}),
+                                    **({'digest': digest} if digest else {}),
                                     **({'reason': reason} if reason else {})))
     return {'verdict': verdict, 'tp': matched, 'fp': false_positives,
             'fn': [site(e) for e in absent], 'loose_matches': loose,
@@ -453,6 +466,8 @@ def score(data, oracle, *, root=None, exit_code=0, anchors=None, true_positives=
             'completion_kinds': completion_kinds,
             'completion_kind': completion_kinds[0] if len(completion_kinds) == 1 else 'mixed',
             'summary_counts': summary_counts,
+            'summary_attribution': {'status': 'unattributable' if missing_pack_provenance else 'attributable',
+                                    'missing_pack_provenance': missing_pack_provenance},
             'activated_packs': activated_packs,
             'diagnostics': dcounts, 'diagnostic_messages': dmsgs, 'diagnostics_by_family': families,
             'expected': expected, 'findings': findings, 'matched': matched,
