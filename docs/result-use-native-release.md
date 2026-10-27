@@ -1,6 +1,27 @@
 # JDK 21 native delivery repair (#129)
 
-## What changes
+## Current status (2026-10-27)
+
+`packs/v0.6.1` is published with the reviewed JDK 21 result-use model. The
+planned `rules/v0.5.2` dependency-only follow-up was not published. The next
+rules release is planned as `rules/v0.6.0`, retaining the exact dependency on
+`packs/v0.6.1` and including the later C# policy additions and catch behavior
+correction described in [release streams](release-streams.md).
+
+No additional native release is required: the native generation inputs and
+recipe have not changed since `packs/v0.6.1`. The source pack
+`bifrost.jdk-golden-summaries` advances from 0.2.0 to 0.2.1 with fourteen
+reviewed receiver-return identity classifications. This correction remains
+source-only and is not selected for native generation; it does not change the
+independent release versions. See the [identity review](qualification/receiver-return-identity.md).
+
+The original preparation and verification plan below is preserved as historical
+context. It describes the state before `packs/v0.6.1` was published; the
+unreleased `rules/v0.5.2` step is superseded by `rules/v0.6.0` above.
+
+## Original preparation plan (historical)
+
+### What changes
 
 Prepare `packs/v0.6.1` and then `rules/v0.5.2`. This is a patch under
 [release versioning](release-versioning.md): it restores native delivery of
