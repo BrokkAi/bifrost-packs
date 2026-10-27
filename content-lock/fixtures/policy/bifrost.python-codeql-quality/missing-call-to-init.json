@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-init/.bifrost/policies/missing-call-to-init.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/missing-call-to-init.rqlp",
+      "sha256": "5dc6ee443c67463f98376033e2ef7e822911e2940794fd3ad277ac8f86993d69",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-init/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-init/README.md",
+      "sha256": "7a42389e07402e4fa62dad6adee13f6a90bb173bbe947698cb426b17b1a57ea0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-init/upstream/Classes/missing-init/missing_init.py",
+      "source_path": "python/ql/test/query-tests/Classes/missing-init/missing_init.py",
+      "sha256": "6c1038f26ea145987002af55085904d2d2a57d5bd735a09120802eed7442a674",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/missing-init/missing_init.py"
+      }
+    }
+  ]
+}

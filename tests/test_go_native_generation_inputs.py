@@ -7,10 +7,13 @@ import json
 from pathlib import Path
 import unittest
 
+from scripts.content import read_lock
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "230019e376d5c1198b079482d4334ed2d18217ba"
 BASE_JOBS = {
+    "jdk21-result-use",
     "c-libc-result-use",
     "csharp-result-use",
     "php-result-use",
@@ -54,7 +57,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
         jobs = {row["name"]: row for row in config["jobs"]}
         self.assertEqual(set(jobs), BASE_JOBS | set(GO_INPUTS))
         self.assertEqual({row["name"] for row in config["recipes"]}, RECIPES)
-        self.assertEqual(len(config["jobs"]), 11)
+        self.assertEqual(len(config["jobs"]), 12)
         self.assertEqual(len(config["recipes"]), 5)
 
         for name, expected in GO_INPUTS.items():
@@ -123,7 +126,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
         ])
 
     def test_new_spec_classification_is_public_and_license_matches(self):
-        lock = _load("content-lock.json")
+        lock = read_lock(ROOT)
         entries = {row["path"]: row for row in lock["files"]}
         for expected in GO_INPUTS.values():
             row = entries[expected["spec"]]
@@ -140,7 +143,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
             spec = _load(expected["spec"])
             self.assertEqual(spec["notices"], ["notices/go-1.26.0-BSD-3-Clause.txt"])
 
-        lock = _load("content-lock.json")
+        lock = read_lock(ROOT)
         entries = {row["path"]: row for row in lock["files"]}
         self.assertEqual(entries[GO_NOTICE_PATH], {
             "path": GO_NOTICE_PATH,

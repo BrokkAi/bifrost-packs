@@ -268,7 +268,7 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
         self.assertIsInstance(config, dict)
         jobs = config.get("jobs")
         self.assertIsInstance(jobs, list)
-        self.assertEqual(len(jobs), 11)
+        self.assertEqual(len(jobs), 12)
         shard_count = 0
 
         for job in jobs:
@@ -286,7 +286,29 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
                 for field in ("compatibility", "provenance", "license", "safety"):
                     self.assertEqual(spec[field], model[field], f"{job['name']} {field}")
 
-        self.assertEqual(shard_count, 18)
+        self.assertEqual(shard_count, 19)
+
+    def test_jdk21_reviewed_obligations_are_selected_for_native_delivery(self):
+        jobs = _load_json("native-generation.json")["jobs"]
+        selected = [job for job in jobs if job["artifact"] ==
+                    "semantic-packs/models/jdk21-result-use-obligations.json"]
+        self.assertEqual(len(selected), 1)
+        model = _load_json(selected[0]["artifact"])
+        self.assertEqual(model["schema_version"], 8)
+        self.assertNotIn("bifrost", model["compatibility"])
+        self.assertEqual(model["shards"][0]["activation"], [{
+            "toolchain": {"name": "jdk", "version": ">=21.0.0, <22.0.0"},
+            "targets": ["jvm"],
+        }])
+        summaries = model["shards"][0]["payload"]["summaries"]
+        self.assertEqual({summary["id"] for summary in summaries}, {
+            "java.lang.string.trim.result-use",
+            "java.nio.file.files.delete-if-exists.result-use",
+        })
+        status = next(summary for summary in summaries
+                      if summary["id"] == "java.nio.file.files.delete-if-exists.result-use")
+        self.assertEqual(status["completeness"], "partial")
+        self.assertTrue(status["result_use_obligations"])
 
     def test_configured_direct_jobs_name_real_safe_spec_relative_notice_assets(self):
         config = _load_json("native-generation.json")
