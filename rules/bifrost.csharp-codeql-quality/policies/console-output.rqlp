@@ -1,0 +1,93 @@
+; CodeQL query: Bad Practices/UseOfSystemOutputStream.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report Console.Write and Console.WriteLine calls, accesses
+; to Console.Out and accesses to Console.Error, outside a Main entry point.
+; Out and Error must resolve exactly to the System.Console properties in the
+; reviewed BCL model. The engine cannot bind the overloaded Write and
+; WriteLine calls through the model, so a call is selected by name on a
+; receiver named Console, and a call proven to target a source-declared
+; Console type is a near miss. A Console.SetOut call anywhere in the
+; workspace suppresses the writes and Out accesses, and a Console.SetError
+; call suppresses the Error accesses. Uses, Out accesses and Error accesses
+; are kept apart by row kind (call, field access, identifier), so the
+; redirect rows can each suppress only their own stream. Main is a static
+; method named Main that returns void or int and takes no parameters or one
+; string array. Top-level statements are excluded as well, but lambdas and
+; local functions are not. Without the model, the property locators do not
+; resolve and the run is incomplete rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.console-output"
+  :name "C# use of system output stream"
+  :message "Poor logging: use of system output stream"
+  :severity note
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/UseOfSystemOutputStream.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Console.Write and Console.WriteLine calls and accesses to Console.Out and Console.Error outside a Main entry point, unless the workspace redirects that stream with Console.SetOut or Console.SetError."
+  :tags ["csharp" "codeql" "quality" "logging"]
+  :analysis (analysis
+    :type assertion
+    (bind :name uses
+      :query (rql :schema-version 1
+        (union
+          (language csharp
+            (except
+              (call :callee (name/regex "^Write(?:Line)?$") :receiver (name "Console"))
+              (inside-decl
+                (method :name "Main"
+                  (text/regex "\\A[^{]*?\\bstatic\\b[^{(]*?\\b(?:void|int)\\s+Main\\s*\\(\\s*(?:(?:params\\s+)?(?:string|(?:System\\.)?String)\\s*\\[\\s*\\]\\s*@?\\w+\\s*)?\\)"))
+                (call :callee (name/regex "^Write(?:Line)?$") :receiver (name "Console")))
+              (except
+                (call :callee (name/regex "^Write(?:Line)?$") :receiver (name "Console"))
+                (inside (class)
+                  (call :callee (name/regex "^Write(?:Line)?$") :receiver (name "Console")))
+                (inside-decl (callable)
+                  (call :callee (name/regex "^Write(?:Line)?$") :receiver (name "Console"))))))
+          (resolved-value
+            :resolves-to "System.Console.Out"
+            :proof exact
+            (language csharp
+              (except
+                (field_access :object (name "Console") :field (name "Out"))
+                (inside-decl
+                  (method :name "Main"
+                    (text/regex "\\A[^{]*?\\bstatic\\b[^{(]*?\\b(?:void|int)\\s+Main\\s*\\(\\s*(?:(?:params\\s+)?(?:string|(?:System\\.)?String)\\s*\\[\\s*\\]\\s*@?\\w+\\s*)?\\)"))
+                  (field_access :object (name "Console") :field (name "Out")))
+                (except
+                  (field_access :object (name "Console") :field (name "Out"))
+                  (inside (class) (field_access :object (name "Console") :field (name "Out")))
+                  (inside-decl (callable) (field_access :object (name "Console") :field (name "Out")))))))
+          (resolved-value
+            :resolves-to "System.Console.Error"
+            :proof exact
+            (language csharp
+              (except
+                (inside (field_access :object (name "Console") :field (name "Error"))
+                  (identifier (name "Error")))
+                (inside-decl
+                  (method :name "Main"
+                    (text/regex "\\A[^{]*?\\bstatic\\b[^{(]*?\\b(?:void|int)\\s+Main\\s*\\(\\s*(?:(?:params\\s+)?(?:string|(?:System\\.)?String)\\s*\\[\\s*\\]\\s*@?\\w+\\s*)?\\)"))
+                  (identifier (name "Error")))
+                (except
+                  (inside (field_access :object (name "Console") :field (name "Error"))
+                    (identifier (name "Error")))
+                  (inside (class) (identifier (name "Error")))
+                  (inside-decl (callable) (identifier (name "Error"))))))))))
+    (bind :name source-console
+      :query (rql :schema-version 1
+        (language csharp
+          (call-shape
+            (call-sites-to :proof proven
+              (members (enclosing-decl (class :name "Console"))))))))
+    (bind :name redirects
+      :query (rql :schema-version 1
+        (language csharp
+          (union
+            (call :callee (name "SetOut") :receiver (name "Console"))
+            (inside (call :callee (name "SetOut") :receiver (name "Console"))
+              (field_access :field (name "SetOut")))
+            (inside (call :callee (name "SetError") :receiver (name "Console"))
+              (identifier (name "SetError")))))))
+    (join :left uses :right source-console :on ((ast_id site_ast_id)) :kind anti)
+    (join :left uses :right redirects :on ((language language) (kind kind)) :kind anti)
+    (group :name by-use :by (uses.id)
+      (aggregate :name system-output-uses :op count))
+    (assert :group by-use :value system-output-uses :cardinality (exactly 0))))

@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 245 unique rule IDs from 12 manifest packs.
+This catalog lists 250 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -67,6 +67,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# call to obsolete method](../rules/bifrost.csharp-codeql-quality/policies/call-to-obsolete-method.rqlp) | `bifrost.csharp-codeql-quality.call-to-obsolete-method` | csharp | quality | warning |
 | [C# catch of NullReferenceException](../rules/bifrost.csharp-codeql-quality/policies/catch-nullreferenceexception.rqlp) | `bifrost.csharp-codeql-quality.catch-nullreferenceexception` | csharp | quality | warning |
 | [C# catch of all exceptions](../rules/bifrost.csharp-codeql-quality/policies/catch-of-all-exceptions.rqlp) | `bifrost.csharp-codeql-quality.catch-of-all-exceptions` | csharp | quality | warning |
+| [C# class implements ICloneable](../rules/bifrost.csharp-codeql-quality/policies/class-implements-icloneable.rqlp) | `bifrost.csharp-codeql-quality.class-implements-icloneable` | csharp | quality | warning |
+| [C# use of system output stream](../rules/bifrost.csharp-codeql-quality/policies/console-output.rqlp) | `bifrost.csharp-codeql-quality.console-output` | csharp | quality | note |
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |
 | [C# empty catch block](../rules/bifrost.csharp-codeql-quality/policies/empty-catch-block.rqlp) | `bifrost.csharp-codeql-quality.empty-catch-block` | csharp | correctness | warning |
 | [C# nested loops reuse variable](../rules/bifrost.csharp-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.csharp-codeql-quality.nested-loops-with-same-variable` | csharp | correctness | warning |
@@ -77,7 +79,10 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# static array](../rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp) | `bifrost.csharp-codeql-quality.static-array` | csharp | quality | warning |
 | [C# StringBuilder initialized with a character](../rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp) | `bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character` | csharp | correctness | warning |
 | [C# TODO comment](../rules/bifrost.csharp-codeql-quality/policies/todo-comment.rqlp) | `bifrost.csharp-codeql-quality.todo-comment` | csharp | quality | note |
+| [C# too many ref parameters](../rules/bifrost.csharp-codeql-quality/policies/too-many-ref-parameters.rqlp) | `bifrost.csharp-codeql-quality.too-many-ref-parameters` | csharp | quality | warning |
 | [C# use number constant](../rules/bifrost.csharp-codeql-quality/policies/use-number-constant.rqlp) | `bifrost.csharp-codeql-quality.use-number-constant` | csharp | quality | warning |
+| [C# use of HtmlInputFile.PostedFile](../rules/bifrost.csharp-codeql-quality/policies/use-of-file-upload.rqlp) | `bifrost.csharp-codeql-quality.use-of-file-upload` | csharp | quality | note |
+| [C# use of HtmlInputHidden](../rules/bifrost.csharp-codeql-quality/policies/use-of-html-input-hidden.rqlp) | `bifrost.csharp-codeql-quality.use-of-html-input-hidden` | csharp | quality | note |
 | [C# useless if statement](../rules/bifrost.csharp-codeql-quality/policies/useless-if-statement.rqlp) | `bifrost.csharp-codeql-quality.useless-if-statement` | csharp | correctness | warning |
 | [Selected C++ boundary reaches no network effect](../rules/bifrost.effects/policies/cpp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.cpp.selected-boundary-no-network-io` | cpp | effects | error |
 | [Selected C# boundary reaches no network effect](../rules/bifrost.effects/policies/csharp/selected-boundary-no-network-io.rqlp) | `bifrost.effects.csharp.selected-boundary-no-network-io` | csharp | effects | error |
