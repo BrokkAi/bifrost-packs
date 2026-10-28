@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.dotnet.bcl-csharp",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "producer": {
     "name": "bifrost-reviewed-dotnet-models",
     "version": "0.1.0"
@@ -134,6 +134,26 @@
               "kind": "artifact",
               "path": "System.Console.dll",
               "symbol": "System.Console"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-io-textwriter",
+            "name": "System.IO.TextWriter",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.IO.TextWriter"
             }
           },
           {
@@ -453,6 +473,60 @@
               "kind": "artifact",
               "path": "System.Console.dll",
               "symbol": "System.Console.ReadLine()"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-console.out",
+            "owner": "type.dotnet.bcl-csharp.system-console",
+            "name": "Out",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.IO.TextWriter",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Console.dll",
+              "symbol": "System.Console.Out"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-console.error",
+            "owner": "type.dotnet.bcl-csharp.system-console",
+            "name": "Error",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.IO.TextWriter",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Console.dll",
+              "symbol": "System.Console.Error"
             }
           },
           {

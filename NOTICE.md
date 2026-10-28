@@ -33,6 +33,9 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 - The authored .NET BCL declaration and summary model retains the .NET
   Foundation and Contributors MIT terms; see licenses/DotNet-Runtime-MIT.txt
   and semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json.
+- The authored .NET Framework System.Web declaration model records public API
+  names and signatures from the .NET Framework 4.8.1 API reference and is MIT;
+  see semantic-packs/dotnet/bifrost.dotnet.system-web-csharp.json.
 - Kotlin, Scala, Typeshed, PHPStorm and TypeScript source specifications retain
   their recorded license, pinned input hashes, and notices. Downloaded inputs
   are not vendored here. Node's complete upstream notice is preserved.
