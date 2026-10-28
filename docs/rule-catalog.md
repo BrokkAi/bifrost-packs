@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 243 unique rule IDs from 12 manifest packs.
+This catalog lists 245 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -68,8 +68,10 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# catch of NullReferenceException](../rules/bifrost.csharp-codeql-quality/policies/catch-nullreferenceexception.rqlp) | `bifrost.csharp-codeql-quality.catch-nullreferenceexception` | csharp | quality | warning |
 | [C# catch of all exceptions](../rules/bifrost.csharp-codeql-quality/policies/catch-of-all-exceptions.rqlp) | `bifrost.csharp-codeql-quality.catch-of-all-exceptions` | csharp | quality | warning |
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |
+| [C# empty catch block](../rules/bifrost.csharp-codeql-quality/policies/empty-catch-block.rqlp) | `bifrost.csharp-codeql-quality.empty-catch-block` | csharp | correctness | warning |
 | [C# nested loops reuse variable](../rules/bifrost.csharp-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.csharp-codeql-quality.nested-loops-with-same-variable` | csharp | correctness | warning |
 | [C# call to Path.Combine](../rules/bifrost.csharp-codeql-quality/policies/path-combine.rqlp) | `bifrost.csharp-codeql-quality.path-combine` | csharp | quality | note |
+| [C# Random object created and used only once](../rules/bifrost.csharp-codeql-quality/policies/random-used-once.rqlp) | `bifrost.csharp-codeql-quality.random-used-once` | csharp | correctness | warning |
 | [C# recursive Equals call](../rules/bifrost.csharp-codeql-quality/policies/recursive-equals-call.rqlp) | `bifrost.csharp-codeql-quality.recursive-equals-call` | csharp | correctness | warning |
 | [C# rethrown exception variable](../rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp) | `bifrost.csharp-codeql-quality.rethrown-exception-variable` | csharp | quality | warning |
 | [C# static array](../rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp) | `bifrost.csharp-codeql-quality.static-array` | csharp | quality | warning |

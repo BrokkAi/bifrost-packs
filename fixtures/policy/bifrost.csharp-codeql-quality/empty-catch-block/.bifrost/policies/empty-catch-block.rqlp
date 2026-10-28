@@ -1,0 +1,19 @@
+; CodeQL query: Bad Practices/EmptyCatchBlock.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report catch clauses whose body block contains only
+; whitespace, with or without a caught type or a filter. A body holding a
+; comment, a statement, an empty statement or a nested block is a near miss.
+; The body form is read from source because failure-handler state also calls
+; comment-only and empty-statement bodies empty. The caught type is not read,
+; so an unmodeled exception type does not make the run incomplete.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.empty-catch-block"
+  :name "C# empty catch block"
+  :message "empty catch block silently discards the exception"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/EmptyCatchBlock.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports catch clauses whose body has no statements and no comment."
+  :tags ["csharp" "codeql" "quality" "exceptions"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (catch (text/regex "\\{\\s*\\}\\z"))))))
