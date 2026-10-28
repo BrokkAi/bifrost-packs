@@ -180,6 +180,61 @@
       "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "call-argument-conversion"],
       "severity_rationale": "Passing a character to the one-argument StringBuilder constructor selects the integer-capacity overload and often creates an unexpectedly large or invalid buffer.",
       "remediation": "Convert the character to a string when text initialization is intended, or pass an explicit capacity when capacity initialization is intended."
+    },
+    {
+      "path": "policies/console-output.rqlp",
+      "id": "bifrost.csharp-codeql-quality.console-output",
+      "authored_hash": "b1808cdf7720cf826e952d4130dbc2aa75169423b1d0fd24adb5afcc9816ae20",
+      "resolved_semantic_hash": null,
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "normalized-call-roles"],
+      "severity_rationale": "Writing directly to the console is unstructured logging: messages bypass log levels, sinks and redaction, and may leak information to standard output or error.",
+      "remediation": "Use a logging API such as Microsoft.Extensions.Logging, or redirect the streams with Console.SetOut and Console.SetError."
+    },
+    {
+      "path": "policies/use-of-html-input-hidden.rqlp",
+      "id": "bifrost.csharp-codeql-quality.use-of-html-input-hidden",
+      "authored_hash": "eb54150fc63fea0f129441c5405ae70b85bc6e7ee49b0371add1d00b1c50384c",
+      "resolved_semantic_hash": null,
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance"],
+      "severity_rationale": "Hidden form fields are cached and sent like any other input, so a browser-cache reader or the user can read or replace their contents.",
+      "remediation": "Keep sensitive or trusted state out of hidden fields; store it server-side or protect and validate it like any other user input."
+    },
+    {
+      "path": "policies/use-of-file-upload.rqlp",
+      "id": "bifrost.csharp-codeql-quality.use-of-file-upload",
+      "authored_hash": "77800689791cd272c00d3928e90952e45e724eef1d60e4955a7615605d1dd36a",
+      "resolved_semantic_hash": null,
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance"],
+      "severity_rationale": "Reading an uploaded file lets users place attacker-controlled content on the server, which can overwrite data or inject code if the upload is not constrained.",
+      "remediation": "Validate the destination path and file content (not only the MIME type), limit the size, log uploads, and run the application without administrator privileges."
+    },
+    {
+      "path": "policies/class-implements-icloneable.rqlp",
+      "id": "bifrost.csharp-codeql-quality.class-implements-icloneable",
+      "authored_hash": "52efcbd5ac11e08e2557c3072eeb320b02e794eb7d91162bf1a0391dce062c82",
+      "resolved_semantic_hash": "52efcbd5ac11e08e2557c3072eeb320b02e794eb7d91162bf1a0391dce062c82",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "ICloneable does not say whether Clone is deep or shallow, so callers cannot rely on its result, and implementing it spreads that ambiguity to every subtype.",
+      "remediation": "Remove ICloneable and expose a typed copy method or copy constructor whose depth is documented, or seal the type."
+    },
+    {
+      "path": "policies/too-many-ref-parameters.rqlp",
+      "id": "bifrost.csharp-codeql-quality.too-many-ref-parameters",
+      "authored_hash": "3f3712338fa273975969be928e3c61732d84571a688e027803777ea13a0fda8c",
+      "resolved_semantic_hash": "3f3712338fa273975969be928e3c61732d84571a688e027803777ea13a0fda8c",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "A method with many ref parameters hides which arguments it changes, which makes calls hard to read and test.",
+      "remediation": "Return a result object or tuple, or pass a wrapper object instead of several ref parameters."
     }
   ]
 }

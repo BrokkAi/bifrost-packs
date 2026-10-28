@@ -1,6 +1,6 @@
 # Public C# CodeQL quality fixtures
 
-These fixtures exercise the sixteen policies in
+These fixtures exercise the twenty-one policies in
 `rules/bifrost.csharp-codeql-quality`. Each case contains a positive example
 and same-shaped near misses, with the expected structural boundary documented
 by the policy's CodeQL query path and pinned commit
@@ -13,5 +13,9 @@ its modeled exception hierarchy as well. The call-to-gc and path-combine cases
 bind calls to its `System.GC.Collect` and `System.IO.Path.Combine` overloads,
 the catch-nullreferenceexception and rethrown-exception-variable cases use
 it to resolve caught exception types, and the random-used-once case binds
-`System.Random` constructors through it. The empty-catch-block case reads
-source syntax only and installs no model.
+`System.Random` constructors through it. The console-output case resolves
+`System.Console.Out` and `System.Console.Error` through it. The
+use-of-html-input-hidden and use-of-file-upload cases install the separate
+.NET Framework `bifrost.dotnet.system-web-csharp` model instead. The
+empty-catch-block, class-implements-icloneable and too-many-ref-parameters
+cases read source syntax only and install no model.
