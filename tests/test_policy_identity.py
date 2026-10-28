@@ -43,6 +43,7 @@ PRODUCTION_WORKSPACE_DIAGNOSTIC_CODES = frozenset(
         "qualified-value-locator-incomplete",
         "endpoint-set-import-requires-workspace",
         "declaration-selection-import-requires-workspace",
+        "catalogs-require-policy-run",
     }
 )
 
