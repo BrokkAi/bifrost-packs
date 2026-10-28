@@ -38,20 +38,30 @@ removals. No source-text fallback is used. Arbitrary replacement regexes,
 compile-time constant expressions and multi-call replacement chains are not
 covered by this literal recognizer.
 
-CodeQL's branch-sensitive equality, trusted-prefix plus normalization or
-traversal checks, blocklist combinations, regex-validation guards and
-annotations, and `File.getName` plus traversal checks require conditional
-barriers absent from the current policy-local sanitizer transfer contract.
-Conditional constructor transfers and the full simple-type barrier family
-also remain gaps. Normalization and `File.getName` alone are not sanitizers.
+The policy also includes conditional sanitizers for basename traversal checks
+and trusted-prefix checks on normalized or canonical paths. Conditional
+constructor transfers and the full simple-type barrier family remain gaps.
+Normalization and `File.getName` alone are not sanitizers.
 
-Validation on 2026-10-27 does not establish parity. Native qualification is
-`SCOPED-FAIL`, full verdict `FP`: two matched expected alerts
-(`TaintedPath.java:16,105`), five extras (`TaintedPath.java:30,51,67,88,122`), and
-77 absent expected sites (57 scoped and 20 deferred). All 77 absences are
-abstentions under inconclusive analysis, not certified false negatives. The
-untraced run finished in 1,376.519 seconds; an initial 900-second traced attempt
-timed out before emitting a report and is excluded from those counts.
+Validation uses CodeQL commit `ae741615`, the `security/CWE-022` test, the
+native route, and engine master `25985e1276`. The scoped result is
+`SCOPED-FAIL`: two true positives (`TaintedPath.java:16,105`), four extras
+(`TaintedPath.java:30,51,67,88`), and 77 misses. The full suite is `FP` with the
+same true positives and extras. Before these sanitizers, there were five
+extras; line 122 (`getName` followed by a `".."` check) is now suppressed with
+no new misses. The remaining extras have these causes:
+
+- Lines 30 and 67 need two guards on the same value, which is not supported yet.
+- Lines 51 and 88 need `Path.startsWith(base + File.separator)`; the native route
+does not yet bind the String concatenation argument because its type is not
+proven.
+- Line 51 also checks a `normalize().toAbsolutePath()` value. This rule does not
+treat it as normalized because `toAbsolutePath` can put the working directory
+in front of leading `..` parts.
+
+The 77 misses remain abstentions under inconclusive analysis, not certified
+false negatives. The rule stays opt-in and has not reached SCOPED-EXACT or zero
+extras.
 
 The default route is `SCOPED-FAIL`, full `EXACT-INCOMPLETE`: zero matched
 findings, zero observed extras, and 79 absent sites, all abstentions under
