@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.dotnet.bcl-csharp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "producer": {
     "name": "bifrost-reviewed-dotnet-models",
     "version": "0.1.0"
@@ -404,6 +404,26 @@
               "kind": "artifact",
               "path": "System.Runtime.dll",
               "symbol": "System.GCCollectionMode"
+            }
+          },
+          {
+            "id": "type.dotnet.bcl-csharp.system-random",
+            "name": "System.Random",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random"
             }
           }
         ],
@@ -1363,6 +1383,291 @@
               "kind": "artifact",
               "path": "System.Runtime.dll",
               "symbol": "System.ICloneable.Clone()"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.constructor",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "Random",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": []
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "Random()"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.constructor-seed",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "Random",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "Seed",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Int32",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "Random(System.Int32)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.next",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "Next",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Int32",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random.Next()"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.next-max",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "Next",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "maxValue",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Int32",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Int32",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random.Next(System.Int32)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.next-min-max",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "Next",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "minValue",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Int32",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "maxValue",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Int32",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Int32",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random.Next(System.Int32,System.Int32)"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.next-bytes-array",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "NextBytes",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "array",
+                    "element": {
+                      "kind": "named",
+                      "name": "System.Byte",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Void",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random.NextBytes(System.Byte[])"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.next-bytes-span",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "NextBytes",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Span",
+                    "arguments": [
+                      {
+                        "kind": "named",
+                        "name": "System.Byte",
+                        "arguments": [],
+                        "nullable": false
+                      }
+                    ],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Void",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random.NextBytes(System.Span{System.Byte})"
+            }
+          },
+          {
+            "id": "member.dotnet.bcl-csharp.system-random.next-double",
+            "owner": "type.dotnet.bcl-csharp.system-random",
+            "name": "NextDouble",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Double",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Random.NextDouble()"
             }
           }
         ],

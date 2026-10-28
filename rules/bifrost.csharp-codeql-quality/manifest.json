@@ -127,6 +127,28 @@
       "remediation": "Check for null before dereferencing, or use null-conditional operators, and remove the catch clause."
     },
     {
+      "path": "policies/empty-catch-block.rqlp",
+      "id": "bifrost.csharp-codeql-quality.empty-catch-block",
+      "authored_hash": "b23c07e552175a58f63a5aec3ec84041d29147fa5109f44b397634e7bd3dd471",
+      "resolved_semantic_hash": "b23c07e552175a58f63a5aec3ec84041d29147fa5109f44b397634e7bd3dd471",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "An empty catch block discards the exception without logging, recovery or rethrow, so failures disappear silently and later code runs from an unknown state.",
+      "remediation": "Handle, log or rethrow the exception, narrow the caught type, or add a comment explaining why ignoring it is safe."
+    },
+    {
+      "path": "policies/random-used-once.rqlp",
+      "id": "bifrost.csharp-codeql-quality.random-used-once",
+      "authored_hash": "9bcb83e5ec9fe152b281ee9e94f81bc5df3303e15c23aba1806e616375a6eda1",
+      "resolved_semantic_hash": null,
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "normalized-call-roles"],
+      "severity_rationale": "A System.Random created for a single call is reseeded on every call; on .NET Framework, instances created in quick succession share a time-based seed and return the same values, and an explicit seed returns the same value on every call.",
+      "remediation": "Create one Random and reuse it, or use Random.Shared; use System.Security.Cryptography.RandomNumberGenerator when the value must be unpredictable."
+    },
+    {
       "path": "policies/call-to-obsolete-method.rqlp",
       "id": "bifrost.csharp-codeql-quality.call-to-obsolete-method",
       "authored_hash": "66996b554cd9e25349829bac6fdce4adb94eb0703884d9f74cd419e50323486f",
