@@ -113,6 +113,42 @@ class JavaStagerTests(unittest.TestCase):
                 self.assertEqual(first.root, again.root)
                 self.assertTrue(artifacts[0].is_file())
 
+    def test_stub_selection_order_changes_prepared_root_cache_key(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(
+                base, ('HikariCP-3.4.5', 'validation-api-2.0.1.Final'))
+            for stub_name, type_name in (('HikariCP-3.4.5', 'First'),
+                                         ('validation-api-2.0.1.Final', 'Second')):
+                source = stub_root / stub_name / f'com/example/{type_name}.java'
+                source.parent.mkdir(parents=True)
+                source.write_text(f'package com.example; public class {type_name} {{}}\n')
+            first_option = '${testdir}/../../stubs/HikariCP-3.4.5'
+            second_option = '${testdir}/../../stubs/validation-api-2.0.1.Final'
+            options = test_dir / 'options'
+            options.write_text(f'--javac-args -cp {first_option}:{second_option}')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                output = Path(command[command.index('-d') + 1])
+                for value in command:
+                    if not value.endswith('.java'):
+                        continue
+                    source = Path(value)
+                    target = output / 'com/example' / f'{source.stem}.class'
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(b'class')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                first = stager.prepare(test_dir, codeql, cache)
+                options.write_text(f'--javac-args -cp {second_option}:{first_option}')
+                second = stager.prepare(test_dir, codeql, cache)
+            self.assertNotEqual(first.root, second.root)
+
     def test_stub_source_change_rebuilds_coordinate_jar(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -183,8 +219,21 @@ class JavaStagerTests(unittest.TestCase):
             self.assertIn('com.example.Shared: kept HikariCP-3.4.5/com/example/Shared.java', record)
             self.assertIn('dropped validation-api-2.0.1.Final/com/example/Shared.java', record)
             first_jar = cache / 'maven-home/.m2/repository/codeql/stubs/HikariCP-3.4.5/0/HikariCP-3.4.5-0.jar'
+            first_sources = first_jar.with_name('HikariCP-3.4.5-0-sources.jar')
+            second_jar = cache / 'maven-home/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar'
+            second_sources = second_jar.with_name('validation-api-2.0.1.Final-sources.jar')
             with zipfile.ZipFile(first_jar) as archive:
-                self.assertIn('com/example/Shared.class', archive.namelist())
+                first_binary_types = {name.removesuffix('.class') for name in archive.namelist()}
+            with zipfile.ZipFile(first_sources) as archive:
+                first_source_types = {name.removesuffix('.java') for name in archive.namelist()}
+            with zipfile.ZipFile(second_jar) as archive:
+                second_binary_types = {name.removesuffix('.class') for name in archive.namelist()}
+            with zipfile.ZipFile(second_sources) as archive:
+                second_source_types = {name.removesuffix('.java') for name in archive.namelist()}
+            self.assertEqual(first_binary_types, first_source_types)
+            self.assertEqual(first_source_types, {'com/example/Shared'})
+            self.assertEqual(second_binary_types, second_source_types)
+            self.assertEqual(second_source_types, set())
 
     def test_jdk_owned_stub_package_is_dropped_and_recorded(self):
         with tempfile.TemporaryDirectory() as temporary:

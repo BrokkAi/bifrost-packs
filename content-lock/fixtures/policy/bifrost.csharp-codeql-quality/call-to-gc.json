@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/.bifrost/policies/call-to-gc.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/call-to-gc.rqlp",
+      "sha256": "7515d82bd1cc47fe64319af3fa7ef40cc602e40ce1244b8acbcb7a0b2287ab39",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/.bifrost/semantic-models/bifrost.dotnet.bcl-csharp.json",
+      "source_path": "semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json",
+      "sha256": "e833df83c52c67e0a60697120670eb056a5b34dbeddfb3dceacc21cf9b1b88ce",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/Local.cs",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/Local.cs",
+      "sha256": "74858c7a0da756c55bfe45b3fbe1145e5616b955ef5f829b4c7fbfa4e87f2ecc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/Probe.cs",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/Probe.cs",
+      "sha256": "1445aa71a80cbaef859d06a5dbc3721af947fd45c75642558213ae2e3598a743",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/README.md",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/README.md",
+      "sha256": "eed9168051e8c9b7d2887e95389c27f65b0e87fbf6f01c2e11d7420d46eff976",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-gc/upstream/API Abuse/CallToGCCollect/CallToGCCollectBad.cs",
+      "source_path": "csharp/ql/test/query-tests/API Abuse/CallToGCCollect/CallToGCCollectBad.cs",
+      "sha256": "bb547c50f4b351b6ade61b0fb5581e66c9c805d6e712112a734869ec4cb05528",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/csharp/ql/test/query-tests/API%20Abuse/CallToGCCollect/CallToGCCollectBad.cs"
+      }
+    }
+  ]
+}
