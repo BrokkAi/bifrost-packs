@@ -1,0 +1,41 @@
+; CodeQL query: API Abuse/ClassImplementsICloneable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a class, record class or interface that declares a
+; method named Clone and either names ICloneable, System.ICloneable or
+; global::System.ICloneable in its own base list, or directly implements a
+; source interface whose base-interface chain does. The base-list name is read
+; from source because type references in a base list do not resolve to
+; external declarations; a type that names a source declaration called
+; ICloneable is excluded. Sealed types and structs, which are implicitly
+; sealed, are near misses, as are a generic constraint naming ICloneable and
+; a type that only inherits the interface through a base class.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.class-implements-icloneable"
+  :name "C# class implements ICloneable"
+  :message "type implements 'ICloneable'"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/API Abuse/ClassImplementsICloneable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports non-sealed types that declare Clone and implement System.ICloneable directly or through a chain of source interfaces."
+  :tags ["csharp" "codeql" "quality" "api-abuse"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (except
+          (intersect
+            (owner (enclosing-decl (method :name "Clone")))
+            (union
+              (enclosing-decl
+                (class (text/regex "\\A[^{]*?\\b(?:class|interface|record)\\s+@?\\w+\\s*(?:<[^>{]*>)?\\s*(?:\\([^){]*\\))?\\s*:\\s*(?:[\\w.:]+(?:<[\\w.:<>,\\s?\\[\\]]*>)?\\s*,\\s*)*(?:global::)?(?:System\\.)?ICloneable\\b")))
+              (subtypes
+                (union
+                  (enclosing-decl
+                    (class (text/regex "\\A[^{]*?\\binterface\\s+@?\\w+\\s*(?:<[^>{]*>)?\\s*:\\s*(?:[\\w.:]+(?:<[\\w.:<>,\\s?\\[\\]]*>)?\\s*,\\s*)*(?:global::)?(?:System\\.)?ICloneable\\b")))
+                  (intersect
+                    (subtypes :transitive true
+                      (enclosing-decl
+                        (class (text/regex "\\A[^{]*?\\binterface\\s+@?\\w+\\s*(?:<[^>{]*>)?\\s*:\\s*(?:[\\w.:]+(?:<[\\w.:<>,\\s?\\[\\]]*>)?\\s*,\\s*)*(?:global::)?(?:System\\.)?ICloneable\\b"))))
+                    (enclosing-decl
+                      (class (text/regex "\\A(?:\\s*\\[[^\\]]*\\])*[^\\[{:(<]*?\\binterface\\b"))))))))
+          (union
+            (enclosing-decl
+              (class (text/regex "\\A(?:\\s*\\[[^\\]]*\\])*[^\\[{:(<]*?\\b(?:sealed|struct)\\b")))
+            (subtypes :transitive true (enclosing-decl (class :name "ICloneable")))))))))

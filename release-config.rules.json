@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.6.0",
+  "release_version": "0.7.0",
   "artifact_role": "source",
-  "notes": "This minor release adds the C# rethrown-exception-variable and todo-comment policies, corrects catch-of-all-exceptions to report exact catch-all handlers that do not use a bare throw;, including a throw of the caught variable, and adds C# password-in-configuration and empty-password-in-configuration policies aligned with CodeQL. The C# selectors exclude xmlns namespace declarations from XML attribute matches. The C# policy component advances to 0.3.0. The new policies use capabilities already required by this component. The release retains the exact dependency on bifrost.public.packs 0.6.1 for the reviewed JDK 21 result-use models and does not imply full policy qualification or complete analysis.",
+  "notes": "This minor release adds ten C# policies ported from CodeQL: call-to-gc, path-combine, catch-nullreferenceexception, empty-catch-block, random-used-once, console-output, use-of-html-input-hidden, use-of-file-upload, class-implements-icloneable and too-many-ref-parameters; the C# policy component advances to 0.3.0. Their supporting BCL and System.Web declaration models are source-only, so calls those models describe resolve only where a workspace supplies the model and otherwise stay explicitly incomplete. bifrost.performance.network-call-in-loop (bifrost.code-smells 4.0.1) again matches requests.get and requests.post by name beside its effect-proven standard-library arm: a call into a workspace or third-party wrapper has no directly declared effect, so the effect-proven arm alone reported a complete run with no findings. The exact native dependency moves from bifrost.public.packs 0.6.1 to 0.7.0, which activates the Python performance effects for CPython 3.10 through 3.14. No policy asks more of a consumer. Publish packs/v0.7.0 first. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.6.1",
+      "release_version": "0.7.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

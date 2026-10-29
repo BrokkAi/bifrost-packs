@@ -4,7 +4,7 @@
   :name "Network request inside a loop"
   :message "Review whether this lexically nested network request repeats per iteration"
   :severity note
-  :description "A network call lexically nested under a loop may amplify latency and remote load. This structural prompt also includes deferred nested bodies; verify execution before batching or adding bounded concurrency. A for-each loop whose iterated expression provably resolves to a collection literal with at most eight elements is excluded; the proof covers declarator-established bindings (JS/TS const/let/var, Rust let, Java locals), so field-, assignment-, or call-produced iterables still report."
+  :description "A network call lexically nested under a loop may amplify latency and remote load. This structural prompt also includes deferred nested bodies; verify execution before batching or adding bounded concurrency. Python standard-library requests report only when a reviewed model proves the call's network effect; `requests.get` and `requests.post` are matched by name, because the effect of a call into a workspace or third-party wrapper is not declared directly. A for-each loop whose iterated expression provably resolves to a collection literal with at most eight elements is excluded; the proof covers declarator-established bindings (JS/TS const/let/var, Rust let, Java locals), so field-, assignment-, or call-produced iterables still report."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
   :tags ["performance" "network" "loop" "code-smell"]
   :analysis
@@ -32,6 +32,10 @@
                       (inside-decl
                         (loop :capture "region")
                         (call :callee (name "request") :capture "smell")))))))
+            (language python
+              (inside-decl
+                (loop :capture "region")
+                (call :receiver (name "requests") :callee (name/regex "^(get|post)$") :capture "smell")))
             (language java
               (inside-decl (loop :capture "region") (call :receiver (name "client") :callee (name "send") :capture "smell")))
             (language javascript

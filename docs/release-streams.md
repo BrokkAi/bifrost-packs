@@ -17,30 +17,34 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-10-27, the latest published streams are `packs/v0.6.1` and
-`rules/v0.5.1`. The planned `rules/v0.5.2` dependency-only follow-up was not
-published and is superseded by the next rules release, `rules/v0.6.0`: since
-0.5.1, the C# catalog adds `rethrown-exception-variable` and `todo-comment` and
-corrects `catch-of-all-exceptions` to report exact catch-all handlers that do
-not use a bare `throw;`, including a throw of the caught variable, and adds
-`password-in-configuration` and `empty-password-in-configuration` aligned with
-CodeQL. These configuration rules exclude `xmlns` namespace declarations from
-XML attribute matches. The C# rules component is versioned `0.3.0`. The release
-retains the exact dependency on
-published `packs/v0.6.1`; these changes do not add consumer capability
-requirements or establish full policy qualification.
+As of 2026-10-29, the latest published streams are `packs/v0.6.1` and
+`rules/v0.6.0`. The next releases are prepared as `packs/v0.7.0` and
+`rules/v0.7.0` (bifrost-packs#168).
+
+`packs/v0.7.0` is a minor release. `bifrost.python-performance-summaries`
+1.1.0 activates on `cpython >=3.10.0, <3.15.0` instead of exactly 3.13.5.
+Bifrost derives the toolchain from the `requires-python` lower bound, so the
+exact pin left ordinary projects without the reviewed effects, and the Python
+performance loop arms stayed structured-open. The summaries, IDs, provenance
+and notice are unchanged. Every other job and recipe and the 0.14.0 generator
+are unchanged. The C# BCL and System.Web declaration models added since 0.6.1
+remain source-only.
+
+`rules/v0.7.0` is a minor release. It adds ten C# CodeQL ports
+(`bifrost.csharp-codeql-quality` 0.3.0) and restores the `requests.get` and
+`requests.post` name arm of `bifrost.performance.network-call-in-loop`
+(`bifrost.code-smells` 4.0.1), whose effect-proven arm alone reported a
+complete run with no findings for calls into workspace wrappers. It depends
+exactly on `packs/v0.7.0`, so publish that first.
+
+Open limits stay explicit: a workspace that passes `sys.modules` to a call
+leaves every reviewed standard-library summary unproven (BrokkAi/bifrost-dev#8107),
+projects below CPython 3.10 activate no Python standard-library model, and
+`json` and `re` performance effects are not native.
 
 The [v0.14.2 release checks](qualification/v0142-public-release.md) record
-all 240 source authoring identities, focused C# and Python outcomes, and the
-exact engine profile's acceptance of packs 0.6.1.
-
-No new native pack release is required. The native generation inputs and recipe
-are unchanged since `packs/v0.6.1`. The source pack
-`bifrost.jdk-golden-summaries` is now `0.2.1`, with fourteen reviewed
-receiver-return identity classifications. This is a source-only patch
-correction: it is not selected for native generation and does not change the
-independent release versions. See the [identity review](qualification/receiver-return-identity.md)
-and the [historical JDK result-use repair plan](result-use-native-release.md).
+the previous releases' identities and the exact engine profile's acceptance of
+packs 0.6.1.
 
 The original preparation plan remains below as historical context. It records
 the planned order before `packs/v0.6.1` was published; its unreleased

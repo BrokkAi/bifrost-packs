@@ -8,12 +8,11 @@ for a release or enable it in a scanner.
 
 ## Next native packaging repair
 
-The proposed `packs/v0.6.1` keeps the generator and all existing inputs, and
-adds the reviewed JDK 21 result-use model as a schema-8 authored direct job.
-There are twelve direct jobs (nine result-use families) and five recipes.
-The companion rules 0.5.2 updates the exact packs dependency so acquisition
-selects the repaired bundle. See the [release repair plan](result-use-native-release.md).
-The eleven-job plan described below is the published 0.6.0 baseline.
+The proposed `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
+five recipes of `packs/v0.6.1`. Only the `python-performance-summaries` input
+changes: its model is 1.1.0 and activates on `cpython >=3.10.0, <3.15.0`. The
+companion rules 0.7.0 updates the exact packs dependency. The published 0.6.1
+plan is described in the [release repair plan](result-use-native-release.md).
 
 ## Pinned native candidate
 
