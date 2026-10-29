@@ -17,9 +17,9 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-10-29, the latest published streams are `packs/v0.6.1` and
-`rules/v0.6.0`. The next releases are prepared as `packs/v0.7.0` and
-`rules/v0.7.0` (bifrost-packs#168).
+As of 2026-10-29, the latest published streams are `packs/v0.7.0` and
+`rules/v0.7.0` (bifrost-packs#168), both tagged on `fd13b06`. Bifrost 0.14.3
+admits both; the engine's pack-compatibility matrix records the outcome.
 
 `packs/v0.7.0` is a minor release. `bifrost.python-performance-summaries`
 1.1.0 activates on `cpython >=3.10.0, <3.15.0` instead of exactly 3.13.5.
@@ -35,7 +35,7 @@ remain source-only.
 `requests.post` name arm of `bifrost.performance.network-call-in-loop`
 (`bifrost.code-smells` 4.0.1), whose effect-proven arm alone reported a
 complete run with no findings for calls into workspace wrappers. It depends
-exactly on `packs/v0.7.0`, so publish that first.
+exactly on `packs/v0.7.0`, which was published first.
 
 Open limits stay explicit: a workspace that passes `sys.modules` to a call
 leaves every reviewed standard-library summary unproven (BrokkAi/bifrost-dev#8107),
