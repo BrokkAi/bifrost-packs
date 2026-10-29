@@ -1,0 +1,26 @@
+; CodeQL query: Bad Practices/PathCombine.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report calls that bind to any System.IO.Path.Combine
+; overload in the reviewed BCL model. Path.Join and same-named methods on
+; other types are near misses. Without the model, the calls stay unresolved
+; and the run is incomplete rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.path-combine"
+  :name "C# call to Path.Combine"
+  :message "Path.Combine silently drops earlier arguments when a later argument is an absolute path"
+  :severity note
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/PathCombine.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls that bind to a System.IO.Path.Combine overload declared by the reviewed BCL semantic model."
+  :tags ["csharp" "codeql" "quality" "filesystem"]
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (resolved-call
+        :resolves-to "System.IO.Path.Combine"
+        :proof declared
+        (call-bindings
+          (call-shape
+            (language csharp
+              (call :callee (name "Combine"))))))))
+    (group :name by-call :by (calls.site_id)
+      (aggregate :name selected-calls :op count))
+    (assert :group by-call :value selected-calls :cardinality (exactly 0))))
