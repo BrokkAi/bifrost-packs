@@ -6,9 +6,9 @@ The engine copy remains for existing embedded sources and focused fixtures;
 new public content belongs here. Storing authoring content does not select it
 for a release or enable it in a scanner.
 
-## Next native packaging repair
+## Latest native packaging repair
 
-The proposed `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
+The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
 five recipes of `packs/v0.6.1`. Only the `python-performance-summaries` input
 changes: its model is 1.1.0 and activates on `cpython >=3.10.0, <3.15.0`. The
 companion rules 0.7.0 updates the exact packs dependency. The published 0.6.1

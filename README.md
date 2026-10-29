@@ -83,7 +83,7 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The next releases, `packs/v0.7.0` and `rules/v0.7.0`, widen the Python
+The latest releases, `packs/v0.7.0` and `rules/v0.7.0`, widen the Python
 performance model's CPython activation, add ten C# policies and restore the
 `requests` arm of `network-call-in-loop`. See
 [release streams](docs/release-streams.md).
