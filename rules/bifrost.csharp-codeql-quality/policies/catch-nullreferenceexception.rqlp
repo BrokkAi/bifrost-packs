@@ -1,0 +1,25 @@
+; CodeQL query: Bad Practices/CatchOfNullReferenceException.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report catch clauses whose caught type resolves exactly to
+; System.NullReferenceException, with or without a filter. Other exception
+; types and a same-named source type in another namespace are near misses.
+; Without the reviewed BCL model the caught type is unresolved and the run is
+; incomplete rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.catch-nullreferenceexception"
+  :name "C# catch of NullReferenceException"
+  :message "catch clause handles NullReferenceException instead of preventing the null dereference"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/CatchOfNullReferenceException.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports catch clauses whose caught type resolves to System.NullReferenceException through source declarations or the reviewed BCL semantic model."
+  :tags ["csharp" "codeql" "quality" "exceptions"]
+  :analysis (analysis
+    :type assertion
+    (bind :name catch
+      :query (rql :schema-version 1
+        (filter :where ((caught_type eq "System.NullReferenceException"))
+          (failure-handler-state
+            (language csharp (catch))))))
+    (group :name by-catch :by (catch.id)
+      (aggregate :name null-reference-catches :op count))
+    (assert :group by-catch :value null-reference-catches :cardinality (exactly 0))))

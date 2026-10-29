@@ -5,7 +5,7 @@ on:
       version:
         description: Independent pack release version (raw generation evidence only until native migration)
         required: true
-        default: '0.6.1'
+        default: '0.7.0'
   # Regenerate only when generator inputs or packs release tooling change; content.yml
   # runs content verification and the unit tests on every pull request and push.
   pull_request:
@@ -148,7 +148,7 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          version=${INPUT_VERSION:-0.6.1}
+          version=${INPUT_VERSION:-0.7.0}
           if [[ "$GITHUB_REF" == refs/tags/packs/* ]]; then
             version=${GITHUB_REF_NAME#packs/v}
             test "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" = "$GITHUB_SHA"
