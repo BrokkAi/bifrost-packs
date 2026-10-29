@@ -594,7 +594,8 @@ class ScopedRecallTests(unittest.TestCase):
             proc = subprocess.run(summary, capture_output=True, text=True)
             self.assertEqual(proc.returncode, 0, proc.stderr)
             self.assertIn('SCOPED-EXACT', proc.stdout)
-            self.assertTrue(proc.stdout.rstrip().endswith('MISS'))
+            self.assertEqual(proc.stdout.rstrip().split('\t')[11], 'MISS')
+            self.assertEqual(proc.stdout.rstrip().split('\t')[-2:], ['attributable', '0'])
             result['scope_attributions'][0]['attribution'] = 'unknown'
             (Path(result['run_dir']) / 'result.json').write_text(json.dumps(result))
             proc = subprocess.run(summary, capture_output=True, text=True)
