@@ -235,6 +235,28 @@
       "required_capabilities": ["structural-match"],
       "severity_rationale": "A method with many ref parameters hides which arguments it changes, which makes calls hard to read and test.",
       "remediation": "Return a result object or tuple, or pass a wrapper object instead of several ref parameters."
+    },
+    {
+      "path": "policies/password-in-configuration.rqlp",
+      "id": "bifrost.csharp-codeql-quality.password-in-configuration",
+      "authored_hash": "70e56e48a736946fa3c1828519afaa63612512cfca0b697eab542a26c317533e",
+      "resolved_semantic_hash": "70e56e48a736946fa3c1828519afaa63612512cfca0b697eab542a26c317533e",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "configuration-facts"],
+      "severity_rationale": "Hard-coded configuration passwords can be exposed with source or deployment artifacts.",
+      "remediation": "Load secrets from a managed secret store or runtime-provided environment, and do not store plaintext passwords in configuration."
+    },
+    {
+      "path": "policies/empty-password-in-configuration.rqlp",
+      "id": "bifrost.csharp-codeql-quality.empty-password-in-configuration",
+      "authored_hash": "1907fd0a5d81b171d59ca50678fb5af9ba5e7af0ae66e1d02132b993caadb5ec",
+      "resolved_semantic_hash": "1907fd0a5d81b171d59ca50678fb5af9ba5e7af0ae66e1d02132b993caadb5ec",
+      "category": "security",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "configuration-facts"],
+      "severity_rationale": "Empty configuration passwords can disable authentication or leave accounts protected only by defaults.",
+      "remediation": "Set a non-empty, securely managed password or remove the credential entry and rely on an appropriate authentication mechanism."
     }
   ]
 }

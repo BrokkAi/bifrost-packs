@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 250 unique rule IDs from 12 manifest packs.
+This catalog lists 252 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -71,7 +71,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# use of system output stream](../rules/bifrost.csharp-codeql-quality/policies/console-output.rqlp) | `bifrost.csharp-codeql-quality.console-output` | csharp | quality | note |
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |
 | [C# empty catch block](../rules/bifrost.csharp-codeql-quality/policies/empty-catch-block.rqlp) | `bifrost.csharp-codeql-quality.empty-catch-block` | csharp | correctness | warning |
+| [C# empty password in configuration](../rules/bifrost.csharp-codeql-quality/policies/empty-password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.empty-password-in-configuration` | csharp | security | warning |
 | [C# nested loops reuse variable](../rules/bifrost.csharp-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.csharp-codeql-quality.nested-loops-with-same-variable` | csharp | correctness | warning |
+| [C# password in configuration](../rules/bifrost.csharp-codeql-quality/policies/password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.password-in-configuration` | csharp | security | warning |
 | [C# call to Path.Combine](../rules/bifrost.csharp-codeql-quality/policies/path-combine.rqlp) | `bifrost.csharp-codeql-quality.path-combine` | csharp | quality | note |
 | [C# Random object created and used only once](../rules/bifrost.csharp-codeql-quality/policies/random-used-once.rqlp) | `bifrost.csharp-codeql-quality.random-used-once` | csharp | correctness | warning |
 | [C# recursive Equals call](../rules/bifrost.csharp-codeql-quality/policies/recursive-equals-call.rqlp) | `bifrost.csharp-codeql-quality.recursive-equals-call` | csharp | correctness | warning |
