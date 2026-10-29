@@ -83,9 +83,10 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The next packaging repair prepares `packs/v0.6.1` and `rules/v0.5.2` to deliver
-the reviewed JDK 21 result-use model through normal acquisition. See the
-[release repair and verification plan](docs/result-use-native-release.md).
+The next releases, `packs/v0.7.0` and `rules/v0.7.0`, widen the Python
+performance model's CPython activation, add ten C# policies and restore the
+`requests` arm of `network-call-in-loop`. See
+[release streams](docs/release-streams.md).
 
 ## Source verification
 
