@@ -1,0 +1,10 @@
+#select
+| sample.java:10:1:10:4 | sink1 | sample.java:1:1:1:4 | source1 | sample.java:10:1:10:4 | sink1 | alert |
+| sample.java:20:1:20:4 | sink2 | sample.java:2:1:2:4 | source2 | sample.java:20:1:20:4 | sink2 | alert |
+| sample.java:20:1:20:4 | sink2 | sample.java:3:1:3:4 | source3 | sample.java:20:1:20:4 | sink2 | alert |
+edges
+| sample.java:1:1:1:4 | source1 | sample.java:10:1:10:4 | sink1 | provenance | Sink:MaD:1 |
+| sample.java:2:1:2:4 | source2 | sample.java:20:1:20:4 | sink2 | provenance | Sink:MaD:1 |
+| sample.java:3:1:3:4 | source3 | sample.java:20:1:20:4 | sink2 | provenance | Sink:MaD:1 |
+models
+| 1 | Sink: org.example; FrameworkEndpoint; true; call; (String); ; Argument[0]; example; manual |

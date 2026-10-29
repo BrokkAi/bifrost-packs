@@ -24,6 +24,10 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   from `github/codeql` at
   `ae741615f3e178ce61289a651790dc67fcc18e19`; see
   `licenses/CodeQL-MIT.txt`.
+- CodeQL QL-class caches under `scripts/upstream/codeql_gate/ql_classes/` are
+  MIT, Copyright (c) GitHub, Inc.: node locations and QL class names that the
+  pinned CodeQL CLI computed over `github/codeql` query tests at
+  `ae741615f3e178ce61289a651790dc67fcc18e19`; see `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded
