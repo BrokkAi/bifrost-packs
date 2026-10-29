@@ -1,0 +1,15 @@
+[
+  "Sink: java.lang; ProcessBuilder; false; ProcessBuilder; (List); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; ProcessBuilder; false; ProcessBuilder; (String[]); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; ProcessBuilder; false; command; (List); ; Argument[0]; command-injection; manual",
+  "Sink: java.lang; ProcessBuilder; false; command; (String[]); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; ProcessBuilder; false; directory; (File); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String,String[]); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String,String[],File); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String,String[],File); ; Argument[2]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String[]); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String[],String[]); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String[],String[],File); ; Argument[0]; command-injection; ai-manual",
+  "Sink: java.lang; Runtime; true; exec; (String[],String[],File); ; Argument[2]; command-injection; ai-manual"
+]

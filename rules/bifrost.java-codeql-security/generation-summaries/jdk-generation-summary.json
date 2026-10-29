@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "codeql_repository": "https://github.com/github/codeql",
+    "codeql_commit": "ae741615f3e178ce61289a651790dc67fcc18e19",
+    "codeql_input": "java/ql/lib/ext",
+    "engine_repository": "https://github.com/BrokkAi/bifrost",
+    "engine_commit": "2eda68dc23",
+    "catalog_prefix": "jdk",
+    "catalog_version": 1,
+    "inputs": {
+      "jdk": {
+        "distribution": "Eclipse Temurin",
+        "runtime_version": "21+35-LTS",
+        "module_image_sha256": "1465b683efd50adb60af815a8554129f8bd1b03807444cc491a5d2800d6f2091"
+      }
+    }
+  },
+  "catalog_version": 1,
+  "catalogs": {
+    "codeql-jdk-barriers-regex-use": {
+      "entries": 1,
+      "semantic_hash": "f35b0f92b70366093215fa1bf8a1bb79312b25a9c9bbb2ad36594c2fa139afad"
+    },
+    "codeql-jdk-sinks-command-injection": {
+      "entries": 13,
+      "semantic_hash": "9e8f1af647907c78c6e4d3965df0ef7ba03b7667708c8dd36eadd79c1d031a16"
+    },
+    "codeql-jdk-sinks-credentials-key": {
+      "entries": 31,
+      "semantic_hash": "61c275f31446a4477f17e13ccb0654bf1b2657872e57fe75e73a953a0f7b8748"
+    },
+    "codeql-jdk-sinks-credentials-password": {
+      "entries": 24,
+      "semantic_hash": "7ac51d4f8b35b72aedb9269903f8d54fa34a04edbbac774086f3581d0e5865b9"
+    },
+    "codeql-jdk-sinks-credentials-username": {
+      "entries": 9,
+      "semantic_hash": "98f09ba1e9db9bf0b6aee00dda67c3881e89e3079cd740cf69b94b5b83412ad4"
+    },
+    "codeql-jdk-sinks-encryption-iv": {
+      "entries": 2,
+      "semantic_hash": "ad74491d896cdbd104eb01041210ee914837c384c45599374865d91e1a426e40"
+    },
+    "codeql-jdk-sinks-encryption-salt": {
+      "entries": 4,
+      "semantic_hash": "c3550707372bc683c1d5f6d485898316e937f7295b8647fb9324d717de387ccb"
+    },
+    "codeql-jdk-sinks-environment-injection": {
+      "entries": 4,
+      "semantic_hash": "6dcf0920e572134b9eaef4d8d8fbc412c99ec88670255587175cc839cdfc523a"
+    },
+    "codeql-jdk-sinks-file-content-store": {
+      "entries": 122,
+      "semantic_hash": "60e5ac54ee1a19898718aa504e3b98a2ba7c8f753e108e0e11bf73c5b42ac3ee"
+    },
+    "codeql-jdk-sinks-hostname-verification": {
+      "entries": 2,
+      "semantic_hash": "9b555d7920ebfcd8f2b5eca392dbf86ae7ecc30cd145db59577cdf1849bb26c3"
+    },
+    "codeql-jdk-sinks-jndi-injection": {
+      "entries": 28,
+      "semantic_hash": "6e759bdaf624118ec6ddb87d626475c0d487480a5a6aa00b6cc240990cabf0ba"
+    },
+    "codeql-jdk-sinks-ldap-injection": {
+      "entries": 32,
+      "semantic_hash": "a94b2287004522da284713cb907f662ede17f3e4e7ee9bb24de6a0cc6638eb40"
+    },
+    "codeql-jdk-sinks-log-injection": {
+      "entries": 89,
+      "semantic_hash": "733bf7c7e2580f4a25b11cb92633b911d1ca61b4132d45ca74d0254d3baa41e4"
+    },
+    "codeql-jdk-sinks-mvel-injection": {
+      "entries": 3,
+      "semantic_hash": "5cd288ce4a2bcd41684e152d2f86958e7d9eefbffd4a9a2fd122b111e9290265"
+    },
+    "codeql-jdk-sinks-path-injection": {
+      "entries": 78,
+      "semantic_hash": "f0b29ebaf48bac1482d35a413adae151d1f07660252eb9de8568643d06dc6475"
+    },
+    "codeql-jdk-sinks-path-injection-read": {
+      "entries": 41,
+      "semantic_hash": "1e8a04b490add488c3edee81caee49e0db6213bb8a9c197f19f259678b3a5b05"
+    },
+    "codeql-jdk-sinks-request-forgery": {
+      "entries": 28,
+      "semantic_hash": "6591173233542fc76b9fc2030e93a189936a3cb032eb340f354f1b862d6667ec"
+    },
+    "codeql-jdk-sinks-sql-injection": {
+      "entries": 25,
+      "semantic_hash": "3fb144522ac553e03071b83b306794d3a19bf8fa6288f29b1e5423ff54f61faf"
+    },
+    "codeql-jdk-sinks-unsafe-deserialization": {
+      "entries": 1,
+      "semantic_hash": "afb216d55bb568f5557dbf26f58cb22ce5ba60006bc892af2e86845fb200d3f9"
+    },
+    "codeql-jdk-sinks-url-redirection": {
+      "entries": 1,
+      "semantic_hash": "1f0411ce5fa79fd5f67914134a33cc8b4892077202312242250a9c075673c10d"
+    },
+    "codeql-jdk-sinks-xpath-injection": {
+      "entries": 9,
+      "semantic_hash": "cf3cc3ffeef074020c5061a80fa76fed0b782c534c0b66188216b9730b1d6221"
+    },
+    "codeql-jdk-sinks-xslt-injection": {
+      "entries": 1,
+      "semantic_hash": "e53375fb1d77850bd1ebd2bd77e4e8af69e2c48261da281972046c92a5feace9"
+    },
+    "codeql-jdk-sources-database": {
+      "entries": 2,
+      "semantic_hash": "f3f308b61599ed1043d6b3c83136904b4d1f23989b1ff1b798c989247afc0a8c"
+    },
+    "codeql-jdk-sources-environment": {
+      "entries": 10,
+      "semantic_hash": "1987c3741f4bdf6f8b607a42269383298b748dad03a7118446471b616f6f8cc7"
+    },
+    "codeql-jdk-sources-remote": {
+      "entries": 2,
+      "semantic_hash": "5b64c7ea4f9f6d7e9a6763c0f6f8eb7a0567937d12285900013c03848a3f32cb"
+    }
+  },
+  "codeql_commit": "ae741615f3e178ce61289a651790dc67fcc18e19",
+  "translated_rows": 307,
+  "collapsed_by_content_kind": {},
+  "conflicts": [],
+  "neutrals_by_kind": {
+    "sink": 22
+  },
+  "rows_by_extensible_and_kind": {
+    "barrierModel": {
+      "html-injection": 1,
+      "regex-use": 1,
+      "trust-boundary-violation": 14
+    },
+    "neutralModel": {
+      "sink": 22,
+      "summary": 21986
+    },
+    "sinkModel": {
+      "bean-validation": 1,
+      "command-injection": 24,
+      "credentials-key": 75,
+      "credentials-password": 101,
+      "credentials-username": 80,
+      "encryption-iv": 2,
+      "encryption-salt": 2,
+      "environment-injection": 8,
+      "file-content-store": 35,
+      "fragment-injection": 33,
+      "groovy-injection": 33,
+      "hostname-verification": 3,
+      "html-injection": 15,
+      "information-leak": 1,
+      "intent-redirection": 23,
+      "jexl-injection": 30,
+      "jndi-injection": 43,
+      "js-injection": 1,
+      "ldap-injection": 33,
+      "log-injection": 851,
+      "mvel-injection": 17,
+      "notification": 83,
+      "ognl-injection": 79,
+      "path-injection": 373,
+      "path-injection[read]": 88,
+      "pending-intents": 25,
+      "regex-use": 6,
+      "regex-use[-1]": 4,
+      "regex-use[0]": 8,
+      "regex-use[]": 3,
+      "regex-use[f-1]": 1,
+      "regex-use[f1]": 1,
+      "regex-use[f]": 2,
+      "request-forgery": 446,
+      "response-splitting": 6,
+      "sql-injection": 151,
+      "template-injection": 22,
+      "trust-boundary-violation": 6,
+      "unsafe-deserialization": 21,
+      "url-forward": 10,
+      "url-redirection": 15,
+      "xpath-injection": 28,
+      "xslt-injection": 9,
+      "xxe": 3
+    },
+    "sourceModel": {
+      "android-external-storage-dir": 6,
+      "commandargs": 1,
+      "contentprovider": 32,
+      "database": 1,
+      "environment": 8,
+      "file": 46,
+      "remote": 328
+    }
+  },
+  "rows_by_provenance": {
+    "ai-generated": 108,
+    "ai-manual": 220,
+    "df-generated": 21268,
+    "df-manual": 227,
+    "hq-generated": 162,
+    "hq-manual": 253,
+    "manual": 3024
+  },
+  "skipped_by_reason": {
+    "extensible_out_of_scope": 29095,
+    "guard_sanitizer_requires_conditional_guard_support": 15,
+    "kind_argument_qualifier_unsupported": 19,
+    "neutral_not_sink_or_source": 21986,
+    "source_argument_requires_heap_write_support": 1,
+    "source_parameter_requires_override_binding_support": 1,
+    "unmatched_declaration": 2912
+  },
+  "skipped_targets_by_reason": {
+    "argument_index_out_of_bounds": 6
+  },
+  "source_kinds_without_threat_model": []
+}

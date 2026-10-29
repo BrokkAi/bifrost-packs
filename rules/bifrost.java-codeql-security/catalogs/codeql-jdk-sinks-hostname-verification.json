@@ -1,0 +1,116 @@
+{
+  "categories": [
+    "hostname-verification"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-hostname-verification",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "hostname-verification"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.net.ssl.HttpsURLConnection.setHostnameVerifier(javax.net.ssl.HostnameVerifier)",
+      "id": "codeql-cd329404dd3abe174aa4b6cfac90ba77ccf0b85598891de9709033be7aaff6b8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "setHostnameVerifier"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.616cc5ed625d8ba40d7a6b221e742f26af09981d82b5d32ce2bbd721dc809d32"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "hostname-verification"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(javax.net.ssl.HostnameVerifier)",
+      "id": "codeql-e2751b7a00b017d83e3baf982f3184b72d1f49fcb516628e12a126faab736137",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "setDefaultHostnameVerifier"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c716310c0f37da73017767f4b221604b862301066c064780197f80fc74457f78"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}
