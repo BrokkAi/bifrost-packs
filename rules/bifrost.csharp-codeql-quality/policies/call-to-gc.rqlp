@@ -1,17 +1,14 @@
-; CodeQL query: API Abuse/CallToGCCollect.ql
-; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
-; Engine contract: report calls that bind exactly to the parameterless
-; System.GC.Collect() overload in the reviewed BCL model. Overloads taking a
-; generation, and same-named methods on other types, are near misses. Without
-; the model, the calls stay unresolved and the run is incomplete rather than
-; clean.
+; CodeQL query: API Abuse/CallToGCCollect.ql at ae741615f3
+; Resolve the System.GC.Collect family independently of pack provenance.
+; Exact exhaustive zero-argument binding selects the parameterless overload.
+; A missing declaration makes the qualified locator unavailable.
 (policy
   :schema-version 1
   :id "bifrost.csharp-codeql-quality.call-to-gc"
   :name "C# call to GC.Collect()"
   :message "call to GC.Collect() forces a full blocking garbage collection"
   :severity warning
-  :description "Mirrors CodeQL csharp/ql/src/API Abuse/CallToGCCollect.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls that bind to the parameterless System.GC.Collect() overload declared by the reviewed BCL semantic model."
+  :description "Mirrors CodeQL csharp/ql/src/API Abuse/CallToGCCollect.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls that bind to the parameterless System.GC.Collect() overload resolved from the available declarations."
   :tags ["csharp" "codeql" "quality" "performance"]
   :analysis (analysis :type assertion
     (bind :name calls :query (rql :schema-version 1
@@ -19,7 +16,7 @@
         :resolves-to "System.GC.Collect"
         :proof declared
         (filter :where
-          ((model_id eq "member.dotnet.bcl-csharp.system-gc.collect"))
+          ((actual_count eq 0) (bound_count eq 0) (coverage eq exhaustive) (mapping eq exact))
           (call-bindings
             (call-shape
               (language csharp

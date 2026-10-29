@@ -5,10 +5,10 @@ Mirrors CodeQL `csharp/ql/src/API Abuse/CallToGCCollect.ql` at commit
 its CodeQL path and an MIT attribution header. The two header lines shift
 upstream line numbers by two.
 
-The engine contract reports calls that bind to the parameterless
-`System.GC.Collect()` overload declared by the reviewed BCL model in
-`.bifrost/semantic-models`. The model declares all five `GC.Collect`
-overloads, so the near miss `GC.Collect(0)` binds to its own overload.
+The engine contract reports calls that bind exactly to the zero-argument
+`System.GC.Collect()` declaration, regardless of which pack supplies it. The
+fixture BCL model declares all five `GC.Collect` overloads, so the near miss
+`GC.Collect(0)` binds to its own overload.
 `Local.cs` declares a same-named `Local.GC.Collect()` and an instance
 `Collect()` method; calls to them are near misses.
 
@@ -26,8 +26,8 @@ row `CallToGCCollectBad.cs:9` (upstream line 7). There are no other findings.
 
 ## Known limits
 
-- Without the model, the qualified locator does not resolve and the policy is
-  `not_run` rather than clean.
+- Without any declaration of `System.GC`, the run is inconclusive rather than
+  clean.
 - A namespace-qualified call, `System.GC.Collect()`, is reported, but the
   engine cannot prove its call selector, so the run is inconclusive
   (`partial_discovery`). The probe therefore keeps only the unqualified form.
