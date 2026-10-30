@@ -186,7 +186,8 @@ with the `bifrost.dotnet.system-xml-csharp` model. The XmlReaderSettings and
 XmlTextReader contract is blocked by the engine: C# has no object identity
 between a settings or reader object, its property writes and
 `XmlReader.Create`, and the overloaded `Create` call does not bind through the
-model. See the [.NET attempt](prototypes/dotnet-xml-resolver/README.md).
+model. Engine issues: BrokkAi/bifrost-dev#8302, #8296, #8303, #8300 and #8304.
+See the [.NET attempt](prototypes/dotnet-xml-resolver/README.md).
 
 Acceptance for the qualification issue:
 

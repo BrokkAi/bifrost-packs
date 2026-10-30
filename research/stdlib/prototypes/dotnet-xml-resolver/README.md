@@ -63,4 +63,19 @@ With 1 and 2, the `XmlReaderSettings` part could report
 that reaches `Create`. The `XmlTextReader` part also needs 1, so that a later
 `DtdProcessing.Prohibit` on the same reader is a near miss.
 
-These gaps are recorded here. No engine issue was filed from this attempt.
+Engine issues (BrokkAi/bifrost-dev):
+
+- [#8302](https://github.com/BrokkAi/bifrost-dev/issues/8302): C# object
+  identity (`binding-of`, points-to, property reaching). Unblocks item 1.
+- [#8296](https://github.com/BrokkAi/bifrost-dev/issues/8296): overloads that
+  differ only by parameter type, including `XmlReader.Create`. Unblocks item 2.
+- [#8303](https://github.com/BrokkAi/bifrost-dev/issues/8303): `resolved-value`
+  on `var`, field, inherited and object-initializer targets. Unblocks item 3
+  and the rule's incomplete cases.
+- [#8300](https://github.com/BrokkAi/bifrost-dev/issues/8300): a selector that
+  rejects every candidate (the same-named source type) makes the run
+  inconclusive.
+- [#8304](https://github.com/BrokkAi/bifrost-dev/issues/8304): `member-targets`
+  and `field-write-value` do not resolve model-declared members.
+
+Item 4 is pack content, not an engine gap.
