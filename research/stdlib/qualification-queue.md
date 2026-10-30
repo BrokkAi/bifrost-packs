@@ -18,7 +18,7 @@ Start with Node authenticated plaintext, JDK CipherInputStream, stdlib TLS state
 | 8 | Qualify Rust child-process reaping | [rust-child-reaping](candidates.md#rust-child-reaping) |
 | 9 | Qualify Python queue completion accounting | [python-queue-task-accounting](candidates.md#python-queue-task-accounting) |
 | 10 | Qualify Python server shutdown thread relation | [python-socketserver-shutdown-thread-state](candidates.md#python-socketserver-shutdown-thread-state) |
-| 11 | Qualify explicit runtime code-loading trust boundaries | [python-dynamic-import-untrusted-name](candidates.md#python-dynamic-import-untrusted-name), [rust-explicit-shell-command](candidates.md#rust-explicit-shell-command), [dotnet-processstartinfo-executable-and-shell-boundary](candidates.md#dotnet-processstartinfo-executable-and-shell-boundary) |
+| 11 | Qualify explicit runtime code-loading trust boundaries | [python-dynamic-import-untrusted-name](candidates.md#python-dynamic-import-untrusted-name), [rust-explicit-shell-command](candidates.md#rust-explicit-shell-command), [dotnet-processstartinfo-executable-and-shell-boundary](candidates.md#dotnet-processstartinfo-executable-and-shell-boundary) (.NET part: incomplete, blocked by engine; [prototype](prototypes/dotnet-processstartinfo/README.md)) |
 | 12 | Qualify Python logging configuration listener verification | [python-logging-config-listener-verification](candidates.md#python-logging-config-listener-verification) |
 | 13 | Qualify .NET XML resolver and DTD configuration | [dotnet-xmlreader-external-dtd-resolution](candidates.md#dotnet-xmlreader-external-dtd-resolution) |
 | 14 | Qualify explicit Python XInclude resource reads | [python-xinclude-untrusted-href](candidates.md#python-xinclude-untrusted-href) |

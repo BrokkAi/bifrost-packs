@@ -443,6 +443,8 @@ Stop gate: Stop if executable resolution, UseShellExecute, argument boundaries, 
 
 Ownership: Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.
 
+Qualification (2026-10-30): **incomplete, blocked by engine** on Bifrost 0.14.2, cross-checked on 0.14.3. Only `new ProcessStartInfo(string)` binds as a sink. `Process.Start(string, ...)` and the two-argument constructors fail overload resolution, `FileName` setters and initializers cannot be sink operands, and `ArgumentList` access paths are unknown, so the near miss cannot be shown clean. No C# source crosses a trust boundary: environment and console input are caller-authorized, request sources are not selectable, and response bodies need `await`. The interpreter half also needs argument-structure, comparison and target-framework facts. See the [prototype](prototypes/dotnet-processstartinfo/README.md).
+
 Sources: [ProcessStartInfo (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo?view=net-10.0), [ProcessStartInfo.ArgumentList (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-10.0), [ProcessStartInfo.Arguments (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.arguments?view=net-10.0).
 
 ## dotnet-xmlreader-external-dtd-resolution
