@@ -1,0 +1,57 @@
+; Candidate: dotnet-xmlreader-external-dtd-resolution
+; (research/stdlib/candidates.md), narrowed to the XmlDocument part.
+; Product source contract: XmlDocument.Load and LoadXml always parse a DTD
+; (they read through an XmlTextReader with DtdProcessing.Parse) and resolve
+; external entities with the document's XmlResolver. Setting that property to
+; a new XmlUrlResolver lets every document the instance parses open file and
+; network URIs. This holds on every .NET version, because the write overrides
+; the version-specific default.
+; Engine contract: report an assignment whose target binds exactly to the
+; System.Xml.XmlDocument.XmlResolver property and whose value binds to the
+; XmlUrlResolver constructor in the reviewed System.Xml model. The model also
+; declares the XmlTextReader and XmlReaderSettings XmlResolver properties, so
+; those writes bind to their own members and are not reported. A write the
+; engine cannot bind, such as one through a `var` local, a field, an object
+; initializer or a source-declared member named XmlResolver, keeps the run
+; inconclusive rather than clean.
+; Not established: that the parsed XML is untrusted, that a load follows the
+; write, or which framework the project targets. Bifrost 0.14.2 has no C#
+; points-to, binding or property reaching facts to relate the write to a
+; later load, and no taint source for request XML in the public packs.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.xmldocument-url-resolver"
+  :name "C# XmlDocument resolves external entities"
+  :message "XmlDocument is given an XmlUrlResolver, so documents it parses can read external file and network entities"
+  :severity warning
+  :description "Reports assignments of a new XmlUrlResolver to XmlDocument.XmlResolver that bind to the reviewed System.Xml model. XmlDocument always processes DTDs, so the resolver lets external entities in any document the instance parses read local files or make network requests (XXE). Assigning null, keeping the default, or setting the XmlResolver of XmlReaderSettings or XmlTextReader is not reported. The policy does not establish that the parsed XML is untrusted or that the instance parses XML after the assignment."
+  :tags ["security" "csharp" "xml" "xxe" "cwe-611"]
+  :analysis (analysis :type assertion
+    (bind :name writes :query (rql :schema-version 1
+      (language csharp (assignment))))
+    (bind :name targets :query (rql :schema-version 1
+      (resolved-value
+        :resolves-to "System.Xml.XmlDocument.XmlResolver"
+        :proof exact
+        (language csharp
+          (union
+            (field_access :field (name "XmlResolver"))
+            (inside (assignment) (identifier (name "XmlResolver"))))))))
+    (bind :name resolvers :query (rql :schema-version 1
+      (resolved-call
+        :resolves-to "System.Xml.XmlUrlResolver.XmlUrlResolver"
+        :proof declared
+        (filter :where
+          ((model_id eq "member.dotnet.system-xml-csharp.system-xml-xmlurlresolver.constructor"))
+          (call-bindings
+            (call-shape
+              (language csharp
+                (call :callee (name "XmlUrlResolver") (arity 0)))))))))
+    (join :left writes :right targets :on ((left_ast_id ast_id)))
+    (join :left writes :right resolvers :on ((right_ast_id site_ast_id)))
+    (group :name by-write :by (writes.id)
+      (aggregate :name url-resolver-writes :op count))
+    (assert :group by-write :value url-resolver-writes :cardinality (exactly 0)))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "611")))

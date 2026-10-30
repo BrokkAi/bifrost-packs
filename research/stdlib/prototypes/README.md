@@ -22,6 +22,7 @@ it does not qualify other consumer versions or models.
 | Python pickle provenance | Untrusted bytes reaching Python pickle reconstruction | Incomplete: exact imported API identity and formal binding; trust and integrity remain unproved | [Python pickle attempt](python-pickle-provenance/README.md) |
 | Node authenticated decryption | Provisional plaintext reaches a reviewed effect before successful finalization of the same decipher | Incomplete: external API identity/binding; runtime witness passes | [Node attempt](node-aead/README.md) |
 | Ruby Net::HTTP | Verification is disabled when the same client starts TLS and sends a request | Incomplete: external receiver identity and Ruby state axes; required runtime unavailable | [Ruby attempt](ruby-net-http/README.md) |
+| .NET XML resolver (Bifrost 0.14.2) | Untrusted XML reaches a reader whose settings parse DTDs with an external-capable resolver | XmlDocument slice implemented as `bifrost.security.csharp.xmldocument-url-resolver`; XmlReaderSettings and XmlTextReader blocked: no C# object identity, `XmlReader.Create` overload binding or initializer binding | [.NET attempt](dotnet-xml-resolver/README.md) |
 
 These probes test feasibility before a production query is authored. Discovery
 queries deliberately include application lookalikes. The Node discovery RQLP is
