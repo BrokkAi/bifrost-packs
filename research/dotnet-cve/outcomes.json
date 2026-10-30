@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-10-30",
+  "bifrost": {
+    "version": "0.14.2",
+    "build_identity": "073c23790739e33f33abc98338651689eaf8b7c0",
+    "binary_sha256": "8c9dac674382c767821b15c294493a1aa68884e3dbde18268756680c414f7789",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental"
+    ]
+  },
+  "probe_model": {
+    "path": ".bifrost/semantic-models/bifrost.research.dotnet-cve-probe.json",
+    "pack_id": "bifrost.research.dotnet-cve-probe",
+    "sha256": "119b869bed88f5a9fbff1fb728fd314a9685d3792622ddeb59f8930ee8e5a52e",
+    "status": "research_only_not_reviewed",
+    "enable_control": {
+      "path": ".bifrost/packs.json",
+      "sha256": "5f30631214746e1545247332ac070a0b37780802aecdbf6af895307bb4c92a8a"
+    }
+  },
+  "shared_blocker": {
+    "query": {
+      "path": "queries/nuget-dependency-evidence.rql",
+      "sha256": "513f46af22c422d2a9ca65bc95e8aa4bf6ed0e423aec36117c1050994faa5ad1"
+    },
+    "observed": "No rows; diagnostic semantic_analysis_partial: CSharp selected dependency publication unavailable: static dependency evidence is unavailable for this analyzer.",
+    "also": "correlate dependency-configuration accepts only npm and cargo; ordinary RQL sets never join code rows with dependency rows."
+  },
+  "leads": [
+    {
+      "issue": 156,
+      "advisory": "CVE-2024-43483",
+      "outcome": "blocked_by_engine",
+      "blockers": [
+        "C# static dependency evidence is unavailable on Bifrost 0.14.2, so the fixed-version near miss cannot be excluded and the unknown-version case cannot be typed.",
+        "Extension-method calls on IMemoryCache (GetOrCreate, Set) do not resolve: unsupported_csharp_receiver.",
+        "C# action parameters ([FromQuery], [FromHeader]) are not a supported structural kind, so no request-key source is selectable."
+      ],
+      "probes": [
+        {
+          "path": ".bifrost/policies/156-memorycache-get-or-create.rqlp",
+          "sha256": "10b33b891f6781db0e64877959f1feb2085339404598a3afbe8f24476d98b107",
+          "policy_hash": "5b67f3e1ac6b14dd47f7f737d3b924671a5e14fe7a205655050733e939246e26",
+          "sources": "156-memorycache",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "not_reported": [
+            "positive",
+            "near-miss-fixed-version",
+            "near-miss-server-key",
+            "unknown-extension-dispatch"
+          ],
+          "diagnostics": [
+            "call_bindings retained an incomplete callee lookup: receiver for C# member GetOrCreate is not resolved"
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 157,
+      "advisory": "CVE-2024-43484",
+      "outcome": "blocked_by_engine",
+      "blockers": [
+        "C# static dependency evidence is unavailable on Bifrost 0.14.2, so the fixed-version near miss cannot be excluded and the unknown-version case cannot be typed.",
+        "The IFormFile.OpenReadStream source is an interface dispatch with no complete executable target, so flows stay possible and partial.",
+        "Overload choice between Package.Open(Stream) and Open(String), or with an undeclared argument type, fails model signature conversion.",
+        "No transitive dependency facts for a System.IO.Packaging copy brought in by the OpenXML SDK."
+      ],
+      "probes": [
+        {
+          "path": ".bifrost/policies/157-package-open.rqlp",
+          "sha256": "a27e90fadd396ac2667744f9fa6bd8ca1569fcdbca3464dfaa72e3b5c4ad70c0",
+          "policy_hash": "17f3c351d4c2a28c26ef8df411fbbaff8d858f1b124fbe30c3412e38970b39a7",
+          "sources": "157-package-open",
+          "completion": "inconclusive (partial_discovery, capability_incomplete)",
+          "reported": [
+            "positive (possible, partial)",
+            "near-miss-fixed-version (possible, partial)"
+          ],
+          "not_reported": [
+            "near-miss-self-created (sink selector incomplete, not clean)",
+            "unknown-transitive-openxml (SDK not modeled)"
+          ],
+          "diagnostics": [
+            "procedure semantics unsupported (resource_management)",
+            "sink selector discovery incomplete: call_bindings did not establish complete actual-to-formal coverage"
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 158,
+      "advisory": "CVE-2024-30105",
+      "outcome": "blocked_by_engine",
+      "blockers": [
+        "C# static dependency evidence is unavailable on Bifrost 0.14.2, so the fixed-version near miss cannot be excluded and the unknown-version case cannot be typed. Package and shared-framework System.Text.Json copies cannot be separated.",
+        "HttpRequest.Body access-path resolution stays unknown, so flows stay possible and partial.",
+        "A same-named source member elsewhere in the workspace (Envelope<T>.Body) stops HttpRequest.Body from resolving at all."
+      ],
+      "probes": [
+        {
+          "path": ".bifrost/policies/158-deserialize-async-enumerable.rqlp",
+          "sha256": "3aec01a4eecb8d7c8bed21ef546ebccbf706d23ce6c412716f5939df8843c3e4",
+          "policy_hash": "fda235d6989198014afbf7510e4c58a63414f4fdd8a933a28f2a4a712e6cfdba",
+          "sources": "158-deserialize-async-enumerable",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "positive (possible, partial)",
+            "near-miss-fixed-version (possible, partial)",
+            "unknown-shared-framework (possible, partial)"
+          ],
+          "not_reported": [
+            "near-miss-other-api",
+            "near-miss-local-file"
+          ],
+          "diagnostics": [
+            "access-path resolution unknown"
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 159,
+      "advisory": "CVE-2024-43485",
+      "outcome": "blocked_by_engine",
+      "blockers": [
+        "C# static dependency evidence is unavailable on Bifrost 0.14.2, so the fixed-version near miss cannot be excluded and the unknown-version case cannot be typed.",
+        "C# attribute facts are name-only: the Newtonsoft JsonExtensionDataAttribute matches like the System.Text.Json one.",
+        "No reachability over the type graph of a deserialized type, including closed generics.",
+        "No implicit MVC [FromBody] binding source: the C# parameter kind is unsupported."
+      ],
+      "queries": [
+        {
+          "path": "queries/json-extension-data-attributes.rql",
+          "sha256": "73fc71b215c0d47e90a13bc9b36ac00101c34216653b413e38e443cf3a9dd297",
+          "observed": "Matches positive, near-miss-fixed-version, unknown-generic-graph and near-miss-newtonsoft-attribute; not near-miss-no-attribute."
+        },
+        {
+          "path": "queries/from-body-parameters.rql",
+          "sha256": "919ccab4e1562b29a2201c88644c41012cb1a2cfad25bc44da99e2e4932cfbce",
+          "observed": "No rows; unsupported_structural_feature: structural adapter for csharp does not support kind(s): parameter."
+        }
+      ]
+    },
+    {
+      "issue": 160,
+      "advisory": "CVE-2024-43499",
+      "outcome": "blocked_by_engine",
+      "blockers": [
+        "C# static dependency evidence is unavailable on Bifrost 0.14.2, so the fixed-version near miss cannot be excluded and the unknown-version case cannot be typed.",
+        "The IFormFile.OpenReadStream source is an interface dispatch with no complete executable target, so flows stay possible and partial."
+      ],
+      "probes": [
+        {
+          "path": ".bifrost/policies/160-nrbf-decode.rqlp",
+          "sha256": "5eea62b0fc04365d81725cbbdfd6d3a4d8089e21eea8576c4eb1b1a6193a65d0",
+          "policy_hash": "1b3eca42636e52f2e071a4541c5882d2dd6356b2dbf54744b34a3eb584502cfe",
+          "sources": "160-nrbf",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "positive (possible, partial)",
+            "near-miss-fixed-version (possible, partial)",
+            "unknown-version (possible, partial)"
+          ],
+          "not_reported": [
+            "near-miss-trusted-bytes",
+            "near-miss-header-check"
+          ],
+          "diagnostics": [
+            "call resolution unknown for IFormFile.OpenReadStream: neither a completely resolved executable target nor an applicable complete external model"
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 161,
+      "advisory": "CVE-2023-36049",
+      "outcome": "blocked_by_engine",
+      "blockers": [
+        "C# static dependency evidence is unavailable on Bifrost 0.14.2, so the fixed-version near miss cannot be excluded and the unknown-version case cannot be typed.",
+        "Overload choice between WebRequest.Create(String) and Create(Uri) fails model signature conversion, so no call binds.",
+        "C# action parameters ([FromQuery]) are not a supported structural kind, so no request-URI source is selectable.",
+        "Scheme allowlists compare Uri.Scheme; C# comparison facts are unsupported."
+      ],
+      "probes": [
+        {
+          "path": ".bifrost/policies/161-webrequest-create.rqlp",
+          "sha256": "163a80be4640b1d834bea4a6589bb091b364e45d85be9841791831c7cade9fbd",
+          "policy_hash": "019eb6cbc74df433d65fd2638fc79cf83ba6d3782bd890b15d0f71ba3ad8f20d",
+          "sources": "161-webrequest-ftp",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "not_reported": [
+            "positive",
+            "near-miss-fixed-version",
+            "near-miss-constant-base",
+            "near-miss-scheme-allowlist",
+            "unknown-runtime"
+          ],
+          "diagnostics": [
+            "model signature conversion unavailable: UnsupportedConversion, UnresolvedSourceType, UnsupportedExpression"
+          ]
+        }
+      ]
+    }
+  ]
+}
