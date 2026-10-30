@@ -291,5 +291,47 @@
       }
     ],
     "locator_note": "A quoted qualified locator (\"System.Diagnostics.Process.Start\") is refused with qualified-call-locator-ambiguous when the declared family mixes the instance Start() with static overloads, even under a model_id filter. An all-static family is accepted, as are instance-only families such as SignedXml.CheckSignature; a scratch SignedXml copy with one overload made static was refused the same way. The probes therefore name members by model id."
-  }
+  },
+  "upstream_blockers": [
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8296,
+      "gate": "same-arity overloads and mixed static/instance families fail binding"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8299,
+      "gate": "explicitly typed locals and member-chain call access paths"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8300,
+      "gate": "resolved-value rejecting every candidate makes the run inconclusive"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8295,
+      "gate": "NuGet and target-framework evidence"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8305,
+      "gate": "instance property writes and initializers as sinks"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8306,
+      "gate": "taint through await and Task<T>.Result"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8307,
+      "gate": "request-input sources"
+    },
+    {
+      "repository": "BrokkAi/bifrost-dev",
+      "issue": 8308,
+      "gate": "binary-expression, comparison and program-point facts"
+    }
+  ]
 }

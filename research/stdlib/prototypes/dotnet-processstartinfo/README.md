@@ -83,6 +83,19 @@ overloads, so the probes name members by model id.
 4. **The near miss cannot be proven clean.** Any `ArgumentList` use leaves the
    run incomplete.
 
+## Upstream blockers
+
+| Gate | Issue |
+| --- | --- |
+| Same-arity overloads and mixed static/instance families fail binding | [bifrost-dev#8296](https://github.com/BrokkAi/bifrost-dev/issues/8296) |
+| Explicitly typed locals and `info.ArgumentList.Add(...)` access paths | [bifrost-dev#8299](https://github.com/BrokkAi/bifrost-dev/issues/8299) |
+| `resolved-value` that rejects every candidate makes the run inconclusive | [bifrost-dev#8300](https://github.com/BrokkAi/bifrost-dev/issues/8300) |
+| No NuGet or target-framework evidence (the `UseShellExecute` default) | [bifrost-dev#8295](https://github.com/BrokkAi/bifrost-dev/issues/8295) |
+| Instance property writes and initializers are not sinks | [bifrost-dev#8305](https://github.com/BrokkAi/bifrost-dev/issues/8305) |
+| Taint stops at `await` and `.Result` | [bifrost-dev#8306](https://github.com/BrokkAi/bifrost-dev/issues/8306) |
+| No request-input source (action parameters, `HttpRequest` reads) | [bifrost-dev#8307](https://github.com/BrokkAi/bifrost-dev/issues/8307) |
+| No binary-expression, comparison or program-point facts | [bifrost-dev#8308](https://github.com/BrokkAi/bifrost-dev/issues/8308) |
+
 ## Promotion criteria
 
 Requalify when the engine (a) resolves same-arity overloads with different
