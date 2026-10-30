@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 253 unique rule IDs from 12 manifest packs.
+This catalog lists 254 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -217,6 +217,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
 | [C# XML signature checked with the document's embedded key](../rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp) | `bifrost.security.csharp.signedxml-embedded-key-trust` | csharp | security | warning |
 | [C# XML injection](../rules/bifrost.security/policies/csharp/xml-injection.rqlp) | `bifrost.security.csharp.xml-injection` | csharp | security | error |
+| [C# XmlDocument resolves external entities](../rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp) | `bifrost.security.csharp.xmldocument-url-resolver` | csharp | security | warning |
 | [C# XPath injection](../rules/bifrost.security/policies/csharp/xpath-injection.rqlp) | `bifrost.security.csharp.xpath-injection` | csharp | security | error |
 | [Stored request value requires the configured validator (C)](../rules/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp) | `bifrost.security.c.store-requires-validation` | c | security | warning |
 | [Stored request value reaches SQL (C)](../rules/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp) | `bifrost.security.c.stored-request-to-sql` | c | security | error |
