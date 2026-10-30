@@ -10,10 +10,13 @@
   :tags ["csharp" "codeql" "quality"]
   :analysis (analysis
     :type assertion
+    (bind :name owner
+      :query (rql :schema-version 1 (language csharp (if))))
     (bind :name branch
       :query (rql :schema-version 1
         (branch-relations :relation [empty-arm]
           (language csharp (if)))))
-    (group :name by-branch :by (branch.id)
+    (join :left owner :right branch :on ((ast_id owner_id)))
+    (group :name by-branch :by (owner.id)
       (aggregate :name violations :op count))
     (assert :group by-branch :value violations :cardinality (exactly 0))))

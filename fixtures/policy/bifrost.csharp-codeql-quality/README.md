@@ -9,8 +9,9 @@ by the policy's CodeQL query path and pinned commit
 The fixtures require the C# structural facts introduced by the unreleased
 Bifrost engine work for epic #4379. The StringBuilder case also activates the
 reviewed public BCL model in `semantic-packs/dotnet`; the catch-all case uses
-its modeled exception hierarchy as well. The call-to-gc and path-combine cases
-bind calls to its `System.GC.Collect` and `System.IO.Path.Combine` overloads,
+its modeled exception hierarchy as well. The call-to-gc case resolves
+`System.GC.Collect` from whichever declarations are available, the
+path-combine case binds calls to its `System.IO.Path.Combine` overloads,
 the catch-nullreferenceexception and rethrown-exception-variable cases use
 it to resolve caught exception types, and the random-used-once case binds
 `System.Random` constructors through it. The console-output case resolves
