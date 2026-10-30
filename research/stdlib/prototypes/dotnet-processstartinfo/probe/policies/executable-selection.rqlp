@@ -1,0 +1,134 @@
+; Research probe for research/stdlib/candidates.md#dotnet-processstartinfo-executable-and-shell-boundary.
+; Not a pack rule. This is the policy the candidate would ship: a remote
+; response body selects the executable of a process start. Every fileName
+; overload is selected by exact model identity, so a call the engine cannot
+; bind keeps the run incomplete instead of clean.
+(policy
+  :schema-version 1
+  :id "research.dotnet-processstartinfo.executable-selection"
+  :name "Research: remote input selects a process executable"
+  :message "remote input selects the executable of a process start"
+  :severity note
+  :description "Research probe for dotnet-processstartinfo-executable-and-shell-boundary. Reports HttpContent.ReadAsStringAsync() data reaching the fileName operand of a ProcessStartInfo constructor or a static Process.Start overload in the research probe model."
+  :tags ["research" "csharp" "process" "cwe-78"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id http-content-string
+              :display-name "HttpContent.ReadAsStringAsync() response body"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-net-http-httpcontent.read-as-string-async :proof declared
+                      (call-bindings (call-shape (call :callee (name "ReadAsStringAsync") :arity 0))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id start-info-file-name
+              :display-name "new ProcessStartInfo(fileName)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name :proof declared
+                        (call-bindings (call-shape (call :callee (name "ProcessStartInfo") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-info-file-name-arguments
+              :display-name "new ProcessStartInfo(fileName, arguments)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name-arguments :proof declared
+                        (call-bindings (call-shape (call :callee (name "ProcessStartInfo") :arity 2)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-info-file-name-argument-list
+              :display-name "new ProcessStartInfo(fileName, IEnumerable<string>)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name-argument-list :proof declared
+                        (call-bindings (call-shape (call :callee (name "ProcessStartInfo") :arity 2)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-file-name
+              :display-name "Process.Start(fileName)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name :proof declared
+                        (call-bindings (call-shape (call :callee (name "Start") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-file-name-arguments
+              :display-name "Process.Start(fileName, arguments)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-arguments :proof declared
+                        (call-bindings (call-shape (call :callee (name "Start") :arity 2)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-file-name-argument-list
+              :display-name "Process.Start(fileName, IEnumerable<string>)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-argument-list :proof declared
+                        (call-bindings (call-shape (call :callee (name "Start") :arity 2)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-file-name-credentials
+              :display-name "Process.Start(fileName, userName, password, domain)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-credentials :proof declared
+                        (call-bindings (call-shape (call :callee (name "Start") :arity 4)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id start-file-name-arguments-credentials
+              :display-name "Process.Start(fileName, arguments, userName, password, domain)"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-arguments-credentials :proof declared
+                        (call-bindings (call-shape (call :callee (name "Start") :arity 5)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "78")))

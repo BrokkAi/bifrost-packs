@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "candidate_id": "dotnet-processstartinfo-executable-and-shell-boundary",
+  "status": "incomplete",
+  "qualification_status": "unqualified",
+  "outcome": "blocked_by_engine",
+  "evaluation_date": "2026-10-30",
+  "engine": {
+    "version": "0.14.2",
+    "build_identity": "073c23790739e33f33abc98338651689eaf8b7c0",
+    "binary_sha256": "8c9dac674382c767821b15c294493a1aa68884e3dbde18268756680c414f7789",
+    "builtin_catalog_sha256": "f9d3b4efcf20e0ca8e8a976d6524556f114f4a4ccab3f4b0cc761f0b9248d206",
+    "platform": "macOS arm64",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental",
+      "--evaluation-date",
+      "2026-10-30",
+      "--format",
+      "json"
+    ]
+  },
+  "cross_check": {
+    "version": "0.14.3",
+    "build_identity": "a8e935c87ffae45104f08a6baec3abe4e54a4e18",
+    "binary_sha256": "9c409462781c13e7ccd41273bea0e6b5f3c33a23154d0a408fffdb8d204a86c1",
+    "platform": "macOS universal",
+    "result": "same completion, findings and diagnostics for every case and policy; only the order of diagnostic lists inside messages differs"
+  },
+  "api_source": {
+    "repository": "dotnet/runtime",
+    "ref": "release/9.0",
+    "commit": "b0984b273c3b543805fabdfb2aaf65b8c96216fd",
+    "path": "src/libraries/System.Diagnostics.Process/ref/System.Diagnostics.Process.cs"
+  },
+  "probe_model": {
+    "path": "probe/.bifrost/semantic-models/bifrost.research.dotnet-processstartinfo-probe.json",
+    "pack_id": "bifrost.research.dotnet-processstartinfo-probe",
+    "status": "research_only_not_reviewed",
+    "enable_control": "probe/.bifrost/packs.json"
+  },
+  "files_sha256": {
+    "probe/.bifrost/packs.json": "108dc58fe59d3988021dd677d56b32fb902f95a4ca21fd26dcc909adcdff78c8",
+    "probe/.bifrost/semantic-models/bifrost.research.dotnet-processstartinfo-probe.json": "f50ee171d626ed7f8179d753d7c3dc2fd93924b3e6a374593a379ef86c1f585f",
+    "probe/argument-list/Converter.cs": "93390ec79c78d3f429148c6880c9de441e01a8db000a0da5ecc9f9e38217ad4b",
+    "probe/ctor-arguments/Launcher.cs": "9088d92fa23fd2f68e5248dda6d3098a08f9058ee115406d44a092cddac35eb9",
+    "probe/ctor-file-name/ToolLauncher.cs": "3fa37040066e05bfb9023758f00af5f15b19ab60a0a76fde0f24cc6a6a204cbb",
+    "probe/policies/binding-witness.rqlp": "bda7a1b0dfe2db52eb43b969ec7fe286eab7d06ebb6c6881c26e3005f8e9ee51",
+    "probe/policies/executable-selection.rqlp": "c7fd30fe732c83a44df82959944c49645a2b69d8cdb666d533f4e13baf677c45",
+    "probe/policies/file-name-write.rqlp": "b6af74190e5109f426a4f40c9d8d945743f319c51ae41e30805e878a53395e7b",
+    "probe/property-writes/Launcher.cs": "68c56a37673217bddd1b2f99b1fffac03c7ef09811082fa3718abe41447adf3d",
+    "probe/remote-source/Updater.cs": "370551f65519244aebdd3ba1dc121ef658ef05d0a75e9f60a7c785c68e2a0170",
+    "probe/shell-interpreter/Shell.cs": "4134081bb1536cdfe2e644771367cc6e239c8feb540dceb739cc726904a94b77",
+    "probe/start-overloads/Launcher.cs": "a51fde661c128d2a2394d691ec496ae9b556eee5d7263057216e255a04f50cdd",
+    "probe/typed-local/TypedLocal.cs": "0e74cfa7b7370c5a60e24f68e6822ccb4012820a4a61445f0ad2331e359e7aa3"
+  },
+  "observations": [
+    {
+      "case": "ctor-file-name",
+      "role": "binding witness: caller-controlled input reaches ProcessStartInfo(String); literal, const field and same-named local type are near misses",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "proven_by_summary"
+      },
+      "findings": [
+        "ctor-file-name/ToolLauncher.cs:14",
+        "ctor-file-name/ToolLauncher.cs:20",
+        "ctor-file-name/ToolLauncher.cs:30"
+      ],
+      "diagnostics": []
+    },
+    {
+      "case": "typed-local",
+      "role": "the ctor-file-name flow through an explicitly typed `string` local",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "scope": {
+          "type": "files",
+          "files": [
+            "typed-local/TypedLocal.cs"
+          ],
+          "truncated": false
+        }
+      },
+      "findings": [],
+      "diagnostics": [
+        "taint discovery is incomplete: procedure semantics for typed-local/TypedLocal.cs:TypedLocal.cs.Probe.TypedLocal.TypedLocal.FromTypedLocal is unknown"
+      ]
+    },
+    {
+      "case": "remote-source",
+      "role": "candidate positive: an HTTP response body selects the executable",
+      "policy": "executable-selection",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery",
+          "capability_incomplete"
+        ],
+        "scope": {
+          "type": "files",
+          "files": [
+            "remote-source/Updater.cs"
+          ],
+          "truncated": false
+        }
+      },
+      "findings": [],
+      "diagnostics": [
+        "taint discovery is incomplete: access-path resolution for remote-source/Updater.cs:Updater.cs.Probe.RemoteSource.Updater.Blocking is unknown",
+        "taint discovery is incomplete: procedure semantics for remote-source/Updater.cs:Updater.cs.Probe.RemoteSource.Updater.Awaited is unsupported (async_suspend_resume)"
+      ]
+    },
+    {
+      "case": "start-overloads",
+      "role": "static Process.Start fileName overloads and Start(ProcessStartInfo)",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "scope": {
+          "type": "run"
+        }
+      },
+      "findings": [],
+      "diagnostics": [
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+        "taint policy `research.dotnet-processstartinfo.binding-witness` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+      ]
+    },
+    {
+      "case": "ctor-arguments",
+      "role": "ProcessStartInfo(String, String) and ProcessStartInfo(String, IEnumerable<String>)",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "scope": {
+          "type": "run"
+        }
+      },
+      "findings": [],
+      "diagnostics": [
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=resolved, coverage=exhaustive, target_count=1, binding coverage=unknown)",
+        "call_bindings model signature conversion is unavailable: SignatureApplicability",
+        "resolved_call rejected every witnessed call-binding candidate",
+        "taint policy `research.dotnet-processstartinfo.binding-witness` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+      ]
+    },
+    {
+      "case": "property-writes",
+      "role": "ProcessStartInfo.FileName set through a parameter, typed local and object initializer",
+      "policy": "file-name-write",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "scope": {
+          "type": "run"
+        }
+      },
+      "findings": [],
+      "diagnostics": [
+        "field_write_value requires one precise static member target",
+        "member_targets returned 1 analysis row with unsupported provider or shape: receiver_site_without_receiver",
+        "taint policy `research.dotnet-processstartinfo.file-name-write` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+      ]
+    },
+    {
+      "case": "property-writes",
+      "role": "ProcessStartInfo.FileName set through a parameter, typed local and object initializer",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "complete"
+      },
+      "findings": [],
+      "diagnostics": [
+        "taint policy `research.dotnet-processstartinfo.binding-witness` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+      ]
+    },
+    {
+      "case": "argument-list",
+      "role": "near miss: constant executable with one untrusted ArgumentList item and UseShellExecute=false",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "scope": {
+          "type": "files",
+          "files": [
+            "argument-list/Converter.cs"
+          ],
+          "truncated": false
+        }
+      },
+      "findings": [],
+      "diagnostics": [
+        "taint discovery is incomplete: access-path resolution for argument-list/Converter.cs:Converter.cs.Probe.ArgumentList.Converter.AddItem is unknown",
+        "taint discovery is incomplete: access-path resolution for argument-list/Converter.cs:Converter.cs.Probe.ArgumentList.Converter.CollectionInitializer is unknown"
+      ]
+    },
+    {
+      "case": "shell-interpreter",
+      "role": "cmd.exe /c through Start and the two-argument constructor, /bin/sh -c through ArgumentList, UseShellExecute=true with an untrusted document",
+      "policy": "binding-witness",
+      "completion": {
+        "type": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "scope": {
+          "type": "run"
+        }
+      },
+      "findings": [
+        "shell-interpreter/Shell.cs:29"
+      ],
+      "diagnostics": [
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=resolved, coverage=exhaustive, target_count=1, binding coverage=unknown)",
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+        "call_bindings model signature conversion is unavailable: UnsupportedExpression",
+        "resolved_call rejected every witnessed call-binding candidate",
+        "taint discovery is incomplete: access-path resolution for shell-interpreter/Shell.cs:Shell.cs.Probe.ShellInterpreter.Shell.PosixShellArgumentList is unknown",
+        "taint discovery is incomplete: access-path resolution for shell-interpreter/Shell.cs:Shell.cs.Probe.ShellInterpreter.Shell.ShellExecuteDocument is unknown"
+      ]
+    }
+  ],
+  "model_variant_experiments": {
+    "note": "Scratch copies of the probe model with members removed, run against start-overloads with a single Start(String, String) sink. They locate the overload blocker; none is a valid model, because each drops members of a complete callable family.",
+    "rows": [
+      {
+        "declared_start_members": [
+          "Start(String, String)"
+        ],
+        "result": "binds; the env flow to fileName is reported"
+      },
+      {
+        "declared_start_members": [
+          "Start(String)",
+          "Start(String, String)"
+        ],
+        "result": "binds"
+      },
+      {
+        "declared_start_members": [
+          "Start(String, String)",
+          "Start(String, String, String, SecureString, String)"
+        ],
+        "result": "binds"
+      },
+      {
+        "declared_start_members": [
+          "Start(String)",
+          "Start(ProcessStartInfo)",
+          "Start(String, String)"
+        ],
+        "result": "Start(String, String) binds; Start(String) and Start(ProcessStartInfo) calls do not"
+      },
+      {
+        "declared_start_members": [
+          "Start()",
+          "Start(String, String)"
+        ],
+        "result": "no Start call binds (callee_unresolved)"
+      },
+      {
+        "declared_start_members": [
+          "Start(String, String)",
+          "Start(String, IEnumerable<String>)"
+        ],
+        "result": "no Start call binds"
+      },
+      {
+        "declared_start_members": "all seven",
+        "result": "no Start call binds; with Start() removed the arity-1 and arity-2 calls report UnsupportedConversion / UnsupportedExpression"
+      }
+    ],
+    "locator_note": "A quoted qualified locator (\"System.Diagnostics.Process.Start\") is refused with qualified-call-locator-ambiguous when the declared family mixes the instance Start() with static overloads, even under a model_id filter. An all-static family is accepted, as are instance-only families such as SignedXml.CheckSignature; a scratch SignedXml copy with one overload made static was refused the same way. The probes therefore name members by model id."
+  }
+}
