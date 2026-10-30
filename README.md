@@ -29,7 +29,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**252 unique rules across 12 policy packs.**
+**253 unique rules across 12 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -44,25 +44,25 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.javascript-codeql-quality | 12 |
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
-| Pack | bifrost.security | 45 |
+| Pack | bifrost.security | 46 |
 | Category | correctness | 111 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 10 |
 | Category | quality | 65 |
-| Category | security | 49 |
+| Category | security | 50 |
 | Severity | error | 72 |
 | Severity | note | 26 |
-| Severity | warning | 154 |
+| Severity | warning | 155 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 490 rule-language pairs.
+13 declared languages; 491 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 19 |
 | cpp | 39 |
-| csharp | 47 |
+| csharp | 48 |
 | go | 20 |
 | java | 51 |
 | javascript | 42 |
@@ -74,7 +74,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 46, unspecified 206. Omitted labels remain unspecified.
+Activation labels: opt-in 46, unspecified 207. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->

@@ -218,6 +218,23 @@
       "remediation": "Use a parameterized XPath mechanism where available, or validate and encode values according to the XPath context before building the expression."
     },
     {
+      "path": "policies/csharp/signedxml-embedded-key-trust.rqlp",
+      "id": "bifrost.security.csharp.signedxml-embedded-key-trust",
+      "authored_hash": "f16b5ec60628cbca5d31ea10e2003542bba1214e7a9a819ac7b0c8bcfec7ef86",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "A signature verified with the key carried in the document itself passes for any document its sender signed with a key of their own, so forged XML-DSig or SAML content is accepted.",
+      "remediation": "Verify the signature with an out-of-band key or certificate through CheckSignature(AsymmetricAlgorithm) or CheckSignature(X509Certificate2, bool), or establish trust in the returned key before accepting the document."
+    },
+    {
       "path": "policies/declared-storage/go-store-requires-validation.rqlp",
       "id": "bifrost.security.go.store-requires-validation",
       "authored_hash": "e9e6ee052b90c7d83e5b25928c2dafeac3954ac4fbbc0d10f60915c1f2b99433",

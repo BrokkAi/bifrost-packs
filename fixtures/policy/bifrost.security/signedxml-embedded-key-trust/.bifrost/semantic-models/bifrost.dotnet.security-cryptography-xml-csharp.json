@@ -1,0 +1,394 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.dotnet.security-cryptography-xml-csharp",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-dotnet-models",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": ".NET API reference and the dotnet/runtime System.Security.Cryptography.Xml reference assembly for the reviewed SignedXml members in this pack",
+    "revision": "dotnet-9.0"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-security-cryptography-xml-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.dotnet.security-cryptography-xml-csharp"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "System.Security.Cryptography.Xml.SignedXml",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.constructor",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "SignedXml",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": []
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "SignedXml()"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.constructor-xml-document",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "SignedXml",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "document",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Xml.XmlDocument",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "SignedXml(System.Xml.XmlDocument)"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.constructor-xml-element",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "SignedXml",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "elem",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Xml.XmlElement",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "SignedXml(System.Xml.XmlElement)"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "CheckSignature",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignature()"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature-asymmetric-algorithm",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "CheckSignature",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Security.Cryptography.AsymmetricAlgorithm",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.AsymmetricAlgorithm)"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature-keyed-hash-algorithm",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "CheckSignature",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "macAlg",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Security.Cryptography.KeyedHashAlgorithm",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.KeyedHashAlgorithm)"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature-certificate",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "CheckSignature",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "certificate",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Security.Cryptography.X509Certificates.X509Certificate2",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "verifySignatureOnly",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Boolean",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean)"
+            }
+          },
+          {
+            "id": "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature-returning-key",
+            "owner": "type.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml",
+            "name": "CheckSignatureReturningKey",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "signingKey",
+                  "type": {
+                    "kind": "by_ref",
+                    "element": {
+                      "kind": "named",
+                      "name": "System.Security.Cryptography.AsymmetricAlgorithm",
+                      "arguments": [],
+                      "nullable": true
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey(System.Security.Cryptography.AsymmetricAlgorithm@)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.dotnet-security-cryptography-xml-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.dotnet.security-cryptography-xml-csharp"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature",
+            "target": {
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignature()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature-returning-key",
+            "target": {
+              "path": "System.Security.Cryptography.Xml.dll",
+              "symbol": "System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey(System.Security.Cryptography.AsymmetricAlgorithm@)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}
