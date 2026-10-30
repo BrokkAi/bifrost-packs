@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "517b615a4807ae5f98a15757f4cceb3fd37c9169aa2914e6bb45c871a8245883"
+      "sha256": "8eedc41d5324a74f410dea8904101fd15daf2313579a1bcbad18473954aa934b"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -25,6 +25,13 @@
       "path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
       "source_path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
       "sha256": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp",
+      "sha256": "feb54098c1faad4fef5e4651f9f0e77dab9838ef56028250af4475d36166fd64",
       "classification": "public",
       "license": "Apache-2.0"
     },
