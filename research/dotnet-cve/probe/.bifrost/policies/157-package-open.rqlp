@@ -1,0 +1,59 @@
+; Research attempt for BrokkAi/bifrost-packs#157 (CVE-2024-43484). Not a pack rule.
+; The policy proves only the code half: upload stream data reaching the exact
+; Package.Open stream operand. It cannot read the System.IO.Packaging version,
+; so it cannot honour the fixed-version near miss.
+(policy
+  :schema-version 1
+  :id "research.dotnet-cve.package-open-untrusted"
+  :name "Research: untrusted upload opened by Package.Open"
+  :message "upload stream reaches Package.Open"
+  :severity note
+  :description "Research probe for CVE-2024-43484; version-blind, so not a CVE finding."
+  :tags ["research" "csharp" "cve-2024-43484"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id form-file-stream
+              :display-name "IFormFile.OpenReadStream upload"
+              :categories [input.user-controlled]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "Microsoft.AspNetCore.Http.IFormFile.OpenReadStream"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "OpenReadStream") :arity 0))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id package-open-stream
+              :display-name "Package.Open stream"
+              :categories [resource.exhaustion]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.IO.Packaging.Package.Open"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "Open"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))

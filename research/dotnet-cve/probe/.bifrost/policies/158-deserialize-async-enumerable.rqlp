@@ -1,0 +1,58 @@
+; Research attempt for BrokkAi/bifrost-packs#158 (CVE-2024-30105). Not a pack rule.
+; The policy proves only the code half: request body data reaching the exact
+; JsonSerializer.DeserializeAsyncEnumerable<T>(Stream, ...) operand. It cannot
+; resolve the effective System.Text.Json (package or shared framework), so it
+; cannot honour the fixed-version near miss.
+(policy
+  :schema-version 1
+  :id "research.dotnet-cve.deserialize-async-enumerable-untrusted"
+  :name "Research: request body streamed by DeserializeAsyncEnumerable"
+  :message "request body reaches JsonSerializer.DeserializeAsyncEnumerable"
+  :severity note
+  :description "Research probe for CVE-2024-30105; version-blind, so not a CVE finding."
+  :tags ["research" "csharp" "cve-2024-30105"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id request-body
+              :display-name "HttpRequest.Body"
+              :categories [input.user-controlled]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-value
+                      :resolves-to "Microsoft.AspNetCore.Http.HttpRequest.Body"
+                      :proof exact
+                      (field_access :field (name "Body")))))
+              :bind matched-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id deserialize-async-enumerable-stream
+              :display-name "JsonSerializer.DeserializeAsyncEnumerable stream"
+              :categories [resource.exhaustion]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Text.Json.JsonSerializer.DeserializeAsyncEnumerable"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "DeserializeAsyncEnumerable"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))

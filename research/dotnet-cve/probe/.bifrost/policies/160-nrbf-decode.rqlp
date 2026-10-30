@@ -1,0 +1,59 @@
+; Research attempt for BrokkAi/bifrost-packs#160 (CVE-2024-43499). Not a pack rule.
+; The policy proves only the code half: upload stream data reaching the exact
+; NrbfDecoder.Decode(Stream, ...) payload operand. It cannot read the
+; System.Formats.Nrbf version, so it cannot honour the fixed-version near miss.
+(policy
+  :schema-version 1
+  :id "research.dotnet-cve.nrbf-decode-untrusted"
+  :name "Research: untrusted upload decoded by NrbfDecoder"
+  :message "upload stream reaches NrbfDecoder.Decode"
+  :severity note
+  :description "Research probe for CVE-2024-43499; version-blind, so not a CVE finding."
+  :tags ["research" "csharp" "cve-2024-43499"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id form-file-stream
+              :display-name "IFormFile.OpenReadStream upload"
+              :categories [input.user-controlled]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "Microsoft.AspNetCore.Http.IFormFile.OpenReadStream"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "OpenReadStream") :arity 0))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id nrbf-decode-payload
+              :display-name "NrbfDecoder.Decode payload"
+              :categories [deserialization]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Formats.Nrbf.NrbfDecoder.Decode"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "Decode"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "502")))

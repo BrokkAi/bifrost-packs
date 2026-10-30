@@ -1,0 +1,17 @@
+; Research attempt for BrokkAi/bifrost-packs#156 (CVE-2024-43483). Not a pack rule.
+; No request-string source is selectable (C# parameter kind unsupported), so this probes the sink binding only.
+(policy
+  :schema-version 1
+  :id "research.dotnet-cve.memorycache-get-or-create-binding"
+  :name "Research: GetOrCreate call binding"
+  :message "call binds to Microsoft.Extensions.Caching.Memory.CacheExtensions.GetOrCreate"
+  :severity note
+  :description "Binding probe for CVE-2024-43483. Reports each call that binds exactly to Microsoft.Extensions.Caching.Memory.CacheExtensions.GetOrCreate; no source or version evidence."
+  :tags ["research" "csharp" "cve-2024-43483"]
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (language csharp
+        (resolved-call :resolves-to "Microsoft.Extensions.Caching.Memory.CacheExtensions.GetOrCreate" :proof declared
+          (call-bindings (call-shape (call :callee (name "GetOrCreate"))))))))
+    (group :name by-call :by (calls.id) (aggregate :name bound-calls :op count))
+    (assert :group by-call :value bound-calls :cardinality (exactly 0))))
