@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-security-sink-declarations",
+  "pack_version": "0.2.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-security-sink-declarations.json",
+    "sha256": "156aedefd95f0560e9254523b6aa93b093a90cf18412615b33ec24496d9e1a15",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/python/security-sinks/bifrost.python-security-sink-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.13.5, <3.13.6"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.13.5, <3.13.6"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "CPython standard-library reference and typeshed",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5"
+  },
+  "license": "PSF-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-security-sinks-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.13.5"
+    },
+    "targets": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "socket.socket"
+    },
+    {
+      "kind": "member",
+      "owner": "socket.socket",
+      "name": "bind"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-stdlib-api-declarations",
+  "pack_version": "0.5.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-stdlib-api-declarations.json",
+    "sha256": "d3f03a6510584e0af0019066298b9a8de1a2bc72199fb84318351f867b8d759d",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.10.0, <3.15.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.10.0, <3.15.0"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "Python standard-library reference and typeshed",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket, http.server request-handler declarations, network APIs, constructors, factories, I/O, SSL protocol, and credential APIs"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-stdlib-api-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.10.0"
+    },
+    "targets": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "_pickle"
+    },
+    {
+      "kind": "member",
+      "owner": "_pickle",
+      "name": "dump"
+    }
+  ]
+}
