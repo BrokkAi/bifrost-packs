@@ -2,7 +2,10 @@
 
 Leads BrokkAi/bifrost-packs#152–#155 and #162–#167, qualified on 2026-10-30
 against Bifrost 0.14.2, build identity
-`073c23790739e33f33abc98338651689eaf8b7c0`.
+`073c23790739e33f33abc98338651689eaf8b7c0`. Rechecked on Bifrost 0.14.3,
+build identity `a8e935c87ffae45104f08a6baec3abe4e54a4e18`, which is not yet
+on npm. NuGet dependency evidence and C# `program-point-of` are still
+unavailable there, so every outcome below is unchanged.
 
 | Lead | Advisory | Outcome |
 | --- | --- | --- |

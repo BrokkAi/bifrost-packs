@@ -33,6 +33,11 @@ resolved identity is workspace-required.
   findings. Both calls carry `semantic_analysis_partial` because the receiver
   type is not established.
 
+Cross-check: Bifrost 0.14.3, build identity
+`a8e935c87ffae45104f08a6baec3abe4e54a4e18`, gives the same authored hash
+and the same outcomes in both workspaces. The baseline stays 0.14.2 because
+the npm package is still at 0.14.2.
+
 ## Known limits
 
 - The advisory's affected versions are not checked. Bifrost 0.14.2 publishes
