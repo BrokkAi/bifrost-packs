@@ -263,6 +263,8 @@ def _spec_and_model(spec_activation: Any, shard_activations: list[Any], *,
 
 
 class AuthoredNativeGenerationInputTests(unittest.TestCase):
+    """Bind every configured authored job to its source identity and shards."""
+
     def test_all_configured_authored_jobs_bind_source_identity_and_each_shard(self):
         config = _load_json("native-generation.json")
         self.assertIsInstance(config, dict)

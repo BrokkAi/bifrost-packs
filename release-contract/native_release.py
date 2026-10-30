@@ -32,6 +32,7 @@ def archive_files(path):
 
 
 def native_contents(archive, baseline=None, generator_version=None):
+    """Verify a native archive and describe each semantic model it carries."""
     if baseline is not None and release.digest(archive.read_bytes()) != baseline['native_sha256']:
         release.fail('integrity-error', 'published native archive checksum differs')
     files = archive_files(archive); prefix = 'bifrost-semantic-packs/'
