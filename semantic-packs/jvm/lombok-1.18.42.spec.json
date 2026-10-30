@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.java.lombok",
+  "pack_version": "1.0.0",
+  "ecosystem": "maven",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "lombok-1.18.42.json",
+    "sha256": "b32c2db5af0ce40b6d737ca7788f837f065862a238eb0f1758617c60a805144d",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/825d2bcb1de3aea097b1149ae13ece24d920898c/semantic-packs/models/lombok-1.18.42.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "org.projectlombok:lombok",
+        "version": "=1.18.42"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://projectlombok.org/features/GetterSetter",
+    "revision": "1.18.42"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": true,
+    "review_required": false
+  },
+  "notices": [
+    "notices/lombok-1.18.42.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "org.projectlombok:lombok",
+      "version": "=1.18.42"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "rule",
+      "id": "java.lombok.getter"
+    },
+    {
+      "kind": "rule",
+      "id": "java.lombok.setter"
+    },
+    {
+      "kind": "rule",
+      "id": "java.lombok.data-getter"
+    },
+    {
+      "kind": "rule",
+      "id": "java.lombok.value-getter"
+    },
+    {
+      "kind": "rule",
+      "id": "java.lombok.no-args-constructor"
+    },
+    {
+      "kind": "rule",
+      "id": "java.lombok.required-args-constructor"
+    }
+  ]
+}

@@ -32,6 +32,7 @@ def archive_files(path):
 
 
 def native_contents(archive, baseline=None, generator_version=None):
+    """Verify a native archive and describe each semantic model it carries."""
     if baseline is not None and release.digest(archive.read_bytes()) != baseline['native_sha256']:
         release.fail('integrity-error', 'published native archive checksum differs')
     files = archive_files(archive); prefix = 'bifrost-semantic-packs/'
@@ -47,7 +48,9 @@ def native_contents(archive, baseline=None, generator_version=None):
         release.fail('integrity-error', 'unlisted native archive file')
     index = json.loads(files[prefix + 'index.json'])
     expected_version = baseline['tag'][1:] if baseline is not None else generator_version
-    if index['schema_version'] != 3 or not expected_version or index['generator']['version'] != expected_version:
+    # Index schema 4 adds the rule and runtime-exposure measurement lookups
+    # (bifrost-dev#8324); engines that read only schema 3 must skip it.
+    if index['schema_version'] not in (3, 4) or not expected_version or index['generator']['version'] != expected_version:
         release.fail('integrity-error', 'native release index version differs')
     if not index['packs'] and not index.get('generated_productions', []):
         release.fail('invalid-manifest', 'native bundle has no packs')
@@ -75,7 +78,7 @@ def native_contents(archive, baseline=None, generator_version=None):
             if len(raw) != shard['raw_bytes']:
                 release.fail('integrity-error', 'native shard raw size differs')
             json.loads(raw)
-        schemas = release.empty_schemas(); schemas['semantic_model_read'] = [manifest['schema_version']]; schemas['release_index'] = [3]
+        schemas = release.empty_schemas(); schemas['semantic_model_read'] = [manifest['schema_version']]; schemas['release_index'] = [index['schema_version']]
         contents.append(dict(kind='semantic-model', identity=manifest['pack_id'], content_version=manifest['version'], completeness=manifest['completeness'], path=path, sha256=release.digest(data), languages=[manifest['language']], dependencies=[json.dumps(manifest['compatibility'], sort_keys=True)], schemas=schemas, required_capabilities=[], license=manifest['license']))
     return contents
 
