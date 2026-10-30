@@ -76,6 +76,8 @@ def _load(relative: str):
 
 
 class LegacyBuiltinNativeJobTests(unittest.TestCase):
+    """Pin the delivered built-in packs and the producer-blocked remainder."""
+
     def test_every_delivered_builtin_pack_is_a_version_independent_job(self):
         jobs = _load("native-generation.json")["jobs"][FIRST_JOB:]
         self.assertEqual(len(jobs), len(DELIVERED))
