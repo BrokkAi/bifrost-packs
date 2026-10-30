@@ -1,11 +1,11 @@
 {
-  "schema_version": 2,
+  "schema_version": 8,
   "pack_id": "bifrost.go.concurrency-declarations",
   "version": "2.0.0",
   "producer": { "name": "bifrost", "version": "0.10.7" },
   "language": "go",
   "ecosystem": "go-stdlib",
-  "compatibility": { "bifrost": ">=0.10.7, <1.0.0", "toolchains": [] },
+  "compatibility": { "toolchains": [] },
   "provenance": {
     "source": "https://go.dev/src/context/, https://go.dev/src/sync/, https://go.dev/src/time/time.go (time.Time, time.Duration, time.Time.Sub, time.Now), and https://go.dev/src/time/sleep.go (time.Timer, time.Timer.Stop, time.AfterFunc)",
     "revision": "go1.26.0"
