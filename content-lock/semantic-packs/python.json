@@ -22,6 +22,13 @@
       "sha256": "002d3968abfef98a4a2b195d54ec98899a288ab270d52a8dc758d528f4bc9788"
     },
     {
+      "path": "semantic-packs/python/notices/cpython-os-command-3.13.5.txt",
+      "source_path": "semantic-packs/python/notices/cpython-os-command-3.13.5.txt",
+      "sha256": "ef62dbed095d99dc26f40a3d0aa8ea4e2f70429e8a527d6537b6e47db92de5fc",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/python/notices/cpython-performance-3.13.5.txt",
       "source_path": "semantic-packs/python/notices/cpython-performance-3.13.5.txt",
       "sha256": "17e1d34e8ed5b3b8de7cf0a455d1f8ae04b4c812e906f536a08336d8dff3b48b",
@@ -36,9 +43,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/python/notices/cpython-security-sinks-3.13.5.txt",
+      "source_path": "semantic-packs/python/notices/cpython-security-sinks-3.13.5.txt",
+      "sha256": "c14690c6770c7e28656c81a81c6d7da14591f4a27e5ecfd62d6763548308a8cd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/python/notices/cpython-status-3.13.5.txt",
       "source_path": "semantic-packs/python/notices/cpython-status-3.13.5.txt",
       "sha256": "c14690c6770c7e28656c81a81c6d7da14591f4a27e5ecfd62d6763548308a8cd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/notices/cpython-stdlib-api-3.13.5.txt",
+      "source_path": "semantic-packs/python/notices/cpython-stdlib-api-3.13.5.txt",
+      "sha256": "d03be98103944212d020b8d36aaf382456d6f5a69171cab26f0f7034343c4e02",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -67,14 +88,14 @@
       "path": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
       "source_path": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
       "source_revision": "4f65acd8a2a81cf2adef3dc9bd0298dc1f7c2728",
-      "sha256": "965f000cb202d26ee9e7e2a512673205dee1e831fc9e85b6d0e8e08c89993b78",
+      "sha256": "7bf3c48e94a196cb44aafc48a1090c7f3c4d283edf719655785186832f91e631",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/python/os-command/bifrost.python-os-command-summaries.json",
       "source_path": "semantic-packs/python/os-command/bifrost.python-os-command-summaries.json",
-      "sha256": "65330b2c13a02d9eb38cfb0d631a46b439d07cf004f54accc770167bcf30808a",
+      "sha256": "5aaf542c947c182c98b6debce0477118b4adf701841d224b79a3e73d7c819f8b",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -93,9 +114,37 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "semantic-packs/python/python-os-command-declarations.spec.json",
+      "source_path": "semantic-packs/python/python-os-command-declarations.spec.json",
+      "sha256": "0d7ba3da2a9d64a131e7081c055ae25409f44652b9b05908350efa9cfd3f9f1f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-os-command-summaries.spec.json",
+      "source_path": "semantic-packs/python/python-os-command-summaries.spec.json",
+      "sha256": "d6caeac3627004fff342c34d663563c47d63fe5bf70f15994f66fe8d6eff9082",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "semantic-packs/python/python-performance-summaries.spec.json",
       "source_path": "semantic-packs/python/python-performance-summaries.spec.json",
       "sha256": "b0b444420fe54017b4866ae97e7883a49adb277c610cfe91be3a1cc44fb91000",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-security-sink-declarations.spec.json",
+      "source_path": "semantic-packs/python/python-security-sink-declarations.spec.json",
+      "sha256": "ef33549873fd8ca28563895da59e9751f2ecdede6e6683c1a810f2d54728c964",
+      "classification": "public",
+      "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-security-sink-summaries.spec.json",
+      "source_path": "semantic-packs/python/python-security-sink-summaries.spec.json",
+      "sha256": "16e3814807f2cb294595c2924763820ba1ece387ec2d23086746145735f27dea",
       "classification": "public",
       "license": "PSF-2.0"
     },
@@ -112,6 +161,13 @@
       "sha256": "3040157eb65b7f96688b7137e1d74ad3d62c913e4b2542af74301d5b4dfa9bc3",
       "classification": "public",
       "license": "PSF-2.0"
+    },
+    {
+      "path": "semantic-packs/python/python-stdlib-api-declarations.spec.json",
+      "source_path": "semantic-packs/python/python-stdlib-api-declarations.spec.json",
+      "sha256": "56058bde1dc0ea02168b1eeca359a619155b963fe648ee293690a07bf7ec69fd",
+      "classification": "public",
+      "license": "Apache-2.0"
     },
     {
       "path": "semantic-packs/python/python-str-result-use-obligations.json",

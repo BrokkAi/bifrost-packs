@@ -268,7 +268,7 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
         self.assertIsInstance(config, dict)
         jobs = config.get("jobs")
         self.assertIsInstance(jobs, list)
-        self.assertEqual(len(jobs), 12)
+        self.assertEqual(len(jobs), 48)
         shard_count = 0
 
         for job in jobs:
@@ -286,7 +286,7 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
                 for field in ("compatibility", "provenance", "license", "safety"):
                     self.assertEqual(spec[field], model[field], f"{job['name']} {field}")
 
-        self.assertEqual(shard_count, 19)
+        self.assertEqual(shard_count, 59)
 
     def test_jdk21_reviewed_obligations_are_selected_for_native_delivery(self):
         jobs = _load_json("native-generation.json")["jobs"]

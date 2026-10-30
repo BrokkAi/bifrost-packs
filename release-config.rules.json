@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.7.0",
+  "release_version": "0.7.1",
   "artifact_role": "source",
-  "notes": "This minor release adds ten C# policies ported from CodeQL: call-to-gc, path-combine, catch-nullreferenceexception, empty-catch-block, random-used-once, console-output, use-of-html-input-hidden, use-of-file-upload, class-implements-icloneable and too-many-ref-parameters; the C# policy component advances to 0.3.0. Their supporting BCL and System.Web declaration models are source-only, so calls those models describe resolve only where a workspace supplies the model and otherwise stay explicitly incomplete. bifrost.performance.network-call-in-loop (bifrost.code-smells 4.0.1) again matches requests.get and requests.post by name beside its effect-proven standard-library arm: a call into a workspace or third-party wrapper has no directly declared effect, so the effect-proven arm alone reported a complete run with no findings. The exact native dependency moves from bifrost.public.packs 0.6.1 to 0.7.0, which activates the Python performance effects for CPython 3.10 through 3.14. No policy asks more of a consumer. Publish packs/v0.7.0 first. This release does not qualify the full policy set or imply complete analysis.",
+  "notes": "This patch release changes only the exact native dependency, from bifrost.public.packs 0.7.0 to 0.8.0, which ships compiled the public packs Bifrost previously supplied only through its embedded built-in registry. Policies, IDs and consumer requirements are unchanged. Publish packs/v0.8.0 first. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.7.0",
+      "release_version": "0.8.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]
