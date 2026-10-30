@@ -327,7 +327,7 @@ def _inspect_bundle(bundle: Path, binary: Path, expected_version: str, *, cwd: P
     if index_path is None:
         _fail(f"verified native bundle is missing index.json: {bundle}")
     index = _load_json(index_path.read_bytes(), str(index_path))
-    if not isinstance(index, dict) or type(index.get("schema_version")) is not int or index["schema_version"] != 3:
+    if not isinstance(index, dict) or type(index.get("schema_version")) is not int or index["schema_version"] not in (3, 4):
         _fail(f"native bundle has unsupported index schema: {bundle}")
     generator = index.get("generator")
     if not isinstance(generator, dict) or generator.get("version") != expected_version:

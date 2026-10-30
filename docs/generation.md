@@ -20,12 +20,14 @@ identities, provenance, licenses and completeness are unchanged. Each spec
 names one or more representative lookups taken from the model's own
 declarations or summaries, and pins the artifact URL to the migration commit.
 
-Six built-in packs stay source-only: Lombok, Getset, Scala case-class,
-Python process-inputs and the two Node runtime-values packs. They carry only
-`rules` or `runtime_values` records. The pinned producer requires at least one
-type, member or procedure lookup that resolves records, and it has no lookup
-kind for rules or runtime values, so these packs need a producer change before
-they can become jobs.
+The six remaining built-in packs, Lombok, Getset, Scala case-class, Python
+process-inputs and the two Node runtime-values packs, carry only `rules` or
+`runtime_values` records. Their jobs use the `rule` and `runtime_exposure`
+measurement lookups from bifrost-dev#8324, which still require each lookup to
+resolve at least one record. A producer with those lookups writes release index
+schema 4, so `native_release.py` declares the index schema the bundle actually
+has; engines that read only schema 3 skip such a release during selection.
+These jobs need a generator pin at a Bifrost release that includes #8324.
 
 ## Previous native packaging repair
 

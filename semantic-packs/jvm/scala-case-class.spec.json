@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.scala.case-class",
+  "pack_version": "1.0.0",
+  "ecosystem": "maven",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "scala-case-class.json",
+    "sha256": "7a8727e5cd05da43a6772cbf4254736e4b9e508be988ddaf98ba9d378ab9f3b4",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/825d2bcb1de3aea097b1149ae13ece24d920898c/semantic-packs/models/scala-case-class.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://docs.scala-lang.org/scala3/reference/changed-features/case-classes.html",
+    "revision": "issue-1153"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": true,
+    "review_required": false
+  },
+  "notices": [
+    "notices/scala-case-class.txt"
+  ],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "rule",
+      "id": "scala.case-class.copy"
+    },
+    {
+      "kind": "rule",
+      "id": "scala.case-class.parameter-accessor"
+    }
+  ]
+}
