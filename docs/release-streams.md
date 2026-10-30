@@ -17,9 +17,21 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-10-29, the latest published streams are `packs/v0.7.0` and
+As of 2026-10-30, the latest published streams are `packs/v0.7.0` and
 `rules/v0.7.0` (bifrost-packs#168), both tagged on `fd13b06`. Bifrost 0.14.3
 admits both; the engine's pack-compatibility matrix records the outcome.
+
+The next releases are prepared as `packs/v0.8.0` and `rules/v0.7.1`
+(bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds 36 native
+packs that Bifrost previously supplied only through its embedded built-in
+registry, so online runs that pin a packs release no longer lose them. The
+[generation notes](generation.md#legacy-built-in-packs) list them and the six
+built-in packs that remain source-only because the pinned producer cannot yet
+measure rules-only or runtime-value packs. `rules/v0.7.1` is a patch release
+that changes only its exact packs dependency to 0.8.0; publish
+`packs/v0.8.0` first.
+
+The 0.7.0 release notes follow.
 
 `packs/v0.7.0` is a minor release. `bifrost.python-performance-summaries`
 1.1.0 activates on `cpython >=3.10.0, <3.15.0` instead of exactly 3.13.5.

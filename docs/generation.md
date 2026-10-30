@@ -6,7 +6,28 @@ The engine copy remains for existing embedded sources and focused fixtures;
 new public content belongs here. Storing authoring content does not select it
 for a release or enable it in a scanner.
 
-## Latest native packaging repair
+## Legacy built-in packs
+
+The prepared `packs/v0.8.0` adds 36 direct jobs after the twelve of
+`packs/v0.7.0`, one for each public pack that Bifrost's legacy embedded
+registry (`BIFROST_EMBEDDED_PACKS`) provides and the 0.7.0 bundle did not
+ship (bifrost-dev#4438). These are the Go standard-library, concurrency and
+testify packs, the Node `child_process` and Buffer packs, and the Python
+os-command, security-sink and stdlib-api packs. Their authored models move
+from schema 2 or 4 to the version-independent schema 8 by removing
+`compatibility.bifrost`, as the Go `os` models did; shard payloads,
+identities, provenance, licenses and completeness are unchanged. Each spec
+names one or more representative lookups taken from the model's own
+declarations or summaries, and pins the artifact URL to the migration commit.
+
+Six built-in packs stay source-only: Lombok, Getset, Scala case-class,
+Python process-inputs and the two Node runtime-values packs. They carry only
+`rules` or `runtime_values` records. The pinned producer requires at least one
+type, member or procedure lookup that resolves records, and it has no lookup
+kind for rules or runtime values, so these packs need a producer change before
+they can become jobs.
+
+## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
 five recipes of `packs/v0.6.1`. Only the `python-performance-summaries` input
