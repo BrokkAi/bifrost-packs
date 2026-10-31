@@ -1,8 +1,9 @@
 ; An ordinary Java, JavaScript, TypeScript, Python, Go, C#, Kotlin, Rust,
 ; Scala, PHP, Ruby, C or C++ local value
-; replaced before
-; any read. The RHS has already run at the selected establishment; no fix is
-; offered because removing it could remove side effects. Kotlin's plain local
+; replaced on every normal continuation before any read. An exceptional exit
+; that no code observes reads nothing (liveness meaning, bifrost-dev #8602).
+; The RHS has already run at the selected establishment; no fix is offered
+; because removing it could remove side effects. Kotlin's plain local
 ; `=` writes are exact; compound reads, member/index writes, delegated locals,
 ; and captured mutable locals stay open.
 (policy
@@ -11,7 +12,7 @@
   :name "Overwritten unread local value"
   :message "the local value is overwritten before it is read"
   :severity warning
-  :description "An exact ordinary local establishment is replaced on every modeled continuation before any read of that value. For Kotlin, only a plain local `=` write is exact; compound reads, member/index writes, delegated locals, and captured mutable locals stay open. The row retains every first replacement event as evidence. Review the original assignment and its right-hand-side effects; no automatic removal is offered."
+  :description "An exact ordinary local establishment is replaced on every normal continuation before any read of that value; an exceptional exit that no code observes reads nothing, so it does not keep the value live. For Kotlin, only a plain local `=` write is exact; compound reads, member/index writes, delegated locals, and captured mutable locals stay open. The row retains every first replacement event as evidence. Review the original assignment and its right-hand-side effects; no automatic removal is offered."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
   :tags ["correctness" "assignment"]
   :analysis (analysis
