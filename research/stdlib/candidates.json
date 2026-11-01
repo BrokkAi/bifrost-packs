@@ -488,8 +488,8 @@
       }
     ],
     "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
-    "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "status": "partially-implemented",
+    "qualification": "XmlDocument slice implemented as bifrost.security.csharp.xmldocument-url-resolver (Bifrost 0.14.2 build 073c23790739e33f33abc98338651689eaf8b7c0, model bifrost.dotnet.system-xml-csharp 0.1.0); reports XmlDocument.XmlResolver = new XmlUrlResolver() without provenance or load proof. XmlReaderSettings/XmlTextReader contract blocked by engine: no C# binding, points-to or property reaching facts, XmlReader.Create overloads do not bind through the model, object-initializer members do not bind. See prototypes/dotnet-xml-resolver/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "candidate",
     "analysis_kind": "taint + typestate"

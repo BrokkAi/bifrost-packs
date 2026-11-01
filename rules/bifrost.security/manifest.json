@@ -235,6 +235,23 @@
       "remediation": "Verify the signature with an out-of-band key or certificate through CheckSignature(AsymmetricAlgorithm) or CheckSignature(X509Certificate2, bool), or establish trust in the returned key before accepting the document."
     },
     {
+      "path": "policies/csharp/xmldocument-url-resolver.rqlp",
+      "id": "bifrost.security.csharp.xmldocument-url-resolver",
+      "authored_hash": "16800e801cbbf4107aa6a13cf6b6dcd596951abd31f18e8f2966ce057e4a6546",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "XmlDocument always processes DTDs, so an XmlUrlResolver lets an external entity in any document the instance parses read local files or reach internal network hosts.",
+      "remediation": "Leave XmlDocument.XmlResolver at its default or set it to null. If entities must be resolved, use a resolver restricted to trusted resources, or load through XmlReader.Create with DtdProcessing.Prohibit."
+    },
+    {
       "path": "policies/declared-storage/go-store-requires-validation.rqlp",
       "id": "bifrost.security.go.store-requires-validation",
       "authored_hash": "e9e6ee052b90c7d83e5b25928c2dafeac3954ac4fbbc0d10f60915c1f2b99433",

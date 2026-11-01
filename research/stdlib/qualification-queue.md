@@ -2,7 +2,7 @@
 
 This is a research-first queue for issue drafting. No qualification or implementation issues were opened by this pass. Recheck current ownership before creating a ticket; use one bounded qualification issue per investigation, then split implementation work only after evidence establishes a supported contract. Rows grouped below still need independent API/language acceptance and non-overlapping file ownership.
 
-The 41 catalog records comprise 24 candidates, six proof-heavy deferrals, one match/configuration lead outside the requested analysis types, nine existing-owner/catalog routes, and one exact-identity recheck. All remain unqualified.
+The 41 catalog records comprise 24 candidates, six proof-heavy deferrals, one match/configuration lead outside the requested analysis types, nine existing-owner/catalog routes, and one exact-identity recheck. All remain unqualified except the .NET XML resolver lead (item 13), which is partially implemented.
 
 Start with Node authenticated plaintext, JDK CipherInputStream, stdlib TLS state, and JNDI filter syntax. These have concrete documented distinctions and useful near misses; this priority is research judgment, not an analyzer-support claim.
 
@@ -179,6 +179,15 @@ Acceptance for the qualification issue:
 ## 13. Qualify .NET XML resolver and DTD configuration
 
 Start with XmlReaderSettings and an explicit external-capable resolver. Preserve secure defaults and parser type/framework version; do not duplicate Java StAX work or confuse expansion DoS with external resource access.
+
+Outcome (2026-10-30, Bifrost 0.14.2 `073c2379`): partially implemented. The
+XmlDocument slice ships as `bifrost.security.csharp.xmldocument-url-resolver`
+with the `bifrost.dotnet.system-xml-csharp` model. The XmlReaderSettings and
+XmlTextReader contract is blocked by the engine: C# has no object identity
+between a settings or reader object, its property writes and
+`XmlReader.Create`, and the overloaded `Create` call does not bind through the
+model. Engine issues: BrokkAi/bifrost-dev#8302, #8296, #8303, #8300 and #8304.
+See the [.NET attempt](prototypes/dotnet-xml-resolver/README.md).
 
 Acceptance for the qualification issue:
 

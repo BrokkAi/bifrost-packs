@@ -44,6 +44,11 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   records public SignedXml API names and signatures from the .NET API
   reference and the dotnet/runtime reference assembly, and is MIT; see
   semantic-packs/dotnet/bifrost.dotnet.security-cryptography-xml-csharp.json.
+- The authored System.Xml declaration model records public XmlResolver,
+  XmlUrlResolver, XmlDocument, XmlTextReader and XmlReaderSettings API names
+  and signatures from the .NET API reference and the dotnet/runtime reference
+  assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.system-xml-csharp.json.
 - Kotlin, Scala, Typeshed, PHPStorm and TypeScript source specifications retain
   their recorded license, pinned input hashes, and notices. Downloaded inputs
   are not vendored here. Node's complete upstream notice is preserved.
