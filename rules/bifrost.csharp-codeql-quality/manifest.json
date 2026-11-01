@@ -41,8 +41,8 @@
     {
       "path": "policies/static-array.rqlp",
       "id": "bifrost.csharp-codeql-quality.static-array",
-      "authored_hash": "96dff03da03c3f3c6611077f2756ac498bb8ec60e1ce17dc10850a7b73922c73",
-      "resolved_semantic_hash": "96dff03da03c3f3c6611077f2756ac498bb8ec60e1ce17dc10850a7b73922c73",
+      "authored_hash": "763872cd915b520ac069bb116efdfb6e3d07a80dacf8312267963bd284da0a65",
+      "resolved_semantic_hash": "763872cd915b520ac069bb116efdfb6e3d07a80dacf8312267963bd284da0a65",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "language-rule-facts"],
@@ -74,8 +74,8 @@
     {
       "path": "policies/rethrown-exception-variable.rqlp",
       "id": "bifrost.csharp-codeql-quality.rethrown-exception-variable",
-      "authored_hash": "659d34a1fe1ef8afd6231460cb4d4cd5667786372a4ffcc9a3eb11d233b8d571",
-      "resolved_semantic_hash": "659d34a1fe1ef8afd6231460cb4d4cd5667786372a4ffcc9a3eb11d233b8d571",
+      "authored_hash": "db689bd0105a4eb6fee5fe13b3067c650c34c0c2fb0e158b999970b05460de25",
+      "resolved_semantic_hash": "db689bd0105a4eb6fee5fe13b3067c650c34c0c2fb0e158b999970b05460de25",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "failure-handler-state"],
@@ -257,6 +257,39 @@
       "required_capabilities": ["structural-match", "configuration-facts"],
       "severity_rationale": "Empty configuration passwords can disable authentication or leave accounts protected only by defaults.",
       "remediation": "Set a non-empty, securely managed password or remove the credential entry and rely on an appropriate authentication mechanism."
+    },
+    {
+      "path": "policies/lock-this.rqlp",
+      "id": "bifrost.csharp-codeql-quality.lock-this",
+      "authored_hash": "1efb3702d3f1d35521cfcb9a7fe8f74702ab32747dd74d4681772a5d08ef6eb3",
+      "resolved_semantic_hash": "1efb3702d3f1d35521cfcb9a7fe8f74702ab32747dd74d4681772a5d08ef6eb3",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "prepared-syntax"],
+      "severity_rationale": "Locking the current object exposes a synchronization object to callers and can cause unexpected contention.",
+      "remediation": "Lock on a private object owned by the instance."
+    },
+    {
+      "path": "policies/nested-if-statements.rqlp",
+      "id": "bifrost.csharp-codeql-quality.nested-if-statements",
+      "authored_hash": "eae437561b05dd7500026f2037d427147687fb75a89f9c211de31b0f909e4b06",
+      "resolved_semantic_hash": "eae437561b05dd7500026f2037d427147687fb75a89f9c211de31b0f909e4b06",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "statement-facts"],
+      "severity_rationale": "Nested if statements with no intervening behavior obscure the combined condition.",
+      "remediation": "Combine the conditions or make the intended branches explicit."
+    },
+    {
+      "path": "policies/misleading-indentation.rqlp",
+      "id": "bifrost.csharp-codeql-quality.misleading-indentation",
+      "authored_hash": "49f292f7e91792311871543a80989e1b79a387ad39c7a524947dc974164ce5d4",
+      "resolved_semantic_hash": "49f292f7e91792311871543a80989e1b79a387ad39c7a524947dc974164ce5d4",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "statement-facts"],
+      "severity_rationale": "Indentation that suggests a statement belongs to a control body can hide unintended execution.",
+      "remediation": "Add braces or align the successor with its actual control scope."
     }
   ]
 }

@@ -13,4 +13,4 @@
   :analysis (analysis :type match :selector
     (rql :schema-version 1
       (language csharp
-        (assignment :language-rule "cs/static-array")))))
+        (union (assignment :language-rule "cs/static-array") (declaration :not-kind [callable class import module] :language-rule "cs/static-array"))))))

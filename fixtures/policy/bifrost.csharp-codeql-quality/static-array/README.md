@@ -8,3 +8,13 @@ private field and the two known-empty array initializers are same-shaped near
 misses. The fixture exercises declaration metadata and tree-sitter initializer
 shape; the product policy is listed in the `bifrost.csharp-codeql-quality`
 manifest.
+
+## v0.14.4 correction
+
+The policy now includes uninitialized public static readonly array fields
+whose static constructor defines a qualifying array, while retaining the
+private and known-empty near misses. Against the original CodeQL query test at
+`ae741615f3`, released Bifrost v0.14.4 gates EXACT and complete: 4
+true-positive sites, zero false positives, misses, silent misses or
+abstentions. The archive SHA-256 is
+`fac867ff504a8637190c99e6818eb6a1cfa93469683526a899f653d7db14685a`.
