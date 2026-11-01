@@ -27,7 +27,7 @@ measurement lookups from bifrost-dev#8324, which still require each lookup to
 resolve at least one record. A producer with those lookups writes release index
 schema 4, so `native_release.py` declares the index schema the bundle actually
 has; engines that read only schema 3 skip such a release during selection.
-These jobs need a generator pin at a Bifrost release that includes #8324.
+The generator pin moved to public Bifrost 0.14.4 (`786891f9ed19d2086dfd6242ff15ca904b610620`, Rust 1.99.1), the first release that includes #8324.
 
 ## Previous native packaging repair
 
