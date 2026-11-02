@@ -1,15 +1,14 @@
 {
-  "status": "focused-complete-integration-only",
-  "released_engine_qualified": false,
-  "scope": "Shared-access refinement: 17 marker fixtures and 20 unchanged callback fixtures",
+  "status": "focused-complete-release-only",
+  "released_engine_qualified": true,
+  "scope": "17 marker fixtures and 20 callback fixtures, each case run with fresh caches",
   "schemas": {
     "policy": 1,
     "rql": 1,
     "policy_pack_manifest": 2
   },
   "semantic_models": "No third-party semantic models required; run with BIFROST_OPEN_PACKS_DISABLE=1 and isolated caches",
-  "reproduction": "python3 scripts/rust-sast-gate.py --binary /path/to/integration-bifrost --output /empty/evidence/directory",
-  "release_blocker": "Keep PR #113 draft until a released engine includes #6385 and #6394. This qualification uses a local release-profile binary, not a published engine release.",
+  "reproduction": "python3 scripts/rust-sast-gate.py --binary /path/to/bifrost-v0.15.0 --output /empty/evidence/directory",
   "coverage_limits": [
     "Marker impl enumeration is same-file only",
     "Incomplete marker rows are excluded",
@@ -21,11 +20,23 @@
     "Sync rows with shared_access=none are excluded; unavailable method access stays conservative",
     "Shared methods include cross-file inherent and trait impl methods through the #6457 resolved-owner language hook"
   ],
-  "versioning": "bifrost.security 1.4.0 -> 1.5.0 for two compatible opt-in policy additions. No stream release version or tag is selected here.",
-  "engine_version": "0.14.0",
-  "build_identity": "33704f6074c4a41b54aefd63229ace52483de6eb",
-  "production_source_checkpoint": "BrokkAi/bifrost-dev@33704f6074c4",
-  "binary_sha256": "da99bcc36ceaf78cae5f7c8ea2150e3d5cdb714b4f8466e701d23dbcfa446567",
+  "required_capabilities": {
+    "note": "Bifrost 0.15.0 does not advertise rust-marker-impls-of, call-shape-callee-provenance, call-results or control-relations-dominance, and a release requiring an unadvertised capability is rejected at admission. The manifest declares the advertised capabilities that existing policies use for the same operators; restore the precise names once a pinned engine profile lists them.",
+    "bifrost.security.rust.unsound-send-sync-impl": [
+      "structural-match",
+      "language-rule-facts"
+    ],
+    "bifrost.security.rust.callback-after-invalid-state": [
+      "structural-match",
+      "normalized-call-roles",
+      "semantic-control-flow"
+    ]
+  },
+  "versioning": "bifrost.security 2.0.0 -> 2.1.0 for two compatible opt-in policy additions. No stream release version or tag is selected here.",
+  "engine_version": "0.15.0",
+  "build_identity": "09a2503c5f7ced1630a9e3c445ead53dfc5925e8",
+  "binary": "bifrost-v0.15.0-aarch64-apple-darwin release asset",
+  "binary_sha256": "d9acbc7305ed0390457117c48531c82c5ff0778dab4290f5cc670e692280ae45",
   "passed_cases": 37,
   "total_cases": 37,
   "rule_results": [
@@ -41,22 +52,26 @@
     }
   ],
   "pending": [],
-  "changed_policy_identity": {
-    "id": "bifrost.security.rust.unsound-send-sync-impl",
-    "source_sha256": "356f77c3ac75b0bc31d76a1d9ff0ad897d879123b97edb5812d8a6b016e740be",
-    "authored_hash": "27332bd5743f8c063a1273d70de865afa4fae5b354cbe2a69baf78c750a7dcc2",
-    "resolved_semantic_hash": "27332bd5743f8c063a1273d70de865afa4fae5b354cbe2a69baf78c750a7dcc2"
-  },
-  "identity_verification": "Changed marker policy checked through the production authoring CLI; the fixture gate checks both selected rules against their manifest semantic hashes.",
+  "policy_identities": [
+    {
+      "id": "bifrost.security.rust.unsound-send-sync-impl",
+      "source_sha256": "356f77c3ac75b0bc31d76a1d9ff0ad897d879123b97edb5812d8a6b016e740be",
+      "authored_hash": "27332bd5743f8c063a1273d70de865afa4fae5b354cbe2a69baf78c750a7dcc2",
+      "resolved_semantic_hash": "27332bd5743f8c063a1273d70de865afa4fae5b354cbe2a69baf78c750a7dcc2"
+    },
+    {
+      "id": "bifrost.security.rust.callback-after-invalid-state",
+      "source_sha256": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+      "authored_hash": "b82cfb7f71d76ec9419311d1edec505f2a84adabfc340559cceb6971b64be07b",
+      "resolved_semantic_hash": "b82cfb7f71d76ec9419311d1edec505f2a84adabfc340559cceb6971b64be07b"
+    }
+  ],
+  "identity_verification": "Both policies checked through the 0.15.0 policy-source-identity command; the fixture gate checks runtime and finding policy hashes against the manifest.",
   "previous_qualification": {
-    "revision": "BrokkAi/bifrost-packs@32f13cd",
-    "record": "docs/qualification/rust-sast.json",
-    "engine_build_identity": "efd25a06b34efd714f4e6ceac74b30b8114c5c1b",
-    "passed_cases": 34,
-    "note": "Historical integration evidence before shared_access; full case observations remain in Git history."
-  },
-  "prerequisite": {
-    "pr": "BrokkAi/bifrost-dev#6457",
-    "head": "3707f713689748b70b2da903f8c56bff114889a6"
+    "revision": "BrokkAi/bifrost-packs@5a729e3",
+    "engine_build_identity": "33704f6074c4a41b54aefd63229ace52483de6eb",
+    "binary_sha256": "da99bcc36ceaf78cae5f7c8ea2150e3d5cdb714b4f8466e701d23dbcfa446567",
+    "passed_cases": 37,
+    "note": "Local integration build of bifrost-dev#6457 for #6385/#6394. Every case keeps its expected finding count on 0.15.0."
   }
 }

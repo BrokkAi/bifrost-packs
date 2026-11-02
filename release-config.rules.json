@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.3.1",
+  "release_version": "0.8.0",
   "artifact_role": "source",
-  "notes": "This patch preserves the corrected rules 0.3.0 policy bytes, required capabilities and typed incomplete outcomes while pinning their native pack dependency to 0.4.0. That independent native stream adds the reviewed result-use model families and PHP builtin declaration pack through its reproducible generation recipes. Source integrity and focused publication smoke remain separate from full engine and policy qualification.",
+  "notes": "This minor release requires Bifrost 0.15.0 or later. Five existing policies use the resolved-value RQL operator and now declare the resolved-value capability that Bifrost 0.15.0 is the first release to advertise: bifrost.csharp-codeql-quality.call-to-obsolete-method, .console-output and .use-of-file-upload (bifrost.csharp-codeql-quality 0.4.0) and bifrost.security.csharp.xmldocument-url-resolver and bifrost.security.python.insecure-protocol (bifrost.security 2.0.0). A consumer engine older than 0.15.0 rejects the bundle at admission. use-of-file-upload resolves no call targets, so it no longer requires exact-call-target. Policy sources, IDs and findings are unchanged. Since rules 0.7.0 the release also adds the C# password-in-configuration and empty-password-in-configuration policies to bifrost.csharp-codeql-quality and the C# XmlDocument XmlUrlResolver and SignedXml embedded-key trust policies to bifrost.security, corrects bifrost.csharp-codeql-quality.call-to-gc and .useless-if-statement against CodeQL's tests, and changes the exact native dependency from bifrost.public.packs 0.7.0 to 0.8.0, which ships compiled the public packs Bifrost previously supplied only through its embedded built-in registry. Publish packs/v0.8.0 first. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.4.0",
+      "release_version": "0.8.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

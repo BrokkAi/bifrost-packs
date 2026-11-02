@@ -56,6 +56,7 @@ SUPPORTED_WORKSPACE_DIAGNOSTIC_CODES = frozenset(
         "qualified-value-locator-inactive-model",
         "qualified-value-locator-incomplete",
         "endpoint-set-import-requires-workspace",
+        "declaration-selection-import-requires-workspace",
     }
 )
 EVIDENCE_SCOPE = "source authoring identity only; no execution or behavior qualification"

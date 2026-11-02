@@ -1,0 +1,1123 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.research.dotnet-processstartinfo-probe",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs-research",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "dotnet/runtime release/9.0 reference assemblies (System.Diagnostics.Process at b0984b273c3b543805fabdfb2aaf65b8c96216fd) for the members these research probes call; research-only, not a reviewed pack",
+    "revision": "dotnet-9.0"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-dotnet-processstartinfo-probe",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.research.dotnet-processstartinfo-probe"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "System.Diagnostics.Process",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process"
+            }
+          },
+          {
+            "id": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "System.Diagnostics.ProcessStartInfo",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo"
+            }
+          },
+          {
+            "id": "type.research.dotnet-processstartinfo-probe.system-environment",
+            "name": "System.Environment",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Environment"
+            }
+          },
+          {
+            "id": "type.research.dotnet-processstartinfo-probe.system-console",
+            "name": "System.Console",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Console.dll",
+              "symbol": "System.Console"
+            }
+          },
+          {
+            "id": "type.research.dotnet-processstartinfo-probe.system-net-http-httpcontent",
+            "name": "System.Net.Http.HttpContent",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Net.Http.dll",
+              "symbol": "System.Net.Http.HttpContent"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start()"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-start-info",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "startInfo",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Diagnostics.ProcessStartInfo",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Diagnostics.Process",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.Diagnostics.ProcessStartInfo)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Diagnostics.Process",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-arguments",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "arguments",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Diagnostics.Process",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-argument-list",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "arguments",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Collections.Generic.IEnumerable",
+                    "arguments": [
+                      {
+                        "kind": "named",
+                        "name": "System.String",
+                        "arguments": [],
+                        "nullable": false
+                      }
+                    ],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Diagnostics.Process",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.Collections.Generic.IEnumerable{System.String})"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-credentials",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "userName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "password",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Security.SecureString",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "domain",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Diagnostics.Process",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.String,System.Security.SecureString,System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-arguments-credentials",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-process",
+            "name": "Start",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "arguments",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "userName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "password",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Security.SecureString",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "domain",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Diagnostics.Process",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.String,System.String,System.Security.SecureString,System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "ProcessStartInfo",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": []
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "ProcessStartInfo()"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "ProcessStartInfo",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "ProcessStartInfo(System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name-arguments",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "ProcessStartInfo",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "arguments",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "ProcessStartInfo(System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name-argument-list",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "ProcessStartInfo",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "fileName",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "arguments",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Collections.Generic.IEnumerable",
+                    "arguments": [
+                      {
+                        "kind": "named",
+                        "name": "System.String",
+                        "arguments": [],
+                        "nullable": false
+                      }
+                    ],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "ProcessStartInfo(System.String,System.Collections.Generic.IEnumerable{System.String})"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.file-name",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "FileName",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.FileName"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.arguments",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "Arguments",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.Arguments"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.argument-list",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "ArgumentList",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Collections.ObjectModel.Collection",
+                "arguments": [
+                  {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.ArgumentList"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.use-shell-execute",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo",
+            "name": "UseShellExecute",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.UseShellExecute"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-environment.get-environment-variable",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-environment",
+            "name": "GetEnvironmentVariable",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "variable",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Environment.GetEnvironmentVariable(System.String)"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-console.read-line",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-console",
+            "name": "ReadLine",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Console.dll",
+              "symbol": "System.Console.ReadLine()"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-net-http-httpcontent.read-as-string-async",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-net-http-httpcontent",
+            "name": "ReadAsStringAsync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Threading.Tasks.Task",
+                "arguments": [
+                  {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Net.Http.dll",
+              "symbol": "System.Net.Http.HttpContent.ReadAsStringAsync()"
+            }
+          },
+          {
+            "id": "member.research.dotnet-processstartinfo-probe.system-net-http-httpcontent.read-as-string-async-cancellation-token",
+            "owner": "type.research.dotnet-processstartinfo-probe.system-net-http-httpcontent",
+            "name": "ReadAsStringAsync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "cancellationToken",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Threading.CancellationToken",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Threading.Tasks.Task",
+                "arguments": [
+                  {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Net.Http.dll",
+              "symbol": "System.Net.Http.HttpContent.ReadAsStringAsync(System.Threading.CancellationToken)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.dotnet-dotnet-processstartinfo-probe",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.research.dotnet-processstartinfo-probe"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-start-info",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.Diagnostics.ProcessStartInfo)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-arguments",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-argument-list",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.Collections.Generic.IEnumerable{System.String})",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-credentials",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.String,System.Security.SecureString,System.String)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-process.start-file-name-arguments-credentials",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.Process.Start(System.String,System.String,System.String,System.Security.SecureString,System.String)",
+              "has_receiver": false,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.ProcessStartInfo()",
+              "has_receiver": false,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.ProcessStartInfo(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name-arguments",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.ProcessStartInfo(System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-diagnostics-processstartinfo.constructor-file-name-argument-list",
+            "target": {
+              "path": "System.Diagnostics.Process.dll",
+              "symbol": "System.Diagnostics.ProcessStartInfo.ProcessStartInfo(System.String,System.Collections.Generic.IEnumerable{System.String})",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-environment.get-environment-variable",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.Environment.GetEnvironmentVariable(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-console.read-line",
+            "target": {
+              "path": "System.Console.dll",
+              "symbol": "System.Console.ReadLine()",
+              "has_receiver": false,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.research.dotnet-processstartinfo-probe.system-net-http-httpcontent.read-as-string-async",
+            "target": {
+              "path": "System.Net.Http.dll",
+              "symbol": "System.Net.Http.HttpContent.ReadAsStringAsync()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

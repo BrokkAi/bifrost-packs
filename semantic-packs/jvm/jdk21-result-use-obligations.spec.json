@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.jdk21.result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "jdk",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "jdk21-result-use-obligations.json",
+    "sha256": "e54877f419239eea3d76cecf561b4e8283f0e6ed3dd3f99762cd7abbb2e24dbb",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/2b4d18fcacb02803ff6fe458805d98a94a4342bf/semantic-packs/models/jdk21-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "jdk",
+        "requirement": ">=21.0.0, <22.0.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "jdk",
+        "version": ">=21.0.0, <22.0.0"
+      },
+      "targets": [
+        "jvm"
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html#trim() ; https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html#deleteIfExists(java.nio.file.Path)",
+    "revision": "java-se-21"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/jdk21-result-use.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "jdk",
+      "version": "=21.0.13"
+    },
+    "targets": [
+      "jvm"
+    ],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "java",
+      "owner": "java.nio.file.Files",
+      "name": "deleteIfExists",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

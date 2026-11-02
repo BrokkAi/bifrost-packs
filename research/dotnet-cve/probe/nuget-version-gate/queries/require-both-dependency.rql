@@ -1,0 +1,8 @@
+; require-both accepts only configuration_fact rows as its second input.
+(require-both
+  :code (language csharp (class (name "CmsVerifier")))
+  :configuration (dependency-evidence
+    :ecosystem nuget
+    :package "System.Security.Cryptography.Pkcs"
+    :kinds [locked installed]
+    :version-range "[9.0.0,9.0.21)"))

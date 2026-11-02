@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-overly-permissive-file/.bifrost/policies/overly-permissive-file.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/overly-permissive-file.rqlp",
+      "sha256": "8deedfe9d1891eae173c44277d7c4b9cbb396e7df8d439e4cb1a985e39e2c148",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-overly-permissive-file/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "sha256": "d3f03a6510584e0af0019066298b9a8de1a2bc72199fb84318351f867b8d759d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-overly-permissive-file/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-overly-permissive-file/README.md",
+      "sha256": "8818352b68039fb56e21ba3c3d419f3d222517b9bccd49ff6efe9a7205ba35f0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-overly-permissive-file/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-overly-permissive-file/main.py",
+      "sha256": "555a62977bf9e4cec573839781ecdcf476ae90597e8d47b55adb5930c96baebf",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-overly-permissive-file/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-overly-permissive-file/pyproject.toml",
+      "sha256": "0e45210856d4a955bdb6e004903494f9cccd288e619a10f4efff0b6576d574ed",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-overly-permissive-file/upstream/WeakFilePermissions.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-732-WeakFilePermissions/test.py",
+      "sha256": "b22681e606875a1693b23414f12967790dc616f02288e00492e38c1b17d0a254",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-732-WeakFilePermissions/test.py"
+      }
+    }
+  ]
+}

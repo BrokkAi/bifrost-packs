@@ -1,0 +1,27 @@
+; CodeQL query: Input Validation/UseOfFileUpload.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report PostedFile member accesses that resolve exactly to
+; System.Web.UI.HtmlControls.HtmlInputFile.PostedFile in the reviewed
+; System.Web semantic model. Accesses named PostedFile are selected first, so
+; other members do not take part. A PostedFile access the resolver cannot
+; prove to be that property, including one on a field, a property, a
+; subclass receiver or another type's PostedFile, makes the run incomplete
+; rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.use-of-file-upload"
+  :name "C# use of HtmlInputFile.PostedFile"
+  :message "Avoid using file upload."
+  :severity note
+  :description "Mirrors CodeQL csharp/ql/src/Input Validation/UseOfFileUpload.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports reads of System.Web.UI.HtmlControls.HtmlInputFile.PostedFile, with the property resolved through the reviewed System.Web semantic model."
+  :tags ["csharp" "codeql" "quality" "asp.net"]
+  :analysis (analysis :type assertion
+    (bind :name accesses :query (rql :schema-version 1
+      (resolved-value
+        :resolves-to "System.Web.UI.HtmlControls.HtmlInputFile.PostedFile"
+        :proof exact
+        (language csharp
+          (field_access :field (name "PostedFile"))))))
+    (group :name by-access :by (accesses.id)
+      (aggregate :name posted-file-reads :op count))
+    (assert :group by-access :value posted-file-reads :cardinality (exactly 0))))

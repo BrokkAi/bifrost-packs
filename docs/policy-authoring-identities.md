@@ -1,17 +1,19 @@
 # Policy authoring identity verification
 
-Rules 0.3.1 is prepared as a patch and dependency successor to the corrected
-`rules/v0.3.0` policy baseline. It preserves the 181 policy source files, policy
-IDs, language scopes, required engine capabilities, policy bytes and typed
-incomplete outcomes, and depends exactly on
-`bifrost.public.packs@0.4.0`. The independent native successor adds eight
-direct result-use model families, two Go `os` model outputs, and the generated
-PHP builtin declaration slice. The existing PHP pack notes describe an earlier
-partial output with 852 rejects (warnings). The selected 0.13.1 generator has
-not run this recipe here,
-so its current completeness/reject report remains unverified and must stay
-explicit. Neither stream change claims complete PHP coverage or qualifies
-consumer behavior; see the [PHP pack notes](../semantic-packs/php/README.md).
+Rules 0.5.1 is prepared as a patch successor to `rules/v0.5.0`. It changes the
+declared required capabilities of twenty-seven policies to canonical names and
+the arity filter of `bifrost.cpp-jsf.av-rule-159`; the av-rule-159 source and
+its fixture copy are the only policy files whose identities change.
+
+Rules 0.5.0 was a minor successor to `rules/v0.4.0`. It keeps the
+238 policy source files and their IDs. Twenty existing policies change their
+consumer requirements: the Python arms of the ten `bifrost.performance` loop
+policies require exact declared effects (`bifrost.code-smells` 4.0.0), and the
+ten `bifrost.effects` selected-boundary policies import their declaration
+selection and are opt-in (`bifrost.effects` 2.0.0). It depends exactly on
+`bifrost.public.packs@0.6.0`, whose native recipe adds the reviewed
+`bifrost.python-performance-summaries` model those Python arms read. Neither
+stream change qualifies consumer behavior.
 
 The earlier authoring-identity preparation corrected 84 authored fields, 43
 available resolved fields and 15 stale resolved values to explicit null. The
@@ -36,5 +38,6 @@ verification.
 Source authoring verification does not execute policies, establish findings,
 complete workspace binding, advertise engine contracts or qualify an engine
 release. Runtime semantic hashes and positive, near-miss and incomplete witnesses
-remain separate requirements. The 0.3.1 preparation remains pending the
-independent public producer check; no successor release is claimed here.
+remain separate requirements. The pinned 0.14.0 CLI verified all 238 source
+authoring identities for the 0.5.0 preparation; no successor release is
+claimed here.

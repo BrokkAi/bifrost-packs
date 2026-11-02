@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.javascript-codeql-quality",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Bifrost JavaScript CodeQL quality",
   "description": "Public JavaScript and TypeScript declaration, binding, class, property, and identifier quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -125,8 +125,7 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "language-rule-facts",
-        "member-resolution"
+        "language-rule-facts"
       ],
       "severity_rationale": "A this-member access with mismatched staticness can target no valid class member.",
       "remediation": "Use the matching static or instance form and keep the declaration and access conventions consistent."
@@ -143,8 +142,7 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "language-rule-facts",
-        "expression-kind-facts"
+        "language-rule-facts"
       ],
       "severity_rationale": "Duplicate object properties hide an earlier value and can make configuration or data construction order-dependent.",
       "remediation": "Remove the duplicate key or make the intended final value explicit."
@@ -198,8 +196,7 @@
         "semantic-model-provenance",
         "normalized-call-roles",
         "lexical-environment",
-        "literal-value-matching",
-        "control-flow"
+        "semantic-control-flow"
       ],
       "severity_rationale": "Checking a path before using it can expose a time-of-check/time-of-use race.",
       "remediation": "Use a race-safe descriptor or atomic operation that combines checking and use."

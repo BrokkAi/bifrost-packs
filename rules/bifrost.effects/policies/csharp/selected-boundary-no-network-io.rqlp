@@ -1,10 +1,12 @@
-; Network-effect boundary for one explicitly selected C# declaration.
+; Network-effect boundary for the reviewed C# declarations a host
+; selects.
 ;
-; This is the shipped specialization. Its ship-time declaration selection is
-; the empty set, so a repository that enables this policy without editing the
-; selection block below carries no purity obligation at all. Purity is never
-; inferred from a method name, a class name, a namespace prefix, a file name, a
-; comment, or an attribute.
+; The protected declarations are not authored in this policy. They come
+; from the reviewed declaration-selection document it imports, so the
+; released policy ID runs unchanged for every repository and an
+; unconfigured run fails activation instead of passing vacuously.
+; Purity is never inferred from a method name, a class name, a namespace
+; prefix, a file name, a comment, or an attribute.
 ;
 ; Activation
 ; ----------
@@ -15,13 +17,25 @@
 ;    / `dotnet` model, which is the evidence row every .NET workspace publishes
 ;    for its shared-framework reference assemblies, so a workspace that already
 ;    resolves its dependencies activates it without further configuration.
-; 2. Replace both declaration selections in the analysis block below with the
-;    exact declaration(s) this repository protects, for example:
-;      (language csharp
-;        (enclosing-decl
-;          (inside-decl (class :name "PriceCalculator")
-;            (method :name "Total"))))
-; 3. Enable the policy: `bifrost --policy-id
+; 2. Write the reviewed declaration selection to
+;    `.bifrost/effect-boundaries/csharp-network-io.rqlp`:
+;      (declaration-selection-document
+;        :schema-version 1
+;        :language csharp
+;        :declarations [
+;          (rql (enclosing-decl
+;                 (inside-decl (class :name "PriceCalculator")
+;                   (method :name "Total"))))])
+;    Each entry is one exact `enclosing-decl` selector of a function, method,
+;    or class with an exact `:name`, optionally inside one exactly named
+;    owner (`inside-decl`). The document admits no other constraint and no
+;    nested file reference. A missing, empty, malformed, wrong-kind or
+;    wrong-language document fails activation (`policy-validation-failed`),
+;    and the imported selection is part of the run's `policy_hash`. A host
+;    that scans untrusted repositories owns this path: it writes its reviewed
+;    document there and never runs the repository's own copy.
+; 3. Enable the policy by its ID; it is opt-in and never joins a default
+;    run: `bifrost --policy-id
 ;    bifrost.effects.csharp.selected-boundary-no-network-io --fail-on error`.
 ;
 ; Why this API
@@ -44,7 +58,7 @@
 ; open and the run publishes an unmet obligation.
 ;
 ; The rule body is shared across languages; only the language label, the
-; activated model, and this selection block differ.
+; activated model, and the imported selection differ.
 ;
 ; The join
 ; --------
@@ -67,35 +81,24 @@
   :name "Selected C# boundary reaches no network effect"
   :message "the selected C# boundary reaches the declared network effect"
   :severity error
-  :description "One explicitly selected C# declaration must not reach a declared network effect, directly or through workspace helpers. The effect is declared by the reviewed C# semantic model on the exact .NET API identity, never inferred from a method name, a class name, a namespace prefix, a file name, a comment, or an attribute. The ship-time selection is empty; configure the declaration-selection block before enabling this policy."
+  :description "No explicitly selected C# declaration may reach a declared network effect, directly or through workspace helpers. The effect is declared by the reviewed C# semantic model on the exact .NET API identity, never inferred from a method name, a class name, a namespace prefix, a file name, a comment, or an attribute. The protected declarations come from the reviewed declaration-selection document `.bifrost/effect-boundaries/csharp-network-io.rqlp`; a missing or invalid document fails activation instead of passing."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#network-effect-boundary"
   :tags ["effects" "network" "boundary" "csharp"]
   :analysis
     (analysis
       :type assertion
       ; ---------------------------------------------------------------------
-      ; Declaration-selection block. Ship-time selection: the empty set.
-      ; Replace both `(except ...)` expressions below with the exact
-      ; declaration this repository protects. The `effect` binding repeats the
-      ; same selection on purpose: `procedure-effects` derives a closure for
-      ; every declaration its input query returns, so repeating the selection
-      ; is what keeps the policy from deriving effects for declarations it did
-      ; not select. With the ship-time empty selection it derives none, the
-      ; assertion has no group to judge, and the run is vacuously clean.
+      ; Declaration selection: imported, never authored here. `effect` reads
+      ; the procedure effects of exactly the declarations `selected` binds,
+      ; so the two cannot drift apart and the policy derives no effect
+      ; closure for a declaration it did not select.
       ; ---------------------------------------------------------------------
       (bind :name selected
-        :query (rql :schema-version 1
-          (language csharp
-            (except
-              (enclosing-decl (method))
-              (enclosing-decl (method))))))
+        :query (declaration-selection-file
+          :path ".bifrost/effect-boundaries/csharp-network-io.rqlp"
+          :language csharp))
       (bind :name effect
-        :query (rql :schema-version 1
-          (language csharp
-            (procedure-effects
-              (except
-                (enclosing-decl (method))
-                (enclosing-decl (method)))))))
+        :query (procedure-effects-of :binding selected))
       (join :left selected :right effect :on ((id procedure_id)))
       (group :name selected-boundary :by (selected.id)
         (aggregate :name network-effects :op count

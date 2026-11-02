@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "purpose": "Re-declare resolved-value on the five public policies that use the (resolved-value ...) operator (bifrost-dev#8117).",
+  "engine": {
+    "version": "0.15.0",
+    "build_identity": "09a2503c5f7ced1630a9e3c445ead53dfc5925e8",
+    "capability_contract_version": 1,
+    "model_set_sha256": "91461455dea3dccbaabba343d7c2fd639002cead21eca7c4786a0b03876fd013",
+    "validated_archive": {
+      "name": "bifrost-v0.15.0-aarch64-apple-darwin.tar.gz",
+      "sha256": "34295669d86aef268f0134c15f5127b90deac2e31e2f89bd3031ffe05cf097a5"
+    },
+    "validated_executable_sha256": "d9acbc7305ed0390457117c48531c82c5ff0778dab4290f5cc670e692280ae45",
+    "ci_archive": {
+      "name": "bifrost-v0.15.0-x86_64-unknown-linux-gnu.tar.gz",
+      "sha256": "1c454241496ed61db2d54e7e631c3663201ac8d4fdcc6ebc72789fe33391ff04"
+    },
+    "advertises": [
+      "configuration-absence",
+      "configuration-code",
+      "field-write-value",
+      "resolved-value"
+    ]
+  },
+  "modes": {
+    "workspace": "BIFROST_OPEN_PACKS_DISABLE=1, --no-builtin-policies, --policy-file .bifrost/policies/<policy>.rqlp",
+    "pack-main": "BIFROST_OPEN_POLICY_PACK_ROOT=<origin/main 4f5be38 rules/>, --policy --policy-id <id>",
+    "pack-new": "BIFROST_OPEN_POLICY_PACK_ROOT=<this change's rules/>, --policy --policy-id <id>"
+  },
+  "common_flags": "BIFROST_SEMANTIC_PACK_DOWNLOAD=off, --no-incremental, --format json, --fail-on never, --evaluation-date 2026-11-02",
+  "authoring_identities": {
+    "verified": 254,
+    "script": "scripts/verify-policy-identities.py"
+  },
+  "python_smoke": {
+    "script": "scripts/smoke.py",
+    "positive": 1,
+    "near_miss": 0
+  },
+  "capability_gate_check": "A copy of the C# manifest that declared the unadvertised name resolved-value-nope made call-to-obsolete-method not_run with 'this engine does not provide the `resolved-value-nope` capability'.",
+  "cases": [
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.call-to-obsolete-method",
+      "fixture": "fixtures/policy/bifrost.csharp-codeql-quality/call-to-obsolete-method",
+      "completion": "complete",
+      "reasons": [],
+      "unavailable_capabilities": [],
+      "findings": [
+        "Probe.cs:17",
+        "Probe.cs:18",
+        "Probe.cs:19",
+        "Probe.cs:24",
+        "Probe.cs:25",
+        "Probe.cs:26"
+      ],
+      "identical_across_modes": true
+    },
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.console-output",
+      "fixture": "fixtures/policy/bifrost.csharp-codeql-quality/console-output",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "unavailable_capabilities": [],
+      "findings": [],
+      "identical_across_modes": true
+    },
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.console-output",
+      "fixture": "fixtures/policy/bifrost.csharp-codeql-quality/console-output/error-stream",
+      "completion": "complete",
+      "reasons": [],
+      "unavailable_capabilities": [],
+      "findings": [
+        "ErrorProbe.cs:17",
+        "ErrorProbe.cs:22"
+      ],
+      "identical_across_modes": true
+    },
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.use-of-file-upload",
+      "fixture": "fixtures/policy/bifrost.csharp-codeql-quality/use-of-file-upload",
+      "completion": "complete",
+      "reasons": [],
+      "unavailable_capabilities": [],
+      "findings": [
+        "Probe.cs:15",
+        "Probe.cs:20",
+        "Probe.cs:25",
+        "Probe.cs:9",
+        "upstream/Input Validation/UseOfFileUpload.cs:14"
+      ],
+      "identical_across_modes": true
+    },
+    {
+      "policy_id": "bifrost.security.python.insecure-protocol",
+      "fixture": "fixtures/policy/bifrost.security/python-insecure-protocol",
+      "completion": "complete",
+      "reasons": [],
+      "unavailable_capabilities": [],
+      "findings": [
+        "main.py:10",
+        "main.py:11",
+        "main.py:12",
+        "main.py:5",
+        "main.py:6",
+        "main.py:7",
+        "main.py:8",
+        "main.py:9",
+        "upstream/InsecureProtocol.py:10",
+        "upstream/InsecureProtocol.py:11",
+        "upstream/InsecureProtocol.py:12",
+        "upstream/InsecureProtocol.py:7",
+        "upstream/InsecureProtocol.py:8",
+        "upstream/InsecureProtocol.py:9"
+      ],
+      "identical_across_modes": true
+    },
+    {
+      "policy_id": "bifrost.security.csharp.xmldocument-url-resolver",
+      "fixture": "fixtures/policy/bifrost.security/xmldocument-url-resolver",
+      "completion": "complete",
+      "reasons": [],
+      "unavailable_capabilities": [],
+      "findings": [
+        "Probe.cs:12",
+        "Probe.cs:20",
+        "Probe.cs:29"
+      ],
+      "identical_across_modes": true
+    },
+    {
+      "policy_id": "bifrost.security.csharp.xmldocument-url-resolver",
+      "fixture": "fixtures/policy/bifrost.security/xmldocument-url-resolver/incomplete",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "unavailable_capabilities": [],
+      "findings": [],
+      "identical_across_modes": true
+    }
+  ]
+}

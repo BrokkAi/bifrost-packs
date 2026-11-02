@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "1.5.0",
+  "version": "2.1.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -216,6 +216,41 @@
       ],
       "severity_rationale": "External input embedded in an XPath expression can alter node selection and expose or modify unintended data.",
       "remediation": "Use a parameterized XPath mechanism where available, or validate and encode values according to the XPath context before building the expression."
+    },
+    {
+      "path": "policies/csharp/signedxml-embedded-key-trust.rqlp",
+      "id": "bifrost.security.csharp.signedxml-embedded-key-trust",
+      "authored_hash": "f16b5ec60628cbca5d31ea10e2003542bba1214e7a9a819ac7b0c8bcfec7ef86",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "A signature verified with the key carried in the document itself passes for any document its sender signed with a key of their own, so forged XML-DSig or SAML content is accepted.",
+      "remediation": "Verify the signature with an out-of-band key or certificate through CheckSignature(AsymmetricAlgorithm) or CheckSignature(X509Certificate2, bool), or establish trust in the returned key before accepting the document."
+    },
+    {
+      "path": "policies/csharp/xmldocument-url-resolver.rqlp",
+      "id": "bifrost.security.csharp.xmldocument-url-resolver",
+      "authored_hash": "16800e801cbbf4107aa6a13cf6b6dcd596951abd31f18e8f2966ce057e4a6546",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "exact-call-target",
+        "resolved-value",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "XmlDocument always processes DTDs, so an XmlUrlResolver lets an external entity in any document the instance parses read local files or reach internal network hosts.",
+      "remediation": "Leave XmlDocument.XmlResolver at its default or set it to null. If entities must be resolved, use a resolver restricted to trusted resources, or load through XmlReader.Create with DtdProcessing.Prohibit."
     },
     {
       "path": "policies/declared-storage/go-store-requires-validation.rqlp",
@@ -546,8 +581,8 @@
         "python"
       ],
       "required_capabilities": [
-        "exact-value-identity",
         "exact-call-target",
+        "resolved-value",
         "actual-to-formal-binding",
         "semantic-model-provenance"
       ],
@@ -735,8 +770,7 @@
         "rust"
       ],
       "required_capabilities": [
-        "structural-match",
-        "literal-value-matching"
+        "structural-match"
       ],
       "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
@@ -869,7 +903,7 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "rust-marker-impls-of"
+        "language-rule-facts"
       ],
       "severity_rationale": "An unsafe marker impl lacking a necessary bound can permit cross-thread races on stored values.",
       "remediation": "Add the required Send or Sync bound to the impl parameter, including through a reviewed supertrait, or remove the unsafe impl.",
@@ -886,9 +920,8 @@
       ],
       "required_capabilities": [
         "structural-match",
-        "call-shape-callee-provenance",
-        "call-results",
-        "control-relations-dominance"
+        "normalized-call-roles",
+        "semantic-control-flow"
       ],
       "severity_rationale": "Caller-supplied code may panic while memory invariants are temporarily broken; this name-based ordering heuristic requires review.",
       "remediation": "Initialize or restore memory invariants before calling caller-supplied code and make unwinding safe.",

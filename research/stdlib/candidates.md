@@ -17,7 +17,7 @@ Every row is research-only and unqualified. The [qualification contract](README.
 | [jvm-aead-cipherinputstream-integrity](#jvm-aead-cipherinputstream-integrity) | JVM (Java; Kotlin/Scala callers of JDK members) | taint + typestate | P1 | candidate |
 | [gcm-nonce-reuse-same-key](#gcm-nonce-reuse-same-key) | JVM (Java/Kotlin/Scala) and C#/.NET | relational encryption protocol | P2 | deferred-proof-heavy |
 | [dotnet-processstartinfo-executable-and-shell-boundary](#dotnet-processstartinfo-executable-and-shell-boundary) | C#/.NET | taint | P2 | candidate |
-| [dotnet-xmlreader-external-dtd-resolution](#dotnet-xmlreader-external-dtd-resolution) | C#/.NET | taint + typestate | P1 | candidate |
+| [dotnet-xmlreader-external-dtd-resolution](#dotnet-xmlreader-external-dtd-resolution) | C#/.NET | taint + typestate | P1 | candidate; XmlDocument slice implemented |
 | [dotnet-regex-unbounded-backtracking](#dotnet-regex-unbounded-backtracking) | C#/.NET | taint | P2 | deferred-proof-heavy |
 | [dotnet-rfc2898-weak-default-parameters](#dotnet-rfc2898-weak-default-parameters) | C#/.NET | match/configuration | P2 | out-of-scope-match-lead |
 | [go-database-sql-tx-terminal](#go-database-sql-tx-terminal) | Go | typestate | P2 | candidate |
@@ -443,6 +443,8 @@ Stop gate: Stop if executable resolution, UseShellExecute, argument boundaries, 
 
 Ownership: Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.
 
+Qualification (2026-10-30): **incomplete, blocked by engine** on Bifrost 0.14.2, cross-checked on 0.14.3. Only `new ProcessStartInfo(string)` binds as a sink. `Process.Start(string, ...)` and the two-argument constructors fail overload resolution, `FileName` setters and initializers cannot be sink operands, and `ArgumentList` access paths are unknown, so the near miss cannot be shown clean. No C# source crosses a trust boundary: environment and console input are caller-authorized, request sources are not selectable, and response bodies need `await`. The interpreter half also needs argument-structure, comparison and target-framework facts. See the [prototype](prototypes/dotnet-processstartinfo/README.md).
+
 Sources: [ProcessStartInfo (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo?view=net-10.0), [ProcessStartInfo.ArgumentList (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-10.0), [ProcessStartInfo.Arguments (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.arguments?view=net-10.0).
 
 ## dotnet-xmlreader-external-dtd-resolution
@@ -472,6 +474,20 @@ Stop gate: Stop if parser type, default configuration, target framework, resolve
 Ownership: Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.
 
 Sources: [XmlReaderSettings.DtdProcessing (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.dtdprocessing?view=net-10.0), [XmlReaderSettings.XmlResolver (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.xmlresolver?view=net-10.0), [XmlReader.Create (.NET 10 API)](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreader.create?view=net-10.0).
+
+Qualification (2026-10-30, Bifrost 0.14.2 `073c2379`): the XmlDocument slice is
+implemented as `bifrost.security.csharp.xmldocument-url-resolver` with the
+reviewed `bifrost.dotnet.system-xml-csharp` model. It reports
+`XmlDocument.XmlResolver = new XmlUrlResolver()`. XmlDocument always parses
+DTDs and the explicit write overrides the framework default, so the finding is
+a version-independent configuration. It does not establish untrusted
+provenance or a later load. The XmlReaderSettings and XmlTextReader contract
+is blocked by the engine. C# has no binding, points-to or property reaching
+facts to tie a settings or reader object to its writes and to
+`XmlReader.Create`, the overloaded `Create` call does not bind through the
+model, and object-initializer members do not bind. Those parts are not
+reported. `var`, field, initializer and subclass receivers keep the run
+inconclusive. Evidence: [.NET attempt](prototypes/dotnet-xml-resolver/README.md).
 
 ## dotnet-regex-unbounded-backtracking
 

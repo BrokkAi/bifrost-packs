@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/side-effect-in-assert/.bifrost/policies/side-effect-in-assert.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/side-effect-in-assert.rqlp",
+      "sha256": "b0109f52141ee61bade3971b5293176216a8825302cd713252b471ec4f9a4be6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/side-effect-in-assert/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/side-effect-in-assert/README.md",
+      "sha256": "b4e00fc90efbf0bf50189b5be07f8ec09b160d84f29188e71f7e18a64c6dc146",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/side-effect-in-assert/upstream/Statements/asserts/assert.py",
+      "source_path": "python/ql/test/query-tests/Statements/asserts/assert.py",
+      "sha256": "2452d240b70f4712c028cda37814631e948b49a7f673e679ecfba0d986fc8aa2",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Statements/asserts/assert.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/side-effect-in-assert/upstream/Statements/asserts/side_effect.py",
+      "source_path": "python/ql/test/query-tests/Statements/asserts/side_effect.py",
+      "sha256": "4de4984fb88fcc69e2a1ce9aa02717d95933511de0656a495f426d3be997ce79",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Statements/asserts/side_effect.py"
+      }
+    }
+  ]
+}

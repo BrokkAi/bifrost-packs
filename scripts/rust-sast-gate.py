@@ -16,6 +16,7 @@ RULES = ('unsound-send-sync-impl', 'callback-after-invalid-state')
 
 
 def digest(path):
+    """Return the SHA-256 hex digest of a file."""
     h = hashlib.sha256()
     with path.open('rb') as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b''):
@@ -24,10 +25,12 @@ def digest(path):
 
 
 def write(path, value):
+    """Write sorted, indented JSON with a trailing newline."""
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n')
 
 
 def main():
+    """Run every expectation case with fresh caches and write per-case and summary evidence."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
@@ -45,8 +48,7 @@ def main():
                              check=True, timeout=30)
     (output / 'version.txt').write_text(version.stdout + version.stderr)
     summary = dict(binary=str(binary), binary_sha256=digest(binary),
-                   version=version.stdout.strip(), qualification='focused integration build only',
-                   released_engine_qualified=False, cases=[])
+                   version=version.stdout.strip(), qualification='focused fixture gate', cases=[])
     manifest = json.loads((ROOT / 'rules/bifrost.security/manifest.json').read_text())
     identities = {p['id']: p for p in manifest['policies']}
     for rule in RULES:

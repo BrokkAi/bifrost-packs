@@ -6,22 +6,70 @@ The engine copy remains for existing embedded sources and focused fixtures;
 new public content belongs here. Storing authoring content does not select it
 for a release or enable it in a scanner.
 
+## Legacy built-in packs
+
+The prepared `packs/v0.8.0` adds 36 direct jobs after the twelve of
+`packs/v0.7.0`, one for each public pack that Bifrost's legacy embedded
+registry (`BIFROST_EMBEDDED_PACKS`) provides and the 0.7.0 bundle did not
+ship (bifrost-dev#4438). These are the Go standard-library, concurrency and
+testify packs, the Node `child_process` and Buffer packs, and the Python
+os-command, security-sink and stdlib-api packs. Their authored models move
+from schema 2 or 4 to the version-independent schema 8 by removing
+`compatibility.bifrost`, as the Go `os` models did; shard payloads,
+identities, provenance, licenses and completeness are unchanged. Each spec
+names one or more representative lookups taken from the model's own
+declarations or summaries, and pins the artifact URL to the migration commit.
+
+Six built-in packs stay source-only: Lombok, Getset, Scala case-class,
+Python process-inputs and the two Node runtime-values packs. They carry only
+`rules` or `runtime_values` records. The pinned producer requires at least one
+type, member or procedure lookup that resolves records, and it has no lookup
+kind for rules or runtime values, so these packs need a producer change before
+they can become jobs.
+
+## Previous native packaging repair
+
+The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
+five recipes of `packs/v0.6.1`. Only the `python-performance-summaries` input
+changes: its model is 1.1.0 and activates on `cpython >=3.10.0, <3.15.0`. The
+companion rules 0.7.0 updates the exact packs dependency. The published 0.6.1
+plan is described in the [release repair plan](result-use-native-release.md).
+
+## Bifrost 0.15.0 generator and authoring pin
+
+After `packs/v0.8.0` and `rules/v0.8.0`, `native-generation.json` pins public
+Bifrost 0.15.0 source `fc4a2da2b78c938e811c496b3c21e5b02f415048` (archive
+SHA-256 `7b89b11d272921e6078408014d90d79a7fea51112698173a1bcc8760618b7dcf`,
+Cargo.lock SHA-256
+`03cc61929856fc31be6619ce69f5c8ffa28de074a185b69414158e7c5b624dab`, Rust
+`1.99.1`). The same pin builds the native producer and the policy authoring CLI
+that checks every locked policy identity. Producers from 0.15.0 can write
+release index schema 4 (bifrost-dev#8336), so `native_generation.py` and
+`native_release.py` accept index schema 3 or 4 and each content declares the
+index schema its bundle actually has. Engines that read only schema 3 skip a
+schema-4 release during selection. The released v0.15.0 CLI reproduced all 254
+locked authoring identities unchanged. The published 0.8.0 releases stay
+immutable and keep the 0.14.0 generator they were built with.
+
 ## Pinned native candidate
 
-The published `packs/v0.3.0` and `rules/v0.2.1` releases remain immutable.
-The current rule-content baseline is `rules/v0.3.0`; the proposed `rules/v0.3.1`
-is a patch and dependency successor.
-The proposed next `packs/v0.4.0` recipe builds the public
-`bifrost-semantic-pack` producer version `0.13.1` from the generator-only
-preparation source
-`8c64332281245b6ea3bfae343645f78d0faf2d23` with Rust `1.97.1`.
+The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
+`packs/v0.4.0`, `rules/v0.3.1`, `packs/v0.3.0` and `rules/v0.2.1` releases
+remain immutable. `packs/v0.6.0` keeps the 0.5.0 jobs and recipes and adds the
+authored `bifrost.python-performance-summaries` job; `rules/v0.5.0` and the
+proposed `rules/v0.5.1` depend on it.
+The proposed next `packs/v0.6.0` recipe builds the public
+`bifrost-semantic-pack` producer version `0.14.0` from public source
+`c11a13ffa03ebea154f587b899954e412b5b871e`, the projection of the Bifrost
+v0.14.0 release candidate, with Rust `1.99.1`.
 `native-generation.json` pins the source archive SHA-256, Cargo.lock SHA-256,
 source revision and toolchain. The build receipt records the actual executable
 SHA-256. These are generator provenance; this public source has not thereby
 become a qualified or published engine release.
 
-The plan contains ten direct jobs: eight reviewed result-use models and the
-Go standard-library `os` procedure result-contract and declarations models. It
+The plan contains eleven direct jobs: eight reviewed result-use models, the
+Go standard-library `os` procedure result-contract and declarations models, and
+the reviewed Python performance summaries. It
 retains five recipes: four existing native recipes plus the existing pinned PHP
 builtin recipe. That recipe builds `bifrost.php-builtin` from
 `semantic-packs/php/phpstorm-stubs-2026.8.29.json`, pinned to phpstorm-stubs
@@ -29,12 +77,13 @@ revision `748ab87d16253a5b5d648b5fe4dae1ff4152bb03` and its recorded source-set
 digest. It is distinct from the PHP result-use model among the eight direct jobs.
 The source specification and model bytes are unchanged. The existing PHP pack
 notes describe a prior partial output with 852 rejects (warnings) for the pinned
-source set. The selected 0.13.1 generator has not run this recipe here, so that count is
-historical; the current generation report
-remains unverified and must stay explicit. This bounded declaration slice does
+source set. A local two-run generation with the selected 0.14.0 generator
+produced a partial `bifrost.php-builtin` with 854 rejects, the same count as the
+published `packs/v0.4.0` and `packs/v0.5.0`; the CI generation report remains the release record
+and must stay explicit. This bounded declaration slice does
 not claim complete PHP runtime coverage. See the
 [PHP pack notes](../semantic-packs/php/README.md). The successor also preserves
-the full generated bundle, including schema-8 and schema-16 content. Generation,
+the full generated bundle, including schema-8 and schema-17 content. Generation,
 integrity, compatibility and consumer behavior remain separate outcomes, and
 behavior qualification remains pending.
 
@@ -70,7 +119,7 @@ python3 -B release-contract/native_generation.py --root . \
   --config native-generation.json --binary /absolute/path/bifrost-semantic-pack \
   --build-receipt /absolute/scratch/generator-build.json --output /absolute/scratch/native
 python3 -B release-contract/native_release.py --root . \
-  --config release-config.packs.json --version 0.4.0 \
+  --config release-config.packs.json --version 0.6.0 \
   --archive /absolute/scratch/native/native.tar.gz \
   --receipt /absolute/scratch/native/generation.json --output /absolute/scratch/dist
 ```
@@ -85,7 +134,9 @@ input plan and archive. Metadata binds that receipt and the archive.
 
 CI caches the producer by source archive, lock and toolchain pins. It also caches
 upstream inputs by the recipe/specification hashes; every reused input must pass
-its own pinned checksum. `SEMANTIC_PACK_SOURCE_CACHE` provides the same verified
+its own pinned checksum, so a pull request may start from main's latest input set
+when its own hashes differ. Pushes to main save both caches, since a pull request
+can restore only what its own merge ref or main saved. `SEMANTIC_PACK_SOURCE_CACHE` provides the same verified
 input reuse locally. It does not permit network-free consumer acceptance to rely
 on the generator's source cache. Consumer offline reuse has its own selected
 release receipt and isolated runtime cache.

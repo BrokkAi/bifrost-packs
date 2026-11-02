@@ -183,6 +183,10 @@ def _language_scopes(root: Node) -> tuple[str, ...]:
             value = _scalar(form[1])
             if value:
                 languages.add(value)
+        elif form and _operator(form[0], "declaration-selection-file"):
+            value = _scalar(_top_level_fields(form).get(":language"))
+            if value:
+                languages.add(value)
     return tuple(sorted(languages))
 
 
@@ -222,6 +226,10 @@ def _validate_policy(path: Path, relative_path: str) -> tuple[str, str, str | No
 
     rql_count = 0
     for form in _nested_forms(root):
+        if form and _operator(form[0], "declaration-selection-file"):
+            # The imported selection's RQL is versioned inside the reviewed
+            # document; the engine validates it when the policy activates.
+            rql_count += 1
         if form and _operator(form[0], "rql"):
             rql_count += 1
             rql_fields: dict[str, Node] = {}

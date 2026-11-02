@@ -60,6 +60,23 @@ class RuleStatsTests(unittest.TestCase):
         self.assertIn("\\[with\\]", rendered)
         self.assertNotIn("ruby", rendered)
 
+    def test_imported_declaration_selection_supplies_query_language(self):
+        (self.root / "rules" / "family" / "policies" / "a.rqlp").write_text(
+            '''(policy
+  :schema-version 1
+  :id "family.a"
+  :name "Imported"
+  :severity error
+  :analysis (analysis :type assertion
+    (bind :name selected
+      :query (declaration-selection-file :path ".bifrost/x.rqlp" :language python))
+    (bind :name effect :query (procedure-effects-of :binding selected))))
+''',
+            encoding="utf-8",
+        )
+        inventory = rule_stats.build_inventory(self.root)
+        self.assertEqual(inventory["policies"][0]["query_languages"], ["python"])
+
     def test_language_pairs_overlap_and_paths_do_not_supply_support(self):
         second = self.write_policy(
             "rules/family/policies/b.rqlp",

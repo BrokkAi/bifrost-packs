@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.testify.require",
+  "pack_version": "1.0.0",
+  "ecosystem": "go-module",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-testify-require.json",
+    "sha256": "6cecba05a1ec89ec23732ca3f24e811e381a9b8db2be66458318504cb8290aa7",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/models/go-testify-require.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "module": {
+        "name": "github.com/stretchr/testify",
+        "version": "=1.11.1"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://pkg.go.dev/github.com/stretchr/testify/require",
+    "revision": "v1.11.1"
+  },
+  "license": "MIT",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/testify-v1.11.1-MIT.txt"
+  ],
+  "measurement_activation": {
+    "module": {
+      "name": "github.com/stretchr/testify",
+      "version": "=1.11.1"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "go",
+      "owner": "github.com/stretchr/testify/require",
+      "name": "NoError",
+      "has_receiver": false,
+      "parameter_count": 3
+    }
+  ]
+}

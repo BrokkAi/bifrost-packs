@@ -546,7 +546,10 @@
                 }
               }
             ],
-            "effects": []
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.regex_compile", "timing": "immediate", "certainty": "definite" }
+            ]
           },
           {
             "id": "summary.python.re.pattern.search",

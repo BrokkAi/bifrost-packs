@@ -4,10 +4,8 @@ Fresh Apache-2.0 public fixtures authored for this pack. Engine test fixtures we
 
 Each isolated crate has one positive or near-miss in `expectations.json`. Findings must have complete evidence; empty incomplete runs never pass. Fixtures are analysis inputs and must not be executed. Exact engine identity and runtime results belong in the gate evidence and qualification record, not in an engine release claim.
 
-The original 14 cases were qualified on integration build efd25a06b34efd714f4e6ceac74b30b8114c5c1b. That record predates the shared-access refinement; the current 17 cases are qualified against the combined #6385/#6394 local release-profile build 33704f6074c4. The accepted static message is generic; read the impl header the finding points at to identify the stored type parameter and required marker bound. See the focused qualification record; released-engine qualification remains pending.
+All 17 cases pass on public Bifrost 0.15.0 (build 09a2503c5f7ced1630a9e3c445ead53dfc5925e8); see the focused qualification record. The accepted static message is generic; read the impl header the finding points at to identify the stored type parameter and required marker bound.
 
-The #6385 fixtures also exercise shared-method access: methods that read only non-stored metadata fields do not report a Sync impl; Debug through a helper and a shared method in a different file do. The engine change depends on #6394 for cross-file method inventory. The combined release-profile fixture gate passes all 17 cases.
-
-Combined #6385/#6394 release-profile validation passes all 17 marker cases and all 20 callback cases. The cross-file-shared-read expectation remains one finding and now passes. This is local integration qualification; a published compatible engine is still required.
+The shared-method fixtures cover access classification: methods that read only non-stored metadata fields do not report a Sync impl; Debug through a helper and a shared method in a different file do.
 
 The classifier conservatively counts every read of a field that stores the type parameter. A metadata-only operation on such a field (for example, the alternative Tokio scheduler Inner reading self.buffer.len()) can therefore still report a Sync impl. Distinguishing that case from value access requires a separate engine design decision.
