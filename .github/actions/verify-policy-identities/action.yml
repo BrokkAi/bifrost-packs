@@ -35,6 +35,8 @@ runs:
       with:
         path: ${{ runner.temp }}/policy-authoring-cli
         key: ${{ steps.cli-key.outputs.key }}
+    # A cold Bifrost 0.15.0 build takes 48 to over 60 minutes on a hosted
+    # runner, so the build gets 120 of the verify job's 180 minutes.
     - name: Compile exact public authoring source
       if: ${{ steps.cli-cache.outputs.cache-hit != 'true' }}
       shell: bash
@@ -52,7 +54,7 @@ runs:
         mkdir "$RUNNER_TEMP/policy-source"
         tar -xzf "$RUNNER_TEMP/policy-source.tar.gz" -C "$RUNNER_TEMP/policy-source" --strip-components=1
         echo "${{ steps.pins.outputs.lock }}  $RUNNER_TEMP/policy-source/Cargo.lock" | sha256sum -c -
-        BIFROST_BUILD_IDENTITY_OVERRIDE="$commit" timeout --signal=TERM --kill-after=30s 60m cargo +"${{ steps.pins.outputs.toolchain }}" build \
+        BIFROST_BUILD_IDENTITY_OVERRIDE="$commit" timeout --signal=TERM --kill-after=30s 120m cargo +"${{ steps.pins.outputs.toolchain }}" build \
           --locked --release --manifest-path "$RUNNER_TEMP/policy-source/Cargo.toml" --bin bifrost
         rm -rf "$RUNNER_TEMP/policy-authoring-cli"
         mkdir -p "$RUNNER_TEMP/policy-authoring-cli"
