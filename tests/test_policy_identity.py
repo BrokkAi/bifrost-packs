@@ -1,3 +1,4 @@
+"""Tests for verifying locked policy authoring identities with the CLI."""
 import hashlib
 import json
 from pathlib import Path
