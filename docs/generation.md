@@ -26,7 +26,7 @@ packs. They carry only `rules` or `runtime_values` records. Their jobs, added
 after 0.8.0, use the `rule` and `runtime_exposure` measurement lookups from
 bifrost-dev#8324, which still require each lookup to resolve at least one
 record. They need the Bifrost 0.15.0 generator pin below and its release index
-schema 4. The prepared `packs/v0.9.0` ships them, built by the released
+schema 4. The published `packs/v0.9.0` ships them, built by the released
 0.15.0 producer binary. Its bundle index lists 62 packs, including all 46
 `pack_id` values under `crates/bifrost-semantic-packs/embedded/` on
 bifrost-dev master, and records no rejects for the six.
