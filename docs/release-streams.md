@@ -18,9 +18,15 @@ rules and compatibility boundaries.
 ## Current release status
 
 As of 2026-11-02, the latest published streams are `packs/v0.9.0`, tagged on
-`f52867e`, and `rules/v0.8.0`, tagged on `ab1ba15`. `rules/v0.9.0` is prepared
-next ([below](#c-codeql-ports-and-rust-security-policies-for-rules-090)); it keeps the exact dependency on
-`packs/v0.8.0`.
+`f52867e`, and `rules/v0.9.0`, tagged on `be4acbf`
+([below](#c-codeql-ports-and-rust-security-policies-for-rules-090)).
+`rules/v0.9.1` is prepared next. It is a patch release that changes only the
+exact packs dependency, from `packs/v0.8.0` to `packs/v0.9.0`. Bifrost 0.15.1
+no longer falls back to its embedded packs (bifrost-dev#4438), so the six packs
+that only `packs/v0.9.0` ships reach online users only once a rules release
+depends on it. Policies, IDs and consumer requirements are unchanged from
+`rules/v0.9.0`, which already requires Bifrost 0.15.0, the version
+`packs/v0.9.0` needs.
 
 `packs/v0.9.0` (bifrost-dev#4438) is a minor release for two reasons. First, it adds six native packs: Lombok,
 Getset, Scala case-class, Python process-inputs and the two Node
@@ -36,10 +42,9 @@ schema 3 skips this release during selection, so use Bifrost 0.15.0 or later.
 Every other job and recipe is unchanged from 0.8.0. The
 [generation notes](generation.md#legacy-built-in-packs) describe the six jobs.
 
-No rules release is required for `packs/v0.9.0`. `rules/v0.8.0`, and
-`rules/v0.9.0` as prepared, keep their exact dependency on `packs/v0.8.0`, so
-normal acquisition through the rules stream selects 0.8.0, without the six
-packs, until a rules release moves that dependency.
+`rules/v0.8.0` and `rules/v0.9.0` keep their exact dependency on
+`packs/v0.8.0`, so normal acquisition through those rules releases selects
+0.8.0, without the six packs. `rules/v0.9.1` moves that dependency.
 
 The 0.8.0 release notes follow. They were prepared as `packs/v0.8.0` and
 `rules/v0.8.0` (bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds
