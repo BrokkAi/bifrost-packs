@@ -68,6 +68,33 @@ a minor bump before 1.0 (`bifrost.csharp-codeql-quality` 0.3.0 → 0.4.0) and a
 major bump after it (`bifrost.security` 1.4.1 → 2.0.0). The rules release CI
 smoke test now uses the checksum-pinned Linux v0.15.0 binary instead of v0.14.2.
 
+### C# CodeQL ports unblocked by Bifrost 0.15.0
+
+Bifrost 0.15.0 adds C# `comparison`, `binary_expression` and `lock` rows, and
+local and parameter reference bindings (bifrost-dev#8308). These made six
+CodeQL C# queries expressible. They join `bifrost.csharp-codeql-quality` 0.4.0,
+which is not yet tagged, so the pack takes no further bump:
+
+| Policy | CodeQL query |
+| --- | --- |
+| `incomplete-parity-check` | `Likely Bugs/BadCheckOdd.ql` |
+| `class-name-comparison` | `Bad Practices/ErroneousClassCompare.ql` |
+| `lock-this` | `Concurrency/LockThis.ql` |
+| `empty-lock-statement` | `Likely Bugs/Statements/EmptyLockStatement.ql` |
+| `self-assignment` | `Likely Bugs/SelfAssignment.ql`, locals and parameters only |
+| `calls-unmanaged-code` | `Bad Practices/CallsUnmanagedCode.ql` |
+
+`recursive-equals-call` now selects the calls an `Equals` body makes
+(bifrost-packs#149), instead of the calls that reach it. Each fixture README
+records CodeQL parity, the 0.15.0 run and the known limits.
+
+These queries stay blocked on 0.15.0. StringBuilderInLoop needs a loop-body
+entry point. NestedIf needs then and else roles. EmptyInterface needs an
+interface declaration kind. ConfusingMethodNames needs case folding.
+ComplexCondition needs a transitive parent relation. NullArgumentToEquals now
+binds in the engine, but the BCL model does not yet declare
+`System.Object.Equals(object)`.
+
 The 0.7.0 release notes follow.
 
 `packs/v0.7.0` is a minor release. `bifrost.python-performance-summaries`
