@@ -20,12 +20,13 @@ identities, provenance, licenses and completeness are unchanged. Each spec
 names one or more representative lookups taken from the model's own
 declarations or summaries, and pins the artifact URL to the migration commit.
 
-Six built-in packs stay source-only: Lombok, Getset, Scala case-class,
-Python process-inputs and the two Node runtime-values packs. They carry only
-`rules` or `runtime_values` records. The pinned producer requires at least one
-type, member or procedure lookup that resolves records, and it has no lookup
-kind for rules or runtime values, so these packs need a producer change before
-they can become jobs.
+The published `packs/v0.8.0` keeps six built-in packs source-only: Lombok,
+Getset, Scala case-class, Python process-inputs and the two Node runtime-values
+packs. They carry only `rules` or `runtime_values` records. Their jobs, added
+after 0.8.0, use the `rule` and `runtime_exposure` measurement lookups from
+bifrost-dev#8324, which still require each lookup to resolve at least one
+record. They need the Bifrost 0.15.0 generator pin below and its release index
+schema 4, so they ship in the next packs release, not in 0.8.0.
 
 The 13 Go declaration models among those jobs mark every function and
 method member `callable_family_complete` (#213). Go has no overloading, so a
