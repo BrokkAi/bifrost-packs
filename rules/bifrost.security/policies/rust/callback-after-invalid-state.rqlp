@@ -1,0 +1,41 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.callback-after-invalid-state"
+  :name "Caller-supplied code after an invalid-state API"
+  :message "The callback may panic or observe invalid state before it is repaired; confirm that the state is valid at this callback"
+  :severity warning
+  :description "Review a caller-supplied call dominated by an invalid-state API call in the same function, method or closure. Calls are selected structurally, then API callee names are matched by name as a review heuristic, not by resolved standard-library identity. Recognized names are set_len and assume_init, plus fully qualified std::ptr or core::ptr read, copy and copy_nonoverlapping, fully qualified std::mem or core::mem uninitialized, and fully qualified std::slice or core::slice from_raw_parts_mut. Qualified APIs use the structurally exposed receiver role and its module-name spelling; no call text is parsed to locate structure. Unqualified imported pointer APIs are not matched (#6247, BrokkAi/bifrost-dev); this accepted gap includes bare ptr::read. Value-receiver .read() is excluded. Module aliases and reexports are not resolved by this name-based review match, and user-defined modules with the selected fully qualified spellings remain an accepted residual. Callback provenance may have any type shape, including generic trait methods, and the callback need not be inside unsafe. Dominance establishes ordering, not that memory is actually invalid or remains unrepaired: safe preinitialization and intervening repairs require review. Local closures, declared helpers, callbacks before the API and callbacks in different functions are excluded. Incomplete or unsupported analysis does not establish safety. Panic unwinding can expose uninitialized memory or cause a double drop."
+  :tags ["security" "rust" "panic-safety" "cwe-908" "cwe-457" "cwe-415"]
+  :analysis (analysis
+    :type assertion
+    (bind :name callback :query
+      (rql :schema-version 1
+        (call-results
+          (filter :where ((callee_provenance eq caller_supplied))
+            (call-shape (language rust (call)))))))
+    (bind :name early :query
+      (rql :schema-version 1
+        (call-results
+          (call-shape (language rust
+            (call (or
+              (call :callee (name/regex "^(set_len|assume_init)$"))
+              (call :callee (name "read")
+                    :receiver (text/regex "^(std|core)::ptr$"))
+              (call :callee (name/regex "^(copy|copy_nonoverlapping)$")
+                    :receiver (text/regex "^(std|core)::ptr$"))
+              (call :callee (name "uninitialized")
+                    :receiver (text/regex "^(std|core)::mem$"))
+              (call :callee (name "from_raw_parts_mut")
+                    :receiver (text/regex "^(std|core)::slice$")))))))))
+    (bind :name dominance :query
+      (rql :schema-version 1
+        (control-relations :relation [dominates]
+          (procedure-of (language rust (callable))))))
+    (join :left callback :right early :on ((procedure_id procedure_id)))
+    (join :left callback :right dominance :on ((point_id target_id)))
+    (group :name by-callback :by (callback.id)
+      (aggregate :name invalid-predecessors :op count
+        :where ((dominance.source_id eq early.point_id))))
+    (assert :group by-callback :value invalid-predecessors :cardinality (exactly 0)))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "908")))
