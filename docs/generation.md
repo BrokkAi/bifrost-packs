@@ -8,7 +8,7 @@ for a release or enable it in a scanner.
 
 ## Legacy built-in packs
 
-The prepared `packs/v0.8.0` adds 36 direct jobs after the twelve of
+The published `packs/v0.8.0` added 36 direct jobs after the twelve of
 `packs/v0.7.0`, one for each public pack that Bifrost's legacy embedded
 registry (`BIFROST_EMBEDDED_PACKS`) provides and the 0.7.0 bundle did not
 ship (bifrost-dev#4438). These are the Go standard-library, concurrency and
@@ -20,13 +20,16 @@ identities, provenance, licenses and completeness are unchanged. Each spec
 names one or more representative lookups taken from the model's own
 declarations or summaries, and pins the artifact URL to the migration commit.
 
-The published `packs/v0.8.0` keeps six built-in packs source-only: Lombok,
+The published `packs/v0.8.0` kept six built-in packs source-only: Lombok,
 Getset, Scala case-class, Python process-inputs and the two Node runtime-values
 packs. They carry only `rules` or `runtime_values` records. Their jobs, added
 after 0.8.0, use the `rule` and `runtime_exposure` measurement lookups from
 bifrost-dev#8324, which still require each lookup to resolve at least one
 record. They need the Bifrost 0.15.0 generator pin below and its release index
-schema 4, so they ship in the next packs release, not in 0.8.0.
+schema 4. The prepared `packs/v0.9.0` ships them, built by the released
+0.15.0 producer binary. Its bundle index lists 62 packs, including all 46
+`pack_id` values under `crates/bifrost-semantic-packs/embedded/` on
+bifrost-dev master, and records no rejects for the six.
 
 The 13 Go declaration models among those jobs mark every function and
 method member `callable_family_complete` (#213). Go has no overloading, so a

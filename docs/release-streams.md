@@ -22,18 +22,38 @@ As of 2026-11-02, the latest published streams are `packs/v0.8.0` and
 ([below](#c-codeql-ports-for-rules-090)); it keeps the exact dependency on
 `packs/v0.8.0`.
 
-The 0.8.0 release notes follow. They were prepared as
-`packs/v0.8.0` and `rules/v0.8.0` (bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds 36 native
-packs that Bifrost previously supplied only through its embedded built-in
+The next packs release is prepared as `packs/v0.9.0` (bifrost-dev#4438). It
+is a minor release for two reasons. First, it adds six native packs: Lombok,
+Getset, Scala case-class, Python process-inputs and the two Node
+runtime-values packs. With them the native bundle contains all 46 packs that
+Bifrost's legacy embedded registry provides, so offline installs and
+`BIFROST_OPEN_PACKS_DISABLE` users can take every built-in pack from a packs
+release. Second, it is the first packs release built by Bifrost 0.15.0: the
+released, checksum-pinned `bifrost-semantic-pack` 0.15.0 binary, not a source
+build. Its output tightens what a consumer must read. The bundle uses release
+index schema 4, and the generated productions use semantic-model schema 19
+(`bifrost.external.java`: 21) instead of 17. An engine that reads only index
+schema 3 skips this release during selection, so use Bifrost 0.15.0 or later.
+Every other job and recipe is unchanged from 0.8.0. The
+[generation notes](generation.md#legacy-built-in-packs) describe the six jobs.
+
+No rules release is required for `packs/v0.9.0`. `rules/v0.8.0`, and
+`rules/v0.9.0` as prepared, keep their exact dependency on `packs/v0.8.0`, so
+normal acquisition through the rules stream selects 0.8.0, without the six
+packs, until a rules release moves that dependency.
+
+The 0.8.0 release notes follow. They were prepared as `packs/v0.8.0` and
+`rules/v0.8.0` (bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds
+36 native packs that Bifrost previously supplied only through its embedded built-in
 registry, so online runs that pin a packs release no longer lose them. The
 [generation notes](generation.md#legacy-built-in-packs) list them and the six
-built-in packs that remain source-only because the pinned producer cannot yet
-measure rules-only or runtime-value packs. Publish `packs/v0.8.0` first.
+built-in packs it kept source-only because its 0.14.0 producer could not
+measure rules-only or runtime-value packs. It was published first.
 
 `rules/v0.8.0` requires Bifrost 0.15.0 or later. A consumer engine older than
 0.15.0 rejects the release at admission. It was prepared as the patch
-`rules/v0.7.1`, which changed only the exact packs dependency to 0.8.0. It is
-now a minor release for two reasons. First, five existing policies now declare
+`rules/v0.7.1`, which changed only the exact packs dependency to 0.8.0. It was
+published as a minor release for two reasons. First, five existing policies now declare
 a capability that only Bifrost 0.15.0 advertises (bifrost-dev#8117), so they
 require more of a consumer. Second, the C# and security packs gained policies
 after `rules/v0.7.0` was tagged.
