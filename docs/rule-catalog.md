@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 254 unique rule IDs from 12 manifest packs.
+This catalog lists 254 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
