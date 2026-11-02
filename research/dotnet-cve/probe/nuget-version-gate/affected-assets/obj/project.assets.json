@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "System.Security.Cryptography.Pkcs/8.0.1": {
+        "type": "package"
+      }
+    }
+  },
+  "libraries": {
+    "System.Security.Cryptography.Pkcs/8.0.1": {
+      "type": "package",
+      "path": "system.security.cryptography.pkcs/8.0.1"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "System.Security.Cryptography.Pkcs >= 8.0.1"
+    ]
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectName": "App"
+    },
+    "frameworks": {
+      "net8.0": {
+        "dependencies": {
+          "System.Security.Cryptography.Pkcs": {
+            "target": "Package",
+            "version": "[8.0.1, )"
+          }
+        }
+      }
+    }
+  }
+}

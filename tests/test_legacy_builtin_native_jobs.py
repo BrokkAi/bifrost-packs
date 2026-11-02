@@ -1,8 +1,8 @@
 """Native jobs for the packs Bifrost still embeds as its legacy built-in registry.
 
 Bifrost-dev#4438 retires the embedded registry once releases deliver the same
-public packs. These checks pin which of those packs are native jobs and which
-remain blocked by the pinned producer. They do not establish runtime behavior.
+public packs. These checks pin which of those packs are native jobs. They do
+not establish runtime behavior.
 """
 
 from __future__ import annotations
@@ -15,6 +15,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7"
+# The rule-only and runtime-value-only models were migrated in a later commit.
+RULE_ONLY_SOURCE_COMMIT = "825d2bcb1de3aea097b1149ae13ece24d920898c"
 FIRST_JOB = 12
 
 # Embedded pack IDs delivered by these jobs; Go os and the JDK and Python str
@@ -58,17 +60,17 @@ DELIVERED = {
     "bifrost.python-stdlib-api-declarations",
 }
 
-# These carry only rules or runtime values. The pinned producer requires a
-# type, member or procedure lookup that resolves records, so they stay source-only.
-PRODUCER_BLOCKED = {
-    "semantic-packs/models/scala-case-class.json",
-    "semantic-packs/models/lombok-1.18.42.json",
-    "semantic-packs/models/getset-0.1.7.json",
-    "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json",
-    "semantic-packs/node/runtime-values/javascript/bifrost.node-runtime-values.json",
-    "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json",
+# These carry only rules or runtime values. They need a producer with the rule
+# and runtime-exposure measurement lookups (bifrost-dev#8324).
+RULE_ONLY = {
+    "bifrost.java.lombok",
+    "bifrost.rust.getset",
+    "bifrost.scala.case-class",
+    "bifrost.python-process-inputs",
+    "bifrost.node-runtime-values-javascript",
+    "bifrost.node-runtime-values-typescript",
 }
-LOOKUP_PAYLOADS = {"types", "members", "summaries"}
+RULE_ONLY_LOOKUPS = {"rule", "runtime_exposure"}
 
 
 def _load(relative: str):
@@ -76,11 +78,11 @@ def _load(relative: str):
 
 
 class LegacyBuiltinNativeJobTests(unittest.TestCase):
-    """Pin the delivered built-in packs and the producer-blocked remainder."""
+    """Pin the delivered built-in packs, including the rule-only ones."""
 
     def test_every_delivered_builtin_pack_is_a_version_independent_job(self):
         jobs = _load("native-generation.json")["jobs"][FIRST_JOB:]
-        self.assertEqual(len(jobs), len(DELIVERED))
+        self.assertEqual(len(jobs), len(DELIVERED | RULE_ONLY))
         seen = set()
         for job in jobs:
             with self.subTest(job=job["name"]):
@@ -92,26 +94,17 @@ class LegacyBuiltinNativeJobTests(unittest.TestCase):
                 self.assertGreaterEqual(model["schema_version"], 8)
                 self.assertNotIn("bifrost", model["compatibility"])
                 self.assertEqual(spec["artifact"]["sha256"], hashlib.sha256(model_bytes).hexdigest())
+                commit = RULE_ONLY_SOURCE_COMMIT if model["pack_id"] in RULE_ONLY else SOURCE_COMMIT
                 if model["schema_version"] == 8:
                     self.assertEqual(
                         spec["artifact"]["url"],
-                        f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{job['artifact']}",
+                        f"https://github.com/BrokkAi/bifrost-packs/blob/{commit}/{job['artifact']}",
                     )
                 self.assertTrue(spec["measurement_queries"])
-        self.assertEqual(seen, DELIVERED)
-
-    def test_blocked_packs_have_no_lookup_records_and_no_job(self):
-        artifacts = {job["artifact"] for job in _load("native-generation.json")["jobs"]}
-        for path in PRODUCER_BLOCKED:
-            with self.subTest(path=path):
-                self.assertNotIn(path, artifacts)
-                payloads = {
-                    key
-                    for shard in _load(path)["shards"]
-                    for key, value in shard["payload"].items()
-                    if value
-                }
-                self.assertFalse(payloads & LOOKUP_PAYLOADS)
+                if model["pack_id"] in RULE_ONLY:
+                    kinds = {query["kind"] for query in spec["measurement_queries"]}
+                    self.assertLessEqual(kinds, RULE_ONLY_LOOKUPS)
+        self.assertEqual(seen, DELIVERED | RULE_ONLY)
 
 
 if __name__ == "__main__":

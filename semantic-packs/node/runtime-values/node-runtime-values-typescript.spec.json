@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.node-runtime-values-typescript",
+  "pack_version": "0.1.0",
+  "ecosystem": "npm",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.node-runtime-values.json",
+    "sha256": "e385d598b0dc2d42c4e54e8715837ca55bb5b403cc74211ad582ff51c56f80f4",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/825d2bcb1de3aea097b1149ae13ece24d920898c/semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:generic/nodejs.org/node@22.11.0"
+      },
+      "targets": [],
+      "configurations": [
+        "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+      ],
+      "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+    }
+  ],
+  "provenance": {
+    "source": "Node.js process API",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "notices": [
+    "notices/node-v22.11.0.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:generic/nodejs.org/node@22.11.0"
+    },
+    "targets": [],
+    "configurations": [
+      "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+    ],
+    "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+  },
+  "measurement_queries": [
+    {
+      "kind": "runtime_exposure",
+      "exposure_id": "node-process-main"
+    }
+  ]
+}

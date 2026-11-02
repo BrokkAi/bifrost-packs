@@ -1,0 +1,6 @@
+; CVE-2024-43499: System.Formats.Nrbf before 9.0.0, exact evidence only.
+(dependency-evidence
+  :ecosystem nuget
+  :package "System.Formats.Nrbf"
+  :kinds [locked installed]
+  :version-range "(,9.0.0)")

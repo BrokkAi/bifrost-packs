@@ -1,7 +1,13 @@
 # .NET runtime CVE lead qualification
 
 **Outcome: all six leads are blocked by the engine.** This directory records
-the qualification of six OSV-derived C# leads against Bifrost 0.14.2. None of
+the qualification of six OSV-derived C# leads against Bifrost 0.14.2.
+
+> **Rechecked on Bifrost 0.14.4** for #158 and #160:
+> [`nuget-0.14.4-recheck.md`](nuget-0.14.4-recheck.md). NuGet version
+> evidence now exists and its ranges are correct, but a C# call site can't
+> reach the project that owns a lock row (bifrost-dev#8778). Both leads stay
+> blocked. The version-evidence sections below describe 0.14.2. None of
 them is promoted to `rules/`. The fixtures, probe policies and probe model here
 are research inputs, not registered pack content. They do not change the
 locked policy or semantic-pack content.
@@ -99,7 +105,9 @@ engine gap: a same-named source member blocks resolution of a modeled member.
 
 ## Layout and reproduction
 
-`probe/` is one runnable root. Its `.bifrost/` directory holds the
+`probe/` is one runnable root. On 0.14.4 its roughly 40 projects exceed the
+NuGet dependency input cap (bifrost-dev#8780), so run dependency queries on one
+lead directory or on `nuget-version-gate/`. Its `.bifrost/` directory holds the
 research-only model `bifrost.research.dotnet-cve-probe`, the enable control
 in `packs.json` and five probe policies. Each `probe/<issue>-<slug>/<case>/`
 directory is one inert project. Positive and near-miss projects pin their

@@ -7,6 +7,13 @@ build identity `a8e935c87ffae45104f08a6baec3abe4e54a4e18`, which is not yet
 on npm. NuGet dependency evidence and C# `program-point-of` are still
 unavailable there, so every outcome below is unchanged.
 
+Rechecked on Bifrost 0.14.4 (build `ff5cf473f4ad414751911ff93ef79e1df1d35823`)
+for #152, #153, #155, #162, #163, #164 and #166:
+[`nuget-0.14.4-recheck.md`](nuget-0.14.4-recheck.md). NuGet lock and assets
+versions are now available, but a call site can't be joined to its owning
+project (bifrost-dev#8778), and runtime and shared-framework versions are
+still missing (bifrost-dev#8779). Every outcome stays blocked.
+
 | Lead | Advisory | Outcome |
 | --- | --- | --- |
 | #152 EncryptedXml decryption of untrusted documents | CVE-2026-47304 | Blocked by engine |

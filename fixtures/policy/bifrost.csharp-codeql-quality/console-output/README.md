@@ -66,6 +66,15 @@ and `ErrorProbe.cs:22`, both on the `Error` identifier of `Console.Error`.
 `Main` and the `Console.SetOut` redirect suppress the rest. There are no
 other findings in either run.
 
+Bifrost 0.15.0, build identity `09a2503c5f7ced1630a9e3c445ead53dfc5925e8`,
+evaluation date `2026-11-02`, same flags: the `error-stream/` run is
+unchanged. The root run is inconclusive (`partial_discovery`) with no
+findings. The engine reports `call_relation_analysis_failed` because it cannot
+prove the incoming call target for the `Local.Console.WriteLine` near miss, so
+the source-console exclusion has no complete row set. The result is the same
+when the policy comes from the pack with `resolved-value` declared. See the
+[0.15.0 capability check](../../../../docs/qualification/v0150-precise-capabilities.md).
+
 ## Known limits
 
 - Without the model, the property locators do not resolve and the policy is
