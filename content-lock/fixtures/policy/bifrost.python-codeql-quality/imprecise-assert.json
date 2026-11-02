@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/imprecise-assert/.bifrost/policies/imprecise-assert.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/imprecise-assert.rqlp",
+      "sha256": "c84d57fe32d24f7c36ed317a757b05ddaae6ad67985a36d49870662bcff8d2c2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/imprecise-assert/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/imprecise-assert/README.md",
+      "sha256": "3dc08ee8c0c7564b28917b33f08ccb0c7e762a803ee36efbf14f6430a11047ca",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/imprecise-assert/upstream/Testing/test.py",
+      "source_path": "python/ql/test/query-tests/Testing/test.py",
+      "sha256": "2d998e5cfa42c6f5698247717f324bf54c66d4746ef6291011aa8cf7220fc6e0",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Testing/test.py"
+      }
+    }
+  ]
+}

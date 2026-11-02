@@ -10,7 +10,7 @@ class ExpressDelivery extends Delivery {
     @Override String status(int attempts) { return "scheduled"; } // Near miss: annotated.
     void record() {} // Near miss: private superclass method is not overridden.
     static void reset() {} // Near miss: static method hiding.
-    String status(String label) { return label; } // Near miss: overload.
+    String status(String label) { return label; } // Near miss: same-arity overload.
     Runnable callback() { return () -> {}; } // Near miss: functional expression.
     java.util.function.Supplier<String> reader() { return this::status; } // Method reference.
     static { reset(); } // Near miss: generated class initializer is not a method.
@@ -29,10 +29,10 @@ class AnnotatedDelivery extends Delivery {
     @java.lang.Override String status() { return "delivered"; } // Qualified near miss.
 }
 class JdkTask implements Runnable, Comparable<JdkTask> {
-    public void run() {} // CodeQL positive; held for engine issue #7179.
-    public int compareTo(JdkTask other) { return 0; } // CodeQL positive; #7179.
-    public String toString() { return "task"; } // CodeQL positive; #7179.
-    public boolean equals(Object other) { return this == other; } // CodeQL positive; #7179.
+    public void run() {} // CodeQL positive; needs JDK hierarchy edges.
+    public int compareTo(JdkTask other) { return 0; } // CodeQL positive; JDK.
+    public String toString() { return "task"; } // CodeQL positive; JDK.
+    public boolean equals(Object other) { return this == other; } // CodeQL positive; JDK.
     @Override public int hashCode() { return 7; } // Annotated JDK near miss.
 }
 class AuditedDelivery extends Delivery implements Runnable {
@@ -41,5 +41,5 @@ class AuditedDelivery extends Delivery implements Runnable {
 }
 class RetriedDelivery extends Delivery {
     String status() { return "retrying"; } // Positive: first overload.
-    String status(int attempts) { return "again"; } // CodeQL positive; second overload, missed until engine issue #7505.
+    String status(int attempts) { return "again"; } // Positive: second overload.
 }

@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/str-format-mixed-fields/.bifrost/policies/str-format-mixed-fields.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/str-format-mixed-fields.rqlp",
+      "sha256": "e9cc8650e753d239747fdffdf7d349916371d0a1ecde8feceadf99f58468c33d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/str-format-mixed-fields/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/str-format-mixed-fields/README.md",
+      "sha256": "94d2ecf46c169e780e1101477fc39843fb9bc3c410479a5f93f17e7e39fcf9f8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/str-format-mixed-fields/upstream/Expressions/Formatting/test.py",
+      "source_path": "python/ql/test/query-tests/Expressions/Formatting/test.py",
+      "sha256": "2be6fd00cf9fee8f919f9633ed087cff3a6cfabf995a1ad4a42cac9e00e6817c",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/Formatting/test.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/str-format-mixed-fields/upstream/Expressions/Formatting/unknown_format_string.py",
+      "source_path": "python/ql/test/query-tests/Expressions/Formatting/unknown_format_string.py",
+      "sha256": "914e69a763711806112f6a73b66523e369b0f3c6737dd6456ad90c5b1405b723",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Expressions/Formatting/unknown_format_string.py"
+      }
+    }
+  ]
+}

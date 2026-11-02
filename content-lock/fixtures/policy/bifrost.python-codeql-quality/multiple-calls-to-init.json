@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-init/.bifrost/policies/multiple-calls-to-init.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/multiple-calls-to-init.rqlp",
+      "sha256": "de244c28bbabedb3a1838bf6e9db3fb730296d0a9e496b0ab83467c59b006090",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-init/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-init/README.md",
+      "sha256": "f1079485322ad60230d65ce28a38cf48e2ef37dd8b977eb75dc7e4a7bdc98913",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/multiple-calls-to-init/upstream/Classes/multiple/multiple-init/multiple_init.py",
+      "source_path": "python/ql/test/query-tests/Classes/multiple/multiple-init/multiple_init.py",
+      "sha256": "d33d0da25d38da84832f0594cf90577f5e5660c179d31bd75e6fb257cf38fd90",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/multiple/multiple-init/multiple_init.py"
+      }
+    }
+  ]
+}

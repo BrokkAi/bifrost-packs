@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/.bifrost/policies/mixed-tuple-returns.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/mixed-tuple-returns.rqlp",
+      "sha256": "2020aec740ca79fbf16ed549a0d25aa7701680c09fa653335a65877da190732c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/README.md",
+      "sha256": "0fecb503522aac69eba6d9fd8ad549bc44867f022d260b80e8c13ac5db693503",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/helper.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/helper.py",
+      "sha256": "de2b69fd0cd4d1a6f4d03da65b089390c1ecd77c763a632ab9f8f492e15776cb",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/main.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/main.py",
+      "sha256": "eb16aec4789e1960ccad29e7005bbada69424c946e468512964a693069ca310b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-tuple-returns/upstream/functions_test.py",
+      "source_path": "python/ql/test/query-tests/Functions/return_values/functions_test.py",
+      "sha256": "1a414212d7c8784d09e0e2f7133aad53a8bc446ddabadf60024e3c7112d325a2",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/return_values/functions_test.py"
+      }
+    }
+  ]
+}

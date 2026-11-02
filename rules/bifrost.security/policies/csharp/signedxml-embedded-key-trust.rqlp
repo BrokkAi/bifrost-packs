@@ -1,0 +1,47 @@
+; Lead: BrokkAi/bifrost-packs#154 (CVE-2026-96222, GHSA-vrv5-2jg9-4mmr).
+; Product source contract: System.Security.Cryptography.Xml.SignedXml.CheckSignature()
+; and CheckSignatureReturningKey(out AsymmetricAlgorithm) verify the signature
+; with the key carried in the signed document's own KeyInfo. Neither call
+; decides whether that key is trusted. The reviewed model declares every
+; CheckSignature overload, so the pinned-key and pinned-certificate overloads
+; bind to their own members and stay near misses.
+; Engine contract: report calls that bind exactly to those two members. This
+; is the version-independent part of the lead. Bifrost 0.14.2 has no NuGet or
+; shared-framework dependency evidence for C#, so this policy does not claim
+; the advisory's affected versions. A receiver whose type the engine cannot
+; infer (a `var` local or a field) keeps the run incomplete rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.signedxml-embedded-key-trust"
+  :name "C# XML signature checked with the document's embedded key"
+  :message "SignedXml signature is verified with the key from the document's own KeyInfo"
+  :severity warning
+  :description "Reports SignedXml.CheckSignature() and SignedXml.CheckSignatureReturningKey(out AsymmetricAlgorithm) calls that bind to the reviewed System.Security.Cryptography.Xml model. Both verify the signature with the key embedded in the document's KeyInfo, so anyone who can sign the document with a key of their own passes the check unless the application separately establishes trust in the returned key. CheckSignature(AsymmetricAlgorithm), CheckSignature(KeyedHashAlgorithm) and CheckSignature(X509Certificate2, bool) take an out-of-band key and are not reported. The policy does not establish the package or shared-framework version named by CVE-2026-96222."
+  :tags ["security" "csharp" "xml-signature" "cwe-347"]
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (union
+        (resolved-call
+          :resolves-to "System.Security.Cryptography.Xml.SignedXml.CheckSignature"
+          :proof declared
+          (filter :where
+            ((model_id eq "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature"))
+            (call-bindings
+              (call-shape
+                (language csharp
+                  (call :callee (name "CheckSignature") (arity 0)))))))
+        (resolved-call
+          :resolves-to "System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey"
+          :proof declared
+          (filter :where
+            ((model_id eq "member.dotnet.security-cryptography-xml-csharp.system-security-cryptography-xml-signedxml.check-signature-returning-key"))
+            (call-bindings
+              (call-shape
+                (language csharp
+                  (call :callee (name "CheckSignatureReturningKey") (arity 1))))))))))
+    (group :name by-call :by (calls.site_id)
+      (aggregate :name selected-calls :op count))
+    (assert :group by-call :value selected-calls :cardinality (exactly 0)))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "347")))

@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/pythagorean/.bifrost/policies/pythagorean.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/pythagorean.rqlp",
+      "sha256": "7fd43c3d4e9eec0de99ec163217a30bcb5d3c0a1049a1976073a2537b4e66e3b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/pythagorean/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/pythagorean/README.md",
+      "sha256": "213f88d432a101f824e451fb84f7f48deb6fd6a94b9b34c27c8597b17c94e470",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/pythagorean/upstream/Numerics/pythagorean_test.py",
+      "source_path": "python/ql/test/query-tests/Numerics/pythagorean_test.py",
+      "sha256": "6d032e20c0577d2846ee9ed4ec993ca71947b34a446d94055d3f39ac3306e9dd",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Numerics/pythagorean_test.py"
+      }
+    }
+  ]
+}

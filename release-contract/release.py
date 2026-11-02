@@ -2,6 +2,7 @@
 """Shared, offline-first pack release contract. No engine defaults are changed."""
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import subprocess
@@ -445,6 +446,25 @@ def expected_tag(manifest):
     return prefix + 'v' + manifest['release_version']
 
 
+def load_content_lock(root):
+    """Return the single-file content lock and its exact bytes.
+
+    A sharded authoring lock (see content_lock.py) is joined into the archived
+    single-file form, so its bytes and lock_sha256 match the unsharded lock.
+    """
+    lock, raw = load_json(root / 'content-lock.json')
+    if 'files' in lock:
+        return lock, raw
+    spec = importlib.util.spec_from_file_location('_bifrost_content_lock', Path(__file__).with_name('content_lock.py'))
+    content_lock = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(content_lock)
+    try:
+        lock = content_lock.read_lock(root, 'content-lock.json')
+    except content_lock.LockError as error:
+        fail('invalid-manifest', str(error))
+    return lock, content_lock.lock_bytes(lock)
+
+
 def public_contents(root, lock, component=None):
     entries = lock['files']
     expected = digest(''.join(f"{e['sha256']}  {e['path']}\n" for e in sorted(entries, key=lambda e: e['path'])).encode())
@@ -522,7 +542,7 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == 'create':
-            root = args.root.resolve(); config, _ = load_json(args.config); lock, raw = load_json(root / 'content-lock.json')
+            root = args.root.resolve(); config, _ = load_json(args.config); lock, raw = load_content_lock(root)
             if args.version: config['release_version'] = args.version
             status = subprocess.run(['git', '-C', str(root), 'status', '--porcelain'], capture_output=True, text=True, check=True)
             if status.stdout.strip(): fail('invalid-manifest', 'release creation requires clean source checkout')

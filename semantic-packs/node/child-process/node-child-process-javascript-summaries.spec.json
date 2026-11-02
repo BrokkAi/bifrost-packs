@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.node-child-process-javascript-summaries",
+  "pack_version": "0.1.0",
+  "ecosystem": "npm",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.node-child-process-summaries.json",
+    "sha256": "ae94b5f92563f1d596d47fb5cda3c796e9530a5302be2e01638125b43efb135f",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/node/child-process/javascript/bifrost.node-child-process-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Node.js child_process API",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "notices": [
+    "notices/node-child-process.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "javascript",
+      "owner": "child_process",
+      "name": "execSync",
+      "has_receiver": true,
+      "parameter_count": 1
+    }
+  ]
+}

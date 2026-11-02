@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/inconsistent-equality/.bifrost/policies/inconsistent-equality.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/inconsistent-equality.rqlp",
+      "sha256": "2cd14430bf2b502fcc1e0e38bda9f18951ddfd3347f0090b79c1ad18580cbde2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/inconsistent-equality/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/inconsistent-equality/README.md",
+      "sha256": "e233d7c707bc4e02df12dab9896aa5bcb7c837fcdbc0be3a9c9e2d5e19b35aa1",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/inconsistent-equality/upstream/Classes/equals-not-equals/EqualsOrNotEquals.py",
+      "source_path": "python/ql/test/query-tests/Classes/equals-not-equals/EqualsOrNotEquals.py",
+      "sha256": "ae4df9383fb8d42c68299a10ab90f2129a91f1528c7957173987e7ea034f0c2b",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/equals-not-equals/EqualsOrNotEquals.py"
+      }
+    }
+  ]
+}

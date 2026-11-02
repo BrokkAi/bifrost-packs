@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-delete/.bifrost/policies/missing-call-to-delete.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/missing-call-to-delete.rqlp",
+      "sha256": "e15fd418cd4d89553d91e5c44b691fd7eaba6c0d7791d2f75bf0b731d5716d7a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-delete/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-delete/README.md",
+      "sha256": "c0cdb84630bb54b2f9d256dd2a81b56bceac599812ad3d7be5cb2878a91eb830",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-call-to-delete/upstream/Classes/missing-del/missing_del.py",
+      "source_path": "python/ql/test/query-tests/Classes/missing-del/missing_del.py",
+      "sha256": "de521822d191a9b02faee4c9e986ca9a8693b28078b92f683b0a7ac6704fafa3",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Classes/missing-del/missing_del.py"
+      }
+    }
+  ]
+}

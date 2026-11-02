@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-docstring/.bifrost/policies/missing-docstring.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/missing-docstring.rqlp",
+      "sha256": "7bb3c16e3e234b5f7abdaf4606b21db40ddf3641bc74b488c251470b28c1d05b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-docstring/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/missing-docstring/README.md",
+      "sha256": "8cbd599497e01da2bbabf11f60c23cf5366638798562ab43be7277df1633103e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/missing-docstring/upstream/Statements/DocStrings/DocStrings.py",
+      "source_path": "python/ql/test/query-tests/Statements/DocStrings/DocStrings.py",
+      "sha256": "60d040da9e33a3280833095c491b457ef191adb06ec88f2e86c90c16a26f24f6",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Statements/DocStrings/DocStrings.py"
+      }
+    }
+  ]
+}
