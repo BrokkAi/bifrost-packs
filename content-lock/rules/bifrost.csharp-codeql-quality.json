@@ -3,7 +3,7 @@
     {
       "path": "rules/bifrost.csharp-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.csharp-codeql-quality/manifest.json",
-      "sha256": "daa5c93a5d8347b6028c588072d8a669c6bce88e0bc46ff74eac1e809b83149d",
+      "sha256": "9d124f7fdfae66f6b328ee698b7fe1c41946cc2ce62978e75ff721f803e10980",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -18,6 +18,13 @@
       "path": "rules/bifrost.csharp-codeql-quality/policies/call-to-obsolete-method.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/call-to-obsolete-method.rqlp",
       "sha256": "3f268070aff7d99b7dea63d86e342fb46ff7685d0439ccb968f5da16b7f97911",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/calls-unmanaged-code.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/calls-unmanaged-code.rqlp",
+      "sha256": "6151e135752c4e05b33a3476b75eb90f6723a72c8655929b9678dcc20ef052e6",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -43,6 +50,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/class-name-comparison.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/class-name-comparison.rqlp",
+      "sha256": "3fb554cbd04d7dcb61ef762b1c5dbbd0d27f2d90ba2254ebcbc037bd8a260c53",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.csharp-codeql-quality/policies/console-output.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/console-output.rqlp",
       "sha256": "206abb0694bbf79dd1cc47ccaa6071cea043005532e3423fab06a5a2b3726b53",
@@ -64,9 +78,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/empty-lock-statement.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/empty-lock-statement.rqlp",
+      "sha256": "90986866e24a039fb47f427fdfc582ca88e6ccda8ebe7c22951076b94a5ccc54",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.csharp-codeql-quality/policies/empty-password-in-configuration.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/empty-password-in-configuration.rqlp",
       "sha256": "f7f64a17b1c5bc4f88547cafc64655c21c6639dbc744fad04700e0b39bbf87fd",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/incomplete-parity-check.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/incomplete-parity-check.rqlp",
+      "sha256": "2f0e2af5d8cf7ff0f245076087fd9e2c768cab9009826e190264ffe0090ef43c",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -122,7 +150,7 @@
     {
       "path": "rules/bifrost.csharp-codeql-quality/policies/recursive-equals-call.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/recursive-equals-call.rqlp",
-      "sha256": "cf30d80d81661c65374ea87db8fd74fbfc2e154775455084abfda0ef5dbb7407",
+      "sha256": "da565c72010abd5ece15cc3e16d26864cafea8295ca79d3b45c886f43af1281e",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -130,6 +158,13 @@
       "path": "rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp",
       "source_path": "rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp",
       "sha256": "3303196e8e7b24bd7ffc4a1a57c5059c7754bd772784e3b9fd8676eb50f606db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.csharp-codeql-quality/policies/self-assignment.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/self-assignment.rqlp",
+      "sha256": "de52c90b4b86428e12090d07aa09a9aab82c55cf145feb6fbbb9701562edd8c1",
       "classification": "public",
       "license": "Apache-2.0"
     },

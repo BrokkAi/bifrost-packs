@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 258 unique rule IDs from 12 manifest packs.
+This catalog lists 263 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -65,13 +65,17 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Power of 10 Rule 1: non-local jump](../rules/bifrost.cpp-power-of-10/policies/use-of-jmp.rqlp) | `bifrost.cpp-power-of-10.use-of-jmp` | cpp | correctness | warning |
 | [C# call to GC.Collect()](../rules/bifrost.csharp-codeql-quality/policies/call-to-gc.rqlp) | `bifrost.csharp-codeql-quality.call-to-gc` | csharp | quality | warning |
 | [C# call to obsolete method](../rules/bifrost.csharp-codeql-quality/policies/call-to-obsolete-method.rqlp) | `bifrost.csharp-codeql-quality.call-to-obsolete-method` | csharp | quality | warning |
+| [C# call to unmanaged code](../rules/bifrost.csharp-codeql-quality/policies/calls-unmanaged-code.rqlp) | `bifrost.csharp-codeql-quality.calls-unmanaged-code` | csharp | quality | warning |
 | [C# catch of NullReferenceException](../rules/bifrost.csharp-codeql-quality/policies/catch-nullreferenceexception.rqlp) | `bifrost.csharp-codeql-quality.catch-nullreferenceexception` | csharp | quality | warning |
 | [C# catch of all exceptions](../rules/bifrost.csharp-codeql-quality/policies/catch-of-all-exceptions.rqlp) | `bifrost.csharp-codeql-quality.catch-of-all-exceptions` | csharp | quality | warning |
 | [C# class implements ICloneable](../rules/bifrost.csharp-codeql-quality/policies/class-implements-icloneable.rqlp) | `bifrost.csharp-codeql-quality.class-implements-icloneable` | csharp | quality | warning |
+| [C# erroneous class compare](../rules/bifrost.csharp-codeql-quality/policies/class-name-comparison.rqlp) | `bifrost.csharp-codeql-quality.class-name-comparison` | csharp | correctness | warning |
 | [C# use of system output stream](../rules/bifrost.csharp-codeql-quality/policies/console-output.rqlp) | `bifrost.csharp-codeql-quality.console-output` | csharp | quality | note |
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |
 | [C# empty catch block](../rules/bifrost.csharp-codeql-quality/policies/empty-catch-block.rqlp) | `bifrost.csharp-codeql-quality.empty-catch-block` | csharp | correctness | warning |
+| [C# empty lock statement](../rules/bifrost.csharp-codeql-quality/policies/empty-lock-statement.rqlp) | `bifrost.csharp-codeql-quality.empty-lock-statement` | csharp | correctness | warning |
 | [C# empty password in configuration](../rules/bifrost.csharp-codeql-quality/policies/empty-password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.empty-password-in-configuration` | csharp | security | warning |
+| [C# bad parity check](../rules/bifrost.csharp-codeql-quality/policies/incomplete-parity-check.rqlp) | `bifrost.csharp-codeql-quality.incomplete-parity-check` | csharp | correctness | warning |
 | [C# locking this](../rules/bifrost.csharp-codeql-quality/policies/lock-this.rqlp) | `bifrost.csharp-codeql-quality.lock-this` | csharp | quality | warning |
 | [C# misleading indentation](../rules/bifrost.csharp-codeql-quality/policies/misleading-indentation.rqlp) | `bifrost.csharp-codeql-quality.misleading-indentation` | csharp | quality | warning |
 | [C# nested-if-statements](../rules/bifrost.csharp-codeql-quality/policies/nested-if-statements.rqlp) | `bifrost.csharp-codeql-quality.nested-if-statements` | csharp | quality | warning |
@@ -81,6 +85,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# Random object created and used only once](../rules/bifrost.csharp-codeql-quality/policies/random-used-once.rqlp) | `bifrost.csharp-codeql-quality.random-used-once` | csharp | correctness | warning |
 | [C# recursive Equals call](../rules/bifrost.csharp-codeql-quality/policies/recursive-equals-call.rqlp) | `bifrost.csharp-codeql-quality.recursive-equals-call` | csharp | correctness | warning |
 | [C# rethrown exception variable](../rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp) | `bifrost.csharp-codeql-quality.rethrown-exception-variable` | csharp | quality | warning |
+| [C# self-assignment](../rules/bifrost.csharp-codeql-quality/policies/self-assignment.rqlp) | `bifrost.csharp-codeql-quality.self-assignment` | csharp | correctness | warning |
 | [C# static array](../rules/bifrost.csharp-codeql-quality/policies/static-array.rqlp) | `bifrost.csharp-codeql-quality.static-array` | csharp | quality | warning |
 | [C# StringBuilder initialized with a character](../rules/bifrost.csharp-codeql-quality/policies/stringbuilder-initialized-with-character.rqlp) | `bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character` | csharp | correctness | warning |
 | [C# TODO comment](../rules/bifrost.csharp-codeql-quality/policies/todo-comment.rqlp) | `bifrost.csharp-codeql-quality.todo-comment` | csharp | quality | note |
