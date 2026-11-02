@@ -83,10 +83,11 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.8.0` and `rules/v0.8.0`. The next packs
-release, `packs/v0.9.0`, ships compiled the last six packs that Bifrost's
-legacy embedded registry provides, so its bundle contains all 46. It is built
-by the Bifrost 0.15.0 generator and needs Bifrost 0.15.0 or later to read it. See
+The latest releases are `packs/v0.9.0` and `rules/v0.8.0`. `packs/v0.9.0`
+ships compiled the last six packs that Bifrost's legacy embedded registry
+provides, so its bundle contains all 46. It is built by the Bifrost 0.15.0
+generator and needs Bifrost 0.15.0 or later to read it. `rules/v0.9.0` is
+prepared next. See
 [release streams](docs/release-streams.md).
 
 ## Source verification
