@@ -162,8 +162,8 @@
     {
       "path": "policies/recursive-equals-call.rqlp",
       "id": "bifrost.csharp-codeql-quality.recursive-equals-call",
-      "authored_hash": "9d4e5136ff66e6be6c734be5cec9a75ff4f7ccf0b072a6630f8b9bab482b2fd4",
-      "resolved_semantic_hash": "9d4e5136ff66e6be6c734be5cec9a75ff4f7ccf0b072a6630f8b9bab482b2fd4",
+      "authored_hash": "ed536bed7679872518aace6172d6936d1c49860681383abd97a1dcfac731f03a",
+      "resolved_semantic_hash": "ed536bed7679872518aace6172d6936d1c49860681383abd97a1dcfac731f03a",
       "category": "correctness",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "exact-call-target", "lexical-environment"],
@@ -290,6 +290,61 @@
       "required_capabilities": ["structural-match", "statement-facts"],
       "severity_rationale": "Indentation that suggests a statement belongs to a control body can hide unintended execution.",
       "remediation": "Add braces or align the successor with its actual control scope."
+    },
+    {
+      "path": "policies/incomplete-parity-check.rqlp",
+      "id": "bifrost.csharp-codeql-quality.incomplete-parity-check",
+      "authored_hash": "5c1cc7c0c3ebf83e15cde3d913de5c1d01f7d774f1af8cb9753608fd56312924",
+      "resolved_semantic_hash": "5c1cc7c0c3ebf83e15cde3d913de5c1d01f7d774f1af8cb9753608fd56312924",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "A remainder of a negative odd number is -1, so x % 2 == 1 and x % 2 > 0 treat negative odd values as even and x % 2 != 1 treats them as odd.",
+      "remediation": "Compare the remainder with zero, for example x % 2 != 0 for odd values, or take the absolute value when the operand can be negative."
+    },
+    {
+      "path": "policies/class-name-comparison.rqlp",
+      "id": "bifrost.csharp-codeql-quality.class-name-comparison",
+      "authored_hash": "025a8ee6724b7109b3a78507ae24fe710c902644b5e0d18bbb87029c133712eb",
+      "resolved_semantic_hash": "025a8ee6724b7109b3a78507ae24fe710c902644b5e0d18bbb87029c133712eb",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "Checking an object's type by comparing its full name with a string breaks when the type is renamed or moved and accepts any unrelated type with the same name.",
+      "remediation": "Compare the type itself, for example obj.GetType() == typeof(Expected) or obj is Expected, instead of its name."
+    },
+    {
+      "path": "policies/empty-lock-statement.rqlp",
+      "id": "bifrost.csharp-codeql-quality.empty-lock-statement",
+      "authored_hash": "8782900e2d51fd82b353791511c440498d27a4271f7beb22fa3d820532a28ff9",
+      "resolved_semantic_hash": "8782900e2d51fd82b353791511c440498d27a4271f7beb22fa3d820532a28ff9",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match"],
+      "severity_rationale": "An empty lock body protects no code, which usually means the protected operation was removed or the lock is being misused as a signal.",
+      "remediation": "Restore the code the lock should protect, remove the lock, or use a wait handle or Monitor.Wait and Monitor.Pulse for signalling."
+    },
+    {
+      "path": "policies/self-assignment.rqlp",
+      "id": "bifrost.csharp-codeql-quality.self-assignment",
+      "authored_hash": "8ad68ec140babae67701c63527e7ee0213314906fa8180a45759cd6cb7e078ed",
+      "resolved_semantic_hash": "8ad68ec140babae67701c63527e7ee0213314906fa8180a45759cd6cb7e078ed",
+      "category": "correctness",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "lexical-environment"],
+      "severity_rationale": "Assigning a local or parameter to itself has no effect and usually means the intended target, such as a same-named field, was not written.",
+      "remediation": "Assign to the intended target, for example this.field = parameter, or remove the assignment."
+    },
+    {
+      "path": "policies/calls-unmanaged-code.rqlp",
+      "id": "bifrost.csharp-codeql-quality.calls-unmanaged-code",
+      "authored_hash": "a38ffa41d2e363e4d5b3a46a25545d1ec99ebc3a278666c0200cc9dee10c6736",
+      "resolved_semantic_hash": "a38ffa41d2e363e4d5b3a46a25545d1ec99ebc3a278666c0200cc9dee10c6736",
+      "category": "quality",
+      "supported_languages": ["csharp"],
+      "required_capabilities": ["structural-match", "exact-call-target", "lexical-environment"],
+      "severity_rationale": "Calls to extern methods leave managed type and memory safety and tie the code to a platform-specific native library.",
+      "remediation": "Prefer a managed .NET API with the same behavior; when native interop is required, isolate it behind a small reviewed wrapper."
     }
   ]
 }
