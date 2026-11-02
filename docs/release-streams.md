@@ -90,6 +90,10 @@ requires Bifrost 0.15.0 and depends exactly on `packs/v0.8.0`:
 (bifrost-packs#149), instead of the calls that reach it. Each fixture README
 records CodeQL parity, the 0.15.0 run and the known limits.
 
+Pack 0.5.0 also carries bifrost-packs#207. That PR adds `lock-this`,
+`nested-if-statements` and `misleading-indentation`, and corrects
+`rethrown-exception-variable` and `static-array` against CodeQL's tests.
+
 These queries stay blocked on 0.15.0. StringBuilderInLoop needs a loop-body
 entry point. EmptyInterface needs an
 interface declaration kind. ConfusingMethodNames needs case folding.
