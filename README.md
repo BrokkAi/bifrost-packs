@@ -83,9 +83,13 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The next releases, `packs/v0.8.0` and `rules/v0.7.1`, ship compiled the 36
+The next releases, `packs/v0.8.0` and `rules/v0.8.0`, ship compiled the 36
 public packs that Bifrost's legacy embedded registry provided and
-`packs/v0.7.0` did not. See [release streams](docs/release-streams.md).
+`packs/v0.7.0` did not. `rules/v0.8.0` requires Bifrost 0.15.0 or later. Five
+policies that use the `resolved-value` operator now declare the
+`resolved-value` capability, which older engines do not advertise, so those
+engines reject the release at admission. See
+[release streams](docs/release-streams.md).
 
 ## Source verification
 

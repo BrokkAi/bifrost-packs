@@ -21,15 +21,52 @@ As of 2026-10-30, the latest published streams are `packs/v0.7.0` and
 `rules/v0.7.0` (bifrost-packs#168), both tagged on `fd13b06`. Bifrost 0.14.3
 admits both; the engine's pack-compatibility matrix records the outcome.
 
-The next releases are prepared as `packs/v0.8.0` and `rules/v0.7.1`
+The next releases are prepared as `packs/v0.8.0` and `rules/v0.8.0`
 (bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds 36 native
 packs that Bifrost previously supplied only through its embedded built-in
 registry, so online runs that pin a packs release no longer lose them. The
 [generation notes](generation.md#legacy-built-in-packs) list them and the six
 built-in packs that remain source-only because the pinned producer cannot yet
-measure rules-only or runtime-value packs. `rules/v0.7.1` is a patch release
-that changes only its exact packs dependency to 0.8.0; publish
-`packs/v0.8.0` first.
+measure rules-only or runtime-value packs. Publish `packs/v0.8.0` first.
+
+`rules/v0.8.0` requires Bifrost 0.15.0 or later. A consumer engine older than
+0.15.0 rejects the release at admission. It was prepared as the patch
+`rules/v0.7.1`, which changed only the exact packs dependency to 0.8.0. It is
+now a minor release for two reasons. First, five existing policies now declare
+a capability that only Bifrost 0.15.0 advertises (bifrost-dev#8117), so they
+require more of a consumer. Second, the C# and security packs gained policies
+after `rules/v0.7.0` was tagged.
+
+### Precise capabilities from Bifrost 0.15.0
+
+Bifrost 0.15.0 (build `09a2503c5f7ced1630a9e3c445ead53dfc5925e8`) is the first
+release to advertise `resolved-value`, `field-write-value`,
+`configuration-absence` and `configuration-code`. Before it, a policy that
+used the `(resolved-value ...)` RQL operator could not declare that capability
+without being rejected, so it listed only `exact-call-target`.
+
+| Policy | Pack version | Before | Now |
+| --- | --- | --- | --- |
+| `bifrost.csharp-codeql-quality.call-to-obsolete-method` | 0.4.0 | `exact-call-target` | `exact-call-target`, `resolved-value` |
+| `bifrost.csharp-codeql-quality.console-output` | 0.4.0 | `exact-call-target` | `exact-call-target`, `resolved-value` |
+| `bifrost.csharp-codeql-quality.use-of-file-upload` | 0.4.0 | `exact-call-target` | `resolved-value` |
+| `bifrost.security.csharp.xmldocument-url-resolver` | 2.0.0 | `exact-call-target` | `exact-call-target`, `resolved-value` |
+| `bifrost.security.python.insecure-protocol` | 2.0.0 | `exact-call-target` | `exact-call-target`, `resolved-value` |
+
+Each policy's other capabilities are unchanged. `use-of-file-upload` resolves
+no call targets, so it no longer lists `exact-call-target`. The other four also
+use `call-sites-to` or `resolved-call`, so they keep it. No public policy uses
+`field-write-value`, `configuration-absence` or `configuration-code`. The
+public configuration rules use only the operators behind `configuration-facts`,
+so they keep that name. Policy sources and IDs are unchanged. The
+[0.15.0 capability check](qualification/v0150-precise-capabilities.md) records
+the engine and the focused outcomes.
+
+The pack bumps follow the consumer-contract rule in
+[release versioning](release-versioning.md): a stricter required capability is
+a minor bump before 1.0 (`bifrost.csharp-codeql-quality` 0.3.0 → 0.4.0) and a
+major bump after it (`bifrost.security` 1.4.1 → 2.0.0). The rules release CI
+smoke test now uses the checksum-pinned Linux v0.15.0 binary instead of v0.14.2.
 
 The 0.7.0 release notes follow.
 
