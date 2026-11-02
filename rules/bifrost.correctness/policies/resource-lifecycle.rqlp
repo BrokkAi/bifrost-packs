@@ -51,6 +51,19 @@
                     (call :callee (name "openResource"))))
               :subject return-value)
             (subject
+              :id java-files-input-stream
+              :selector
+                (rql
+                  :schema-version 1
+                  (language java
+                    (resolved-call
+                      :resolves-to member.files.new-input-stream-path-open-options
+                      :proof exact
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "newInputStream")))))))
+              :subject return-value)
+            (subject
               :id go-resource
               :selector
                 (rql

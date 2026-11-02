@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "id": "bifrost.correctness",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "Bifrost correctness",
   "description": "Selectable lifecycle and ownership policies over reviewed acquisition families.",
   "policies": [
     {
       "path": "policies/resource-lifecycle.rqlp",
       "id": "bifrost.correctness.resource-lifecycle",
-      "authored_hash": "efb7f8435c92eab75f2ec628da592470ea40e063816364b27744886ee4a1a5c7",
-      "resolved_semantic_hash": "efb7f8435c92eab75f2ec628da592470ea40e063816364b27744886ee4a1a5c7",
+      "authored_hash": "815f43927f219aeb36358512a7635cd59e3b8ae9922fe22d1a8d5a0dcf7dd47b",
+      "resolved_semantic_hash": "815f43927f219aeb36358512a7635cd59e3b8ae9922fe22d1a8d5a0dcf7dd47b",
       "category": "correctness",
       "supported_languages": [
         "go",
@@ -26,7 +26,9 @@
         "typestate",
         "interprocedural-transfer",
         "terminal-obligation",
-        "normal-and-exceptional-exit"
+        "normal-and-exceptional-exit",
+        "exact-call-target",
+        "actual-to-formal-binding"
       ],
       "severity_rationale": "A resource that reaches a supported exit of its acquiring root while still open can leak a file descriptor, connection, or lock until process exit.",
       "remediation": "Close the resource on every supported exit of the acquiring procedure, including the exceptional exit, or transfer ownership through a contract the analysis can prove."
