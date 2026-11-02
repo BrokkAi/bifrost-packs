@@ -209,5 +209,221 @@
         }
       ]
     }
+  ],
+  "rechecks": [
+    {
+      "evaluation_date": "2026-11-01",
+      "bifrost": {
+        "version": "0.14.4",
+        "build_identity": "ff5cf473f4ad414751911ff93ef79e1df1d35823",
+        "release_archive": "bifrost-v0.14.4-universal-apple-darwin.tar.gz",
+        "archive_sha256": "4107616cbd9e9377c7c1c568e9cd2082f5565a4fd9c3e27022a79acd201532ac",
+        "binary_sha256": "a3aa17a18be33e1e841c1bf317c6ca35a6aa3aaef452c607fafbb3b83aeec399",
+        "environment": {
+          "BIFROST_OPEN_PACKS_DISABLE": "1"
+        }
+      },
+      "record": "nuget-0.14.4-recheck.md",
+      "outcome": "blocked_by_engine",
+      "version_gate": {
+        "root": "nuget-version-gate",
+        "fixtures": {
+          "nuget-version-gate/affected-assets/App.csproj": "2c221efa6c372c1198550bba69fc30e46f9407dfab1fe5b711a4b6ab37ae7085",
+          "nuget-version-gate/affected-assets/CmsVerifier.cs": "bef5729114685c405e01ccebd729cdf90ddcf2b1758d346ed455379b9ce99d53",
+          "nuget-version-gate/affected-assets/obj/project.assets.json": "62decc3ebecb7767d70811735ba4d26359b68a2d14e577650861a9889267de9a",
+          "nuget-version-gate/affected-lock/App.csproj": "5c5d071c5812ea2d457e861f1d6a7c70b3e14a3148a60b528a83e15ddddd969a",
+          "nuget-version-gate/affected-lock/CmsVerifier.cs": "17de3343aea9b663fadd57ab2ef8bac2e21b7f6a88b831b14d7cf1fb023a7cd4",
+          "nuget-version-gate/affected-lock/packages.lock.json": "e0b2b3c873593caef2546b5aad16c3a547d43c576aebe8e42d9c3ec1a902c117",
+          "nuget-version-gate/fixed-lock/App.csproj": "2f61c10d11b88579fb32f0a4dd854d44eee7e5a6136456aae8ffd4862e1d4cf9",
+          "nuget-version-gate/fixed-lock/CmsVerifier.cs": "fee0e049e2645b6df24e80597a88fd9e3601f43d8d2eeb337b1a51532b2dde5a",
+          "nuget-version-gate/fixed-lock/packages.lock.json": "49539702b5fff6057604d4caa21f1a11cfa69400bc1aa81d7a6b082a42038aab",
+          "nuget-version-gate/framework-explicit/App.csproj": "83640dc285ad71b4046995979065084703839a7d7b08075d42c6cf7ef4d52e87",
+          "nuget-version-gate/framework-explicit/CmsVerifier.cs": "76265dd79eb10b9dcd617502d035c233679a84bffc5fac2956e5dff928fe252e",
+          "nuget-version-gate/inbox-runtime/App.csproj": "e44c6aa5d69d0526c6b7961331a2020122c313ee9ea087d1daa3f4e7cab34bad",
+          "nuget-version-gate/inbox-runtime/CmsVerifier.cs": "a87bdb3bab96785ac99b47ae0dd8b81ecc35b336260b2ee156678a2ba79c8420",
+          "nuget-version-gate/no-lock/App.csproj": "5c5d071c5812ea2d457e861f1d6a7c70b3e14a3148a60b528a83e15ddddd969a",
+          "nuget-version-gate/no-lock/CmsVerifier.cs": "29c91183354aa7305be111897485054d4db91a397dab0f241b44cc2cba292300",
+          "nuget-version-gate/prerelease-lock/App.csproj": "15da70499016701e5e2caef9094f5a016232e5add7213f37a95e3152ba0d4560",
+          "nuget-version-gate/prerelease-lock/CmsVerifier.cs": "784b55ed538f6cad708cf75a8cc6032f4a53c2979411aa351bdb89f7540b6e50",
+          "nuget-version-gate/prerelease-lock/packages.lock.json": "152a20cfde5dbd65b07dd04dc3db0f03ee69a77417d8faae1bce33a704f5d287",
+          "nuget-version-gate/web-implicit/App.csproj": "c2efd10af533d3a242a2fe23b48f11605e799b9c36b85e073a82013730033236",
+          "nuget-version-gate/web-implicit/CmsVerifier.cs": "b4378659805ef49226d9a3b087e5ec18984ff56d68c4943b6049efae78509739"
+        },
+        "queries": [
+          {
+            "path": "nuget-version-gate/queries/nuget-dependency-evidence.rql",
+            "sha256": "513f46af22c422d2a9ca65bc95e8aa4bf6ed0e423aec36117c1050994faa5ad1",
+            "observed": "10 rows, complete: 6 declared package rows, 1 declared framework row with no version (framework-explicit), locks 9.0.20, 9.0.21 and 11.0.0-rc.1.25451.107, and installed 8.0.1. No rows for inbox-runtime or web-implicit."
+          },
+          {
+            "path": "nuget-version-gate/queries/pkcs-affected-locked.rql",
+            "sha256": "900b45754a5658451d0441611a86bcd6e5062906e240e43eb6ebd4e03eb17275",
+            "observed": "Matches affected-lock (9.0.20), affected-assets (8.0.1) and prerelease-lock (11.0.0-rc.1.25451.107); excludes fixed-lock (9.0.21). Complete, so no-lock, inbox-runtime and web-implicit are silently absent."
+          },
+          {
+            "path": "nuget-version-gate/queries/pkcs-affected-all-kinds.rql",
+            "sha256": "1f29a0b10d9972224c067cbbf330eb49103ce1248828525ff88f5ceeb5888b94",
+            "observed": "Same three rows, plus one semantic_analysis_partial 'no complete exact version evidence' per declared row, including the projects whose lock matches."
+          },
+          {
+            "path": "nuget-version-gate/queries/aspnetcore-framework-range.rql",
+            "sha256": "62f5947adf6f45a922d8c7590f95a3b253ff52c5390c3374b32bfaad6f8053f0",
+            "observed": "No rows; framework-explicit's versionless framework row is reported unresolved (incomplete)."
+          },
+          {
+            "path": "nuget-version-gate/queries/csharp-file-build-target.rql",
+            "sha256": "e97eeafc6107202bcaa9fea285e0cec6dcb6346e637568f0aa95df9e37a063da",
+            "observed": "No rows; topology_derivation_incomplete (target-of reads Maven only)."
+          },
+          {
+            "path": "nuget-version-gate/queries/require-both-dependency.rql",
+            "sha256": "4a4a7577a069d1e5c99c45b1309fedcfbc05abbcc6a0c16ccc47de152cf1acb1",
+            "observed": "Load error: the configuration input of require_both must produce configuration_fact rows, but it produces dependency_evidence."
+          }
+        ],
+        "lead_queries": [
+          {
+            "path": "160-nrbf/queries/nrbf-affected-locked.rql",
+            "sha256": "4c6585f923302035774b16b56aca7c06ffa30321c97ee78dac2a6a1de65307cb",
+            "observed": "Matches positive, near-miss-trusted-bytes and near-miss-header-check (9.0.0-rc.1.24431.7); excludes near-miss-fixed-version (9.0.0).",
+            "root": "160-nrbf"
+          },
+          {
+            "path": "158-deserialize-async-enumerable/queries/system-text-json-affected-locked.rql",
+            "sha256": "c939910915b047e0f89d0645ab7e7e2b494f41ece6758b8704e86b2c36a5b65b",
+            "observed": "Matches positive, near-miss-other-api and near-miss-local-file (8.0.3); excludes near-miss-fixed-version (8.0.4).",
+            "root": "158-deserialize-async-enumerable"
+          }
+        ],
+        "full_probe_root": "queries/nuget-dependency-evidence.rql over probe/ (about 40 projects) is truncated and incomplete: dependency input file cap exceeded, cited at a nonexistent obj/App.csproj.nuget.g.props."
+      },
+      "code_half_reruns": [
+        {
+          "probe": ".bifrost/policies/160-nrbf-decode.rqlp",
+          "sha256": "5eea62b0fc04365d81725cbbdfd6d3a4d8089e21eea8576c4eb1b1a6193a65d0",
+          "sources": "160-nrbf",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "positive (possible, partial)",
+            "near-miss-fixed-version (possible, partial)",
+            "unknown-version (possible, partial)"
+          ],
+          "diagnostics": [
+            "call resolution for IFormFile.OpenReadStream is unknown: neither a completely resolved executable target nor an applicable complete model"
+          ]
+        },
+        {
+          "probe": ".bifrost/policies/158-deserialize-async-enumerable.rqlp",
+          "sha256": "3aec01a4eecb8d7c8bed21ef546ebccbf706d23ce6c412716f5939df8843c3e4",
+          "sources": "158-deserialize-async-enumerable",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "positive (possible, partial)",
+            "near-miss-fixed-version (possible, partial)",
+            "unknown-shared-framework (possible, partial)"
+          ],
+          "diagnostics": [
+            "access-path resolution unknown (HttpRequest.Body)"
+          ]
+        }
+      ],
+      "engine_issues": {
+        "code_to_project_ownership": "https://github.com/BrokkAi/bifrost-dev/issues/8778",
+        "runtime_shared_framework_versions": "https://github.com/BrokkAi/bifrost-dev/issues/8779",
+        "dependency_input_cap": "https://github.com/BrokkAi/bifrost-dev/issues/8780"
+      },
+      "leads": [
+        {
+          "issue": 152,
+          "advisory": "CVE-2026-47304",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778 code-to-project ownership",
+            "bifrost-dev#8779 shared-framework copy of System.Security.Cryptography.Xml",
+            "no open request-body source",
+            "new EncryptedXml(doc) receiver (bifrost-dev#8299)"
+          ]
+        },
+        {
+          "issue": 153,
+          "advisory": "CVE-2026-26171",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778",
+            "bifrost-dev#8779",
+            "no open request-body source",
+            "bifrost-dev#8299"
+          ]
+        },
+        {
+          "issue": 155,
+          "advisory": "CVE-2026-84008",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778",
+            "bifrost-dev#8779 in-box copy has no row",
+            "no proven attacker-controlled byte source"
+          ]
+        },
+        {
+          "issue": 158,
+          "advisory": "CVE-2024-30105",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778",
+            "bifrost-dev#8779 shared-framework System.Text.Json",
+            "HttpRequest.Body access path unknown (bifrost-dev#8307)"
+          ]
+        },
+        {
+          "issue": 160,
+          "advisory": "CVE-2024-43499",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778",
+            "IFormFile.OpenReadStream unresolved",
+            "bifrost-dev#8779 for the shared-framework unknown-version case"
+          ]
+        },
+        {
+          "issue": 162,
+          "advisory": "CVE-2021-41355",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778",
+            "Linux target evidence (bifrost-dev#8349)"
+          ]
+        },
+        {
+          "issue": 163,
+          "advisory": "CVE-2018-8292",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8779 in-box HttpClientHandler version",
+            "bifrost-dev#8778",
+            "handler property writes (bifrost-dev#8305, #8303)"
+          ]
+        },
+        {
+          "issue": 164,
+          "advisory": "CVE-2023-33170",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8779 shared-framework servicing version"
+          ]
+        },
+        {
+          "issue": 166,
+          "advisory": "CVE-2026-47303",
+          "outcome": "blocked_by_engine",
+          "blockers": [
+            "bifrost-dev#8778",
+            "lambda option facts (bifrost-dev#8311)",
+            "extension methods (bifrost-dev#8297)",
+            "vulnerable path unconfirmed from the fix"
+          ]
+        }
+      ]
+    }
   ]
 }

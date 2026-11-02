@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -246,6 +246,7 @@
       "required_capabilities": [
         "structural-match",
         "exact-call-target",
+        "resolved-value",
         "semantic-model-provenance"
       ],
       "severity_rationale": "XmlDocument always processes DTDs, so an XmlUrlResolver lets an external entity in any document the instance parses read local files or reach internal network hosts.",
@@ -581,6 +582,7 @@
       ],
       "required_capabilities": [
         "exact-call-target",
+        "resolved-value",
         "actual-to-formal-binding",
         "semantic-model-provenance"
       ],

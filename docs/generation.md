@@ -20,14 +20,13 @@ identities, provenance, licenses and completeness are unchanged. Each spec
 names one or more representative lookups taken from the model's own
 declarations or summaries, and pins the artifact URL to the migration commit.
 
-The six remaining built-in packs, Lombok, Getset, Scala case-class, Python
-process-inputs and the two Node runtime-values packs, carry only `rules` or
-`runtime_values` records. Their jobs use the `rule` and `runtime_exposure`
-measurement lookups from bifrost-dev#8324, which still require each lookup to
-resolve at least one record. A producer with those lookups writes release index
-schema 4, so `native_release.py` declares the index schema the bundle actually
-has; engines that read only schema 3 skip such a release during selection.
-The generator pin moved to public Bifrost 0.14.4 (`786891f9ed19d2086dfd6242ff15ca904b610620`, Rust 1.99.1), the first release that includes #8324.
+The published `packs/v0.8.0` keeps six built-in packs source-only: Lombok,
+Getset, Scala case-class, Python process-inputs and the two Node runtime-values
+packs. They carry only `rules` or `runtime_values` records. Their jobs, added
+after 0.8.0, use the `rule` and `runtime_exposure` measurement lookups from
+bifrost-dev#8324, which still require each lookup to resolve at least one
+record. They need the Bifrost 0.15.0 generator pin below and its release index
+schema 4, so they ship in the next packs release, not in 0.8.0.
 
 ## Previous native packaging repair
 
@@ -36,6 +35,22 @@ five recipes of `packs/v0.6.1`. Only the `python-performance-summaries` input
 changes: its model is 1.1.0 and activates on `cpython >=3.10.0, <3.15.0`. The
 companion rules 0.7.0 updates the exact packs dependency. The published 0.6.1
 plan is described in the [release repair plan](result-use-native-release.md).
+
+## Bifrost 0.15.0 generator and authoring pin
+
+After `packs/v0.8.0` and `rules/v0.8.0`, `native-generation.json` pins public
+Bifrost 0.15.0 source `fc4a2da2b78c938e811c496b3c21e5b02f415048` (archive
+SHA-256 `7b89b11d272921e6078408014d90d79a7fea51112698173a1bcc8760618b7dcf`,
+Cargo.lock SHA-256
+`03cc61929856fc31be6619ce69f5c8ffa28de074a185b69414158e7c5b624dab`, Rust
+`1.99.1`). The same pin builds the native producer and the policy authoring CLI
+that checks every locked policy identity. Producers from 0.15.0 can write
+release index schema 4 (bifrost-dev#8336), so `native_generation.py` and
+`native_release.py` accept index schema 3 or 4 and each content declares the
+index schema its bundle actually has. Engines that read only schema 3 skip a
+schema-4 release during selection. The released v0.15.0 CLI reproduced all 254
+locked authoring identities unchanged. The published 0.8.0 releases stay
+immutable and keep the 0.14.0 generator they were built with.
 
 ## Pinned native candidate
 
