@@ -1,0 +1,14 @@
+; CodeQL: Concurrency/LockThis.ql at ae741615f3.
+; Exact value classification applies only to the structurally selected operand.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.lock-this"
+  :name "C# locking this"
+  :message "'this' used in lock statement."
+  :severity warning
+  :description "Reports this as the direct operand of a lock statement."
+  :tags ["csharp" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (anchor :capture "operand"
+        (language csharp
+          (lock :value (text/regex "^this$") :and [(lock :value (capture "operand"))]))))))
