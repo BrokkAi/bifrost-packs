@@ -1,11 +1,11 @@
 ; Resource lifecycle: a tracked resource must be closed on every supported exit
 ; of the procedure that acquired it.
 ;
-; This is a selectable policy specialization. Each language contributes one
-; reviewed acquisition family (the `subject` entries) and the close/use
+; This is a selectable policy specialization. Each language contributes reviewed
+; acquisition families (the `subject` entries) and the close/use
 ; operations that its supported ownership contract knows. A call that merely
 ; has a matching name never creates a subject: the acquisition selector names
-; one reviewed factory per language, and every later event is bound to the
+; reviewed factories, and every later event is bound to the
 ; tracked subject identity rather than to the spelled receiver or argument.
 ; The helper's own return is not the acquiring root's terminal exit; the
 ; analysis root is the procedure that acquired the resource.
