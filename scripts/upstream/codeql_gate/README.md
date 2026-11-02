@@ -108,17 +108,31 @@ empty (ambient flags cannot change staging). `GOPROXY=off`, `GOSUMDB=off`, and
 ## Java staging
 
 Java copies all non-CodeQL files recursively, reads stub paths from `options`,
-and stages each referenced stub coordinate as binary and sources jars in a
-fake Maven repository beneath the prepared-root cache. All stub sources go in
-the sources jars. Stub sources for one test are compiled together with
-`javac --release 21` from `JAVA_HOME` (or `--java-home`); compilation is best
-effort, with compiler failures recorded in `compile.txt` and any emitted class
-files retained in the binary jars. Sources in packages owned by the selected
-JDK are listed in the compile record and excluded from compilation. Each
-prepared root gets a `pom.xml` with compile dependencies for its stubs. The
-binary jar is staged even when empty because Maven coordinate discovery requires
-that path before it can attach the sources jar. Maven HOME and USERPROFILE point
-at the fake Maven home. Coordinate evidence is kept in
+and stages stub coordinates as binary and sources jars in a fake Maven
+repository beneath the prepared-root cache. All selected stub sources go in
+the sources jars. Stub roots compile independently with `javac --release 21`
+from `JAVA_HOME` (or `--java-home`), retrying failed roots until a pass builds
+no new roots. Each compile uses JDK classes and binaries built in earlier
+passes. When roots declare the same type, the source from the first root in
+`options` wins; type identity uses the declared package and file stem. Sources
+with invalid Java identifier stems are skipped. Duplicate types, skipped
+sources, and source paths that disagree with declared packages are recorded in
+`compile.txt`. Sources in packages owned by the selected JDK image are excluded
+from compilation and recorded.
+
+When javac reports a missing package, the stager can add an auxiliary root from
+the CodeQL stub tree. It chooses the root with the fewest source files, then by
+name; option roots keep type precedence. The auxiliary root and the missing
+package diagnostic that selected it are recorded as compile-only provenance.
+Auxiliary roots are available to javac, but are not published as Maven
+dependencies or staged into the measured workspace. A test import supplied
+only by an auxiliary root is a setup error. A root that remains unbuildable is marked
+`unstaged`, with its coordinate and first javac diagnostic in the prepared-root
+provenance and each run's `result.json` and `result.md`; it has no binary jar.
+Preparation fails if a test source imports a package supplied only by an
+unstaged root. Each built binary jar is checked for every selected source's
+expected class. Maven HOME and USERPROFILE point at the fake Maven home.
+Coordinate evidence is kept in
 `stagers/java_stub_coordinates.tsv`; unrecognized coordinates remain explicitly
 marked as unknown. The per-run `result.json` records every selected artifact's
 coordinates, confidence and evidence, including unknown placeholder coordinates.
@@ -217,8 +231,15 @@ or semantic similarity heuristic is applied. The duplicate-branches acceptance u
 The observed binary emits report schema 6. Findings come from
 `runs[*].findings[*].primary.path` and `primary.region.start_line/end_line`.
 A finding's `completeness.type` other than `complete` prevents PASS.
-`runs[*].completion.type` must be `complete` for the whole run to PASS.
-`proven_subset`, `proven_by_summary`, `inconclusive`, `unsupported`, `not_run`,
+`runs[*].completion.type` may be `complete` or `proven_by_summary` for the
+whole run to be scored as complete. `proven_by_summary` means completion was
+established under activated semantic-pack summaries and is scored on the same
+footing as CodeQL models-as-data. Every finding records its run's completion
+kind; the result records completion kinds and counts summary-backed verdicts,
+true positives, and false positives separately. It also records selected
+semantic-pack decisions, including their activation reasons (which carry the
+pack version when supplied by the CLI), to make summary-backed results
+traceable to models. `proven_subset`, `inconclusive`, `unsupported`, `not_run`,
 missing/unknown completion types all withhold a complete verdict; `failed` is ERROR.
 
 For an absent expected site, `completion.scope` can bound an inconclusive
@@ -318,6 +339,13 @@ remain. The new `pass` boolean is the authoritative gate result, alongside
 `codeql_commit`. `diagnostics_by_family` additionally retains actual family
 counts. Multi-directory CLI output prefixes combined sites with test directory
 to avoid collisions.
+
+`results.tsv` retains existing columns in order and appends completion kind,
+the completion-kinds list, summary-backed verdict count, summary-backed
+true-positive count, summary-backed false-positive count, the summary
+attribution status (`attributable` or `unattributable`), and the
+unattributable verdict count. `summary` prints these rows verbatim, so it
+shows the attribution status and count as well.
 
 Changes from the seed SPEC: explicit checkout/binary arguments replace host
 paths and inventory; source annotation union and known-gap classes replace
@@ -460,6 +488,76 @@ unique `(test_dir, path, line)` identities. The closed attribution enum is:
 
 - `framework-endpoint-absent`: the **only** deferrable attribution. `endpoint`
   must name an absent printed endpoint model explaining every path at the site.
+  For a reviewed QL-defined Java endpoint, use `ql_endpoint` instead:
+
+  ```json
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-090",
+    "path": "Example.java",
+    "line": 20,
+    "attribution": "framework-endpoint-absent",
+    "ql_endpoint": {
+      "id": "spring-servlet-input-parameter",
+      "nodes": [{"path": "Example.java", "line": 12, "column": 9}]
+    },
+    "justification": "The Spring request-mapping source is outside the supplied catalogs."
+  }
+  ```
+
+  QL endpoint ids come from the committed language stager allow-list. Java's
+  entries pin the QL class, file, inclusive line range, endpoint role and a
+  short description to CodeQL commit
+  `ae741615f3e178ce61289a651790dc67fcc18e19`. When a checkout is supplied,
+  the gate verifies every listed file and confirms that the range contains its
+  class declaration; a moved or renamed class is a setup error (exit 2).
+  Go and C# have empty allow-lists. An attribution must name the actual printed
+  path node as `path`, `line` and `column`; it must be the source or sink node
+  matching the allow-listed role, and it must have no MaD endpoint provenance.
+  Any MaD model evidence on that endpoint rejects the QL attribution, even when
+  some alternate routes have no MaD evidence.
+  Unknown ids, nodes outside the alert's paths, wrong roles, or MaD-proven
+  nodes are attribution errors. A MaD-proven endpoint continues to use the
+  exact printed-model `endpoint` form.
+
+  The gate binds each QL attribution to its asserted QL class through a
+  committed per-test-directory cache. Generate a cache with the pinned CLI:
+
+  ```sh
+  python3 -I scripts/upstream/codeql_gate/gate.py ql-classes java/ldap-injection \
+    --language java --codeql-root "$CODEQL_ROOT" --codeql-cli "$CODEQL_CLI" \
+    --test-dir java/ql/test/query-tests/security/CWE-090
+  ```
+
+  The required CLI is CodeQL 2.27.3; its linux64 archive SHA-256 is
+  `845075a2fa2fdf72629adc6cbde6264691b698d1f294bd27f10c6b579cd750a4`.
+  The command checks `codeql version`, copies the test sources and options to a
+  temporary workspace, adds a helper query, and runs `codeql test run --learn`
+  with the checkout as its search path. It records the checkout-relative node
+  path and full location plus `getAQlClass()` for every allow-listed class and
+  `CliInput`. Cache JSON includes the CodeQL commit, CLI version, archive pin,
+  helper-query SHA-256 and test directory. Commit the generated file under
+  `scripts/upstream/codeql_gate/ql_classes/java/`.
+
+  Every QL deferral requires a cache matching the pinned CodeQL commit, CLI
+  version and helper-query hash. A missing or stale cache is an error; the gate
+  never falls back to the attribution assertion. Each attributed node must
+  have a cached row for the allow-listed class at its expected path and full
+  coordinates. Independently, Java deferrals are blocked when the node is a
+  formal parameter of `main(String[] args)`, `main(String... args)` or
+  `main(String args[])`. The helper query includes `CliInput` so cache-backed
+  classification corroborates this guard.
+
+  Deferral is checked path by path. Every route must be explained by its
+  attributed QL endpoint or by the named absent catalog endpoint. A route with
+  an unlisted or unattributed QL-defined endpoint remains in scope and blocks
+  deferral. For each deferred QL attribution, result JSON records the asserted
+  allow-list id, QL class and nodes; the Markdown report shows the same
+  assertion next to the deferred site. Java's initial allow-list includes Spring and Micronaut request
+  parameter sources, the Spring RestTemplate URI-variable sink, and the dom4j
+  constructor branch of `DefaultXPathInjectionSink`. In that class,
+  `sinkNode(this, "xpath-injection")` is ordinary models-as-data and stays in
+  scope as a printed MaD row. `CliInput` is the only non-deferrable
+  QL-defined Java endpoint in the census.
 - `framework-summary-step`: blocks the scoped verdict.
 - `skipped-stdlib-summary`: blocks the scoped verdict (including skipped JDK
   summaries).
@@ -467,7 +565,9 @@ unique `(test_dir, path, line)` identities. The closed attribution enum is:
 
 Unknown values are rejected when reading attribution files or result reports
 in `summary`. Missing attribution for an out-of-subset miss fails with ERROR.
-An attribution cannot defer an in-scope or QL-defined endpoint obligation.
+An attribution cannot defer an in-scope endpoint obligation. A QL-defined
+endpoint remains in scope unless it is explicitly allow-listed and attributed
+to a path node as described above.
 
 Extras are always scored against the **full** expected suite. An observed
 out-of-subset expected alert remains a match; an unmatched finding remains a

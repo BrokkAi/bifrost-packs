@@ -10,7 +10,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 
 from scripts.upstream.codeql_gate.core import (GateError, inline_expectations, load_oracle, parse_expected,
-                                               report_analyzed_paths, score)
+                                               report_analyzed_paths, score, write_results)
 from scripts.upstream.codeql_gate.stagers.go import GoStager
 from scripts.upstream.codeql_gate.compare_sarif import compare
 
@@ -24,6 +24,99 @@ def report(*locations, complete=True):
                      'diagnostics': [], 'work': {'scanned_files': 1},
                      'findings': [{'primary': {'path': p, 'region': {'start_line': n, 'end_line': end}},
                                    'completeness': {'type': 'complete'}} for p, n, end in locations]}]}
+
+
+class ResultTests(unittest.TestCase):
+    def test_summary_completion_scores_and_records_model_provenance(self):
+        data = json.loads((FIXTURES / 'summary-completion.json').read_text())
+        oracle = {'expected': [{'path': 'sample.go', 'start': 1, 'end': 1},
+                               {'path': 'sample.go', 'start': 3, 'end': 3}],
+                  'spurious': [], 'missing': [], 'testFailures': [],
+                  'oracle_sources': {}, 'oracle_disagreement': None}
+        result = score(data, oracle)
+        self.assertTrue(result['complete'])
+        self.assertEqual(result['completion_kinds'], ['complete', 'proven_by_summary'])
+        self.assertEqual(result['summary_counts'], {'verdicts': 1, 'true_positives': 1,
+                                                    'false_positives': 1,
+                                                    'unattributable_verdicts': 0})
+        summary_finding = next(f for f in result['findings'] if f['start'] == 1)
+        self.assertEqual(summary_finding['completion_kind'], 'proven_by_summary')
+        self.assertEqual(len(result['activated_packs']), 2)
+        self.assertIn('version 1.2.3', result['activated_packs'][0]['reason'])
+        self.assertEqual(result['activated_packs'][1]['version'], '1.2.3')
+        self.assertEqual(result['verdict'], 'FP')
+        with tempfile.TemporaryDirectory() as temporary:
+            write_results(Path(temporary), dict(result, query='example', binary_sha256='digest',
+                                                 codeql_commit='commit', errors=[]))
+            payload = json.loads((Path(temporary) / 'result.json').read_text())
+            self.assertEqual(payload['completion_kind'], 'mixed')
+            self.assertEqual(payload['findings'][0]['completion_kind'], 'proven_by_summary')
+            self.assertEqual(payload['activated_packs'][1]['version'], '1.2.3')
+            markdown = (Path(temporary) / 'result.md').read_text()
+            self.assertIn('Summary-backed counts:', markdown)
+            self.assertIn('bifrost.example-summaries', markdown)
+
+    def test_only_complete_and_summary_completion_are_scorable(self):
+        oracle = {'expected': [], 'spurious': [], 'missing': [], 'testFailures': [],
+                  'oracle_sources': {}, 'oracle_disagreement': None}
+        for kind in ('partial', 'inconclusive', 'proven_subset', 'unsupported', 'not_run', 'future_kind'):
+            with self.subTest(kind=kind):
+                result = score({'runs': [{'completion': {'type': kind}, 'findings': []}]}, oracle)
+                self.assertFalse(result['complete'])
+        result = score({'runs': [{'completion': {'type': 'complete'}, 'findings': []}]}, oracle)
+        self.assertTrue(result['complete'])
+        incomplete = score({'runs': [{'completion': {'type': 'proven_by_summary'}, 'findings': [
+            {'primary': {'path': 'sample.go', 'region': {'start_line': 1, 'end_line': 1}},
+             'completeness': {'type': 'incomplete'}}]}]}, oracle)
+        self.assertFalse(incomplete['complete'])
+
+    def test_summary_counts_follow_finding_assignment_not_overlapping_sites(self):
+        oracle = {'expected': [{'path': 'sample.go', 'start': 10, 'end': 20}],
+                  'spurious': [], 'missing': [], 'testFailures': [],
+                  'oracle_sources': {}, 'oracle_disagreement': None}
+        data = {'scope': {'analyzed_files': ['sample.go']}, 'runs': [
+            {'completion': {'type': 'proven_by_summary'}, 'findings': [
+                {'primary': {'path': 'sample.go', 'region': {'start_line': 10, 'end_line': 10}}}]},
+            {'completion': {'type': 'complete'}, 'findings': [
+                {'primary': {'path': 'sample.go', 'region': {'start_line': 8, 'end_line': 20}}}]}]}
+        result = score(data, oracle, anchors={'relation': 'span_overlap'})
+        self.assertEqual(result['summary_counts']['true_positives'], 0)
+        self.assertEqual(result['summary_counts']['false_positives'], 1)
+
+    def test_unversioned_pack_marks_summary_verdicts_unattributable(self):
+        oracle = {'expected': [], 'spurious': [], 'missing': [], 'testFailures': [],
+                  'oracle_sources': {}, 'oracle_disagreement': None}
+        data = {'packs': {'decisions': [{'pack': 'bifrost.unknown', 'status': 'selected'}]},
+                'runs': [{'completion': {'type': 'proven_by_summary'}, 'findings': []}]}
+        result = score(data, oracle)
+        self.assertEqual(result['activated_packs'], [])
+        self.assertEqual(result['summary_attribution'],
+                         {'status': 'unattributable', 'missing_pack_provenance': 1})
+        self.assertEqual(result['summary_counts']['unattributable_verdicts'], 1)
+
+    def test_java_stub_status_is_reported_in_json_and_markdown(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            run_dir = Path(temporary)
+            result = dict(query='example', verdict='EXACT-INCOMPLETE', **{'pass': False}, complete=True,
+                          matched=[], false_positives=[], silent_misses=[], abstentions=[],
+                          spurious={'sites': [], 'findings': []}, missing={'sites': [], 'findings': []},
+                          errors=[], oracle_sources={}, oracle_disagreement={}, binary_sha256='digest',
+                          codeql_commit='commit', staged_artifacts=[{
+                              'stub_dir': 'broken-stub', 'staging_status': 'unstaged',
+                              'staging_diagnostic': 'broken.java:3: error: unresolved type'
+                          }, {
+                              'stub_dir': 'auxiliary-stub', 'staging_status': 'built',
+                              'staging_kind': 'auxiliary', 'auxiliary_package': 'shared.api',
+                              'auxiliary_trigger': 'Use.java:1: package shared.api does not exist'
+                          }])
+            write_results(run_dir, result)
+            payload = json.loads((run_dir / 'result.json').read_text())
+            markdown = (run_dir / 'result.md').read_text()
+            self.assertEqual(payload['staged_artifacts'][0]['staging_status'], 'unstaged')
+            self.assertIn('broken-stub', markdown)
+            self.assertIn('broken.java:3: error: unresolved type', markdown)
+            self.assertIn('auxiliary package `shared.api`', markdown)
+            self.assertIn('package shared.api does not exist', markdown)
 
 
 class OracleTests(unittest.TestCase):

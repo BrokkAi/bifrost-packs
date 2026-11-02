@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# The released engine pin does not yet include codeql-jvm-catalogs or
-# codeql-jdk-summaries. Set BIFROST_SEMANTIC_PACK_GENERATOR to the compatible
-# generator executable; bump the engine pin only when that follow-up release
-# is available.
+# The pinned engine (Bifrost 0.15.0) has codeql-jvm-catalogs and
+# codeql-jdk-summaries, but both refuse the pinned JDK image: its reader marks
+# the JDK declarations incomplete for local and anonymous classes
+# (java.class.unresolved_type_parameter). The servlet run reproduces the
+# committed catalog. Until a release accepts the JDK image, set
+# BIFROST_SEMANTIC_PACK_GENERATOR to the compatible generator executable
+# (engine 2eda68dc23 produced the committed content).
 if [[ $# -ne 1 ]]; then
   echo "usage: $0 SCRATCH_DIR" >&2
   exit 2

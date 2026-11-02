@@ -1,14 +1,17 @@
 """Java stager tests using authored temporary fixtures."""
 import os
+import re
 import subprocess
 import tempfile
 import unittest
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
 from scripts.upstream.codeql_gate.stagers.java import JavaStager
+from scripts.upstream.codeql_gate.core import GateError
 
 
 def _javac_supports_release_21():
@@ -110,6 +113,42 @@ class JavaStagerTests(unittest.TestCase):
                 self.assertEqual(first.root, again.root)
                 self.assertTrue(artifacts[0].is_file())
 
+    def test_stub_selection_order_changes_prepared_root_cache_key(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(
+                base, ('HikariCP-3.4.5', 'validation-api-2.0.1.Final'))
+            for stub_name, type_name in (('HikariCP-3.4.5', 'First'),
+                                         ('validation-api-2.0.1.Final', 'Second')):
+                source = stub_root / stub_name / f'com/example/{type_name}.java'
+                source.parent.mkdir(parents=True)
+                source.write_text(f'package com.example; public class {type_name} {{}}\n')
+            first_option = '${testdir}/../../stubs/HikariCP-3.4.5'
+            second_option = '${testdir}/../../stubs/validation-api-2.0.1.Final'
+            options = test_dir / 'options'
+            options.write_text(f'--javac-args -cp {first_option}:{second_option}')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                output = Path(command[command.index('-d') + 1])
+                for value in command:
+                    if not value.endswith('.java'):
+                        continue
+                    source = Path(value)
+                    target = output / 'com/example' / f'{source.stem}.class'
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(b'class')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                first = stager.prepare(test_dir, codeql, cache)
+                options.write_text(f'--javac-args -cp {second_option}:{first_option}')
+                second = stager.prepare(test_dir, codeql, cache)
+            self.assertNotEqual(first.root, second.root)
+
     def test_stub_source_change_rebuilds_coordinate_jar(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -146,6 +185,415 @@ class JavaStagerTests(unittest.TestCase):
                 self.assertNotEqual(fingerprint_file.read_text(), first_fingerprint)
                 with zipfile.ZipFile(jar) as archive:
                     self.assertNotEqual(archive.read('com/example/Stub.class'), first_class)
+
+    def test_duplicate_stub_type_first_in_options_wins_and_is_recorded(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base, ('HikariCP-3.4.5', 'validation-api-2.0.1.Final'))
+            first = stub_root / 'HikariCP-3.4.5/com/example/Shared.java'
+            second = stub_root / 'validation-api-2.0.1.Final/com/example/Shared.java'
+            first.parent.mkdir(parents=True)
+            second.parent.mkdir(parents=True)
+            first.write_text('package com.example; public class Shared { int first; }\n')
+            second.write_text('package com.example; public class Shared { int second; }\n')
+            test_dir.joinpath('options').write_text(
+                '--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5:'
+                '${testdir}/../../stubs/validation-api-2.0.1.Final')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                sources = [Path(value) for value in command if value.endswith('.java')]
+                self.assertEqual(len(sources), 1)
+                self.assertIn('first', sources[0].read_text())
+                output = Path(command[command.index('-d') + 1]) / 'com/example/Shared.class'
+                output.parent.mkdir(parents=True, exist_ok=True)
+                output.write_bytes(b'compiled-first')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                stager.prepare(test_dir, codeql, cache)
+            record = next((cache / 'java-stubs').glob('*/compile.txt')).read_text()
+            self.assertIn('com.example.Shared: kept HikariCP-3.4.5/com/example/Shared.java', record)
+            self.assertIn('dropped validation-api-2.0.1.Final/com/example/Shared.java', record)
+            first_jar = cache / 'maven-home/.m2/repository/codeql/stubs/HikariCP-3.4.5/0/HikariCP-3.4.5-0.jar'
+            first_sources = first_jar.with_name('HikariCP-3.4.5-0-sources.jar')
+            second_jar = cache / 'maven-home/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar'
+            second_sources = second_jar.with_name('validation-api-2.0.1.Final-sources.jar')
+            with zipfile.ZipFile(first_jar) as archive:
+                first_binary_types = {name.removesuffix('.class') for name in archive.namelist()}
+            with zipfile.ZipFile(first_sources) as archive:
+                first_source_types = {name.removesuffix('.java') for name in archive.namelist()}
+            with zipfile.ZipFile(second_jar) as archive:
+                second_binary_types = {name.removesuffix('.class') for name in archive.namelist()}
+            with zipfile.ZipFile(second_sources) as archive:
+                second_source_types = {name.removesuffix('.java') for name in archive.namelist()}
+            self.assertEqual(first_binary_types, first_source_types)
+            self.assertEqual(first_source_types, {'com/example/Shared'})
+            self.assertEqual(second_binary_types, second_source_types)
+            self.assertEqual(second_source_types, set())
+
+    def test_jdk_owned_stub_package_is_dropped_and_recorded(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/javax/crypto/Stub.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('package javax.crypto; public class Stub {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+            with patch.object(stager, '_jdk_packages', return_value={'javax.crypto': {'java.base'}}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run') as javac:
+                stager.prepare(test_dir, codeql, cache)
+                javac.assert_not_called()
+            record = next((cache / 'java-stubs').glob('*/compile.txt')).read_text()
+            self.assertIn('HikariCP-3.4.5/javax/crypto/Stub.java package=javax.crypto modules=java.base', record)
+
+    def test_package_in_comment_does_not_hide_real_imported_class(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/real/Good.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('/*\npackage javax.crypto;\n*/\npackage real; public class Good {}\n')
+            (test_dir / 'Use.java').write_text('import real.Good; class Use {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                output = Path(command[command.index('-d') + 1]) / 'real/Good.class'
+                output.parent.mkdir(parents=True)
+                output.write_bytes(b'Good')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={'javax.crypto': {'java.base'}}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                prepared = stager.prepare(test_dir, codeql, cache)
+            jar = cache / 'maven-home/.m2/repository/codeql/stubs/HikariCP-3.4.5/0/HikariCP-3.4.5-0.jar'
+            self.assertEqual(prepared.staged_artifacts[0]['staging_status'], 'built')
+            with zipfile.ZipFile(jar) as archive:
+                self.assertIn('real/Good.class', archive.namelist())
+
+
+    def test_compile_failure_marks_root_unstaged_without_binary_jar(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/com/example/Bad.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('package com.example; public class Bad {')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run',
+                          return_value=SimpleNamespace(returncode=1, stdout='',
+                                                      stderr='Bad.java:1: error: package nowhere.example does not exist')):
+                prepared = stager.prepare(test_dir, codeql, cache)
+            self.assertEqual(prepared.staged_artifacts[0]['staging_status'], 'unstaged')
+            self.assertIn('package nowhere.example does not exist',
+                          prepared.staged_artifacts[0]['staging_diagnostic'])
+            self.assertFalse(list((cache / 'maven-home').rglob('HikariCP-3.4.5-0.jar')))
+            self.assertFalse(list((cache / 'maven-home').rglob('HikariCP-3.4.5-0.jar.fingerprint')))
+            self.assertTrue(list((cache / 'maven-home').rglob('HikariCP-3.4.5-0-sources.jar')))
+
+    def test_broken_stub_root_does_not_block_unrelated_root(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base, ('HikariCP-3.4.5', 'validation-api-2.0.1.Final'))
+            broken = stub_root / 'HikariCP-3.4.5/broken/Bad.java'
+            healthy = stub_root / 'validation-api-2.0.1.Final/healthy/Good.java'
+            broken.parent.mkdir(parents=True)
+            healthy.parent.mkdir(parents=True)
+            broken.write_text('package broken; public class Bad {}\n')
+            healthy.write_text('package healthy; public class Good {}\n')
+            test_dir.joinpath('options').write_text(
+                '--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5:'
+                '${testdir}/../../stubs/validation-api-2.0.1.Final')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                source = Path(command[-1])
+                if source.name == 'Bad.java':
+                    return SimpleNamespace(returncode=1, stdout='', stderr='synthetic failure')
+                output = Path(command[command.index('-d') + 1]) / 'healthy/Good.class'
+                output.parent.mkdir(parents=True, exist_ok=True)
+                output.write_bytes(b'good')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                prepared = stager.prepare(test_dir, codeql, cache)
+            statuses = {item['stub_dir']: item['staging_status'] for item in prepared.staged_artifacts}
+            self.assertEqual(statuses, {'HikariCP-3.4.5': 'unstaged', 'validation-api-2.0.1.Final': 'built'})
+            self.assertTrue(list((cache / 'maven-home').rglob('validation-api-2.0.1.Final.jar')))
+            self.assertFalse(list((cache / 'maven-home').rglob('HikariCP-3.4.5-0.jar.fingerprint')))
+
+    def test_dependency_root_builds_on_later_fixpoint_pass(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base, ('HikariCP-3.4.5', 'validation-api-2.0.1.Final'))
+            dependent = stub_root / 'HikariCP-3.4.5/consumer/Use.java'
+            dependency = stub_root / 'validation-api-2.0.1.Final/library/Needed.java'
+            dependent.parent.mkdir(parents=True)
+            dependency.parent.mkdir(parents=True)
+            dependent.write_text('package consumer; import library.Needed; public class Use {}\n')
+            dependency.write_text('package library; public class Needed {}\n')
+            test_dir.joinpath('options').write_text(
+                '--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5:'
+                '${testdir}/../../stubs/validation-api-2.0.1.Final')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+            calls = []
+
+            def fake_javac(command, **_kwargs):
+                source = Path(command[-1])
+                calls.append((source.name, '-classpath' in command))
+                if source.name == 'Use.java' and '-classpath' not in command:
+                    return SimpleNamespace(returncode=1, stdout='', stderr='package library missing')
+                output = Path(command[command.index('-d') + 1])
+                relative = Path('consumer/Use.class' if source.name == 'Use.java' else 'library/Needed.class')
+                target = output / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(b'built')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                prepared = stager.prepare(test_dir, codeql, cache)
+            self.assertEqual({item['staging_status'] for item in prepared.staged_artifacts}, {'built'})
+            self.assertIn(('Use.java', False), calls)
+            self.assertIn(('Use.java', True), calls)
+
+    def test_import_from_unstaged_stub_package_fails_preparation(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/org/example/Broken.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('package org.example; public class Broken {}\n')
+            (test_dir / 'Use.java').write_text(
+                'import org.example.Broken;\nimport static org.example.Broken.VALUE;\n'
+                'import org.example.*;\nclass Use {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run',
+                          return_value=SimpleNamespace(returncode=1, stdout='', stderr='bad stub')):
+                with self.assertRaisesRegex(GateError, 'import org.example') as error:
+                    stager.prepare(test_dir, codeql, cache)
+            self.assertIn('unstaged stub roots', str(error.exception))
+            self.assertIn('Broken', str(error.exception))
+
+    def test_duplicate_key_uses_declared_package_for_misplaced_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base, ('HikariCP-3.4.5', 'validation-api-2.0.1.Final'))
+            misplaced = stub_root / 'HikariCP-3.4.5/wrong/Shared.java'
+            regular = stub_root / 'validation-api-2.0.1.Final/declared/Shared.java'
+            misplaced.parent.mkdir(parents=True)
+            regular.parent.mkdir(parents=True)
+            misplaced.write_text('package declared; public class Shared {}\n')
+            regular.write_text('package declared; public class Shared { int duplicate; }\n')
+            test_dir.joinpath('options').write_text(
+                '--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5:'
+                '${testdir}/../../stubs/validation-api-2.0.1.Final')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                source = Path(command[-1])
+                self.assertIn('wrong/Shared.java', source.as_posix())
+                self.assertNotIn('duplicate', source.read_text())
+                output = Path(command[command.index('-d') + 1]) / 'declared/Shared.class'
+                output.parent.mkdir(parents=True, exist_ok=True)
+                output.write_bytes(b'first')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                stager.prepare(test_dir, codeql, cache)
+            record = next((cache / 'java-stubs').glob('*/compile.txt')).read_text()
+            self.assertIn('path=wrong declared=declared', record)
+            self.assertIn('declared.Shared: kept HikariCP-3.4.5/wrong/Shared.java', record)
+            self.assertIn('dropped validation-api-2.0.1.Final/declared/Shared.java', record)
+
+    def test_invalid_java_file_stem_is_skipped_and_recorded(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/org/example/PublicType copy.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('package org.example; public class PublicType {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run') as javac:
+                prepared = stager.prepare(test_dir, codeql, cache)
+                javac.assert_not_called()
+            record = next((cache / 'java-stubs').glob('*/compile.txt')).read_text()
+            self.assertIn('HikariCP-3.4.5/org/example/PublicType copy.java', record)
+            self.assertIn('file stem is not a valid Java identifier', record)
+            self.assertEqual(prepared.staged_artifacts[0]['staging_status'], 'built')
+
+    def _prepare_missing_package_with_auxiliaries(self, base, candidates, test_source=None):
+        names = ('HikariCP-3.4.5',)
+        codeql, test_dir, stub_root = self.fixture(base, names)
+        consumer = stub_root / names[0] / 'consumer/Use.java'
+        consumer.parent.mkdir(parents=True)
+        consumer.write_text('package consumer; import shared.api.Needed; public class Use {}\n')
+        test_dir.joinpath('options').write_text(
+            '--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+        if test_source:
+            (test_dir / 'Test.java').write_text(test_source)
+        for root_name, package_sources in candidates.items():
+            for relative, text in package_sources.items():
+                source = stub_root / root_name / relative
+                source.parent.mkdir(parents=True, exist_ok=True)
+                source.write_text(text)
+        java_home, cache = base / 'jdk', base / 'cache'
+        java_home.mkdir()
+        stager = JavaStager(java_home)
+
+        def fake_javac(command, **_kwargs):
+            sources = [Path(value) for value in command if value.endswith('.java')]
+            if any(source.name == 'Use.java' for source in sources) and '-classpath' not in command:
+                return SimpleNamespace(returncode=1, stdout='',
+                                       stderr='Use.java:1: error: package shared.api does not exist')
+            output = Path(command[command.index('-d') + 1])
+            for source in sources:
+                match = re.search(r'^\s*package\s+([\w.]+)\s*;', source.read_text(), re.M)
+                package = match.group(1) if match else ''
+                relative = Path(package.replace('.', '/')) / f'{source.stem}.class'
+                target = output / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(b'built')
+            return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+        with patch.object(stager, '_jdk_packages', return_value={}), \
+                patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+            return stager.prepare(test_dir, codeql, cache)
+
+    def test_missing_package_uses_smallest_declaring_auxiliary_root(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            prepared = self._prepare_missing_package_with_auxiliaries(Path(temporary), {
+                'apache-hive': {
+                    'shared/api/Needed.java': 'package shared.api; public class Needed {}\n',
+                    'shared/api/Extra.java': 'package shared.api; public class Extra {}\n',
+                },
+                'javafx-web': {
+                    'shared/api/Needed.java': 'package shared.api; public class Needed {}\n',
+                },
+            })
+            auxiliaries = [item for item in prepared.staged_artifacts
+                           if item.get('staging_kind') == 'auxiliary']
+            self.assertEqual([item['stub_dir'] for item in auxiliaries], ['javafx-web'])
+            self.assertEqual(auxiliaries[0]['auxiliary_package'], 'shared.api')
+            self.assertIn('package shared.api does not exist', auxiliaries[0]['auxiliary_trigger'])
+
+    def test_changed_auxiliary_winner_rebuilds_dependencies_and_removes_stale_jar(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base, ('HikariCP-3.4.5', 'apache-hive', 'javafx-web'))
+            consumer = stub_root / 'HikariCP-3.4.5/consumer/Use.java'
+            consumer.parent.mkdir(parents=True)
+            consumer.write_text('package consumer; import shared.api.Needed; public class Use {}\n')
+            for root in ('apache-hive', 'javafx-web'):
+                source = stub_root / root / 'shared/api/Needed.java'
+                source.parent.mkdir(parents=True)
+                source.write_text('package shared.api; public class Needed {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+
+            def fake_javac(command, **_kwargs):
+                sources = [Path(value) for value in command if value.endswith('.java')]
+                if any(source.name == 'Use.java' for source in sources) and '-classpath' not in command:
+                    return SimpleNamespace(returncode=1, stdout='', stderr='package shared.api does not exist')
+                output = Path(command[command.index('-d') + 1])
+                for source in sources:
+                    relative = Path('consumer/Use.class' if source.name == 'Use.java'
+                                    else 'shared/api/Needed.class')
+                    target = output / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(b'class')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run', side_effect=fake_javac):
+                first = stager.prepare(test_dir, codeql, cache)
+                (stub_root / 'apache-hive/shared/api/Extra.java').write_text(
+                    'package shared.api; public class Extra {}\n')
+                second = stager.prepare(test_dir, codeql, cache)
+            self.assertNotEqual(first.root, second.root)
+            auxiliaries = [item for item in second.staged_artifacts if item['staging_kind'] == 'auxiliary']
+            self.assertEqual([item['stub_dir'] for item in auxiliaries], ['javafx-web'])
+            self.assertTrue(auxiliaries[0]['compile_only'])
+            pom = ET.parse(second.root / 'pom.xml').getroot()
+            artifacts = [dep.findtext('artifactId') for dep in pom.findall('./dependencies/dependency')]
+            self.assertNotIn('apache-hive', artifacts)
+            self.assertNotIn('javafx-web', artifacts)
+            old_jar = cache / 'maven-home/.m2/repository/codeql/stubs/apache-hive/0/apache-hive-0.jar'
+            self.assertFalse(old_jar.exists())
+            self.assertFalse(list((cache / 'maven-home').rglob('javafx-web-0.jar')))
+
+    def test_import_from_compile_only_auxiliary_is_setup_error(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(GateError, 'import shared.api.Needed'):
+                self._prepare_missing_package_with_auxiliaries(Path(temporary), {
+                    'javafx-web': {
+                        'shared/api/Needed.java': 'package shared.api; public class Needed {}\n',
+                    },
+                }, 'import shared.api.Needed; class Test {}\n')
+
+    def test_auxiliary_root_tie_breaks_by_name(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            prepared = self._prepare_missing_package_with_auxiliaries(Path(temporary), {
+                'apache-hive': {
+                    'shared/api/Needed.java': 'package shared.api; public class Needed {}\n',
+                },
+                'apache-commons-logging-1.2': {
+                    'shared/api/Needed.java': 'package shared.api; public class Needed {}\n',
+                },
+            })
+            auxiliaries = [item for item in prepared.staged_artifacts
+                           if item.get('staging_kind') == 'auxiliary']
+            self.assertEqual([item['stub_dir'] for item in auxiliaries],
+                             ['apache-commons-logging-1.2'])
+
+    def test_binary_jar_missing_expected_class_is_setup_error(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            codeql, test_dir, stub_root = self.fixture(base)
+            source = stub_root / 'HikariCP-3.4.5/com/example/Stub.java'
+            source.parent.mkdir(parents=True)
+            source.write_text('package com.example; public class Stub {}\n')
+            test_dir.joinpath('options').write_text('--javac-args -cp ${testdir}/../../stubs/HikariCP-3.4.5')
+            java_home, cache = base / 'jdk', base / 'cache'
+            java_home.mkdir()
+            stager = JavaStager(java_home)
+            with patch.object(stager, '_jdk_packages', return_value={}), \
+                    patch('scripts.upstream.codeql_gate.stagers.java.subprocess.run',
+                          return_value=SimpleNamespace(returncode=0, stdout='', stderr='')):
+                with self.assertRaisesRegex(GateError, 'missing expected classes'):
+                    stager.prepare(test_dir, codeql, cache)
+            self.assertFalse(list((cache / 'java-stubs').glob('*/compile.txt')))
 
     @unittest.skipUnless(_javac_supports_release_21(), 'requires JAVA_HOME with a JDK 21+ javac')
     def test_real_stub_compile_when_jdk_is_available(self):
