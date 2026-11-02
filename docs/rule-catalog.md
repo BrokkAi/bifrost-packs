@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 255 unique rule IDs from 12 manifest packs.
+This catalog lists 258 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -72,6 +72,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# empty branch and loop blocks](../rules/bifrost.csharp-codeql-quality/policies/empty-block.rqlp) | `bifrost.csharp-codeql-quality.empty-block` | csharp | correctness | warning |
 | [C# empty catch block](../rules/bifrost.csharp-codeql-quality/policies/empty-catch-block.rqlp) | `bifrost.csharp-codeql-quality.empty-catch-block` | csharp | correctness | warning |
 | [C# empty password in configuration](../rules/bifrost.csharp-codeql-quality/policies/empty-password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.empty-password-in-configuration` | csharp | security | warning |
+| [C# locking this](../rules/bifrost.csharp-codeql-quality/policies/lock-this.rqlp) | `bifrost.csharp-codeql-quality.lock-this` | csharp | quality | warning |
+| [C# misleading indentation](../rules/bifrost.csharp-codeql-quality/policies/misleading-indentation.rqlp) | `bifrost.csharp-codeql-quality.misleading-indentation` | csharp | quality | warning |
+| [C# nested-if-statements](../rules/bifrost.csharp-codeql-quality/policies/nested-if-statements.rqlp) | `bifrost.csharp-codeql-quality.nested-if-statements` | csharp | quality | warning |
 | [C# nested loops reuse variable](../rules/bifrost.csharp-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.csharp-codeql-quality.nested-loops-with-same-variable` | csharp | correctness | warning |
 | [C# password in configuration](../rules/bifrost.csharp-codeql-quality/policies/password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.password-in-configuration` | csharp | security | warning |
 | [C# call to Path.Combine](../rules/bifrost.csharp-codeql-quality/policies/path-combine.rqlp) | `bifrost.csharp-codeql-quality.path-combine` | csharp | quality | note |

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.rust.getset",
+  "pack_version": "1.0.0",
+  "ecosystem": "cargo",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "getset-0.1.7.json",
+    "sha256": "7513cdb3b3ad6ba44257c27b2086ff6b6208d544338ba3639a195626a2fb991b",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/825d2bcb1de3aea097b1149ae13ece24d920898c/semantic-packs/models/getset-0.1.7.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "getset",
+        "version": "=0.1.7"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://docs.rs/getset/0.1.7/getset/",
+    "revision": "0.1.7"
+  },
+  "license": "MIT",
+  "safety": {
+    "generated_code_only": true,
+    "review_required": false
+  },
+  "notices": [
+    "notices/getset-0.1.7.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "getset",
+      "version": "=0.1.7"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "rule",
+      "id": "rust.getset.getter"
+    }
+  ]
+}
