@@ -10,3 +10,5 @@ the reviewed `bifrost.dotnet.security-cryptography-xml-csharp` model.
 XmlDocument part of the stdlib candidate
 `dotnet-xmlreader-external-dtd-resolution` against the reviewed
 `bifrost.dotnet.system-xml-csharp` model.
+
+The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.

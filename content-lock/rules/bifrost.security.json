@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "0e8c4bc897587289f86ce685cedb233fdc6e60e8b7f3f2444fa0a7ace8fe692b"
+      "sha256": "0069e85b10f47e3ae91edc575a8d90bf13b9a517152e02691d43b1fe295506c5"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -330,6 +330,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp",
+      "sha256": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
       "sha256": "238e5f69772d38e924f1657866b3b466d8862986c1c54d5360bdb98d1d13cfbf",
@@ -343,6 +350,13 @@
       "classification": "public",
       "license": "Apache-2.0",
       "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp",
+      "sha256": "356f77c3ac75b0bc31d76a1d9ff0ad897d879123b97edb5812d8a6b016e740be",
+      "classification": "public",
+      "license": "Apache-2.0"
     }
   ]
 }
