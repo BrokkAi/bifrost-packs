@@ -29,7 +29,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**262 unique rules across 13 policy packs.**
+**264 unique rules across 13 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -45,19 +45,19 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.javascript-codeql-quality | 12 |
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
-| Pack | bifrost.security | 47 |
+| Pack | bifrost.security | 49 |
 | Category | correctness | 115 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 10 |
 | Category | quality | 69 |
-| Category | security | 51 |
-| Severity | error | 72 |
+| Category | security | 53 |
+| Severity | error | 73 |
 | Severity | note | 26 |
-| Severity | warning | 164 |
+| Severity | warning | 165 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 500 rule-language pairs.
+13 declared languages; 502 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -71,11 +71,11 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | php | 20 |
 | python | 128 |
 | ruby | 20 |
-| rust | 32 |
+| rust | 34 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 46, unspecified 216. Omitted labels remain unspecified.
+Activation labels: opt-in 48, unspecified 216. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -84,12 +84,10 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The next releases, `packs/v0.8.0` and `rules/v0.8.0`, ship compiled the 36
-public packs that Bifrost's legacy embedded registry provided and
-`packs/v0.7.0` did not. `rules/v0.8.0` requires Bifrost 0.15.0 or later. Five
-policies that use the `resolved-value` operator now declare the
-`resolved-value` capability, which older engines do not advertise, so those
-engines reject the release at admission. See
+The latest releases are `packs/v0.8.0` and `rules/v0.8.0`. The next packs
+release, `packs/v0.9.0`, ships compiled the last six packs that Bifrost's
+legacy embedded registry provides, so its bundle contains all 46. It is built
+by the Bifrost 0.15.0 generator and needs Bifrost 0.15.0 or later to read it. See
 [release streams](docs/release-streams.md).
 
 ## Source verification
