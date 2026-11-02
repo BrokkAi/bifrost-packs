@@ -4,13 +4,9 @@
     "repository": "https://github.com/BrokkAi/bifrost",
     "commit": "fc4a2da2b78c938e811c496b3c21e5b02f415048",
     "version": "0.15.0",
-    "asset": "source.tar.gz",
-    "asset_sha256": "7b89b11d272921e6078408014d90d79a7fea51112698173a1bcc8760618b7dcf",
-    "binary_sha256": null,
-    "build": {
-      "rust_toolchain": "1.99.1",
-      "cargo_lock_sha256": "03cc61929856fc31be6619ce69f5c8ffa28de074a185b69414158e7c5b624dab"
-    }
+    "asset": "bifrost-semantic-pack-v0.15.0-x86_64-unknown-linux-gnu.tar.gz",
+    "asset_sha256": "825294fb3ddda0c97c44c222b544b451818f04dd11817dcd79069d1c856bac79",
+    "binary_sha256": "d6c19acdcbf37d495e4c0b3f7490746e6235da3522aba5deba4c78f904312031"
   },
   "jobs": [
     {
@@ -252,6 +248,36 @@
       "name": "go-testify-require-declarations",
       "spec": "semantic-packs/go/go-testify-require-declarations.spec.json",
       "artifact": "semantic-packs/models/go-testify-require-declarations.json"
+    },
+    {
+      "name": "java-lombok",
+      "spec": "semantic-packs/jvm/lombok-1.18.42.spec.json",
+      "artifact": "semantic-packs/models/lombok-1.18.42.json"
+    },
+    {
+      "name": "rust-getset",
+      "spec": "semantic-packs/rust/getset-0.1.7.spec.json",
+      "artifact": "semantic-packs/models/getset-0.1.7.json"
+    },
+    {
+      "name": "scala-case-class",
+      "spec": "semantic-packs/jvm/scala-case-class.spec.json",
+      "artifact": "semantic-packs/models/scala-case-class.json"
+    },
+    {
+      "name": "python-process-inputs",
+      "spec": "semantic-packs/python/python-process-inputs.spec.json",
+      "artifact": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json"
+    },
+    {
+      "name": "node-runtime-values-javascript",
+      "spec": "semantic-packs/node/runtime-values/node-runtime-values-javascript.spec.json",
+      "artifact": "semantic-packs/node/runtime-values/javascript/bifrost.node-runtime-values.json"
+    },
+    {
+      "name": "node-runtime-values-typescript",
+      "spec": "semantic-packs/node/runtime-values/node-runtime-values-typescript.spec.json",
+      "artifact": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json"
     }
   ],
   "recipes": [
