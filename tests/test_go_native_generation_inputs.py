@@ -56,6 +56,8 @@ def _sha256(data: bytes) -> str:
 
 
 class GoNativeGenerationInputTests(unittest.TestCase):
+    """Pin the Go os native jobs' inputs, lookup anchors, licenses and lock rows."""
+
     def test_two_go_models_are_explicit_jobs_and_existing_plan_is_preserved(self):
         config = _load("native-generation.json")
         jobs = {row["name"]: row for row in config["jobs"]}
