@@ -1,84 +1,31 @@
 name: Verify public policy authoring identities
-description: Build the production authoring CLI from immutable public source and compare every locked policy identity.
+description: Download the pinned released authoring CLI and compare every locked policy identity.
 runs:
   using: composite
   steps:
-    - id: pins
-      shell: bash
-      run: |
-        set -euo pipefail
-        python3 - <<'PYTHON'
-        import sys
-        from pathlib import Path
-        sys.path.insert(0, str(Path('release-contract').resolve()))
-        import native_generation
-        native_generation._validate_config(Path('.').resolve(), Path('native-generation.json'))
-        PYTHON
-        echo "toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)" >> "$GITHUB_OUTPUT"
-        echo "source=$(jq -r .generator.asset_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
-        echo "lock=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
-    - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
-      with:
-        toolchain: ${{ steps.pins.outputs.toolchain }}
-    # One build per exact pin. The key covers every input the binary depends
-    # on, including this action, and the restored binary is accepted only when
-    # its receipt matches the pins and its SHA-256 matches the receipt, as the
-    # native generator's cache in native-packs.yml already does.
-    - id: cli-key
-      shell: bash
-      run: |
-        set -euo pipefail
-        commit=$(jq -r .generator.commit native-generation.json)
-        echo "key=policy-authoring-cli-${{ runner.os }}-${{ runner.arch }}-${commit}-${{ steps.pins.outputs.source }}-${{ steps.pins.outputs.lock }}-${{ steps.pins.outputs.toolchain }}-${{ hashFiles('.github/actions/verify-policy-identities/action.yml') }}" >> "$GITHUB_OUTPUT"
-    - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-      id: cli-cache
-      with:
-        path: ${{ runner.temp }}/policy-authoring-cli
-        key: ${{ steps.cli-key.outputs.key }}
-    - name: Compile exact public authoring source
-      if: ${{ steps.cli-cache.outputs.cache-hit != 'true' }}
+    # policy-authoring.json pins the released Linux x86_64 CLI by archive and
+    # executable SHA-256, plus the build identity that executable reports.
+    - name: Download exact released authoring CLI
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
-        CARGO_BUILD_JOBS: '2'
-        CARGO_INCREMENTAL: '0'
       run: |
         set -euo pipefail
-        repo=$(jq -r .generator.repository native-generation.json)
+        pin=policy-authoring.json
+        test "$(jq -r .schema_version "$pin")" = 1
+        repo=$(jq -r .cli.repository "$pin")
         repo=${repo#https://github.com/}
-        commit=$(jq -r .generator.commit native-generation.json)
-        timeout --signal=TERM --kill-after=30s 120s gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/policy-source.tar.gz"
-        echo "${{ steps.pins.outputs.source }}  $RUNNER_TEMP/policy-source.tar.gz" | sha256sum -c -
-        mkdir "$RUNNER_TEMP/policy-source"
-        tar -xzf "$RUNNER_TEMP/policy-source.tar.gz" -C "$RUNNER_TEMP/policy-source" --strip-components=1
-        echo "${{ steps.pins.outputs.lock }}  $RUNNER_TEMP/policy-source/Cargo.lock" | sha256sum -c -
-        BIFROST_BUILD_IDENTITY_OVERRIDE="$commit" timeout --signal=TERM --kill-after=30s 60m cargo +"${{ steps.pins.outputs.toolchain }}" build \
-          --locked --release --manifest-path "$RUNNER_TEMP/policy-source/Cargo.toml" --bin bifrost
-        rm -rf "$RUNNER_TEMP/policy-authoring-cli"
-        mkdir -p "$RUNNER_TEMP/policy-authoring-cli"
-        cp "$RUNNER_TEMP/policy-source/target/release/bifrost" "$RUNNER_TEMP/policy-authoring-cli/bifrost"
-        jq -n --arg commit "$commit" --arg source "${{ steps.pins.outputs.source }}" \
-          --arg lock "${{ steps.pins.outputs.lock }}" --arg toolchain "${{ steps.pins.outputs.toolchain }}" \
-          --arg binary "$(sha256sum "$RUNNER_TEMP/policy-authoring-cli/bifrost" | awk '{print $1}')" \
-          '{schema_version: 1, generator_commit: $commit, source_archive_sha256: $source,
-            cargo_lock_sha256: $lock, rust_toolchain: $toolchain, binary_sha256: $binary}' \
-          > "$RUNNER_TEMP/policy-authoring-cli/build.json"
-    - name: Verify the authoring CLI matches its pins
-      shell: bash
-      run: |
-        set -euo pipefail
-        receipt="$RUNNER_TEMP/policy-authoring-cli/build.json"
-        test "$(jq -r .generator_commit "$receipt")" = "$(jq -r .generator.commit native-generation.json)"
-        test "$(jq -r .source_archive_sha256 "$receipt")" = "${{ steps.pins.outputs.source }}"
-        test "$(jq -r .cargo_lock_sha256 "$receipt")" = "${{ steps.pins.outputs.lock }}"
-        test "$(jq -r .rust_toolchain "$receipt")" = "${{ steps.pins.outputs.toolchain }}"
-        echo "$(jq -r .binary_sha256 "$receipt")  $RUNNER_TEMP/policy-authoring-cli/bifrost" | sha256sum -c -
-        echo "Authoring CLI cache hit: ${{ steps.cli-cache.outputs.cache-hit == 'true' }}"
-    - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-      if: ${{ steps.cli-cache.outputs.cache-hit != 'true' }}
-      with:
-        path: ${{ runner.temp }}/policy-authoring-cli
-        key: ${{ steps.cli-key.outputs.key }}
+        version=$(jq -r .cli.version "$pin")
+        asset=$(jq -r .cli.asset "$pin")
+        test "$asset" = "bifrost-v${version}-x86_64-unknown-linux-gnu.tar.gz"
+        mkdir -p "$RUNNER_TEMP/policy-authoring-download" "$RUNNER_TEMP/policy-authoring-cli"
+        timeout --signal=TERM --kill-after=30s 300s gh release download "v$version" --repo "$repo" \
+          --pattern "$asset" --dir "$RUNNER_TEMP/policy-authoring-download"
+        echo "$(jq -r .cli.asset_sha256 "$pin")  $RUNNER_TEMP/policy-authoring-download/$asset" | sha256sum -c -
+        tar -xzf "$RUNNER_TEMP/policy-authoring-download/$asset" -C "$RUNNER_TEMP/policy-authoring-download"
+        binary=$(find "$RUNNER_TEMP/policy-authoring-download" -type f -name bifrost)
+        echo "$(jq -r .cli.binary_sha256 "$pin")  $binary" | sha256sum -c -
+        cp "$binary" "$RUNNER_TEMP/policy-authoring-cli/bifrost"
     - name: Compare source authoring identities
       shell: bash
       run: |
@@ -86,10 +33,9 @@ runs:
         python3 -B scripts/verify-policy-identities.py \
           --binary "$RUNNER_TEMP/policy-authoring-cli/bifrost" \
           --output "$RUNNER_TEMP/policy-identities" \
-          --engine-version "$(jq -r .generator.version native-generation.json)" \
-          --build-identity "$(jq -r .generator.commit native-generation.json)"
-        cp native-generation.json "$RUNNER_TEMP/policy-identities/public-source-pins.json"
-        cp "$RUNNER_TEMP/policy-authoring-cli/build.json" "$RUNNER_TEMP/policy-identities/authoring-cli-build.json"
+          --engine-version "$(jq -r .cli.version policy-authoring.json)" \
+          --build-identity "$(jq -r .cli.build_identity policy-authoring.json)"
+        cp policy-authoring.json "$RUNNER_TEMP/policy-identities/authoring-cli-pin.json"
     - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       if: ${{ always() }}
       with:
