@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.testify.require-declarations",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "producer": {
     "name": "bifrost",
     "version": "0.10.6"
@@ -85,6 +85,7 @@
             "name": "NoError",
             "member_kind": "function",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": true,
             "is_abstract": false,
             "is_virtual": false,
