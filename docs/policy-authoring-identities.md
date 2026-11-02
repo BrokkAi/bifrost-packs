@@ -28,9 +28,14 @@ explicit `workspace-required` result requires a null resolved manifest field;
 raw file hashes and authored identities never substitute for resolution.
 
 Normal content CI and rules packaging build the production CLI from the public
-source archive, Rust toolchain and Cargo lock pinned in `native-generation.json`.
-The archive commit identifies that authoring build; it is not a claim of
-release-candidate compiled-input equivalence. Records retain the executable hash,
+source archive, Rust toolchain and Cargo lock pinned in `policy-authoring.json`.
+That pin has the generator pin's shape but is separate from
+`native-generation.json`, so policies can use RQL forms newer than the native
+pack producer. It pins Bifrost 0.15.0 (`09a2503c5f7ced1630a9e3c445ead53dfc5925e8`),
+the first release that parses the C# `lock`, `cast` and `type_literal` forms,
+while native generation stays on 0.14.0. The archive commit identifies that
+authoring build; it is not a claim of release-candidate compiled-input
+equivalence. Records retain the executable hash,
 exact command, environment, raw output and process status for every policy.
 Mismatch, malformed output, process failure, timeout and output overflow fail
 verification.
