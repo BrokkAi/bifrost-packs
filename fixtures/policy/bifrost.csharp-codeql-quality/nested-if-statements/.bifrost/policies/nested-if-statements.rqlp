@@ -1,0 +1,11 @@
+ ; Test-only draft for CodeQL cs/nested-if-statements.
+(policy :schema-version 1
+ :id "bifrost.csharp-codeql-quality.nested-if-statements"
+ :name "C# nested-if-statements"
+ :message "Inspect nested-if-statements"
+ :severity warning
+ :description "Source-local CodeQL statement fact."
+ :tags ["csharp" "codeql" "quality"]
+ :analysis (analysis :type match :selector
+  (rql :schema-version 1 (language csharp
+   (statement-facts :kind nested-if-statements (if))))))
