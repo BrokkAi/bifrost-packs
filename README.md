@@ -29,7 +29,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**258 unique rules across 13 policy packs.**
+**263 unique rules across 13 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -38,7 +38,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.correctness | 1 |
 | Pack | bifrost.cpp-jsf | 14 |
 | Pack | bifrost.cpp-power-of-10 | 2 |
-| Pack | bifrost.csharp-codeql-quality | 26 |
+| Pack | bifrost.csharp-codeql-quality | 31 |
 | Pack | bifrost.effects | 12 |
 | Pack | bifrost.java-codeql-quality | 19 |
 | Pack | bifrost.java-codeql-security | 1 |
@@ -46,24 +46,24 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
 | Pack | bifrost.security | 47 |
-| Category | correctness | 111 |
+| Category | correctness | 115 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 10 |
-| Category | quality | 68 |
+| Category | quality | 69 |
 | Category | security | 52 |
 | Severity | error | 73 |
 | Severity | note | 26 |
-| Severity | warning | 159 |
+| Severity | warning | 164 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 496 rule-language pairs.
+13 declared languages; 501 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 19 |
 | cpp | 39 |
-| csharp | 52 |
+| csharp | 57 |
 | go | 20 |
 | java | 52 |
 | javascript | 42 |
@@ -75,7 +75,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 47, unspecified 211. Omitted labels remain unspecified.
+Activation labels: opt-in 47, unspecified 216. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->

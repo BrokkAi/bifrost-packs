@@ -1,0 +1,21 @@
+; CodeQL: csharp/ql/src/Bad Practices/CallsUnmanagedCode.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: proven calls whose exact target is a source method declared extern
+; in a class. The extern modifier is read from the declaration header, before
+; the parameter list; struct and interface members are excluded.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.calls-unmanaged-code"
+  :name "C# call to unmanaged code"
+  :message "call to an extern method; replace it with a call to managed code if possible"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/CallsUnmanagedCode.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports proven calls to source methods declared extern in a class, such as DllImport platform-invoke declarations."
+  :tags ["csharp" "codeql" "quality" "interop"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (call-sites-to :proof proven
+          (enclosing-decl
+            (except
+              (method (text/regex "\\A(?:\\s*\\[[^\\]]*\\])*[^\\[({;=]*?\\bextern\\b"))
+              (inside (class (text/regex "\\A(?:\\s*\\[[^\\]]*\\])*[^\\[{:(<]*?\\b(?:struct|interface)\\b"))
+                (method (text/regex "\\A(?:\\s*\\[[^\\]]*\\])*[^\\[({;=]*?\\bextern\\b"))))))))))
