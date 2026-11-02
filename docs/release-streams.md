@@ -17,12 +17,13 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-10-30, the latest published streams are `packs/v0.7.0` and
-`rules/v0.7.0` (bifrost-packs#168), both tagged on `fd13b06`. Bifrost 0.14.3
-admits both; the engine's pack-compatibility matrix records the outcome.
+As of 2026-11-02, the latest published streams are `packs/v0.8.0` and
+`rules/v0.8.0`, both tagged on `ab1ba15`. `rules/v0.9.0` is prepared next
+([below](#c-codeql-ports-for-rules-090)); it keeps the exact dependency on
+`packs/v0.8.0`.
 
-The next releases are prepared as `packs/v0.8.0` and `rules/v0.8.0`
-(bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds 36 native
+The 0.8.0 release notes follow. They were prepared as
+`packs/v0.8.0` and `rules/v0.8.0` (bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds 36 native
 packs that Bifrost previously supplied only through its embedded built-in
 registry, so online runs that pin a packs release no longer lose them. The
 [generation notes](generation.md#legacy-built-in-packs) list them and the six
@@ -68,12 +69,14 @@ a minor bump before 1.0 (`bifrost.csharp-codeql-quality` 0.3.0 → 0.4.0) and a
 major bump after it (`bifrost.security` 1.4.1 → 2.0.0). The rules release CI
 smoke test now uses the checksum-pinned Linux v0.15.0 binary instead of v0.14.2.
 
-### C# CodeQL ports unblocked by Bifrost 0.15.0
+### C# CodeQL ports for rules 0.9.0
 
 Bifrost 0.15.0 adds C# `comparison`, `binary_expression` and `lock` rows, and
 local and parameter reference bindings (bifrost-dev#8308). These made six
-CodeQL C# queries expressible. They join `bifrost.csharp-codeql-quality` 0.4.0,
-which is not yet tagged, so the pack takes no further bump:
+CodeQL C# queries expressible. `rules/v0.8.0` was already tagged without them,
+so they ship in the minor release `rules/v0.9.0`, and the new policies bump
+`bifrost.csharp-codeql-quality` from 0.4.0 to 0.5.0. Like 0.8.0, the release
+requires Bifrost 0.15.0 and depends exactly on `packs/v0.8.0`:
 
 | Policy | CodeQL query |
 | --- | --- |
