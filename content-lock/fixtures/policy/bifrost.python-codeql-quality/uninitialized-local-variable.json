@@ -1,0 +1,54 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/.bifrost/policies/uninitialized-local-variable.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/uninitialized-local-variable.rqlp",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "e1bbee29c6954cb0c1cb300f2b05a5fc759356436bbb61236fb1b23eb249ce8b"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/README.md",
+      "classification": "public",
+      "license": "Apache-2.0",
+      "sha256": "a474c48d726e1bb82041276a4c457f28c38636c5afbe3cf89a15c7f5625b9ef6"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/UninitializedLocal.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/UninitializedLocal.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "b3f075a4309161070961b3472faada23126895a311374ff4ba32e95d44cd35ae",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/UninitializedLocal.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/odasa3987.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/odasa3987.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "255041ab4c53d693a4ed260f3560624ca440b137967b1efb894842a074a78b14",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/odasa3987.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/uninitialized-local-variable/upstream/Variables/undefined/odasa6800.py",
+      "source_path": "python/ql/test/query-tests/Variables/undefined/odasa6800.py",
+      "classification": "public",
+      "license": "MIT",
+      "sha256": "a55d815d43568e73ff785291893dc40ce90b2e0d99dd178d265a7fbaa313af52",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Variables/undefined/odasa6800.py"
+      }
+    }
+  ]
+}

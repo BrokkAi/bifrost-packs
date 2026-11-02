@@ -1,0 +1,15 @@
+#select
+| sample.java:10:1:10:4 | sink1 | sample.java:1:1:1:4 | source1 | sample.java:10:1:10:4 | sink1 | alert |
+| sample.java:20:1:20:4 | sink2 | sample.java:2:1:2:4 | source2 | sample.java:20:1:20:4 | sink2 | alert |
+| sample.java:30:1:30:4 | sink3 | sample.java:3:1:3:4 | source3 | sample.java:30:1:30:4 | sink3 | alert |
+edges
+| sample.java:1:1:1:4 | source1 | sample.java:10:1:10:4 | sink1 | provenance | Src:MaD:1 MaD:4 Sink:MaD:2 |
+| sample.java:2:1:2:4 | source2 | sample.java:20:1:20:4 | sink2 | provenance | Src:MaD:1 Sink:MaD:3 |
+| sample.java:3:1:3:4 | source3 | sample.java:30:1:30:4 | sink3 | provenance | Sink:MaD:3 |
+models
+| 1 | Source: java.io; BufferedReader; true; readLine; (); ; ReturnValue; remote; manual |
+| 2 | Sink: java.lang; Runtime; true; exec; (String); ; Argument[0]; command-injection; manual |
+| 3 | Sink: org.example.web; Runner; true; execute; (String); ; Argument[0]; command-injection; manual |
+| 4 | Summary: org.example.web; Wrapper; true; wrap; (String); ; Argument[0]; ReturnValue; taint; manual |
+nodes
+| sample.java:1:1:1:4 | source1 | semmle.label | source1 |

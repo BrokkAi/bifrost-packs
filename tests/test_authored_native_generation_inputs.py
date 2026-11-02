@@ -34,6 +34,8 @@ SELECTOR_FIELDS = {
 IDENTITY_VALUE_FIELDS = {"name", "version"}
 SHA256_LENGTH = 64
 AUTHORED_KIND = "authored_semantic_model"
+MIN_MODEL_SCHEMA_VERSION = 8
+MAX_MODEL_SCHEMA_VERSION = 17
 
 
 class SourceInputError(ValueError):
@@ -143,8 +145,11 @@ def _validate_authored_model_source(spec: Any, model: Any, description: str) -> 
     pack_id = spec.get("pack_id")
     _require(isinstance(pack_id, str) and bool(pack_id), f"{description} pack_id must be nonempty")
     _require(model.get("pack_id") == pack_id, f"{description} pack_id does not match model identity")
-    _require(type(model.get("schema_version")) is int and model["schema_version"] == 8,
-             f"{description} model schema_version must be 8")
+    # Schema 8 is the first with version-independent compatibility; the pinned
+    # producer's current schema is the newest it reads and writes.
+    _require(type(model.get("schema_version")) is int
+             and MIN_MODEL_SCHEMA_VERSION <= model["schema_version"] <= MAX_MODEL_SCHEMA_VERSION,
+             f"{description} model schema_version must be {MIN_MODEL_SCHEMA_VERSION} through {MAX_MODEL_SCHEMA_VERSION}")
 
     artifact = spec.get("artifact")
     _require(isinstance(artifact, dict), f"{description} artifact must be an object")
@@ -258,12 +263,14 @@ def _spec_and_model(spec_activation: Any, shard_activations: list[Any], *,
 
 
 class AuthoredNativeGenerationInputTests(unittest.TestCase):
+    """Bind every configured authored job to its source identity and shards."""
+
     def test_all_configured_authored_jobs_bind_source_identity_and_each_shard(self):
         config = _load_json("native-generation.json")
         self.assertIsInstance(config, dict)
         jobs = config.get("jobs")
         self.assertIsInstance(jobs, list)
-        self.assertEqual(len(jobs), 10)
+        self.assertEqual(len(jobs), 54)
         shard_count = 0
 
         for job in jobs:
@@ -281,7 +288,29 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
                 for field in ("compatibility", "provenance", "license", "safety"):
                     self.assertEqual(spec[field], model[field], f"{job['name']} {field}")
 
-        self.assertEqual(shard_count, 17)
+        self.assertEqual(shard_count, 65)
+
+    def test_jdk21_reviewed_obligations_are_selected_for_native_delivery(self):
+        jobs = _load_json("native-generation.json")["jobs"]
+        selected = [job for job in jobs if job["artifact"] ==
+                    "semantic-packs/models/jdk21-result-use-obligations.json"]
+        self.assertEqual(len(selected), 1)
+        model = _load_json(selected[0]["artifact"])
+        self.assertEqual(model["schema_version"], 8)
+        self.assertNotIn("bifrost", model["compatibility"])
+        self.assertEqual(model["shards"][0]["activation"], [{
+            "toolchain": {"name": "jdk", "version": ">=21.0.0, <22.0.0"},
+            "targets": ["jvm"],
+        }])
+        summaries = model["shards"][0]["payload"]["summaries"]
+        self.assertEqual({summary["id"] for summary in summaries}, {
+            "java.lang.string.trim.result-use",
+            "java.nio.file.files.delete-if-exists.result-use",
+        })
+        status = next(summary for summary in summaries
+                      if summary["id"] == "java.nio.file.files.delete-if-exists.result-use")
+        self.assertEqual(status["completeness"], "partial")
+        self.assertTrue(status["result_use_obligations"])
 
     def test_configured_direct_jobs_name_real_safe_spec_relative_notice_assets(self):
         config = _load_json("native-generation.json")
@@ -431,6 +460,19 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
         wrong_model["pack_id"] = "bifrost.other.model"
         with self.assertRaisesRegex(SourceInputError, "pack_id does not match"):
             _validate_authored_model_source(spec, wrong_model, "wrong model identity")
+
+    def test_model_schema_stays_within_the_version_independent_range(self):
+        broad = [{"targets": []}]
+        spec, model = _spec_and_model(broad, [broad])
+        for schema_version in (MIN_MODEL_SCHEMA_VERSION, 14, MAX_MODEL_SCHEMA_VERSION):
+            with self.subTest(schema_version=schema_version):
+                model["schema_version"] = schema_version
+                _validate_authored_model_source(spec, model, "supported model schema")
+        for schema_version in (MIN_MODEL_SCHEMA_VERSION - 1, MAX_MODEL_SCHEMA_VERSION + 1, "14"):
+            with self.subTest(schema_version=schema_version):
+                model["schema_version"] = schema_version
+                with self.assertRaisesRegex(SourceInputError, "model schema_version must be"):
+                    _validate_authored_model_source(spec, model, "unsupported model schema")
 
     def test_duplicate_authored_shard_ids_are_rejected(self):
         activation = [{"targets": []}]

@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/.bifrost/policies/mixed-returns.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/mixed-returns.rqlp",
+      "sha256": "2fedb8cc3f865df0846c99ec846ee2735ebc52a0f7e3825fe769268018fe5082",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/README.md",
+      "sha256": "40e7d22cc39d9379e4eeb167d5d7b262a74d5fd011d74dc59509b2540d5220a0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/helper.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/helper.py",
+      "sha256": "a158e5870cb7e4107b3b761849dd618ebf5143b048219eebf4f09b97f8128948",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/main.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/main.py",
+      "sha256": "1f01f807f9f62e20a012e79e062f686995aa968a71de5d38a5b60e701ad6c414",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/mixed-returns/upstream/functions_test.py",
+      "source_path": "python/ql/test/query-tests/Functions/return_values/functions_test.py",
+      "sha256": "1a414212d7c8784d09e0e2f7133aad53a8bc446ddabadf60024e3c7112d325a2",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Functions/return_values/functions_test.py"
+      }
+    }
+  ]
+}

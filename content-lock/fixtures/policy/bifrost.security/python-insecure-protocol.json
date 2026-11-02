@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-protocol/.bifrost/policies/insecure-protocol.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/insecure-protocol.rqlp",
+      "sha256": "e306cc2b8857c5702f9451bc631ef4285c4bbaf9a4be4172ffcdacf3308a6365",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-protocol/.bifrost/semantic-models/bifrost.python-ssl-protocol-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-ssl-protocol-declarations.json",
+      "sha256": "02652bd197d656ff623d5bb668c80511ea2833dd02e0cebb7e5e188a6bffe311",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-protocol/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-protocol/README.md",
+      "sha256": "930e376786b9e88220d357a858b9f3ff6fb4a5160830e3fd8253a7f91d6c16aa",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-protocol/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-protocol/main.py",
+      "sha256": "5b312da3dac507c3d0bc904a6b925e474e3250a65860b20568dcf5ebaec4ac62",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-protocol/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-protocol/pyproject.toml",
+      "sha256": "68de193767b5dfe729bc14f9652862c3001f49786bbaae01f9637364fa0a5668",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-protocol/upstream/InsecureProtocol.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-327-InsecureProtocol/InsecureProtocol.py",
+      "sha256": "9f02447ebda440dad5cc1e886fb1b115807d08fc844f65f29ef1f7b887a18448",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-327-InsecureProtocol/InsecureProtocol.py"
+      }
+    }
+  ]
+}

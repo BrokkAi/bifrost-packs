@@ -5,19 +5,23 @@ on:
       version:
         description: Independent pack release version (raw generation evidence only until native migration)
         required: true
-        default: '0.5.0'
+        default: '0.8.0'
+  # Regenerate only when generator inputs or packs release tooling change; content.yml
+  # runs content verification and the unit tests on every pull request and push.
   pull_request:
-    paths: ['native-generation.json', 'release-contract/**', 'release-config.packs.json', 'content-lock.json', 'scripts/content.py', 'tests/**', 'semantic-packs/**', 'scripts/upstream/**', '.github/workflows/native-packs.yml']
+    paths: ['native-generation.json', 'release-config.packs.json', 'semantic-packs/**', 'scripts/upstream/**', 'release-contract/**', 'scripts/content.py', 'scripts/audit_tuple.py', '.github/workflows/native-packs.yml']
+  # A pull request can restore only caches saved on its own merge ref or on main,
+  # so main saves the producer and upstream inputs for later pull requests.
   push:
+    branches: [main]
     tags: ['packs/v*.*.*']
+    paths: ['native-generation.json', 'release-config.packs.json', 'semantic-packs/**', 'scripts/upstream/**', 'release-contract/**', 'scripts/content.py', 'scripts/audit_tuple.py', '.github/workflows/native-packs.yml']
 permissions:
   contents: read
 jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 180
-    env:
-      CARGO_BUILD_JOBS: 2
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -33,97 +37,47 @@ jobs:
         run: |
           python3 -B scripts/content.py verify
           python3 -B -m unittest discover -s tests -p 'test_*.py'
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        id: inputs-cache
         with:
           path: ${{ runner.temp }}/native-input-cache
-          key: native-inputs-linux-${{ hashFiles('scripts/upstream/**', 'semantic-packs/**/*.json') }}-v1
-      - id: generator-pin
-        name: Read immutable generator build pins
-        run: |
-          echo "toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)" >> "$GITHUB_OUTPUT"
-      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
-        with:
-          toolchain: ${{ steps.generator-pin.outputs.toolchain }}
-      - id: generator-identity
-        name: Identify exact producer build inputs
-        run: |
-          python3 -B release-contract/native_generator_cache.py identity --root . \
-            --config native-generation.json --identity "$RUNNER_TEMP/generator-identity.json" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        id: generator-cache
-        with:
-          path: ${{ runner.temp }}/generator-cache
-          key: ${{ steps.generator-identity.outputs.key }}
-      - name: Record runner disk before compilation
-        run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"
-      - name: Build generator from pinned public source
-        id: generator-build
-        if: ${{ steps.generator-cache.outputs.cache-hit != 'true' }}
+          key: native-inputs-linux-v1-${{ hashFiles('scripts/upstream/**', 'semantic-packs/**/*.json') }}
+          # Every cached archive is reused only after its pinned checksum matches, so an older
+          # input set is safe to start from; a missing or stale archive is fetched again.
+          restore-keys: native-inputs-linux-v1-
+      # native-generation.json pins the released Linux x86_64 producer by
+      # archive and executable SHA-256; native_generation.py checks the
+      # executable again before it generates.
+      - name: Download exact released generator
         env:
           GH_TOKEN: ${{ github.token }}
-          TARGET_TRIPLE: ${{ steps.generator-identity.outputs.target }}
         run: |
           set -euo pipefail
           repo=$(jq -r .generator.repository native-generation.json)
           repo=${repo#https://github.com/}
-          commit=$(jq -r .generator.commit native-generation.json)
-          hash=$(jq -r .generator.asset_sha256 native-generation.json)
-          gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/source.tar.gz"
-          echo "$hash  $RUNNER_TEMP/source.tar.gz" | sha256sum -c -
-          mkdir "$RUNNER_TEMP/generator-source"
-          tar -xzf "$RUNNER_TEMP/source.tar.gz" -C "$RUNNER_TEMP/generator-source" --strip-components=1
-          lock_hash=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)
-          echo "$lock_hash  $RUNNER_TEMP/generator-source/Cargo.lock" | sha256sum -c -
-          toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)
-          cd "$RUNNER_TEMP/generator-source"
-          cargo +"$toolchain" build --locked --release --features release-tooling \
-            --manifest-path "$RUNNER_TEMP/generator-source/Cargo.toml" \
-            --target "$TARGET_TRIPLE" \
-            -p brokk-bifrost-semantic-packs --bin bifrost-semantic-pack
-          cd "$GITHUB_WORKSPACE"
-          binary="$RUNNER_TEMP/generator-source/target/$TARGET_TRIPLE/release/bifrost-semantic-pack"
-          rm -rf "$RUNNER_TEMP/generator-cache"
-          mkdir "$RUNNER_TEMP/generator-cache"
-          cp "$binary" "$RUNNER_TEMP/generator-cache/bifrost-semantic-pack"
-          python3 - "$binary" "$RUNNER_TEMP/generator-cache/build.json" <<'PY'
-          import hashlib, json, sys
-          from pathlib import Path
-          generator = json.loads(Path('native-generation.json').read_text())['generator']
-          receipt = dict(schema_version=1, generator_commit=generator['commit'],
-                         source_archive_sha256=generator['asset_sha256'],
-                         cargo_lock_sha256=generator['build']['cargo_lock_sha256'],
-                         rust_toolchain=generator['build']['rust_toolchain'],
-                         binary_sha256=hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest())
-          Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2) + '\n')
-          PY
-          python3 -B release-contract/native_generator_cache.py record --root . \
-            --config native-generation.json --identity "$RUNNER_TEMP/generator-identity.json" \
-            --cache "$RUNNER_TEMP/generator-cache"
-      - name: Verify exact producer cache identity and payload
-        id: generator-verify
-        run: |
-          python3 -B release-contract/native_generator_cache.py verify --root . \
-            --config native-generation.json --identity "$RUNNER_TEMP/generator-identity.json" \
-            --cache "$RUNNER_TEMP/generator-cache"
-      - name: Save completed verified producer before generation
-        id: generator-save
-        if: ${{ success() && steps.generator-build.outcome == 'success' && steps.generator-verify.outcome == 'success' }}
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-          path: ${{ runner.temp }}/generator-cache
-          key: ${{ steps.generator-cache.outputs.cache-primary-key }}
-      - name: Record runner disk after compilation
-        if: ${{ always() }}
-        run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"
-      - name: Select pinned generated tool
-        run: |
-          echo "BIFROST_SEMANTIC_PACK_BIN=$RUNNER_TEMP/generator-cache/bifrost-semantic-pack" >> "$GITHUB_ENV"
+          version=$(jq -r .generator.version native-generation.json)
+          asset=$(jq -r .generator.asset native-generation.json)
+          test "$asset" = "bifrost-semantic-pack-v${version}-x86_64-unknown-linux-gnu.tar.gz"
+          mkdir "$RUNNER_TEMP/generator-download" "$RUNNER_TEMP/generator"
+          gh release download "v$version" --repo "$repo" --pattern "$asset" --dir "$RUNNER_TEMP/generator-download"
+          echo "$(jq -r .generator.asset_sha256 native-generation.json)  $RUNNER_TEMP/generator-download/$asset" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/generator-download/$asset" -C "$RUNNER_TEMP/generator-download"
+          binary=$(find "$RUNNER_TEMP/generator-download" -type f -name bifrost-semantic-pack)
+          echo "$(jq -r .generator.binary_sha256 native-generation.json)  $binary" | sha256sum -c -
+          cp "$binary" "$RUNNER_TEMP/generator/bifrost-semantic-pack"
+          echo "BIFROST_SEMANTIC_PACK_BIN=$RUNNER_TEMP/generator/bifrost-semantic-pack" >> "$GITHUB_ENV"
           echo "SEMANTIC_PACK_SOURCE_CACHE=$RUNNER_TEMP/native-input-cache" >> "$GITHUB_ENV"
       - name: Generate twice, verify and compare native content
         run: |
           python3 -B release-contract/native_generation.py --root . \
             --config native-generation.json --binary "$BIFROST_SEMANTIC_PACK_BIN" \
-            --build-receipt "$RUNNER_TEMP/generator-cache/build.json" --output "$RUNNER_TEMP/native"
+            --output "$RUNNER_TEMP/native"
+      - name: Save upstream inputs for later pull requests
+        if: ${{ success() && github.ref == 'refs/heads/main' && steps.inputs-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ runner.temp }}/native-input-cache
+          key: ${{ steps.inputs-cache.outputs.cache-primary-key }}
       - name: Record runner disk after generation
         if: ${{ always() }}
         run: df -h "$GITHUB_WORKSPACE" "$RUNNER_TEMP"
@@ -132,7 +86,7 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          version=${INPUT_VERSION:-0.5.0}
+          version=${INPUT_VERSION:-0.8.0}
           if [[ "$GITHUB_REF" == refs/tags/packs/* ]]; then
             version=${GITHUB_REF_NAME#packs/v}
             test "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" = "$GITHUB_SHA"
@@ -184,7 +138,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md
+          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md \
+            --context-notes "$(jq -r .notes release-config.packs.json)"
           cd dist
           sha256sum -c *.sha256
           flags=()

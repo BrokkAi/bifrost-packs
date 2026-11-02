@@ -19,7 +19,9 @@
         (filter :where ((caught_type_relation eq system_exception)
                         (caught_type eq "System.Exception")
                         (has_filter eq false)
-                        (rethrow_kind eq none)
+                        (rethrow_kind ne bare)
+                        (rethrow_kind ne both)
+                        (rethrow_kind ne unknown)
                         (proof eq exact)
                         (coverage eq exhaustive))
           (failure-handler-state

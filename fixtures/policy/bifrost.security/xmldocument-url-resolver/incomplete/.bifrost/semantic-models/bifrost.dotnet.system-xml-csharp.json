@@ -1,0 +1,318 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.dotnet.system-xml-csharp",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-dotnet-models",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": ".NET API reference and the dotnet/runtime System.Xml.ReaderWriter reference assembly for the reviewed XmlResolver properties and the XmlUrlResolver constructor in this pack",
+    "revision": "dotnet-9.0"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-system-xml-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.dotnet.system-xml-csharp"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmlresolver",
+            "name": "System.Xml.XmlResolver",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlResolver"
+            }
+          },
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmlurlresolver",
+            "name": "System.Xml.XmlUrlResolver",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "System.Xml.XmlResolver",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlUrlResolver"
+            }
+          },
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmlnode",
+            "name": "System.Xml.XmlNode",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlNode"
+            }
+          },
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmldocument",
+            "name": "System.Xml.XmlDocument",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "System.Xml.XmlNode",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlDocument"
+            }
+          },
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmlreader",
+            "name": "System.Xml.XmlReader",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlReader"
+            }
+          },
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmltextreader",
+            "name": "System.Xml.XmlTextReader",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "System.Xml.XmlReader",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            ],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlTextReader"
+            }
+          },
+          {
+            "id": "type.dotnet.system-xml-csharp.system-xml-xmlreadersettings",
+            "name": "System.Xml.XmlReaderSettings",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlReaderSettings"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.dotnet.system-xml-csharp.system-xml-xmlurlresolver.constructor",
+            "owner": "type.dotnet.system-xml-csharp.system-xml-xmlurlresolver",
+            "name": "XmlUrlResolver",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": []
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "XmlUrlResolver()"
+            }
+          },
+          {
+            "id": "member.dotnet.system-xml-csharp.system-xml-xmldocument.xml-resolver",
+            "owner": "type.dotnet.system-xml-csharp.system-xml-xmldocument",
+            "name": "XmlResolver",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Xml.XmlResolver",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlDocument.XmlResolver"
+            }
+          },
+          {
+            "id": "member.dotnet.system-xml-csharp.system-xml-xmltextreader.xml-resolver",
+            "owner": "type.dotnet.system-xml-csharp.system-xml-xmltextreader",
+            "name": "XmlResolver",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Xml.XmlResolver",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlTextReader.XmlResolver"
+            }
+          },
+          {
+            "id": "member.dotnet.system-xml-csharp.system-xml-xmlreadersettings.xml-resolver",
+            "owner": "type.dotnet.system-xml-csharp.system-xml-xmlreadersettings",
+            "name": "XmlResolver",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Xml.XmlResolver",
+                "arguments": [],
+                "nullable": true
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Xml.ReaderWriter.dll",
+              "symbol": "System.Xml.XmlReaderSettings.XmlResolver"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

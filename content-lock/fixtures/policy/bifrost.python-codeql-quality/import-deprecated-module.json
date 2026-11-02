@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/import-deprecated-module/.bifrost/policies/import-deprecated-module.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/import-deprecated-module.rqlp",
+      "sha256": "7ea758d193b4a13a083606403d70715e2ec392be9493fd7897e1cf91059d649e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/import-deprecated-module/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/import-deprecated-module/README.md",
+      "sha256": "6d6943631b703b21315215c30b4cecfea942280069a82834e841b6f1a1651705",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/import-deprecated-module/upstream/Imports/deprecated/test.py",
+      "source_path": "python/ql/test/query-tests/Imports/deprecated/test.py",
+      "sha256": "186f44c091f043f44b7a214d3022518b29e3c60161838be106ee377f0e54b5e6",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Imports/deprecated/test.py"
+      }
+    }
+  ]
+}

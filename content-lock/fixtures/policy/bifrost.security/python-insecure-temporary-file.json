@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/.bifrost/policies/insecure-temporary-file.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/insecure-temporary-file.rqlp",
+      "sha256": "40c326b98bb2e6e28bd8b8ba7bdf059301f57c7ed33e99f5b58ae1d608743d64",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json",
+      "source_path": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json",
+      "sha256": "d3f03a6510584e0af0019066298b9a8de1a2bc72199fb84318351f867b8d759d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/README.md",
+      "sha256": "4710b37b15e744cce5ef963adecdd1421d8e3393e7b960e79d7e82b4362bacd8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/main.py",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/main.py",
+      "sha256": "2c9a0c68efde1a9664390b5c7c4614dac2010e9c477726fe8c498b11128b2d71",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/pyproject.toml",
+      "sha256": "3332073ca18e7700a8cb74e5eb88f7de15dc80c829f69f0369d5635373357e27",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-insecure-temporary-file/upstream/InsecureTemporaryFile.py",
+      "source_path": "python/ql/test/query-tests/Security/CWE-377-InsecureTemporaryFile/InsecureTemporaryFile.py",
+      "sha256": "c811701edaadb603045a5ad3b602525d234e97f06e79b2439ebf3025c852b36f",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Security/CWE-377-InsecureTemporaryFile/InsecureTemporaryFile.py"
+      }
+    }
+  ]
+}

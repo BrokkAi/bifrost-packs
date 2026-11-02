@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/.bifrost/policies/rethrown-exception-variable.rqlp",
+      "source_path": "rules/bifrost.csharp-codeql-quality/policies/rethrown-exception-variable.rqlp",
+      "sha256": "3303196e8e7b24bd7ffc4a1a57c5059c7754bd772784e3b9fd8676eb50f606db",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/.bifrost/semantic-models/bifrost.dotnet.bcl-csharp.json",
+      "source_path": "semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json",
+      "sha256": "e833df83c52c67e0a60697120670eb056a5b34dbeddfb3dceacc21cf9b1b88ce",
+      "classification": "public",
+      "license": "MIT"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/Probe.cs",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/Probe.cs",
+      "sha256": "e77fc680ab3430215df8976578e90d7e755d4cf5cb5e507d76698e26e04aff66",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/README.md",
+      "source_path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/README.md",
+      "sha256": "ba1fb97cdfac73c8be50cfa8183a76b27b02261d7d4fd6581a3d6de96f01566b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable/upstream/Language Abuse/RethrowException/RethrowException.cs",
+      "source_path": "csharp/ql/test/query-tests/Language Abuse/RethrowException/RethrowException.cs",
+      "sha256": "10947d85dd8ead561399ec20cb116e97dc2568a95071ea115f0e4caab6f02e5e",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/csharp/ql/test/query-tests/Language%20Abuse/RethrowException/RethrowException.cs"
+      }
+    }
+  ]
+}

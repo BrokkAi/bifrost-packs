@@ -1,0 +1,15 @@
+; CodeQL csharp/ql/src/Likely Bugs/Statements/UseBraces.ql
+; at commit ae741615f3e178ce61289a651790dc67fcc18e19.
+; Fold the gated if and loop arms into one CodeQL policy identity.
+(policy :schema-version 1
+ :id "bifrost.csharp-codeql-quality.misleading-indentation"
+ :name "C# misleading indentation"
+ :message "Inspect misleading indentation"
+ :severity warning
+ :description "Source-local CodeQL statement fact for if and loop controls."
+ :tags ["csharp" "codeql" "quality"]
+ :analysis (analysis :type match :selector
+  (rql :schema-version 1
+   (union
+    (language csharp (statement-facts :kind misleading-indentation (if)))
+    (language csharp (statement-facts :kind misleading-indentation (loop)))))))

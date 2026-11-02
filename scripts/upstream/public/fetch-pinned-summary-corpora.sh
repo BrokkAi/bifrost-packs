@@ -20,6 +20,8 @@ if [[ $# -lt 1 || $# -gt 3 ]]; then
 fi
 
 repository_root=$(CDPATH='' cd -- "$(dirname -- "$0")/../.." && pwd)
+# shellcheck source=scripts/upstream/lib/semantic-pack-tool.sh
+source "$(dirname -- "$0")/../lib/semantic-pack-tool.sh"
 work_dir=$1
 report_path=${2:-${work_dir}/summary-corpus-join.json}
 pins_path="${repository_root}/semantic-packs/summary-corpora/pins.json"
@@ -78,6 +80,5 @@ if [[ -n "${jvm_sources}" && ! -d "${jvm_sources}" ]]; then
   exit 1
 fi
 
-cargo run --locked --release --features release-tooling \
-  -p brokk-bifrost-semantic-packs --bin bifrost-semantic-pack -- summary-corpus-join \
+run_semantic_pack_tool summary-corpus-join \
   "${pins_path}" "${codeql_models}" "${joern_source}" "${report_path}" ${jvm_sources:+"${jvm_sources}"}

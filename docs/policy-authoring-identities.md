@@ -1,16 +1,19 @@
 # Policy authoring identity verification
 
-Rules 0.4.0 is prepared as a minor successor to `rules/v0.3.1`. It adds 57
-policies, for 238 policy source files, preserves the existing policy IDs,
-language scopes, required engine capabilities, policy bytes and typed
-incomplete outcomes, and depends exactly on
-`bifrost.public.packs@0.5.0`. The independent native successor carries eight
-direct result-use model families, two Go `os` model outputs, and the generated
-PHP builtin declaration slice. The existing PHP pack notes describe an earlier
-partial output with 852 rejects (warnings); a local generation with the
-selected 0.14.0 generator reported 854, and the CI generation report remains the
-release record and must stay explicit. Neither stream change claims complete PHP coverage or qualifies
-consumer behavior; see the [PHP pack notes](../semantic-packs/php/README.md).
+Rules 0.5.1 is prepared as a patch successor to `rules/v0.5.0`. It changes the
+declared required capabilities of twenty-seven policies to canonical names and
+the arity filter of `bifrost.cpp-jsf.av-rule-159`; the av-rule-159 source and
+its fixture copy are the only policy files whose identities change.
+
+Rules 0.5.0 was a minor successor to `rules/v0.4.0`. It keeps the
+238 policy source files and their IDs. Twenty existing policies change their
+consumer requirements: the Python arms of the ten `bifrost.performance` loop
+policies require exact declared effects (`bifrost.code-smells` 4.0.0), and the
+ten `bifrost.effects` selected-boundary policies import their declaration
+selection and are opt-in (`bifrost.effects` 2.0.0). It depends exactly on
+`bifrost.public.packs@0.6.0`, whose native recipe adds the reviewed
+`bifrost.python-performance-summaries` model those Python arms read. Neither
+stream change qualifies consumer behavior.
 
 The earlier authoring-identity preparation corrected 84 authored fields, 43
 available resolved fields and 15 stale resolved values to explicit null. The
@@ -24,10 +27,13 @@ authored identity and available resolved identity against the manifest. An
 explicit `workspace-required` result requires a null resolved manifest field;
 raw file hashes and authored identities never substitute for resolution.
 
-Normal content CI and rules packaging build the production CLI from the public
-source archive, Rust toolchain and Cargo lock pinned in `native-generation.json`.
-The archive commit identifies that authoring build; it is not a claim of
-release-candidate compiled-input equivalence. Records retain the executable hash,
+Normal content CI and rules packaging download the released Linux x86_64
+production CLI pinned in `policy-authoring.json`: the engine version, release
+asset, archive SHA-256, executable SHA-256 and the build identity that
+executable reports. A mismatched archive or executable fails before any policy
+is checked. Until Bifrost 0.15.0, CI compiled this CLI from the public source
+pinned in `native-generation.json`; with engine releases now a day apart, the
+published binary replaces that hour-long build. Records retain the executable hash,
 exact command, environment, raw output and process status for every policy.
 Mismatch, malformed output, process failure, timeout and output overflow fail
 verification.
@@ -35,5 +41,6 @@ verification.
 Source authoring verification does not execute policies, establish findings,
 complete workspace binding, advertise engine contracts or qualify an engine
 release. Runtime semantic hashes and positive, near-miss and incomplete witnesses
-remain separate requirements. The 0.4.0 preparation remains pending the
-independent public producer check; no successor release is claimed here.
+remain separate requirements. The pinned 0.14.0 CLI verified all 238 source
+authoring identities for the 0.5.0 preparation; no successor release is
+claimed here.

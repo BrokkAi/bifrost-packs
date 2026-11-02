@@ -326,7 +326,7 @@ class ReleaseTests(unittest.TestCase):
             release.validate_manifest(manifest)
 
     def test_actual_copy_index_has_policy_hashes(self):
-        lock = json.loads((ROOT / 'content-lock.json').read_text())
+        lock, _ = release.load_content_lock(ROOT)
         contents = release.public_contents(ROOT, lock)
         policies = [row for row in contents if row['kind'] == 'policy']
         manifests = [json.loads(path.read_text()) for path in (ROOT / 'rules').glob('*/manifest.json')]

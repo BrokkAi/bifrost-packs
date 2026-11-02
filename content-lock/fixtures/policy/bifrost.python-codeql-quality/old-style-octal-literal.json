@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/.bifrost/policies/old-style-octal-literal.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/old-style-octal-literal.rqlp",
+      "sha256": "661b1c3a1c9be9698ba2042fb0e8b827fb06e54a9960e20a2e2c3ea9770f4ba3",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/README.md",
+      "sha256": "b639db5554b66a99ab280b327b04da9706975e9042ea61c4f1f6bed490aa65d0",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/helper.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/helper.py",
+      "sha256": "1688f97bf2c3179c1119abac00116a434d63bb2390a45034d3815dbeeb60c7f4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/main.py",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/main.py",
+      "sha256": "286394e770324789be57115f2bd508eef5f07f27f8b1b0b893988f1bcadcf9d4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/old-style-octal-literal/upstream_codeql.py",
+      "source_path": "python/ql/src/Lexical/OldOctalLiteral.py",
+      "sha256": "274393a221a5e995112d91b492551caf4dcc4f8854771c2accbd9b60b467b931",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/src/Lexical/OldOctalLiteral.py"
+      }
+    }
+  ]
+}
