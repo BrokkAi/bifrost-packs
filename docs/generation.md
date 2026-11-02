@@ -38,13 +38,22 @@ plan is described in the [release repair plan](result-use-native-release.md).
 
 ## Bifrost 0.15.0 generator and authoring pin
 
-After `packs/v0.8.0` and `rules/v0.8.0`, `native-generation.json` pins public
-Bifrost 0.15.0 source `fc4a2da2b78c938e811c496b3c21e5b02f415048` (archive
-SHA-256 `7b89b11d272921e6078408014d90d79a7fea51112698173a1bcc8760618b7dcf`,
-Cargo.lock SHA-256
-`03cc61929856fc31be6619ce69f5c8ffa28de074a185b69414158e7c5b624dab`, Rust
-`1.99.1`). The same pin builds the native producer and the policy authoring CLI
-that checks every locked policy identity. Producers from 0.15.0 can write
+After `packs/v0.8.0` and `rules/v0.8.0`, the generator moves to Bifrost
+0.15.0, and CI uses its released binaries instead of compiling them, which took
+up to an hour per job. `native-generation.json` pins the prebuilt producer
+`bifrost-semantic-pack-v0.15.0-x86_64-unknown-linux-gnu.tar.gz` from the
+`v0.15.0` release of public commit `fc4a2da2b78c938e811c496b3c21e5b02f415048`
+(archive SHA-256
+`825294fb3ddda0c97c44c222b544b451818f04dd11817dcd79069d1c856bac79`, executable
+SHA-256 `d6c19acdcbf37d495e4c0b3f7490746e6235da3522aba5deba4c78f904312031`).
+Without `build` metadata, `native_generation.py` treats it as prebuilt: it
+checks the executable hash and takes no build receipt. `policy-authoring.json`
+separately pins the released `bifrost` CLI that checks every locked policy
+identity, with the build identity it reports
+(`09a2503c5f7ced1630a9e3c445ead53dfc5925e8`). `native_generation.py` still accepts a source-built
+configuration with `build` metadata and a build receipt, but CI no longer
+compiles one, so the producer build cache (`native_generator_cache.py`) is
+removed. Producers from 0.15.0 can write
 release index schema 4 (bifrost-dev#8336), so `native_generation.py` and
 `native_release.py` accept index schema 3 or 4 and each content declares the
 index schema its bundle actually has. Engines that read only schema 3 skip a
