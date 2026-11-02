@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 254 unique rule IDs from 13 manifest packs.
+This catalog lists 255 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -117,6 +117,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Java undocumented return value](../rules/bifrost.java-codeql-quality/policies/undocumented-return-value.rqlp) | `bifrost.java-codeql-quality.undocumented-return-value` | java | quality | warning |
 | [Java undocumented type](../rules/bifrost.java-codeql-quality/policies/undocumented-type.rqlp) | `bifrost.java-codeql-quality.undocumented-type` | java | quality | warning |
 | [Java unknown Javadoc parameter](../rules/bifrost.java-codeql-quality/policies/unknown-javadoc-parameter.rqlp) | `bifrost.java-codeql-quality.unknown-javadoc-parameter` | java | quality | warning |
+| [Untrusted input reaches a filesystem path](../rules/bifrost.java-codeql-security/policies/path-injection.rqlp) | `bifrost.java-codeql-security.path-injection` | java | security | error |
 | [JavaScript global alert call](../rules/bifrost.javascript-codeql-quality/policies/alert-call.rqlp) | `bifrost.javascript-codeql-quality.alert-call` | javascript | quality | warning |
 | [JavaScript file check before use](../rules/bifrost.javascript-codeql-quality/policies/file-system-race.rqlp) | `bifrost.javascript-codeql-quality.file-system-race` | javascript | security | warning |
 | [JavaScript conflicting function declaration](../rules/bifrost.javascript-codeql-quality/policies/function-declaration-conflict.rqlp) | `bifrost.javascript-codeql-quality.function-declaration-conflict` | javascript, typescript | correctness | error |

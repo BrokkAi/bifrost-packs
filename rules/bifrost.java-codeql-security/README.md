@@ -87,3 +87,27 @@ A minimal socket-to-reader chain produces a complete finding with no diagnostics
 and `proven_by_summary` run completion. The current strict gate accepts only
 `complete` run completion; summary-backed qualification is a separate contract
 question from the binding and sanitizer gaps above.
+
+### Bifrost 0.15.0 rerun
+
+On 2026-11-02 the same test, scope union and attributions ran on Bifrost
+0.15.0 (`fc4a2da2b78c938e811c496b3c21e5b02f415048`) with Temurin JDK 21.0.8
+and the gate harness that scores `proven_by_summary` completion. Both routes
+remain `SCOPED-FAIL`, full `EXACT-INCOMPLETE`, with run completion
+`inconclusive` (partial discovery), so no route passes:
+
+| Route | Binary | TP | Extras | In-scope misses | Deferred |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Native (`BIFROST_TRIAL_NATIVE_JAVA=1`) | 0.15.0 source, `measure` profile with `test-support` | 51 | 0 | 8 | 20 |
+| Default | released v0.15.0 macOS arm64 | 21 | 0 | 38 | 20 |
+
+Cast-fed calls in `Test.java` now bind on the native route (57 misses fell
+to 6). The remaining native misses are `Test.java:37,39,69,83,137,138` and
+`TaintedPath.java:16,105`. `TaintedPath.java` reports nothing on either
+route: the `BufferedReader` constructor call stays unresolved, so the
+socket source no longer reaches its sinks. The four earlier extras
+(`TaintedPath.java:30,51,67,88`) are therefore absent because that file is
+silent, not because the guards were proven; they still need the support
+described above. The native run still reports one unresolved call
+resolution, on the staged servlet `getParameter` call in `Test.source`. The native route is test-support only and is not in the
+released binary.
