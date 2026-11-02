@@ -27,10 +27,13 @@ authored identity and available resolved identity against the manifest. An
 explicit `workspace-required` result requires a null resolved manifest field;
 raw file hashes and authored identities never substitute for resolution.
 
-Normal content CI and rules packaging build the production CLI from the public
-source archive, Rust toolchain and Cargo lock pinned in `native-generation.json`.
-The archive commit identifies that authoring build; it is not a claim of
-release-candidate compiled-input equivalence. Records retain the executable hash,
+Normal content CI and rules packaging download the released Linux x86_64
+production CLI pinned in `policy-authoring.json`: the engine version, release
+asset, archive SHA-256, executable SHA-256 and the build identity that
+executable reports. A mismatched archive or executable fails before any policy
+is checked. Until Bifrost 0.15.0, CI compiled this CLI from the public source
+pinned in `native-generation.json`; with engine releases now a day apart, the
+published binary replaces that hour-long build. Records retain the executable hash,
 exact command, environment, raw output and process status for every policy.
 Mismatch, malformed output, process failure, timeout and output overflow fail
 verification.
