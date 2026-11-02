@@ -18,7 +18,8 @@ rules and compatibility boundaries.
 ## Current release status
 
 As of 2026-11-02, the latest published streams are `packs/v0.8.0` and
-`rules/v0.8.0`, both tagged on `ab1ba15`. `rules/v0.8.0` depends exactly on
+`rules/v0.8.0`, both tagged on `ab1ba15`. `rules/v0.9.0` is prepared next
+([below](#c-codeql-ports-for-rules-090)); it keeps the exact dependency on
 `packs/v0.8.0`.
 
 The next packs release is prepared as `packs/v0.9.0` (bifrost-dev#4438). It
@@ -27,23 +28,23 @@ Getset, Scala case-class, Python process-inputs and the two Node
 runtime-values packs. With them the native bundle contains all 46 packs that
 Bifrost's legacy embedded registry provides, so offline installs and
 `BIFROST_OPEN_PACKS_DISABLE` users can take every built-in pack from a packs
-release. Second, it is the first packs release built by the Bifrost 0.15.0
-generator, which tightens what a consumer must read. The bundle uses release
+release. Second, it is the first packs release built by Bifrost 0.15.0: the
+released, checksum-pinned `bifrost-semantic-pack` 0.15.0 binary, not a source
+build. Its output tightens what a consumer must read. The bundle uses release
 index schema 4, and the generated productions use semantic-model schema 19
 (`bifrost.external.java`: 21) instead of 17. An engine that reads only index
 schema 3 skips this release during selection, so use Bifrost 0.15.0 or later.
 Every other job and recipe is unchanged from 0.8.0. The
 [generation notes](generation.md#legacy-built-in-packs) describe the six jobs.
 
-No rules release accompanies `packs/v0.9.0`. `rules/v0.8.0` keeps its exact
-dependency on `packs/v0.8.0`, so normal acquisition through the rules stream
-selects 0.8.0, without the six packs, until a later rules release moves that
-dependency.
+No rules release is required for `packs/v0.9.0`. `rules/v0.8.0`, and
+`rules/v0.9.0` as prepared, keep their exact dependency on `packs/v0.8.0`, so
+normal acquisition through the rules stream selects 0.8.0, without the six
+packs, until a rules release moves that dependency.
 
-The 0.8.0 release notes follow.
-
-`packs/v0.8.0` is a minor release: it adds 36 native
-packs that Bifrost previously supplied only through its embedded built-in
+The 0.8.0 release notes follow. They were prepared as `packs/v0.8.0` and
+`rules/v0.8.0` (bifrost-dev#4438). `packs/v0.8.0` is a minor release: it adds
+36 native packs that Bifrost previously supplied only through its embedded built-in
 registry, so online runs that pin a packs release no longer lose them. The
 [generation notes](generation.md#legacy-built-in-packs) list them and the six
 built-in packs it kept source-only because its 0.14.0 producer could not
@@ -87,6 +88,38 @@ The pack bumps follow the consumer-contract rule in
 a minor bump before 1.0 (`bifrost.csharp-codeql-quality` 0.3.0 → 0.4.0) and a
 major bump after it (`bifrost.security` 1.4.1 → 2.0.0). The rules release CI
 smoke test now uses the checksum-pinned Linux v0.15.0 binary instead of v0.14.2.
+
+### C# CodeQL ports for rules 0.9.0
+
+Bifrost 0.15.0 adds C# `comparison`, `binary_expression` and `lock` rows, and
+local and parameter reference bindings (bifrost-dev#8308). These made five
+CodeQL C# queries expressible. `rules/v0.8.0` was already tagged without them,
+so they ship in the minor release `rules/v0.9.0`, and the new policies bump
+`bifrost.csharp-codeql-quality` from 0.4.0 to 0.5.0. Like 0.8.0, the release
+requires Bifrost 0.15.0 and depends exactly on `packs/v0.8.0`:
+
+| Policy | CodeQL query |
+| --- | --- |
+| `incomplete-parity-check` | `Likely Bugs/BadCheckOdd.ql` |
+| `class-name-comparison` | `Bad Practices/ErroneousClassCompare.ql` |
+| `empty-lock-statement` | `Likely Bugs/Statements/EmptyLockStatement.ql` |
+| `self-assignment` | `Likely Bugs/SelfAssignment.ql`, locals and parameters only |
+| `calls-unmanaged-code` | `Bad Practices/CallsUnmanagedCode.ql` |
+
+`recursive-equals-call` now selects the calls an `Equals` body makes
+(bifrost-packs#149), instead of the calls that reach it. Each fixture README
+records CodeQL parity, the 0.15.0 run and the known limits.
+
+Pack 0.5.0 also carries bifrost-packs#207. That PR adds `lock-this`,
+`nested-if-statements` and `misleading-indentation`, and corrects
+`rethrown-exception-variable` and `static-array` against CodeQL's tests.
+
+These queries stay blocked on 0.15.0. StringBuilderInLoop needs a loop-body
+entry point. EmptyInterface needs an
+interface declaration kind. ConfusingMethodNames needs case folding.
+ComplexCondition needs a transitive parent relation. NullArgumentToEquals now
+binds in the engine, but the BCL model does not yet declare
+`System.Object.Equals(object)`.
 
 The 0.7.0 release notes follow.
 
