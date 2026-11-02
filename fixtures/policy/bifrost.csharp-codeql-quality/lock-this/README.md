@@ -10,13 +10,17 @@ The rule reports lock(this) as the direct lock operand; lock(lck) is the near mi
 
 ## Validation
 
-Released Bifrost v0.14.4 (Linux archive SHA-256
-`fac867ff504a8637190c99e6818eb6a1cfa93469683526a899f653d7db14685a`),
+Released Bifrost v0.15.0 (build identity
+`09a2503c5f7ced1630a9e3c445ead53dfc5925e8`; macOS arm64 archive SHA-256
+`34295669d86aef268f0134c15f5127b90deac2e31e2f89bd3031ffe05cf097a5`),
 gated against CodeQL's original upstream query test. Verdict EXACT, complete:
 1 true-positive site(s), zero false positives, misses, silent misses, or
-abstentions. Gate details are in the M6 wave-1 packaging report.
+abstentions. Released v0.14.4 gave the same result before the v0.15.0
+preprocessor and C# flow changes.
 
 ## Known limit
 
 Structural C# policies do not yet report the undecided `#if` branch obligation
 (bifrost-dev#8723). A `lock(this)` in an undecided branch is reported definite.
+A v0.15.0 `lock-this` probe confirms this for an undefined symbol; a `#if false`
+branch is excluded.

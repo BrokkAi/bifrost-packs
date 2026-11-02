@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.csharp-codeql-quality",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "name": "Bifrost C# CodeQL quality",
   "description": "Public C# structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -155,7 +155,7 @@
       "resolved_semantic_hash": null,
       "category": "quality",
       "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match", "exact-call-target", "declaration-attributes"],
+      "required_capabilities": ["structural-match", "exact-call-target", "resolved-value", "declaration-attributes"],
       "severity_rationale": "Calling an API explicitly marked obsolete can preserve deprecated behavior, trigger future build failures, or bypass a documented replacement.",
       "remediation": "Migrate to the API named by the deprecation guidance, or isolate and document the compatibility boundary if migration is not yet possible."
     },
@@ -188,7 +188,7 @@
       "resolved_semantic_hash": null,
       "category": "quality",
       "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance", "normalized-call-roles"],
+      "required_capabilities": ["structural-match", "exact-call-target", "resolved-value", "semantic-model-provenance", "normalized-call-roles"],
       "severity_rationale": "Writing directly to the console is unstructured logging: messages bypass log levels, sinks and redaction, and may leak information to standard output or error.",
       "remediation": "Use a logging API such as Microsoft.Extensions.Logging, or redirect the streams with Console.SetOut and Console.SetError."
     },
@@ -210,7 +210,7 @@
       "resolved_semantic_hash": null,
       "category": "quality",
       "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match", "exact-call-target", "semantic-model-provenance"],
+      "required_capabilities": ["structural-match", "resolved-value", "semantic-model-provenance"],
       "severity_rationale": "Reading an uploaded file lets users place attacker-controlled content on the server, which can overwrite data or inject code if the upload is not constrained.",
       "remediation": "Validate the destination path and file content (not only the MIME type), limit the size, log uploads, and run the application without administrator privileges."
     },
