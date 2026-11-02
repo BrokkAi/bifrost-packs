@@ -1,0 +1,73 @@
+; CodeQL query: csharp/ql/src/Bad Practices/ErroneousClassCompare.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select an equality test between a string literal and a
+; FullName member read from a parameterless GetType() call or a typeof
+; expression. The test is `==` in either operand order, a one-argument
+; instance Equals call in either order, or Equals or ReferenceEquals called
+; on an explicit object, Object or System.Object receiver. Parentheses are
+; transparent. No reviewed model declares System.Type or Object.GetType, so
+; the receiver shape stands in for the System.Type.FullName target: FullName
+; read from a Type variable, field, property or other call is not selected,
+; and neither are unqualified static Equals, CompareTo(...) == 0 or a cast
+; operand.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.class-name-comparison"
+  :name "C# erroneous class compare"
+  :message "type is checked by comparing its full name to a string"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/ErroneousClassCompare.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports equality tests between a string literal and the FullName of x.GetType() or typeof(T), using ==, instance Equals, or object.Equals and object.ReferenceEquals. A check on the type's name is not robust to renames and can be satisfied by an unrelated class with the same name."
+  :tags ["csharp" "codeql" "quality" "correctness" "cwe-486"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (union
+          (comparison
+            :operator (text/regex "^==$")
+            :left (field_access
+              :or [
+                (field_access :field (name "FullName")
+                  :object (call :callee (name "GetType") (arity 0)))
+                (field_access :field (name "FullName") :object (type_literal))])
+            :right (string_literal))
+          (comparison
+            :operator (text/regex "^==$")
+            :left (string_literal)
+            :right (field_access
+              :or [
+                (field_access :field (name "FullName")
+                  :object (call :callee (name "GetType") (arity 0)))
+                (field_access :field (name "FullName") :object (type_literal))]))
+          (call :callee (name "Equals") (arity 1)
+            :receiver (field_access
+              :or [
+                (field_access :field (name "FullName")
+                  :object (call :callee (name "GetType") (arity 0)))
+                (field_access :field (name "FullName") :object (type_literal))])
+            :args [(string_literal)])
+          (call :callee (name "Equals") (arity 1)
+            :receiver (string_literal)
+            :args [
+              (field_access
+                :or [
+                  (field_access :field (name "FullName")
+                    :object (call :callee (name "GetType") (arity 0)))
+                  (field_access :field (name "FullName") :object (type_literal))])])
+          (call :callee (name/regex "^(?:Equals|ReferenceEquals)$") (arity 2)
+            :receiver (name/regex "^(?:object|Object|System\\.Object)$")
+            :args [
+              (field_access
+                :or [
+                  (field_access :field (name "FullName")
+                    :object (call :callee (name "GetType") (arity 0)))
+                  (field_access :field (name "FullName") :object (type_literal))])
+              (string_literal)])
+          (call :callee (name/regex "^(?:Equals|ReferenceEquals)$") (arity 2)
+            :receiver (name/regex "^(?:object|Object|System\\.Object)$")
+            :args [
+              (string_literal)
+              (field_access
+                :or [
+                  (field_access :field (name "FullName")
+                    :object (call :callee (name "GetType") (arity 0)))
+                  (field_access :field (name "FullName") :object (type_literal))])]))))))
