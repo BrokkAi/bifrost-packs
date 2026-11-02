@@ -1,6 +1,6 @@
 # Public C# CodeQL quality fixtures
 
-These fixtures exercise the twenty-nine policies in
+These fixtures exercise the twenty-eight policies in
 `rules/bifrost.csharp-codeql-quality`. Each case contains a positive example
 and same-shaped near misses, with the expected structural boundary documented
 by the policy's CodeQL query path and pinned commit
@@ -21,7 +21,7 @@ use-of-html-input-hidden and use-of-file-upload cases install the separate
 empty-catch-block, class-implements-icloneable and too-many-ref-parameters
 cases read source syntax only and install no model.
 
-The incomplete-parity-check, class-name-comparison, lock-this,
+The incomplete-parity-check, class-name-comparison,
 empty-lock-statement, self-assignment and calls-unmanaged-code cases also
 install no model. They need the C# `comparison`, `binary_expression` and
 `lock` rows that Bifrost 0.15.0 is the first release to provide, and

@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 260 unique rule IDs from 12 manifest packs.
+This catalog lists 259 unique rule IDs from 12 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -76,7 +76,6 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# empty lock statement](../rules/bifrost.csharp-codeql-quality/policies/empty-lock-statement.rqlp) | `bifrost.csharp-codeql-quality.empty-lock-statement` | csharp | correctness | warning |
 | [C# empty password in configuration](../rules/bifrost.csharp-codeql-quality/policies/empty-password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.empty-password-in-configuration` | csharp | security | warning |
 | [C# bad parity check](../rules/bifrost.csharp-codeql-quality/policies/incomplete-parity-check.rqlp) | `bifrost.csharp-codeql-quality.incomplete-parity-check` | csharp | correctness | warning |
-| [C# lock on this](../rules/bifrost.csharp-codeql-quality/policies/lock-this.rqlp) | `bifrost.csharp-codeql-quality.lock-this` | csharp | correctness | warning |
 | [C# nested loops reuse variable](../rules/bifrost.csharp-codeql-quality/policies/nested-loops-with-same-variable.rqlp) | `bifrost.csharp-codeql-quality.nested-loops-with-same-variable` | csharp | correctness | warning |
 | [C# password in configuration](../rules/bifrost.csharp-codeql-quality/policies/password-in-configuration.rqlp) | `bifrost.csharp-codeql-quality.password-in-configuration` | csharp | security | warning |
 | [C# call to Path.Combine](../rules/bifrost.csharp-codeql-quality/policies/path-combine.rqlp) | `bifrost.csharp-codeql-quality.path-combine` | csharp | quality | note |

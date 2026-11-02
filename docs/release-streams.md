@@ -72,7 +72,7 @@ smoke test now uses the checksum-pinned Linux v0.15.0 binary instead of v0.14.2.
 ### C# CodeQL ports for rules 0.9.0
 
 Bifrost 0.15.0 adds C# `comparison`, `binary_expression` and `lock` rows, and
-local and parameter reference bindings (bifrost-dev#8308). These made six
+local and parameter reference bindings (bifrost-dev#8308). These made five
 CodeQL C# queries expressible. `rules/v0.8.0` was already tagged without them,
 so they ship in the minor release `rules/v0.9.0`, and the new policies bump
 `bifrost.csharp-codeql-quality` from 0.4.0 to 0.5.0. Like 0.8.0, the release
@@ -82,7 +82,6 @@ requires Bifrost 0.15.0 and depends exactly on `packs/v0.8.0`:
 | --- | --- |
 | `incomplete-parity-check` | `Likely Bugs/BadCheckOdd.ql` |
 | `class-name-comparison` | `Bad Practices/ErroneousClassCompare.ql` |
-| `lock-this` | `Concurrency/LockThis.ql` |
 | `empty-lock-statement` | `Likely Bugs/Statements/EmptyLockStatement.ql` |
 | `self-assignment` | `Likely Bugs/SelfAssignment.ql`, locals and parameters only |
 | `calls-unmanaged-code` | `Bad Practices/CallsUnmanagedCode.ql` |

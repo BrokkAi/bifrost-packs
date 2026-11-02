@@ -281,17 +281,6 @@
       "remediation": "Compare the type itself, for example obj.GetType() == typeof(Expected) or obj is Expected, instead of its name."
     },
     {
-      "path": "policies/lock-this.rqlp",
-      "id": "bifrost.csharp-codeql-quality.lock-this",
-      "authored_hash": "3e78057c43b3fd4942e136ab48311dba887f6cae5a88c50ad4740f4bbe2ab0f5",
-      "resolved_semantic_hash": "3e78057c43b3fd4942e136ab48311dba887f6cae5a88c50ad4740f4bbe2ab0f5",
-      "category": "correctness",
-      "supported_languages": ["csharp"],
-      "required_capabilities": ["structural-match"],
-      "severity_rationale": "Locking this exposes the monitor to any code holding a reference to the instance, so unrelated callers can contend or deadlock with the class's internal synchronization.",
-      "remediation": "Lock a private readonly object dedicated to synchronization instead of this."
-    },
-    {
       "path": "policies/empty-lock-statement.rqlp",
       "id": "bifrost.csharp-codeql-quality.empty-lock-statement",
       "authored_hash": "8782900e2d51fd82b353791511c440498d27a4271f7beb22fa3d820532a28ff9",

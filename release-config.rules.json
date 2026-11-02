@@ -5,7 +5,7 @@
   "visibility": "public",
   "release_version": "0.9.0",
   "artifact_role": "source",
-  "notes": "This minor release adds six CodeQL C# ports to bifrost.csharp-codeql-quality 0.5.0 that need C# comparison, binary-expression, lock and reference-binding facts Bifrost 0.15.0 is the first release to provide: incomplete-parity-check, class-name-comparison, lock-this, empty-lock-statement, self-assignment (locals and parameters only) and calls-unmanaged-code. It also corrects recursive-equals-call to select the calls an Equals body makes instead of the calls that reach it (bifrost-packs#149), which changes its findings. Like rules 0.8.0 it requires Bifrost 0.15.0 or later, and it keeps the exact native dependency on bifrost.public.packs 0.8.0. This release does not qualify the full policy set or imply complete analysis.",
+  "notes": "This minor release adds five CodeQL C# ports to bifrost.csharp-codeql-quality 0.5.0 that need C# comparison, binary-expression, lock and reference-binding facts Bifrost 0.15.0 is the first release to provide: incomplete-parity-check, class-name-comparison, empty-lock-statement, self-assignment (locals and parameters only) and calls-unmanaged-code. It also corrects recursive-equals-call to select the calls an Equals body makes instead of the calls that reach it (bifrost-packs#149), which changes its findings. Like rules 0.8.0 it requires Bifrost 0.15.0 or later, and it keeps the exact native dependency on bifrost.public.packs 0.8.0. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
