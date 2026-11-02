@@ -252,6 +252,36 @@
       "name": "go-testify-require-declarations",
       "spec": "semantic-packs/go/go-testify-require-declarations.spec.json",
       "artifact": "semantic-packs/models/go-testify-require-declarations.json"
+    },
+    {
+      "name": "java-lombok",
+      "spec": "semantic-packs/jvm/lombok-1.18.42.spec.json",
+      "artifact": "semantic-packs/models/lombok-1.18.42.json"
+    },
+    {
+      "name": "rust-getset",
+      "spec": "semantic-packs/rust/getset-0.1.7.spec.json",
+      "artifact": "semantic-packs/models/getset-0.1.7.json"
+    },
+    {
+      "name": "scala-case-class",
+      "spec": "semantic-packs/jvm/scala-case-class.spec.json",
+      "artifact": "semantic-packs/models/scala-case-class.json"
+    },
+    {
+      "name": "python-process-inputs",
+      "spec": "semantic-packs/python/python-process-inputs.spec.json",
+      "artifact": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json"
+    },
+    {
+      "name": "node-runtime-values-javascript",
+      "spec": "semantic-packs/node/runtime-values/node-runtime-values-javascript.spec.json",
+      "artifact": "semantic-packs/node/runtime-values/javascript/bifrost.node-runtime-values.json"
+    },
+    {
+      "name": "node-runtime-values-typescript",
+      "spec": "semantic-packs/node/runtime-values/node-runtime-values-typescript.spec.json",
+      "artifact": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json"
     }
   ],
   "recipes": [

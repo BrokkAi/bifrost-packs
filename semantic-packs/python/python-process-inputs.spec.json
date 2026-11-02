@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-process-inputs",
+  "pack_version": "0.1.0",
+  "ecosystem": "pypi",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-process-inputs.json",
+    "sha256": "5a4b1534d3b72005aab1c0f277bd98dc0a737d06403e8085b00516c3ab52ab1e",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/825d2bcb1de3aea097b1149ae13ece24d920898c/semantic-packs/python/process-inputs/bifrost.python-process-inputs.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": [
+        "b95b6625659ac476f274bdb3a305f20f497727137dc85aa96e50a989d57d8afd"
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "Python standard library reference, os and sys",
+    "revision": "v3.13.5"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-process-inputs-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": [
+      "b95b6625659ac476f274bdb3a305f20f497727137dc85aa96e50a989d57d8afd"
+    ]
+  },
+  "measurement_queries": [
+    {
+      "kind": "runtime_exposure",
+      "exposure_id": "python-os-module"
+    },
+    {
+      "kind": "runtime_exposure",
+      "exposure_id": "python-sys-module"
+    }
+  ]
+}
