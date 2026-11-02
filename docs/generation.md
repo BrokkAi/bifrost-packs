@@ -27,6 +27,17 @@ type, member or procedure lookup that resolves records, and it has no lookup
 kind for rules or runtime values, so these packs need a producer change before
 they can become jobs.
 
+The 13 Go declaration models among those jobs mark every function and
+method member `callable_family_complete` (#213). Go has no overloading, so a
+declared package function, or a method on its receiver type, is its whole
+callable family. Without the flag, Bifrost 0.15.0 refuses a `resolved-call`
+to `net.Dial`, `os.Open` or `sync.Mutex.Lock` as
+`qualified-call-locator-partial`. Each pack takes a minor version, and its
+spec pins the commit that made the change. Pack completeness stays
+`partial`, because the packages are not fully enumerated. Fields, receivers,
+identities and provenance are unchanged. The schema-2 errgroup and embed
+declaration models are not jobs and are left as they were.
+
 ## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the

@@ -15,6 +15,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7"
+# The Go declaration models moved here when they gained callable_family_complete (#213).
+GO_DECLARATIONS_COMMIT = "f9c42f6854fff105e78bb961e7a56c56c63744e3"
 FIRST_JOB = 12
 
 # Embedded pack IDs delivered by these jobs; Go os and the JDK and Python str
@@ -93,9 +95,14 @@ class LegacyBuiltinNativeJobTests(unittest.TestCase):
                 self.assertNotIn("bifrost", model["compatibility"])
                 self.assertEqual(spec["artifact"]["sha256"], hashlib.sha256(model_bytes).hexdigest())
                 if model["schema_version"] == 8:
+                    commit = (
+                        GO_DECLARATIONS_COMMIT
+                        if job["name"].startswith("go-") and job["name"].endswith("-declarations")
+                        else SOURCE_COMMIT
+                    )
                     self.assertEqual(
                         spec["artifact"]["url"],
-                        f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{job['artifact']}",
+                        f"https://github.com/BrokkAi/bifrost-packs/blob/{commit}/{job['artifact']}",
                     )
                 self.assertTrue(spec["measurement_queries"])
         self.assertEqual(seen, DELIVERED)

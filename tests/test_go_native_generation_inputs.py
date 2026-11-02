@@ -12,6 +12,8 @@ from scripts.content import read_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "230019e376d5c1198b079482d4334ed2d18217ba"
+# The Go declaration models moved here when they gained callable_family_complete (#213).
+GO_DECLARATIONS_COMMIT = "f9c42f6854fff105e78bb961e7a56c56c63744e3"
 BASE_JOBS = {
     "jdk21-result-use",
     "c-libc-result-use",
@@ -33,12 +35,14 @@ GO_INPUTS = {
         "model": "semantic-packs/models/go-stdlib-os.json",
         "pack_id": "bifrost.go.stdlib.os",
         "payload_sha256": "e467f63e984dfc2f62196c209a59187e4da5982a286938dd7f121e700ee9c5b5",
+        "source_commit": SOURCE_COMMIT,
     },
     "go-stdlib-os-declarations": {
         "spec": "semantic-packs/go/go-stdlib-os-declarations.spec.json",
         "model": "semantic-packs/models/go-stdlib-os-declarations.json",
         "pack_id": "bifrost.go.stdlib.os-declarations",
-        "payload_sha256": "2cfaee35b9b4cb3f5685fa956282c7f2f4557fb2652046d8fb71b308674f5411",
+        "payload_sha256": "4e2ac9149573c24516426db5776a9250d9138277624c0a0abeab3664ec67dec8",
+        "source_commit": GO_DECLARATIONS_COMMIT,
     },
 }
 
@@ -84,7 +88,7 @@ class GoNativeGenerationInputTests(unittest.TestCase):
                 self.assertEqual(spec["artifact"]["sha256"], _sha256(model_bytes))
                 self.assertEqual(
                     spec["artifact"]["url"],
-                    f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{expected['model']}",
+                    f"https://github.com/BrokkAi/bifrost-packs/blob/{expected['source_commit']}/{expected['model']}",
                 )
                 self.assertTrue(spec["measurement_queries"])
                 canonical_payload = json.dumps(
