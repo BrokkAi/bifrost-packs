@@ -1,0 +1,19 @@
+; CodeQL query: Likely Bugs/Statements/EmptyLockStatement.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report lock statements whose body is a block with no
+; statements. Like CodeQL's getNumberOfStmts() = 0, comments and preprocessor
+; directive lines inside the block do not count, so a comment-only body is
+; reported. An empty statement `;`, a nested block, and a body that is not a
+; block, as in `lock (x) ;`, are near misses. The body form is read from
+; source because block body state does not separate these shapes.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.empty-lock-statement"
+  :name "C# empty lock statement"
+  :message "empty lock statement"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/Statements/EmptyLockStatement.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports lock statements whose block holds no statements, counting a comment-only block as empty."
+  :tags ["csharp" "codeql" "quality" "concurrency"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (lock :body (block (text/regex "\\A\\{(?:\\s|//[^\\n]*|/\\*[\\s\\S]*?\\*/|#[^\\n]*)*\\}\\z")))))))
