@@ -92,7 +92,7 @@ requires Bifrost 0.15.0 and depends exactly on `packs/v0.8.0`:
 records CodeQL parity, the 0.15.0 run and the known limits.
 
 These queries stay blocked on 0.15.0. StringBuilderInLoop needs a loop-body
-entry point. NestedIf needs then and else roles. EmptyInterface needs an
+entry point. EmptyInterface needs an
 interface declaration kind. ConfusingMethodNames needs case folding.
 ComplexCondition needs a transitive parent relation. NullArgumentToEquals now
 binds in the engine, but the BCL model does not yet declare
