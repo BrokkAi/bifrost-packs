@@ -1,0 +1,29 @@
+; CodeQL query: Bad Practices/UseOfHtmlInputHidden.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report object creations that bind exactly to the
+; System.Web.UI.HtmlControls.HtmlInputHidden constructor in the reviewed
+; System.Web semantic model. The constructor binding proves the created type
+; is HtmlInputHidden itself, so subclasses and same-named source types are
+; near misses. Target-typed new() has no call fact and is not reported.
+; Without the model the constructor stays unresolved and the run is
+; incomplete rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.use-of-html-input-hidden"
+  :name "C# use of HtmlInputHidden"
+  :message "Avoid using 'HTMLInputHidden' fields."
+  :severity note
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/UseOfHtmlInputHidden.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports creations of System.Web.UI.HtmlControls.HtmlInputHidden, with the constructor bound through the reviewed System.Web semantic model."
+  :tags ["csharp" "codeql" "quality" "asp.net"]
+  :analysis (analysis :type assertion
+    (bind :name creations :query (rql :schema-version 1
+      (resolved-call
+        :resolves-to "System.Web.UI.HtmlControls.HtmlInputHidden.HtmlInputHidden"
+        :proof declared
+        (call-bindings
+          (call-shape
+            (language csharp
+              (call :callee (name "HtmlInputHidden"))))))))
+    (group :name by-call :by (creations.site_id)
+      (aggregate :name hidden-field-creations :op count))
+    (assert :group by-call :value hidden-field-creations :cardinality (exactly 0))))

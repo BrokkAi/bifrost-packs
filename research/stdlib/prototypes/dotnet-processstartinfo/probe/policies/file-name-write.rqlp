@@ -1,0 +1,47 @@
+; Research probe. Not a pack rule. Tests whether an instance property write to
+; ProcessStartInfo.FileName can be a taint sink.
+(policy
+  :schema-version 1
+  :id "research.dotnet-processstartinfo.file-name-write"
+  :name "Research: ProcessStartInfo.FileName write sink"
+  :message "caller-controlled input is written to ProcessStartInfo.FileName"
+  :severity note
+  :description "Property-write probe for dotnet-processstartinfo-executable-and-shell-boundary. Selects assignments to ProcessStartInfo.FileName through field-write-value. The console input is caller-controlled, so a report is not a security finding."
+  :tags ["research" "csharp" "process" "cwe-78"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id console-read-line
+              :display-name "Console.ReadLine (caller-controlled)"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql :schema-version 1
+                  (language csharp
+                    (resolved-call :resolves-to member.research.dotnet-processstartinfo-probe.system-console.read-line :proof declared
+                      (call-bindings (call-shape (call :callee (name "ReadLine") :arity 0))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id file-name-write
+              :display-name "ProcessStartInfo.FileName write"
+              :categories [command.execution]
+              :selector
+                (rql :schema-version 1
+                  (field-write-value :member-target-id "System.Diagnostics.ProcessStartInfo.FileName"
+                    (member-targets :capture write_target
+                      (language csharp
+                        (assignment :operator (text/regex "^=$") :left (capture "write_target"))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "78")))

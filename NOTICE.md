@@ -30,6 +30,10 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   `ae741615f3e178ce61289a651790dc67fcc18e19`; see
   `licenses/CodeQL-MIT.txt`. The Java regeneration recipe and accompanying
   authored documentation are Apache-2.0.
+- CodeQL QL-class caches under `scripts/upstream/codeql_gate/ql_classes/` are
+  MIT, Copyright (c) GitHub, Inc.: node locations and QL class names that the
+  pinned CodeQL CLI computed over `github/codeql` query tests at
+  `ae741615f3e178ce61289a651790dc67fcc18e19`; see `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded
@@ -39,6 +43,18 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 - The authored .NET BCL declaration and summary model retains the .NET
   Foundation and Contributors MIT terms; see licenses/DotNet-Runtime-MIT.txt
   and semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json.
+- The authored .NET Framework System.Web declaration model records public API
+  names and signatures from the .NET Framework 4.8.1 API reference and is MIT;
+  see semantic-packs/dotnet/bifrost.dotnet.system-web-csharp.json.
+- The authored System.Security.Cryptography.Xml declaration and summary model
+  records public SignedXml API names and signatures from the .NET API
+  reference and the dotnet/runtime reference assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.security-cryptography-xml-csharp.json.
+- The authored System.Xml declaration model records public XmlResolver,
+  XmlUrlResolver, XmlDocument, XmlTextReader and XmlReaderSettings API names
+  and signatures from the .NET API reference and the dotnet/runtime reference
+  assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.system-xml-csharp.json.
 - Kotlin, Scala, Typeshed, PHPStorm and TypeScript source specifications retain
   their recorded license, pinned input hashes, and notices. Downloaded inputs
   are not vendored here. Node's complete upstream notice is preserved.

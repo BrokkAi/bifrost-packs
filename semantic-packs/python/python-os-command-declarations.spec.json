@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-os-command-declarations",
+  "pack_version": "0.2.0",
+  "ecosystem": "pypi",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-os-command-declarations.json",
+    "sha256": "7bf3c48e94a196cb44aafc48a1090c7f3c4d283edf719655785186832f91e631",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/python/os-command/bifrost.python-os-command-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Python standard library reference, os",
+    "revision": "v3.13.5"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-os-command-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "os"
+    },
+    {
+      "kind": "member",
+      "owner": "os",
+      "name": "system"
+    }
+  ]
+}

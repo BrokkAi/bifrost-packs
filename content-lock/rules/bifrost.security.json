@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "517b615a4807ae5f98a15757f4cceb3fd37c9169aa2914e6bb45c871a8245883"
+      "sha256": "d248d891190ec8cd381e9354a3f65b4be68b8e3a461cb2878baf442f05f2c35b"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -29,9 +29,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp",
+      "sha256": "feb54098c1faad4fef5e4651f9f0e77dab9838ef56028250af4475d36166fd64",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/csharp/xml-injection.rqlp",
       "source_path": "rules/bifrost.security/policies/csharp/xml-injection.rqlp",
       "sha256": "1c7e0a0564bf27ca96a7eda9f47181d716c1f21e4c6e244ec7bf75b0a200d981",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp",
+      "sha256": "b23c074a38844cb72593b241e37de00e887fbda8e432f9985c3a1207e53ba198",
       "classification": "public",
       "license": "Apache-2.0"
     },

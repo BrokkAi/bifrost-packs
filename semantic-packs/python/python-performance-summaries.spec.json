@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.python-performance-summaries",
-  "pack_version": "1.0.0",
+  "pack_version": "1.1.0",
   "ecosystem": "python",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "bifrost.python-performance-summaries.json",
-    "sha256": "30337660d38206eceba138c427587011874cec2b5f8231e584b1c2102640a49c",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/51e1f7f47dce9b3245f73c27cdc5275cf9df198c/semantic-packs/python/performance/bifrost.python-performance-summaries.json",
+    "sha256": "4c2c2a968896d458a9fe224f7aadbb9cae9484e939a737187406272bb7334ab9",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/920d99a8899a2364610cb6f2708e9394f1631b64/semantic-packs/python/performance/bifrost.python-performance-summaries.json",
     "container": null
   },
   "compatibility": {
     "toolchains": [
       {
         "name": "cpython",
-        "requirement": ">=3.13.5, <3.13.6"
+        "requirement": ">=3.10.0, <3.15.0"
       }
     ]
   },
@@ -24,7 +24,7 @@
     {
       "toolchain": {
         "name": "cpython",
-        "version": ">=3.13.5, <3.13.6"
+        "version": ">=3.10.0, <3.15.0"
       },
       "targets": []
     }

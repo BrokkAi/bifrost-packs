@@ -14,11 +14,12 @@ from scoped import validate_attributions
 from stagers.go import GoStager
 from stagers.java import JavaStager
 from stagers.csharp import CSharpStager
+from ql_classes import generate_cache
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('expected', 'prepare', 'run', 'summary'))
+    parser.add_argument('command', choices=('expected', 'prepare', 'run', 'summary', 'ql-classes'))
     parser.add_argument('query', nargs='?')
     parser.add_argument('policy', nargs='?', type=Path)
     parser.add_argument('--language', choices=('go', 'java', 'csharp'), default='go')
@@ -44,6 +45,8 @@ def main(argv=None):
                         help='JSON list of exact printed model rows; repeat to union catalogs')
     parser.add_argument('--scope-attributions', type=Path,
                         help='JSON list of reviewed out-of-subset miss attributions')
+    parser.add_argument('--codeql-cli', type=Path, default=os.environ.get('CODEQL_CLI'),
+                        help='pinned CodeQL CLI used to generate Java QL-class caches')
     args = parser.parse_args(argv)
     catalogs = None
     for path in args.scope_catalogs or []:
@@ -57,6 +60,22 @@ def main(argv=None):
     if args.scope_attributions and catalogs is None:
         raise GateError('--scope-attributions requires --scope-catalogs')
     args.state_dir = args.state_dir.resolve()
+    if args.command == 'ql-classes':
+        if args.language != 'java':
+            parser.error('ql-classes currently supports only Java')
+        if not args.codeql_root or not args.codeql_cli or not args.test_dir:
+            parser.error('ql-classes requires --codeql-root, --codeql-cli and at least one --test-dir')
+        args.codeql_root = args.codeql_root.resolve()
+        stager = JavaStager(args.java_home)
+        stager.validate_ql_endpoints(args.codeql_root)
+        scratch = args.state_dir / 'ql-class-generation'
+        scratch.mkdir(parents=True, exist_ok=True)
+        output_root = Path(__file__).resolve().parent / 'ql_classes'
+        outputs = [generate_cache(args.codeql_root, args.codeql_root / directory,
+                                  args.codeql_cli, output_root, scratch, stager.ql_endpoints)
+                   for directory in args.test_dir]
+        print(json.dumps([str(path.relative_to(output_root)) for path in outputs], indent=2))
+        return 0
     if args.command == 'summary':
         latest = {}
         file = args.state_dir / 'results.tsv'
@@ -77,6 +96,8 @@ def main(argv=None):
                               args.nuget_source)
     else:
         stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
+    if hasattr(stager, 'validate_ql_endpoints'):
+        stager.validate_ql_endpoints(args.codeql_root)
     query_path = args.query_path
     if not query_path:
         import re
