@@ -162,7 +162,20 @@ def _file_or_tree_sha256(path: Path) -> tuple[str, str]:
     return "tree", digest.hexdigest()
 
 
-def _validate_generator(generator: Any) -> None:
+def _validate_config(root: Path, config_path: Path) -> tuple[dict[str, Any], bytes, list[dict[str, Any]], list[dict[str, Any]]]:
+    config_path = config_path.resolve(strict=True)
+    try:
+        config_path.relative_to(root)
+    except ValueError:
+        _fail("config must be inside repository root")
+    config_bytes = config_path.read_bytes()
+    config = _load_json(config_bytes, str(config_path))
+    if not isinstance(config, dict) or set(config) - {"schema_version", "generator", "jobs", "recipes"}:
+        _fail("config must contain only schema_version, generator, jobs, and recipes")
+    if type(config.get("schema_version")) is not int or config["schema_version"] != 1:
+        _fail("unsupported native generation config schema_version (expected 1)")
+
+    generator = config.get("generator")
     if not isinstance(generator, dict) or set(generator) not in (GENERATOR_FIELDS, GENERATOR_FIELDS | {"build"}):
         _fail("generator must contain the six generator pins and only optional build metadata")
     if not isinstance(generator["version"], str) or not SEMVER_RE.fullmatch(generator["version"]):
@@ -185,41 +198,6 @@ def _validate_generator(generator: Any) -> None:
         _fail("generator.commit must be a full 40- or 64-character commit id")
     if not isinstance(generator["asset"], str) or not generator["asset"].strip():
         _fail("generator.asset must be nonempty")
-
-
-def validate_authoring_pin(root: Path, pin_path: Path) -> dict[str, Any]:
-    """Validate the authoring CLI pin, which has the same shape as the generator pin."""
-    pin_path = pin_path.resolve(strict=True)
-    try:
-        pin_path.relative_to(root)
-    except ValueError:
-        _fail("authoring pin must be inside repository root")
-    pin = _load_json(pin_path.read_bytes(), str(pin_path))
-    if not isinstance(pin, dict) or set(pin) != {"schema_version", "generator"}:
-        _fail("authoring pin must contain exactly schema_version and generator")
-    if type(pin["schema_version"]) is not int or pin["schema_version"] != 1:
-        _fail("unsupported authoring pin schema_version (expected 1)")
-    _validate_generator(pin["generator"])
-    if "build" not in pin["generator"]:
-        _fail("authoring pin generator must carry build metadata")
-    return pin
-
-
-def _validate_config(root: Path, config_path: Path) -> tuple[dict[str, Any], bytes, list[dict[str, Any]], list[dict[str, Any]]]:
-    config_path = config_path.resolve(strict=True)
-    try:
-        config_path.relative_to(root)
-    except ValueError:
-        _fail("config must be inside repository root")
-    config_bytes = config_path.read_bytes()
-    config = _load_json(config_bytes, str(config_path))
-    if not isinstance(config, dict) or set(config) - {"schema_version", "generator", "jobs", "recipes"}:
-        _fail("config must contain only schema_version, generator, jobs, and recipes")
-    if type(config.get("schema_version")) is not int or config["schema_version"] != 1:
-        _fail("unsupported native generation config schema_version (expected 1)")
-
-    generator = config.get("generator")
-    _validate_generator(generator)
 
     jobs_raw = config.get("jobs", [])
     recipes_raw = config.get("recipes", [])

@@ -1,5 +1,5 @@
 name: Verify public policy authoring identities
-description: Build the production authoring CLI pinned in policy-authoring.json from immutable public source and compare every locked policy identity.
+description: Build the production authoring CLI from immutable public source and compare every locked policy identity.
 runs:
   using: composite
   steps:
@@ -12,11 +12,11 @@ runs:
         from pathlib import Path
         sys.path.insert(0, str(Path('release-contract').resolve()))
         import native_generation
-        native_generation.validate_authoring_pin(Path('.').resolve(), Path('policy-authoring.json'))
+        native_generation._validate_config(Path('.').resolve(), Path('native-generation.json'))
         PYTHON
-        echo "toolchain=$(jq -r .generator.build.rust_toolchain policy-authoring.json)" >> "$GITHUB_OUTPUT"
-        echo "source=$(jq -r .generator.asset_sha256 policy-authoring.json)" >> "$GITHUB_OUTPUT"
-        echo "lock=$(jq -r .generator.build.cargo_lock_sha256 policy-authoring.json)" >> "$GITHUB_OUTPUT"
+        echo "toolchain=$(jq -r .generator.build.rust_toolchain native-generation.json)" >> "$GITHUB_OUTPUT"
+        echo "source=$(jq -r .generator.asset_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
+        echo "lock=$(jq -r .generator.build.cargo_lock_sha256 native-generation.json)" >> "$GITHUB_OUTPUT"
     - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4
       with:
         toolchain: ${{ steps.pins.outputs.toolchain }}
@@ -28,7 +28,7 @@ runs:
       shell: bash
       run: |
         set -euo pipefail
-        commit=$(jq -r .generator.commit policy-authoring.json)
+        commit=$(jq -r .generator.commit native-generation.json)
         echo "key=policy-authoring-cli-${{ runner.os }}-${{ runner.arch }}-${commit}-${{ steps.pins.outputs.source }}-${{ steps.pins.outputs.lock }}-${{ steps.pins.outputs.toolchain }}-${{ hashFiles('.github/actions/verify-policy-identities/action.yml') }}" >> "$GITHUB_OUTPUT"
     - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
       id: cli-cache
@@ -44,9 +44,9 @@ runs:
         CARGO_INCREMENTAL: '0'
       run: |
         set -euo pipefail
-        repo=$(jq -r .generator.repository policy-authoring.json)
+        repo=$(jq -r .generator.repository native-generation.json)
         repo=${repo#https://github.com/}
-        commit=$(jq -r .generator.commit policy-authoring.json)
+        commit=$(jq -r .generator.commit native-generation.json)
         timeout --signal=TERM --kill-after=30s 120s gh api "repos/$repo/tarball/$commit" > "$RUNNER_TEMP/policy-source.tar.gz"
         echo "${{ steps.pins.outputs.source }}  $RUNNER_TEMP/policy-source.tar.gz" | sha256sum -c -
         mkdir "$RUNNER_TEMP/policy-source"
@@ -68,7 +68,7 @@ runs:
       run: |
         set -euo pipefail
         receipt="$RUNNER_TEMP/policy-authoring-cli/build.json"
-        test "$(jq -r .generator_commit "$receipt")" = "$(jq -r .generator.commit policy-authoring.json)"
+        test "$(jq -r .generator_commit "$receipt")" = "$(jq -r .generator.commit native-generation.json)"
         test "$(jq -r .source_archive_sha256 "$receipt")" = "${{ steps.pins.outputs.source }}"
         test "$(jq -r .cargo_lock_sha256 "$receipt")" = "${{ steps.pins.outputs.lock }}"
         test "$(jq -r .rust_toolchain "$receipt")" = "${{ steps.pins.outputs.toolchain }}"
@@ -86,9 +86,9 @@ runs:
         python3 -B scripts/verify-policy-identities.py \
           --binary "$RUNNER_TEMP/policy-authoring-cli/bifrost" \
           --output "$RUNNER_TEMP/policy-identities" \
-          --engine-version "$(jq -r .generator.version policy-authoring.json)" \
-          --build-identity "$(jq -r .generator.commit policy-authoring.json)"
-        cp policy-authoring.json "$RUNNER_TEMP/policy-identities/public-source-pins.json"
+          --engine-version "$(jq -r .generator.version native-generation.json)" \
+          --build-identity "$(jq -r .generator.commit native-generation.json)"
+        cp native-generation.json "$RUNNER_TEMP/policy-identities/public-source-pins.json"
         cp "$RUNNER_TEMP/policy-authoring-cli/build.json" "$RUNNER_TEMP/policy-identities/authoring-cli-build.json"
     - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       if: ${{ always() }}

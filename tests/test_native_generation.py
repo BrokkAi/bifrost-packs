@@ -368,35 +368,5 @@ class NativeGenerationTests(unittest.TestCase):
                     native_generation._validate_config(self.root.resolve(), config_path)
 
 
-class AuthoringPinTests(unittest.TestCase):
-    """Pin the policy authoring CLI separately from the native pack producer."""
-
-    def test_repository_authoring_pin_is_valid_and_separate_from_generator(self):
-        pin = native_generation.validate_authoring_pin(ROOT, ROOT / "policy-authoring.json")
-        generator = json.loads((ROOT / "native-generation.json").read_text())["generator"]
-        self.assertIn("build", pin["generator"])
-        self.assertEqual(pin["generator"]["repository"], generator["repository"])
-
-    def test_authoring_pin_rejects_invalid_shapes(self):
-        valid = json.loads((ROOT / "policy-authoring.json").read_text())
-        no_build = dict(valid["generator"])
-        del no_build["build"]
-        no_build["binary_sha256"] = "a" * 64
-        invalid = [
-            dict(valid, jobs=[]),
-            dict(valid, schema_version=2),
-            dict(valid, generator=dict(valid["generator"], commit="short")),
-            dict(valid, generator=no_build),
-        ]
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary).resolve()
-            pin_path = root / "policy-authoring.json"
-            for pin in invalid:
-                with self.subTest(pin=pin):
-                    pin_path.write_text(json.dumps(pin))
-                    with self.assertRaises(native_generation.NativeGenerationError):
-                        native_generation.validate_authoring_pin(root, pin_path)
-
-
 if __name__ == "__main__":
     unittest.main()
