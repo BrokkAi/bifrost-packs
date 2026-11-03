@@ -10,7 +10,7 @@ Start with Node authenticated plaintext, JDK CipherInputStream, stdlib TLS state
 | --- | --- | --- |
 | 1 | Qualify Node authenticated plaintext acceptance | [node-crypto-authenticated-decipher-finalization](candidates.md#node-crypto-authenticated-decipher-finalization) |
 | 2 | Qualify JDK authenticated decryption through CipherInputStream | [jvm-aead-cipherinputstream-integrity](candidates.md#jvm-aead-cipherinputstream-integrity) |
-| 3 | Qualify stdlib TLS client verification state | [python-ssl-client-verification-typestate](candidates.md#python-ssl-client-verification-typestate), [go-crypto-tls-client-skip-verification](candidates.md#go-crypto-tls-client-skip-verification), [ruby-net-http-active-peer-verification-disabled](candidates.md#ruby-net-http-active-peer-verification-disabled) |
+| 3 | Qualify stdlib TLS client verification state | [python-ssl-client-verification-typestate](candidates.md#python-ssl-client-verification-typestate), [go-crypto-tls-client-skip-verification](candidates.md#go-crypto-tls-client-skip-verification), [ruby-net-http-active-peer-verification-disabled](candidates.md#ruby-net-http-active-peer-verification-disabled) (Ruby part: incomplete, blocked by engine on 0.15.0; [record](../ruby-php-stdlib/README.md)) |
 | 4 | Qualify JNDI LDAP syntax versus filter arguments | [jvm-jndi-filter-escaping](candidates.md#jvm-jndi-filter-escaping) |
 | 5 | Qualify implicit multiprocessing object deserialization | [python-multiprocessing-connection-recv-pickle](candidates.md#python-multiprocessing-connection-recv-pickle) |
 | 6 | Qualify stdlib archive and filesystem root confinement | [jvm-zip-entry-containment](candidates.md#jvm-zip-entry-containment), [go-archive-extraction-root-confinement](candidates.md#go-archive-extraction-root-confinement), [rust-path-root-containment](candidates.md#rust-path-root-containment) |
@@ -22,7 +22,7 @@ Start with Node authenticated plaintext, JDK CipherInputStream, stdlib TLS state
 | 12 | Qualify Python logging configuration listener verification | [python-logging-config-listener-verification](candidates.md#python-logging-config-listener-verification) |
 | 13 | Qualify .NET XML resolver and DTD configuration | [dotnet-xmlreader-external-dtd-resolution](candidates.md#dotnet-xmlreader-external-dtd-resolution) |
 | 14 | Qualify explicit Python XInclude resource reads | [python-xinclude-untrusted-href](candidates.md#python-xinclude-untrusted-href) |
-| 15 | Qualify PHP paired process and pipe ownership | [php-proc-open-paired-ownership](candidates.md#php-proc-open-paired-ownership) |
+| 15 | Qualify PHP paired process and pipe ownership | [php-proc-open-paired-ownership](candidates.md#php-proc-open-paired-ownership) (incomplete, blocked by engine on 0.15.0; [record](../ruby-php-stdlib/README.md)) |
 | 16 | Qualify Rust MaybeUninit initialization state | [rust-maybeuninit-initialization-state](candidates.md#rust-maybeuninit-initialization-state) |
 | 17 | Qualify Rust Condvar predicate rechecks | [rust-condvar-predicate-recheck](candidates.md#rust-condvar-predicate-recheck) |
 | 18 | Qualify Rust buffered-output completion | [rust-bufwriter-drop-hidden-flush-error](candidates.md#rust-bufwriter-drop-hidden-flush-error) |
@@ -213,6 +213,8 @@ Acceptance for the qualification issue:
 
 Start with a harmless child waiting for EOF. Correlate output pipes with their process resource and show the actual blocking dependency; inherited descriptors are not newly owned pipes.
 
+Status (2026-11-03, Bifrost 0.15.0): blocked by engine before ownership. `proc_open` can't be selected exactly, because the generated `bifrost.php-builtin` pack marks no global function `callable_family_complete` (BrokkAi/bifrost-dev#9337). `$pipes` element reads make PHP procedure semantics unknown (BrokkAi/bifrost-dev#9330). See the [record](../ruby-php-stdlib/README.md).
+
 Acceptance for the qualification issue:
 
 - Pin exact runtime/provider, public API source revision, engine and model identities.
@@ -263,9 +265,9 @@ declared completion boundary.
 ## Existing ownership and deferrals
 
 - Node child-process shell and ordinary Go/C/C++ resource-close cases belong to existing security/lifecycle qualification. Add precise API models and fixtures under those owners; do not create a competing leak engine.
-- PHP unserialize and Ruby Marshal were already cataloged. Review public runtime ownership under their existing research routes. No premium content or issues were migrated.
-- Ruby Open3 returned-pipe cleanup and Tempfile close/unlink belong under existing Ruby lifecycle qualification. Open3's Process.detach waiter reaps independently; missing wait-thread value retrieval is not a zombie-process finding. Tempfile deletion requires an actual temporary-use obligation; retained or renamed artifacts differ.
-- Ruby Psych unsafe-load and Kernel.open pipe-command cases route to existing deserialization and command-execution discovery. Psych safe defaults depend on its exact loaded version; Kernel.open pipe mode is scoped to Ruby 3.4 and excluded on Ruby 4.
+- PHP unserialize and Ruby Marshal were already cataloged. Review public runtime ownership under their existing research routes. No premium content or issues were migrated. On Bifrost 0.15.0 both are blocked by engine: PHP by BrokkAi/bifrost-dev#9337 and BrokkAi/bifrost-dev#9330, Ruby by BrokkAi/bifrost-dev#9336, BrokkAi/bifrost-dev#9334 and BrokkAi/bifrost-dev#9335. See the [record](../ruby-php-stdlib/README.md).
+- Ruby Open3 returned-pipe cleanup and Tempfile close/unlink belong under existing Ruby lifecycle qualification. On Bifrost 0.15.0 their opening calls can't be selected exactly (BrokkAi/bifrost-dev#9336). Open3's Process.detach waiter reaps independently; missing wait-thread value retrieval is not a zombie-process finding. Tempfile deletion requires an actual temporary-use obligation; retained or renamed artifacts differ.
+- Ruby Psych unsafe-load and Kernel.open pipe-command cases route to existing deserialization and command-execution discovery. On Bifrost 0.15.0 both are blocked by BrokkAi/bifrost-dev#9336 and BrokkAi/bifrost-dev#9335, and their version scopes by BrokkAi/bifrost-dev#9318. Psych safe defaults depend on its exact loaded version; Kernel.open pipe mode is scoped to Ruby 3.4 and excluded on Ruby 4.
 - Ruby Open3 paired-pipe deadlock remains deferred until child output volume, effective pipe capacity and blocking read order can be proven. Sequential source order alone is insufficient.
 - Rust Unix pre_exec callback safety and process-environment mutation remain deferred. Require executed post-fork callback identity or actual foreign environment-reader concurrency respectively; unused registration, Windows environment mutation and CommandExt::exec need their distinct contracts.
 - C formatted-output taint needs a current exact-build check of global external declaration identity before any production endpoint.
