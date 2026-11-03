@@ -1,0 +1,323 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.database-sql-declarations",
+  "version": "1.0.0",
+  "producer": {
+    "name": "bifrost",
+    "version": "0.15.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/database/sql/sql.go (sql.DB, sql.Tx, sql.Stmt, sql.Result and pointer-receiver Exec methods)",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.database-sql.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.c3e73525fe29f12e8873d07a3d3731b5a648ca4d7ee440d0d46d91275ab13361",
+            "name": "database/sql",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "sql"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql"
+            }
+          },
+          {
+            "id": "type.1bf032d4fc99b9c6eff1e0fe021158fb1ef5a6dcaff6c534240225bc13720d33",
+            "name": "database/sql.DB",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.DB"
+            }
+          },
+          {
+            "id": "type.d2cf6460d5329af4d99f2db7457d4e4719d4e4a19ebbb144db0c8481604dc7db",
+            "name": "database/sql.Tx",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.Tx"
+            }
+          },
+          {
+            "id": "type.20da20bcc4b16b508c555b7794be94e879b42171e5fd640f411ea3411497cedf",
+            "name": "database/sql.Stmt",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.Stmt"
+            }
+          },
+          {
+            "id": "type.4388d0b809d74d16f82bf615f463947665c172c21af4f5e8f23d4feeaa5b3556",
+            "name": "database/sql.Result",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.Result"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.cfe2a7bee49dac5d2fc0a362b493e2c7620bb5ee2a36446f01155108c7cf247c",
+            "owner": "type.1bf032d4fc99b9c6eff1e0fe021158fb1ef5a6dcaff6c534240225bc13720d33",
+            "name": "Exec",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "query",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "declared",
+                    "id": "type.4388d0b809d74d16f82bf615f463947665c172c21af4f5e8f23d4feeaa5b3556",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.DB.Exec"
+            }
+          },
+          {
+            "id": "member.9f46316e0eeb64553bd8c6a368111e0098fdc3a45953f2238d793d29df1c1216",
+            "owner": "type.d2cf6460d5329af4d99f2db7457d4e4719d4e4a19ebbb144db0c8481604dc7db",
+            "name": "Exec",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "query",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "declared",
+                    "id": "type.4388d0b809d74d16f82bf615f463947665c172c21af4f5e8f23d4feeaa5b3556",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.Tx.Exec"
+            }
+          },
+          {
+            "id": "member.137eee6f928300ce074bb2cd41b1ea103c519dcb1f94b6f93cd3d8493c160b55",
+            "owner": "type.20da20bcc4b16b508c555b7794be94e879b42171e5fd640f411ea3411497cedf",
+            "name": "Exec",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "declared",
+                    "id": "type.4388d0b809d74d16f82bf615f463947665c172c21af4f5e8f23d4feeaa5b3556",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/database/sql/sql.go",
+              "symbol": "database/sql.Stmt.Exec"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.net-http-declarations",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "producer": { "name": "bifrost", "version": "0.11.3" },
   "language": "go",
   "ecosystem": "go-stdlib",
   "compatibility": { "toolchains": [] },
   "provenance": {
-    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get)",
+    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get) and https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/net/http/request.go (http.Request, (*Request).FormValue)",
     "revision": "go1.26.0"
   },
   "license": "BSD-3-Clause",
@@ -83,6 +83,26 @@
             "aliases": [],
             "extension_surfaces": [],
             "locator": { "kind": "artifact", "path": "src/net/http/server.go", "symbol": "net/http.HandlerFunc" }
+          },
+          {
+            "id": "type.97ff26c9ed1757158ac2236b14d93dbdd0172694aceb6b8a8ded3387f52613a7",
+            "name": "net/http.Request",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/net/http/request.go",
+              "symbol": "net/http.Request"
+            }
           }
         ],
         "members": [
@@ -253,6 +273,48 @@
             "receiver": { "pointer": true },
             "aliases": [],
             "locator": { "kind": "artifact", "path": "src/net/http/server.go", "symbol": "net/http.ServeMux.Handle" }
+          },
+          {
+            "id": "member.40b29f1319d7f5c030e7a467747267c69cc95a0642bdad61211bcbdc2a6ba530",
+            "owner": "type.97ff26c9ed1757158ac2236b14d93dbdd0172694aceb6b8a8ded3387f52613a7",
+            "name": "FormValue",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/net/http/request.go",
+              "symbol": "net/http.Request.FormValue"
+            }
           }
         ],
         "relations": []
