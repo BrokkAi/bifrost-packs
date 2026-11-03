@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 73 unique rule IDs from 5 manifest packs.
+This catalog lists 74 unique rule IDs from 5 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -48,6 +48,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Selected TypeScript boundary reaches no network effect](../rules/bifrost.effects/policies/typescript/selected-boundary-no-network-io.rqlp) | `bifrost.effects.typescript.selected-boundary-no-network-io` | typescript | effects | error |
 | [Unwrap of external command launch](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
 | [Expect on fallible filesystem operation](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
+| [Unwrap of home-directory environment variable](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
 | [Fixed sleep in a polling method](../rules/bifrost.rust-generic/policies/sleep-before-try-recv.rqlp) | `bifrost.rust.sleep-before-try-recv` | rust | performance | note |
 | [Stored request value requires the configured validator (C)](../rules/bifrost.security/policies/declared-storage/c-store-requires-validation.rqlp) | `bifrost.security.c.store-requires-validation` | c | security | warning |
 | [Stored request value reaches SQL (C)](../rules/bifrost.security/policies/declared-storage/c-stored-request-to-sql.rqlp) | `bifrost.security.c.stored-request-to-sql` | c | security | error |

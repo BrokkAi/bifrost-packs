@@ -36,6 +36,21 @@
       "remediation": "Review the operation and use explicit error handling or a blocking receive where appropriate."
     },
     {
+      "path": "policies/home-env-expect.rqlp",
+      "id": "bifrost.rust.home-env-expect",
+      "authored_hash": "235144bf470ac786364f3168778e8e0d5370abb48e13cb7413ff0794a450d012",
+      "resolved_semantic_hash": "235144bf470ac786364f3168778e8e0d5370abb48e13cb7413ff0794a450d012",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust environment access.",
+      "remediation": "Use a platform-aware home-directory API or handle a missing environment variable."
+    },
+    {
       "path": "policies/sleep-before-try-recv.rqlp",
       "id": "bifrost.rust.sleep-before-try-recv",
       "authored_hash": "c603d0b00d8e605112fae98584c2c913081c960c664fa06b1562b620f9893303",

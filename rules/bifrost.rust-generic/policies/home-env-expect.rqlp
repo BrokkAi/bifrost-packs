@@ -1,0 +1,17 @@
+(policy
+  :schema-version 1
+  :id "bifrost.rust.home-env-expect"
+  :name "Unwrap of home-directory environment variable"
+  :message "Review whether the home directory can be obtained without this environment variable"
+  :severity note
+  :description "An expect directly consumes std::env::var or env::var for HOME or USERPROFILE. These variables are not guaranteed to exist in every process environment. This structural prompt does not prove that a missing variable must be recoverable; a platform-aware home-directory API may be preferable."
+  :tags ["rust" "environment" "portability"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql :schema-version 1
+          (language rust
+            (call :callee (name "expect")
+                  :receiver (call :callee (name "var")
+                                  :args [(string_literal :string-value/regex "^(HOME|USERPROFILE)$")]))))))
