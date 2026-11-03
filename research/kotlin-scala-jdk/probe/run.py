@@ -32,6 +32,7 @@ ENV = dict(
 
 
 def bifrost(binary, root, *args):
+    """Run Bifrost on root and return its exit code and stdout."""
     done = subprocess.run(
         [binary, "--root", str(root), *args],
         capture_output=True, env=ENV, check=False, timeout=600,
@@ -40,6 +41,7 @@ def bifrost(binary, root, *args):
 
 
 def dispatch_table(binary, root, language, path):
+    """Return the dispatch outcome of every call in one probe file."""
     query = {
         "schema_version": "1", "languages": [language],
         "match": {"kind": "call"}, "steps": [{"op": "dispatch_outcome"}],
@@ -64,12 +66,14 @@ def dispatch_table(binary, root, language, path):
 
 
 def binding_diagnostics(binary, root, language):
+    """Return the distinct call-binding diagnostics for one language."""
     _, out = bifrost(binary, root, "--query-file", f"queries/call-bindings-{language}.rql")
     content = json.loads(out)["structuredContent"]
     return sorted({d["message"] for d in content.get("diagnostics", [])})
 
 
 def policy_run(binary, root, language):
+    """Run one getenv-to-exec probe policy and summarise its completion and findings."""
     code, out = bifrost(
         binary, root, "--policy", "--no-builtin-policies", "--no-incremental",
         "--sources", f"env/{language}", "--format", "json",
@@ -89,6 +93,7 @@ def policy_run(binary, root, language):
 
 
 def main():
+    """Replay the probe in a temporary root and print the report as JSON."""
     binary = os.environ.get("BIFROST", "bifrost")
     profile = subprocess.run([binary, "pack-engine-profile"], capture_output=True, text=True).stdout
     if EXPECTED_BUILD not in profile:
