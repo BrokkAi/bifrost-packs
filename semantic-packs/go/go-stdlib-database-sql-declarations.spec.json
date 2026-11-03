@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.database-sql-declarations",
+  "pack_version": "1.0.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-database-sql-declarations.json",
+    "sha256": "2428adc5fb3938f10ffb0e235e01005df47230b79fe5fb1c4804b68c970b54ba",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a3aa4e8be6ca0b1c88836a58060d7a001ceec9fa/semantic-packs/models/go-stdlib-database-sql-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/database/sql/sql.go (sql.DB, sql.Tx, sql.Stmt, sql.Result and pointer-receiver Exec methods)",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "database/sql.DB",
+      "name": "Exec"
+    },
+    {
+      "kind": "member",
+      "owner": "database/sql.Tx",
+      "name": "Exec"
+    },
+    {
+      "kind": "member",
+      "owner": "database/sql.Stmt",
+      "name": "Exec"
+    }
+  ]
+}
