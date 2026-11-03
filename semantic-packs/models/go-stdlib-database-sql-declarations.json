@@ -9,7 +9,12 @@
   "language": "go",
   "ecosystem": "go-stdlib",
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "provenance": {
     "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/database/sql/sql.go (sql.DB, sql.Tx, sql.Stmt, sql.Result and pointer-receiver Exec methods)",
@@ -25,7 +30,12 @@
     {
       "id": "go.stdlib.database-sql.declarations",
       "activation": [
-        {}
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
       ],
       "payload": {
         "kind": "declaration_facts",
