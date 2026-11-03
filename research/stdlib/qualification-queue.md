@@ -9,11 +9,11 @@ Start with Node authenticated plaintext, JDK CipherInputStream, stdlib TLS state
 | Order | Proposed investigation | Catalog leads |
 | --- | --- | --- |
 | 1 | Qualify Node authenticated plaintext acceptance | [node-crypto-authenticated-decipher-finalization](candidates.md#node-crypto-authenticated-decipher-finalization) |
-| 2 | Qualify JDK authenticated decryption through CipherInputStream | [jvm-aead-cipherinputstream-integrity](candidates.md#jvm-aead-cipherinputstream-integrity) |
+| 2 | Qualify JDK authenticated decryption through CipherInputStream | [jvm-aead-cipherinputstream-integrity](candidates.md#jvm-aead-cipherinputstream-integrity) (Kotlin/Scala part: blocked by engine on 0.15.0; [record](../kotlin-scala-jdk/README.md)) |
 | 3 | Qualify stdlib TLS client verification state | [python-ssl-client-verification-typestate](candidates.md#python-ssl-client-verification-typestate), [go-crypto-tls-client-skip-verification](candidates.md#go-crypto-tls-client-skip-verification), [ruby-net-http-active-peer-verification-disabled](candidates.md#ruby-net-http-active-peer-verification-disabled) (Ruby part: incomplete, blocked by engine on 0.15.0; [record](../ruby-php-stdlib/README.md)) |
-| 4 | Qualify JNDI LDAP syntax versus filter arguments | [jvm-jndi-filter-escaping](candidates.md#jvm-jndi-filter-escaping) |
+| 4 | Qualify JNDI LDAP syntax versus filter arguments | [jvm-jndi-filter-escaping](candidates.md#jvm-jndi-filter-escaping) (Kotlin/Scala part: blocked by engine on 0.15.0; [record](../kotlin-scala-jdk/README.md)) |
 | 5 | Qualify implicit multiprocessing object deserialization | [python-multiprocessing-connection-recv-pickle](candidates.md#python-multiprocessing-connection-recv-pickle) |
-| 6 | Qualify stdlib archive and filesystem root confinement | [jvm-zip-entry-containment](candidates.md#jvm-zip-entry-containment), [go-archive-extraction-root-confinement](candidates.md#go-archive-extraction-root-confinement), [rust-path-root-containment](candidates.md#rust-path-root-containment) |
+| 6 | Qualify stdlib archive and filesystem root confinement | [jvm-zip-entry-containment](candidates.md#jvm-zip-entry-containment) (Kotlin/Scala part: blocked by engine on 0.15.0; [record](../kotlin-scala-jdk/README.md)), [go-archive-extraction-root-confinement](candidates.md#go-archive-extraction-root-confinement), [rust-path-root-containment](candidates.md#rust-path-root-containment) |
 | 7 | Qualify database/sql transaction completion | [go-database-sql-tx-terminal](candidates.md#go-database-sql-tx-terminal) |
 | 8 | Qualify Rust child-process reaping | [rust-child-reaping](candidates.md#rust-child-reaping) |
 | 9 | Qualify Python queue completion accounting | [python-queue-task-accounting](candidates.md#python-queue-task-accounting) |
