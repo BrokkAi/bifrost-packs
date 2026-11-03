@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.rust-generic",
+  "version": "0.1.0",
+  "name": "Generic Rust bug prompts",
+  "description": "Source-backed review prompts from public Rust bug fixes.",
+  "policies": [
+    {
+      "path": "policies/command-output-unwrap.rqlp",
+      "id": "bifrost.rust.command-output-unwrap",
+      "authored_hash": "7831b44d1798f158958c92f6facff27f213fca32dfcb74e3e5e71bd25f40580e",
+      "resolved_semantic_hash": "7831b44d1798f158958c92f6facff27f213fca32dfcb74e3e5e71bd25f40580e",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust operation.",
+      "remediation": "Review the operation and use explicit error handling or a blocking receive where appropriate."
+    },
+    {
+      "path": "policies/filesystem-expect.rqlp",
+      "id": "bifrost.rust.filesystem-expect",
+      "authored_hash": "fc3ec20d069970752976a7781fae0878f0dc19125c954a99bc43d37ac0398c6c",
+      "resolved_semantic_hash": "fc3ec20d069970752976a7781fae0878f0dc19125c954a99bc43d37ac0398c6c",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust operation.",
+      "remediation": "Review the operation and use explicit error handling or a blocking receive where appropriate."
+    },
+    {
+      "path": "policies/sleep-before-try-recv.rqlp",
+      "id": "bifrost.rust.sleep-before-try-recv",
+      "authored_hash": "c603d0b00d8e605112fae98584c2c913081c960c664fa06b1562b620f9893303",
+      "resolved_semantic_hash": "c603d0b00d8e605112fae98584c2c913081c960c664fa06b1562b620f9893303",
+      "category": "performance",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust operation.",
+      "remediation": "Review the operation and use explicit error handling or a blocking receive where appropriate."
+    }
+  ]
+}

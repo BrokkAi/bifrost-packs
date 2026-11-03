@@ -1,0 +1,20 @@
+(policy
+  :schema-version 1
+  :id "bifrost.rust.sleep-before-try-recv"
+  :name "Fixed sleep in a polling method"
+  :message "Review whether this sleep delays channel messages before a nonblocking receive"
+  :severity note
+  :description "A sleep and try_recv appear in the same Rust callable. This is a review prompt: the structural relation does not prove that sleep precedes try_recv on every path or that the callable is repeatedly invoked. A blocking receive with timeout can avoid fixed latency."
+  :tags ["rust" "concurrency" "latency"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql :schema-version 1
+          (union
+            (language rust
+              (inside-decl (function (has (call :callee (name "try_recv"))))
+                (call :callee (name "sleep"))))
+            (language rust
+              (inside-decl (method (has (call :callee (name "try_recv"))))
+                (call :callee (name "sleep"))))))))

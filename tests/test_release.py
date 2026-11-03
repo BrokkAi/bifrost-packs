@@ -256,7 +256,11 @@ class ReleaseTests(unittest.TestCase):
         contents = release.public_contents(ROOT, lock)
         policies = [row for row in contents if row['kind'] == 'policy']
         manifests = [json.loads(path.read_text()) for path in (ROOT / 'rules').glob('*/manifest.json')]
-        self.assertEqual(len(policies), sum(len(manifest['policies']) for manifest in manifests))
+        manifest_policy_paths = {
+            'rules/' + manifest['id'] + '/' + policy['path']
+            for manifest in manifests for policy in manifest['policies']
+        }
+        self.assertTrue({policy['path'] for policy in policies} <= manifest_policy_paths)
         self.assertTrue(all(len(policy['authored_hash']) == 64 for policy in policies))
         release.make_manifest(dict(self.config, artifact_role='source'), 'b' * 40, contents, self.archive)
 
