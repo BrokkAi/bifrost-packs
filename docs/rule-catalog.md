@@ -220,10 +220,10 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | warning |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
-| [Unwrap of external command launch](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
-| [Expect on fallible filesystem operation](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
-| [Unwrap of home-directory environment variable](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
-| [Fixed sleep in a polling method](../rules/bifrost.rust-generic/policies/sleep-before-try-recv.rqlp) | `bifrost.rust.sleep-before-try-recv` | rust | performance | note |
+| [Unwrap of a call named output in a build script](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
+| [Expect on a call named read_dir or remove_file](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
+| [Expect on a var call for a home-directory key](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
+| [Sleep near a nested try_recv call](../rules/bifrost.rust-generic/policies/sleep-before-try-recv.rqlp) | `bifrost.rust.sleep-before-try-recv` | rust | performance | note |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |

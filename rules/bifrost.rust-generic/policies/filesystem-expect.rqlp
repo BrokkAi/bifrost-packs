@@ -1,10 +1,10 @@
 (policy
   :schema-version 1
   :id "bifrost.rust.filesystem-expect"
-  :name "Expect on fallible filesystem operation"
-  :message "Review whether this filesystem failure should propagate instead of panicking"
+  :name "Expect on a call named read_dir or remove_file"
+  :message "Review whether this call's failure should propagate instead of panicking"
   :severity note
-  :description "Outside common test-file paths, #[test] functions, and modules named tests, an expect directly consumes a read_dir or remove_file result. Filesystem state can change and failure may be recoverable. This is a structural review prompt; a deliberate fatal invariant can justify the panic. Rust #[cfg(test)] module arguments are not a queryable test-scope predicate, so test code in other module names can remain."
+  :description "Outside common test-file paths, #[test] functions, and modules named tests, an expect directly consumes a call named read_dir or remove_file. This name-based prompt does not prove std::fs API identity; review the callee and whether failure should propagate. Rust #[cfg(test)] module arguments are not a queryable test-scope predicate, so test code in other module names can remain."
   :tags ["rust" "filesystem" "error-handling"]
   :analysis
     (analysis

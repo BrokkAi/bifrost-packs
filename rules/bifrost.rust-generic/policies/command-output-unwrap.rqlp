@@ -1,17 +1,22 @@
 (policy
   :schema-version 1
   :id "bifrost.rust.command-output-unwrap"
-  :name "Unwrap of external command launch"
-  :message "Review the unhandled failure of this external command launch"
+  :name "Unwrap of a call named output in a build script"
+  :message "Review whether this output call can fail and should propagate"
   :severity note
-  :description "In a Rust build script, an unwrap directly consumes Command::output. A missing executable or launch failure panics. This is a structural review prompt; the query does not prove the command is optional or that a fallback is appropriate."
+  :description "In a Rust build.rs outside test paths, an unwrap directly consumes a call named output. This name-based prompt does not prove that the call is std::process::Command::output; review the callee and whether failure should propagate."
   :tags ["rust" "process" "error-handling"]
   :analysis
     (analysis
       :type match
       :selector
         (rql :schema-version 1
-          (where "build.rs" "**/build.rs"
-            (language rust
-              (call :callee (name "unwrap")
-                    :receiver (call :callee (name "output"))))))))
+          (except
+            (where "build.rs" "**/build.rs"
+              (language rust
+                (call :callee (name "unwrap")
+                      :receiver (call :callee (name "output")))))
+            (where "**/tests/**"
+              (language rust
+                (call :callee (name "unwrap")
+                      :receiver (call :callee (name "output")))))))))
