@@ -1,0 +1,1358 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.io-declarations",
+  "version": "1.0.0",
+  "producer": {
+    "name": "bifrost",
+    "version": "0.15.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/io/io.go (the 22 exported io interfaces and their methods and embeddings)",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.io.declarations",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.3bc13d45c206a030d9440024fdef589122314ceb87f2fd4f18404a966da2eb26",
+            "name": "io",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "io"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io"
+            }
+          },
+          {
+            "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+            "name": "io.Reader",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Reader"
+            }
+          },
+          {
+            "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+            "name": "io.Writer",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Writer"
+            }
+          },
+          {
+            "id": "type.a58b6a5b562a820b20b02fe82e44a87739770ce3ad05b2b060f7a03ebd91f6b0",
+            "name": "io.Closer",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Closer"
+            }
+          },
+          {
+            "id": "type.1b4405a4702367a4b49f63238727e392cbd5b56f7c4ffaa5191624fad4e0bf58",
+            "name": "io.Seeker",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Seeker"
+            }
+          },
+          {
+            "id": "type.76fab5de514cd510949584d85f233fcece6d214a0907517af67d0ffe889fe273",
+            "name": "io.ReadWriter",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReadWriter"
+            }
+          },
+          {
+            "id": "type.2f25287ad65584470151bfa8519ccefabb5af4e4474885d725df0cd35b9e533f",
+            "name": "io.ReadCloser",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.a58b6a5b562a820b20b02fe82e44a87739770ce3ad05b2b060f7a03ebd91f6b0",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReadCloser"
+            }
+          },
+          {
+            "id": "type.29d953ccab70756c5357acbc9c3e60fd95ab9eaebeb8706f4842d8874a4a100a",
+            "name": "io.WriteCloser",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.a58b6a5b562a820b20b02fe82e44a87739770ce3ad05b2b060f7a03ebd91f6b0",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.WriteCloser"
+            }
+          },
+          {
+            "id": "type.00d019c7404570a26d1c42e3e531402e047f6253b2eb56c8969df50113c03e5e",
+            "name": "io.ReadWriteCloser",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.a58b6a5b562a820b20b02fe82e44a87739770ce3ad05b2b060f7a03ebd91f6b0",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReadWriteCloser"
+            }
+          },
+          {
+            "id": "type.f04369903a3bfe8df721130ad5ecd7632f59a4421bb19f3aa09836369f31eb24",
+            "name": "io.ReadSeeker",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.1b4405a4702367a4b49f63238727e392cbd5b56f7c4ffaa5191624fad4e0bf58",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReadSeeker"
+            }
+          },
+          {
+            "id": "type.00ce68d26687d5dcc1549962d9b3c65d7df69a1f439049ea6c9e631ce0f6323f",
+            "name": "io.ReadSeekCloser",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.1b4405a4702367a4b49f63238727e392cbd5b56f7c4ffaa5191624fad4e0bf58",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.a58b6a5b562a820b20b02fe82e44a87739770ce3ad05b2b060f7a03ebd91f6b0",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReadSeekCloser"
+            }
+          },
+          {
+            "id": "type.a4dce56805027b60a95d6b66904ba157748a4d9ea2590c1723a4300cde6cea6a",
+            "name": "io.WriteSeeker",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.1b4405a4702367a4b49f63238727e392cbd5b56f7c4ffaa5191624fad4e0bf58",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.WriteSeeker"
+            }
+          },
+          {
+            "id": "type.cb311fbe45733e42a0bf7235fe84d59199d4a9aca89cc3ddb1c5e4ce017066a7",
+            "name": "io.ReadWriteSeeker",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              },
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.1b4405a4702367a4b49f63238727e392cbd5b56f7c4ffaa5191624fad4e0bf58",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReadWriteSeeker"
+            }
+          },
+          {
+            "id": "type.e36ea610db01a89f85951092b6652fb4dd1cd089117195d348a9fe7e9bff42ba",
+            "name": "io.ReaderAt",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReaderAt"
+            }
+          },
+          {
+            "id": "type.1d16bfe5b440ce0e680f07d5369ba1ca44b86438d9eae219b150eef2b37abc98",
+            "name": "io.WriterAt",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.WriterAt"
+            }
+          },
+          {
+            "id": "type.1551295849d032effc22a9fed89b45613d33ec87938a8d3ef49b0983ef36c082",
+            "name": "io.ReaderFrom",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReaderFrom"
+            }
+          },
+          {
+            "id": "type.c53765f0f98e0ae85642b57f56c960765deb1060611a93fc1d597ad41e147f44",
+            "name": "io.WriterTo",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.WriterTo"
+            }
+          },
+          {
+            "id": "type.ee8730e5acf623c38b2bdaf15a9a5fe30ee608981c75df75ae9aadd1d59a650e",
+            "name": "io.ByteReader",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ByteReader"
+            }
+          },
+          {
+            "id": "type.318ed9a738769477930f0eff9ba20f1adf688f81969838a12158d2aef8a1d987",
+            "name": "io.ByteScanner",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.ee8730e5acf623c38b2bdaf15a9a5fe30ee608981c75df75ae9aadd1d59a650e",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ByteScanner"
+            }
+          },
+          {
+            "id": "type.0e155dcd4fd5a9f41c3c738e0ba615bb18cedfa507dc1dc2c81f95076d1cc435",
+            "name": "io.ByteWriter",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ByteWriter"
+            }
+          },
+          {
+            "id": "type.99c92538c2655f21c3d8ab3fcd1bf79e66c059c6646d99332ef7588fd79606cb",
+            "name": "io.RuneReader",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.RuneReader"
+            }
+          },
+          {
+            "id": "type.d5e1368075540888f6297f9dac9a6a8e46a672c6f6edfaae2a215e510924808d",
+            "name": "io.RuneScanner",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [
+              {
+                "target": {
+                  "kind": "declared",
+                  "id": "type.99c92538c2655f21c3d8ab3fcd1bf79e66c059c6646d99332ef7588fd79606cb",
+                  "arguments": [],
+                  "nullable": false
+                },
+                "pointer": false
+              }
+            ],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.RuneScanner"
+            }
+          },
+          {
+            "id": "type.53ae94e3a455cd6beef6e4dfdd11367a7a6d09458dc96bbce949ec0ce8bd12d1",
+            "name": "io.StringWriter",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.StringWriter"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.94d001773ff9132e04ba9472fc8db47e94a8add125107e60b4c8d9fbb6215ad8",
+            "owner": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+            "name": "Read",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "p",
+                  "type": {
+                    "kind": "slice",
+                    "element": {
+                      "kind": "named",
+                      "name": "byte",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Reader.Read"
+            }
+          },
+          {
+            "id": "member.afdcb663db3893c837cbfaf20b7f13f5248725f74b9a9f3db8c58504767319fc",
+            "owner": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+            "name": "Write",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "p",
+                  "type": {
+                    "kind": "slice",
+                    "element": {
+                      "kind": "named",
+                      "name": "byte",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Writer.Write"
+            }
+          },
+          {
+            "id": "member.684ea0c3de29313795b3bdb36f74965024a687322ac2eefe06b26c84cb5e7a2c",
+            "owner": "type.a58b6a5b562a820b20b02fe82e44a87739770ce3ad05b2b060f7a03ebd91f6b0",
+            "name": "Close",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Closer.Close"
+            }
+          },
+          {
+            "id": "member.93501233b2fceaad83dfbf586aa8d3a7860160ef777c436c13fb011f68f1ddfc",
+            "owner": "type.1b4405a4702367a4b49f63238727e392cbd5b56f7c4ffaa5191624fad4e0bf58",
+            "name": "Seek",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "whence",
+                  "type": {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.Seeker.Seek"
+            }
+          },
+          {
+            "id": "member.0e206ea1d7fd21059c6ca295ce63895c4680811590dea3899cf652618da14200",
+            "owner": "type.e36ea610db01a89f85951092b6652fb4dd1cd089117195d348a9fe7e9bff42ba",
+            "name": "ReadAt",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "p",
+                  "type": {
+                    "kind": "slice",
+                    "element": {
+                      "kind": "named",
+                      "name": "byte",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "off",
+                  "type": {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReaderAt.ReadAt"
+            }
+          },
+          {
+            "id": "member.112f84b750e7341d4e8c462e3872878f6585b9b65fb3f13aec4b7a19c18e606e",
+            "owner": "type.1d16bfe5b440ce0e680f07d5369ba1ca44b86438d9eae219b150eef2b37abc98",
+            "name": "WriteAt",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "p",
+                  "type": {
+                    "kind": "slice",
+                    "element": {
+                      "kind": "named",
+                      "name": "byte",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "off",
+                  "type": {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.WriterAt.WriteAt"
+            }
+          },
+          {
+            "id": "member.06b6e72851a3f460cf4b70752d741ba3c1081852274bccaf4ceb3d7484f483a0",
+            "owner": "type.1551295849d032effc22a9fed89b45613d33ec87938a8d3ef49b0983ef36c082",
+            "name": "ReadFrom",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "r",
+                  "type": {
+                    "kind": "declared",
+                    "id": "type.aac34556d5a64eb751797268f48e7cd3db2f7a570e820fa816a5afc2c241780e",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ReaderFrom.ReadFrom"
+            }
+          },
+          {
+            "id": "member.d7628c5a78105fa5c363de6141c4adc0596d93d2591579346a356eeb33cb6598",
+            "owner": "type.c53765f0f98e0ae85642b57f56c960765deb1060611a93fc1d597ad41e147f44",
+            "name": "WriteTo",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "w",
+                  "type": {
+                    "kind": "declared",
+                    "id": "type.046cbcbf7f89048227862ad347c73bf4b784253e2e0849f395fdeacd5345a930",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.WriterTo.WriteTo"
+            }
+          },
+          {
+            "id": "member.3283698075076d476ebec02d65cef0b0084747c428a0a238983eaa063ac7d514",
+            "owner": "type.ee8730e5acf623c38b2bdaf15a9a5fe30ee608981c75df75ae9aadd1d59a650e",
+            "name": "ReadByte",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "byte",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ByteReader.ReadByte"
+            }
+          },
+          {
+            "id": "member.b758348308040132b7068068b5f51b6218ad620cfca480dfb015aedc5718d93d",
+            "owner": "type.318ed9a738769477930f0eff9ba20f1adf688f81969838a12158d2aef8a1d987",
+            "name": "UnreadByte",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ByteScanner.UnreadByte"
+            }
+          },
+          {
+            "id": "member.8250a06db3958d8c9ae5c4175b921c6fda22624eaa54cff00b9791abc1fbf0c7",
+            "owner": "type.0e155dcd4fd5a9f41c3c738e0ba615bb18cedfa507dc1dc2c81f95076d1cc435",
+            "name": "WriteByte",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "c",
+                  "type": {
+                    "kind": "named",
+                    "name": "byte",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.ByteWriter.WriteByte"
+            }
+          },
+          {
+            "id": "member.53b0b59c007ae18f2620f2eb90871aaa0b16a580996cf08888ee0518ba3745f7",
+            "owner": "type.99c92538c2655f21c3d8ab3fcd1bf79e66c059c6646d99332ef7588fd79606cb",
+            "name": "ReadRune",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "rune",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.RuneReader.ReadRune"
+            }
+          },
+          {
+            "id": "member.695788393c489001bcc0068a0082d405aef812307d138821a20626bb2b73365f",
+            "owner": "type.d5e1368075540888f6297f9dac9a6a8e46a672c6f6edfaae2a215e510924808d",
+            "name": "UnreadRune",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.RuneScanner.UnreadRune"
+            }
+          },
+          {
+            "id": "member.b4d107c8a99aa31c3c822238ef0021b47d4d1cced37c635f831a41daffc606dc",
+            "owner": "type.53ae94e3a455cd6beef6e4dfdd11367a7a6d09458dc96bbce949ec0ce8bd12d1",
+            "name": "WriteString",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "s",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "src/io/io.go",
+              "symbol": "io.StringWriter.WriteString"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}
