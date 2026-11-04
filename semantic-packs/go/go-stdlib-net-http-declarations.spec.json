@@ -1,25 +1,35 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.net-http-declarations",
-  "pack_version": "2.1.0",
+  "pack_version": "3.0.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-net-http-declarations.json",
-    "sha256": "4b697358b490b91cb2a0869f909866a6ed3af86717e3bd9910390d9449375113",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-stdlib-net-http-declarations.json",
+    "sha256": "00a46ff46ad7b365c3740ca6c87218c07182f5bfdb7f81ef63fdc96a11943556",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f7b3e1175df056d8a05c5b93086e00d164765bc3/semantic-packs/models/go-stdlib-net-http-declarations.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
-    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get)",
+    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get) and https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/net/http/request.go (http.Request, (*Request).FormValue)",
     "revision": "go1.26.0"
   },
   "license": "BSD-3-Clause",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.26.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "type",
@@ -40,6 +55,11 @@
       "kind": "member",
       "owner": "net/http",
       "name": "NewServeMux"
+    },
+    {
+      "kind": "member",
+      "owner": "net/http.Request",
+      "name": "FormValue"
     }
   ]
 }
