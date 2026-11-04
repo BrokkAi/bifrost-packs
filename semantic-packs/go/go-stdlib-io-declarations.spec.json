@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.io-declarations",
+  "pack_version": "1.0.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-io-declarations.json",
+    "sha256": "d6ccd4b60b57533bcf5c238bfd281fc2eac255e02f2dcb48cf4137861c728446",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/e75885212acee0dfd9bacc3cdfd445f58b77a7c4/semantic-packs/models/go-stdlib-io-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/io/io.go (the 22 exported io interfaces and their methods and embeddings)",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "io.Reader"
+    },
+    {
+      "kind": "member",
+      "owner": "io.Reader",
+      "name": "Read"
+    },
+    {
+      "kind": "member",
+      "owner": "io.Closer",
+      "name": "Close"
+    },
+    {
+      "kind": "type",
+      "name": "io.ReadWriteCloser"
+    }
+  ]
+}
