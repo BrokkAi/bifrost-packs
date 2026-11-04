@@ -1,0 +1,17 @@
+; Research attempt for BrokkAi/bifrost-packs#161 (CVE-2023-36049). Not a pack rule.
+; No request-string source is selectable (C# parameter kind unsupported) and scheme guards need comparison facts, so this probes the sink binding only.
+(policy
+  :schema-version 1
+  :id "research.dotnet-cve.webrequest-create-binding"
+  :name "Research: Create call binding"
+  :message "call binds to System.Net.WebRequest.Create"
+  :severity note
+  :description "Binding probe for CVE-2023-36049. Reports each call that binds exactly to System.Net.WebRequest.Create; no source or version evidence."
+  :tags ["research" "csharp" "cve-2023-36049"]
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (language csharp
+        (resolved-call :resolves-to "System.Net.WebRequest.Create" :proof declared
+          (call-bindings (call-shape (call :callee (name "Create"))))))))
+    (group :name by-call :by (calls.id) (aggregate :name bound-calls :op count))
+    (assert :group by-call :value bound-calls :cardinality (exactly 0))))

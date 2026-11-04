@@ -1,0 +1,30 @@
+# Public C# CodeQL quality fixtures
+
+These fixtures exercise the thirty-one policies in
+`rules/bifrost.csharp-codeql-quality`. Each case contains a positive example
+and same-shaped near misses, with the expected structural boundary documented
+by the policy's CodeQL query path and pinned commit
+`ae741615f3e178ce61289a651790dc67fcc18e19`.
+
+The three new policies and the corrected rethrow and static-array policies use
+C# facts first released in Bifrost v0.14.4 (epic #4379) and are re-gated on
+v0.15.0. The StringBuilder case also activates the
+reviewed public BCL model in `semantic-packs/dotnet`; the catch-all case uses
+its modeled exception hierarchy as well. The call-to-gc case resolves
+`System.GC.Collect` from whichever declarations are available, the
+path-combine case binds calls to its `System.IO.Path.Combine` overloads,
+the catch-nullreferenceexception and rethrown-exception-variable cases use
+it to resolve caught exception types, and the random-used-once case binds
+`System.Random` constructors through it. The console-output case resolves
+`System.Console.Out` and `System.Console.Error` through it. The
+use-of-html-input-hidden and use-of-file-upload cases install the separate
+.NET Framework `bifrost.dotnet.system-web-csharp` model instead. The
+empty-catch-block, class-implements-icloneable and too-many-ref-parameters
+cases read source syntax only and install no model.
+
+The incomplete-parity-check, class-name-comparison,
+empty-lock-statement, self-assignment and calls-unmanaged-code cases also
+install no model. They need the C# `comparison`, `binary_expression` and
+`lock` rows that Bifrost 0.15.0 is the first release to provide, and
+self-assignment needs its local and parameter reference bindings.
+calls-unmanaged-code resolves calls to source `extern` declarations.

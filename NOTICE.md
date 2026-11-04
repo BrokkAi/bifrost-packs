@@ -19,15 +19,41 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 
 - CodeQL reduced corpus slices: MIT; see `licenses/CodeQL-MIT.txt` and the
   exact upstream revision in `semantic-packs/summary-corpora/pins.json`.
+- CodeQL-derived Python quality and security fixture test sources are MIT,
+  Copyright (c) GitHub, Inc.,
+  from `github/codeql` at
+  `ae741615f3e178ce61289a651790dc67fcc18e19`; see
+  `licenses/CodeQL-MIT.txt`.
+- CodeQL QL-class caches under `scripts/upstream/codeql_gate/ql_classes/` are
+  MIT, Copyright (c) GitHub, Inc.: node locations and QL class names that the
+  pinned CodeQL CLI computed over `github/codeql` query tests at
+  `ae741615f3e178ce61289a651790dc67fcc18e19`; see `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded
   from the engine's published Cargo crate. They are included in this source
   repository/source archive only and must remain separate from runtime bundles.
 - Rust declaration specifications retain MIT OR Apache-2.0 metadata.
+- The authored .NET BCL declaration and summary model retains the .NET
+  Foundation and Contributors MIT terms; see licenses/DotNet-Runtime-MIT.txt
+  and semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json.
+- The authored .NET Framework System.Web declaration model records public API
+  names and signatures from the .NET Framework 4.8.1 API reference and is MIT;
+  see semantic-packs/dotnet/bifrost.dotnet.system-web-csharp.json.
+- The authored System.Security.Cryptography.Xml declaration and summary model
+  records public SignedXml API names and signatures from the .NET API
+  reference and the dotnet/runtime reference assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.security-cryptography-xml-csharp.json.
+- The authored System.Xml declaration model records public XmlResolver,
+  XmlUrlResolver, XmlDocument, XmlTextReader and XmlReaderSettings API names
+  and signatures from the .NET API reference and the dotnet/runtime reference
+  assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.system-xml-csharp.json.
 - Kotlin, Scala, Typeshed, PHPStorm and TypeScript source specifications retain
   their recorded license, pinned input hashes, and notices. Downloaded inputs
   are not vendored here. Node's complete upstream notice is preserved.
 
 The source archive is a mixed-license source distribution, not an Apache-only
 relicensing and not an installable native semantic-pack release bundle.
+
+Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19. Public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0. No CodeQL query implementation or third-party library source is copied. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.

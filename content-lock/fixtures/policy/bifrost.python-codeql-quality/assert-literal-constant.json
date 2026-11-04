@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/assert-literal-constant/.bifrost/policies/assert-literal-constant.rqlp",
+      "source_path": "rules/bifrost.python-codeql-quality/policies/assert-literal-constant.rqlp",
+      "sha256": "c6ffe14b1f30142ae1370e9e92c52cb4a26be2932880286f9959ccb2dd415309",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/assert-literal-constant/README.md",
+      "source_path": "fixtures/policy/bifrost.python-codeql-quality/assert-literal-constant/README.md",
+      "sha256": "d09298ab6a6f3f8400f2365a8e0d0986b270622a7ecca9a2b9e93f694b198a1d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/assert-literal-constant/upstream/Statements/asserts/assert.py",
+      "source_path": "python/ql/test/query-tests/Statements/asserts/assert.py",
+      "sha256": "2452d240b70f4712c028cda37814631e948b49a7f673e679ecfba0d986fc8aa2",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Statements/asserts/assert.py"
+      }
+    },
+    {
+      "path": "fixtures/policy/bifrost.python-codeql-quality/assert-literal-constant/upstream/Statements/asserts/side_effect.py",
+      "source_path": "python/ql/test/query-tests/Statements/asserts/side_effect.py",
+      "sha256": "4de4984fb88fcc69e2a1ce9aa02717d95933511de0656a495f426d3be997ce79",
+      "classification": "public",
+      "license": "MIT",
+      "external_source": {
+        "repository": "https://github.com/github/codeql",
+        "revision": "ae741615f3e178ce61289a651790dc67fcc18e19",
+        "url": "https://raw.githubusercontent.com/github/codeql/ae741615f3e178ce61289a651790dc67fcc18e19/python/ql/test/query-tests/Statements/asserts/side_effect.py"
+      }
+    }
+  ]
+}

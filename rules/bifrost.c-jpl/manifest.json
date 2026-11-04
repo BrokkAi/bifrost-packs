@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.c-jpl",
+  "version": "0.1.0",
+  "name": "Bifrost JPL-C coding standard",
+  "description": "Buildable JPL-C coding-standard policies mirrored from the public CodeQL C/C++ query pack.",
+  "policies": [
+    {
+      "path": "policies/avoid-semaphores.rqlp",
+      "id": "bifrost.c-jpl.avoid-semaphores",
+      "authored_hash": "bc75d345d686448bfb58a31d3703cd018a10ff84fceba45d077edbc551097cca",
+      "resolved_semantic_hash": "bc75d345d686448bfb58a31d3703cd018a10ff84fceba45d077edbc551097cca",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "normalized-call"],
+      "severity_rationale": "Semaphore and task-lock primitives create shared execution state that JPL-C requires reviewers to avoid.",
+      "remediation": "Replace the primitive with the project's reviewed synchronization abstraction or document the bounded exception."
+    },
+    {
+      "path": "policies/heap-memory.rqlp",
+      "id": "bifrost.c-jpl.heap-memory",
+      "authored_hash": "c69eef855a9b349f793a4108f3bdeb37e892e68aeae40e72cbc2ca4c92a821c0",
+      "resolved_semantic_hash": "c69eef855a9b349f793a4108f3bdeb37e892e68aeae40e72cbc2ca4c92a821c0",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "normalized-call", "declaration-bounded-containment"],
+      "severity_rationale": "Heap allocation after initialization expands lifetime and failure obligations in safety-critical code.",
+      "remediation": "Move allocation into the initialization phase or replace it with a reviewed bounded-storage strategy."
+    },
+    {
+      "path": "policies/simple-control-flow-jmp.rqlp",
+      "id": "bifrost.c-jpl.simple-control-flow-jmp",
+      "authored_hash": "d3309b0d11ecff6707e11d8778a87e78df56a4136336007c0b6638abe2543177",
+      "resolved_semantic_hash": "d3309b0d11ecff6707e11d8778a87e78df56a4136336007c0b6638abe2543177",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "normalized-call"],
+      "severity_rationale": "Non-local jumps bypass ordinary structured control flow and complicate cleanup and review.",
+      "remediation": "Use structured error and control-flow handling instead of setjmp or longjmp."
+    },
+    {
+      "path": "policies/thread-safety.rqlp",
+      "id": "bifrost.c-jpl.thread-safety",
+      "authored_hash": "bd7add1522c273ff08821145de01acb12291ce2fd6d8cb17c919f63c4a254c05",
+      "resolved_semantic_hash": "bd7add1522c273ff08821145de01acb12291ce2fd6d8cb17c919f63c4a254c05",
+      "category": "correctness",
+      "supported_languages": ["cpp"],
+      "required_capabilities": ["structural-match", "normalized-call"],
+      "severity_rationale": "Delay calls in safety-critical task code can create timing and synchronization behavior that is difficult to bound.",
+      "remediation": "Use the project's reviewed scheduling or synchronization primitive and document its timing contract."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Classes/CallsToInitDel/MissingCallToDel.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Call a non-trivial superclass finalizer from the overriding finalizer.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.missing-call-to-delete"
+  :name "Missing call to Python superclass __del__"
+  :message "A finalizer that skips a non-trivial superclass finalizer can leave base-class resources uncleaned."
+  :severity error
+  :description "CodeQL parity policy adapted from the engine-proven Python hierarchy relations."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq call_lifecycle) (outcome eq missing_call) (member_name eq "__del__") (coverage eq complete) (target_non_trivial eq true))
+        (python-call-relations (enclosing-decl (language python (class (not-has (method :name "__new__"))))))))))

@@ -1,0 +1,38 @@
+; CodeQL query: Likely Bugs/RandomUsedOnce.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report Next, NextBytes and NextDouble calls whose receiver
+; is an object creation that binds exactly to a System.Random constructor in
+; the reviewed BCL model. The constructor binding proves the created type is
+; System.Random itself, so subclasses and same-named source types are near
+; misses, as are other methods and a Random kept in a variable. The method is
+; selected by name because the engine does not infer the receiver type of an
+; object creation; on that receiver only System.Random members or an
+; extension method of the same name can be called. Without the model the
+; constructor stays unresolved and the run is incomplete rather than clean.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.random-used-once"
+  :name "C# Random object created and used only once"
+  :message "Random object is created and used only once"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/RandomUsedOnce.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Next, NextBytes and NextDouble calls on a System.Random object created in the same expression, with the constructor bound through the reviewed BCL semantic model."
+  :tags ["csharp" "codeql" "quality" "randomness"]
+  :analysis (analysis
+    :type assertion
+    (bind :name use
+      :query (rql :schema-version 1
+        (language csharp
+          (call :callee (name/regex "^Next(?:Bytes|Double)?$")))))
+    (bind :name creation
+      :query (rql :schema-version 1
+        (resolved-call
+          :resolves-to "System.Random.Random"
+          :proof declared
+          (call-bindings
+            (call-shape
+              (language csharp
+                (call :callee (name "Random"))))))))
+    (join :left use :right creation :on ((receiver_ast_id site_ast_id)))
+    (group :name by-call :by (use.id)
+      (aggregate :name single-use-randoms :op count))
+    (assert :group by-call :value single-use-randoms :cardinality (exactly 0))))

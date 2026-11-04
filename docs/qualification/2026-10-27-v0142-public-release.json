@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-10-27",
+  "scope": "Public rules 0.6.0 preparation against published Bifrost 0.14.2; focused behavior only.",
+  "engine": {
+    "repository": "https://github.com/BrokkAi/bifrost",
+    "tag": "v0.14.2",
+    "tag_commit": "7690510ad0221994ffa3f376cedc89c75f510914",
+    "build_identity": "073c23790739e33f33abc98338651689eaf8b7c0",
+    "asset": "bifrost-v0.14.2-universal-apple-darwin.tar.gz",
+    "asset_sha256": "dd6be503132edfee6454753dc870ae2e804af49bdfa41eda4503dc2d314234e6",
+    "binary_sha256": "e4c7c7ef96d2dad62554f6db6f6fa4e8a555d65fedc705257d25de09ef676557",
+    "profile": {
+      "build_identity": "073c23790739e33f33abc98338651689eaf8b7c0",
+      "capabilities": [
+        "absent-member",
+        "actual-to-formal-binding",
+        "assignment-relations",
+        "bounded-caller-reachability",
+        "branch-relations",
+        "call-argument-conversion",
+        "callable-metrics",
+        "callable-signature",
+        "canonical-external-dispatch",
+        "class-set-type-flow",
+        "conditional-result-contracts",
+        "configuration-facts",
+        "declaration-attributes",
+        "declaration-bounded-containment",
+        "declaration-selection-imports",
+        "declared-store-boundary",
+        "descendant-match",
+        "endpoint-categories",
+        "endpoint-set-imports",
+        "exact-call-target",
+        "exact-result-use",
+        "exhaustive-effect-coverage",
+        "external-api-identity",
+        "failure-edge-control",
+        "failure-handler-state",
+        "flow",
+        "guard-dominance",
+        "interprocedural-transfer",
+        "javadoc-facts",
+        "language-rule-facts",
+        "lexical-environment",
+        "literal-occurrences",
+        "loop-relations",
+        "module-identity-declaration-selection",
+        "native-result-obligation",
+        "nilness-operations",
+        "normal-and-exceptional-exit",
+        "normalized-call",
+        "normalized-call-roles",
+        "operation-precondition-contracts",
+        "origin-shape-assertion",
+        "pending-cleanup-flow",
+        "prepared-c-syntax",
+        "prepared-syntax",
+        "procedure-local-scalar-refinement",
+        "python-call-relations",
+        "python-cfg",
+        "python-class-hierarchy",
+        "python-declaration-models",
+        "python-import-cycles",
+        "python-import-site",
+        "reaching-binding-assertion",
+        "reaching-definitions",
+        "resolved-call-target",
+        "result-contract-failure-uses",
+        "result-contract-operation-uses",
+        "reviewed-csharp-bcl-result-obligation",
+        "reviewed-javascript-string-result-obligation",
+        "reviewed-jdk-result-obligation",
+        "reviewed-libc-result-obligation",
+        "reviewed-php-result-obligation",
+        "reviewed-python-builtin-result-obligation",
+        "reviewed-python-result-obligation",
+        "reviewed-ruby-core-result-obligation",
+        "reviewed-typescript-string-result-obligation",
+        "runtime-keyed-read",
+        "same-evaluation",
+        "scalar-state",
+        "scoped-callable-completeness",
+        "semantic-control-flow",
+        "semantic-guard-facts",
+        "semantic-model-declared-effects",
+        "semantic-model-provenance",
+        "statement-facts",
+        "statement-reachability",
+        "structural-match",
+        "taint",
+        "terminal-obligation",
+        "transitive-procedure-effects",
+        "typestate",
+        "value-origin-assertion"
+      ],
+      "capability_contract_version": 1,
+      "engine_version": "0.14.2",
+      "model_set_sha256": "91461455dea3dccbaabba343d7c2fd639002cead21eca7c4786a0b03876fd013",
+      "schemas": {
+        "builtin_catalog": [
+          2
+        ],
+        "policy_bundle": [],
+        "policy_document": [
+          1
+        ],
+        "release_index": [
+          3
+        ],
+        "rql": [
+          1
+        ],
+        "runtime": [],
+        "semantic_model_read": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "semantic_model_write": [
+          19
+        ],
+        "semantic_spec": []
+      }
+    }
+  },
+  "source_policy_base_commit": "b980bd17cd8849ebc1e6974a68b42b6b6916b2f6",
+  "authoring_identity_verification": {
+    "policy_count": 240,
+    "status": "passed",
+    "scope": "All locked authoring identities, not behavior qualification."
+  },
+  "focused_behavior": [
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.rethrown-exception-variable",
+      "policy_file_sha256": "7c587788533cca75bfcc5a85e5368a605939440a2c6230d3bca1548a22dc2e48",
+      "completion": {
+        "type": "complete"
+      },
+      "diagnostics": [],
+      "findings": [
+        {
+          "path": "Probe.cs",
+          "line": 8
+        },
+        {
+          "path": "Probe.cs",
+          "line": 18
+        },
+        {
+          "path": "upstream/Language Abuse/RethrowException/RethrowException.cs",
+          "line": 12
+        },
+        {
+          "path": "upstream/Language Abuse/RethrowException/RethrowException.cs",
+          "line": 20
+        }
+      ],
+      "raw_report_sha256": "16d990f27d0c0c33c0787b9f4c935ea502022af6a0b800fc7a139f49b897b331",
+      "fixture_root": "fixtures/policy/bifrost.csharp-codeql-quality/rethrown-exception-variable"
+    },
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.todo-comment",
+      "policy_file_sha256": "881b91ce3646efc25d01725aeb1557f181699498ca3479ce6a483978e72df7b2",
+      "completion": {
+        "type": "complete"
+      },
+      "diagnostics": [],
+      "findings": [
+        {
+          "path": "Probe.cs",
+          "line": 3
+        },
+        {
+          "path": "Probe.cs",
+          "line": 6
+        },
+        {
+          "path": "Probe.cs",
+          "line": 10
+        },
+        {
+          "path": "upstream/Bad Practices/Comments/TodoComments/TodoComments.cs",
+          "line": 6
+        },
+        {
+          "path": "upstream/Bad Practices/Comments/TodoComments/TodoComments.cs",
+          "line": 7
+        },
+        {
+          "path": "upstream/Bad Practices/Comments/TodoComments/TodoCommentsBad.cs",
+          "line": 9
+        }
+      ],
+      "raw_report_sha256": "e207099eabc84615c86adc467295eba016c2f24ba9a939a4ea82009d2608872d",
+      "fixture_root": "fixtures/policy/bifrost.csharp-codeql-quality/todo-comment"
+    },
+    {
+      "policy_id": "bifrost.csharp-codeql-quality.catch-of-all-exceptions",
+      "policy_file_sha256": "ab6f3c424a25dbbb71e75524c922b4ecca8c02d9b67e5853f82b5da5d22c3d53",
+      "completion": {
+        "type": "complete"
+      },
+      "diagnostics": [],
+      "findings": [
+        {
+          "path": "Source.cs",
+          "line": 8
+        },
+        {
+          "path": "Source.cs",
+          "line": 14
+        },
+        {
+          "path": "Source.cs",
+          "line": 20
+        },
+        {
+          "path": "Source.cs",
+          "line": 44
+        }
+      ],
+      "raw_report_sha256": "d2a319062f64fe592c4f4901fba94e4e23fa985f5e53adf52291c8ff715f7b08",
+      "fixture_root": "fixtures/policy/bifrost.csharp-codeql-quality/catch-of-all-exceptions"
+    },
+    {
+      "policy_id": "bifrost.correctness.dynamic-evaluation",
+      "status": "passed",
+      "policy_authored_hash": "455fca5f51f3291329d71adaa89b4c5e478df8a869272e633b6cd138afe54fb3",
+      "policy_resolved_semantic_hash": "455fca5f51f3291329d71adaa89b4c5e478df8a869272e633b6cd138afe54fb3",
+      "cases": [
+        {
+          "case": "positive",
+          "completion": {
+            "type": "complete"
+          },
+          "finding_count": 1,
+          "exit_code": 1,
+          "status": "passed",
+          "raw_report_sha256": "937acfd10854487331db96a7a12ce856a64a744a3f2ef1f4bed8e9138cd57368"
+        },
+        {
+          "case": "near-miss",
+          "completion": {
+            "type": "complete"
+          },
+          "finding_count": 0,
+          "exit_code": 0,
+          "status": "passed",
+          "raw_report_sha256": "87c1a90554e7829683472e18c9d850c38916ac1c2ab838852f7c8eeaa9952549"
+        }
+      ]
+    }
+  ],
+  "native_dependency": {
+    "pack_id": "bifrost.public.packs",
+    "version": "0.6.1",
+    "source_commit": "6c9758d13c089b44a22cc262bddad407c8908c03",
+    "manifest_sha256": "6916b659d04d1e3d3451193e2682d494c8df00b766ac944001f0b9ba5ac1dc8a",
+    "native_sha256": "bd3b274af6b86d481e06d4d44e75ae85583106e2469c339154ca4c1f26a545bb",
+    "publication_integrity": "verified",
+    "profile_selection": "accepted",
+    "behavior": "pending"
+  },
+  "limits": [
+    "No full policy-set behavior qualification.",
+    "Native profile compatibility and integrity do not prove complete native behavior or analysis.",
+    "Original sandboxed smoke could not initialize the user catalog lock; the recorded successful run had normal cache access."
+  ]
+}

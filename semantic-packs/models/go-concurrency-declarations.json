@@ -1,14 +1,14 @@
 {
-  "schema_version": 2,
+  "schema_version": 8,
   "pack_id": "bifrost.go.concurrency-declarations",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "producer": { "name": "bifrost", "version": "0.10.7" },
   "language": "go",
-  "ecosystem": "go",
-  "compatibility": { "bifrost": ">=0.10.7, <1.0.0", "toolchains": [] },
+  "ecosystem": "go-stdlib",
+  "compatibility": { "toolchains": [] },
   "provenance": {
-    "source": "https://go.dev/src/context/, https://go.dev/src/sync/, https://go.dev/src/time/time.go (time.Time, time.Duration, time.Time.Sub, time.Now), https://go.dev/src/time/sleep.go (time.Timer, time.Timer.Stop, time.AfterFunc), and https://pkg.go.dev/golang.org/x/sync/errgroup",
-    "revision": "go1.26.0;x-sync-v0.15.0"
+    "source": "https://go.dev/src/context/, https://go.dev/src/sync/, https://go.dev/src/time/time.go (time.Time, time.Duration, time.Time.Sub, time.Now), and https://go.dev/src/time/sleep.go (time.Timer, time.Timer.Stop, time.AfterFunc)",
+    "revision": "go1.26.0"
   },
   "license": "BSD-3-Clause",
   "completeness": "partial",
@@ -188,6 +188,7 @@
             "name": "Done",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": true,
             "is_virtual": true,
@@ -201,6 +202,7 @@
             "name": "Lock",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -215,6 +217,7 @@
             "name": "Unlock",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -229,6 +232,7 @@
             "name": "Lock",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -243,6 +247,7 @@
             "name": "Unlock",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -257,6 +262,7 @@
             "name": "RLock",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -271,6 +277,7 @@
             "name": "RUnlock",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -282,28 +289,28 @@
           {
             "id": "member.4e412cc424322bd482cd4bc0147f65535b2853ec0bed0f1ea5ad143aa2a23130",
             "owner": "type.49a94d9575ad82b6cbe979981ba4954e2079a11c66647bbca0067670396e4252",
-            "name": "TryLock", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "TryLock", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/mutex.go", "symbol": "sync.Mutex.TryLock" }
           },
           {
             "id": "member.96c8e82a05060412ad3ad6d2593b718c24a51569d3a35652254e0518c3ee546f",
             "owner": "type.bce6608aba713965daf5f924056b5537d943b39ff06ec86c5382b08a789ec2e3",
-            "name": "TryLock", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "TryLock", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/rwmutex.go", "symbol": "sync.RWMutex.TryLock" }
           },
           {
             "id": "member.46f559b5bb749afc92b47b1faced4bed0164b1499885c15cabe08df1b53b97a1",
             "owner": "type.bce6608aba713965daf5f924056b5537d943b39ff06ec86c5382b08a789ec2e3",
-            "name": "TryRLock", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "TryRLock", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/rwmutex.go", "symbol": "sync.RWMutex.TryRLock" }
           },
           {
             "id": "member.cafb75dfc7c6dd7a03b8bb8b5cc10e20c20febfaee44812c14fa643c59f379b6",
             "owner": "type.9c6857469485ea47ece477c4c1da488b2171f18ffa4241346447bdf62ba993db",
-            "name": "NewCond", "member_kind": "function", "visibility": "public", "is_static": true, "is_abstract": false, "is_virtual": false,
+            "name": "NewCond", "member_kind": "function", "visibility": "public", "callable_family_complete": true, "is_static": true, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "l", "type": { "kind": "named", "name": "sync.Locker", "arguments": [], "nullable": false }, "optional": false, "variadic": false }], "returns": { "kind": "pointer", "element": { "kind": "declared", "id": "type.6055305a597d0b5012873c6d68180256bacc20af37150077b7950c162c91cde1", "arguments": [], "nullable": false } } },
             "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/cond.go", "symbol": "sync.NewCond" }
@@ -311,21 +318,21 @@
           {
             "id": "member.f8e51f5a5a19f9976d9400c46616b830a2dff7c9511c3a8bb25cc7c3ec1bf2d8",
             "owner": "type.6055305a597d0b5012873c6d68180256bacc20af37150077b7950c162c91cde1",
-            "name": "Wait", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Wait", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/cond.go", "symbol": "sync.Cond.Wait" }
           },
           {
             "id": "member.1862cdbcdf393c61d03b3100f1ee289582ba22eb29f2d5cc91f9fcc746ff202d",
             "owner": "type.6055305a597d0b5012873c6d68180256bacc20af37150077b7950c162c91cde1",
-            "name": "Signal", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Signal", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/cond.go", "symbol": "sync.Cond.Signal" }
           },
           {
             "id": "member.373632c7de5cc548bc48780a90964dec6a2de4bb701b2af8e02d63af5b73ed8c",
             "owner": "type.6055305a597d0b5012873c6d68180256bacc20af37150077b7950c162c91cde1",
-            "name": "Broadcast", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Broadcast", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/cond.go", "symbol": "sync.Cond.Broadcast" }
           },
@@ -340,77 +347,77 @@
           {
             "id": "member.a548a6de13ba2d47d106ea40b201de2d8b52041d635edb32e04a65efc9fe9808",
             "owner": "type.538649cc81748836c55f68c423109c1a9e1d0f0b59bc27f12a9bda095f904951",
-            "name": "Do", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Do", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "f", "type": { "kind": "named", "name": "func", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/once.go", "symbol": "sync.Once.Do" }
           },
           {
             "id": "member.dde5dc89319dc89bfeb4cbda7b198948a62a02fa6bb6adb72358d30c3eb0f84f",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "Load", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Load", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.Load" }
           },
           {
             "id": "member.a167fad3d4243d321a60546a27e25baf52e77849243632b2f850496fdace264f",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "Store", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Store", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }, { "name": "value", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.Store" }
           },
           {
             "id": "member.e1ce3e82c55a1d4a633cd85d14bd09b3a6bfd90d8b87d93852095f6184313daa",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "LoadOrStore", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "LoadOrStore", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }, { "name": "value", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.LoadOrStore" }
           },
           {
             "id": "member.e2c7a02b1e40e860ceafb75c384b9eb64d1cd4e022b245c24a24b3bfee36ad2c",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "LoadAndDelete", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "LoadAndDelete", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.LoadAndDelete" }
           },
           {
             "id": "member.11f60a47a00adf9b7c8767754f69b33b725509867b626782f78f78abf015b2a6",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "Delete", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Delete", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.Delete" }
           },
           {
             "id": "member.6129030b79c7cec2ac935d4465a8c838a3a496ce09f511549933655e1d815541",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "Swap", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Swap", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }, { "name": "value", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.Swap" }
           },
           {
             "id": "member.a0885476d02bcccb9108d817de36de4480c209e4761e626363f59e94703e4cc4",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "CompareAndSwap", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "CompareAndSwap", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }, { "name": "old", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }, { "name": "new", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.CompareAndSwap" }
           },
           {
             "id": "member.36e93871afda75bece882258b783618d2dfd299c3035f542c0d1abd82978d19c",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "CompareAndDelete", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "CompareAndDelete", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "key", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }, { "name": "old", "type": { "kind": "named", "name": "any", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.CompareAndDelete" }
           },
           {
             "id": "member.bb4e8a864318dee2f24590329bb412e3e65a82ca7a19fbed5232f2fc182794fd",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "Range", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Range", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [{ "name": "f", "type": { "kind": "named", "name": "func", "arguments": [], "nullable": false }, "optional": false, "variadic": false }] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.Range" }
           },
           {
             "id": "member.746a7628c21bb9364909a490879dd9104286de662027dffb483f7e493212a48d",
             "owner": "type.cb3b5e0c3ba68e1ddd368ed618385b50d43a366e1b353f66957fa551e8661104",
-            "name": "Clear", "member_kind": "method", "visibility": "public", "is_static": false, "is_abstract": false, "is_virtual": false,
+            "name": "Clear", "member_kind": "method", "visibility": "public", "callable_family_complete": true, "is_static": false, "is_abstract": false, "is_virtual": false,
             "signature": { "type_parameters": [], "parameters": [] }, "receiver": { "pointer": true }, "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/hashtriemap.go", "symbol": "sync.Map.Clear" }
           },
@@ -420,6 +427,7 @@
             "name": "Add",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -437,6 +445,7 @@
             "name": "Done",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -451,6 +460,7 @@
             "name": "Go",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -468,6 +478,7 @@
             "name": "Wait",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -475,125 +486,6 @@
             "receiver": { "pointer": true },
             "aliases": [],
             "locator": { "kind": "artifact", "path": "src/sync/waitgroup.go", "symbol": "sync.WaitGroup.Wait" }
-          }
-        ],
-        "relations": []
-      }
-    },
-    {
-      "id": "go.concurrency.errgroup.declarations",
-      "activation": [{ "module": { "name": "golang.org/x/sync", "version": ">=0.1.0, <1.0.0" } }],
-      "payload": {
-        "kind": "declaration_facts",
-        "types": [
-          {
-            "id": "type.d9a13c3593128df16b560fd8293a702e20b1a36f381b6d54f82a6ccbcd2737cd",
-            "name": "golang.org/x/sync/errgroup",
-            "type_kind": "module",
-            "visibility": "package",
-            "is_abstract": false,
-            "is_sealed": false,
-            "has_explicit_type_terms": false,
-            "type_parameters": [],
-            "type_parameter_constraints": [],
-            "embedded_types": [],
-            "hierarchy": [],
-            "aliases": ["errgroup"],
-            "extension_surfaces": [],
-            "locator": { "kind": "artifact", "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup" }
-          },
-          {
-            "id": "type.0c4f21e4d6d55855f8189f63d90adcce32a1cd675cd25058d1416fba1c0a2927",
-            "name": "golang.org/x/sync/errgroup.Group",
-            "type_kind": "struct",
-            "visibility": "public",
-            "is_abstract": false,
-            "is_sealed": false,
-            "has_explicit_type_terms": false,
-            "type_parameters": [],
-            "type_parameter_constraints": [],
-            "embedded_types": [],
-            "hierarchy": [],
-            "aliases": [],
-            "extension_surfaces": [],
-            "locator": { "kind": "artifact", "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group" }
-          }
-        ],
-        "members": [
-          {
-            "id": "member.8eba5e7e0d44e9a914e81eb4c18dadad146753487819400bd7f686a30da5c9cb",
-            "owner": "type.d9a13c3593128df16b560fd8293a702e20b1a36f381b6d54f82a6ccbcd2737cd",
-            "name": "WithContext",
-            "member_kind": "function",
-            "visibility": "public",
-            "is_static": true,
-            "is_abstract": false,
-            "is_virtual": false,
-            "signature": {
-              "type_parameters": [],
-              "parameters": [{ "name": "ctx", "type": { "kind": "named", "name": "context.Context", "arguments": [], "nullable": false }, "optional": false, "variadic": false }],
-              "returns": {
-                "kind": "tuple",
-                "elements": [
-                  { "kind": "pointer", "element": { "kind": "declared", "id": "type.0c4f21e4d6d55855f8189f63d90adcce32a1cd675cd25058d1416fba1c0a2927", "arguments": [], "nullable": false } },
-                  { "kind": "named", "name": "context.Context", "arguments": [], "nullable": false }
-                ]
-              }
-            },
-            "aliases": [],
-            "locator": { "kind": "artifact", "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.WithContext" }
-          },
-          {
-            "id": "member.4d0432d587858f542855f7836d30c4e8e41ef7cc530c5d10e2adf7297cee2227",
-            "owner": "type.0c4f21e4d6d55855f8189f63d90adcce32a1cd675cd25058d1416fba1c0a2927",
-            "name": "Go",
-            "member_kind": "method",
-            "visibility": "public",
-            "is_static": false,
-            "is_abstract": false,
-            "is_virtual": false,
-            "signature": {
-              "type_parameters": [],
-              "parameters": [{ "name": "f", "type": { "kind": "named", "name": "func", "arguments": [], "nullable": false }, "optional": false, "variadic": false }]
-            },
-            "receiver": { "pointer": true },
-            "aliases": [],
-            "locator": { "kind": "artifact", "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group.Go" }
-          },
-          {
-            "id": "member.d878ae721ea455b329534bfd337cac605ab46d8060cf61179693cf59a0dbced0",
-            "owner": "type.0c4f21e4d6d55855f8189f63d90adcce32a1cd675cd25058d1416fba1c0a2927",
-            "name": "TryGo",
-            "member_kind": "method",
-            "visibility": "public",
-            "is_static": false,
-            "is_abstract": false,
-            "is_virtual": false,
-            "signature": {
-              "type_parameters": [],
-              "parameters": [{ "name": "f", "type": { "kind": "named", "name": "func", "arguments": [], "nullable": false }, "optional": false, "variadic": false }]
-            },
-            "receiver": { "pointer": true },
-            "aliases": [],
-            "locator": { "kind": "artifact", "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group.TryGo" }
-          },
-          {
-            "id": "member.f4ccffe4aee7246f71dafc1d38211225e0c689dfa0068c64def4713ff8e989cd",
-            "owner": "type.0c4f21e4d6d55855f8189f63d90adcce32a1cd675cd25058d1416fba1c0a2927",
-            "name": "Wait",
-            "member_kind": "method",
-            "visibility": "public",
-            "is_static": false,
-            "is_abstract": false,
-            "is_virtual": false,
-            "signature": {
-              "type_parameters": [],
-              "parameters": [],
-              "returns": { "kind": "named", "name": "error", "arguments": [], "nullable": false }
-            },
-            "receiver": { "pointer": true },
-            "aliases": [],
-            "locator": { "kind": "artifact", "path": "errgroup/errgroup.go", "symbol": "golang.org/x/sync/errgroup.Group.Wait" }
           }
         ],
         "relations": []
@@ -677,6 +569,7 @@
             "name": "Now",
             "member_kind": "function",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": true,
             "is_abstract": false,
             "is_virtual": false,
@@ -694,6 +587,7 @@
             "name": "Sub",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -714,6 +608,7 @@
             "name": "Stop",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -732,6 +627,7 @@
             "name": "Reset",
             "member_kind": "method",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": false,
             "is_abstract": false,
             "is_virtual": false,
@@ -752,6 +648,7 @@
             "name": "AfterFunc",
             "member_kind": "function",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": true,
             "is_abstract": false,
             "is_virtual": false,

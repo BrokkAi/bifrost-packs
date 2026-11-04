@@ -1,0 +1,31 @@
+; CodeQL: python/ql/src/Variables/ShadowGlobal.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a first function-local binding that shadows a module variable after CodeQL exclusions.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.local-shadows-global"
+  :name "Python local shadows a global"
+  :message "Local variable shadows a module global."
+  :severity warning
+  :description "Reports a first function-local definition with a same-name module variable, excluding guarded-only module definitions, deletions, paired import definitions, pytest fixtures, builtins, optimizing parameters, and self assignment."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+  (except
+    (filter :where ((relation eq lexical_variable_peer)
+                    (scope_kind eq function)
+                    (first_definition eq true)
+                    (related_scope_kind eq module)
+                    (related_has_definition_outside_main eq true)
+                    (related_has_deletion eq false)
+                    (related_is_pytest_fixture eq false)
+                    (is_builtin eq false)
+                    (optimizing_parameter eq false)
+                    (self_assignment eq false)
+                    (name ne "_"))
+      (python-variable-peers
+        (python-variable-of (language python (bindings)))))
+    (filter :where ((relation eq lexical_variable_peer)
+                    (definition_kind eq import)
+                    (related_has_import eq true))
+      (python-variable-peers
+        (python-variable-of (language python (bindings)))))))))

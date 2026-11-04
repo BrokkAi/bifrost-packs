@@ -1,0 +1,26 @@
+; CodeQL query: javascript/ql/src/DOM/Alert.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select a global function call, excluding member and
+; constructor calls and local shadows.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.alert-call"
+  :name "JavaScript global alert call"
+  :message "The browser alert global was called"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls to the global browser alert function while excluding member, constructor, and locally shadowed calls."
+  :tags ["javascript" "codeql" "quality" "dom"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (except
+        (occurrences-in :class reference :role value_reference
+          (language javascript
+            (filter :where ((call_kind ne constructor))
+              (call-shape
+                (call :callee (identifier :name "alert"))))))
+        (binding-occurrence
+          (binding-of
+            (occurrences-in :class reference :role value_reference
+              (language javascript
+                (call :callee (identifier :name "alert"))))))))))

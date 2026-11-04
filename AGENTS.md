@@ -18,3 +18,6 @@
 - A new authored model does not enter a native release automatically. The
   release recipe selects its explicit inputs. Check their actual schema against
   the pinned producer and consumer before adding them to that recipe.
+- Apply the [release versioning guidance](docs/release-versioning.md) when
+  selecting independent stream versions; evaluate all included changes before
+  tagging.

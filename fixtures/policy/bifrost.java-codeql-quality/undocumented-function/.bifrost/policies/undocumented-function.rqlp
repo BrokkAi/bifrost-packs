@@ -1,0 +1,16 @@
+; CodeQL query: java/ql/src/Advisory/Documentation/MissingJavadocMethods.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: eligible public methods and constructors require acceptable
+; Javadoc; private, generated, accessor, and overriding members are excluded.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.undocumented-function"
+  :name "Java undocumented function"
+  :message "Public callable lacks Javadoc"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (method :language-rule "java/undocumented-function")))))

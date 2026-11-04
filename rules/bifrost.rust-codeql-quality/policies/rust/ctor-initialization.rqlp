@@ -1,0 +1,26 @@
+(policy
+  :schema-version 1
+  :id "bifrost.rust-codeql-quality.ctor-initialization"
+  :name "Constructor reaches standard library"
+  :message "Constructor startup function reaches an external standard-library call"
+  :severity error
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql :schema-version 1
+          (intersect
+            (enclosing-decl
+              (language rust
+                (function :decorators
+                  [(name/regex "^(ctor|ctor::ctor|dtor|dtor::dtor)$")])) )
+            (union
+              (enclosing-decl
+                (filter :where ((target_fq_name regex "^(std[.]|<std::)"))
+                  (language rust
+                    (dispatch-targets (call)))))
+              (callers :depth 2 :proof proven
+                (enclosing-decl
+                  (filter :where ((target_fq_name regex "^(std[.]|<std::)"))
+                    (language rust
+                      (dispatch-targets (call)))))))))))

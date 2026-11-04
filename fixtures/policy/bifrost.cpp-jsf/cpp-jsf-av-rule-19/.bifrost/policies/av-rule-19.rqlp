@@ -1,0 +1,13 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-19"
+  :name "JSF AV Rule 19"
+  :message "locale.h inclusion requires review"
+  :severity error
+  :description "Mirrors CodeQL cpp/jsf/av-rule-19 (cpp/ql/src/jsf/4.05 Libraries/AV Rule 19.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Including locale.h is a JSF library-use finding."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-19"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp (import :module (name "locale.h")))))
+  )

@@ -1,0 +1,11 @@
+extern int mutex_a;
+extern int mutex_b;
+int semBCreate(int, int);
+int semMCreate(int, int);
+int semCCreate(int, int);
+int semRWCreate(int, int);
+int semTake(int, int);
+int semGive(int);
+void taskLock();
+void taskUnlock();
+void user_lock();

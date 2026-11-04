@@ -1,0 +1,20 @@
+; CodeQL query: Bad Practices/Declarations/TooManyRefParameters.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a method declaration with at least three `ref`
+; parameters. The modifier is read from source because signature parameter
+; rows carry the type without its modifier. `out`, `in` and `ref readonly`
+; parameters do not count; `this ref` and `scoped ref` do. The scan stops at
+; the first `{` or `=`: a `ref` parameter cannot follow an optional one, so
+; default values, expression bodies and block bodies never contribute.
+; Constructors, operators, delegates and local functions are not methods.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.too-many-ref-parameters"
+  :name "C# too many ref parameters"
+  :message "method has more than two 'ref' parameters and might be hard to understand"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Bad Practices/Declarations/TooManyRefParameters.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports methods that declare more than two ref parameters."
+  :tags ["csharp" "codeql" "quality" "maintainability"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (method (text/regex "\\A(?:[^{=]*?[(,]\\s*(?:\\[[^\\]]*\\]\\s*)*(?:(?:this|scoped)\\s+)*ref\\s+(?:this\\s+)?(?:[^r\\s]|r(?:[^e]|e(?:[^a]|a(?:[^d]|d(?:[^o]|o(?:[^n]|n(?:[^l]|l(?:[^y]|y[\\w@]))))))))){3}"))))))

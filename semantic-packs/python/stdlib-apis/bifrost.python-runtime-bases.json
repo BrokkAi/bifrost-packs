@@ -1,0 +1,2228 @@
+{
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": "=3.13.5"
+      }
+    ]
+  },
+  "completeness": "partial",
+  "ecosystem": "python",
+  "language": "python",
+  "license": "PSF-2.0",
+  "pack_id": "bifrost.python-runtime-bases",
+  "producer": {
+    "name": "bifrost-cpython-runtime-base-observer",
+    "version": "1.3.0"
+  },
+  "provenance": {
+    "revision": "CPython 3.13.5 executable sha256 889c603f0d17cb54060951bcf4c4f9b8c9ebd9e52b392c70209bbb9755d797d9; observer sha256 307c2dd4ae418fb24c212e81cc0f5888a8d3defe2010a36941375206a9be7d43; input selection: all type exports in vars(builtins), plus exactly unittest.TestCase, unittest.case.TestCase, collections.abc.MutableMapping, _collections_abc.MutableMapping, threading.Thread, wsgiref.simple_server.WSGIRequestHandler, transitively closed over actual ordered __bases__; selected-module file pins: threading fresh_module_source threading.py sha256 61e1cd79adb93cfacf69dc3900ea99fbc8042d65f3742233c07c5707e39add84; unittest fresh_module_source unittest/__init__.py sha256 7c22ee0c503b75aba5221e3e8189f9bf4632f85a43315ff841ec9d26a68e3551; unittest.case fresh_module_source unittest/case.py sha256 ce2499ee6f34a9e6e24f11ae1e2f02e71a3529cca03d5488f0bdcfea8d5d8481; wsgiref fresh_module_source wsgiref/__init__.py sha256 c30e144025a63d267778d92f2f066fa592b476e789d888f79b96c059bf0bef60; socketserver fresh_module_source socketserver.py sha256 ecbbe1a633801460399a8f10b39007aa0e13cdbdad507e39414000f097b769b5; http fresh_module_source http/__init__.py sha256 d5747ca51f40e43b2366ce430154af22ce02d8d5972a6e81afb54ca946f684c0; http.server fresh_module_source http/server.py sha256 253cc04a379f2a42dc72c33a9a67218ecda13b54995b72c3f59e83d1abe8e9a3; wsgiref.simple_server fresh_module_source wsgiref/simple_server.py sha256 d6b820a6addc837717989064565d5be0c18af67337700ad48b317825eb4a13d8; _collections_abc retained_companion_file _collections_abc.py sha256 2cfe340c4cf54077f054cd366a2c7a515e9ee8da7d8b3fa071251f280034756d; collections retained_companion_file collections/__init__.py sha256 2347f647577b6c11b82fc48fa4a1744f7af1af87f15942f92b7cc4410f0a817b; ABC bindings verified against actual frozen origin/FrozenImporter; companion pins are not executed frozen-code equivalence",
+    "source": "CPython runtime observation: all type exports in vars(builtins), plus exactly unittest.TestCase, unittest.case.TestCase, collections.abc.MutableMapping, _collections_abc.MutableMapping, threading.Thread, wsgiref.simple_server.WSGIRequestHandler, transitively closed over actual ordered __bases__; no workspace imports"
+  },
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "schema_version": 17,
+  "shards": [
+    {
+      "activation": [
+        {
+          "targets": [],
+          "toolchain": {
+            "name": "cpython",
+            "version": "=3.13.5"
+          }
+        }
+      ],
+      "id": "declarations.python-runtime-bases",
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "aliases": [
+              "builtins.__loader__"
+            ],
+            "id": "type.python._frozen_importlib.builtinimporter",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "_frozen_importlib.BuiltinImporter"
+            },
+            "name": "_frozen_importlib.BuiltinImporter",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.arithmeticerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ArithmeticError"
+            },
+            "name": "builtins.ArithmeticError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.assertionerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.AssertionError"
+            },
+            "name": "builtins.AssertionError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.attributeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.AttributeError"
+            },
+            "name": "builtins.AttributeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.baseexception",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.BaseException"
+            },
+            "name": "builtins.BaseException",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.baseexceptiongroup",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.BaseExceptionGroup"
+            },
+            "name": "builtins.BaseExceptionGroup",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.baseexception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.blockingioerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.BlockingIOError"
+            },
+            "name": "builtins.BlockingIOError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.brokenpipeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.BrokenPipeError"
+            },
+            "name": "builtins.BrokenPipeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.connectionerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.buffererror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.BufferError"
+            },
+            "name": "builtins.BufferError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.byteswarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.BytesWarning"
+            },
+            "name": "builtins.BytesWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.childprocesserror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ChildProcessError"
+            },
+            "name": "builtins.ChildProcessError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.connectionabortederror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ConnectionAbortedError"
+            },
+            "name": "builtins.ConnectionAbortedError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.connectionerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.connectionerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ConnectionError"
+            },
+            "name": "builtins.ConnectionError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.connectionrefusederror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ConnectionRefusedError"
+            },
+            "name": "builtins.ConnectionRefusedError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.connectionerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.connectionreseterror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ConnectionResetError"
+            },
+            "name": "builtins.ConnectionResetError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.connectionerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.deprecationwarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.DeprecationWarning"
+            },
+            "name": "builtins.DeprecationWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.eoferror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.EOFError"
+            },
+            "name": "builtins.EOFError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.encodingwarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.EncodingWarning"
+            },
+            "name": "builtins.EncodingWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.exception",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.Exception"
+            },
+            "name": "builtins.Exception",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.baseexception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.exceptiongroup",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ExceptionGroup"
+            },
+            "name": "builtins.ExceptionGroup",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.baseexceptiongroup",
+                "kind": "declared",
+                "nullable": false
+              },
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.fileexistserror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.FileExistsError"
+            },
+            "name": "builtins.FileExistsError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.filenotfounderror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.FileNotFoundError"
+            },
+            "name": "builtins.FileNotFoundError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.floatingpointerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.FloatingPointError"
+            },
+            "name": "builtins.FloatingPointError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.arithmeticerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.futurewarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.FutureWarning"
+            },
+            "name": "builtins.FutureWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.generatorexit",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.GeneratorExit"
+            },
+            "name": "builtins.GeneratorExit",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.baseexception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.importerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ImportError"
+            },
+            "name": "builtins.ImportError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.importwarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ImportWarning"
+            },
+            "name": "builtins.ImportWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.indentationerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.IndentationError"
+            },
+            "name": "builtins.IndentationError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.syntaxerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.indexerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.IndexError"
+            },
+            "name": "builtins.IndexError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.lookuperror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.interruptederror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.InterruptedError"
+            },
+            "name": "builtins.InterruptedError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.isadirectoryerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.IsADirectoryError"
+            },
+            "name": "builtins.IsADirectoryError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.keyerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.KeyError"
+            },
+            "name": "builtins.KeyError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.lookuperror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.keyboardinterrupt",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.KeyboardInterrupt"
+            },
+            "name": "builtins.KeyboardInterrupt",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.baseexception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.lookuperror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.LookupError"
+            },
+            "name": "builtins.LookupError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.memoryerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.MemoryError"
+            },
+            "name": "builtins.MemoryError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.modulenotfounderror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ModuleNotFoundError"
+            },
+            "name": "builtins.ModuleNotFoundError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.importerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.nameerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.NameError"
+            },
+            "name": "builtins.NameError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.notadirectoryerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.NotADirectoryError"
+            },
+            "name": "builtins.NotADirectoryError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.notimplementederror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.NotImplementedError"
+            },
+            "name": "builtins.NotImplementedError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.runtimeerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [
+              "builtins.EnvironmentError",
+              "builtins.IOError"
+            ],
+            "id": "type.python.builtins.oserror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.OSError"
+            },
+            "name": "builtins.OSError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.overflowerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.OverflowError"
+            },
+            "name": "builtins.OverflowError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.arithmeticerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.pendingdeprecationwarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.PendingDeprecationWarning"
+            },
+            "name": "builtins.PendingDeprecationWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.permissionerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.PermissionError"
+            },
+            "name": "builtins.PermissionError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.processlookuperror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ProcessLookupError"
+            },
+            "name": "builtins.ProcessLookupError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.pythonfinalizationerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.PythonFinalizationError"
+            },
+            "name": "builtins.PythonFinalizationError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.runtimeerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.recursionerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.RecursionError"
+            },
+            "name": "builtins.RecursionError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.runtimeerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.referenceerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ReferenceError"
+            },
+            "name": "builtins.ReferenceError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.resourcewarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ResourceWarning"
+            },
+            "name": "builtins.ResourceWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.runtimeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.RuntimeError"
+            },
+            "name": "builtins.RuntimeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.runtimewarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.RuntimeWarning"
+            },
+            "name": "builtins.RuntimeWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.stopasynciteration",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.StopAsyncIteration"
+            },
+            "name": "builtins.StopAsyncIteration",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.stopiteration",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.StopIteration"
+            },
+            "name": "builtins.StopIteration",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.syntaxerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.SyntaxError"
+            },
+            "name": "builtins.SyntaxError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.syntaxwarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.SyntaxWarning"
+            },
+            "name": "builtins.SyntaxWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.systemerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.SystemError"
+            },
+            "name": "builtins.SystemError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.systemexit",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.SystemExit"
+            },
+            "name": "builtins.SystemExit",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.baseexception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.taberror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.TabError"
+            },
+            "name": "builtins.TabError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.indentationerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.timeouterror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.TimeoutError"
+            },
+            "name": "builtins.TimeoutError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.oserror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.typeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.TypeError"
+            },
+            "name": "builtins.TypeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.unboundlocalerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UnboundLocalError"
+            },
+            "name": "builtins.UnboundLocalError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.nameerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.unicodedecodeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UnicodeDecodeError"
+            },
+            "name": "builtins.UnicodeDecodeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.unicodeerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.unicodeencodeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UnicodeEncodeError"
+            },
+            "name": "builtins.UnicodeEncodeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.unicodeerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.unicodeerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UnicodeError"
+            },
+            "name": "builtins.UnicodeError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.valueerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.unicodetranslateerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UnicodeTranslateError"
+            },
+            "name": "builtins.UnicodeTranslateError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.unicodeerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.unicodewarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UnicodeWarning"
+            },
+            "name": "builtins.UnicodeWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.userwarning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.UserWarning"
+            },
+            "name": "builtins.UserWarning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.warning",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.valueerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ValueError"
+            },
+            "name": "builtins.ValueError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.warning",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.Warning"
+            },
+            "name": "builtins.Warning",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.exception",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.zerodivisionerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.ZeroDivisionError"
+            },
+            "name": "builtins.ZeroDivisionError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.arithmeticerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins._incompleteinputerror",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins._IncompleteInputError"
+            },
+            "name": "builtins._IncompleteInputError",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.syntaxerror",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.bool",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.bool"
+            },
+            "name": "builtins.bool",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.int",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.bytearray",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.bytearray"
+            },
+            "name": "builtins.bytearray",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.bytes",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.bytes"
+            },
+            "name": "builtins.bytes",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.classmethod",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.classmethod"
+            },
+            "name": "builtins.classmethod",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.complex",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.complex"
+            },
+            "name": "builtins.complex",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.dict",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.dict"
+            },
+            "name": "builtins.dict",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.enumerate",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.enumerate"
+            },
+            "name": "builtins.enumerate",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.filter",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.filter"
+            },
+            "name": "builtins.filter",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.float",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.float"
+            },
+            "name": "builtins.float",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.frozenset",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.frozenset"
+            },
+            "name": "builtins.frozenset",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.int",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.int"
+            },
+            "name": "builtins.int",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.list",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.list"
+            },
+            "name": "builtins.list",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.map",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.map"
+            },
+            "name": "builtins.map",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.memoryview",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.memoryview"
+            },
+            "name": "builtins.memoryview",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.object",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.object"
+            },
+            "name": "builtins.object",
+            "runtime_bases": [],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.property",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.property"
+            },
+            "name": "builtins.property",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.range",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.range"
+            },
+            "name": "builtins.range",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.reversed",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.reversed"
+            },
+            "name": "builtins.reversed",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.set",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.set"
+            },
+            "name": "builtins.set",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.slice",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.slice"
+            },
+            "name": "builtins.slice",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.staticmethod",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.staticmethod"
+            },
+            "name": "builtins.staticmethod",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.str",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.str"
+            },
+            "name": "builtins.str",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.super",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.super"
+            },
+            "name": "builtins.super",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.tuple",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.tuple"
+            },
+            "name": "builtins.tuple",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.type",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.type"
+            },
+            "name": "builtins.type",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.builtins.zip",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "builtins.zip"
+            },
+            "name": "builtins.zip",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.collection",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Collection"
+            },
+            "name": "collections.abc.Collection",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.sized",
+                "kind": "declared",
+                "nullable": false
+              },
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.iterable",
+                "kind": "declared",
+                "nullable": false
+              },
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.container",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.container",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Container"
+            },
+            "name": "collections.abc.Container",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.iterable",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Iterable"
+            },
+            "name": "collections.abc.Iterable",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.mapping",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Mapping"
+            },
+            "name": "collections.abc.Mapping",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.collection",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [
+              "_collections_abc.MutableMapping"
+            ],
+            "id": "type.python.collections.abc.mutablemapping",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.MutableMapping"
+            },
+            "name": "collections.abc.MutableMapping",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.collections.abc.mapping",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.collections.abc.sized",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "collections.abc.Sized"
+            },
+            "name": "collections.abc.Sized",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.http.server.basehttprequesthandler",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "http.server.BaseHTTPRequestHandler"
+            },
+            "name": "http.server.BaseHTTPRequestHandler",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.socketserver.streamrequesthandler",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.socketserver.baserequesthandler",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "socketserver.BaseRequestHandler"
+            },
+            "name": "socketserver.BaseRequestHandler",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.socketserver.streamrequesthandler",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "socketserver.StreamRequestHandler"
+            },
+            "name": "socketserver.StreamRequestHandler",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.socketserver.baserequesthandler",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.threading.thread",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "threading.Thread"
+            },
+            "name": "threading.Thread",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [
+              "unittest.TestCase"
+            ],
+            "id": "type.python.unittest.case.testcase",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "unittest.case.TestCase"
+            },
+            "name": "unittest.case.TestCase",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.builtins.object",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          },
+          {
+            "aliases": [],
+            "id": "type.python.wsgiref.simple_server.wsgirequesthandler",
+            "locator": {
+              "kind": "artifact",
+              "path": "cpython-3.13.5-runtime",
+              "symbol": "wsgiref.simple_server.WSGIRequestHandler"
+            },
+            "name": "wsgiref.simple_server.WSGIRequestHandler",
+            "runtime_bases": [
+              {
+                "arguments": [],
+                "id": "type.python.http.server.basehttprequesthandler",
+                "kind": "declared",
+                "nullable": false
+              }
+            ],
+            "type_kind": "class",
+            "visibility": "public"
+          }
+        ]
+      }
+    }
+  ],
+  "version": "1.3.0"
+}

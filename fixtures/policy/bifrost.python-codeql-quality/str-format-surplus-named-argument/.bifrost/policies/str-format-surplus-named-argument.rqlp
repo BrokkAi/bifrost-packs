@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Expressions/Formatting/UnusedNamedArgumentIn3101Format.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag supported str.format calls with proven unused named arguments.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.str-format-surplus-named-argument"
+  :name "Python str.format surplus named argument"
+  :message "This format call supplies an unused named argument."
+  :severity warning
+  :description "Finds complete, proven Python format-issue rows where a keyword argument does not correspond to a parsed named format field."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where ((relation eq str_format_surplus_named_argument) (outcome eq issue) (proof eq proven) (completeness eq complete)) (python-format-issues (language python (call)))))))

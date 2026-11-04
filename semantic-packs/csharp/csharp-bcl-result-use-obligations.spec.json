@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.csharp.bcl-result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "nuget",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "csharp-bcl-result-use-obligations.json",
+    "sha256": "f7c45649f5bf76c0cb085377f8b60439cd85dad03ee7d5f5d12acb52b0d34100",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/3543-code-smells-2.17.0/semantic-packs/csharp/csharp-bcl-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "Microsoft.NETCore.App.Ref"
+      },
+      "module": {
+        "name": "System.Runtime"
+      },
+      "targets": [
+        "net8.0"
+      ]
+    },
+    {
+      "package": {
+        "name": "Microsoft.NETCore.App.Ref"
+      },
+      "module": {
+        "name": "System.Collections"
+      },
+      "targets": [
+        "net8.0"
+      ]
+    },
+    {
+      "package": {
+        "name": "Microsoft.NETCore.App.Ref"
+      },
+      "module": {
+        "name": "System.Collections.Concurrent"
+      },
+      "targets": [
+        "net8.0"
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "https://learn.microsoft.com/dotnet/api/system.string ; https://learn.microsoft.com/dotnet/api/system.int32.tryparse ; https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2.tryadd ; https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2",
+    "revision": ".NET 8 reference assemblies; ECMA-335 metadata identities; reviewed BCL result-use contracts"
+  },
+  "license": "MIT",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/microsoft-netcore-app-ref-8.0.0.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "Microsoft.NETCore.App.Ref",
+      "version": "=8.0.0"
+    },
+    "module": {
+      "name": "System.Runtime"
+    },
+    "targets": [
+      "net8.0"
+    ],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "csharp",
+      "owner": "System.String",
+      "name": "Trim",
+      "has_receiver": true,
+      "parameter_count": 0
+    }
+  ]
+}

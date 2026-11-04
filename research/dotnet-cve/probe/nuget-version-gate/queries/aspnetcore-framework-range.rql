@@ -1,0 +1,5 @@
+; A shared-framework range: framework rows carry no version.
+(dependency-evidence
+  :ecosystem nuget
+  :package "Microsoft.AspNetCore.App"
+  :version-range "[8.0.0,8.0.18)")

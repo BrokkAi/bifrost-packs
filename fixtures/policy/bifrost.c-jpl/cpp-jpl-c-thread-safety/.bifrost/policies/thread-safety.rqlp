@@ -1,0 +1,14 @@
+(policy
+  :schema-version 1
+  :id "bifrost.c-jpl.thread-safety"
+  :name "JPL-C Rule 07: delay function"
+  :message "task synchronization uses a delay call"
+  :severity warning
+  :description "Mirrors CodeQL cpp/jpl-c/thread-safety (cpp/ql/src/JPL_C/LOC-2/Rule 07/ThreadSafety.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Exact forbidden delay-call names require review."
+  :tags ["cpp" "jpl-c" "codeql-cpp-jpl-c-thread-safety"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (call :callee (name/regex "^(task_delay|taskDelay|sleep|nanosleep|clock_nanosleep)$")))))
+  )

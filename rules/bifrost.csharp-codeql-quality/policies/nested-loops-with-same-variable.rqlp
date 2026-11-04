@@ -1,0 +1,16 @@
+; CodeQL query: csharp/ql/src/Likely Bugs/NestedLoopsSameVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select inner for loops whose update target resolves to an
+; enclosing for header binding, except equivalent C# condition/update pairs.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.nested-loops-with-same-variable"
+  :name "C# nested loops reuse variable"
+  :message "nested loops reuse the same iteration variable"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/NestedLoopsSameVariable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports inner for loops whose update target resolves to an enclosing header binding, excluding equivalent condition/update pairs."
+  :tags ["csharp" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (statement-facts :kind nested-loops-with-same-variable
+          (loop))))))

@@ -1,0 +1,23 @@
+; The span is the first-to-last executable AST leaf owned by the callable.
+; Nested callables do not inflate their enclosing callable's span.
+(policy
+  :schema-version 1
+  :id "bifrost.code-smells.oversized-function-span"
+  :name "Oversized callable span"
+  :message "callable exceeds the source span budget"
+  :severity warning
+  :description "Reports a source-backed callable whose exact AST-owned executable span exceeds fifty lines. Blank lines and comments inside that owned span count as distance, while nested named or anonymous callable bodies are excluded; incomplete evidence remains open."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["code-smell" "complexity" "function-size"]
+  :analysis (analysis
+    :type assertion
+    (bind :name span
+      :query (rql :schema-version 1
+        (filter :where ((coverage eq exact)
+                        (owned_body_span_lines gt 50))
+          (language java javascript typescript python csharp kotlin go rust php scala ruby c cpp
+            (callable-metrics
+              (enclosing-decl (callable)))))))
+    (group :name by-callable :by (span.id)
+      (aggregate :name violations :op count))
+    (assert :group by-callable :value violations :cardinality (exactly 0))))

@@ -2,16 +2,284 @@
   "schema_version": 1,
   "generator": {
     "repository": "https://github.com/BrokkAi/bifrost",
-    "commit": "948f6700d2e668ee830aa42abf7ed4151d5bf560",
-    "version": "0.13.0",
-    "asset": "source.tar.gz",
-    "asset_sha256": "2ecce8ddee197d07335044e7d92e26e992d26efa15cff2ead70797f5ac725d58",
-    "binary_sha256": null,
-    "build": {
-      "rust_toolchain": "1.97.1",
-      "cargo_lock_sha256": "ae74c163e77f44b137d069eac728b686004ddb116ed97dc70f9cad299ecfa859"
-    }
+    "commit": "fc4a2da2b78c938e811c496b3c21e5b02f415048",
+    "version": "0.15.0",
+    "asset": "bifrost-semantic-pack-v0.15.0-x86_64-unknown-linux-gnu.tar.gz",
+    "asset_sha256": "825294fb3ddda0c97c44c222b544b451818f04dd11817dcd79069d1c856bac79",
+    "binary_sha256": "d6c19acdcbf37d495e4c0b3f7490746e6235da3522aba5deba4c78f904312031"
   },
+  "jobs": [
+    {
+      "name": "jdk21-result-use",
+      "spec": "semantic-packs/jvm/jdk21-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/models/jdk21-result-use-obligations.json"
+    },
+    {
+      "name": "c-libc-result-use",
+      "spec": "semantic-packs/c/c-libc-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/c/c-libc-result-use-obligations.json"
+    },
+    {
+      "name": "csharp-result-use",
+      "spec": "semantic-packs/csharp/csharp-bcl-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/csharp/csharp-bcl-result-use-obligations.json"
+    },
+    {
+      "name": "php-result-use",
+      "spec": "semantic-packs/php/php-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/php/php-result-use-obligations.json"
+    },
+    {
+      "name": "ruby-result-use",
+      "spec": "semantic-packs/ruby/ruby-core-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/ruby/ruby-core-result-use-obligations.json"
+    },
+    {
+      "name": "javascript-string-result-use",
+      "spec": "semantic-packs/javascript/javascript-string-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/javascript/javascript-string-result-use-obligations.json"
+    },
+    {
+      "name": "typescript-string-result-use",
+      "spec": "semantic-packs/typescript/typescript-string-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/typescript/typescript-string-result-use-obligations.json"
+    },
+    {
+      "name": "python-str-result-use",
+      "spec": "semantic-packs/python/python-str-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/python/python-str-result-use-obligations.json"
+    },
+    {
+      "name": "python-status-result-use",
+      "spec": "semantic-packs/python/python-status-result-use-obligations.spec.json",
+      "artifact": "semantic-packs/python/python-status-result-use-obligations.json"
+    },
+    {
+      "name": "go-stdlib-os-result-contracts",
+      "spec": "semantic-packs/go/go-stdlib-os-result-contracts.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-os.json"
+    },
+    {
+      "name": "go-stdlib-os-declarations",
+      "spec": "semantic-packs/go/go-stdlib-os-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-os-declarations.json"
+    },
+    {
+      "name": "python-performance-summaries",
+      "spec": "semantic-packs/python/python-performance-summaries.spec.json",
+      "artifact": "semantic-packs/python/performance/bifrost.python-performance-summaries.json"
+    },
+    {
+      "name": "node-child-process-javascript-declarations",
+      "spec": "semantic-packs/node/child-process/node-child-process-javascript-declarations.spec.json",
+      "artifact": "semantic-packs/node/child-process/javascript/bifrost.node-child-process-declarations.json"
+    },
+    {
+      "name": "node-child-process-typescript-declarations",
+      "spec": "semantic-packs/node/child-process/node-child-process-typescript-declarations.spec.json",
+      "artifact": "semantic-packs/node/child-process/typescript/bifrost.node-child-process-declarations.json"
+    },
+    {
+      "name": "node-child-process-javascript-summaries",
+      "spec": "semantic-packs/node/child-process/node-child-process-javascript-summaries.spec.json",
+      "artifact": "semantic-packs/node/child-process/javascript/bifrost.node-child-process-summaries.json"
+    },
+    {
+      "name": "node-child-process-typescript-summaries",
+      "spec": "semantic-packs/node/child-process/node-child-process-typescript-summaries.spec.json",
+      "artifact": "semantic-packs/node/child-process/typescript/bifrost.node-child-process-summaries.json"
+    },
+    {
+      "name": "python-os-command-declarations",
+      "spec": "semantic-packs/python/python-os-command-declarations.spec.json",
+      "artifact": "semantic-packs/python/os-command/bifrost.python-os-command-declarations.json"
+    },
+    {
+      "name": "python-os-command-summaries",
+      "spec": "semantic-packs/python/python-os-command-summaries.spec.json",
+      "artifact": "semantic-packs/python/os-command/bifrost.python-os-command-summaries.json"
+    },
+    {
+      "name": "python-security-sink-summaries",
+      "spec": "semantic-packs/python/python-security-sink-summaries.spec.json",
+      "artifact": "semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json"
+    },
+    {
+      "name": "python-security-sink-declarations",
+      "spec": "semantic-packs/python/python-security-sink-declarations.spec.json",
+      "artifact": "semantic-packs/python/security-sinks/bifrost.python-security-sink-declarations.json"
+    },
+    {
+      "name": "python-stdlib-api-declarations",
+      "spec": "semantic-packs/python/python-stdlib-api-declarations.spec.json",
+      "artifact": "semantic-packs/python/stdlib-apis/bifrost.python-stdlib-api-declarations.json"
+    },
+    {
+      "name": "node-buffer-javascript-declarations",
+      "spec": "semantic-packs/node/buffer/node-buffer-javascript-declarations.spec.json",
+      "artifact": "semantic-packs/node/buffer/javascript/bifrost.node-buffer-declarations.json"
+    },
+    {
+      "name": "node-buffer-typescript-declarations",
+      "spec": "semantic-packs/node/buffer/node-buffer-typescript-declarations.spec.json",
+      "artifact": "semantic-packs/node/buffer/typescript/bifrost.node-buffer-declarations.json"
+    },
+    {
+      "name": "go-stdlib-errors",
+      "spec": "semantic-packs/go/go-stdlib-errors.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-errors.json"
+    },
+    {
+      "name": "go-stdlib-errors-declarations",
+      "spec": "semantic-packs/go/go-stdlib-errors-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-errors-declarations.json"
+    },
+    {
+      "name": "go-stdlib-log",
+      "spec": "semantic-packs/go/go-stdlib-log.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-log.json"
+    },
+    {
+      "name": "go-stdlib-log-declarations",
+      "spec": "semantic-packs/go/go-stdlib-log-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-log-declarations.json"
+    },
+    {
+      "name": "go-stdlib-net",
+      "spec": "semantic-packs/go/go-stdlib-net.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-net.json"
+    },
+    {
+      "name": "go-stdlib-net-declarations",
+      "spec": "semantic-packs/go/go-stdlib-net-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-net-declarations.json"
+    },
+    {
+      "name": "go-stdlib-net-url",
+      "spec": "semantic-packs/go/go-stdlib-net-url.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-net-url.json"
+    },
+    {
+      "name": "go-stdlib-net-url-declarations",
+      "spec": "semantic-packs/go/go-stdlib-net-url-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-net-url-declarations.json"
+    },
+    {
+      "name": "go-stdlib-net-http",
+      "spec": "semantic-packs/go/go-stdlib-net-http.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-net-http.json"
+    },
+    {
+      "name": "go-stdlib-net-http-declarations",
+      "spec": "semantic-packs/go/go-stdlib-net-http-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-net-http-declarations.json"
+    },
+    {
+      "name": "go-stdlib-bytes-declarations",
+      "spec": "semantic-packs/go/go-stdlib-bytes-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-bytes-declarations.json"
+    },
+    {
+      "name": "go-stdlib-encoding-pem",
+      "spec": "semantic-packs/go/go-stdlib-encoding-pem.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-encoding-pem.json"
+    },
+    {
+      "name": "go-stdlib-encoding-pem-declarations",
+      "spec": "semantic-packs/go/go-stdlib-encoding-pem-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-encoding-pem-declarations.json"
+    },
+    {
+      "name": "go-stdlib-crypto-x509",
+      "spec": "semantic-packs/go/go-stdlib-crypto-x509.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-crypto-x509.json"
+    },
+    {
+      "name": "go-stdlib-crypto-x509-declarations",
+      "spec": "semantic-packs/go/go-stdlib-crypto-x509-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-crypto-x509-declarations.json"
+    },
+    {
+      "name": "go-stdlib-path-filepath",
+      "spec": "semantic-packs/go/go-stdlib-path-filepath.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-path-filepath.json"
+    },
+    {
+      "name": "go-stdlib-testing",
+      "spec": "semantic-packs/go/go-stdlib-testing.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-testing.json"
+    },
+    {
+      "name": "go-concurrency",
+      "spec": "semantic-packs/go/go-concurrency.spec.json",
+      "artifact": "semantic-packs/models/go-concurrency.json"
+    },
+    {
+      "name": "go-concurrency-declarations",
+      "spec": "semantic-packs/go/go-concurrency-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-concurrency-declarations.json"
+    },
+    {
+      "name": "go-stdlib-sync-atomic",
+      "spec": "semantic-packs/go/go-stdlib-sync-atomic.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-sync-atomic.json"
+    },
+    {
+      "name": "go-stdlib-sync-atomic-declarations",
+      "spec": "semantic-packs/go/go-stdlib-sync-atomic-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-sync-atomic-declarations.json"
+    },
+    {
+      "name": "go-testify-assert",
+      "spec": "semantic-packs/go/go-testify-assert.spec.json",
+      "artifact": "semantic-packs/models/go-testify-assert.json"
+    },
+    {
+      "name": "go-testify-assert-declarations",
+      "spec": "semantic-packs/go/go-testify-assert-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-testify-assert-declarations.json"
+    },
+    {
+      "name": "go-testify-require",
+      "spec": "semantic-packs/go/go-testify-require.spec.json",
+      "artifact": "semantic-packs/models/go-testify-require.json"
+    },
+    {
+      "name": "go-testify-require-declarations",
+      "spec": "semantic-packs/go/go-testify-require-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-testify-require-declarations.json"
+    },
+    {
+      "name": "java-lombok",
+      "spec": "semantic-packs/jvm/lombok-1.18.42.spec.json",
+      "artifact": "semantic-packs/models/lombok-1.18.42.json"
+    },
+    {
+      "name": "rust-getset",
+      "spec": "semantic-packs/rust/getset-0.1.7.spec.json",
+      "artifact": "semantic-packs/models/getset-0.1.7.json"
+    },
+    {
+      "name": "scala-case-class",
+      "spec": "semantic-packs/jvm/scala-case-class.spec.json",
+      "artifact": "semantic-packs/models/scala-case-class.json"
+    },
+    {
+      "name": "python-process-inputs",
+      "spec": "semantic-packs/python/python-process-inputs.spec.json",
+      "artifact": "semantic-packs/python/process-inputs/bifrost.python-process-inputs.json"
+    },
+    {
+      "name": "node-runtime-values-javascript",
+      "spec": "semantic-packs/node/runtime-values/node-runtime-values-javascript.spec.json",
+      "artifact": "semantic-packs/node/runtime-values/javascript/bifrost.node-runtime-values.json"
+    },
+    {
+      "name": "node-runtime-values-typescript",
+      "spec": "semantic-packs/node/runtime-values/node-runtime-values-typescript.spec.json",
+      "artifact": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json"
+    }
+  ],
   "recipes": [
     {
       "name": "jvm",
@@ -20,6 +288,10 @@
     {
       "name": "python",
       "script": "scripts/upstream/public/build-pinned-python-semantic-packs.sh"
+    },
+    {
+      "name": "php-builtin",
+      "script": "scripts/upstream/public/build-pinned-php-semantic-packs.sh"
     },
     {
       "name": "typescript",

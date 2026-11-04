@@ -1,0 +1,14 @@
+; CodeQL: csharp/ql/src/Likely Bugs/Statements/EmptyBlock.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: select directly-owned empty branch/loop blocks, excluding comment-only blocks and updated for bodies.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.empty-block"
+  :name "C# empty branch and loop blocks"
+  :message "branch or loop body is empty"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/Statements/EmptyBlock.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports directly-owned empty branch and loop bodies while retaining comment-only and updated-for exclusions."
+  :tags ["csharp" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (block :body-state empty)))))

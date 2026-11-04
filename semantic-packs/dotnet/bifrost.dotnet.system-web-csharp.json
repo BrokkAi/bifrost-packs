@@ -1,0 +1,133 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.dotnet.system-web-csharp",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-dotnet-models",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": ".NET Framework API reference for the reviewed System.Web.dll members in this pack",
+    "revision": "netframework-4.8.1"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-system-web-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.dotnet.system-web-csharp"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.dotnet.system-web-csharp.system-web-ui-htmlcontrols-htmlinputhidden",
+            "name": "System.Web.UI.HtmlControls.HtmlInputHidden",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Web.dll",
+              "symbol": "System.Web.UI.HtmlControls.HtmlInputHidden"
+            }
+          },
+          {
+            "id": "type.dotnet.system-web-csharp.system-web-ui-htmlcontrols-htmlinputfile",
+            "name": "System.Web.UI.HtmlControls.HtmlInputFile",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Web.dll",
+              "symbol": "System.Web.UI.HtmlControls.HtmlInputFile"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.dotnet.system-web-csharp.system-web-ui-htmlcontrols-htmlinputhidden.constructor",
+            "owner": "type.dotnet.system-web-csharp.system-web-ui-htmlcontrols-htmlinputhidden",
+            "name": "HtmlInputHidden",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": []
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Web.dll",
+              "symbol": "HtmlInputHidden()"
+            }
+          },
+          {
+            "id": "member.dotnet.system-web-csharp.system-web-ui-htmlcontrols-htmlinputfile.posted-file",
+            "owner": "type.dotnet.system-web-csharp.system-web-ui-htmlcontrols-htmlinputfile",
+            "name": "PostedFile",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "System.Web.HttpPostedFile",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Web.dll",
+              "symbol": "System.Web.UI.HtmlControls.HtmlInputFile.PostedFile"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.1.2",
+  "release_version": "0.9.1",
   "artifact_role": "source",
-  "notes": "This stream publishes the current 70-policy authoring copy selected by content-lock.json. Source-byte integrity is verified separately from consumer capability and behavioral qualification.",
+  "notes": "This patch release changes only the exact native dependency, from bifrost.public.packs 0.8.0 to 0.9.0, which adds compiled the last six packs Bifrost's legacy embedded registry provided: bifrost.java.lombok, bifrost.rust.getset, bifrost.scala.case-class, bifrost.python-process-inputs, bifrost.node-runtime-values-javascript and bifrost.node-runtime-values-typescript. Bifrost 0.15.1 no longer falls back to embedded packs, so normal acquisition through the rules stream needs this dependency to supply them (bifrost-dev#4438). Policies, IDs and consumer requirements are unchanged from rules 0.9.0: it requires Bifrost 0.15.0 or later, which is also what packs 0.9.0 needs to read its index schema 4 bundle. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.2.0",
+      "release_version": "0.9.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Classes/CallsToInitDel/MissingCallToInit.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Call a non-trivial superclass initializer from the overriding initializer.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.missing-call-to-init"
+  :name "Missing call to Python superclass __init__"
+  :message "An initializer that skips a non-trivial superclass initializer can leave base-class state uninitialized."
+  :severity error
+  :description "CodeQL parity policy adapted from the engine-proven Python hierarchy relations."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((fact_kind eq call_lifecycle) (outcome eq missing_call) (member_name eq "__init__") (coverage eq complete) (target_non_trivial eq true))
+        (python-call-relations (enclosing-decl (language python (class))))))))

@@ -1,0 +1,33 @@
+; Input-derived recursion merits review, but this structural prompt cannot
+; prove that the recursive step follows attacker-controlled input or creates
+; stack risk. Rust parameter nodes are not available to the `has` predicate,
+; and signature parameter rows do not carry a joinable declaration identity,
+; so explicit depth and budget parameters remain a known boundary.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.rust-input-recursion-without-bound"
+  :name "Input-reachable Rust recursion to review"
+  :message "Review this recursive function for input-driven stack depth; this prompt does not prove stack risk"
+  :severity note
+  :description "A direct recursive function reachable within two call edges from a public function accepting &str or &[u8] is a review prompt, not proof that recursion advances through attacker-controlled input or creates stack risk. The Rust structural adapter does not expose parameter nodes to the `has` predicate, so explicit depth, budget, limit, fuel, remaining, and max_depth parameters cannot be excluded; bounded recursion can also match."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "rust" "recursion" "stack-depth"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql
+          :schema-version 1
+          (language rust
+            (filter :where ((caller_id eq (field callee_id)))
+              (call-sites-from :proof proven
+                (union
+                  (enclosing-decl
+                    (function
+                      :visibility public
+                      :parameter-type/regex "^&(str|\\[u8\\])$"))
+                  (callees :depth 2
+                    (enclosing-decl
+                      (function
+                        :visibility public
+                        :parameter-type/regex "^&(str|\\[u8\\])$"))))))))))

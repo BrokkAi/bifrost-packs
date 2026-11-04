@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.c.libc.result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "cpp-headers",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "c-libc-result-use-obligations.json",
+    "sha256": "d13d7050ed54d77e2f6b989a679130e751ad507cc338baea49ea9f3b0c9de333",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/963ccd039eac571d929fdfff212d265ff3a0d162/semantic-packs/c/c-libc-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "ISO/IEC 9899:2018 clauses 7.21.7.3 (fputc), 7.21.7.4 (fputs), 7.21.7.10 (putc), 7.21.4 (file operations), and 7.22.4 (remove/rename); POSIX.1-2017 close(), read(), unlink(), and write() pages",
+    "revision": "C17 and POSIX.1-2017; reviewed libc status conventions: EOF, nonzero, and -1"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/libc-result-use.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "cpp",
+      "owner": "stdio",
+      "name": "fclose",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

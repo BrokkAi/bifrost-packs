@@ -1,0 +1,16 @@
+; CodeQL query: javascript/ql/src/Declarations/ConflictingFunctions.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: same-name function declarations join through one lexical
+; binding scope and require bodies.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.function-declaration-conflict"
+  :name "JavaScript conflicting function declaration"
+  :message "function declarations conflict in one lexical scope"
+  :severity error
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports same-name JavaScript and TypeScript function declarations that conflict in one lexical scope."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language js-ts
+        (function :language-rule "js/function-declaration-conflict")))))

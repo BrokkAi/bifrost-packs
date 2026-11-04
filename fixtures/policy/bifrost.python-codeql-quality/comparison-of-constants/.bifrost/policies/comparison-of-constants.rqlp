@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Expressions/CompareConstants.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag non-assert comparisons whose operands are supported constant expressions.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.comparison-of-constants"
+  :name "Python comparison of constants"
+  :message "Both sides of this comparison are constant."
+  :severity warning
+  :description "Compares two supported constant expressions outside a direct assert test."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (python-comparison-constants
+        (language python (comparison))))))

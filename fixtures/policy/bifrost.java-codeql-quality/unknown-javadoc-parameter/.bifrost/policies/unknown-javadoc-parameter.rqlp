@@ -1,0 +1,16 @@
+; CodeQL query: java/ql/src/Advisory/Documentation/SpuriousJavadocParam.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: a grammar-backed Javadoc @param name must match a callable
+; parameter or declared type parameter.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.unknown-javadoc-parameter"
+  :name "Java unknown Javadoc parameter"
+  :message "Javadoc parameter does not match a declaration"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (method :language-rule "java/unknown-javadoc-parameter")))))

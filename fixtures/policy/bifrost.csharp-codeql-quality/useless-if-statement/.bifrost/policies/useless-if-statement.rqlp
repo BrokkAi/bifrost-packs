@@ -1,0 +1,22 @@
+; CodeQL: csharp/ql/src/Useless code/FutileConditional.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: select if statements with an empty consequence and no alternative or an empty alternative.
+(policy :schema-version 1
+  :id "bifrost.csharp-codeql-quality.useless-if-statement"
+  :name "C# useless if statement"
+  :message "if statement has an empty branch"
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Useless code/FutileConditional.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports an empty consequence with no alternative or an empty alternative, preserving comment-sensitive branch ownership."
+  :tags ["csharp" "codeql" "quality"]
+  :analysis (analysis
+    :type assertion
+    (bind :name owner
+      :query (rql :schema-version 1 (language csharp (if))))
+    (bind :name branch
+      :query (rql :schema-version 1
+        (branch-relations :relation [empty-arm]
+          (language csharp (if)))))
+    (join :left owner :right branch :on ((ast_id owner_id)))
+    (group :name by-branch :by (owner.id)
+      (aggregate :name violations :op count))
+    (assert :group by-branch :value violations :cardinality (exactly 0))))

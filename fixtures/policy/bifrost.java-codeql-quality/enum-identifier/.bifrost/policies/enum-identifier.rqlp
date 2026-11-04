@@ -1,0 +1,18 @@
+; CodeQL java/ql/src/Language Abuse/EnumIdentifier.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report an identifier declaration named enum, not a
+; reference to that declaration.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.enum-identifier"
+  :name "Java enum identifier"
+  :message "enum should not be used as an identifier"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java declaration names spelled enum."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (identifier
+          :name "enum"
+          :language-rule "java/enum-identifier")))))

@@ -1,0 +1,19 @@
+; CodeQL query: javascript/ql/src/Declarations/MissingThisQualifier.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: class-owned method calls with no local/global binding select
+; the call AST span.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.missing-this-qualifier"
+  :name "JavaScript missing this qualifier"
+  :message "This call may need a this qualifier"
+  :severity error
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports class-owned JavaScript and TypeScript method calls that need an explicit this qualifier."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (union
+        (language javascript
+          (call :language-rule "js/missing-this-qualifier"))
+        (language typescript
+          (call :language-rule "js/missing-this-qualifier"))))))

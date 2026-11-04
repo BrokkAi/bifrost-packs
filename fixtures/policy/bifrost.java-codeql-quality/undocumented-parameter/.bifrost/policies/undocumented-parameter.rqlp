@@ -1,0 +1,16 @@
+; CodeQL query: java/ql/src/Advisory/Documentation/MissingJavadocParameters.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: a parameter of an eligible public callable with Javadoc
+; requires a matching acceptable @param tag.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.undocumented-parameter"
+  :name "Java undocumented parameter"
+  :message "Public parameter lacks Javadoc"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (parameter :language-rule "java/undocumented-parameter")))))

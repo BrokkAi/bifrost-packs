@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.sync-atomic-declarations",
+  "pack_version": "2.1.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-sync-atomic-declarations.json",
+    "sha256": "02079b2c35e8225749a6ad0c2091efb1ae99bbd4efe763fdc923679815027979",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-stdlib-sync-atomic-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://go.dev/src/sync/atomic/",
+    "revision": "go1.26.0-linux-amd64"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "sync/atomic"
+    },
+    {
+      "kind": "member",
+      "owner": "sync/atomic",
+      "name": "CompareAndSwapInt32"
+    }
+  ]
+}

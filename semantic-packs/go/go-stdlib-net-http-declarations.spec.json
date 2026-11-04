@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.net-http-declarations",
+  "pack_version": "2.1.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-net-http-declarations.json",
+    "sha256": "4b697358b490b91cb2a0869f909866a6ed3af86717e3bd9910390d9449375113",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-stdlib-net-http-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get)",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "net/http"
+    },
+    {
+      "kind": "member",
+      "owner": "net/http",
+      "name": "NewServeMux"
+    }
+  ]
+}

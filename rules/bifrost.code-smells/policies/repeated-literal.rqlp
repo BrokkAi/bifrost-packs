@@ -1,0 +1,28 @@
+; A repeated non-trivial scalar literal in one source-backed scope is easy to
+; drift when the value changes. The threshold is deliberately authored here:
+; four exact occurrences of one typed scalar identity are a finding. The
+; literal_occurrence producer keeps incomplete decoder rows visible, while
+; this policy only asserts over exact, non-trivial identities.
+(policy
+  :schema-version 1
+  :id "bifrost.code-smells.repeated-literal"
+  :name "Repeated non-trivial literal"
+  :message "this non-trivial scalar literal is repeated at least four times in one source scope"
+  :severity warning
+  :description "Reports a decoded string or integer identity repeated at least four times in the nearest source-backed callable, module, or file scope. String and integer identities stay distinct, and null, booleans, -1/0/1, and the empty string are retained as auditable rows but excluded. Incomplete decoder values remain open rather than becoming findings or clean evidence. API-required literals and generated/test exclusions are intended to be added through structured pack joins and path scopes as those contracts are authored."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["maintainability" "literal" "duplication"]
+  :analysis (analysis
+    :type assertion
+    (bind :name literal
+      :query (rql :schema-version 1
+        (filter :where ((coverage eq exact)
+                        (trivial eq false)
+                        (identity is-not-null)
+                        (kind in [string integer]))
+          (language c cpp csharp php python ruby javascript typescript rust
+            (literal-occurrences (literal))))))
+    (group :name repeated-scalar
+      :by (literal.scope_id literal.kind literal.identity)
+      (aggregate :name occurrences :op count))
+    (assert :group repeated-scalar :value occurrences :cardinality (at-most 3))))

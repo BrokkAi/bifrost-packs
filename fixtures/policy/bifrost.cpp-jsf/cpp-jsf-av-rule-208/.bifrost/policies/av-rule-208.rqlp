@@ -1,0 +1,13 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-208"
+  :name "JSF AV Rule 208"
+  :message "C++ exception use requires review"
+  :severity note
+  :description "Mirrors CodeQL cpp/jsf/av-rule-208 (cpp/ql/src/jsf/4.27 Fault Handling/AV Rule 208.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Structured throw expressions and catch handlers expose prohibited exception use."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-208"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp (union (throw) (catch)))))
+  )

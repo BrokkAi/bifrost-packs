@@ -48,8 +48,19 @@
                       (call :callee (name/regex "^(sort|sort_by|sort_by_key|sort_by_cached_key|sort_unstable|sort_unstable_by|sort_unstable_by_key)$")
                             :receiver (identifier :capture "target"))))
             (language python
-              (inside (loop :capture "region")
-                      (call :callee (name "sort") :receiver (identifier :capture "target"))))
+              (filter :where ((effect_id eq "bifrost.performance.sort")
+                              (derivation eq declared)
+                              (certainty eq definite)
+                              (proof eq proven)
+                              (coverage eq exhaustive)
+                              (terminal eq false)
+                              (execution_timing eq same_invocation)
+                              (timing eq immediate))
+                (call-effects
+                  (call-shape
+                    (inside (loop :capture "region")
+                            (call :callee (name "sort")
+                                  :receiver (identifier :capture "target")))))))
             (language java
               (inside (loop :capture "region")
                       (call :callee (name "sort") :receiver (identifier :capture "target"))))

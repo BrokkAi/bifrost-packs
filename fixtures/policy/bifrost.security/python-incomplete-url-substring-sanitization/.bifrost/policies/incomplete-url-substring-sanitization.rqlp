@@ -1,0 +1,32 @@
+; CodeQL query: python/ql/src/Security/CWE-020/IncompleteUrlSubstringSanitization.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Select URL host literals used in unanchored startswith/endswith checks or as the left operand of in; scheme-anchored and boundary-aware checks remain clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.incomplete-url-substring-sanitization"
+  :name "Python incomplete URL substring sanitization"
+  :message "URL allowlist text is checked at an arbitrary position"
+  :severity warning
+  :description "Unanchored hostname literals in URL startswith/endswith or left-side membership checks can accept attacker-controlled authorities."
+  :tags ["security" "python" "url"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python
+        (union
+          (call
+            :callee (name/regex "^(startswith|endswith)$")
+            :args [(string_literal
+                     (and
+                       (value/regex "^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$")
+                       (not (or (value/regex "^https?://") (value/regex "^\\.")))))])
+          (comparison
+            :operator (name "in")
+            :left (string_literal
+                    (and
+                      (value/regex "^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$")
+                      (not (or (value/regex "^https?://") (value/regex "^\\.")))))
+            :right (name/regex ".*(url|target).*")))))
+)
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "20")))

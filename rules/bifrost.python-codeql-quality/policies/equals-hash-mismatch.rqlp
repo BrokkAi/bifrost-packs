@@ -1,0 +1,18 @@
+; CodeQL query: python/ql/src/Classes/Comparisons/EqualsOrHash.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: match a class that directly defines __hash__ and does not
+; directly define __eq__; inherited equality does not satisfy the contract.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.equals-hash-mismatch"
+  :name "Python hash without equality"
+  :message "Class defines __hash__ without defining __eq__"
+  :severity warning
+  :description "Mirrors CodeQL python/ql/src/Classes/Comparisons/EqualsOrHash.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Uses direct class-body declarations, so inherited equality does not suppress a finding."
+  :tags ["python" "codeql" "quality" "equality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language python
+        (class
+          (has (method :name "__hash__"))
+          (not-has (method :name "__eq__")))))))

@@ -1,0 +1,16 @@
+; CodeQL java/ql/src/Advisory/Declarations/NonFinalImmutableField.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a non-final immutable field whose writes stay in
+; its initializer or declaring type's constructors.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.non-final-immutable-field"
+  :name "Java non-final immutable field"
+  :message "immutable field should be final"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java immutable fields whose writes are initialization-only and which are not final."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (identifier :language-rule "java/non-final-immutable-field")))))

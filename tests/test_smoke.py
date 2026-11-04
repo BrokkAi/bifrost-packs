@@ -31,6 +31,7 @@ class SmokeHarnessTests(unittest.TestCase):
                     "path": "policies/dynamic-evaluation.rqlp",
                     "id": POLICY_ID,
                     "authored_hash": "4" * 64,
+                    "resolved_semantic_hash": "9" * 64,
                 }
             ]
         }
@@ -70,10 +71,13 @@ assert os.environ.get("JAVA_HOME") == ""
 assert os.environ.get("BIFROST_SEMANTIC_PACK_DOWNLOAD") == "off"
 source = (root / "case.py").read_text()
 positive = " = eval(" in source
-findings = [{{"policy_id": "{POLICY_ID}", "primary": {{"path": "case.py"}}}}] if positive else []
-run = {{"policy_id": "{POLICY_ID}", "policy_hash": "4444444444444444444444444444444444444444444444444444444444444444", "completion": {{"type": "complete"}}, "findings": findings, "diagnostics": []}}
-report = {{"rules": [{{"policy_id": "{POLICY_ID}", "policy_hash": "4444444444444444444444444444444444444444444444444444444444444444"}}], "runs": [run], "diagnostics": []}}
 behavior = {behavior!r}
+resolved_hash = "9999999999999999999999999999999999999999999999999999999999999999"
+if behavior == "wrong-resolved":
+    resolved_hash = "8888888888888888888888888888888888888888888888888888888888888888"
+findings = [{{"policy_id": "{POLICY_ID}", "policy_hash": resolved_hash, "primary": {{"path": "case.py"}}}}] if positive else []
+run = {{"policy_id": "{POLICY_ID}", "policy_hash": resolved_hash, "completion": {{"type": "complete"}}, "findings": findings, "diagnostics": []}}
+report = {{"rules": [{{"policy_id": "{POLICY_ID}", "policy_hash": resolved_hash}}], "runs": [run], "diagnostics": []}}
 if behavior == "malformed":
     pathlib.Path(arg("--output")).write_text("{{bad json")
 elif behavior == "incomplete":
@@ -91,8 +95,10 @@ raise SystemExit(1 if findings else 0)
         result = run_smoke(self.fake_binary, output, repository_root=self.repo)
 
         self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["schema_version"], 2)
         self.assertEqual(result["engine_version"], "9.8.7")
         self.assertEqual(result["policy_authored_hash"], "4" * 64)
+        self.assertEqual(result["policy_resolved_semantic_hash"], "9" * 64)
         self.assertEqual(
             result["binary_sha256"], hashlib.sha256(self.fake_binary.read_bytes()).hexdigest()
         )
@@ -101,9 +107,25 @@ raise SystemExit(1 if findings else 0)
         for run in result["runs"]:
             raw = json.loads((output / run["raw_report"]).read_text(encoding="utf-8"))
             self.assertEqual(raw["runs"][0]["completion"]["type"], "complete")
+            self.assertEqual(run["policy_authored_hash"], "4" * 64)
+            self.assertEqual(run["policy_resolved_semantic_hash"], "9" * 64)
+            self.assertEqual(run["reported_policy_resolved_semantic_hash"], "9" * 64)
             self.assertTrue((output / run["stdout"]).is_file())
             self.assertTrue((output / run["stderr"]).is_file())
         self.assertIn("does not qualify the full copied content", result["scope"])
+
+    def test_missing_manifest_resolved_identity_fails_closed(self):
+        manifest_path = self.repo / "rules/bifrost.code-smells/manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        del manifest["policies"][0]["resolved_semantic_hash"]
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        with self.assertRaisesRegex(SmokeError, "resolved_semantic_hash.*invalid"):
+            run_smoke(self.fake_binary, self.root / "missing-resolved-evidence", repository_root=self.repo)
+
+    def test_runtime_resolved_identity_must_match_manifest(self):
+        self._write_fake_binary("wrong-resolved")
+        with self.assertRaisesRegex(SmokeError, "wrong resolved policy hash"):
+            run_smoke(self.fake_binary, self.root / "wrong-resolved-evidence", repository_root=self.repo)
 
     def test_malformed_raw_report_fails_and_preserves_failure_evidence(self):
         self._write_fake_binary("malformed")

@@ -1,0 +1,10 @@
+; CodeQL: python/ql/src/Expressions/CompareIdenticalValues.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Avoid comparing an expression with itself.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.comparison-of-identical-expressions" :name "Comparison of identical expressions" :message "Avoid comparing identical values." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Expressions/CompareIdenticalValues.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Avoid comparing an expression with itself."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (except
+      (identical-operands (language python (comparison)))
+      (python-missing-self (language python (comparison)))))))

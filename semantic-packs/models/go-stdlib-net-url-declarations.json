@@ -1,15 +1,14 @@
 {
-  "schema_version": 2,
+  "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.net-url-declarations",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "producer": {
     "name": "bifrost",
     "version": "0.10.6"
   },
   "language": "go",
-  "ecosystem": "go",
+  "ecosystem": "go-stdlib",
   "compatibility": {
-    "bifrost": ">=0.10.6, <1.0.0",
     "toolchains": []
   },
   "provenance": {
@@ -107,6 +106,7 @@
             "name": "Parse",
             "member_kind": "function",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": true,
             "is_abstract": false,
             "is_virtual": false,
@@ -159,6 +159,7 @@
             "name": "ParseRequestURI",
             "member_kind": "function",
             "visibility": "public",
+            "callable_family_complete": true,
             "is_static": true,
             "is_abstract": false,
             "is_virtual": false,

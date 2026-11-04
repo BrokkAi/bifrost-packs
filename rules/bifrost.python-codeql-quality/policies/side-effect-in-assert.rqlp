@@ -1,0 +1,14 @@
+; CodeQL: python/ql/src/Statements/SideEffectInAssert.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Move side effects out of assertion expressions.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.side-effect-in-assert" :name "Side effect in assert" :message "Move side effects out of assertions." :severity error
+  :description "Mirrors CodeQL python/ql/src/Statements/SideEffectInAssert.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Move side effects out of assertion expressions."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (union
+      (language python
+        (assertion (has (yield))))
+      (language python
+        (assertion
+          (has (call :callee
+            (name/regex "^(print|write|append|pop|remove|discard|delete|close|open|exit|call|check_call|check_output)$")))))))))

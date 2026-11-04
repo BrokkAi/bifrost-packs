@@ -8,7 +8,7 @@ on:
         required: true
       version:
         type: string
-        default: '0.1.2'
+        default: '0.9.1'
         required: true
   push:
     tags:
@@ -18,6 +18,7 @@ permissions:
 jobs:
   package:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -26,6 +27,8 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.12'
+      - name: Verify every source authoring identity
+        uses: ./.github/actions/verify-policy-identities
       - name: Validate and build selected release stream
         env:
           GH_TOKEN: ${{ github.token }}
@@ -74,15 +77,15 @@ jobs:
           archive=$(find "$RUNNER_TEMP/dist" -name '*.tar.gz')
           python3 -B release-contract/release.py verify-artifact \
             --manifest "$RUNNER_TEMP/dist/pack-release.json" --artifact "$archive"
-      - name: Test current locked rules with matching Bifrost v0.12 binary
+      - name: Test current locked rules with matching Bifrost v0.15.0 binary
         if: ${{ startsWith(github.ref_name, 'rules/') || inputs.component == 'rules' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          engine_asset=bifrost-v0.12.0-x86_64-unknown-linux-gnu.tar.gz
-          engine_checksum=6938fdbda79ee008f9e2d13abe87b341aec7765946859d918cee90da9fa8b503
-          gh release download v0.12.0 --repo BrokkAi/bifrost \
+          engine_asset=bifrost-v0.15.0-x86_64-unknown-linux-gnu.tar.gz
+          engine_checksum=1c454241496ed61db2d54e7e631c3663201ac8d4fdcc6ebc72789fe33391ff04
+          gh release download v0.15.0 --repo BrokkAi/bifrost \
             --pattern "$engine_asset" --pattern "$engine_asset.sha256" --dir "$RUNNER_TEMP"
           test "$(awk '{print $1}' "$RUNNER_TEMP/$engine_asset.sha256")" = "$engine_checksum"
           (cd "$RUNNER_TEMP" && sha256sum -c "$engine_asset.sha256")
@@ -140,11 +143,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md
+          python3 -B release-contract/release_notes.py --manifest dist/pack-release.json --output dist/release-notes.md \
+            --context-notes "$(jq -r .notes release-config.rules.json)"
           cd dist
           sha256sum -c *.sha256
           flags=()
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
-          gh release create "$GITHUB_REF_NAME" *.tar.gz *.sha256 *.json *.txt *.rqlp *.py \
+          gh release create "$GITHUB_REF_NAME" *.tar.gz smoke-evidence.zip *.sha256 *.json *.txt *.rqlp *.py \
             --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" "${flags[@]}" \
             --notes-file release-notes.md

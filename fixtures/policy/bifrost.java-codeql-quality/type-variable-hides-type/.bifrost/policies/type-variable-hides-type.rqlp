@@ -1,0 +1,16 @@
+; CodeQL: java/ql/src/Language Abuse/TypeVariableHidesType.ql
+; Commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select a containing class when a type-parameter name resolves to one visible source type declaration.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.type-variable-hides-type"
+  :name "Type variable hides type"
+  :message "type variable hides a visible type"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language java
+        (class :language-rule "java/type-variable-hides-type")))))

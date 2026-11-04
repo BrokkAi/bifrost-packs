@@ -1,0 +1,77 @@
+; CodeQL query: csharp/ql/src/Security Features/CWE-091/XMLInjection.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Product source contract: System.Environment.GetEnvironmentVariable is the public BCL external-input
+; source. ASP.NET and System.Web sources are intentionally outside this pack.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.xml-injection"
+  :name "C# XML injection"
+  :message "external input reaches XmlWriter.WriteRaw"
+  :severity error
+  :description "Mirrors CodeQL csharp/ql/src/Security Features/CWE-091/XMLInjection.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports Environment.GetEnvironmentVariable data reaching the exact XmlWriter.WriteRaw text operand unless System.Security.SecurityElement.Escape removes the untrusted label."
+  :tags ["security" "csharp" "codeql" "xml-injection" "cwe-91"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id environment-get-environment-variable
+              :display-name "Environment.GetEnvironmentVariable external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id xml-writer-raw
+              :display-name "XmlWriter.WriteRaw text"
+              :categories [data.xml]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Xml.XmlWriter.WriteRaw"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "WriteRaw") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])])
+      :sanitizers
+        (endpoint-set
+          :entries [
+            (sanitizer
+              :id security-element-escape
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Security.SecurityElement.Escape"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "Escape") :arity 1))))))
+              :input (argument :index 0)
+              :output return-value
+              :removes [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "91")))

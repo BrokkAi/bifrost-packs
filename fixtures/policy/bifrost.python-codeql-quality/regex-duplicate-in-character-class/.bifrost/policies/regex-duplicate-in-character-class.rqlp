@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Expressions/Regex/DuplicateCharacterInSet.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Remove duplicate characters from a regular-expression character class.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.regex-duplicate-in-character-class"
+  :name "Duplicate character in Python regex class"
+  :message "Remove a repeated character from this Python regular expression character class."
+  :severity warning
+  :description "Selects the Python regex risk fact used by the CodeQL-compatible regex-duplicate-in-character-class rule."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (regex_risk_duplicate_class_character)))))

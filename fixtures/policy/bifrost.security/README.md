@@ -1,0 +1,14 @@
+# Public C# and Rust CodeQL security fixtures
+
+The C# fixtures exercise the five public BCL-backed injection policies. The Rust fixture covers the non-HTTPS URL literal rule, which classifies string values structurally and requires no third-party semantic models.
+
+`signedxml-embedded-key-trust` is not a CodeQL port. It qualifies the
+version-independent part of the .NET CVE lead BrokkAi/bifrost-packs#154 against
+the reviewed `bifrost.dotnet.security-cryptography-xml-csharp` model.
+
+`xmldocument-url-resolver` is not a CodeQL port either. It qualifies the
+XmlDocument part of the stdlib candidate
+`dotnet-xmlreader-external-dtd-resolution` against the reviewed
+`bifrost.dotnet.system-xml-csharp` model.
+
+The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.

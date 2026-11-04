@@ -1,0 +1,17 @@
+; CodeQL query: python/ql/src/Security/CWE-020/IncompleteHostnameRegExp.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: Select regex literals classified by the engine hostname-risk fact.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.incomplete-hostname-regexp"
+  :name "Python incomplete hostname regular expression"
+  :message "A hostname regular expression contains an unescaped dot"
+  :severity warning
+  :description "Select regex literals classified by the engine hostname-risk fact."
+  :tags ["security" "python" "regexp"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (regex_risk_hostname))))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "20")))

@@ -1,0 +1,34 @@
+; CodeQL: python/ql/src/Variables/UnusedLocalVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report unread function-local assignments after CodeQL exclusions, including nonlocal-suite behavior.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.unused-local-variable"
+  :name "Python unused local variable"
+  :message "Local variable definition is not used."
+  :severity warning
+  :description "Reports a function-local definition with no reaching lexical read, excluding nonlocals, annotation-only bindings, decorated declarations, and CodeQL's accepted ignored-name patterns."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (except
+      (filter :where ((relation eq lexical_variable_definition)
+                      (scope_kind eq function)
+                      (definition_kind in [assignment augmented])
+                      (definition_is_unused eq true)
+                      (is_nonlocal eq false)
+                      (annotation_only eq false)
+                      (annotated_assignment eq false)
+                      (is_decorated eq false))
+        (python-variable-definitions
+          (python-variable-of (language python (bindings)))))
+      (filter :where ((name regex "^(?:_+|empty|.*unused.*|dummy|__.*)$"))
+        (filter :where ((relation eq lexical_variable_definition)
+                        (scope_kind eq function)
+                        (definition_kind in [assignment augmented])
+                        (definition_is_unused eq true)
+                        (is_nonlocal eq false)
+                        (annotation_only eq false)
+                        (annotated_assignment eq false)
+                        (is_decorated eq false))
+          (python-variable-definitions
+            (python-variable-of (language python (bindings))))))))))

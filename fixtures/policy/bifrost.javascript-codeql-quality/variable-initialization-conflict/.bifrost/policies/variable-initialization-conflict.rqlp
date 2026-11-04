@@ -1,0 +1,16 @@
+; CodeQL query: javascript/ql/src/Declarations/ClobberingVarInit.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: sibling initialized declarators join within one
+; declaration statement in source order.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.variable-initialization-conflict"
+  :name "JavaScript conflicting variable initialization"
+  :message "a later variable initializer immediately overwrites an earlier one"
+  :severity error
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports a later initializer that immediately overwrites an earlier sibling declaration in JavaScript or TypeScript."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language js-ts
+        (assignment :language-rule "js/variable-initialization-conflict")))))

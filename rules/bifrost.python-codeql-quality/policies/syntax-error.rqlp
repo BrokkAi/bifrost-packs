@@ -1,0 +1,13 @@
+; CodeQL query: python/ql/src/Imports/SyntaxError.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report Python parser syntax-error nodes, preserving their source spans.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.syntax-error"
+  :name "Python syntax error"
+  :message "Python syntax error prevents reliable analysis"
+  :severity error
+  :description "Mirrors CodeQL py/syntax-error using parser-recovery syntax_error nodes with source-backed locations."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language python (syntax_error)))))

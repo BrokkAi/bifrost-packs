@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Statements/AssertOnTuple.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag Python assert statements whose test expression is a tuple literal.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.asserts-tuple"
+  :name "Python asserts a tuple"
+  :message "An assertion on a tuple is always truthy when the tuple is nonempty."
+  :severity warning
+  :description "Finds Python assert statements whose direct test expression is a tuple literal; scalar tests remain clean."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (assertion :test (tuple_literal))))))

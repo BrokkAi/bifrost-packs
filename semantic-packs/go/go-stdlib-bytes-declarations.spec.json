@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.bytes-declarations",
+  "pack_version": "2.1.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-bytes-declarations.json",
+    "sha256": "164b4ff964715696b851d56db34035ab2c7cde038c3662efe1667a652dd4185f",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-stdlib-bytes-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://pkg.go.dev/bytes",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "bytes"
+    },
+    {
+      "kind": "member",
+      "owner": "bytes",
+      "name": "TrimSpace"
+    }
+  ]
+}

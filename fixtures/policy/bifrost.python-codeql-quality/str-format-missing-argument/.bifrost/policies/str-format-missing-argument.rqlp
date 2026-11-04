@@ -1,0 +1,22 @@
+; CodeQL: python/ql/src/Expressions/Formatting/WrongNumberArgumentsFor3101Format.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: flag supported str.format calls with fewer positional arguments
+; than the highest required numeric field.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.str-format-missing-argument"
+  :name "Python str.format missing argument"
+  :message "This format string requires more positional arguments."
+  :severity error
+  :description "Finds supported str.format calls where positional arguments do not satisfy the highest numeric field in the parsed format string."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where
+        ((relation eq str_format_missing_argument)
+         (outcome eq issue)
+         (proof eq proven)
+         (completeness eq complete))
+        (python-format-issues
+          (language python (call :callee (name "format"))))))))

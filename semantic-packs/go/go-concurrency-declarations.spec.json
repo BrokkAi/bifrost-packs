@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.concurrency-declarations",
+  "pack_version": "2.1.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-concurrency-declarations.json",
+    "sha256": "42e87f1c4034c3d066026c9f819174132d7cc41bf5608b7588c144a6951ff0c7",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-concurrency-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {}
+  ],
+  "provenance": {
+    "source": "https://go.dev/src/context/, https://go.dev/src/sync/, https://go.dev/src/time/time.go (time.Time, time.Duration, time.Time.Sub, time.Now), and https://go.dev/src/time/sleep.go (time.Timer, time.Timer.Stop, time.AfterFunc)",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {},
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "context.Context"
+    },
+    {
+      "kind": "member",
+      "owner": "context.Context",
+      "name": "Done"
+    }
+  ]
+}

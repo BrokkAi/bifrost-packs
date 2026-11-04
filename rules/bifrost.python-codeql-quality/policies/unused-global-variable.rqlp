@@ -1,0 +1,21 @@
+; CodeQL: python/ql/src/Variables/UnusedModuleVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: This module-level binding has no resolved lexical reads.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.unused-global-variable"
+  :name "Python unused global variable"
+  :message "This module-level binding has no resolved lexical reads."
+  :severity warning
+  :description "Mirrors CodeQL python/ql/src/Variables/UnusedModuleVariable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Subtracts exact lexical uses from module-scope local bindings. Dynamic namespace reads leave the binding-use answer typed incomplete."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (except
+        (filter :where ((declaring_scope_index eq 0))
+          (language python (bindings :kind local)))
+        (binding-of
+          (binding-uses
+            (filter :where ((declaring_scope_index eq 0))
+              (language python (bindings :kind local)))))))))

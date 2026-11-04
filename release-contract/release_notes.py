@@ -5,13 +5,15 @@ from pathlib import Path
 import release
 
 
-def render(manifest):
+def render(manifest, context_notes=""):
     release.validate_manifest(manifest)
     if manifest['manifest_schema_version'] != 2:
         release.fail('unsupported-manifest-schema', 'new release notes require schema 2')
     lines = [f"{manifest['pack']['id']} {manifest['release_version']}", '',
-             f"Source commit: `{manifest['source']['commit']}`.", '',
-             'Compatibility requires release manifest schema 2 and these content formats:']
+             f"Source commit: `{manifest['source']['commit']}`."]
+    if context_notes.strip():
+        lines.extend(['', context_notes.strip()])
+    lines.extend(['', 'Compatibility requires release manifest schema 2 and these content formats:'])
     for axis, versions in manifest['compatibility']['schemas'].items():
         if versions:
             lines.append(f"- `{axis}`: {', '.join(map(str, versions))}")
@@ -40,9 +42,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--context-notes', default='')
     args = parser.parse_args()
     manifest, _ = release.load_json(args.manifest)
-    args.output.write_text(render(manifest))
+    args.output.write_text(render(manifest, args.context_notes))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.php.result-use-obligations",
+  "pack_version": "1.0.0",
+  "ecosystem": "php",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "php-result-use-obligations.json",
+    "sha256": "ac9f2b00770841cb3f5975b84b4a4e90e536a8a00ad16a997c80c5367ba130c3",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/963ccd039eac571d929fdfff212d265ff3a0d162/semantic-packs/php/php-result-use-obligations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "php",
+        "requirement": ">=8.0.0, <9.0.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "php",
+        "version": ">=8.0.0, <9.0.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "JetBrains phpstorm-stubs global function declarations and the PHP 8.0-8.x manual; reviewed PHP pure transformations and false-status functions",
+    "revision": "JetBrains phpstorm-stubs revision 748ab87d16253a5b5d648b5fe4dae1ff4152bb03; artifact sha256 270cfce465ac9e1de4abaa4f1facf70982f1becf70e040635f0519bd4a773bb9; PHP 8.0-8.x manual contracts"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/phpstorm-stubs-result-use.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "php",
+      "version": "=8.3.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "php",
+      "owner": "_php_global_",
+      "name": "trim",
+      "has_receiver": false,
+      "parameter_count": 1
+    },
+    {
+      "kind": "procedure",
+      "language": "php",
+      "owner": "_php_global_",
+      "name": "file_put_contents",
+      "has_receiver": false,
+      "parameter_count": 2
+    }
+  ]
+}

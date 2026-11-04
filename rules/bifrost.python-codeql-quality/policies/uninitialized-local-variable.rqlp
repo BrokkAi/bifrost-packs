@@ -1,0 +1,21 @@
+; CodeQL: python/ql/src/Variables/UninitializedLocal.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+(policy
+  :schema-version 1
+  :id "codeql.verify.py-uninitialized-local-variable"
+  :name "CodeQL uninitialized local variable"
+  :message "Local variable may be used before it is initialized."
+  :severity error
+  :description "A local read is reported only when a feasible procedure path reaches it before initialization."
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (filter :where (
+          (relation eq undefined_placeholder_variable)
+          (outcome eq may_be_uninitialized)
+          (completeness eq complete))
+        (language python
+          (python-uninitialized-variable
+            (union
+              (binding-uses (bindings))
+              (occurrences :class reference :role [value_reference receiver_position]))))))))

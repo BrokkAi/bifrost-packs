@@ -1,7 +1,7 @@
 {
-  "schema_version": 2,
+  "schema_version": 16,
   "pack_id": "bifrost.python-stdlib-api-declarations",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -9,7 +9,6 @@
   "language": "python",
   "ecosystem": "python",
   "compatibility": {
-    "bifrost": ">=0.11.0, <1.0.0",
     "toolchains": [
       {
         "name": "cpython",
@@ -19,7 +18,7 @@
   },
   "provenance": {
     "source": "Python standard-library reference and typeshed",
-    "revision": "typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; CPython v3.13.5 logging, file-output, credential, and builtins.print APIs"
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket, http.server request-handler declarations, network APIs, constructors, factories, I/O, SSL protocol, and credential APIs"
   },
   "license": "Apache-2.0",
   "completeness": "partial",
@@ -342,6 +341,343 @@
               "path": "urllib/parse.pyi",
               "symbol": "ParseResult"
             }
+          },
+          {
+            "id": "type.python.io.bufferedrandom",
+            "name": "io.BufferedRandom",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "BufferedRandom"
+            }
+          },
+          {
+            "id": "type.python.io.bufferedreader",
+            "name": "io.BufferedReader",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "BufferedReader"
+            }
+          },
+          {
+            "id": "type.python.io.bufferedwriter",
+            "name": "io.BufferedWriter",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "BufferedWriter"
+            }
+          },
+          {
+            "id": "type.python.io.fileio",
+            "name": "io.FileIO",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "FileIO"
+            }
+          },
+          {
+            "id": "type.python.os",
+            "name": "os",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "os/__init__.pyi",
+              "symbol": "os"
+            },
+            "aliases": [
+              "os"
+            ]
+          },
+          {
+            "id": "type.python.ssl",
+            "name": "ssl",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "ssl"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl"
+            }
+          },
+          {
+            "id": "type.python.ssl-context",
+            "name": "ssl.SSLContext",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "ssl.pyi",
+              "symbol": "ssl.SSLContext"
+            }
+          },
+          {
+            "id": "type.python.tempfile",
+            "name": "tempfile",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "tempfile.pyi",
+              "symbol": "tempfile"
+            },
+            "aliases": [
+              "tempfile"
+            ]
+          },
+          {
+            "id": "type.python.urllib.request",
+            "name": "urllib.request",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib/request.pyi",
+              "symbol": "urllib.request"
+            },
+            "aliases": [
+              "urllib.request"
+            ]
+          },
+          {
+            "id": "type.python.bytes",
+            "name": "builtins.bytes",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins.pyi",
+              "symbol": "bytes"
+            }
+          },
+          {
+            "id": "type.python.http",
+            "name": "http",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "http/__init__.pyi",
+              "symbol": "http"
+            },
+            "aliases": [
+              "http"
+            ]
+          },
+          {
+            "id": "type.python.http.server",
+            "name": "http.server",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "http/server.pyi",
+              "symbol": "http.server"
+            },
+            "aliases": [
+              "http.server"
+            ]
+          },
+          {
+            "id": "type.python.socketserver",
+            "name": "socketserver",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "socketserver.pyi",
+              "symbol": "socketserver"
+            },
+            "aliases": [
+              "socketserver"
+            ]
+          },
+          {
+            "id": "type.python.email",
+            "name": "email",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "email/__init__.pyi",
+              "symbol": "email"
+            },
+            "aliases": [
+              "email"
+            ]
+          },
+          {
+            "id": "type.python.email.message",
+            "name": "email.message",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "email/message.pyi",
+              "symbol": "email.message"
+            },
+            "aliases": [
+              "email.message"
+            ]
+          },
+          {
+            "id": "type.python._io",
+            "name": "_io",
+            "type_kind": "module",
+            "visibility": "private",
+            "locator": {
+              "kind": "artifact",
+              "path": "_io.pyi",
+              "symbol": "_io"
+            },
+            "aliases": [
+              "_io"
+            ]
+          },
+          {
+            "id": "type.python.http.server.baserequesthandler",
+            "name": "http.server.BaseHTTPRequestHandler",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "http/server.pyi",
+              "symbol": "http.server.BaseHTTPRequestHandler"
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "socketserver.StreamRequestHandler"
+                }
+              }
+            ]
+          },
+          {
+            "id": "type.python.socketserver.streamrequesthandler",
+            "name": "socketserver.StreamRequestHandler",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "socketserver.pyi",
+              "symbol": "socketserver.StreamRequestHandler"
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "socketserver.BaseRequestHandler"
+                }
+              }
+            ]
+          },
+          {
+            "id": "type.python.socketserver.baserequesthandler",
+            "name": "socketserver.BaseRequestHandler",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "socketserver.pyi",
+              "symbol": "socketserver.BaseRequestHandler"
+            }
+          },
+          {
+            "id": "type.python.email.message.message",
+            "name": "email.message.Message",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "email/message.pyi",
+              "symbol": "email.message.Message"
+            }
+          },
+          {
+            "id": "type.python.io.bufferedio",
+            "name": "io.BufferedIOBase",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "io.BufferedIOBase"
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "_io._BufferedIOBase"
+                }
+              },
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "io.IOBase"
+                }
+              }
+            ]
+          },
+          {
+            "id": "type.python.io.iobase",
+            "name": "io.IOBase",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "io.IOBase"
+            }
+          },
+          {
+            "id": "type.python._io.iobase",
+            "name": "_io._IOBase",
+            "type_kind": "class",
+            "visibility": "private",
+            "locator": {
+              "kind": "artifact",
+              "path": "_io.pyi",
+              "symbol": "_io._IOBase"
+            }
+          },
+          {
+            "id": "type.python._io.bufferedio",
+            "name": "_io._BufferedIOBase",
+            "type_kind": "class",
+            "visibility": "private",
+            "locator": {
+              "kind": "artifact",
+              "path": "_io.pyi",
+              "symbol": "_io._BufferedIOBase"
+            },
+            "hierarchy": [
+              {
+                "hierarchy_kind": "extends",
+                "target": {
+                  "kind": "named",
+                  "name": "_io._IOBase"
+                }
+              }
+            ]
           }
         ],
         "members": [
@@ -2195,7 +2531,13 @@
               "kind": "artifact",
               "path": "re.pyi",
               "symbol": "re.compile(pattern, flags)"
-            }
+            },
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "re.Pattern"
+              }
+            ]
           },
           {
             "id": "member.python.re.findall",
@@ -2722,84 +3064,412 @@
               "path": "urllib/parse.pyi",
               "symbol": "urllib.parse.urlparse(url, scheme, allow_fragments)"
             }
-          }
-        ],
-        "relations": []
-      }
-    },
-    {
-      "id": "declarations.python-ssl-legacy-api",
-      "activation": [
-        {
-          "toolchain": {
-            "name": "cpython",
-            "version": ">=3.10.0, <3.12.0"
           },
-          "targets": []
-        }
-      ],
-      "payload": {
-        "kind": "declaration_facts",
-        "types": [
           {
-            "id": "type.python.ssl",
-            "name": "ssl",
-            "type_kind": "module",
-            "visibility": "public",
-            "aliases": [
-              "ssl"
-            ],
-            "locator": {
-              "kind": "artifact",
-              "path": "ssl.pyi",
-              "symbol": "ssl"
-            }
-          }
-        ],
-        "members": [
-          {
-            "id": "member.python.ssl.wrap_socket",
-            "owner": "type.python.ssl",
-            "name": "wrap_socket",
+            "id": "member.python.builtins.open",
+            "owner": "type.python.builtins",
+            "name": "open",
             "member_kind": "function",
             "visibility": "public",
             "is_static": true,
-            "callable_family_complete": true,
             "signature": {
               "parameters": [
                 {
-                  "name": "sock",
+                  "name": "file",
                   "type": {
                     "kind": "named",
                     "name": "builtins.object"
                   }
                 },
                 {
-                  "name": "keyfile",
+                  "name": "mode",
                   "type": {
                     "kind": "named",
-                    "name": "builtins.object"
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "typing.IO"
+              }
+            },
+            "callable_family_complete": true,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "io.TextIOWrapper"
+              },
+              {
+                "kind": "named",
+                "name": "io.BufferedReader"
+              },
+              {
+                "kind": "named",
+                "name": "io.BufferedWriter"
+              },
+              {
+                "kind": "named",
+                "name": "io.BufferedRandom"
+              },
+              {
+                "kind": "named",
+                "name": "io.FileIO"
+              }
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins.pyi",
+              "symbol": "builtins.open(file, mode)"
+            }
+          },
+          {
+            "id": "member.python.ftplib.ftp.init",
+            "owner": "type.python.ftplib.ftp",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "host",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
                   },
                   "optional": true
                 },
                 {
-                  "name": "certfile",
+                  "name": "user",
                   "type": {
                     "kind": "named",
-                    "name": "builtins.object"
+                    "name": "builtins.str"
                   },
                   "optional": true
                 },
                 {
-                  "name": "server_side",
+                  "name": "passwd",
                   "type": {
                     "kind": "named",
-                    "name": "builtins.bool"
+                    "name": "builtins.str"
                   },
                   "optional": true
                 },
                 {
-                  "name": "cert_reqs",
+                  "name": "acct",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.float"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "source_address",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.tuple"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "encoding",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "ftplib.pyi",
+              "symbol": "ftplib.FTP.__init__(host, user, passwd, acct, timeout, source_address, encoding)"
+            }
+          },
+          {
+            "id": "member.python.io.bufferedrandom.write",
+            "owner": "type.python.io.bufferedrandom",
+            "name": "write",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bytes"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.int"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "io.BufferedRandom.write(buffer)"
+            }
+          },
+          {
+            "id": "member.python.io.bufferedreader.write",
+            "owner": "type.python.io.bufferedreader",
+            "name": "write",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "s",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.int"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "io.BufferedReader.write(s)"
+            }
+          },
+          {
+            "id": "member.python.io.bufferedwriter.write",
+            "owner": "type.python.io.bufferedwriter",
+            "name": "write",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bytes"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.int"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "io.BufferedWriter.write(buffer)"
+            }
+          },
+          {
+            "id": "member.python.io.fileio.write",
+            "owner": "type.python.io.fileio",
+            "name": "write",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "b",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bytes"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.int"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "io.pyi",
+              "symbol": "io.FileIO.write(b)"
+            }
+          },
+          {
+            "id": "member.python.logging.get_logger",
+            "owner": "type.python.logging",
+            "name": "getLogger",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "logging.Logger"
+              }
+            },
+            "callable_family_complete": true,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "logging.Logger"
+              }
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "logging/__init__.pyi",
+              "symbol": "logging.getLogger(name)"
+            }
+          },
+          {
+            "id": "member.python.logging.logger.init",
+            "owner": "type.python.logging.logger",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                },
+                {
+                  "name": "level",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "logging/__init__.pyi",
+              "symbol": "logging.Logger.__init__(name, level)"
+            }
+          },
+          {
+            "id": "member.python.os.tempnam",
+            "owner": "type.python.os",
+            "name": "tempnam",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "dir",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "prefix",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.str"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "os/__init__.pyi",
+              "symbol": "os.tempnam(dir, prefix)"
+            }
+          },
+          {
+            "id": "member.python.os.tmpnam",
+            "owner": "type.python.os",
+            "name": "tmpnam",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.str"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "os/__init__.pyi",
+              "symbol": "os.tmpnam()"
+            }
+          },
+          {
+            "id": "member.python.smtplib.smtp.init",
+            "owner": "type.python.smtplib.smtp",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "host",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "port",
                   "type": {
                     "kind": "named",
                     "name": "builtins.int"
@@ -2807,15 +3477,106 @@
                   "optional": true
                 },
                 {
-                  "name": "ssl_version",
+                  "name": "local_hostname",
                   "type": {
                     "kind": "named",
-                    "name": "builtins.int"
+                    "name": "builtins.str"
                   },
                   "optional": true
                 },
                 {
-                  "name": "ca_certs",
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.float"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "source_address",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.tuple"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "smtplib.pyi",
+              "symbol": "smtplib.SMTP.__init__(host, port, local_hostname, timeout, source_address)"
+            }
+          },
+          {
+            "id": "member.python.tempfile.mktemp",
+            "owner": "type.python.tempfile",
+            "name": "mktemp",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "suffix",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "prefix",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "dir",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.str"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "tempfile.pyi",
+              "symbol": "tempfile.mktemp(suffix, prefix, dir)"
+            }
+          },
+          {
+            "id": "member.python.urllib.request.urlopen",
+            "owner": "type.python.urllib.request",
+            "name": "urlopen",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
                   "type": {
                     "kind": "named",
                     "name": "builtins.object"
@@ -2823,28 +3584,21 @@
                   "optional": true
                 },
                 {
-                  "name": "do_handshake_on_connect",
+                  "name": "timeout",
                   "type": {
                     "kind": "named",
-                    "name": "builtins.bool"
+                    "name": "builtins.float"
                   },
                   "optional": true
                 },
                 {
-                  "name": "suppress_ragged_eofs",
-                  "type": {
-                    "kind": "named",
-                    "name": "builtins.bool"
-                  },
-                  "optional": true
-                },
-                {
-                  "name": "ciphers",
+                  "name": "context",
                   "type": {
                     "kind": "named",
                     "name": "builtins.object"
                   },
-                  "optional": true
+                  "optional": true,
+                  "passing_mode": "named_only"
                 }
               ],
               "returns": {
@@ -2852,11 +3606,160 @@
                 "name": "builtins.object"
               }
             },
+            "callable_family_complete": true,
             "locator": {
               "kind": "artifact",
-              "path": "ssl.pyi",
-              "symbol": "ssl.wrap_socket"
+              "path": "urllib/request.pyi",
+              "symbol": "urllib.request.urlopen(url, data, timeout, context)"
             }
+          },
+          {
+            "id": "member.python.bytes.decode",
+            "owner": "type.python.bytes",
+            "name": "decode",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "encoding",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "errors",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.str"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "builtins.pyi",
+              "symbol": "bytes.decode(encoding, errors)"
+            }
+          },
+          {
+            "id": "member.python.http.server.basehttprequesthandler.path",
+            "owner": "type.python.http.server.baserequesthandler",
+            "name": "path",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "http/server.pyi",
+              "symbol": "http.server.BaseHTTPRequestHandler.path"
+            },
+            "value_type": {
+              "kind": "named",
+              "name": "builtins.str"
+            }
+          },
+          {
+            "id": "member.python.http.server.basehttprequesthandler.headers",
+            "owner": "type.python.http.server.baserequesthandler",
+            "name": "headers",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "http/server.pyi",
+              "symbol": "http.server.BaseHTTPRequestHandler.headers"
+            },
+            "value_type": {
+              "kind": "named",
+              "name": "email.message.Message"
+            }
+          },
+          {
+            "id": "member.python.socketserver.streamrequesthandler.rfile",
+            "owner": "type.python.socketserver.streamrequesthandler",
+            "name": "rfile",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "socketserver.pyi",
+              "symbol": "socketserver.StreamRequestHandler.rfile"
+            },
+            "value_type": {
+              "kind": "named",
+              "name": "io.BufferedIOBase"
+            }
+          },
+          {
+            "id": "member.python.email.message.message.getitem",
+            "owner": "type.python.email.message.message",
+            "name": "__getitem__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "email/message.pyi",
+              "symbol": "email.message.Message.__getitem__(name)"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.str"
+              }
+            },
+            "callable_family_complete": true
+          },
+          {
+            "id": "member.python.io.bufferedio.read",
+            "owner": "type.python._io.bufferedio",
+            "name": "read",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "locator": {
+              "kind": "artifact",
+              "path": "_io.pyi",
+              "symbol": "_io._BufferedIOBase.read(size)"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bytes"
+              }
+            },
+            "callable_family_complete": true
           }
         ],
         "relations": []

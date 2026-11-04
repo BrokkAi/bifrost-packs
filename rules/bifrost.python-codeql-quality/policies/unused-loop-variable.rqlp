@@ -1,0 +1,26 @@
+; CodeQL: python/ql/src/Variables/SuspiciousUnusedLoopIterationVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report unused loop targets after CodeQL range, empty-body, one-item, counting and ignored-name exclusions.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.unused-loop-variable"
+  :name "Python unused loop variable"
+  :message "Loop iteration variable is not used in the loop body."
+  :severity error
+  :description "Reports a loop target with no body read after CodeQL's range, empty-body, one-item, counting, and implicit-repeat exclusions."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (except
+      (filter :where ((relation eq lexical_variable_definition)
+                      (definition_kind eq loop_target)
+                      (loop_has_body_read eq false)
+                      (loop_policy_excluded eq false))
+        (python-variable-definitions
+          (python-variable-of (language python (bindings)))))
+      (filter :where ((name regex "^(?:_+|empty|.*unused.*|dummy|__.*)$"))
+        (filter :where ((relation eq lexical_variable_definition)
+                        (definition_kind eq loop_target)
+                        (loop_has_body_read eq false)
+                        (loop_policy_excluded eq false))
+          (python-variable-definitions
+            (python-variable-of (language python (bindings))))))))))

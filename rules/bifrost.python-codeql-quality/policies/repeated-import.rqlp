@@ -1,0 +1,16 @@
+; CodeQL: python/ql/src/Imports/MultipleImports.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Remove repeated imports of the same module in one source file.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.repeated-import"
+  :name "Repeated Python import"
+  :message "This module is imported again into the same binding"
+  :severity warning
+  :description "Reports a later namespace import of the same parsed module into the same local binding in one file."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((python_import_duplicate eq true))
+        (python_import_site
+          (language python (import)))))))

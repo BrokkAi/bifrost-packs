@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.testify.assert-declarations",
+  "pack_version": "1.1.0",
+  "ecosystem": "go-module",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-testify-assert-declarations.json",
+    "sha256": "fc810d72182caaaf66b88fc683cf3b32c8a88966b9d2ca6e47d8b19509ab3774",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-testify-assert-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "module": {
+        "name": "github.com/stretchr/testify",
+        "version": "=1.11.1"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://pkg.go.dev/github.com/stretchr/testify/assert",
+    "revision": "v1.11.1"
+  },
+  "license": "MIT",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/testify-v1.11.1-MIT.txt"
+  ],
+  "measurement_activation": {
+    "module": {
+      "name": "github.com/stretchr/testify",
+      "version": "=1.11.1"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "github.com/stretchr/testify/assert"
+    },
+    {
+      "kind": "member",
+      "owner": "github.com/stretchr/testify/assert",
+      "name": "NoError"
+    }
+  ]
+}

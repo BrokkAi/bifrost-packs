@@ -50,7 +50,7 @@ def _write_json(path: Path, value: Any) -> None:
     os.replace(temporary, path)
 
 
-def _load_policy_authored_hash(repository_root: Path) -> str:
+def _load_policy_hashes(repository_root: Path) -> tuple[str, str]:
     try:
         manifest = json.loads((repository_root / MANIFEST_PATH).read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
@@ -68,7 +68,12 @@ def _load_policy_authored_hash(repository_root: Path) -> str:
     authored_hash = matches[0].get("authored_hash")
     if not isinstance(authored_hash, str) or not SHA256_RE.fullmatch(authored_hash):
         raise SmokeError(f"manifest authored_hash for {POLICY_ID} is invalid")
-    return authored_hash
+    resolved_semantic_hash = matches[0].get("resolved_semantic_hash")
+    if not isinstance(resolved_semantic_hash, str) or not SHA256_RE.fullmatch(
+        resolved_semantic_hash
+    ):
+        raise SmokeError(f"manifest resolved_semantic_hash for {POLICY_ID} is invalid")
+    return authored_hash, resolved_semantic_hash
 
 
 def _decode_capture(value: str | bytes | None) -> str:
@@ -116,21 +121,34 @@ def _read_raw_report(path: Path) -> dict[str, Any]:
 
 
 def _validate_report(
-    report: dict[str, Any], case_name: str, returncode: int, authored_hash: str
+    report: dict[str, Any],
+    case_name: str,
+    returncode: int,
+    resolved_semantic_hash: str,
 ) -> dict[str, Any]:
     rules = report.get("rules")
     if not isinstance(rules, list):
         raise SmokeError(f"{case_name}: raw report has no rules array")
     selected_rules = [rule for rule in rules if isinstance(rule, dict) and rule.get("policy_id") == POLICY_ID]
-    if len(selected_rules) != 1 or selected_rules[0].get("policy_hash") != authored_hash:
-        raise SmokeError(f"{case_name}: raw report does not contain the expected authored policy hash")
+    if len(selected_rules) != 1:
+        raise SmokeError(f"{case_name}: raw report does not contain exactly one policy rule")
+    reported_rule_hash = selected_rules[0].get("policy_hash")
+    if not isinstance(reported_rule_hash, str) or not SHA256_RE.fullmatch(reported_rule_hash):
+        raise SmokeError(f"{case_name}: raw report resolved policy hash is missing or invalid")
+    if reported_rule_hash != resolved_semantic_hash:
+        raise SmokeError(f"{case_name}: raw report rule has the wrong resolved policy hash")
 
     runs = report.get("runs")
     if not isinstance(runs, list) or len(runs) != 1 or not isinstance(runs[0], dict):
         raise SmokeError(f"{case_name}: expected exactly one explicit policy run")
     run = runs[0]
-    if run.get("policy_id") != POLICY_ID or run.get("policy_hash") != authored_hash:
-        raise SmokeError(f"{case_name}: run does not match the requested policy and authored hash")
+    reported_run_hash = run.get("policy_hash")
+    if run.get("policy_id") != POLICY_ID:
+        raise SmokeError(f"{case_name}: run does not match the requested policy")
+    if not isinstance(reported_run_hash, str) or not SHA256_RE.fullmatch(reported_run_hash):
+        raise SmokeError(f"{case_name}: run resolved policy hash is missing or invalid")
+    if reported_run_hash != resolved_semantic_hash:
+        raise SmokeError(f"{case_name}: run has the wrong resolved policy hash")
     completion = run.get("completion")
     if not isinstance(completion, dict) or completion.get("type") != "complete":
         actual = completion.get("type") if isinstance(completion, dict) else completion
@@ -148,10 +166,12 @@ def _validate_report(
     unexpected = [
         finding
         for finding in findings
-        if not isinstance(finding, dict) or finding.get("policy_id") != POLICY_ID
+        if not isinstance(finding, dict)
+        or finding.get("policy_id") != POLICY_ID
+        or finding.get("policy_hash") != resolved_semantic_hash
     ]
     if unexpected:
-        raise SmokeError(f"{case_name}: report contains findings outside {POLICY_ID}")
+        raise SmokeError(f"{case_name}: report contains findings with the wrong policy identity")
 
     expected_count = 1 if case_name == "positive" else 0
     if len(findings) != expected_count:
@@ -177,7 +197,7 @@ def _validate_report(
         "completion": completion,
         "finding_count": len(findings),
         "findings": concise_findings,
-        "reported_policy_hash": run["policy_hash"],
+        "reported_policy_resolved_semantic_hash": reported_run_hash,
     }
 
 
@@ -214,7 +234,7 @@ def run_smoke(binary: Path, output: Path, timeout: int = 120,
 
     output = _prepare_output(Path(output))
     policy = repository_root / POLICY_PATH
-    authored_hash = _load_policy_authored_hash(repository_root)
+    authored_hash, resolved_semantic_hash = _load_policy_hashes(repository_root)
     try:
         policy_bytes = policy.read_bytes()
         fixtures = {name: (repository_root / path).read_bytes() for name, path in CASE_PATHS.items()}
@@ -236,7 +256,7 @@ def run_smoke(binary: Path, output: Path, timeout: int = 120,
     (output / "version.stdout.txt").write_text(version_stdout, encoding="utf-8")
     (output / "version.stderr.txt").write_text(version_stderr, encoding="utf-8")
     summary: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "scope": "one explicit Python structural dynamic-evaluation policy; this smoke does not qualify the full copied content set",
         "engine_version": engine_version,
         "engine_version_output": {"stdout": version_stdout, "stderr": version_stderr},
@@ -245,6 +265,7 @@ def run_smoke(binary: Path, output: Path, timeout: int = 120,
         "policy_id": POLICY_ID,
         "policy_path": POLICY_PATH.as_posix(),
         "policy_authored_hash": authored_hash,
+        "policy_resolved_semantic_hash": resolved_semantic_hash,
         "copied_policy_sha256": hashlib.sha256(policy_bytes).hexdigest(),
         "copied_policy_path": "inputs/dynamic-evaluation.rqlp",
         "fixture_hashes": {
@@ -272,6 +293,7 @@ def run_smoke(binary: Path, output: Path, timeout: int = 120,
                 "case": case_name,
                 "fixture_sha256": summary["fixture_hashes"][case_name],
                 "policy_authored_hash": authored_hash,
+                "policy_resolved_semantic_hash": resolved_semantic_hash,
                 "copied_policy_sha256": summary["copied_policy_sha256"],
                 "raw_report": f"runs/{case_name}/raw-report.json",
                 "stdout": f"runs/{case_name}/stdout.txt",
@@ -316,7 +338,7 @@ def run_smoke(binary: Path, output: Path, timeout: int = 120,
                 report = _read_raw_report(raw_report_path)
                 run_record["raw_report_sha256"] = _sha256_file(raw_report_path)
                 checked = _validate_report(
-                    report, case_name, completed.returncode, authored_hash
+                    report, case_name, completed.returncode, resolved_semantic_hash
                 )
                 run_record.update(checked)
                 run_record["status"] = "passed"

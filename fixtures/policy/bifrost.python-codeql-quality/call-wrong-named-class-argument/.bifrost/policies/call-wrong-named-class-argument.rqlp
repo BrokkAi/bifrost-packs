@@ -1,0 +1,22 @@
+; CodeQL: python/ql/src/Classes/WrongNameForArgumentInClassInstantiation.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: report constructor keyword actuals proven to have no matching __init__ formal.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.call-wrong-named-class-argument"
+  :name "Python constructor keyword has no matching parameter"
+  :message "constructor keyword does not match an __init__ parameter"
+  :severity error
+  :description "Mirrors CodeQL py/call/wrong-named-class-argument at ae741615f3e178ce61289a651790dc67fcc18e19. Reports only constructor call-binding rows classified as unknown keywords; unresolved bindings remain incomplete."
+  :tags ["python" "codeql" "quality" "correctness"]
+  :analysis (analysis
+    :type assertion
+    (bind :name mismatch
+      :query (rql :schema-version 1
+        (filter :where ((reason eq unknown_keyword))
+          (call-bindings
+            (filter :where ((call_kind eq constructor))
+              (call-shape (language python (call))))))))
+    (group :name by-site :by (mismatch.site_ast_id)
+      (aggregate :name violations :op count))
+    (assert :group by-site :value violations :cardinality (exactly 0))))

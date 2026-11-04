@@ -1,0 +1,22 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-110"
+  :name "JSF AV Rule 110"
+  :message "function has more than 7 parameters"
+  :severity warning
+  :description "Mirrors CodeQL cpp/jsf/av-rule-110 (cpp/ql/src/jsf/4.13 Functions/AV Rule 110.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. A defined callable with more than seven parameters is a JSF review finding."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-110"]
+  :analysis (analysis
+    :type assertion
+    (bind :name signature
+      :query (rql :schema-version 1
+        (filter :where ((parameter_count gt 7)
+                        (coverage eq exact)
+                        (declaration_only eq false)
+                        (role in [function method constructor]))
+          (language cpp
+            (callable-signature
+              (enclosing-decl (callable)))))))
+    (group :name by-signature :by (signature.id)
+      (aggregate :name violations :op count))
+    (assert :group by-signature :value violations :cardinality (exactly 0))))

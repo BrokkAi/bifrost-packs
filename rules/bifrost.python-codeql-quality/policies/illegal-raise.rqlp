@@ -1,0 +1,10 @@
+; CodeQL: python/ql/src/Exceptions/IllegalRaise.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Raise only exception classes or exception instances.
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.illegal-raise" :name "Illegal raise" :message "Raise an exception class or instance." :severity warning
+  :description "Mirrors CodeQL python/ql/src/Exceptions/IllegalRaise.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Raise only exception classes or exception instances."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq illegal_raise) (outcome eq illegal)
+                    (proof eq proven) (completeness eq complete))
+      (python-raise-legality (language python (throw)))))))

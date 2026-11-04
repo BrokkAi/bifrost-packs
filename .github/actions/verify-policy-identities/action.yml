@@ -1,0 +1,44 @@
+name: Verify public policy authoring identities
+description: Download the pinned released authoring CLI and compare every locked policy identity.
+runs:
+  using: composite
+  steps:
+    # policy-authoring.json pins the released Linux x86_64 CLI by archive and
+    # executable SHA-256, plus the build identity that executable reports.
+    - name: Download exact released authoring CLI
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        pin=policy-authoring.json
+        test "$(jq -r .schema_version "$pin")" = 1
+        repo=$(jq -r .cli.repository "$pin")
+        repo=${repo#https://github.com/}
+        version=$(jq -r .cli.version "$pin")
+        asset=$(jq -r .cli.asset "$pin")
+        test "$asset" = "bifrost-v${version}-x86_64-unknown-linux-gnu.tar.gz"
+        mkdir -p "$RUNNER_TEMP/policy-authoring-download" "$RUNNER_TEMP/policy-authoring-cli"
+        timeout --signal=TERM --kill-after=30s 300s gh release download "v$version" --repo "$repo" \
+          --pattern "$asset" --dir "$RUNNER_TEMP/policy-authoring-download"
+        echo "$(jq -r .cli.asset_sha256 "$pin")  $RUNNER_TEMP/policy-authoring-download/$asset" | sha256sum -c -
+        tar -xzf "$RUNNER_TEMP/policy-authoring-download/$asset" -C "$RUNNER_TEMP/policy-authoring-download"
+        binary=$(find "$RUNNER_TEMP/policy-authoring-download" -type f -name bifrost)
+        echo "$(jq -r .cli.binary_sha256 "$pin")  $binary" | sha256sum -c -
+        cp "$binary" "$RUNNER_TEMP/policy-authoring-cli/bifrost"
+    - name: Compare source authoring identities
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 -B scripts/verify-policy-identities.py \
+          --binary "$RUNNER_TEMP/policy-authoring-cli/bifrost" \
+          --output "$RUNNER_TEMP/policy-identities" \
+          --engine-version "$(jq -r .cli.version policy-authoring.json)" \
+          --build-identity "$(jq -r .cli.build_identity policy-authoring.json)"
+        cp policy-authoring.json "$RUNNER_TEMP/policy-identities/authoring-cli-pin.json"
+    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      if: ${{ always() }}
+      with:
+        name: policy-authoring-identities-${{ github.sha }}
+        path: ${{ runner.temp }}/policy-identities
+        if-no-files-found: error

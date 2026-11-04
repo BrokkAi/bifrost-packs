@@ -1,0 +1,19 @@
+(policy
+  :schema-version 1
+  :id "bifrost.cpp-jsf.av-rule-209"
+  :name "JSF AV Rule 209"
+  :message "basic arithmetic type requires portability review"
+  :severity note
+  :description "Mirrors CodeQL cpp/jsf/av-rule-209 (cpp/ql/src/jsf/4.28 Portable Code/AV Rule 209.ql) at CodeQL commit ae741615f3e178ce61289a651790dc67fcc18e19. Basic arithmetic type-name spellings are selected for portability review."
+  :tags ["cpp" "jsf" "codeql-cpp-jsf-av-rule-209"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language cpp
+        (union
+          (identifier :name "int")
+          (identifier :name "short")
+          (identifier :name "long")
+          (identifier :name "float")
+          (identifier :name "double")))))
+  )

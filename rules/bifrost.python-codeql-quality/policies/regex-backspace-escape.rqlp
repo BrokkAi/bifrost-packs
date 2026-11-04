@@ -1,0 +1,15 @@
+; CodeQL: python/ql/src/Expressions/Regex/BackspaceEscape.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Use a word boundary outside a character class or an explicit backspace value.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.regex-backspace-escape"
+  :name "Backspace escape in Python regex character class"
+  :message "Use a word-boundary assertion outside a character class, or an explicit backspace value."
+  :severity warning
+  :description "Selects the Python regex risk fact used by the CodeQL-compatible regex-backspace-escape rule."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python (regex_risk_backspace_escape)))))

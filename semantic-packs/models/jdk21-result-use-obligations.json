@@ -1,12 +1,11 @@
 {
-  "schema_version": 5,
+  "schema_version": 8,
   "pack_id": "bifrost.jdk21.result-use-obligations",
   "version": "1.0.0",
   "producer": { "name": "bifrost", "version": "0.12.0" },
   "language": "java",
   "ecosystem": "jdk",
   "compatibility": {
-    "bifrost": ">=0.12.0, <1.0.0",
     "toolchains": [{ "name": "jdk", "requirement": ">=21.0.0, <22.0.0" }]
   },
   "provenance": {

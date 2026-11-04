@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'release-contract'))
 import attach_smoke
@@ -26,7 +27,7 @@ class SmokeAttachmentTests(unittest.TestCase):
         schemas = release.empty_schemas()
         schemas['policy_document'] = schemas['rql'] = [1]
         policy = fixture.repo / 'rules/bifrost.code-smells/policies/dynamic-evaluation.rqlp'
-        contents = [dict(kind='policy', identity=self.summary['policy_id'], path='rules/dynamic-evaluation.rqlp', sha256=release.digest(policy.read_bytes()), authored_hash=self.summary['policy_authored_hash'], languages=['python'], dependencies=[], schemas=schemas, required_capabilities=[])]
+        contents = [dict(kind='policy', identity=self.summary['policy_id'], path='rules/dynamic-evaluation.rqlp', sha256=release.digest(policy.read_bytes()), authored_hash=self.summary['policy_authored_hash'], resolved_semantic_hash=self.summary['policy_resolved_semantic_hash'], languages=['python'], dependencies=[], schemas=schemas, required_capabilities=[])]
         config = dict(pack_id='test.rules', repository='https://github.com/test/public', visibility='public', release_version='0.1.1', artifact_role='source')
         config['provenance'] = dict(engine_version='0.11.5', source_commit='c' * 40)
         self.manifest = release.make_manifest(config, 'a' * 40, contents, archive)
@@ -49,6 +50,66 @@ class SmokeAttachmentTests(unittest.TestCase):
         with self.assertRaises(release.ReleaseError) as caught:
             attach_smoke.attach(self.path, self.evidence, self.output)
         self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_wrong_authored_manifest_binding_is_not_attached(self):
+        policy = next(item for item in self.manifest['contents'] if item['kind'] == 'policy')
+        policy['authored_hash'] = '5' * 64
+        self.path.write_text(json.dumps(self.manifest))
+        with self.assertRaises(release.ReleaseError) as caught:
+            attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_wrong_authored_summary_identity_is_not_attached(self):
+        self.summary['policy_authored_hash'] = '8' * 64
+        (self.evidence / 'smoke.json').write_text(json.dumps(self.summary))
+        with self.assertRaises(release.ReleaseError) as caught:
+            attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_missing_or_invalid_resolved_summary_identity_is_not_attached(self):
+        for resolved_hash in (None, 'not-a-sha256'):
+            with self.subTest(resolved_hash=resolved_hash):
+                self.summary['policy_resolved_semantic_hash'] = resolved_hash
+                (self.evidence / 'smoke.json').write_text(json.dumps(self.summary))
+                with self.assertRaises(release.ReleaseError) as caught:
+                    attach_smoke.attach(self.path, self.evidence, self.output)
+                self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_wrong_resolved_summary_identity_is_not_attached(self):
+        self.summary['policy_resolved_semantic_hash'] = '8' * 64
+        (self.evidence / 'smoke.json').write_text(json.dumps(self.summary))
+        with self.assertRaises(release.ReleaseError) as caught:
+            attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_wrong_resolved_report_identity_is_not_attached(self):
+        item = self.summary['runs'][1]
+        report_path = self.evidence / item['raw_report']
+        report = json.loads(report_path.read_text(encoding='utf-8'))
+        report['rules'][0]['policy_hash'] = '8' * 64
+        report['runs'][0]['policy_hash'] = '8' * 64
+        report_path.write_text(json.dumps(report), encoding='utf-8')
+        item['reported_policy_resolved_semantic_hash'] = '8' * 64
+        item['raw_report_sha256'] = release.digest(report_path.read_bytes())
+        (self.evidence / 'smoke.json').write_text(json.dumps(self.summary))
+        with self.assertRaises(release.ReleaseError) as caught:
+            attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertEqual(caught.exception.code, 'integrity-error')
+
+    def test_empty_evidence_is_preserved_in_reproducible_zip(self):
+        empty = self.evidence / 'runs' / 'positive' / 'stderr.txt'
+        empty.write_bytes(b'')
+        expected = {p.relative_to(self.evidence).as_posix(): p.read_bytes()
+                    for p in self.evidence.rglob('*') if p.is_file()}
+        manifest = attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertTrue(all(a['size_bytes'] > 0 for a in manifest['artifacts']))
+        archive = self.output / 'smoke-evidence.zip'
+        original = archive.read_bytes()
+        with zipfile.ZipFile(archive) as evidence:
+            self.assertEqual({name: evidence.read(name) for name in evidence.namelist()}, expected)
+        self.path.write_text(json.dumps(self.manifest))
+        attach_smoke.attach(self.path, self.evidence, self.output)
+        self.assertEqual(archive.read_bytes(), original)
 
     def test_failed_summary_is_not_attached(self):
         self.summary['status'] = 'failed'

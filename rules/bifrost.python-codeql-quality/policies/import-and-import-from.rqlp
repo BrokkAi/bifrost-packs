@@ -1,0 +1,16 @@
+; CodeQL query: python/ql/src/Imports/ImportandImportFrom.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report the plain import side of a complete local module imported with both import forms in one scope.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.import-and-import-from"
+  :name "Python module imported with both forms"
+  :message "module is imported with both 'import' and 'from ... import'"
+  :severity warning
+  :description "Mirrors CodeQL py/import-and-import-from for complete, locally resolved imports, using exact parsed import-form and same-scope module-group facts."
+  :tags ["python" "codeql" "quality" "imports"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((python_import_complete eq true)
+                      (python_import_form eq import)
+                      (python_import_mixed_form eq true))
+        (python-import-site (language python (import)))))))

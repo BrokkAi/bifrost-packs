@@ -1,0 +1,19 @@
+; CodeQL query: javascript/ql/src/Declarations/UniquePropertyNames.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: duplicate decoded object keys select earlier value
+; properties; computed keys are incomplete.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.overwritten-property"
+  :name "JavaScript overwritten property"
+  :message "an object property is overwritten"
+  :severity error
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports duplicate decoded object properties in JavaScript and TypeScript; computed keys remain an explicit incomplete boundary."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (union
+        (language javascript
+          (object_property :language-rule "js/overwritten-property"))
+        (language typescript
+          (object_property :language-rule "js/overwritten-property"))))))

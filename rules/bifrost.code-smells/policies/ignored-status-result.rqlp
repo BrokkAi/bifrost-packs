@@ -1,27 +1,115 @@
 ; Files.deleteIfExists(Path) returns false when the file did not exist. The
 ; false status is not an I/O exception; I/O failures are thrown separately.
-; This policy asks only whether the reviewed status value was discarded.
+; The C/C++ rows are reviewed libc declarations, selected only when the
+; resolver proves the configured standard-header declaration.
+; The Python rows are reviewed CPython stdlib status functions, selected only
+; when the Python resolver proves the module attribute identity.
+; Go's native error result and Rust's core/std Result are the native arms:
+; only exact declaration signatures prove them, and explicit blank
+; assignments remain intentional discards. C# reviewed Try APIs use false as
+; the failure status; their out parameters do not consume the returned bool.
+; PHP's reviewed global status functions require `_php_global_` identity and
+; use false as the failure predicate. Ruby's reviewed Kernel#system status
+; returns true on success and false or nil on failure; Ruby exceptions and
+; unreviewed status-like methods remain outside this diagnostic.
 (policy
   :schema-version 1
   :id "bifrost.correctness.ignored-status-result"
-  :name "Ignored file-deletion status"
-  :message "the reviewed deletion status is discarded"
+  :name "Ignored fallible result"
+  :message "a fallible result is discarded"
   :severity note
-  :description "The exact JDK 21 Files.deleteIfExists(Path) call returns a Boolean status: false means no file was deleted because it did not exist. An expression statement or for-loop initializer/update discards that status. An expression lambda discards the status only when its resolved functional method returns void; a value-returning target retains it. Missing or conflicting contracts remain incomplete, and a diagnostic does not prove the deferred body executes. I/O exceptions remain separate. This diagnostic requires exact selected-artifact and dispatch evidence; it does not claim that discarding the status is always a bug."
+  :description "The exact JDK 21 Files.deleteIfExists(Path) call returns a Boolean status: false means no file was deleted because the file did not exist. C#'s reviewed int, long, double, decimal, Guid, and DateTime TryParse APIs plus Dictionary and ConcurrentDictionary TryAdd/TryRemove/TryUpdate APIs return false on their reviewed failure path; out parameters do not consume that Boolean status. PHP's reviewed global file_put_contents, mkdir, unlink, rename, fclose, and fwrite calls return false on failure when the resolver proves `_php_global_` identity; fwrite byte counts are outside this contract. Ruby's reviewed Kernel#system returns true on success and false or nil on failure; only the exact core identity is included. Go calls whose resolved declaration has a native predeclared error result, Rust calls whose resolved declaration returns core/std Result, reviewed C/C++ libc calls whose standard-header declaration returns EOF, nonzero, or -1 on failure, and reviewed CPython stdlib status calls whose module attribute identity is resolver-proven are covered by the same result-use relation. An expression statement or for-loop initializer/update discards a result; an explicit blank assignment is intentional. Missing or conflicting contracts, shadowed Go error names, unproved Rust aliases, unresolved dispatch, C/C++ calls without structured standard-header identity, Python calls without structured CPython module identity, and PHP calls without structured `_php_global_` identity remain incomplete. I/O exceptions and standard-library Write methods documented to never return an error remain separate. This diagnostic does not claim that every discarded fallible result is always a bug."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
-  :tags ["correctness" "java" "result-use" "status"]
+  :tags ["correctness" "java" "csharp" "php" "ruby" "go" "rust" "c" "cpp" "python" "result-use" "status"]
   :analysis (analysis
     :type assertion
     (bind :name discarded
       :query (rql :schema-version 1
-        (filter :where ((obligation_kind eq fallible_status)
-                        (failure_predicate eq (enum false))
-                        (result_use eq discarded)
-                        (coverage eq exhaustive)
-                        (terminal eq false))
-          (language java
-            (call-result-obligations
-              (call-shape (call :callee "deleteIfExists")))))))
+        (union
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate eq (enum false))
+                          (provenance eq reviewed)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language java
+              (call-result-obligations
+                (call-shape (call :callee "deleteIfExists")))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate eq (enum false))
+                          (provenance eq reviewed)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language csharp
+              (call-result-obligations
+                (call-shape
+                  (call :callee (name/regex "^(TryParse|TryAdd|TryRemove|TryUpdate)$"))))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate eq (enum false))
+                          (provenance eq reviewed)
+                          (obligation_basis eq dispatch_agreement)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language php
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (provenance eq native)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language go
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (provenance eq native)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language rust
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate in [(enum eof) (enum nonzero) (enum minus_one)])
+                          (provenance eq reviewed)
+                          (obligation_basis eq libc_standard_declaration)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language c
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate in [(enum eof) (enum nonzero) (enum minus_one)])
+                          (provenance eq reviewed)
+                          (obligation_basis eq libc_standard_declaration)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language cpp
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate eq (enum nonzero))
+                          (provenance eq reviewed)
+                          (obligation_basis eq python_stdlib_function)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language python
+              (call-result-obligations
+                (call-shape (call)))))
+          (filter :where ((obligation_kind eq fallible_status)
+                          (failure_predicate in [(enum false) (enum null)])
+                          (provenance eq reviewed)
+                          (result_use eq discarded)
+                          (coverage eq exhaustive)
+                          (terminal eq false))
+            (language ruby
+              (call-result-obligations
+                (call-shape (call :callee "system"))))))))
     (group :name by-call :by (discarded.id)
       (aggregate :name ignored-statuses :op count))
     (assert :group by-call :value ignored-statuses :cardinality (exactly 0))))

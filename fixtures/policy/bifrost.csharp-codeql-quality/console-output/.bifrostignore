@@ -1,0 +1,3 @@
+# The error-stream workspace runs on its own: the upstream example here calls
+# Console.SetError, which suppresses Console.Error accesses workspace-wide.
+error-stream/

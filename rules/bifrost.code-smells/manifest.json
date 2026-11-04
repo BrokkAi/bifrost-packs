@@ -1,31 +1,73 @@
 {
   "schema_version": 2,
   "id": "bifrost.code-smells",
-  "version": "2.16.0",
+  "version": "4.0.1",
   "name": "Bifrost code smells",
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
     {
       "path": "policies/contradictory-condition.rqlp",
       "id": "bifrost.correctness.contradictory-condition",
-      "authored_hash": "8a5a83b875e2a2fb21a187cefacc95fc701ee0678b9675ceba199e48a0b4c679",
-      "resolved_semantic_hash": "8a5a83b875e2a2fb21a187cefacc95fc701ee0678b9675ceba199e48a0b4c679",
+      "authored_hash": "f0a0b7d900c669e7c88ca343739781a291cfd25ab0431130d9961a513894b3e8",
+      "resolved_semantic_hash": "f0a0b7d900c669e7c88ca343739781a291cfd25ab0431130d9961a513894b3e8",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python"],
-      "required_capabilities": ["structural-match", "branch-relations", "semantic-guard-facts", "scalar-state"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "go",
+        "csharp",
+        "rust",
+        "kotlin",
+        "scala",
+        "php",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "branch-relations",
+        "semantic-guard-facts",
+        "scalar-state"
+      ],
       "severity_rationale": "A proven constant condition outcome makes one conditional arm unreachable.",
       "remediation": "Review the scalar assumptions and intended branch test before changing the code; no automatic rewrite is supplied."
     },
     {
       "path": "policies/discarded-pure-result.rqlp",
       "id": "bifrost.correctness.discarded-pure-result",
-      "authored_hash": "c8e561066136209b0b38f1278db2e084a0d0eb3f9ac3e77e1d6afdf992bcf3a1",
-      "resolved_semantic_hash": "c8e561066136209b0b38f1278db2e084a0d0eb3f9ac3e77e1d6afdf992bcf3a1",
+      "authored_hash": "8e9413798007f39a88810c709794631037e38e8895e4de892e1b12e0ee035523",
+      "resolved_semantic_hash": "8e9413798007f39a88810c709794631037e38e8895e4de892e1b12e0ee035523",
       "category": "correctness",
-      "supported_languages": ["java"],
-      "required_capabilities": ["normalized-call", "canonical-external-dispatch", "exact-result-use", "reviewed-jdk-result-obligation"],
-      "severity_rationale": "An exact JDK 21 String.trim() result is a pure transformed value and the caller discards it.",
-      "remediation": "Use or return the transformed value if intended; review why the call was made before removing it. No automatic fix is supplied."
+      "supported_languages": [
+        "java",
+        "python",
+        "javascript",
+        "typescript",
+        "csharp",
+        "php",
+        "ruby",
+        "rust",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "normalized-call",
+        "canonical-external-dispatch",
+        "exact-result-use",
+        "reviewed-jdk-result-obligation",
+        "reviewed-python-builtin-result-obligation",
+        "reviewed-typescript-string-result-obligation",
+        "reviewed-javascript-string-result-obligation",
+        "reviewed-csharp-bcl-result-obligation",
+        "reviewed-php-result-obligation",
+        "reviewed-ruby-core-result-obligation",
+        "native-result-obligation"
+      ],
+      "severity_rationale": "An exact JDK 21 String.trim() result, a reviewed Python, TypeScript, JavaScript, C#, PHP, or Ruby standard-library transformation result, or a native must-use result is discarded by the caller.",
+      "remediation": "Use or return the transformed or must-use value if intended; review why the call was made before removing it. No automatic fix is supplied."
     },
     {
       "path": "policies/dynamic-evaluation.rqlp",
@@ -48,44 +90,118 @@
     {
       "path": "policies/identical-conditional-branches.rqlp",
       "id": "bifrost.correctness.identical-conditional-branches",
-      "authored_hash": "ecae8e51ea4b11ad0159b1891b9df33fe2a855b6b466b129227e7e6a3f372494",
-      "resolved_semantic_hash": "ecae8e51ea4b11ad0159b1891b9df33fe2a855b6b466b129227e7e6a3f372494",
+      "authored_hash": "28e3dee19cdd3b5ba0b43b219c44ccfdf76f15a50b8375b687eef75cc20d1617",
+      "resolved_semantic_hash": "28e3dee19cdd3b5ba0b43b219c44ccfdf76f15a50b8375b687eef75cc20d1617",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python"],
-      "required_capabilities": ["structural-match", "branch-relations", "lexical-environment"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "rust",
+        "scala",
+        "php",
+        "ruby",
+        "kotlin",
+        "csharp",
+        "go",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "branch-relations",
+        "lexical-environment"
+      ],
       "severity_rationale": "Two branch bodies have the same structured operations and proven reference identities, suggesting a copy/paste error or redundant condition.",
       "remediation": "Review the intended behavior in each branch. Preserve condition evaluation, pattern binding and branch scope when changing code."
     },
     {
       "path": "policies/ignored-status-result.rqlp",
       "id": "bifrost.correctness.ignored-status-result",
-      "authored_hash": "b5b653845c718f0881ed46ea0ee2a1a4bae35cbba97a766d4e893c55ad86c32b",
-      "resolved_semantic_hash": "b5b653845c718f0881ed46ea0ee2a1a4bae35cbba97a766d4e893c55ad86c32b",
+      "authored_hash": "e472421155030eb6a2ec167bfe445d3b31862e034c1d5d4f451378b5b8869ecc",
+      "resolved_semantic_hash": "e472421155030eb6a2ec167bfe445d3b31862e034c1d5d4f451378b5b8869ecc",
       "category": "correctness",
-      "supported_languages": ["java"],
-      "required_capabilities": ["normalized-call", "canonical-external-dispatch", "exact-result-use", "reviewed-jdk-result-obligation"],
-      "severity_rationale": "An exact JDK 21 Files.deleteIfExists(Path) call returns a status indicating whether a file was deleted; a proved expression-statement, for-header or void-functional use discards it.",
-      "remediation": "Handle or deliberately ignore the status according to the caller's intent. I/O exceptions are separate; no automatic fix is supplied."
+      "supported_languages": [
+        "java",
+        "csharp",
+        "php",
+        "ruby",
+        "go",
+        "rust",
+        "c",
+        "cpp",
+        "python"
+      ],
+      "required_capabilities": [
+        "normalized-call",
+        "canonical-external-dispatch",
+        "exact-result-use",
+        "reviewed-jdk-result-obligation",
+        "reviewed-libc-result-obligation",
+        "reviewed-python-result-obligation",
+        "reviewed-csharp-bcl-result-obligation",
+        "reviewed-php-result-obligation",
+        "reviewed-ruby-core-result-obligation",
+        "native-result-obligation"
+      ],
+      "severity_rationale": "An exact JDK 21 Files.deleteIfExists(Path) status, a native Go error result, a reviewed C/C++ libc status, a reviewed CPython stdlib status, a reviewed PHP false-status function, a reviewed Ruby Kernel#system status, or a C# BCL fallible status is discarded by a proved result-use relation.",
+      "remediation": "Handle or deliberately ignore the fallible result according to the caller's intent. I/O exceptions are separate; no automatic fix is supplied."
     },
     {
       "path": "policies/repeated-branch-condition.rqlp",
       "id": "bifrost.correctness.repeated-branch-condition",
-      "authored_hash": "1ebe9d4f16d8cd37e4c606edbe5abb85711b9de2f96f684cbb657eb1a9932b48",
-      "resolved_semantic_hash": "1ebe9d4f16d8cd37e4c606edbe5abb85711b9de2f96f684cbb657eb1a9932b48",
+      "authored_hash": "66da6dbbf639a745011d67a0dc7cd3ad449694b86f03624ab04e80049716de9f",
+      "resolved_semantic_hash": "66da6dbbf639a745011d67a0dc7cd3ad449694b86f03624ab04e80049716de9f",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python"],
-      "required_capabilities": ["structural-match", "branch-relations", "lexical-environment"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "rust",
+        "scala",
+        "php",
+        "ruby",
+        "kotlin",
+        "csharp",
+        "go",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "branch-relations",
+        "lexical-environment"
+      ],
       "severity_rationale": "A later ordered branch repeats an earlier test over stable ordinary bindings, so that later branch cannot be selected.",
       "remediation": "Correct the repeated test or remove the unreachable branch after reviewing condition side effects and intended branch behavior."
     },
     {
       "path": "policies/redundant-boolean-branches.rqlp",
       "id": "bifrost.correctness.redundant-boolean-branches",
-      "authored_hash": "b80c30a8f84e7e086f05b7e1b5f8f3af185a12a77383b8413ac3e80385fd8ecc",
-      "resolved_semantic_hash": "b80c30a8f84e7e086f05b7e1b5f8f3af185a12a77383b8413ac3e80385fd8ecc",
+      "authored_hash": "960d5ff006eadb39d6128c71d3e7cbc28444a309c312a63134b8649c3aef4b6e",
+      "resolved_semantic_hash": "960d5ff006eadb39d6128c71d3e7cbc28444a309c312a63134b8649c3aef4b6e",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python"],
-      "required_capabilities": ["structural-match", "branch-relations"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "rust",
+        "scala",
+        "php",
+        "ruby",
+        "csharp",
+        "kotlin",
+        "go",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "branch-relations"
+      ],
       "severity_rationale": "Opposite Boolean-literal returns on immediate conditional paths are a verbose or mistaken outcome.",
       "remediation": "Review the intended Boolean result and condition evaluation before changing the branch structure; no expression rewrite is supplied."
     },
@@ -111,34 +227,17 @@
       "authored_hash": "0018b743fcf3cd82084af3ae2cdd6f8f59573934ed5f1d33297827911b113287",
       "resolved_semantic_hash": "0018b743fcf3cd82084af3ae2cdd6f8f59573934ed5f1d33297827911b113287",
       "category": "correctness",
-      "supported_languages": ["python"],
+      "supported_languages": [
+        "python"
+      ],
       "required_capabilities": [
         "class-set-type-flow",
         "python-declaration-models",
         "absent-member"
       ],
       "severity_rationale": "A fully classified receiver includes a Proven class whose complete member surface lacks this access; unknown receivers and open member models are excluded.",
-      "remediation": "Pass a receiver with the required member, correct the member name, or guard the access using a condition the analyzer can prove. Inspect the class origin and retained witness before changing the caller."
-    },
-    {
-      "path": "policies/go-data-race.rqlp",
-      "id": "bifrost.correctness.go-data-race",
-      "authored_hash": "4e2a3cc7715440600870e968765ec8b8b503b43f13c84845ecc0d78e4e79636f",
-      "resolved_semantic_hash": "4e2a3cc7715440600870e968765ec8b8b503b43f13c84845ecc0d78e4e79636f",
-      "category": "correctness",
-      "supported_languages": [
-        "go"
-      ],
-      "required_capabilities": [
-        "structural-match",
-        "normalized-concurrent-spawn",
-        "concurrent-access-conflicts",
-        "canonical-workspace-dispatch",
-        "heap-location-identity",
-        "reviewed-concurrency-models"
-      ],
-      "severity_rationale": "Two exact conflicting accesses without ordering or compatible protection violate Go's data-race-free execution contract and can produce undefined program behavior.",
-      "remediation": "Order the accesses with a channel or completed task group, protect both accesses with the same compatible mutex, use an appropriate atomic operation consistently, or stop sharing the location."
+      "remediation": "Pass a receiver with the required member, correct the member name, or guard the access using a condition the analyzer can prove. Inspect the class origin and retained witness before changing the caller.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/go-nil-dereference.rqlp",
@@ -186,11 +285,28 @@
     {
       "path": "policies/empty-failure-handler.rqlp",
       "id": "bifrost.correctness.empty-failure-handler",
-      "authored_hash": "04aac31ec8e97ff376eeea39adf87da668503b5657452b5747fd808fd65dd1eb",
-      "resolved_semantic_hash": "04aac31ec8e97ff376eeea39adf87da668503b5657452b5747fd808fd65dd1eb",
+      "authored_hash": "a8964bf111ac90cd0e0b49bcc1785d1ed1e71823c302363577e5ec472245b26f",
+      "resolved_semantic_hash": "a8964bf111ac90cd0e0b49bcc1785d1ed1e71823c302363577e5ec472245b26f",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python", "csharp", "php", "cpp", "kotlin", "ruby"],
-      "required_capabilities": ["structural-match", "prepared-syntax", "failure-handler-state"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "php",
+        "cpp",
+        "kotlin",
+        "scala",
+        "ruby",
+        "rust",
+        "go"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "prepared-syntax",
+        "failure-handler-state"
+      ],
       "severity_rationale": "An empty catch or except body may silently discard failures when the handler is reached; this rule reports the structural body regardless of reachability.",
       "remediation": "Review whether to handle or propagate the exception deliberately. No automatic fix is supplied."
     },
@@ -215,63 +331,155 @@
     {
       "path": "policies/local-self-assignment.rqlp",
       "id": "bifrost.correctness.local-self-assignment",
-      "authored_hash": "3f2f323f6b296d94f0689af34e9156fa26745362a316eb23636b36857c468b68",
-      "resolved_semantic_hash": "3f2f323f6b296d94f0689af34e9156fa26745362a316eb23636b36857c468b68",
+      "authored_hash": "9329fed1d9dc86659dd83ad73f45fff6eb0b3ced681f367cfd5ee71eff2886a0",
+      "resolved_semantic_hash": "9329fed1d9dc86659dd83ad73f45fff6eb0b3ced681f367cfd5ee71eff2886a0",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python", "csharp", "kotlin", "go"],
-      "required_capabilities": ["prepared-syntax", "assignment-relations", "reaching-definitions", "same-evaluation"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "scala",
+        "php",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "prepared-syntax",
+        "assignment-relations",
+        "reaching-definitions",
+        "same-evaluation"
+      ],
       "severity_rationale": "Writing an initialized ordinary local back to the same binding is usually an accidental no-op.",
       "remediation": "Remove the assignment or use the intended source or target binding."
     },
     {
       "path": "policies/failed-swap.rqlp",
       "id": "bifrost.correctness.failed-swap",
-      "authored_hash": "4efca701138729b97774ada39175a507d0f6c3038dd7b760419e37c52e39cb50",
-      "resolved_semantic_hash": "4efca701138729b97774ada39175a507d0f6c3038dd7b760419e37c52e39cb50",
+      "authored_hash": "4c518f9628234cf1f163a7abb48b8704e8c81f8e355090f763b004ede194b778",
+      "resolved_semantic_hash": "4c518f9628234cf1f163a7abb48b8704e8c81f8e355090f763b004ede194b778",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python", "csharp", "kotlin", "go"],
-      "required_capabilities": ["prepared-syntax", "assignment-relations", "reaching-definitions", "same-evaluation"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "scala",
+        "php",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "prepared-syntax",
+        "assignment-relations",
+        "reaching-definitions",
+        "same-evaluation"
+      ],
       "severity_rationale": "Adjacent crossed writes copy the first assigned value back into the second local, suggesting a failed swap.",
       "remediation": "Review the intended operation; if a swap was intended, preserve the original value in a temporary or use the language's simultaneous assignment."
     },
     {
       "path": "policies/overwritten-unread-value.rqlp",
       "id": "bifrost.correctness.overwritten-unread-value",
-      "authored_hash": "48ac2e0918628c552c9630c76ec5c0f0f2d9516ff0fb31f7b739a3b9c40e2360",
-      "resolved_semantic_hash": "48ac2e0918628c552c9630c76ec5c0f0f2d9516ff0fb31f7b739a3b9c40e2360",
+      "authored_hash": "93708f01e548678513737fb8e2d2bac9ab51cfdebb9cd98b3afcb2956eec169f",
+      "resolved_semantic_hash": "93708f01e548678513737fb8e2d2bac9ab51cfdebb9cd98b3afcb2956eec169f",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python", "go", "csharp", "kotlin"],
-      "required_capabilities": ["prepared-syntax", "assignment-relations", "reaching-definitions"],
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "go",
+        "csharp",
+        "kotlin",
+        "rust",
+        "scala",
+        "php",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "prepared-syntax",
+        "assignment-relations",
+        "reaching-definitions"
+      ],
       "severity_rationale": "An exact ordinary local value is replaced on every modeled continuation before any read, so its original value is unused.",
       "remediation": "Review the original assignment and its right-hand-side effects before changing it."
     },
     {
       "path": "policies/loop-body-never-repeats.rqlp",
       "id": "bifrost.correctness.loop-body-never-repeats",
-      "authored_hash": "49b53237d6a329fd4631cdc6f215ac28d64772a25f219b3a321e0eedd5607f2d",
-      "resolved_semantic_hash": "49b53237d6a329fd4631cdc6f215ac28d64772a25f219b3a321e0eedd5607f2d",
+      "authored_hash": "288974628ee39c301ee3ecf22b931dc38d86b5f02662560245dea87ae4394817",
+      "resolved_semantic_hash": "288974628ee39c301ee3ecf22b931dc38d86b5f02662560245dea87ae4394817",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python", "csharp", "kotlin", "go", "rust", "php"],
-      "required_capabilities": ["prepared-syntax", "loop-relations", "semantic-control-flow"],
-      "severity_rationale": "A reachable Java loop body cannot reach the same loop's repeat edge on any modeled continuation.",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "prepared-syntax",
+        "loop-relations",
+        "semantic-control-flow"
+      ],
+      "severity_rationale": "A reachable loop body cannot reach the same loop's repeat edge on any modeled continuation.",
       "remediation": "Review the early exits and whether a loop is intended; no automatic rewrite is supplied."
     },
     {
       "path": "policies/unreachable-statement.rqlp",
       "id": "bifrost.correctness.unreachable-statement",
-      "authored_hash": "039716e1ab124f213971bf511df721e002ed351bf7c0641083370be5409d51cb",
-      "resolved_semantic_hash": "039716e1ab124f213971bf511df721e002ed351bf7c0641083370be5409d51cb",
+      "authored_hash": "d92240ee27f089971fd44b9210ea00bf40ecd549e02ef8d7fd48bc10012f4246",
+      "resolved_semantic_hash": "d92240ee27f089971fd44b9210ea00bf40ecd549e02ef8d7fd48bc10012f4246",
       "category": "correctness",
-      "supported_languages": ["java", "javascript", "typescript", "python", "csharp", "kotlin", "go", "rust", "php"],
-      "required_capabilities": ["prepared-syntax", "statement-reachability", "semantic-control-flow"],
-      "severity_rationale": "All producer-authored entries to an exact Java statement are outside complete entry reachability.",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "prepared-syntax",
+        "statement-reachability",
+        "semantic-control-flow"
+      ],
+      "severity_rationale": "All producer-authored entries to an exact statement are outside complete entry reachability.",
       "remediation": "Review the preceding control flow and the intended statement before removing unreachable code."
     },
     {
       "path": "policies/loop-invariant-sort.rqlp",
       "id": "bifrost.performance.loop-invariant-sort",
-      "authored_hash": "933ab0a333030b76e26fdc97b8139797a6d388fa258cabc9f7fdb50d1222fcf1",
-      "resolved_semantic_hash": "933ab0a333030b76e26fdc97b8139797a6d388fa258cabc9f7fdb50d1222fcf1",
+      "authored_hash": "a3925165d67e57a71ef24fdfe1d1d03201f881d81237edc6ec68aa355b30aa9f",
+      "resolved_semantic_hash": "a3925165d67e57a71ef24fdfe1d1d03201f881d81237edc6ec68aa355b30aa9f",
       "category": "performance",
       "supported_languages": [
         "rust",
@@ -285,7 +493,10 @@
         "normalized-call-roles",
         "lexical-environment",
         "reaching-binding-assertion",
-        "value-origin-assertion"
+        "value-origin-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "The receiver's value is established outside the loop and no assignment inside re-establishes it, so the loop provably re-sorts one unchanged-identity value on every pass.",
       "remediation": "Sort once before the loop or maintain order incrementally. Calls in deferred bodies are reported lexically; verify how often the body runs before restructuring."
@@ -293,8 +504,8 @@
     {
       "path": "policies/regex-compile-in-loop.rqlp",
       "id": "bifrost.performance.regex-compile-in-loop",
-      "authored_hash": "c7347566fe5db86bf385d136b9585da5be6f8e3e8f4ef57922aadd22b306b165",
-      "resolved_semantic_hash": "c7347566fe5db86bf385d136b9585da5be6f8e3e8f4ef57922aadd22b306b165",
+      "authored_hash": "a022ec8e7a02edc56f6fabfaced00a754536a51889b5395508af7d4bf056f232",
+      "resolved_semantic_hash": "a022ec8e7a02edc56f6fabfaced00a754536a51889b5395508af7d4bf056f232",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -308,7 +519,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Compiling the same regular expression repeatedly adds avoidable parser and automaton construction work.",
       "remediation": "Compile loop-invariant expressions once and reuse the compiled pattern."
@@ -316,8 +530,8 @@
     {
       "path": "policies/file-read-in-loop.rqlp",
       "id": "bifrost.performance.file-read-in-loop",
-      "authored_hash": "4f0b625d3cdef7c80700d6e72e997428321ec4afacc99fe89a246169a4acb3f1",
-      "resolved_semantic_hash": "4f0b625d3cdef7c80700d6e72e997428321ec4afacc99fe89a246169a4acb3f1",
+      "authored_hash": "429b4216451e1418a5bfeb360e790baa6d4eceba75d3e39f6cae9f6211f906ac",
+      "resolved_semantic_hash": "429b4216451e1418a5bfeb360e790baa6d4eceba75d3e39f6cae9f6211f906ac",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -331,7 +545,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Synchronous or whole-file reads inside a loop can multiply I/O and allocation cost.",
       "remediation": "Read once, stream or batch inputs, and cache loop-invariant content where semantics permit."
@@ -339,8 +556,8 @@
     {
       "path": "policies/serialization-in-loop.rqlp",
       "id": "bifrost.performance.serialization-in-loop",
-      "authored_hash": "aa047adba257c80f10812f857e4fd647344dab04d60ba1935f2fc4b13bf2e74c",
-      "resolved_semantic_hash": "aa047adba257c80f10812f857e4fd647344dab04d60ba1935f2fc4b13bf2e74c",
+      "authored_hash": "e8f66500650cdf6d6b06ca48ebb85be6b45d628d8874feb2541c08e3c84816c9",
+      "resolved_semantic_hash": "e8f66500650cdf6d6b06ca48ebb85be6b45d628d8874feb2541c08e3c84816c9",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -354,7 +571,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Repeated serialization can dominate loops through traversal, encoding, and allocation.",
       "remediation": "Move loop-invariant serialization out of the loop or batch records into one encoder call."
@@ -362,8 +582,8 @@
     {
       "path": "policies/parsing-in-loop.rqlp",
       "id": "bifrost.performance.parsing-in-loop",
-      "authored_hash": "1b5b748be4794ffb11a0924d228346c63403dc4e4dfade76ed93655f5cd469c4",
-      "resolved_semantic_hash": "1b5b748be4794ffb11a0924d228346c63403dc4e4dfade76ed93655f5cd469c4",
+      "authored_hash": "c3d33dbbc771adfc00412d382b67953c2812d1ef0461b63f7c086fc327de9bbf",
+      "resolved_semantic_hash": "c3d33dbbc771adfc00412d382b67953c2812d1ef0461b63f7c086fc327de9bbf",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -377,7 +597,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Parsing the same representation per iteration repeats validation, tokenization, and object construction.",
       "remediation": "Parse loop-invariant data once or use an incremental/batched parser for per-item input."
@@ -385,8 +608,8 @@
     {
       "path": "policies/database-call-in-loop.rqlp",
       "id": "bifrost.performance.database-call-in-loop",
-      "authored_hash": "f184707c0021d42dde7e6c4a77985a3854e5b7db970ec30ff109856ebd74da21",
-      "resolved_semantic_hash": "f184707c0021d42dde7e6c4a77985a3854e5b7db970ec30ff109856ebd74da21",
+      "authored_hash": "0dc51f9ec1777734554d0abb9efa09f4c75d945bd9f449fd8c5b95d83bff404b",
+      "resolved_semantic_hash": "0dc51f9ec1777734554d0abb9efa09f4c75d945bd9f449fd8c5b95d83bff404b",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -399,7 +622,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "A database round trip per iteration is a common N+1 query pattern.",
       "remediation": "Batch the operation, prefetch required rows, or use one set-oriented query."
@@ -407,8 +633,8 @@
     {
       "path": "policies/network-call-in-loop.rqlp",
       "id": "bifrost.performance.network-call-in-loop",
-      "authored_hash": "b48032b76b82c4c449aa2d2fa45aff95b36350314e4cbcefd6f4ed86de47cd83",
-      "resolved_semantic_hash": "b48032b76b82c4c449aa2d2fa45aff95b36350314e4cbcefd6f4ed86de47cd83",
+      "authored_hash": "b7a1eb37db3b36b40f591782a7251dfbf123d2175873831436415f4b725fec80",
+      "resolved_semantic_hash": "b7a1eb37db3b36b40f591782a7251dfbf123d2175873831436415f4b725fec80",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -422,7 +648,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "A serial network request per iteration amplifies latency and remote-service load.",
       "remediation": "Batch requests, prefetch data, or use explicitly bounded concurrency with backpressure."
@@ -430,8 +659,8 @@
     {
       "path": "policies/subprocess-in-loop.rqlp",
       "id": "bifrost.performance.subprocess-in-loop",
-      "authored_hash": "0c264195a730138def1054723dffb3ec40ad13a0bc7c3bb7b74b72ea5996fd37",
-      "resolved_semantic_hash": "0c264195a730138def1054723dffb3ec40ad13a0bc7c3bb7b74b72ea5996fd37",
+      "authored_hash": "058f86f37482968a5d6c7b9a344c927269d94f266c10910f1dfc8db5a8ef24b5",
+      "resolved_semantic_hash": "058f86f37482968a5d6c7b9a344c927269d94f266c10910f1dfc8db5a8ef24b5",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -444,7 +673,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Process creation is expensive and repeated launches can exhaust OS resources.",
       "remediation": "Move invariant work outside the loop, use one long-lived process, or batch subprocess input."
@@ -452,8 +684,8 @@
     {
       "path": "policies/sleep-in-loop.rqlp",
       "id": "bifrost.performance.sleep-in-loop",
-      "authored_hash": "16b1be4131f57ee9dff8c34d8a083241bbfbd0992cc0a6e215e9b142d7e551ab",
-      "resolved_semantic_hash": "16b1be4131f57ee9dff8c34d8a083241bbfbd0992cc0a6e215e9b142d7e551ab",
+      "authored_hash": "bd4f2371ff873042c809dc2ee8cd696dbc5893f9714a897847f250edd188e498",
+      "resolved_semantic_hash": "bd4f2371ff873042c809dc2ee8cd696dbc5893f9714a897847f250edd188e498",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -465,7 +697,10 @@
         "declaration-bounded-containment",
         "normalized-call-roles",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "Sleeping for every iterated item throttles the whole batch in lockstep.",
       "remediation": "Prefer rate limiters or batching over per-item sleeps; keep deliberate poll and backoff sleeps in condition-controlled loops, which this rule does not flag."
@@ -473,8 +708,8 @@
     {
       "path": "policies/expensive-operation-in-nested-loop.rqlp",
       "id": "bifrost.performance.expensive-operation-in-nested-loop",
-      "authored_hash": "2bf75d3cc91deae0675196ee82c530b82f96096430aeafa2a2642faf7583bbc5",
-      "resolved_semantic_hash": "2bf75d3cc91deae0675196ee82c530b82f96096430aeafa2a2642faf7583bbc5",
+      "authored_hash": "63d75d550e2d5bf9cd31972232dfc45022f930f31a25f4d62d92993f84f65690",
+      "resolved_semantic_hash": "63d75d550e2d5bf9cd31972232dfc45022f930f31a25f4d62d92993f84f65690",
       "category": "performance",
       "supported_languages": [
         "python",
@@ -488,7 +723,10 @@
         "descendant-match",
         "normalized-call",
         "lexical-environment",
-        "origin-shape-assertion"
+        "origin-shape-assertion",
+        "exact-call-target",
+        "semantic-model-declared-effects",
+        "exhaustive-effect-coverage"
       ],
       "severity_rationale": "I/O, parsing, serialization, sorting, or remote work under two loop levels can grow multiplicatively.",
       "remediation": "Hoist invariant work, precompute indexes, batch external operations, or reduce the nested iteration space."
@@ -509,6 +747,187 @@
       ],
       "severity_rationale": "A blocking once-cell whose initializer joins on rayon can park the worker that owns the stolen re-entrant job and wedge the whole pool.",
       "remediation": "Use a pool-safe memoization such as PoolSafeMemo::get_or_build_parallel, or build the value eagerly before entering the parallel region."
+    },
+    {
+      "path": "policies/rust-input-recursion-without-bound.rqlp",
+      "id": "bifrost.correctness.rust-input-recursion-without-bound",
+      "authored_hash": "8fd2d58d9eadc3ee05adb293d41696e354b38776bf8b4dee0d4b18c948a4758d",
+      "resolved_semantic_hash": "8fd2d58d9eadc3ee05adb293d41696e354b38776bf8b4dee0d4b18c948a4758d",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "normalized-call-roles",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Direct recursion reachable from public text or byte input can make stack depth depend on input size, but this selector does not prove input progress or exclude explicit budgets.",
+      "remediation": "Review the recursive progress and available depth limits; add a deliberate budget or convert the traversal to an iterative form when input can grow without a safe bound."
+    },
+    {
+      "path": "policies/repeated-literal.rqlp",
+      "id": "bifrost.code-smells.repeated-literal",
+      "authored_hash": "c95b8fa15ef290ba8c2cf48a1d10360be7808b38552f8219897be387c0a8ee4a",
+      "resolved_semantic_hash": "c95b8fa15ef290ba8c2cf48a1d10360be7808b38552f8219897be387c0a8ee4a",
+      "category": "maintainability",
+      "supported_languages": [
+        "c",
+        "cpp",
+        "csharp",
+        "php",
+        "python",
+        "ruby",
+        "javascript",
+        "typescript",
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "literal-occurrences"
+      ],
+      "severity_rationale": "Repeated non-trivial scalar identities increase drift risk when a value must be updated consistently.",
+      "remediation": "Name the value once or centralize the shared constant after reviewing whether the repetitions intentionally diverge.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/pending-cleanup-flow.rqlp",
+      "id": "bifrost.correctness.pending-cleanup-flow",
+      "authored_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
+      "resolved_semantic_hash": "4f104642eeaca35f817dbf057c458f489ba720e77f70f6c468df8438dcd1f372",
+      "category": "correctness",
+      "supported_languages": [
+        "javascript",
+        "ruby"
+      ],
+      "required_capabilities": [
+        "pending-cleanup-flow"
+      ],
+      "severity_rationale": "An exact exhaustive cleanup outcome that replaces a pending control transfer changes the procedure's externally visible control flow.",
+      "remediation": "Review the cleanup body and the pending transfer together; preserve the intended return, throw, break or continue explicitly when the cleanup should not replace it.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/excessive-nesting.rqlp",
+      "id": "bifrost.code-smells.excessive-nesting",
+      "authored_hash": "46a957e1b4f92c646f9dfb7fce75fa40e13d7f52ce0e482eb24cdec574f40378",
+      "resolved_semantic_hash": "46a957e1b4f92c646f9dfb7fce75fa40e13d7f52ce0e482eb24cdec574f40378",
+      "category": "maintainability",
+      "activation": "opt-in",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "callable-metrics"
+      ],
+      "severity_rationale": "Deeply nested executable control flow increases review and maintenance cost.",
+      "remediation": "Reduce control-flow nesting with guard clauses, extracted callables, or a reviewed state abstraction while preserving behavior."
+    },
+    {
+      "path": "policies/oversized-function-span.rqlp",
+      "id": "bifrost.code-smells.oversized-function-span",
+      "authored_hash": "0d84b9b852fe9f1ab55bddad8d1ced65b567f3de22a47811cb594e961302f909",
+      "resolved_semantic_hash": "0d84b9b852fe9f1ab55bddad8d1ced65b567f3de22a47811cb594e961302f909",
+      "category": "maintainability",
+      "activation": "opt-in",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "callable-metrics"
+      ],
+      "severity_rationale": "A wide executable span makes a callable harder to understand and review as one unit.",
+      "remediation": "Extract cohesive operations into separately named callables and keep each callable's responsibilities bounded."
+    },
+    {
+      "path": "policies/oversized-function-complexity.rqlp",
+      "id": "bifrost.code-smells.oversized-function-complexity",
+      "authored_hash": "ea4c0829d02d622da459267582334d14ce0c82a62b469da11d1435330a13cb4d",
+      "resolved_semantic_hash": "ea4c0829d02d622da459267582334d14ce0c82a62b469da11d1435330a13cb4d",
+      "category": "maintainability",
+      "activation": "opt-in",
+      "supported_languages": [
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "csharp",
+        "kotlin",
+        "go",
+        "rust",
+        "php",
+        "scala",
+        "ruby",
+        "c",
+        "cpp"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "callable-metrics"
+      ],
+      "severity_rationale": "High structured cognitive complexity indicates a callable with too many interacting control-flow decisions.",
+      "remediation": "Split the decision structure into cohesive helpers or simplify the control flow after reviewing behavior and error paths."
+    },
+    {
+      "path": "policies/excessive-parameters.rqlp",
+      "id": "bifrost.maintainability.excessive-parameters",
+      "authored_hash": "ce9cbf22fd9c720b9f1a7c6d0565c834620ef8a5f8a71ae2e8b09f1afb7b1bd6",
+      "resolved_semantic_hash": "ce9cbf22fd9c720b9f1a7c6d0565c834620ef8a5f8a71ae2e8b09f1afb7b1bd6",
+      "category": "maintainability",
+      "supported_languages": [
+        "c",
+        "java",
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "callable-signature"
+      ],
+      "severity_rationale": "A callable with more than seven declared parameters is difficult to invoke, review, and evolve as one contract.",
+      "remediation": "Group related inputs into a reviewed value object or split the callable while preserving its declaration and overload contracts.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python-assert-true.rqlp",
+      "id": "bifrost.correctness.python-assert-true",
+      "authored_hash": "09b8bab36da5e631d8012f7aaf09ea30b308658d6bc90b4dfc23c9f2052eb8b0",
+      "resolved_semantic_hash": "09b8bab36da5e631d8012f7aaf09ea30b308658d6bc90b4dfc23c9f2052eb8b0",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "A literal True assertion cannot fail and has no runtime checking effect.",
+      "remediation": "Remove the assertion or replace it with the intended condition; this policy does not judge assert False or non-literal assertion expressions.",
+      "activation": "opt-in"
     }
   ]
 }

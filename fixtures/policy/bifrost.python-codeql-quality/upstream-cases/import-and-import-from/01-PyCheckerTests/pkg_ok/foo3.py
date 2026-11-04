@@ -1,0 +1,4 @@
+# Source: github/codeql/python/ql/test/query-tests/Imports/PyCheckerTests/pkg_ok/foo3.py at ae741615f3e178ce61289a651790dc67fcc18e19
+# MIT License, Copyright GitHub, Inc.
+class Foo3():
+    pass

@@ -1,7 +1,7 @@
 {
   "schema_version": 14,
   "pack_id": "bifrost.python-security-sink-summaries",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -18,7 +18,7 @@
   },
   "provenance": {
     "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, and credential APIs",
-    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed polynomial ReDoS transfers from issues #4324/#4342"
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, exact factory, and I/O write summaries"
   },
   "license": "PSF-2.0",
   "completeness": "complete",
@@ -31,8 +31,11 @@
       "id": "summaries.python-security-sinks",
       "activation": [
         {
-          "targets": [],
-          "configurations": []
+          "toolchain": {
+            "name": "cpython",
+            "version": ">=3.13.5, <3.13.6"
+          },
+          "targets": []
         }
       ],
       "payload": {
@@ -543,7 +546,10 @@
                 }
               }
             ],
-            "effects": []
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.regex_compile", "timing": "immediate", "certainty": "definite" }
+            ]
           },
           {
             "id": "summary.python.re.pattern.search",
@@ -1782,6 +1788,247 @@
                 "input": {
                   "kind": "parameter",
                   "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.builtins.open",
+            "target": {
+              "path": "builtins.pyi",
+              "symbol": "builtins.open(file, mode)",
+              "has_receiver": false,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "file"
+                },
+                {
+                  "name": "mode",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.python.bytes.decode",
+            "target": {
+              "path": "builtins.pyi",
+              "symbol": "bytes.decode(encoding, errors)",
+              "has_receiver": true,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "encoding",
+                  "optional": true
+                },
+                {
+                  "name": "errors",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "exit_kind": "normal",
+                "input": {
+                  "kind": "receiver"
+                },
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.io.bufferedrandom.write",
+            "target": {
+              "path": "io.pyi",
+              "symbol": "io.BufferedRandom.write(buffer)",
+              "has_receiver": true,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "buffer"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.io.bufferedrandom.write",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.io.bufferedreader.write",
+            "target": {
+              "path": "io.pyi",
+              "symbol": "io.BufferedReader.write(s)",
+              "has_receiver": true,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "s"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.io.bufferedreader.write",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.io.bufferedwriter.write",
+            "target": {
+              "path": "io.pyi",
+              "symbol": "io.BufferedWriter.write(buffer)",
+              "has_receiver": true,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "buffer"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.io.bufferedwriter.write",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.io.fileio.write",
+            "target": {
+              "path": "io.pyi",
+              "symbol": "io.FileIO.write(b)",
+              "has_receiver": true,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "b"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.io.fileio.write",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.socket.socket.recv",
+            "target": {
+              "path": "_socket.pyi",
+              "symbol": "_socket.socket.recv(bufsize, flags)",
+              "has_receiver": true,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "bufsize"
+                },
+                {
+                  "name": "flags",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.python.urllib.request.urlopen",
+            "target": {
+              "path": "urllib/request.pyi",
+              "symbol": "urllib.request.urlopen(url, data, timeout, context)",
+              "has_receiver": false,
+              "parameter_count": 4,
+              "formals": [
+                {
+                  "name": "url"
+                },
+                {
+                  "name": "data",
+                  "optional": true
+                },
+                {
+                  "name": "timeout",
+                  "optional": true
+                },
+                {
+                  "name": "context",
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.urllib.request.urlopen.url",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              },
+              {
+                "kind": "escape",
+                "event": "python.urllib.request.urlopen.data",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
                 }
               }
             ]

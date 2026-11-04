@@ -1,7 +1,7 @@
 {
-  "schema_version": 2,
+  "schema_version": 16,
   "pack_id": "bifrost.python-security-sink-declarations",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -9,7 +9,6 @@
   "language": "python",
   "ecosystem": "python",
   "compatibility": {
-    "bifrost": ">=0.11.0, <1.0.0",
     "toolchains": [
       {
         "name": "cpython",
@@ -19,7 +18,7 @@
   },
   "provenance": {
     "source": "CPython standard-library reference and typeshed",
-    "revision": "v3.13.5"
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5"
   },
   "license": "PSF-2.0",
   "completeness": "partial",
@@ -47,7 +46,9 @@
             "name": "socket",
             "type_kind": "module",
             "visibility": "public",
-            "aliases": ["socket"],
+            "aliases": [
+              "socket"
+            ],
             "locator": {
               "kind": "artifact",
               "path": "socket.pyi",
@@ -70,7 +71,9 @@
             "name": "xml.etree.ElementTree",
             "type_kind": "module",
             "visibility": "public",
-            "aliases": ["xml.etree.ElementTree"],
+            "aliases": [
+              "xml.etree.ElementTree"
+            ],
             "locator": {
               "kind": "artifact",
               "path": "xml/etree/ElementTree.pyi",
@@ -82,7 +85,9 @@
             "name": "xml.sax",
             "type_kind": "module",
             "visibility": "public",
-            "aliases": ["xml.sax"],
+            "aliases": [
+              "xml.sax"
+            ],
             "locator": {
               "kind": "artifact",
               "path": "xml/sax.pyi",
@@ -94,7 +99,9 @@
             "name": "xml.dom.minidom",
             "type_kind": "module",
             "visibility": "public",
-            "aliases": ["xml.dom.minidom"],
+            "aliases": [
+              "xml.dom.minidom"
+            ],
             "locator": {
               "kind": "artifact",
               "path": "xml/dom/minidom.pyi",
@@ -115,10 +122,16 @@
               "parameters": [
                 {
                   "name": "address",
-                  "type": {"kind": "named", "name": "builtins.object"}
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
                 }
               ],
-              "returns": {"kind": "named", "name": "builtins.NoneType"}
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
             },
             "locator": {
               "kind": "artifact",
@@ -138,15 +151,24 @@
               "parameters": [
                 {
                   "name": "text",
-                  "type": {"kind": "named", "name": "builtins.str"}
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
                 },
                 {
                   "name": "parser",
-                  "type": {"kind": "named", "name": "builtins.object"},
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
                   "optional": true
                 }
               ],
-              "returns": {"kind": "named", "name": "builtins.object"}
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
             },
             "locator": {
               "kind": "artifact",
@@ -166,19 +188,31 @@
               "parameters": [
                 {
                   "name": "string",
-                  "type": {"kind": "named", "name": "builtins.object"}
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
                 },
                 {
                   "name": "handler",
-                  "type": {"kind": "named", "name": "builtins.object"}
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
                 },
                 {
                   "name": "errorHandler",
-                  "type": {"kind": "named", "name": "builtins.object"},
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
                   "optional": true
                 }
               ],
-              "returns": {"kind": "named", "name": "builtins.object"}
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
             },
             "locator": {
               "kind": "artifact",
@@ -198,20 +232,120 @@
               "parameters": [
                 {
                   "name": "string",
-                  "type": {"kind": "named", "name": "builtins.str"}
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
                 },
                 {
                   "name": "parser",
-                  "type": {"kind": "named", "name": "builtins.object"},
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
                   "optional": true
                 }
               ],
-              "returns": {"kind": "named", "name": "builtins.object"}
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
             },
             "locator": {
               "kind": "artifact",
               "path": "xml/dom/minidom.pyi",
               "symbol": "xml.dom.minidom.parseString(string, parser)"
+            }
+          },
+          {
+            "id": "member.python.socket.socket.init",
+            "owner": "type.python.socket.socket",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "family",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "proto",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "fileno",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "socket.pyi",
+              "symbol": "socket.socket.__init__(family, type, proto, fileno)"
+            }
+          },
+          {
+            "id": "member.python.socket.socket.recv",
+            "owner": "type.python.socket.socket",
+            "name": "recv",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "bufsize",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  }
+                },
+                {
+                  "name": "flags",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bytes"
+              }
+            },
+            "callable_family_complete": true,
+            "locator": {
+              "kind": "artifact",
+              "path": "_socket.pyi",
+              "symbol": "_socket.socket.recv(bufsize, flags)"
             }
           }
         ],

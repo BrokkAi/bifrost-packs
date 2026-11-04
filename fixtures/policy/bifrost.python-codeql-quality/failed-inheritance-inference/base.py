@@ -1,0 +1,2 @@
+class ImportedBase:
+    pass

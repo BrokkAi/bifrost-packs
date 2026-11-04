@@ -1,0 +1,60 @@
+; CodeQL: python/ql/src/Classes/Comparisons/IncompleteOrdering.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Provide both strict and non-strict ordering methods unless total_ordering supplies them.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.incomplete-ordering"
+  :name "Incomplete Python ordering comparisons"
+  :message "A class that defines strict ordering without non-strict ordering, or vice versa, may not support all rich comparisons consistently."
+  :severity warning
+  :description "Test-derived policy using Python C3 hierarchy facts from engine tests."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (union
+        (filter :where ((fact_kind eq member)
+                        (mro_rank eq 0)
+                        (member_name eq "__lt__")
+                        (has_non_strict_ordering eq false)
+                        (total_ordering_decorator eq false)
+                        (coverage eq complete))
+          (mro-members
+            (enclosing-decl
+              (language python
+                (class (has (method :name "__lt__")))))))
+        (filter :where ((fact_kind eq member)
+                        (mro_rank eq 0)
+                        (member_name eq "__gt__")
+                        (has_non_strict_ordering eq false)
+                        (total_ordering_decorator eq false)
+                        (coverage eq complete))
+          (mro-members
+            (enclosing-decl
+              (language python
+                (class
+                  (and
+                    (has (method :name "__gt__"))
+                    (not-has (method :name "__lt__"))))))))
+        (filter :where ((fact_kind eq member)
+                        (mro_rank eq 0)
+                        (member_name eq "__le__")
+                        (has_strict_ordering eq false)
+                        (total_ordering_decorator eq false)
+                        (coverage eq complete))
+          (mro-members
+            (enclosing-decl
+              (language python
+                (class (has (method :name "__le__")))))))
+        (filter :where ((fact_kind eq member)
+                        (mro_rank eq 0)
+                        (member_name eq "__ge__")
+                        (has_strict_ordering eq false)
+                        (total_ordering_decorator eq false)
+                        (coverage eq complete))
+          (mro-members
+            (enclosing-decl
+              (language python
+                (class
+                  (and
+                    (has (method :name "__ge__"))
+                    (not-has (method :name "__le__"))))))))))))

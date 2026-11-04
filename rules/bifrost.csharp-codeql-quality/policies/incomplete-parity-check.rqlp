@@ -1,0 +1,77 @@
+; CodeQL query: csharp/ql/src/Likely Bugs/BadCheckOdd.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: select a comparison `x % 2 == 1`, `x % 2 != 1` or
+; `x % 2 > 0` whose remainder is the left operand and whose divisor and
+; right operand are integer literals with those values. Parentheses are
+; transparent. The remainder's dividend, through at most two casts, is
+; excluded when it is a non-negative integer literal, a member access named
+; Length or a call named Count, as CodeQL's isDefinitelyPositive excludes it.
+; The selection is syntactic: other non-negative constants, an implicit-this
+; Length and remainders of types with user-defined operators are reported.
+(policy
+  :schema-version 1
+  :id "bifrost.csharp-codeql-quality.incomplete-parity-check"
+  :name "C# bad parity check"
+  :message "Possibly invalid parity test. This will fail for negative numbers."
+  :severity warning
+  :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/BadCheckOdd.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports x % 2 == 1, x % 2 != 1 and x % 2 > 0, which give the wrong answer for negative odd x, unless the dividend is a non-negative integer literal, a Length member or a Count() call."
+  :tags ["csharp" "codeql" "quality" "correctness"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language csharp
+        (except
+          (union
+            (comparison
+              :operator (text/regex "^(?:==|!=)$")
+              :left (binary_expression
+                :operator (text/regex "^%$")
+                :right (numeric_literal :integer-value "2"))
+              :right (numeric_literal :integer-value "1"))
+            (comparison
+              :operator (text/regex "^>$")
+              :left (binary_expression
+                :operator (text/regex "^%$")
+                :right (numeric_literal :integer-value "2"))
+              :right (numeric_literal :integer-value "0")))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (numeric_literal
+                (text/regex "^(?:0[xX][0-9A-Fa-f_]+|0[bB][01_]+|[0-9][0-9_]*)(?:[uU][lL]?|[lL][uU]?)?$"))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (field_access :field (name "Length"))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (call :callee (name "Count"))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (cast
+                :value (numeric_literal
+                  (text/regex "^(?:0[xX][0-9A-Fa-f_]+|0[bB][01_]+|[0-9][0-9_]*)(?:[uU][lL]?|[lL][uU]?)?$")))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (cast :value (field_access :field (name "Length")))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (cast :value (call :callee (name "Count")))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (cast
+                :value (cast
+                  :value (numeric_literal
+                    (text/regex "^(?:0[xX][0-9A-Fa-f_]+|0[bB][01_]+|[0-9][0-9_]*)(?:[uU][lL]?|[lL][uU]?)?$"))))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (cast :value (cast :value (field_access :field (name "Length"))))))
+          (comparison
+            :left (binary_expression
+              :operator (text/regex "^%$")
+              :left (cast :value (cast :value (call :callee (name "Count")))))))))))

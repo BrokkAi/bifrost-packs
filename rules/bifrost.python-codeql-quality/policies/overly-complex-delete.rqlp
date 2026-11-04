@@ -1,0 +1,16 @@
+; CodeQL query: python/ql/src/Functions/OverlyComplexDelMethod.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report complete __del__ methods whose reachable cyclomatic complexity exceeds three.
+(policy :schema-version 1
+  :id "bifrost.python-codeql-quality.overly-complex-delete"
+  :name "Overly complex Python destructor"
+  :message "overly complex '__del__' method"
+  :severity warning
+  :description "Mirrors CodeQL py/overly-complex-delete with the engine's reachable-block cyclomatic-complexity fact; incomplete control-flow results are not findings."
+  :tags ["python" "codeql" "quality" "complexity"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq overly_complex_delete) (outcome eq issue)
+                      (cyclomatic_complexity gt 3) (completeness eq complete))
+        (python-overly-complex-delete
+          (enclosing-decl (language python (callable))))))))

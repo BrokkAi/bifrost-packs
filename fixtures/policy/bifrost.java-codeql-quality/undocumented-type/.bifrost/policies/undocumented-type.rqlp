@@ -1,0 +1,16 @@
+; CodeQL query: java/ql/src/Advisory/Documentation/MissingJavadocTypes.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: public source types require an acceptable grammar-backed
+; Javadoc block; private types are excluded.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.undocumented-type"
+  :name "Java undocumented type"
+  :message "Public type lacks Javadoc"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (class :language-rule "java/undocumented-type")))))

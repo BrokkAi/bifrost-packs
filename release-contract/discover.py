@@ -103,12 +103,13 @@ def enumerate_candidates(repository, visibility, cache, offline=False):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--repository', required=True); p.add_argument('--visibility', choices=['public', 'private'], required=True); p.add_argument('--cache-dir', type=Path, required=True); p.add_argument('--offline', action='store_true'); p.add_argument('--engine-profile', type=Path, required=True); p.add_argument('--pack-id', required=True); p.add_argument('--channel', choices=['stable', 'prerelease'], default='stable'); p.add_argument('--version'); p.add_argument('--commit'); p.add_argument('--receipt', type=Path, required=True); p.add_argument('--allow-unqualified', action='store_true')
+    p.add_argument('--repository', required=True); p.add_argument('--visibility', choices=['public', 'private'], required=True); p.add_argument('--cache-dir', type=Path, required=True); p.add_argument('--offline', action='store_true'); p.add_argument('--engine-profile', type=Path, required=True); p.add_argument('--host-profile', type=Path); p.add_argument('--pack-id', required=True); p.add_argument('--channel', choices=['stable', 'prerelease'], default='stable'); p.add_argument('--version'); p.add_argument('--commit'); p.add_argument('--receipt', type=Path, required=True); p.add_argument('--allow-unqualified', action='store_true')
     args = p.parse_args()
     try:
         paths, index = enumerate_candidates(args.repository, args.visibility, args.cache_dir, args.offline)
         profile, _ = release.load_json(args.engine_profile)
-        candidates = release.resolve_release_set(paths, profile, args.pack_id, args.channel, args.version, args.commit, args.allow_unqualified)
+        host_profile = release.load_json(args.host_profile)[0] if args.host_profile else None
+        candidates = release.resolve_release_set(paths, profile, args.pack_id, args.channel, args.version, args.commit, args.allow_unqualified, host_profile=host_profile)
         for artifact in [a for _, _, manifest, _ in candidates for a in manifest['artifacts']]:
             destination = args.cache_dir / artifact['sha256'] / artifact['name']
             if not destination.is_file() and not args.offline:
@@ -116,7 +117,7 @@ def main():
                 if release.digest(raw) != artifact['sha256'] or len(raw) != artifact['size_bytes']:
                     release.fail('integrity-error', 'downloaded artifact differs from manifest')
                 destination.parent.mkdir(parents=True, exist_ok=True); destination.write_bytes(raw)
-        result = release.select_release(paths, profile, args.pack_id, args.channel, args.version, args.commit, args.cache_dir, args.allow_unqualified)
+        result = release.select_release(paths, profile, args.pack_id, args.channel, args.version, args.commit, args.cache_dir, args.allow_unqualified, host_profile)
         args.receipt.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
         print(json.dumps(result, sort_keys=True)); return 0
     except release.ReleaseError as error:

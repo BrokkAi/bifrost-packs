@@ -1,0 +1,19 @@
+; CodeQL query: javascript/ql/src/Declarations/MixedStaticInstanceThisAccess.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: this member access must target a class member with matching
+; staticness.
+(policy
+  :schema-version 1
+  :id "bifrost.javascript-codeql-quality.mixed-static-instance-this-access"
+  :name "JavaScript mixed static and instance this access"
+  :message "this access has mixed staticness"
+  :severity error
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports JavaScript and TypeScript this-member accesses whose staticness does not match the target class member."
+  :tags ["javascript" "typescript" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (union
+        (language javascript
+          (field_access :language-rule "js/mixed-static-instance-this-access"))
+        (language typescript
+          (field_access :language-rule "js/mixed-static-instance-this-access"))))))

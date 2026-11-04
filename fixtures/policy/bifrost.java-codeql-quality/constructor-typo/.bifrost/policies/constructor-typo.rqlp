@@ -1,0 +1,16 @@
+; CodeQL java/ql/src/Likely Bugs/Likely Typos/ConstructorTypo.ql.
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Engine contract: report a method whose name equals its declaring type's
+; simple name; a true constructor is a near miss.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-quality.constructor-typo"
+  :name "Java constructor typo"
+  :message "method name matches its enclosing type"
+  :severity warning
+  :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java methods whose names equal their enclosing type name."
+  :tags ["java" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (language java
+        (method :language-rule "java/constructor-typo")))))
