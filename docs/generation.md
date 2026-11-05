@@ -69,6 +69,23 @@ inconclusive. A summary pack's `complete` envelope covers the summaries it
 contains: Bifrost rejects complete summaries in a partial envelope
 (`summary.completeness_exceeds_pack`).
 
+## Go gzip and io jobs
+
+Four authored jobs follow the gob jobs: `go-stdlib-compress-gzip`,
+`go-stdlib-compress-gzip-declarations`, `go-stdlib-io` and
+`go-stdlib-io-declarations` (`bifrost.go.stdlib.compress-gzip`,
+`bifrost.go.stdlib.compress-gzip-declarations`, `bifrost.go.stdlib.io` and
+`bifrost.go.stdlib.io-declarations`, all 0.1.0, BSD-3-Clause, go1.26.0
+provenance). They declare `gzip.NewReader`, `Reader.Close`,
+`Reader.Multistream`, `io.ReadAll`, `io.Copy` and `io.LimitReader`, each a
+complete callable family. The summaries cover the same calls except `io.Copy`,
+whose write into `dst` the schema cannot express, as with gob `Decode`. The
+specs pin commit `65b68f55b537ab77b7ecd8569b0c838aac9be0ea`.
+`tests/test_go_read_all_native_jobs.py` pins the jobs. The policy
+`bifrost.security.go.network-read-all-unbounded` depends on the Go net, gzip
+and io packs. The io declarations pack does not yet declare the `io.Reader`
+family of interfaces that #209 asks for.
+
 ## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the

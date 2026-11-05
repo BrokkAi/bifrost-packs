@@ -1,0 +1,12 @@
+(policy :schema-version 1 :id "repro.transform-origin-model" :name "n" :message "m" :severity warning :description "d"
+  :analysis (analysis :type taint :mode may
+    :sources (endpoint-set :entries [
+      (source :id input :display-name "input" :categories [io.external] :selector (rql :schema-version 1 (language go (call :callee (name "input"))))
+        :bind (result :index 0) :labels [raw])])
+    :transforms (endpoint-set :entries [
+      (transform :id gzip-new-reader :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "compress/gzip.NewReader" :proof declared
+                (call-bindings (call-shape (call :callee (name "NewReader") :arity 1))))))
+        :input (argument :index 0) :output (result :index 0) :adds [wrapped])])
+    :sinks (endpoint-set :entries [
+      (sink :id sink :display-name "sink" :categories [test] :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (call-bindings (call-shape (call :callee (name "sink")))))))
+        :dangerous-operand (argument :index 0) :accepts [wrapped])])))

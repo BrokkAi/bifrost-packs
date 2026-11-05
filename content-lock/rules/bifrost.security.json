@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "8009647da34f023109b20f95573dfaeeacd2931d7d5d36215d20fa74de806204"
+      "sha256": "10d8dfb0f271bdc50571a736664dee766c7cf6fa0c4d8283502b65d500373c93"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -22,9 +22,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp",
+      "sha256": "2715c77def29c522814c6fb4ea6c7356a76378e4dd569a03767dd66dd434a20d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
       "source_path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
       "sha256": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp",
+      "sha256": "1aff0cd96b2b80de2c5da57500a7f6261022d76ac831afbcafd7a4222fcdbc04",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -242,6 +256,13 @@
       "path": "rules/bifrost.security/policies/go/gob-decode-network-input.rqlp",
       "source_path": "rules/bifrost.security/policies/go/gob-decode-network-input.rqlp",
       "sha256": "e5937c9d2696e6dafe3e403a12e3a77972cee960ae1e28c158d26f2afa85e6be",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
+      "source_path": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
+      "sha256": "c4b674294f7c0590a24e8bf3f50b6603bde3f4399ca62f5d692c1703034d883f",
       "classification": "public",
       "license": "Apache-2.0"
     },

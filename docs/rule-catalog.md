@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 272 unique rule IDs from 14 manifest packs.
+This catalog lists 275 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -226,7 +226,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Sleep near a nested try_recv call](../rules/bifrost.rust-generic/policies/sleep-before-try-recv.rqlp) | `bifrost.rust.sleep-before-try-recv` | rust | performance | note |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
+| [C# external input chooses the XML document read by DataSet or DataTable](../rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp) | `bifrost.security.csharp.dataset-read-xml-external-location` | csharp | security | warning |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
+| [C# external input used as a regular-expression pattern without a timeout](../rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp) | `bifrost.security.csharp.regex-pattern-injection` | csharp | security | warning |
 | [C# XML signature checked with the document's embedded key](../rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp) | `bifrost.security.csharp.signedxml-embedded-key-trust` | csharp | security | warning |
 | [C# XML injection](../rules/bifrost.security/policies/csharp/xml-injection.rqlp) | `bifrost.security.csharp.xml-injection` | csharp | security | error |
 | [C# XmlDocument resolves external entities](../rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp) | `bifrost.security.csharp.xmldocument-url-resolver` | csharp | security | warning |
@@ -258,6 +260,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value requires the configured validator (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp) | `bifrost.security.typescript.store-requires-validation` | typescript | security | warning |
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
 | [Go network connection decoded with encoding/gob](../rules/bifrost.security/policies/go/gob-decode-network-input.rqlp) | `bifrost.security.go.gob-decode-network-input` | go | security | warning |
+| [Go network connection read to EOF without a size bound](../rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp) | `bifrost.security.go.network-read-all-unbounded` | go | security | warning |
 | [Process argument reaches a Node fs write path](../rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-write-path` | javascript | security | warning |
 | [Process argument parsed by legacy url.parse](../rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp) | `bifrost.security.javascript.process-input-to-legacy-url-parse` | javascript | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
