@@ -1,0 +1,8 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+internal = { version = "1.0", registry = "corp" }
+serde = "1.0"
