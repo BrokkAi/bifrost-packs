@@ -16,6 +16,7 @@ from scripts.content import read_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "65b68f55b537ab77b7ecd8569b0c838aac9be0ea"
+IO_DECLARATIONS_COMMIT = "21151aab8d92052e3a766620c5d531f92bf87089"
 JOBS = {
     "go-stdlib-compress-gzip": {
         "pack_id": "bifrost.go.stdlib.compress-gzip",
@@ -99,7 +100,7 @@ class GoReadAllNativeJobTests(unittest.TestCase):
                 self.assertEqual(spec["artifact"]["sha256"], _sha256(model_bytes))
                 self.assertEqual(
                     spec["artifact"]["url"],
-                    f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{_model(name)}",
+                    f"https://github.com/BrokkAi/bifrost-packs/blob/{IO_DECLARATIONS_COMMIT if name == 'go-stdlib-io-declarations' else SOURCE_COMMIT}/{_model(name)}",
                 )
 
     def test_summaries_pass_the_reader_through(self):
