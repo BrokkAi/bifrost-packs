@@ -59,10 +59,12 @@ def _sha256(data: bytes) -> str:
 class GoGobNativeJobTests(unittest.TestCase):
     """Pin the gob jobs, the net interface summaries and the fixture copies."""
 
-    def test_gob_jobs_are_the_last_two_and_bind_their_specs(self):
+    def test_gob_jobs_are_adjacent_and_bind_their_specs(self):
         jobs = _load("native-generation.json")["jobs"]
-        self.assertEqual([job["name"] for job in jobs[-2:]], list(GOB_JOBS))
-        for job in jobs[-2:]:
+        names = [job["name"] for job in jobs]
+        start = names.index("go-stdlib-encoding-gob")
+        self.assertEqual(names[start:start + 2], list(GOB_JOBS))
+        for job in jobs[start:start + 2]:
             expected = GOB_JOBS[job["name"]]
             with self.subTest(job=job["name"]):
                 self.assertEqual(job, {"name": job["name"], "spec": expected["spec"], "artifact": expected["model"]})

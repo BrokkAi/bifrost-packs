@@ -1,0 +1,143 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.net-smtp",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/net/smtp",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.net-smtp.summaries",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "net-smtp.dial",
+            "target": {
+              "path": "src/net/smtp/smtp.go",
+              "symbol": "net/smtp.Dial(addr string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "net-smtp.plain-auth",
+            "target": {
+              "path": "src/net/smtp/auth.go",
+              "symbol": "net/smtp.PlainAuth(identity, username, password, host string)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 2
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 3
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "net-smtp.client.start-tls",
+            "target": {
+              "path": "src/net/smtp/smtp.go",
+              "symbol": "net/smtp.Client.StartTLS(config *tls.Config)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "net-smtp.client.auth",
+            "target": {
+              "path": "src/net/smtp/smtp.go",
+              "symbol": "net/smtp.Client.Auth(a Auth)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "net-smtp.client.close",
+            "target": {
+              "path": "src/net/smtp/smtp.go",
+              "symbol": "net/smtp.Client.Close()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

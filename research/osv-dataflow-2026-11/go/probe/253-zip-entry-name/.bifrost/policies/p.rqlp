@@ -1,0 +1,30 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.go.tar-entry-path-traversal"
+  :name "n" :message "m" :severity warning :description "d"
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source :id zip-open-reader :display-name "zip.OpenReader archive" :categories [io.external]
+              :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "archive/zip.OpenReader" :proof declared
+                (call-bindings (call-shape (call :callee (name "OpenReader") :arity 1))))))
+              :bind (result :index 0) :labels [untrusted])])
+      :sanitizers
+        (endpoint-set
+          :entries [
+            (sanitizer :id filepath-base
+              :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "path/filepath.Base" :proof declared
+                (call-bindings (call-shape (call :callee (name "Base") :arity 1)))))))
+              :input (argument :index 0) :output return-value :removes [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink :id os-create :display-name "os.Create path" :categories [path-traversal]
+              :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "os.Create" :proof declared
+                (call-bindings (call-shape (call :callee (name "Create") :arity 1)))))))
+              :dangerous-operand (argument :index 0) :accepts [untrusted])])))

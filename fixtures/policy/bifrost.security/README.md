@@ -22,6 +22,11 @@ version-independent part of the Go CVE lead BrokkAi/bifrost-packs#192 against
 the reviewed `bifrost.go.stdlib.net` and `bifrost.go.stdlib.encoding-gob`
 models.
 
+`go-network-read-all-unbounded` is not a CodeQL port either. It qualifies the
+version-independent part of the Go CVE lead BrokkAi/bifrost-packs#252 against
+the reviewed `bifrost.go.stdlib.net`, `bifrost.go.stdlib.compress-gzip` and
+`bifrost.go.stdlib.io` models.
+
 `java-objectinputstream-read-without-filter` is not a CodeQL port. It
 qualifies the version-independent part of the Java CVE lead
 BrokkAi/bifrost-packs#301 (CVE-2026-41586) against the generated JDK members
