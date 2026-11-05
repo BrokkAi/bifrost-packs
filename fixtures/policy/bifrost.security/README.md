@@ -11,6 +11,12 @@ XmlDocument part of the stdlib candidate
 `dotnet-xmlreader-external-dtd-resolution` against the reviewed
 `bifrost.dotnet.system-xml-csharp` model.
 
+`regex-pattern-injection` and `dataset-read-xml-external-location` are not
+CodeQL ports. They qualify the version-independent parts of the .NET CVE leads
+BrokkAi/bifrost-packs#263 (CVE-2019-0820) and #262 (CVE-2020-1147) against the
+reviewed `bifrost.dotnet.system-text-regularexpressions-csharp` and
+`bifrost.dotnet.system-data-csharp` models.
+
 `go-gob-decode-network-input` is not a CodeQL port. It qualifies the
 version-independent part of the Go CVE lead BrokkAi/bifrost-packs#192 against
 the reviewed `bifrost.go.stdlib.net` and `bifrost.go.stdlib.encoding-gob`

@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 270 unique rule IDs from 13 manifest packs.
+This catalog lists 272 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -226,7 +226,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Sleep near a nested try_recv call](../rules/bifrost.rust-generic/policies/sleep-before-try-recv.rqlp) | `bifrost.rust.sleep-before-try-recv` | rust | performance | note |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
+| [C# external input chooses the XML document read by DataSet or DataTable](../rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp) | `bifrost.security.csharp.dataset-read-xml-external-location` | csharp | security | warning |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
+| [C# external input used as a regular-expression pattern without a timeout](../rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp) | `bifrost.security.csharp.regex-pattern-injection` | csharp | security | warning |
 | [C# XML signature checked with the document's embedded key](../rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp) | `bifrost.security.csharp.signedxml-embedded-key-trust` | csharp | security | warning |
 | [C# XML injection](../rules/bifrost.security/policies/csharp/xml-injection.rqlp) | `bifrost.security.csharp.xml-injection` | csharp | security | error |
 | [C# XmlDocument resolves external entities](../rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp) | `bifrost.security.csharp.xmldocument-url-resolver` | csharp | security | warning |

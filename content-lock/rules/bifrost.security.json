@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "9e32ce89b3f2292b5773c09e6b74fb010e05678691e7b4fabbe50455ed7f2e4d"
+      "sha256": "39d29345d2a09087481c4c30c608116188ea9392d594667924650368cc6ccfe9"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -22,9 +22,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp",
+      "sha256": "2715c77def29c522814c6fb4ea6c7356a76378e4dd569a03767dd66dd434a20d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
       "source_path": "rules/bifrost.security/policies/csharp/ldap-injection.rqlp",
       "sha256": "a7cdd9741c21e20397204e5116c3843c5b23317e49e1b73696bd5a53030fedd4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp",
+      "sha256": "1aff0cd96b2b80de2c5da57500a7f6261022d76ac831afbcafd7a4222fcdbc04",
       "classification": "public",
       "license": "Apache-2.0"
     },
