@@ -308,7 +308,8 @@
         "scoped-callable-completeness"
       ],
       "severity_rationale": "A network peer controls every byte a gob decoder reads, and the decoder is documented as not hardened against adversarial input; a crafted stream can exhaust the stack (CVE-2024-34156) or other resources on any toolchain.",
-      "remediation": "Do not decode gob from untrusted peers. Use a format with an explicit schema and size limits for network input, or authenticate the peer and bound the stream before decoding."
+      "remediation": "Do not decode gob from untrusted peers. Use a format with an explicit schema and size limits for network input, or authenticate the peer and bound the stream before decoding.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/jvm/servlet-parameter-to-jdbc.rqlp",

@@ -20,6 +20,8 @@ into `.bifrost/semantic-models`:
   can't express their write into the argument, and a complete summary with no
   transfers would claim that decoding writes nothing there.
 
+The policy is opt-in (`"activation": "opt-in"`): it does not run by default.
+
 **Every run that decodes is inconclusive on Bifrost 0.15.1.** Every real gob
 use calls `Decode`, which is unmodeled, and the policy uses `require-model`.
 The findings are still reported, definite and complete, but no run proves
