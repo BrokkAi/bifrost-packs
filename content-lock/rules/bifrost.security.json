@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "535d667a35d0ec2f198277d39a022d1e03ea749545a758941c7f07e827388bcf"
+      "sha256": "0f7364d4502034edc61e02062658453874f3eb75b4b368bd5daadaab39c93c09"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -249,6 +249,20 @@
       "path": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
       "source_path": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
       "sha256": "c4b674294f7c0590a24e8bf3f50b6603bde3f4399ca62f5d692c1703034d883f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp",
+      "sha256": "cfe16cb708541c66cfe68c10418650a53e323ae953bba6e67e500bf021207682",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp",
+      "sha256": "71b44eb2b370c111ac1cb2d184898b6f5ca92d028103aa71c8f5d997771bc94a",
       "classification": "public",
       "license": "Apache-2.0"
     },
