@@ -421,7 +421,7 @@
       "advisory": "CVE-2022-46176",
       "outcome": "rule",
       "blocking_issues": [],
-      "note": "0.15.1: locked git+ssh Cargo rows joined to rust-toolchain rows before 1.66.1 through declared_by; 10/10 fixture cases pass. A workspace .cargo/config.toml (including git-fetch-with-cli = true) stays inconclusive: Cargo config is unread, although bifrost-dev#3768 is closed.",
+      "note": "0.15.1: locked git+ssh Cargo rows joined to rust-toolchain rows before 1.66.1 through declared_by; 10/10 fixture cases pass. A workspace .cargo/config.toml (including git-fetch-with-cli = true) stays inconclusive: Cargo config is unread, although bifrost-dev#3768 is closed (now bifrost-dev#9902).",
       "rule": "bifrost.security.rust.cargo-ssh-git-host-key-unverified"
     },
     {
@@ -429,8 +429,10 @@
       "language": "rust",
       "advisory": "CVE-2022-36113",
       "outcome": "blocked_by_engine",
-      "blocking_issues": [],
-      "note": "0.15.1: alternate-registry declarations never associate with their lock entries, because the [registries] index in .cargo/config.toml is unread. Every positive is inconclusive. A new engine issue is needed."
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9902"
+      ],
+      "note": "0.15.1: alternate-registry declarations never associate with their lock entries, because the [registries] index in .cargo/config.toml is unread. Every positive is inconclusive. Engine issue: bifrost-dev#9902."
     }
   ],
   "bifrost_0150": {
