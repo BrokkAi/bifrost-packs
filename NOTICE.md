@@ -53,6 +53,12 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   API names and signatures from the Go 1.26.0 `encoding/gob` documentation and
   are BSD-3-Clause; see semantic-packs/go/notices/go-1.26.0-BSD-3-Clause.txt
   and semantic-packs/models/go-stdlib-encoding-gob*.json.
+- The authored Go compress/gzip and io declaration and summary models record
+  public API names and signatures from the Go 1.26.0 `compress/gzip` and `io`
+  documentation and are BSD-3-Clause; see
+  semantic-packs/go/notices/go-1.26.0-BSD-3-Clause.txt and
+  semantic-packs/models/go-stdlib-compress-gzip*.json and
+  semantic-packs/models/go-stdlib-io*.json.
 - Kotlin, Scala, Typeshed, PHPStorm and TypeScript source specifications retain
   their recorded license, pinned input hashes, and notices. Downloaded inputs
   are not vendored here. Node's complete upstream notice is preserved.
