@@ -1,0 +1,344 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.net-smtp-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/net/smtp",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.net-smtp.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.c3f2fd3dc72571e7f494b8bdebb73f0e145be543bc720830226a7da2a9d1dda9",
+            "name": "net/smtp",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "smtp"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/smtp.go",
+              "symbol": "net/smtp"
+            }
+          },
+          {
+            "id": "type.3505df8ee2774be6eb93ff80092c98990a69f762f74ace26f80fc2c5b7d6cf66",
+            "name": "net/smtp.Client",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/smtp.go",
+              "symbol": "net/smtp.Client"
+            }
+          },
+          {
+            "id": "type.30f21c80c0853d54e32f9b138ff59aa5c4acda8724d1c2250cacde73d37005fd",
+            "name": "net/smtp.Auth",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/auth.go",
+              "symbol": "net/smtp.Auth"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.7e2fe9e5d43ea4f69a2d56480c68f662a79f543f3e0ddaf1205373d523e3fb0a",
+            "owner": "type.c3f2fd3dc72571e7f494b8bdebb73f0e145be543bc720830226a7da2a9d1dda9",
+            "name": "Dial",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "addr",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "pointer",
+                    "element": {
+                      "kind": "declared",
+                      "id": "type.3505df8ee2774be6eb93ff80092c98990a69f762f74ace26f80fc2c5b7d6cf66",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/smtp.go",
+              "symbol": "net/smtp.Dial"
+            }
+          },
+          {
+            "id": "member.7edf1f1775502e420a36d4b7202414e7de70da3f3d1221fa56cc208d89a35fab",
+            "owner": "type.c3f2fd3dc72571e7f494b8bdebb73f0e145be543bc720830226a7da2a9d1dda9",
+            "name": "PlainAuth",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "identity",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "username",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "password",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "host",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "declared",
+                "id": "type.30f21c80c0853d54e32f9b138ff59aa5c4acda8724d1c2250cacde73d37005fd",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/auth.go",
+              "symbol": "net/smtp.PlainAuth"
+            }
+          },
+          {
+            "id": "member.960719f05f5c08490a28d4868601ae2e19b2698c9fee5e8476d721df275dd73f",
+            "owner": "type.3505df8ee2774be6eb93ff80092c98990a69f762f74ace26f80fc2c5b7d6cf66",
+            "name": "StartTLS",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "config",
+                  "type": {
+                    "kind": "pointer",
+                    "element": {
+                      "kind": "named",
+                      "name": "crypto/tls.Config",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/smtp.go",
+              "symbol": "net/smtp.Client.StartTLS"
+            }
+          },
+          {
+            "id": "member.a6896442639fcb7bc87c2a42faac71d506facf0d66eb4a6a2511d3b8c452a71c",
+            "owner": "type.3505df8ee2774be6eb93ff80092c98990a69f762f74ace26f80fc2c5b7d6cf66",
+            "name": "Auth",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "a",
+                  "type": {
+                    "kind": "declared",
+                    "id": "type.30f21c80c0853d54e32f9b138ff59aa5c4acda8724d1c2250cacde73d37005fd",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/smtp.go",
+              "symbol": "net/smtp.Client.Auth"
+            }
+          },
+          {
+            "id": "member.415c2c75fdac839f999d661aed5557e2843312aef9ae13b6fdbebf1909722bf3",
+            "owner": "type.3505df8ee2774be6eb93ff80092c98990a69f762f74ace26f80fc2c5b7d6cf66",
+            "name": "Close",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/smtp/smtp.go",
+              "symbol": "net/smtp.Client.Close"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

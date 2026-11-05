@@ -1,7 +1,7 @@
 {
   "schema_version": 14,
   "pack_id": "bifrost.python-security-sink-summaries",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -17,8 +17,8 @@
     ]
   },
   "provenance": {
-    "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, and credential APIs",
-    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, exact factory, and I/O write summaries"
+    "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, webbrowser, and credential APIs",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, webbrowser launch, exact factory, and I/O write summaries"
   },
   "license": "PSF-2.0",
   "completeness": "complete",
@@ -2029,6 +2029,98 @@
                 "input": {
                   "kind": "parameter",
                   "ordinal": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.webbrowser.open",
+            "target": {
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open(url, new, autoraise)",
+              "has_receiver": false,
+              "parameter_count": 3,
+              "formals": [
+                {
+                  "name": "url"
+                },
+                {
+                  "name": "new",
+                  "optional": true
+                },
+                {
+                  "name": "autoraise",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.webbrowser.open.url",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.webbrowser.open_new",
+            "target": {
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open_new(url)",
+              "has_receiver": false,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "url"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.webbrowser.open_new.url",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.webbrowser.open_new_tab",
+            "target": {
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open_new_tab(url)",
+              "has_receiver": false,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "url"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.webbrowser.open_new_tab.url",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
                 }
               }
             ]

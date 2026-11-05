@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 266 unique rule IDs from 12 manifest packs.
+This catalog lists 278 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -220,9 +220,15 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | warning |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
+| [Unwrap of a call named output in a build script](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
+| [Expect on a call named read_dir or remove_file](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
+| [Expect on a var call for a home-directory key](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
+| [Sleep near a nested try_recv call](../rules/bifrost.rust-generic/policies/sleep-before-try-recv.rqlp) | `bifrost.rust.sleep-before-try-recv` | rust | performance | note |
 | [C# assembly path injection](../rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp) | `bifrost.security.csharp.assembly-path-injection` | csharp | security | error |
 | [C# code injection](../rules/bifrost.security/policies/csharp/code-injection.rqlp) | `bifrost.security.csharp.code-injection` | csharp | security | error |
+| [C# external input chooses the XML document read by DataSet or DataTable](../rules/bifrost.security/policies/csharp/dataset-read-xml-external-location.rqlp) | `bifrost.security.csharp.dataset-read-xml-external-location` | csharp | security | warning |
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
+| [C# external input used as a regular-expression pattern without a timeout](../rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp) | `bifrost.security.csharp.regex-pattern-injection` | csharp | security | warning |
 | [C# XML signature checked with the document's embedded key](../rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp) | `bifrost.security.csharp.signedxml-embedded-key-trust` | csharp | security | warning |
 | [C# XML injection](../rules/bifrost.security/policies/csharp/xml-injection.rqlp) | `bifrost.security.csharp.xml-injection` | csharp | security | error |
 | [C# XmlDocument resolves external entities](../rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp) | `bifrost.security.csharp.xmldocument-url-resolver` | csharp | security | warning |
@@ -254,6 +260,10 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value requires the configured validator (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp) | `bifrost.security.typescript.store-requires-validation` | typescript | security | warning |
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
 | [Go network connection decoded with encoding/gob](../rules/bifrost.security/policies/go/gob-decode-network-input.rqlp) | `bifrost.security.go.gob-decode-network-input` | go | security | warning |
+| [Go network connection read to EOF without a size bound](../rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp) | `bifrost.security.go.network-read-all-unbounded` | go | security | warning |
+| [Process argument reaches a Node fs write path](../rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-write-path` | javascript | security | warning |
+| [Process argument parsed by legacy url.parse](../rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp) | `bifrost.security.javascript.process-input-to-legacy-url-parse` | javascript | security | warning |
+| [ObjectInputStream read before an ObjectInputFilter is set](../rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp) | `bifrost.security.java.objectinputstream-read-without-filter` | java | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
@@ -266,6 +276,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python overly permissive file mode](../rules/bifrost.security/policies/python/overly-permissive-file.rqlp) | `bifrost.security.python.overly-permissive-file` | python | security | warning |
 | [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
+| [Process input reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp) | `bifrost.security.python.process-input-to-urlopen` | python | security | warning |
+| [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
 | [SSH git dependency fetched by a Cargo that skips host-key checks](../rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified` | rust | security | warning |

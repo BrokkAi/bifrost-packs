@@ -1,0 +1,8 @@
+(policy :schema-version 1 :id "x.tls" :name "n" :message "m" :severity warning :description "d"
+  :analysis (analysis :type typestate :mode may :call-modeling (call-modeling :unmodeled paranoid)
+    :subjects (subject-set :entries [
+      (subject :id cfg :selector (rql :schema-version 1 (language go (call :callee (name "NewListener")))) :subject (argument :index 1))])
+    :uncertainty (uncertainty :escape inconclusive)
+    :automaton (automaton :states [inuse violated] :initial inuse :accepting-states [inuse] :error-states [violated]
+      :events [ (event :id w :field-write (calls :selector (rql :schema-version 1 (language go (call :callee (name "x")))) :subject receiver :phase after-normal-return)) ]
+      :transitions [(transition :from inuse :on w :to violated)])))
