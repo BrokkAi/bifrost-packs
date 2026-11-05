@@ -35,8 +35,12 @@ semantic-model schema 22 instead of 21, so it needs Bifrost 0.15.1 or later.
 The bundle keeps release index schema 4 and lists 64 packs.
 
 `rules/v0.10.0` is a minor release. It requires Bifrost 0.15.1 or later and
-depends exactly on `packs/v0.10.0`. `bifrost.security` 2.2.0 adds two opt-in
-policies. `bifrost.security.rust.cargo-ssh-git-host-key-unverified`
+depends exactly on `packs/v0.10.0`. It adds the new `bifrost.rust-generic`
+0.1.0 pack (#243): four note-severity review prompts from public Rust bug
+fixes, enabled by default. They match calls by name (`output`, `read_dir`,
+`remove_file`, `sleep`/`try_recv` and `HOME`/`USERPROFILE` env reads), not by
+proven standard-library identity, and need only `structural-match`.
+`bifrost.security` 2.2.0 adds two opt-in policies. `bifrost.security.rust.cargo-ssh-git-host-key-unverified`
 (CVE-2022-46176) uses the Rust toolchain dependency evidence that 0.15.1
 introduced. No capability name covers that evidence, so it declares none, and
 Bifrost 0.15.0 rejects it at validation.

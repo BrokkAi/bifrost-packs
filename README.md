@@ -88,8 +88,9 @@ The latest releases are `packs/v0.9.0` and `rules/v0.9.1`. `packs/v0.10.0`
 and `rules/v0.10.0` are prepared next. Both need Bifrost 0.15.1 or later.
 `packs/v0.10.0` adds the Go `encoding/gob` packs and `net` 2.1.0 interface
 summaries and is built by the released 0.15.1 producer. `rules/v0.10.0` adds
-two opt-in `bifrost.security` policies (Cargo SSH git host keys and gob decoding
-of network input) and depends on `packs/v0.10.0`. See
+the default-on `bifrost.rust-generic` review prompts and two opt-in
+`bifrost.security` policies (Cargo SSH git host keys and gob decoding of
+network input), and depends on `packs/v0.10.0`. See
 [release streams](docs/release-streams.md).
 
 ## Source verification
