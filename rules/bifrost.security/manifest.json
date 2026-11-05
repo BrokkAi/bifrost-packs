@@ -448,6 +448,25 @@
       "remediation": "Avoid passing untrusted text to Runtime.exec. Use a fixed executable and validate arguments against an allowlist."
     },
     {
+      "path": "policies/jvm/objectinputstream-read-without-filter.rqlp",
+      "id": "bifrost.security.java.objectinputstream-read-without-filter",
+      "authored_hash": "2ce2f8532a6a169802337732c4295fc354860a6f2c35620a744ab35dc856e297",
+      "resolved_semantic_hash": "2ce2f8532a6a169802337732c4295fc354860a6f2c35620a744ab35dc856e297",
+      "category": "security",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "typestate",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "An ObjectInputStream without a filter instantiates any serializable class its input names, so a caller who controls the bytes can trigger gadget chains (CVE-2026-41586) on any JDK.",
+      "remediation": "Call setObjectInputFilter with an allow-list filter before the first readObject, or replace Java serialization with a schema-checked format for data the application doesn't produce itself.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/declared-storage/javascript-store-requires-validation.rqlp",
       "id": "bifrost.security.javascript.store-requires-validation",
       "authored_hash": "7c90fe3b5e5ac546dbd6a4f00aee5a2f03c56176869cbca95c7f3873b4445f5d",

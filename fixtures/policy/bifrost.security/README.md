@@ -27,6 +27,12 @@ version-independent part of the Go CVE lead BrokkAi/bifrost-packs#252 against
 the reviewed `bifrost.go.stdlib.net`, `bifrost.go.stdlib.compress-gzip` and
 `bifrost.go.stdlib.io` models.
 
+`java-objectinputstream-read-without-filter` is not a CodeQL port. It
+qualifies the version-independent part of the Java CVE lead
+BrokkAi/bifrost-packs#301 (CVE-2026-41586) against the generated JDK members
+for `java.io.ObjectInputStream`. On Bifrost 0.15.1 every run is inconclusive
+and every finding is `possible`; see its `README.md`.
+
 The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.
 
 `cargo-ssh-git-host-key-unverified` qualifies the Rust CVE lead

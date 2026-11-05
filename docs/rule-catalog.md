@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 277 unique rule IDs from 13 manifest packs.
+This catalog lists 278 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -263,6 +263,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Go network connection read to EOF without a size bound](../rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp) | `bifrost.security.go.network-read-all-unbounded` | go | security | warning |
 | [Process argument reaches a Node fs write path](../rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-write-path` | javascript | security | warning |
 | [Process argument parsed by legacy url.parse](../rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp) | `bifrost.security.javascript.process-input-to-legacy-url-parse` | javascript | security | warning |
+| [ObjectInputStream read before an ObjectInputFilter is set](../rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp) | `bifrost.security.java.objectinputstream-read-without-filter` | java | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
