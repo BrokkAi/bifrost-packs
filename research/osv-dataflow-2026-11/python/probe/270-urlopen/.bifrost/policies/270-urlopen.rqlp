@@ -1,0 +1,57 @@
+(policy
+  :schema-version 1
+  :id "bifrost.research.python.process-input-to-urlopen"
+  :name "Process input reaches urllib.request.urlopen"
+  :message "A process input reached the url argument of urllib.request.urlopen"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#270."
+  :tags ["security" "python" "ssrf" "cwe-918"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global os :container environ
+                      :key-kind static-property :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global sys :container argv
+                      :key-kind static-index :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id urlopen-url
+              :display-name "urllib.request.urlopen url"
+              :categories [network.request]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.python.urllib.request.urlopen :proof declared
+                        (call-bindings (call-shape (call :callee (name "urlopen"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification :fallback (classification-id :taxonomy "CWE" :id "918")))
