@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 268 unique rule IDs from 13 manifest packs.
+This catalog lists 270 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -257,6 +257,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value reaches JDBC SQL (Scala)](../rules/bifrost.security/policies/declared-storage/scala-stored-request-to-sql.rqlp) | `bifrost.security.scala.stored-request-to-sql` | scala | security | error |
 | [Stored request value requires the configured validator (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp) | `bifrost.security.typescript.store-requires-validation` | typescript | security | warning |
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
+| [Go network connection decoded with encoding/gob](../rules/bifrost.security/policies/go/gob-decode-network-input.rqlp) | `bifrost.security.go.gob-decode-network-input` | go | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
@@ -271,5 +272,6 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
+| [SSH git dependency fetched by a Cargo that skips host-key checks](../rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
 | [Stored type parameter lacks a Send or Sync bound](../rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp) | `bifrost.security.rust.unsound-send-sync-impl` | rust | security | error |

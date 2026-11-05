@@ -2,11 +2,11 @@
   "schema_version": 1,
   "generator": {
     "repository": "https://github.com/BrokkAi/bifrost",
-    "commit": "fc4a2da2b78c938e811c496b3c21e5b02f415048",
-    "version": "0.15.0",
-    "asset": "bifrost-semantic-pack-v0.15.0-x86_64-unknown-linux-gnu.tar.gz",
-    "asset_sha256": "825294fb3ddda0c97c44c222b544b451818f04dd11817dcd79069d1c856bac79",
-    "binary_sha256": "d6c19acdcbf37d495e4c0b3f7490746e6235da3522aba5deba4c78f904312031"
+    "commit": "04fdd17d2606d13a7a5f13b012bfbe3ad9729d1e",
+    "version": "0.15.1",
+    "asset": "bifrost-semantic-pack-v0.15.1-x86_64-unknown-linux-gnu.tar.gz",
+    "asset_sha256": "8989298644bda041997308823122f904291a22010d93359ed3580053aa052f8e",
+    "binary_sha256": "7322cdbd653830aaba349c9a278eceb97573965739b2845412a3074080b6acc2"
   },
   "jobs": [
     {
@@ -278,6 +278,16 @@
       "name": "node-runtime-values-typescript",
       "spec": "semantic-packs/node/runtime-values/node-runtime-values-typescript.spec.json",
       "artifact": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json"
+    },
+    {
+      "name": "go-stdlib-encoding-gob",
+      "spec": "semantic-packs/go/go-stdlib-encoding-gob.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-encoding-gob.json"
+    },
+    {
+      "name": "go-stdlib-encoding-gob-declarations",
+      "spec": "semantic-packs/go/go-stdlib-encoding-gob-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-encoding-gob-declarations.json"
     }
   ],
   "recipes": [

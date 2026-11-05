@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "16670452e8afae3e09852f33e259d97063b690c81d9526864571e948d18f31eb"
+      "sha256": "9e32ce89b3f2292b5773c09e6b74fb010e05678691e7b4fabbe50455ed7f2e4d"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -239,6 +239,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/go/gob-decode-network-input.rqlp",
+      "source_path": "rules/bifrost.security/policies/go/gob-decode-network-input.rqlp",
+      "sha256": "e5937c9d2696e6dafe3e403a12e3a77972cee960ae1e28c158d26f2afa85e6be",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp",
       "sha256": "ed0bb56305f140ee203d6e6c5135d8d8943fc493eadc85a03f632a4cf1748f70",
@@ -333,6 +340,13 @@
       "path": "rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp",
       "sha256": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
+      "sha256": "520e85d3c6e0f31ba1f5f79fb870e6f6fd98068d77b384445210deef2e302727",
       "classification": "public",
       "license": "Apache-2.0"
     },
