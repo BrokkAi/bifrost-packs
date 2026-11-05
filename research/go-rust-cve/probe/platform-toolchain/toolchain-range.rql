@@ -1,0 +1,5 @@
+; CVE-2026-78667 (GO-2026-6609) affected toolchains, in go/version order.
+; OSV: introduced 0, fixed 1.26.9; introduced 1.27.0-0, fixed 1.27.2.
+(dependency-evidence
+  :ecosystem go-toolchain
+  :version-range "<1.26.9 || >=1.27 <1.27.2")

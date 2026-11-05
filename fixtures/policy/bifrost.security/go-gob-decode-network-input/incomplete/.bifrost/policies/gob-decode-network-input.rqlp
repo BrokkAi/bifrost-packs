@@ -1,0 +1,101 @@
+; Lead: BrokkAi/bifrost-packs#192 (CVE-2024-34156), version-independent part.
+; Product source contract: the encoding/gob package documentation says the
+; decoder is not hardened against adversarial input, and CVE-2024-34156 shows a
+; crafted stream exhausting the stack. Fixed toolchains still decode untrusted
+; streams with that documented limit, so connection bytes reaching
+; gob.NewDecoder are reported on every Go toolchain. The CVE's affected-version
+; part needs toolchain evidence the engine does not have
+; (research/go-rust-cve/README.md).
+; Engine contract: sources and the sink bind exactly to the reviewed
+; bifrost.go.stdlib.net and bifrost.go.stdlib.encoding-gob models. Calls through
+; net.Conn and net.Listener close only through those models' summaries that
+; claim covers_overrides. Any other call on the path must be modeled, so an
+; unmodeled wrapper such as bufio.NewReader leaves the run inconclusive instead
+; of clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.go.gob-decode-network-input"
+  :name "Go network connection decoded with encoding/gob"
+  :message "bytes from a network connection reach gob.NewDecoder"
+  :severity warning
+  :description "Reports net.Dial, net.DialTimeout and net.Listener.Accept connections that reach the reader operand of encoding/gob.NewDecoder. The gob decoder is documented as not hardened against adversarial input (CVE-2024-34156), so a peer controls a decoder that can exhaust resources on any toolchain."
+  :tags ["security" "go" "deserialization" "cwe-502"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id net-dial
+              :display-name "net.Dial connection"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (resolved-call
+                      :resolves-to "net.Dial"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "Dial") :arity 2))))))
+              :bind (result :index 0)
+              :labels [untrusted])
+            (source
+              :id net-dial-timeout
+              :display-name "net.DialTimeout connection"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (resolved-call
+                      :resolves-to "net.DialTimeout"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "DialTimeout") :arity 3))))))
+              :bind (result :index 0)
+              :labels [untrusted])
+            (source
+              :id net-listener-accept
+              :display-name "net.Listener.Accept connection"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (resolved-call
+                      :resolves-to "net.Listener.Accept"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "Accept") :arity 0))))))
+              :bind (result :index 0)
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id gob-new-decoder-reader
+              :display-name "gob.NewDecoder reader"
+              :categories [deserialization]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "encoding/gob.NewDecoder"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "NewDecoder") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "502")))
