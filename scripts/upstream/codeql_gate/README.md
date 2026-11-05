@@ -25,6 +25,12 @@ python3 -I scripts/upstream/codeql_gate/gate.py run go/duplicate-branches \
 ```
 
 Commands: `expected QUERY`, `prepare QUERY`, `run QUERY POLICY`, `summary`.
+`fixture NAME POLICY --language rust --fixture-root DIR --binary BINARY` copies
+an engine CQ fixture directory with its `app/` and sibling `stubs/`, activates
+the repeated `--model-pack` files in the copied app, and reports completion,
+finding lines and diagnostic families. The policy path is relative to `app/`.
+It does not use a CodeQL oracle; compare its output with the engine test's
+assertions before using the qltest gate.
 `--test-dir` is relative to the checkout and repeatable; omitted directories
 are discovered from matching `.qlref` files. `--query-path` overrides query
 resolution by `@id` in `<language>/ql/src`. Only exact query paths or their
