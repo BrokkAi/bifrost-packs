@@ -1,0 +1,8 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.77.0"
+
+[dependencies]
+serde = { git = "ssh://git@github.com/serde-rs/serde.git" }
