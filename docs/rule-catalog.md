@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 276 unique rule IDs from 13 manifest packs.
+This catalog lists 278 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -276,6 +276,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python overly permissive file mode](../rules/bifrost.security/policies/python/overly-permissive-file.rqlp) | `bifrost.security.python.overly-permissive-file` | python | security | warning |
 | [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
+| [Process input reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp) | `bifrost.security.python.process-input-to-urlopen` | python | security | warning |
+| [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
 | [SSH git dependency fetched by a Cargo that skips host-key checks](../rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified` | rust | security | warning |

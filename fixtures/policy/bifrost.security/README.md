@@ -41,3 +41,9 @@ BrokkAi/bifrost-packs#60 (CVE-2022-46176). It needs Bifrost 0.15.1 Cargo and
 include five where the toolchain or configuration is unknown, and those must
 stay inconclusive. See its `README.md` and
 `docs/qualification/rust-cargo-ssh-git.json`.
+
+`python-process-input-to-urlopen` and `python-process-input-to-webbrowser-open`
+are not CodeQL ports. They qualify the version-independent parts of the Python
+CVE leads BrokkAi/bifrost-packs#270 and #272 against the reviewed
+`bifrost.python-process-inputs`, `bifrost.python-stdlib-api-declarations` and
+`bifrost.python-security-sink-summaries` models.

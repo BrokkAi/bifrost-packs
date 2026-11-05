@@ -1,7 +1,7 @@
 {
   "schema_version": 16,
   "pack_id": "bifrost.python-stdlib-api-declarations",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -18,7 +18,7 @@
   },
   "provenance": {
     "source": "Python standard-library reference and typeshed",
-    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket, http.server request-handler declarations, network APIs, constructors, factories, I/O, SSL protocol, and credential APIs"
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket, http.server request-handler declarations, network APIs, constructors, factories, webbrowser launch functions, I/O, SSL protocol, and credential APIs"
   },
   "license": "Apache-2.0",
   "completeness": "partial",
@@ -678,6 +678,20 @@
                 }
               }
             ]
+          },
+          {
+            "id": "type.python.webbrowser",
+            "name": "webbrowser",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "webbrowser"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser"
+            }
           }
         ],
         "members": [
@@ -3760,6 +3774,109 @@
               }
             },
             "callable_family_complete": true
+          },
+          {
+            "id": "member.python.webbrowser.open",
+            "owner": "type.python.webbrowser",
+            "name": "open",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                },
+                {
+                  "name": "new",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "autoraise",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bool"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open(url, new, autoraise)"
+            }
+          },
+          {
+            "id": "member.python.webbrowser.open_new",
+            "owner": "type.python.webbrowser",
+            "name": "open_new",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bool"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open_new(url)"
+            }
+          },
+          {
+            "id": "member.python.webbrowser.open_new_tab",
+            "owner": "type.python.webbrowser",
+            "name": "open_new_tab",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bool"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open_new_tab(url)"
+            }
           }
         ],
         "relations": []

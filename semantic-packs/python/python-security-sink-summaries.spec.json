@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.python-security-sink-summaries",
-  "pack_version": "0.4.0",
+  "pack_version": "0.5.0",
   "ecosystem": "python",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "bifrost.python-security-sink-summaries.json",
-    "sha256": "681e8742502fbdf7deb32100e1aaafe2faf4e3ac7df7496956202a6187bb47ff",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
+    "sha256": "1866779571a88728179a86b5ca3232c5fb81061594c7a2a61333472e0377f01b",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/bcbb949b52ee120a6947f265318a678d3634f7cd/semantic-packs/python/security-sinks/bifrost.python-security-sink-summaries.json",
     "container": null
   },
   "compatibility": {
@@ -30,8 +30,8 @@
     }
   ],
   "provenance": {
-    "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, and credential APIs",
-    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, exact factory, and I/O write summaries"
+    "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, webbrowser, and credential APIs",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, webbrowser launch, exact factory, and I/O write summaries"
   },
   "license": "PSF-2.0",
   "safety": {

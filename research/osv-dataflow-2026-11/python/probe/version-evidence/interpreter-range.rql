@@ -1,0 +1,2 @@
+; Interpreter gate a version-gated CPython CVE rule would need (CVE-2026-0865 range).
+(dependency-evidence :ecosystem cpython :version-range "<3.13.12")
