@@ -1,0 +1,174 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.regexp-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/regexp",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.regexp.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.5491792030ccf7056f849765608489056454933939214534bdd7635086532028",
+            "name": "regexp",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "regexp"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "regexp/regexp.go",
+              "symbol": "regexp"
+            }
+          },
+          {
+            "id": "type.619f0d1430c6a36dc292dcb3c509cde8ad0d0c59deacfef5b248e07fed1db2a2",
+            "name": "regexp.Regexp",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "regexp/regexp.go",
+              "symbol": "regexp.Regexp"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.037be1382835b61c866dcb700619a24da2f6591e687cc25f2e6789912e81d434",
+            "owner": "type.5491792030ccf7056f849765608489056454933939214534bdd7635086532028",
+            "name": "Compile",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "expr",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "pointer",
+                    "element": {
+                      "kind": "declared",
+                      "id": "type.619f0d1430c6a36dc292dcb3c509cde8ad0d0c59deacfef5b248e07fed1db2a2",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "regexp/regexp.go",
+              "symbol": "regexp.Compile"
+            }
+          },
+          {
+            "id": "member.e4e269f4dd78d8548f6b85791cc04420eb8ae1fc0f666f4741cffd05ceb6b29c",
+            "owner": "type.5491792030ccf7056f849765608489056454933939214534bdd7635086532028",
+            "name": "QuoteMeta",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "s",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "regexp/regexp.go",
+              "symbol": "regexp.QuoteMeta"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

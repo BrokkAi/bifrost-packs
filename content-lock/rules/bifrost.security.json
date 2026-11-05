@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "ba9b98dba766c4e93d230cb0d85bf6dd0c1c3f9709aef49eb2ce77defadaafa1"
+      "sha256": "10d8dfb0f271bdc50571a736664dee766c7cf6fa0c4d8283502b65d500373c93"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -256,6 +256,13 @@
       "path": "rules/bifrost.security/policies/go/gob-decode-network-input.rqlp",
       "source_path": "rules/bifrost.security/policies/go/gob-decode-network-input.rqlp",
       "sha256": "e5937c9d2696e6dafe3e403a12e3a77972cee960ae1e28c158d26f2afa85e6be",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
+      "source_path": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
+      "sha256": "c4b674294f7c0590a24e8bf3f50b6603bde3f4399ca62f5d692c1703034d883f",
       "classification": "public",
       "license": "Apache-2.0"
     },

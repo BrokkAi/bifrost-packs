@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 274 unique rule IDs from 13 manifest packs.
+This catalog lists 275 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -260,6 +260,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value requires the configured validator (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-store-requires-validation.rqlp) | `bifrost.security.typescript.store-requires-validation` | typescript | security | warning |
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
 | [Go network connection decoded with encoding/gob](../rules/bifrost.security/policies/go/gob-decode-network-input.rqlp) | `bifrost.security.go.gob-decode-network-input` | go | security | warning |
+| [Go network connection read to EOF without a size bound](../rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp) | `bifrost.security.go.network-read-all-unbounded` | go | security | warning |
 | [Process argument reaches a Node fs write path](../rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-write-path` | javascript | security | warning |
 | [Process argument parsed by legacy url.parse](../rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp) | `bifrost.security.javascript.process-input-to-legacy-url-parse` | javascript | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
