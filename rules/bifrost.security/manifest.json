@@ -998,6 +998,48 @@
       "severity_rationale": "Caller-supplied code may panic while memory invariants are temporarily broken; this name-based ordering heuristic requires review.",
       "remediation": "Initialize or restore memory invariants before calling caller-supplied code and make unwinding safe.",
       "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-fs-write-path.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-fs-write-path",
+      "authored_hash": "99ac09db7ec74620c40ba6a49b4db91f12007c4fb9324596192a68ae3198ac6b",
+      "resolved_semantic_hash": "99ac09db7ec74620c40ba6a49b4db91f12007c4fb9324596192a68ae3198ac6b",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Whoever supplies the process argument chooses which file the program writes: path.join, path.normalize and path.resolve resolve `..` and keep absolute segments, and affected Windows runtimes also keep device names (CVE-2025-27210).",
+      "remediation": "Resolve the joined path, then reject it unless it stays inside the intended base directory (compare path.relative against `..` and absolute results), or map the argument to a fixed allowlist of file names.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-legacy-url-parse.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-legacy-url-parse",
+      "authored_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
+      "resolved_semantic_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Node documents the legacy url.parse as prone to host name spoofing and not for untrusted input, and issues no CVEs for it, so host checks built on its result can be bypassed; affected runtimes also crash in url.format (CVE-2026-21712).",
+      "remediation": "Parse untrusted URLs with the WHATWG URL API (new URL(input)) and check the resulting origin; do not pass untrusted strings to url.parse or url.format.",
+      "activation": "opt-in"
     }
   ]
 }

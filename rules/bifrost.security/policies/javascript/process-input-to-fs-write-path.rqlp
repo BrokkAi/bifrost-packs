@@ -1,0 +1,105 @@
+; Lead: BrokkAi/bifrost-packs#287 (CVE-2025-27210), version-independent part.
+; Product source contract: path.join, path.normalize and path.resolve resolve
+; `..` segments and never confine a segment to its base (Node v22.11.0
+; doc/api/path.md), so a process argument joined under a base directory can
+; name any file. CVE-2025-27210 adds Windows device names to that on affected
+; runtimes. The device-name part needs Windows and Node runtime evidence the
+; engine does not have (research/osv-dataflow-2026-11/jsts/README.md), so this
+; rule reports the flow on every runtime and platform.
+; Engine contract: the source is a keyed read of the reviewed Node runtime
+; `process.argv` model; path composition binds only through the reviewed
+; bifrost.node-path-javascript summaries, which model the two-argument join and
+; resolve forms and one-argument normalize; the sinks bind exactly to the
+; reviewed bifrost.node-fs-javascript members. Any other call on the path must
+; be modeled, so another arity of path.join or an unmodeled helper leaves the
+; run inconclusive instead of clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.javascript.process-input-to-fs-write-path"
+  :name "Process argument reaches a Node fs write path"
+  :message "a process argument reached the path operand of a Node fs write"
+  :severity warning
+  :description "Reports process.argv values that reach the path operand of fs.writeFileSync, fs.appendFileSync or fs.openSync, directly or through path.join, path.normalize or path.resolve. These path functions resolve `..` and never confine a segment to its base directory, and on affected Windows runtimes they keep device names (CVE-2025-27210), so the caller chooses which file is written."
+  :tags ["security" "javascript" "path-traversal" "cwe-22" "node"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id process-argv-read
+              :display-name "process.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (keyed-read-value
+                      :runtime node
+                      :global process
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id fs-write-file-sync-path
+              :display-name "fs.writeFileSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.write-file-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "writeFileSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-append-file-sync-path
+              :display-name "fs.appendFileSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.append-file-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "appendFileSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-open-sync-path
+              :display-name "fs.openSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.open-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "openSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "22")))
