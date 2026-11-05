@@ -253,6 +253,44 @@
       "remediation": "Leave XmlDocument.XmlResolver at its default or set it to null. If entities must be resolved, use a resolver restricted to trusted resources, or load through XmlReader.Create with DtdProcessing.Prohibit."
     },
     {
+      "path": "policies/csharp/regex-pattern-injection.rqlp",
+      "id": "bifrost.security.csharp.regex-pattern-injection",
+      "authored_hash": "a49111555098e3a0d31fbaae6c8889d3055204ba9f5833b808b22c15036effc3",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A caller-written regular expression can backtrack catastrophically and hold a thread for as long as it runs; without a match timeout the cost is unbounded on any runtime (CVE-2019-0820).",
+      "remediation": "Escape untrusted text with Regex.Escape before building a pattern, or pass a matchTimeout (or use RegexOptions.NonBacktracking) whenever the pattern itself must come from outside."
+    },
+    {
+      "path": "policies/csharp/dataset-read-xml-external-location.rqlp",
+      "id": "bifrost.security.csharp.dataset-read-xml-external-location",
+      "authored_hash": "f9c163683ea0a156d2dcadf9c64838043202af047d7e15407410694f0d605a28",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "DataSet.ReadXml and DataTable.ReadXml instantiate the types an XML document names, so a caller who chooses the file or URL chooses that document; Microsoft's guidance is not to read XML from untrusted input on any version (CVE-2020-1147).",
+      "remediation": "Read only application-owned XML into DataSet or DataTable. For external data, deserialize into fixed types with a schema and size limits, or restrict the allowed DataSet types and validate the source."
+    },
+    {
       "path": "policies/declared-storage/go-store-requires-validation.rqlp",
       "id": "bifrost.security.go.store-requires-validation",
       "authored_hash": "e9e6ee052b90c7d83e5b25928c2dafeac3954ac4fbbc0d10f60915c1f2b99433",
