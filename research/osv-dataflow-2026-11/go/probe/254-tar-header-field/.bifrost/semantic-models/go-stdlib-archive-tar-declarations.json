@@ -1,0 +1,240 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.archive-tar-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/archive/tar",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.archive-tar.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.3bb6426133bfd192fd19fd55949de157a09dcc520fe249b0a8ee2ba211ca0099",
+            "name": "archive/tar",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "tar"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/common.go",
+              "symbol": "archive/tar"
+            }
+          },
+          {
+            "id": "type.1b02d05907cfec350acd9277ae6c446c12485ced671b1f4ca86b55af22d6b3da",
+            "name": "archive/tar.Reader",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/reader.go",
+              "symbol": "archive/tar.Reader"
+            }
+          },
+          {
+            "id": "type.90adae3491cc4abf7e59b90e39cbc60ec34d70f0dfbb99fc1e93aba29b7cb63d",
+            "name": "archive/tar.Header",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/common.go",
+              "symbol": "archive/tar.Header"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.9ef9eaf2330b44b08d3c6f0e8e00a7410244248864bcead2e686f7c794527a2c",
+            "owner": "type.3bb6426133bfd192fd19fd55949de157a09dcc520fe249b0a8ee2ba211ca0099",
+            "name": "NewReader",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "r",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Reader",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "pointer",
+                "element": {
+                  "kind": "declared",
+                  "id": "type.1b02d05907cfec350acd9277ae6c446c12485ced671b1f4ca86b55af22d6b3da",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/reader.go",
+              "symbol": "archive/tar.NewReader"
+            }
+          },
+          {
+            "id": "member.fda5dd63b3a9a1177574d5a5a254026bf6a0a99ad98a10169b10a4df146335d5",
+            "owner": "type.1b02d05907cfec350acd9277ae6c446c12485ced671b1f4ca86b55af22d6b3da",
+            "name": "Next",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "pointer",
+                    "element": {
+                      "kind": "declared",
+                      "id": "type.90adae3491cc4abf7e59b90e39cbc60ec34d70f0dfbb99fc1e93aba29b7cb63d",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/reader.go",
+              "symbol": "archive/tar.Reader.Next"
+            }
+          },
+          {
+            "id": "member.a723f064c5b675835248eedfd3f7ba0bd0cb2a7689c766e841e94439986534d6",
+            "owner": "type.90adae3491cc4abf7e59b90e39cbc60ec34d70f0dfbb99fc1e93aba29b7cb63d",
+            "name": "Name",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/common.go",
+              "symbol": "archive/tar.Header.Name"
+            }
+          },
+          {
+            "id": "member.b0b5b9bb513c86a0e35e868b59ba599cbe46f3068c34d0ebb0ee155468cbbb98",
+            "owner": "type.90adae3491cc4abf7e59b90e39cbc60ec34d70f0dfbb99fc1e93aba29b7cb63d",
+            "name": "Linkname",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "archive/tar/common.go",
+              "symbol": "archive/tar.Header.Linkname"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.path-filepath-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/path/filepath",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.path-filepath.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.6f114af1abfad6bb5c23d6e1353249936698472f3efe4de33d65224570657ac1",
+            "name": "path/filepath",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "filepath"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "path/filepath/path.go",
+              "symbol": "path/filepath"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.2a419fdbfb2365d180a31a9f745980549c049f820ed296f28ef86bdf524f0885",
+            "owner": "type.6f114af1abfad6bb5c23d6e1353249936698472f3efe4de33d65224570657ac1",
+            "name": "Join",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "elem",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "path/filepath/path.go",
+              "symbol": "path/filepath.Join"
+            }
+          },
+          {
+            "id": "member.ec79ff606d4e77613e4d1a74a497edfb4537b885c5916a3b18d48a66c27b3917",
+            "owner": "type.6f114af1abfad6bb5c23d6e1353249936698472f3efe4de33d65224570657ac1",
+            "name": "Base",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "path/filepath/path.go",
+              "symbol": "path/filepath.Base"
+            }
+          },
+          {
+            "id": "member.89404085b2aa67b6306e9583d0b8cde480a60325fa70314e64878efd3fe5967d",
+            "owner": "type.6f114af1abfad6bb5c23d6e1353249936698472f3efe4de33d65224570657ac1",
+            "name": "IsLocal",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "bool",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "path/filepath/path.go",
+              "symbol": "path/filepath.IsLocal"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

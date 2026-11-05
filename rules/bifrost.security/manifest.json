@@ -350,6 +350,26 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/go/network-read-all-unbounded.rqlp",
+      "id": "bifrost.security.go.network-read-all-unbounded",
+      "authored_hash": "01e9aa33b308535761ffafd882063e659ffb1672e2740e7229b122e67088b56a",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "go"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A network peer controls how many bytes io.ReadAll or io.Copy reads, and compress/gzip inflates without a size bound, so a small stream can exhaust memory or disk on any toolchain (CVE-2022-30631 shows the same reader is also a stack-exhaustion vector).",
+      "remediation": "Wrap the connection or the gzip reader in io.LimitReader (or http.MaxBytesReader for request bodies) with a limit the program can afford, and treat hitting the limit as an error.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/jvm/servlet-parameter-to-jdbc.rqlp",
       "id": "bifrost.security.java.servlet-parameter-to-jdbc",
       "authored_hash": "d6de25c3fb96ae45fd6e787eca7302380df8e141a78a43d72f36a4da0b85d920",
