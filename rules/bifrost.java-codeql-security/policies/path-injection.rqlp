@@ -1,0 +1,78 @@
+; CodeQL java/path-injection: remote input reaches a path read or write.
+; Guard sanitizers require the accepting branch and structural path validation.
+(policy
+  :schema-version 1
+  :id "bifrost.java-codeql-security.path-injection"
+  :name "Untrusted input reaches a filesystem path"
+  :message "Remote input reaches a filesystem path without proven path validation"
+  :severity error
+  :description "Tracks remote input to registered path-injection and path-injection-read sinks using classified library summaries. Guard sanitizers recognize normalized-path prefix checks and validated basenames."
+  :help-uri "https://codeql.github.com/codeql-query-help/java/java-path-injection/"
+  :tags ["security" "java" "path-injection" "cwe-22"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :include-sets [
+      (catalog :any-registered true :categories (any [remote]))])
+    :sinks (endpoint-set :include-sets [
+      (catalog :any-registered true :categories (any [path-injection path-injection-read]))])
+    :sanitizers (endpoint-set :entries [
+      ; Removing dot, slash, and backslash in one class or alternation is unconditional.
+      ; Match decoded literal values only after the AST selected the arguments.
+      (sanitizer :id replace-directory-characters
+        :selector (rql :schema-version 1
+          (resolved-call :resolves-to "java.lang.String.replaceAll" :proof declared
+            (call-bindings (call-shape (language java
+              (call :callee "replaceAll"
+                :args [(string_literal :string-value/regex "^(?:\\[\\./\\\\\\\\\\]|\\[\\.\\\\\\\\/\\]|\\[/\\.\\\\\\\\\\]|\\[/\\\\\\\\\\.\\]|\\[\\\\\\\\\\./\\]|\\[\\\\\\\\/\\.\\]|\\[\\\\\\./\\\\\\\\\\]|\\[\\\\\\.\\\\\\\\/\\]|\\[/\\\\\\.\\\\\\\\\\]|\\[/\\\\\\\\\\\\\\.\\]|\\[\\\\\\\\\\\\\\./\\]|\\[\\\\\\\\/\\\\\\.\\]|\\[\\.\\]\\|/\\|\\\\\\\\|\\[\\.\\]\\|\\\\\\\\\\|/|/\\|\\[\\.\\]\\|\\\\\\\\|/\\|\\\\\\\\\\|\\[\\.\\]|\\\\\\\\\\|\\[\\.\\]\\|/|\\\\\\\\\\|/\\|\\[\\.\\]|\\\\\\.\\|/\\|\\\\\\\\|\\\\\\.\\|\\\\\\\\\\|/|/\\|\\\\\\.\\|\\\\\\\\|/\\|\\\\\\\\\\|\\\\\\.|\\\\\\\\\\|\\\\\\.\\|/|\\\\\\\\\\|/\\|\\\\\\.)$")
+                       (string_literal :string-value/regex "^[_-]?$")]))))))
+        :input receiver :output return-value :removes [attacker-controlled])
+      ; A basename has no separators, but still needs a parent-component check.
+      (sanitizer :id basename-without-parent-component
+        :selector (rql :schema-version 1
+          (resolved-call :resolves-to "java.lang.String.contains" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "contains"))))))
+        :when (result false)
+        :sanitizes receiver
+        :requires [(argument :index 0 :equals "..")
+                   (receiver :result-of (rql :schema-version 1
+                     (resolved-call :resolves-to "java.io.File.getName" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "getName")))))))]
+        :removes [attacker-controlled])
+      ; The checked path must come directly from normalize or toRealPath. A later
+      ; toAbsolutePath can put the working directory in front of leading ".." parts.
+      (sanitizer :id normalized-path-prefix
+        :selector (rql :schema-version 1
+          (resolved-call :resolves-to "java.nio.file.Path.startsWith" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "startsWith"))))))
+        :when (result true)
+        :sanitizes receiver
+        :requires [(argument :index 0 :constant true)
+                   (receiver :result-of (rql :schema-version 1
+          (union
+            (resolved-call :resolves-to "java.nio.file.Path.normalize" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "normalize")))))
+            (resolved-call :resolves-to "java.nio.file.Path.toRealPath" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "toRealPath"))))))))]
+        :removes [attacker-controlled])
+      (sanitizer :id canonical-path-prefix
+        :selector (rql :schema-version 1
+          (resolved-call :resolves-to "java.lang.String.startsWith" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "startsWith" :arity 1))))))
+        :when (result true)
+        :sanitizes receiver
+        :requires [(argument :index 0 :constant true)
+                   (receiver :result-of (rql :schema-version 1
+          (resolved-call :resolves-to "java.io.File.getCanonicalPath" :proof declared
+              (call-bindings (call-shape (language java
+                (call :callee "getCanonicalPath")))))))]
+        :removes [attacker-controlled])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CodeQL" :id "java/path-injection")))
