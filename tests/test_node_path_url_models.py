@@ -63,6 +63,8 @@ def _load(path: Path):
 
 
 class NodePathUrlModelTests(unittest.TestCase):
+    """Pin the path and url models, the fs summaries and the rule fixture copies."""
+
     def test_models_are_review_required_and_fixed_arity(self):
         for module, members in MODULES.items():
             for kind in ("declarations", "summaries"):
