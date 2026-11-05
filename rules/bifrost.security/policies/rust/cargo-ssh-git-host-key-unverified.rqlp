@@ -1,0 +1,48 @@
+; CVE-2022-46176: Cargo before the one bundled with Rust 1.66.1 does not
+; verify the SSH host key when its built-in git support fetches a git
+; dependency over SSH. https://blog.rust-lang.org/2023/01/10/cve-2022-46176/
+;
+; The rule joins two kinds of dependency evidence of the same Cargo package,
+; through `declared_by`:
+; - a locked Cargo dependency whose source is `git+ssh://`. Locked rows cover
+;   transitive dependencies too, and give one finding per locked package.
+; - a `rust-toolchain` row whose pinned release is before 1.66.1.
+;
+; Incomplete evidence stays incomplete:
+; - No toolchain file, a channel such as `stable`, `nightly-…` or `1.65`, or
+;   only a `rust-version` minimum gives no exact release. The version
+;   predicate is unresolved and the run is inconclusive, never clean.
+; - A missing `Cargo.lock` leaves the declaration-to-lock association
+;   unresolved, so the run is inconclusive.
+; - A workspace `.cargo/config.toml` is reported as unsupported dependency
+;   evidence, so `net.git-fetch-with-cli = true` there makes the run
+;   inconclusive rather than clean.
+;
+; Not read: `$CARGO_HOME/config.toml`, `CARGO_NET_GIT_FETCH_WITH_CLI`, git
+; `insteadOf` rewrites, rustup overrides and `RUSTUP_TOOLCHAIN`, and
+; independently patched Cargo builds. Any of these can change the outcome.
+; SSH registry indexes are not covered.
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.cargo-ssh-git-host-key-unverified"
+  :name "SSH git dependency fetched by a Cargo that skips host-key checks"
+  :message "the pinned Rust toolchain predates 1.66.1, whose Cargo fetches this SSH git dependency without verifying the host key (CVE-2022-46176)"
+  :severity warning
+  :description "Reports a locked Cargo dependency with a git+ssh source in a package whose rust-toolchain file pins a Rust release before 1.66.1. Cargo's built-in git support in those releases does not verify the SSH host key, so a network attacker can serve the dependency. An unpinned toolchain, a missing Cargo.lock, or a workspace .cargo/config.toml leaves the run inconclusive. Ambient Cargo and git configuration is not read."
+  :help-uri "https://blog.rust-lang.org/2023/01/10/cve-2022-46176/"
+  :tags ["security" "rust" "cargo" "supply-chain" "cve-2022-46176" "cwe-322"]
+  :analysis (analysis
+    :type assertion
+    (bind :name dependency
+      :query (rql :schema-version 1
+        (filter :where ((source regex "^git\\+ssh://"))
+          (dependency-evidence :ecosystem cargo :kinds [locked]))))
+    (bind :name toolchain
+      :query (rql :schema-version 1
+        (dependency-evidence :ecosystem rust-toolchain :version-range "<1.66.1")))
+    (join :left dependency :right toolchain :on ((declared_by declared_by)))
+    (group :name locked-ssh-dependency :by (dependency.id)
+      (aggregate :name affected-toolchains :op count))
+    (assert :group locked-ssh-dependency :value affected-toolchains :cardinality (exactly 0)))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "322")))
