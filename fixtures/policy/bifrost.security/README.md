@@ -11,4 +11,9 @@ XmlDocument part of the stdlib candidate
 `dotnet-xmlreader-external-dtd-resolution` against the reviewed
 `bifrost.dotnet.system-xml-csharp` model.
 
+`go-gob-decode-network-input` is not a CodeQL port. It qualifies the
+version-independent part of the Go CVE lead BrokkAi/bifrost-packs#192 against
+the reviewed `bifrost.go.stdlib.net` and `bifrost.go.stdlib.encoding-gob`
+models.
+
 The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.

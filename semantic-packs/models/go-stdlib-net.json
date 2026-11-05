@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.net",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "producer": {
     "name": "bifrost",
     "version": "0.10.7"
@@ -345,6 +345,132 @@
                 ]
               }
             ]
+          },
+          {
+            "id": "net.conn.close",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Conn.Close()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.conn.local-addr",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Conn.LocalAddr()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.conn.remote-addr",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Conn.RemoteAddr()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.conn.set-deadline",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Conn.SetDeadline(t time.Time)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.conn.set-read-deadline",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Conn.SetReadDeadline(t time.Time)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.conn.set-write-deadline",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Conn.SetWriteDeadline(t time.Time)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.listener.accept",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Listener.Accept()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.listener.close",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Listener.Close()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "net.listener.addr",
+            "target": {
+              "path": "src/net/net.go",
+              "symbol": "net.Listener.Addr()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
           }
         ]
       }
