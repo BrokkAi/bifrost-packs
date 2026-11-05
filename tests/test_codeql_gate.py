@@ -589,3 +589,30 @@ class ExecutionTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class RustStagerTests(unittest.TestCase):
+    def test_stages_only_sources_without_running_fixture(self):
+        from scripts.upstream.codeql_gate.stagers.rust import RustStager
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            test = root / 'fixture'
+            test.mkdir()
+            (test / 'main.rs').write_text('fn main() {} // $ Alert[rust/example] Source=here\n')
+            (test / 'Cargo.toml').write_text('[dependencies]\nnetwork = "*"\n')
+            (test / 'setup.sh').write_text('exit 1\n')
+            stager = RustStager()
+            prepared = stager.prepare(test, root, root / 'cache')
+            self.assertEqual(prepared.source_paths, ('main.rs',))
+            self.assertFalse((prepared.root / 'setup.sh').exists())
+            self.assertNotIn('network', (prepared.root / 'Cargo.toml').read_text())
+            self.assertEqual(len(stager.inline_oracle(test, 'rust/example')['inline_alert']), 1)
+
+    def test_inline_comment_ignores_strings_and_respects_columns(self):
+        from scripts.upstream.codeql_gate.stagers.rust import RustStager
+        with tempfile.TemporaryDirectory() as temporary:
+            test = Path(temporary)
+            (test / 'lib.rs').write_text('let s = r"// $ Alert";\n// $ MISSING: Alert[rust/example] Sink=x\n// $ SPURIOUS: Alert[rust/example]\n')
+            oracle = RustStager().inline_oracle(test, 'rust/example')
+            self.assertEqual([r['start'] for r in oracle['missing']], [2])
+            self.assertEqual([r['start'] for r in oracle['spurious']], [3])
+            self.assertFalse(oracle['inline_alert'])

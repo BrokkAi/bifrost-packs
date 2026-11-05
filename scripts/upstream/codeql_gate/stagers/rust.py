@@ -1,0 +1,72 @@
+"""Stage inert Rust qltest sources as one synthetic crate; never invoke Cargo."""
+import hashlib
+import re
+import shutil
+import tempfile
+from pathlib import Path
+
+from . import PreparedRoot
+try:
+    from core import GateError, add_inline_expectations
+except ImportError:
+    from ..core import GateError, add_inline_expectations
+
+
+class RustStager:
+    ql_endpoints = ()
+
+    @staticmethod
+    def model_in_catalog(row, catalogs):
+        return row in catalogs
+
+    def prepare(self, test_dir, codeql_root, cache_dir):
+        test_dir, cache_dir = Path(test_dir), Path(cache_dir)
+        files = sorted(test_dir.rglob('*.rs'))
+        if not files:
+            raise GateError(f'no Rust source files in {test_dir}')
+        digest = hashlib.sha256(b'rust-stager-v1\0' + str(test_dir.resolve()).encode())
+        for path in files:
+            digest.update(path.relative_to(test_dir).as_posix().encode() + b'\0')
+            digest.update(hashlib.sha256(path.read_bytes()).digest())
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        target = cache_dir / digest.hexdigest()
+        if not target.exists():
+            temporary = Path(tempfile.mkdtemp(prefix='.rust-prepare-', dir=cache_dir))
+            try:
+                for path in files:
+                    dest = temporary / path.relative_to(test_dir)
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(path, dest)
+                # Explicit path retains CodeQL locations; no source rewriting or dependency resolution.
+                primary = next((p for p in files if p.name == 'lib.rs'), files[0])
+                rel = primary.relative_to(test_dir).as_posix()
+                (temporary / 'Cargo.toml').write_text(
+                    '[package]\nname = "codeql_fixture"\nversion = "0.0.0"\nedition = "2021"\n'
+                    f'[lib]\npath = "{rel}"\n')
+                temporary.rename(target)
+            finally:
+                shutil.rmtree(temporary, ignore_errors=True)
+        return PreparedRoot(target, tuple(p.relative_to(test_dir).as_posix() for p in files))
+
+    def run_env(self, run_dir, prepared):
+        return {'BIFROST_OPEN_PACKS_DISABLE': '1', 'CARGO_NET_OFFLINE': 'true',
+                'CARGO_HOME': str(run_dir / 'cargo-home')}
+
+    def extra_policy_files(self, prepared):
+        return []
+
+    def inline_oracle(self, test_dir, query_id):
+        result = {'inline_alert': [], 'inline_taint': [], 'spurious': [], 'missing': []}
+        # Lex comments while skipping ordinary, byte and raw strings; line comments
+        # inside literals cannot become expectations. Block comments are ignored.
+        tokens = re.compile(r'br(?P<bhash>#{0,255})"[\s\S]*?"(?P=bhash)|r(?P<hash>#{0,255})"[\s\S]*?"(?P=hash)|b?"(?:\\.|[^"\\])*"|/\*[\s\S]*?\*/|//[^\n]*')
+        for path in sorted(Path(test_dir).rglob('*.rs')):
+            source = path.read_text(errors='replace')
+            for match in tokens.finditer(source):
+                comment = match.group()
+                if comment.startswith('//'):
+                    line = source.count('\n', 0, match.start()) + 1
+                    add_inline_expectations(result, {'path': path.relative_to(test_dir).as_posix(),
+                                                     'start': line, 'end': line}, comment[2:],
+                                            query_id, {'Alert': 'inline_alert', 'hasTaintFlow': 'inline_taint'})
+        return result

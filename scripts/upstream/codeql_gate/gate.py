@@ -14,6 +14,7 @@ from scoped import validate_attributions
 from stagers.go import GoStager
 from stagers.java import JavaStager
 from stagers.csharp import CSharpStager
+from stagers.rust import RustStager
 from ql_classes import generate_cache
 
 
@@ -22,7 +23,7 @@ def main(argv=None):
     parser.add_argument('command', choices=('expected', 'prepare', 'run', 'summary', 'ql-classes'))
     parser.add_argument('query', nargs='?')
     parser.add_argument('policy', nargs='?', type=Path)
-    parser.add_argument('--language', choices=('go', 'java', 'csharp'), default='go')
+    parser.add_argument('--language', choices=('go', 'java', 'csharp', 'rust'), default='go')
     parser.add_argument('--codeql-root', type=Path, default=os.environ.get('CODEQL_ROOT'))
     parser.add_argument('--test-dir', action='append', type=Path, default=[], help='relative to CodeQL root; repeat for multi-dir queries')
     parser.add_argument('--query-path', help='query: value in .qlref; inferred from @id when omitted')
@@ -95,7 +96,7 @@ def main(argv=None):
         stager = CSharpStager(args.dotnet_root, args.nuget_packages or args.state_dir / 'nuget-packages',
                               args.nuget_source)
     else:
-        stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
+        stager = {'go': GoStager, 'rust': RustStager}.get(args.language, lambda: JavaStager(args.java_home))()
     if hasattr(stager, 'validate_ql_endpoints'):
         stager.validate_ql_endpoints(args.codeql_root)
     query_path = args.query_path

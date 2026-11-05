@@ -582,3 +582,12 @@ it is never labeled EXACT. JSON records `full_suite_verdict`, `full_suite_pass`,
 The Markdown report prints both verdicts together; TSV appends the full-suite
 verdict as its final column. The combined JSON verdict and `summary` recognize
 SCOPED-EXACT as success. All test directories must pass.
+
+### Rust
+
+`--language rust` stages only `.rs` files from each qltest directory, preserving
+relative paths and adding a minimal synthetic `Cargo.toml` that points at an
+existing source. It never invokes Cargo, restores dependencies, or executes
+fixture scripts. A directory without Rust sources is an explicit staging error.
+Rust line comments use the shared inline-expectation parser; `.expected` remains
+the primary oracle and the gate retains its `EXACT`/incomplete scoring.
