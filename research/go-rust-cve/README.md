@@ -207,7 +207,8 @@ build identity is `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`. Evaluation date:
   Cargo row incomplete: `dependency evidence Unsupported at
   .cargo/config.toml: Cargo configuration overrides are owned by #3768`.
   bifrost-dev#3768 is closed, but no 0.15.1 row exposes `[registries]`,
-  `[source]` replacement or `[net] git-fetch-with-cli`.
+  `[source]` replacement or `[net] git-fetch-with-cli`. That's now tracked
+  in bifrost-dev#9902.
 - **No capability name.** No advertised capability name covers dependency
   evidence. Bifrost 0.15.0 rejects a `rust-toolchain` version range at
   validation: `version_ranges requires exactly one supported ecosystem:
@@ -218,7 +219,7 @@ build identity is `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`. Evaluation date:
 | Lead | Outcome | Evidence |
 | --- | --- | --- |
 | #60 CVE-2022-46176 | Rule: `bifrost.security.rust.cargo-ssh-git-host-key-unverified`, opt-in, `bifrost.security` 2.2.0 | The rule joins a locked `git+ssh://` Cargo row to a toolchain row before 1.66.1 in the same package. 10 fixture cases pass. Three positives (direct, transitive, legacy toolchain file) are complete with one finding each. Two near misses (1.66.1, an HTTPS source) are complete with none. Five unknowns (no toolchain file, `stable`, `rust-version` only, no `Cargo.lock`, a workspace `git-fetch-with-cli = true`) are inconclusive. See `docs/qualification/rust-cargo-ssh-git.json`. |
-| #61 CVE-2022-36113 | Blocked by engine | `probe/version-evidence/rust-alt-registry/`. The declared row has source `registry-name:corp`, but it never associates with its `sparse+https://…` lock entry. The registry index lives in the unread Cargo config. The declared-row join reports the dependency, but the run is inconclusive. The locked-row join finds no group, because the unassociated lock row has no `declared_by`. Every alternate-registry positive would be inconclusive. Crates.io-only can't be proven when a config file is present. A new engine issue is needed (see the PR). |
+| #61 CVE-2022-36113 | Blocked by engine | `probe/version-evidence/rust-alt-registry/`. The declared row has source `registry-name:corp`, but it never associates with its `sparse+https://…` lock entry. The registry index lives in the unread Cargo config. The declared-row join reports the dependency, but the run is inconclusive. The locked-row join finds no group, because the unassociated lock row has no `declared_by`. Every alternate-registry positive would be inconclusive. Crates.io-only can't be proven when a config file is present. Engine issue: bifrost-dev#9902. |
 | #58 CVE-2024-24576 | Blocked: #208 | Toolchain and target evidence are now available. Without std declarations, `Command::new("run.bat").arg(arg)` gives `callee_unresolved`, `dispatch_outcome unproven`, `coverage open` (`probe/version-evidence/rust-crate/command-arg-bindings.rql`). #208 lists `std.process.Command` `new`, `arg` and `args`. Not probed: binding the batch-file program and the untrusted argument to one builder. |
 | #59 CVE-2024-43402 | Blocked: #208 | As #58. It also needs Windows trailing-space and trailing-period normalization of the program name, and the 1.77.2 to 1.80.x range. |
 
@@ -276,7 +277,7 @@ exercised.
 | #194 | CVE-2025-0913 | Blocked by engine | 0.15.1: bifrost-dev#9867 and #9869. `os.OpenFile` binds. |
 | #58 | CVE-2024-24576 | Blocked (0.15.1) | Toolchain and target evidence now exist. `Command::arg` is unresolved without the std declarations in #208. |
 | #59 | CVE-2024-43402 | Blocked (0.15.1) | As #58, plus Windows program-name normalization. |
-| #60 | CVE-2022-46176 | Rule (0.15.1) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified`, opt-in. A workspace `git-fetch-with-cli = true` stays inconclusive: Cargo config is unread, although bifrost-dev#3768 is closed. |
+| #60 | CVE-2022-46176 | Rule (0.15.1) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified`, opt-in. A workspace `git-fetch-with-cli = true` stays inconclusive: Cargo config is unread, although bifrost-dev#3768 is closed (now bifrost-dev#9902). |
 | #61 | CVE-2022-36113 | Blocked by engine (0.15.1) | Alternate-registry declarations never associate with their lock entries, because the Cargo config is unread. |
 
 ## Layout and reproduction
