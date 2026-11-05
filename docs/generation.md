@@ -42,6 +42,28 @@ spec pins the commit that made the change. Pack completeness stays
 identities and provenance are unchanged. The schema-2 errgroup and embed
 declaration models are not jobs and are left as they were.
 
+## Go gob jobs and net interface summaries
+
+Two authored jobs follow the legacy set: `go-stdlib-encoding-gob-declarations`
+and `go-stdlib-encoding-gob` (`bifrost.go.stdlib.encoding-gob-declarations` and
+`bifrost.go.stdlib.encoding-gob`, both 0.1.0, BSD-3-Clause, go1.26.0
+provenance). They declare `NewDecoder`, `NewEncoder`, `Register`,
+`RegisterName` and the pointer-receiver `Decoder` and `Encoder` methods, each a
+complete callable family, and summarize the same calls.
+`bifrost.go.stdlib.net` moves to 2.1.0. It adds complete summaries for the
+`net.Conn` and `net.Listener` members other than `Read` and `Write`, and those
+summaries claim `covers_overrides`. On Bifrost 0.15.1 a call through a
+model-declared interface closes only through such a summary (bifrost-dev#9053).
+The specs pin commit `3745e66f03f8599337aa2d72b58c43611414d37e`, and
+`tests/test_go_gob_native_jobs.py` pins the jobs. The policy
+`bifrost.security.go.gob-decode-network-input` depends on all four Go net and
+gob packs.
+
+The semantic-model schema has no transfer output for a write through a pointer
+argument. So the `Decoder.Decode` and `DecodeValue` summaries don't carry
+stream bytes into the decoded value. They are suitable for flows that end at
+the decoder's reader, not for flows that start at decoded data.
+
 ## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
