@@ -1,0 +1,19 @@
+; Research probe for filter-var-url-fetch. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.php-osv.filter-var-url-fetch"
+  :name "request URL validated with FILTER_VALIDATE_URL reaches file_get_contents (research probe)"
+  :message "request URL validated with FILTER_VALIDATE_URL reaches file_get_contents"
+  :severity warning
+  :description "Research probe for the PHP OSV data-flow lead filter-var-url-fetch."
+  :tags ["research" "php"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id request-param :display-name "request parameter" :categories [input.user-controlled]
+        :selector (rql :schema-version 1 (language php (call-sites-to :proof proven (enclosing-decl (function :name "request_param")))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id file-get-contents :display-name "file-get-contents" :categories [x] :selector (rql :schema-version 1 (language php (call-argument :formal-index 0 (resolved-call :resolves-to "_php_global_.file_get_contents" :proof declared (call-bindings (call-shape (call :callee (name "file_get_contents")))))))) :dangerous-operand (argument :index 0) :accepts [untrusted])])))

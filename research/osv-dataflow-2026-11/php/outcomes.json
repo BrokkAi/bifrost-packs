@@ -1,0 +1,552 @@
+{
+ "schema_version": 1,
+ "evaluation_date": "2026-11-05",
+ "bifrost": {
+  "version": "0.15.1",
+  "archive": "bifrost-v0.15.1-universal-apple-darwin.tar.gz",
+  "archive_sha256": "d7ca6901787455bdabf18ec9c36453032a9be354180e54b5ff183b1e4bf83038",
+  "binary_sha256": "00b279126297d5e9f7805390799493e915eaf4a2d5940dc3e755138a577a6df9",
+  "environment": {
+   "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+   "BIFROST_OPEN_PACKS_DISABLE": "1 (research variant only)",
+   "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+   "BIFROST_CACHE_ROOT": "fresh per run"
+  },
+  "flags": [
+   "--policy",
+   "--no-builtin-policies",
+   "--no-incremental",
+   "--format",
+   "json"
+  ],
+  "production_packs": {
+   "release": "packs/v0.10.0",
+   "archive": "bifrost.public.packs-0.10.0-native.tar.gz",
+   "archive_sha256": "3f39f9f5ec2d028e293a238ff796260101915e50963a44a93c812d9d02860945",
+   "php_builtin": {
+    "pack_version": "2026.9.4",
+    "shard_sha256": "e8e6ad9cb51904b193e71ef5c0402e602ce2c6c42846a4c90e2386c441e7e392",
+    "callable_family_complete_records": 0,
+    "records": 4992
+   }
+  }
+ },
+ "issues": {
+  "leads": [
+   "https://github.com/BrokkAi/bifrost-packs/issues/309",
+   "https://github.com/BrokkAi/bifrost-packs/issues/310",
+   "https://github.com/BrokkAi/bifrost-packs/issues/311",
+   "https://github.com/BrokkAi/bifrost-packs/issues/312",
+   "https://github.com/BrokkAi/bifrost-packs/issues/313",
+   "https://github.com/BrokkAi/bifrost-packs/issues/314",
+   "https://github.com/BrokkAi/bifrost-packs/issues/315",
+   "https://github.com/BrokkAi/bifrost-packs/issues/316",
+   "https://github.com/BrokkAi/bifrost-premium-packs/issues/471",
+   "https://github.com/BrokkAi/bifrost-premium-packs/issues/472"
+  ],
+  "filed": [
+   "https://github.com/BrokkAi/bifrost-dev/issues/9992",
+   "https://github.com/BrokkAi/bifrost-dev/issues/9993",
+   "https://github.com/BrokkAi/bifrost-packs/issues/318"
+  ],
+  "reused": [
+   "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+   "https://github.com/BrokkAi/bifrost-dev/issues/9331",
+   "https://github.com/BrokkAi/bifrost-dev/issues/9337"
+  ]
+ },
+ "recheck_0150_blockers": [
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+   "upstream": "closed 2026-11-03 by bifrost-dev PR 9372, not in public v0.15.1",
+   "observed": "qualified-call-locator-partial with php-builtin 2026.9.4 selected; ambiguous when research declarations are added"
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+   "upstream": "closed by PR 9455, not in v0.15.1",
+   "observed": "$_GET['url'], ?? '', 'x' . $_GET['url'], ==, ===, !== and ?: leave procedure semantics unknown (inconclusive)"
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9331",
+   "upstream": "closed by PR 9470, not in v0.15.1",
+   "observed": "string interpolation inconclusive"
+  }
+ ],
+ "research_probe": {
+  "policy_dir": "probe/.bifrost/policies",
+  "model": "probe/.bifrost/semantic-models/bifrost.research.php-osv-dataflow-probe.json",
+  "cases": {
+   "filter-var-url-fetch/near-miss-constant": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "filter-var-url-fetch/positive": {
+    "completion": "inconclusive",
+    "reasons": [
+     "partial_discovery"
+    ],
+    "findings": [
+     "app.php:14 definite proven complete"
+    ],
+    "diagnostics": [
+     "taint discovery is incomplete: procedure semantics for filter-var-url-fetch/positive/app.php:app.php.fetch is unknown"
+    ],
+    "exit_code": 1
+   },
+   "filter-var-url-fetch/positive-filtered-value": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:11 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "filter-var-url-fetch/unknown-unmodeled-trim": {
+    "completion": "inconclusive",
+    "reasons": [
+     "partial_discovery"
+    ],
+    "findings": [],
+    "diagnostics": [
+     "taint discovery is incomplete: call resolution for filter-var-url-fetch/unknown-unmodeled-trim/app.php:app.php.fetch is unknown; this exact call has neither a completely resolved executable target nor an applicable complete external model; call `trim` at filter-var-url-fetch/unknown-unmodeled-trim/a"
+    ],
+    "exit_code": 0
+   },
+   "fsockopen-host-after-check/near-miss-constant": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "fsockopen-host-after-check/positive": {
+    "completion": "inconclusive",
+    "reasons": [
+     "partial_discovery"
+    ],
+    "findings": [
+     "app.php:15 definite proven complete"
+    ],
+    "diagnostics": [
+     "taint discovery is incomplete: procedure semantics for fsockopen-host-after-check/positive/app.php:app.php.probe is unknown"
+    ],
+    "exit_code": 1
+   },
+   "fsockopen-host-after-check/unknown-unmodeled-strtolower": {
+    "completion": "inconclusive",
+    "reasons": [
+     "partial_discovery"
+    ],
+    "findings": [],
+    "diagnostics": [
+     "taint discovery is incomplete: call resolution for fsockopen-host-after-check/unknown-unmodeled-strtolower/app.php:app.php.probe is unknown; this exact call has neither a completely resolved executable target nor an applicable complete external model; call `strtolower` at fsockopen-host-after-check/"
+    ],
+    "exit_code": 0
+   },
+   "http-context-header/near-miss-constant-header": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "http-context-header/near-miss-method-only": {
+    "completion": "inconclusive",
+    "reasons": [
+     "partial_discovery"
+    ],
+    "findings": [],
+    "diagnostics": [
+     "taint discovery is incomplete: procedure semantics for http-context-header/near-miss-method-only/app.php:app.php.context is unknown"
+    ],
+    "exit_code": 0
+   },
+   "http-context-header/positive": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "http-proxy-fulluri/near-miss-no-proxy": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:11 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "http-proxy-fulluri/positive": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:11 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "libxml-noent-untrusted-xml/near-miss-default-options": {
+    "completion": "complete",
+    "findings": [],
+    "diagnostics": [
+     "taint policy `research.php-osv.libxml-noent-untrusted-xml` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+    ],
+    "exit_code": 0
+   },
+   "libxml-noent-untrusted-xml/near-miss-nonet": {
+    "completion": "complete",
+    "findings": [],
+    "diagnostics": [
+     "taint policy `research.php-osv.libxml-noent-untrusted-xml` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+    ],
+    "exit_code": 0
+   },
+   "libxml-noent-untrusted-xml/positive": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:10 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "libxml-noent-untrusted-xml/unknown-flag-union": {
+    "completion": "complete",
+    "findings": [],
+    "diagnostics": [
+     "taint policy `research.php-osv.libxml-noent-untrusted-xml` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+    ],
+    "exit_code": 0
+   },
+   "libxml-remote-url-load/near-miss-constant": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "libxml-remote-url-load/positive": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:10 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "openssl-pkcs1-network-ciphertext/near-miss-oaep": {
+    "completion": "complete",
+    "findings": [],
+    "diagnostics": [
+     "taint policy `research.php-osv.openssl-pkcs1-network-ciphertext` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+    ],
+    "exit_code": 0
+   },
+   "openssl-pkcs1-network-ciphertext/positive-default-padding": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:8 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "openssl-pkcs1-network-ciphertext/positive-explicit-pkcs1": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:8 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "proc-open-array-command/near-miss-constant": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "proc-open-array-command/positive-array": {
+    "completion": "proven_by_summary",
+    "findings": [],
+    "exit_code": 0
+   },
+   "proc-open-array-command/positive-string": {
+    "completion": "proven_by_summary",
+    "findings": [
+     "app.php:12 definite proven complete"
+    ],
+    "exit_code": 1
+   },
+   "proc-open-array-command/unknown-unmodeled-escape": {
+    "completion": "inconclusive",
+    "reasons": [
+     "partial_discovery"
+    ],
+    "findings": [],
+    "diagnostics": [
+     "taint discovery is incomplete: call resolution for proc-open-array-command/unknown-unmodeled-escape/app.php:app.php.convert is unknown; this exact call has neither a completely resolved executable target nor an applicable complete external model; call `escapeshellarg` at proc-open-array-command/unkn"
+    ],
+    "exit_code": 0
+   }
+  }
+ },
+ "production_probe": {
+  "note": "php-builtin selected through .php-version 8.3.0; research declaration shard removed; one positive per lead",
+  "cases": {
+   "filter-var-url-fetch/positive-filtered-value": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-partial: qualified call locator `_php_global_.file_get_contents` resolved only through partial or uncertain model evidence (active semantic-model callable family containing `member.d6ee77ba4714bb84775f7d3c0668884d57724992a5fc3d5ba66455cb792daf76`)"
+    ],
+    "findings": 0
+   },
+   "fsockopen-host-after-check/positive": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-partial: qualified call locator `_php_global_.fsockopen` resolved only through partial or uncertain model evidence (active semantic-model callable family containing `member.d3a0333d5acac09f17e1560287f2d10b78f9f6465d308f65e67680b9aa7930c4`)"
+    ],
+    "findings": 0
+   },
+   "http-context-header/positive": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-partial: qualified call locator `_php_global_.stream_context_create` resolved only through partial or uncertain model evidence (active semantic-model callable family containing `member.7c012662c3cff058fcceef3c545b5facf7e867c277f428059cd9cc7a288fb424`)"
+    ],
+    "findings": 0
+   },
+   "http-proxy-fulluri/positive": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-partial: qualified call locator `_php_global_.file_get_contents` resolved only through partial or uncertain model evidence (active semantic-model callable family containing `member.d6ee77ba4714bb84775f7d3c0668884d57724992a5fc3d5ba66455cb792daf76`)"
+    ],
+    "findings": 0
+   },
+   "libxml-noent-untrusted-xml/positive": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-zero: qualified call locator `_php_global_.simplexml_load_string` did not resolve to an exact identity (qualified locator `_php_global_.simplexml_load_string`)"
+    ],
+    "findings": 0
+   },
+   "libxml-remote-url-load/positive": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-zero: qualified call locator `_php_global_.simplexml_load_file` did not resolve to an exact identity (qualified locator `_php_global_.simplexml_load_file`)"
+    ],
+    "findings": 0
+   },
+   "openssl-pkcs1-network-ciphertext/positive-default-padding": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-zero: qualified call locator `_php_global_.openssl_private_decrypt` did not resolve to an exact identity (qualified locator `_php_global_.openssl_private_decrypt`)"
+    ],
+    "findings": 0
+   },
+   "proc-open-array-command/positive-string": {
+    "completion": "not_run",
+    "unavailable": [
+     "qualified-call-locator-partial: qualified call locator `_php_global_.proc_open` resolved only through partial or uncertain model evidence (active semantic-model callable family containing `member.74b26a2c9e4fa0bdb091d5d703eff05bfe8cb530395610f3b6fbb417daae1232`)"
+    ],
+    "findings": 0
+   }
+  }
+ },
+ "array_literal_probe": {
+  "policy": "probe/engine-array-literal/.bifrost/policies/array-literal.rqlp",
+  "cases": {
+   "engine-array-literal/control": {
+    "completion": "complete",
+    "reasons": [],
+    "findings": 1
+   },
+   "engine-array-literal/list-literal": {
+    "completion": "complete",
+    "reasons": [],
+    "findings": 0
+   },
+   "engine-array-literal/keyed-literal": {
+    "completion": "complete",
+    "reasons": [],
+    "findings": 0
+   },
+   "engine-array-literal/nested-literal": {
+    "completion": "complete",
+    "reasons": [],
+    "findings": 0
+   },
+   "engine-array-literal/list-then-read": {
+    "completion": "complete",
+    "reasons": [],
+    "findings": 0
+   },
+   "engine-array-literal/append-then-pass": {
+    "completion": "inconclusive",
+    "reasons": [
+     "capability_incomplete"
+    ],
+    "findings": 1
+   },
+   "engine-array-literal/near-miss-constant": {
+    "completion": "complete",
+    "reasons": [],
+    "findings": 0
+   }
+  }
+ },
+ "input_sha256": {
+  "probe/.bifrost/policies/filter-var-url-fetch.rqlp": "9e817b815a750e05f7c496a22cc7f70b7b9f9018d36a56429d52aa55397eefc8",
+  "probe/.bifrost/policies/fsockopen-host-after-check.rqlp": "5a40aa22af5b62bff89e57152c2930e608015a76c6b0c35ac54c91663903a5d9",
+  "probe/.bifrost/policies/http-context-header.rqlp": "bd9e745c94400209eb04e97edc148eeb8db156aec9a6b93507103ab511e8ba7c",
+  "probe/.bifrost/policies/http-proxy-fulluri.rqlp": "1f8adb4a985dff27ce438eba7ac8f76d0179fa6c1977d59d1363a5e1eaa04770",
+  "probe/.bifrost/policies/libxml-noent-untrusted-xml.rqlp": "b2f3516feb010fc7d2977f2920edef6e19b3014dc04fdaa3fe7245bf4ad5fc4e",
+  "probe/.bifrost/policies/libxml-remote-url-load.rqlp": "6f1793c9f59fb713cb98850005a2b95aa8c069d20b8cb4812f69c3fa39d391d2",
+  "probe/.bifrost/policies/openssl-pkcs1-network-ciphertext.rqlp": "69e77a14465c0beb97ef18bd778a9b326594493d75062217a2a6855bf9c3cb44",
+  "probe/.bifrost/policies/proc-open-array-command.rqlp": "8d7c8c5382516554a8509ec3a28b501a22d23837702a0d459845079059da68c7",
+  "probe/.bifrost/semantic-models/bifrost.research.php-osv-dataflow-probe.json": "2c44fc320dd197420fd6e7a049d43fa41f3010674ad42f608c08d1446e8632df",
+  "probe/engine-array-literal/.bifrost/policies/array-literal.rqlp": "05023fb91316f0fd47ecd6158d8f8ccd1c212bc90b6651af2d4cc70921dd2142",
+  "probe/engine-array-literal/append-then-pass/a.php": "4c79cf6b0ff365ad61fe656bcb947296127472281f6be7a9d8e2fa1cb4e248bc",
+  "probe/engine-array-literal/control/a.php": "9c8808f9791415df165fea5ead4774e1e3936908bd7c94e682e363884e72185c",
+  "probe/engine-array-literal/keyed-literal/a.php": "332a4a3752718f37b43ecb340cd739d14f9a008aadc83e9cda80a93311e41f76",
+  "probe/engine-array-literal/list-literal/a.php": "9f2208ddf9a729282970c05c7d1ad93d6140bd8b5b3d643d79784a26897b60ce",
+  "probe/engine-array-literal/list-then-read/a.php": "f6847a70468da2f721d6eca4d6717de2154b770647431f897bb12bd450347728",
+  "probe/engine-array-literal/near-miss-constant/a.php": "341e464e8caa8dd15241d574f9b301986d1b45adad8fb8ee958ec99c145c4369",
+  "probe/engine-array-literal/nested-literal/a.php": "9aa24112b44a0bde6e1513e04a2fc05d3baa1b3b9c6f2e37e5d282ee40a2c9ab",
+  "probe/filter-var-url-fetch/near-miss-constant/app.php": "234a9f18126c8f39936ae1f1c436e37cc51367ee61f07c0c4a220ad8a1a827a2",
+  "probe/filter-var-url-fetch/positive/app.php": "421abde60142deac7251358c4d57e52f89c74e8ffd30a59874f1e57d641ef9e5",
+  "probe/filter-var-url-fetch/positive-filtered-value/app.php": "b11ddeb191831c1355800b06016725dde2bf95682de7e2873a2dd849870b816c",
+  "probe/filter-var-url-fetch/unknown-unmodeled-trim/app.php": "c357adb705153578b64a99fc7146bc24079dae5baf0de93dd7dbf9a2a1ab35c0",
+  "probe/fsockopen-host-after-check/near-miss-constant/app.php": "e3f74ecc7766eba90dd3ffceb05835a4897694152c28fc547552bd93f7a5b2f1",
+  "probe/fsockopen-host-after-check/positive/app.php": "5a5f0b866456c481a4442bbeaffac25a6f72c60708206d30d148c1ded574362c",
+  "probe/fsockopen-host-after-check/unknown-unmodeled-strtolower/app.php": "811700d8e6ed0ad2cc96a841df0f29cab94c8ea0ec727c77cc56d0b630dfa8c6",
+  "probe/http-context-header/near-miss-constant-header/app.php": "615a7267edae34100b40b5fb15f640ca6f4392509ba8ed4c9d2412874ef3472e",
+  "probe/http-context-header/near-miss-method-only/app.php": "a7b16d458163ea3c69b044dd4825ba697438537e1d573159a13ade20d62badfb",
+  "probe/http-context-header/positive/app.php": "a59077fdf6ce29b89395936196f7fe623dd7628ba2c76639e44d1126bbf75e6b",
+  "probe/http-proxy-fulluri/near-miss-no-proxy/app.php": "4f8429b01f549a536cb9fc591a4d8e1ecbea1742bbf447b7a86601ada12860fb",
+  "probe/http-proxy-fulluri/positive/app.php": "14275196e5f0f76f5de5f971d885fb988b350ab10a3fa0c00a745bd421ea0dab",
+  "probe/libxml-noent-untrusted-xml/near-miss-default-options/app.php": "44742403400c7997bd4a4f9829c30899602e6b28107cf698f88690cd991ee0fb",
+  "probe/libxml-noent-untrusted-xml/near-miss-nonet/app.php": "c17efa57a4372aac1f5e3aa2932f0d483a4ff8d12bea46b2ad334e826ba3790c",
+  "probe/libxml-noent-untrusted-xml/positive/app.php": "59dcd1c1656d3cfa543af6534533b81411f361ab1b7d4e4e392dbf4ef67c9392",
+  "probe/libxml-noent-untrusted-xml/unknown-flag-union/app.php": "a885f6738499c210a5e9a87cd934333b7a9ba309352f238d9810eb2daba9a2a7",
+  "probe/libxml-remote-url-load/near-miss-constant/app.php": "a5201a21b505ea2e1a17e9710db60b37713a8d5f8f1ba7ff2883123440d1c613",
+  "probe/libxml-remote-url-load/positive/app.php": "7b621c958180c668844db20d47dabf96c32da439f3a6918127645e9db0bd299f",
+  "probe/openssl-pkcs1-network-ciphertext/near-miss-oaep/app.php": "77fd3a0ae6b4ab0c864bc3f2d4ec9db0bd4d8accd347f82904da9b76bec66f8e",
+  "probe/openssl-pkcs1-network-ciphertext/positive-default-padding/app.php": "285228cb552ed73322c2af90757b86f4626bd77a3435fedff803c6ce8fa37c36",
+  "probe/openssl-pkcs1-network-ciphertext/positive-explicit-pkcs1/app.php": "57569df7e2f027239d43a03adb59e9df4941048d47c9b86960d139437a631ba3",
+  "probe/proc-open-array-command/near-miss-constant/app.php": "50ea26775eef61efbf590bfeff25ac076d4704535ccd4806e96ca15a3c3aa2b7",
+  "probe/proc-open-array-command/positive-array/app.php": "bb8fdb2928c8cc69f81190cea982fa77a21415ca40eec7c2ca4a258f5a8e6aee",
+  "probe/proc-open-array-command/positive-string/app.php": "ad7a209b889accae3e8a774e48a06b270e37137e7d5807d0400c1448f97d8471",
+  "probe/proc-open-array-command/unknown-unmodeled-escape/app.php": "fe0df8709ab962eaf606ed5bb6a3b99fa46e7762dd9b20730d45004231ecbb4c"
+ },
+ "leads": [
+  {
+   "issue": 309,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2024-5458",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+    "https://github.com/BrokkAi/bifrost-packs/issues/318"
+   ],
+   "probe": "probe/filter-var-url-fetch",
+   "note": "Version-independent slice works with research declarations (proven_by_summary). filter_var is not in the pinned stub slice. Runtime version part not probed."
+  },
+  {
+   "issue": 310,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2023-3823",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+    "https://github.com/BrokkAi/bifrost-packs/issues/318"
+   ],
+   "probe": "probe/libxml-noent-untrusted-xml",
+   "note": "Bare LIBXML_NOENT works. A flag union selects no sink (vacuous complete), so a shipped rule needs an operand selector with an unknown fallback. DOMDocument::loadXML binding not probed."
+  },
+  {
+   "issue": 311,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2024-1874",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9992",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+   ],
+   "probe": "probe/proc-open-array-command",
+   "note": "String command works. The array command form drops the flow and reports complete. Windows target evidence not probed."
+  },
+  {
+   "issue": 312,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2025-1736",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9992",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9993",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+   ],
+   "probe": "probe/http-context-header",
+   "note": "Nested http.header element dropped while the run reports complete."
+  },
+  {
+   "issue": 313,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2024-11234",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9993",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+   ],
+   "probe": "probe/http-proxy-fulluri",
+   "note": "URL flow found, but proxy and no-proxy contexts give the same finding."
+  },
+  {
+   "issue": 314,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2025-1220",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9331"
+   ],
+   "probe": "probe/fsockopen-host-after-check",
+   "note": "Flow found; the !== guard leaves the run inconclusive on 0.15.1 (fixed upstream in PR 9455, unreleased)."
+  },
+  {
+   "issue": 315,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2024-2408",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+    "https://github.com/BrokkAi/bifrost-packs/issues/318"
+   ],
+   "probe": "probe/openssl-pkcs1-network-ciphertext",
+   "note": "Network bytes to openssl_private_decrypt with default or PKCS1 padding found; OAEP clean. OpenSSL build stays review."
+  },
+  {
+   "issue": 316,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "php",
+   "advisory": "CVE-2025-1219",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+    "https://github.com/BrokkAi/bifrost-packs/issues/318"
+   ],
+   "probe": "probe/libxml-remote-url-load",
+   "note": "Flow found with research declarations. simplexml_load_file has no identity under php-builtin."
+  },
+  {
+   "issue": 471,
+   "repository": "BrokkAi/bifrost-premium-packs",
+   "language": "php",
+   "advisory": "CVE-2026-45071",
+   "outcome": "premium_not_implemented",
+   "blocking_issues": [],
+   "note": "Composer package contract; placed in premium and not probed here."
+  },
+  {
+   "issue": 472,
+   "repository": "BrokkAi/bifrost-premium-packs",
+   "language": "php",
+   "advisory": "CVE-2026-84372",
+   "outcome": "premium_not_implemented",
+   "blocking_issues": [],
+   "note": "Composer package contract; placed in premium and not probed here."
+  }
+ ]
+}
