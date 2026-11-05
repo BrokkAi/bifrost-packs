@@ -12,3 +12,10 @@ XmlDocument part of the stdlib candidate
 `bifrost.dotnet.system-xml-csharp` model.
 
 The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.
+
+`cargo-ssh-git-host-key-unverified` qualifies the Rust CVE lead
+BrokkAi/bifrost-packs#60 (CVE-2022-46176). It needs Bifrost 0.15.1 Cargo and
+`rust-toolchain` dependency evidence, and no semantic models. Its 10 cases
+include five where the toolchain or configuration is unknown, and those must
+stay inconclusive. See its `README.md` and
+`docs/qualification/rust-cargo-ssh-git.json`.
