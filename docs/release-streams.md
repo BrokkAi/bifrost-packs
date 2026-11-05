@@ -17,10 +17,35 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-02, the latest published streams are `packs/v0.9.0`, tagged on
-`f52867e`, and `rules/v0.9.0`, tagged on `be4acbf`
-([below](#c-codeql-ports-and-rust-security-policies-for-rules-090)).
-`rules/v0.9.1` is prepared next. It is a patch release that changes only the
+As of 2026-11-05, the latest published streams are `packs/v0.9.0`, tagged on
+`f52867e`, and `rules/v0.9.1`, tagged on `7112b80`. `packs/v0.10.0` and
+`rules/v0.10.0` are prepared next. Publish the packs release first, because
+the rules release depends on it exactly.
+
+`packs/v0.10.0` is a minor release. It adds two native packs,
+`bifrost.go.stdlib.encoding-gob-declarations` and
+`bifrost.go.stdlib.encoding-gob`. Their summaries leave `Decoder.Decode` and
+`DecodeValue` unsummarized, because the semantic-model schema cannot express a
+write into the argument (bifrost-dev#9907). `bifrost.go.stdlib.net` 2.1.0 adds
+`net.Conn` and `net.Listener` interface summaries. The thirteen Go declaration
+packs move to new minors that mark every declared callable
+`callable_family_complete` (#213). It is the first packs release built by the
+released 0.15.1 producer. Its `bifrost.external.java` production uses
+semantic-model schema 22 instead of 21, so it needs Bifrost 0.15.1 or later.
+The bundle keeps release index schema 4 and lists 64 packs.
+
+`rules/v0.10.0` is a minor release. It requires Bifrost 0.15.1 or later and
+depends exactly on `packs/v0.10.0`. `bifrost.security` 2.2.0 adds two opt-in
+policies. `bifrost.security.rust.cargo-ssh-git-host-key-unverified`
+(CVE-2022-46176) uses the Rust toolchain dependency evidence that 0.15.1
+introduced. No capability name covers that evidence, so it declares none, and
+Bifrost 0.15.0 rejects it at validation.
+`bifrost.security.go.gob-decode-network-input` (CVE-2024-34156) needs the
+`packs/v0.10.0` gob and `net` models and 0.15.1's binding of calls through
+model-declared interfaces. Its runs that reach `Decoder.Decode` are
+inconclusive. The rules smoke test in `pack-release.yml` runs Bifrost 0.15.1.
+
+The `rules/v0.9.1` notes follow. It was a patch release that changes only the
 exact packs dependency, from `packs/v0.8.0` to `packs/v0.9.0`. Bifrost 0.15.1
 no longer falls back to its embedded packs (bifrost-dev#4438), so the six packs
 that only `packs/v0.9.0` ships reach online users only once a rules release

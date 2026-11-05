@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.9.1",
+  "release_version": "0.10.0",
   "artifact_role": "source",
-  "notes": "This patch release changes only the exact native dependency, from bifrost.public.packs 0.8.0 to 0.9.0, which adds compiled the last six packs Bifrost's legacy embedded registry provided: bifrost.java.lombok, bifrost.rust.getset, bifrost.scala.case-class, bifrost.python-process-inputs, bifrost.node-runtime-values-javascript and bifrost.node-runtime-values-typescript. Bifrost 0.15.1 no longer falls back to embedded packs, so normal acquisition through the rules stream needs this dependency to supply them (bifrost-dev#4438). Policies, IDs and consumer requirements are unchanged from rules 0.9.0: it requires Bifrost 0.15.0 or later, which is also what packs 0.9.0 needs to read its index schema 4 bundle. This release does not qualify the full policy set or imply complete analysis.",
+  "notes": "This minor release requires Bifrost 0.15.1 or later and depends exactly on bifrost.public.packs 0.10.0. It adds two opt-in policies to bifrost.security 2.2.0. bifrost.security.rust.cargo-ssh-git-host-key-unverified (CVE-2022-46176) reports a locked git+ssh Cargo dependency in a package whose rust-toolchain file pins a release before 1.66.1; an unpinned toolchain, a missing Cargo.lock or a workspace .cargo/config.toml leaves the run inconclusive, and ambient Cargo and git configuration is not read (bifrost-dev#9902). It uses the rust-toolchain dependency evidence that Bifrost 0.15.1 introduced; no capability name covers dependency evidence, so it declares none, and Bifrost 0.15.0 rejects it at validation. bifrost.security.go.gob-decode-network-input (CVE-2024-34156) reports network connections from net.Dial, net.DialTimeout and net.Listener.Accept that reach gob.NewDecoder, on any Go toolchain. It needs the packs 0.10.0 gob and net 2.1.0 models and Bifrost 0.15.1's binding of calls through model-declared interfaces. Runs that reach Decoder.Decode are inconclusive (bifrost-dev#9907), though its findings stay definite. All other policies, IDs and consumer requirements are unchanged from rules 0.9.1. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.9.0",
+      "release_version": "0.10.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

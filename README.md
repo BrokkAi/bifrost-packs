@@ -83,11 +83,12 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.9.0` and `rules/v0.9.0`. `packs/v0.9.0`
-ships compiled the last six packs that Bifrost's legacy embedded registry
-provides, so its bundle contains all 46. It is built by the Bifrost 0.15.0
-generator and needs Bifrost 0.15.0 or later to read it. `rules/v0.9.1` is
-prepared next; it moves the exact packs dependency to `packs/v0.9.0`. See
+The latest releases are `packs/v0.9.0` and `rules/v0.9.1`. `packs/v0.10.0`
+and `rules/v0.10.0` are prepared next. Both need Bifrost 0.15.1 or later.
+`packs/v0.10.0` adds the Go `encoding/gob` packs and `net` 2.1.0 interface
+summaries and is built by the released 0.15.1 producer. `rules/v0.10.0` adds
+two opt-in `bifrost.security` policies (Cargo SSH git host keys and gob decoding
+of network input) and depends on `packs/v0.10.0`. See
 [release streams](docs/release-streams.md).
 
 ## Source verification
