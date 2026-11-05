@@ -53,6 +53,8 @@ def _sha256(data: bytes) -> str:
 
 
 class GoGobNativeJobTests(unittest.TestCase):
+    """Pin the gob jobs, the net interface summaries and the fixture copies."""
+
     def test_gob_jobs_are_the_last_two_and_bind_their_specs(self):
         jobs = _load("native-generation.json")["jobs"]
         self.assertEqual([job["name"] for job in jobs[-2:]], list(GOB_JOBS))
