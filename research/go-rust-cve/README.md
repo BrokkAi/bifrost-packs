@@ -35,7 +35,10 @@ reuses the main checkout's `.bifrost/cache`, even with `--no-incremental`.
   summaries in `bifrost.go.stdlib.net` 2.1.0. Those summaries claim
   `covers_overrides`. On 0.15.1 a call through a model-declared interface binds
   (bifrost-dev#9053), but dispatch closes only through a summary that makes
-  that claim. The fixture README lists the shapes that stay inconclusive.
+  that claim. `Decoder.Decode` has no summary, because the schema can't
+  express its write into the argument. So every run that decodes is
+  inconclusive, although its findings are definite. The fixture README has
+  the details.
 - **The toolchain gate is still missing.** Go `dependency-evidence` exists now
   (bifrost-dev#9047), but the `go` and `toolchain` directives are only
   `constraint` rows. `probe/version-evidence/go-module/toolchain-range.rql`
@@ -153,7 +156,7 @@ exercised.
 | #189 | CVE-2025-22874 | Blocked by engine | bifrost-dev#9867. The public crypto/x509 declarations cover only `IsEncryptedPEMBlock`, so `VerifyOptions` isn't declared. |
 | #190 | CVE-2024-24785 | Blocked by engine | bifrost-dev#9867. 0.15.1 has no html/template context rows. |
 | #191 | CVE-2022-32190 | Blocked by engine | bifrost-dev#9867. A version-independent traversal slice exists, because `JoinPath` with an absolute base path still resolves `..` on fixed toolchains. It still needs request sources (draft #225). |
-| #192 | CVE-2024-34156 | **Version-independent slice implemented** | `bifrost.security.go.gob-decode-network-input`. The affected-toolchain part is blocked by bifrost-dev#9867. |
+| #192 | CVE-2024-34156 | **Version-independent slice implemented** | `bifrost.security.go.gob-decode-network-input` reports definite findings, but runs that decode are inconclusive (`Decode` is unmodeled). The affected-toolchain part is blocked by bifrost-dev#9867. |
 | #193 | CVE-2024-24784 | Blocked by engine | bifrost-dev#9867. Not probed: result-field flow into comparisons. No public `net/mail` model. |
 | #194 | CVE-2025-0913 | Blocked by engine | bifrost-dev#9048 (GOOS). |
 | #58 | CVE-2024-24576 | Blocked by engine | bifrost-dev#9049 (toolchain and Windows target). |

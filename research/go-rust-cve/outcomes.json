@@ -342,7 +342,7 @@
       "blocking_issues": [
         "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "The version-independent slice ships: net.Dial, net.DialTimeout and net.Listener.Accept connections reaching gob.NewDecoder. The CVE's affected-toolchain part stays blocked by bifrost-dev#9867. The rule's own incomplete shapes are listed in the fixture README.",
+      "note": "The version-independent slice ships: net.Dial, net.DialTimeout and net.Listener.Accept connections reaching gob.NewDecoder. Findings are definite, but every run that decodes is inconclusive: Decoder.Decode has no summary, because the schema can't express its write into the argument. The affected-toolchain part stays blocked by bifrost-dev#9867.",
       "rule": "bifrost.security.go.gob-decode-network-input"
     },
     {
@@ -474,6 +474,6 @@
         "reported": []
       }
     ],
-    "note": "Research cases run with the shipped net 2.0.0 models plus Conn.Close and Listener.Accept summaries that claim covers_overrides. Without covers_overrides, unknown-defer-close and unknown-accept stay inconclusive: the interface call binds, but dispatch stays open (bifrost-dev#9053, PR #9091)."
+    "note": "Research cases run with the shipped net 2.0.0 models plus Conn.Close and Listener.Accept summaries that claim covers_overrides. Without covers_overrides, unknown-defer-close and unknown-accept stay inconclusive: the interface call binds, but dispatch stays open (bifrost-dev#9053, PR #9091). Later in PR #249 the Decode and DecodeValue summaries were removed from the shipped pack. The rule fixture's findings are unchanged, but its runs are inconclusive."
   }
 }

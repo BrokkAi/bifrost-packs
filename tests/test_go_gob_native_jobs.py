@@ -16,18 +16,22 @@ from scripts.content import read_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
+# The gob summaries dropped Decode and DecodeValue in a later commit.
+GOB_SUMMARIES_COMMIT = "9849718fe0945d4c77011b28616b8f3ad375ba05"
 GOB_JOBS = {
     "go-stdlib-encoding-gob": {
         "spec": "semantic-packs/go/go-stdlib-encoding-gob.spec.json",
         "model": "semantic-packs/models/go-stdlib-encoding-gob.json",
         "pack_id": "bifrost.go.stdlib.encoding-gob",
         "completeness": "complete",
+        "source_commit": GOB_SUMMARIES_COMMIT,
     },
     "go-stdlib-encoding-gob-declarations": {
         "spec": "semantic-packs/go/go-stdlib-encoding-gob-declarations.spec.json",
         "model": "semantic-packs/models/go-stdlib-encoding-gob-declarations.json",
         "pack_id": "bifrost.go.stdlib.encoding-gob-declarations",
         "completeness": "partial",
+        "source_commit": SOURCE_COMMIT,
     },
 }
 NET_MODEL = "semantic-packs/models/go-stdlib-net.json"
@@ -76,8 +80,23 @@ class GoGobNativeJobTests(unittest.TestCase):
                 self.assertEqual(spec["artifact"]["sha256"], _sha256(model_bytes))
                 self.assertEqual(
                     spec["artifact"]["url"],
-                    f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{expected['model']}",
+                    f"https://github.com/BrokkAi/bifrost-packs/blob/{expected['source_commit']}/{expected['model']}",
                 )
+
+    def test_decoder_methods_have_no_summary(self):
+        # The schema can't express Decode's write into its argument, and a
+        # complete summary with no transfers would claim it writes nothing.
+        summaries = _load(GOB_JOBS["go-stdlib-encoding-gob"]["model"])["shards"][0]["payload"]["summaries"]
+        symbols = {row["target"]["symbol"] for row in summaries}
+        self.assertEqual(symbols, {
+            "encoding/gob.NewDecoder(r io.Reader)",
+            "encoding/gob.NewEncoder(w io.Writer)",
+            "encoding/gob.Encoder.Encode(e any)",
+            "encoding/gob.Encoder.EncodeValue(value reflect.Value)",
+            "encoding/gob.Register(value any)",
+            "encoding/gob.RegisterName(name string, value any)",
+        })
+        self.assertTrue(all(row["completeness"] == "complete" for row in summaries))
 
     def test_every_gob_callable_is_a_complete_family(self):
         payload = _load(GOB_JOBS["go-stdlib-encoding-gob-declarations"]["model"])["shards"][0]["payload"]
