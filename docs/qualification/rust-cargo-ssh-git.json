@@ -1,0 +1,153 @@
+{
+  "status": "focused-fixture-release-only",
+  "released_engine_qualified": true,
+  "lead": "BrokkAi/bifrost-packs#60 (CVE-2022-46176)",
+  "scope": "10 isolated Cargo packages: 3 positives, 2 near misses and 5 unknown-toolchain or unknown-configuration cases, each run with fresh caches",
+  "schemas": {
+    "policy": 1,
+    "rql": 1,
+    "policy_pack_manifest": 2
+  },
+  "semantic_models": "None; run with BIFROST_OPEN_PACKS_DISABLE=1 and isolated caches",
+  "reproduction": "python3 scripts/rust-sast-gate.py --binary /path/to/bifrost-v0.15.1 --output /empty/evidence/directory --rule cargo-ssh-git-host-key-unverified",
+  "engine_version": "0.15.1",
+  "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+  "binary": "bifrost-v0.15.1-aarch64-apple-darwin release asset",
+  "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+  "evaluation_date": "2026-11-05",
+  "passed_cases": 10,
+  "total_cases": 10,
+  "cases": [
+    {
+      "case": "positive-direct",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "positive-transitive",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:20"
+      ]
+    },
+    {
+      "case": "positive-legacy-toolchain-file",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "near-miss-fixed-toolchain",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "near-miss-https-source",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-no-toolchain-file",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-stable-channel",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-msrv-only",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-missing-lockfile",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-workspace-git-fetch-with-cli",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    }
+  ],
+  "policy_identity": {
+    "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
+    "source_sha256": "520e85d3c6e0f31ba1f5f79fb870e6f6fd98068d77b384445210deef2e302727",
+    "authored_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
+    "resolved_semantic_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f"
+  },
+  "required_capabilities": {
+    "declared": [],
+    "note": "Bifrost 0.15.1 advertises no capability name for dependency evidence, rust-toolchain version ranges or relational assertions. The manifest declares none rather than a name that does not describe the policy. Restore a precise name once a pinned engine profile lists one."
+  },
+  "older_engine": {
+    "engine_version": "0.15.0",
+    "build_identity": "09a2503c5f7ced1630a9e3c445ead53dfc5925e8",
+    "binary_sha256": "47e3e2da0a64ba65b447337b43952478deebbed7af3aa92d835d3a5ad458da96",
+    "outcome": "policy-validation-failed: version_ranges requires exactly one supported ecosystem: cargo, npm or nuget. The policy fails closed instead of running clean."
+  },
+  "coverage_limits": [
+    "Ambient Cargo and git configuration is not read: $CARGO_HOME/config.toml, CARGO_NET_GIT_FETCH_WITH_CLI, git insteadOf rewrites",
+    "Rustup overrides and RUSTUP_TOOLCHAIN are not observed (rust.toolchain_override: unobserved)",
+    "A workspace .cargo/config.toml is unsupported dependency evidence, so git-fetch-with-cli = true there is inconclusive, not clean",
+    "Independently patched Cargo builds match by release number",
+    "SSH registry indexes are not covered",
+    "An unpinned channel, rust-version minimum or missing Cargo.lock is inconclusive, never clean"
+  ],
+  "versioning": "bifrost.security 2.1.0 -> 2.2.0 for one compatible opt-in policy addition. No stream release version or tag is selected here."
+}
