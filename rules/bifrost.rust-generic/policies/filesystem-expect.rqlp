@@ -1,0 +1,26 @@
+(policy
+  :schema-version 1
+  :id "bifrost.rust.filesystem-expect"
+  :name "Expect on a call named read_dir or remove_file"
+  :message "Review whether this call's failure should propagate instead of panicking"
+  :severity note
+  :description "Outside common test-file paths, #[test] functions, and modules named tests, an expect directly consumes a call named read_dir or remove_file. This name-based prompt does not prove std::fs API identity; review the callee and whether failure should propagate. Rust #[cfg(test)] module arguments are not a queryable test-scope predicate, so test code in other module names can remain."
+  :tags ["rust" "filesystem" "error-handling"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql :schema-version 1
+          (except
+            (language rust
+              (union
+                (not-inside (or (function :decorators [(decorator :name "test")]) (module :name "tests"))
+                  (call :callee (name "expect") :receiver (call :callee (name "read_dir"))))
+                (not-inside (or (function :decorators [(decorator :name "test")]) (module :name "tests"))
+                  (call :callee (name "expect") :receiver (call :callee (name "remove_file"))))))
+            (where "**/tests/**" "**/*_tests.rs" "**/test_*.rs"
+              (language rust
+                (union
+                  (call :callee (name "expect") :receiver (call :callee (name "read_dir")))
+                  (call :callee (name "expect") :receiver (call :callee (name "remove_file")))))))
+        )))
