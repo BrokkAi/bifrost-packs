@@ -1,0 +1,200 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.rust-core-logging",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-rust-core-logging-declarations",
+    "version": "0.1.0"
+  },
+  "language": "rust",
+  "ecosystem": "cargo",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Rust core panicking and Option declarations supporting CodeQL cleartext-logging sinks. Argument positions follow github/codeql rust/ql/lib/codeql/rust/frameworks/log.model.yml: panic_fmt Argument[0], assert_failed Argument[3].Field[core::option::Option::Some(0)], and Option::expect Argument[0]. This declaration slice does not claim Option variant projection or callable body summaries. The core Option declaration and expect member include their standard-library reexport aliases, std.option.Option and std.option.Option.expect.",
+    "revision": "github/codeql@dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6; rust-core-1.100"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "shards": [
+    {
+      "id": "declarations.bifrost.rust-core-logging",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.rust-core-logging.core",
+            "name": "core",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/lib.rs",
+              "symbol": "core"
+            }
+          },
+          {
+            "id": "type.rust-core-logging.panicking",
+            "name": "core.panicking",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/panicking.rs",
+              "symbol": "core.panicking"
+            }
+          },
+          {
+            "id": "type.rust-core-logging.option",
+            "name": "core.option",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/option.rs",
+              "symbol": "core.option"
+            }
+          },
+          {
+            "id": "type.rust-core-logging.option-option",
+            "name": "core.option.Option",
+            "type_kind": "enum",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/option.rs",
+              "symbol": "core.option.Option"
+            },
+            "aliases": [
+              "std.option.Option"
+            ],
+            "type_parameters": [
+              "T"
+            ]
+          }
+        ],
+        "members": [
+          {
+            "id": "member.rust-core-logging.panic-fmt",
+            "owner": "type.rust-core-logging.panicking",
+            "name": "panic_fmt",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "fmt",
+                  "type": {
+                    "kind": "named",
+                    "name": "core.fmt.Arguments"
+                  }
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/panicking.rs",
+              "symbol": "core.panicking.panic_fmt"
+            }
+          },
+          {
+            "id": "member.rust-core-logging.assert-failed",
+            "owner": "type.rust-core-logging.panicking",
+            "name": "assert_failed",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "kind",
+                  "type": {
+                    "kind": "named",
+                    "name": "core.panicking.AssertKind"
+                  }
+                },
+                {
+                  "name": "left",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "right",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "named",
+                    "name": "core.option.Option",
+                    "arguments": [
+                      {
+                        "kind": "named",
+                        "name": "core.fmt.Arguments"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/panicking.rs",
+              "symbol": "core.panicking.assert_failed"
+            }
+          },
+          {
+            "id": "member.rust-core-logging.expect",
+            "owner": "type.rust-core-logging.option-option",
+            "name": "expect",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "msg",
+                  "type": {
+                    "kind": "named",
+                    "name": "core.primitive.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "T"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/option.rs",
+              "symbol": "core.option.Option.expect"
+            },
+            "is_static": false,
+            "aliases": [
+              "std.option.Option.expect"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

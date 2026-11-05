@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "90ed1613f91a6f10d41bc05cf3237400400b165dd5fde1db207b4b2de784ab8c"
+      "sha256": "a9e8f9611f1005e8854f0bd61c76636562f8d161d8ba567f17786039edffbd69"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -405,6 +405,13 @@
       "sha256": "520e85d3c6e0f31ba1f5f79fb870e6f6fd98068d77b384445210deef2e302727",
       "classification": "public",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
+      "sha256": "238e5f69772d38e924f1657866b3b466d8862986c1c54d5360bdb98d1d13cfbf",
+      "classification": "public",
+      "license": "MIT"
     },
     {
       "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
