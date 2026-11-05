@@ -292,6 +292,26 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/go/gob-decode-network-input.rqlp",
+      "id": "bifrost.security.go.gob-decode-network-input",
+      "authored_hash": "9ff3e4211e721dce4ae46c0b1a2caf931b7dc991610cd76e77be6af0b4dc8ff9",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "go"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A network peer controls every byte a gob decoder reads, and the decoder is documented as not hardened against adversarial input; a crafted stream can exhaust the stack (CVE-2024-34156) or other resources on any toolchain.",
+      "remediation": "Do not decode gob from untrusted peers. Use a format with an explicit schema and size limits for network input, or authenticate the peer and bound the stream before decoding.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/jvm/servlet-parameter-to-jdbc.rqlp",
       "id": "bifrost.security.java.servlet-parameter-to-jdbc",
       "authored_hash": "d6de25c3fb96ae45fd6e787eca7302380df8e141a78a43d72f36a4da0b85d920",
