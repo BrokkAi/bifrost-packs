@@ -1,0 +1,106 @@
+; Lead: BrokkAi/bifrost-packs#272 (CVE-2026-4519, CVE-2026-4786),
+; version-independent part.
+; Product source contract: webbrowser.open, open_new and open_new_tab hand the
+; URL to the platform browser or URI handler. CVE-2026-4519 and its incomplete
+; fix CVE-2026-4786 let a URL starting with a dash become a browser command-line
+; option, and the advisory tells callers to sanitize URLs before calling
+; webbrowser.open(). On every CPython version an attacker-chosen URL also picks
+; the local handler for its scheme (file:, custom URI schemes), so a process
+; input reaching the url argument is reported on any interpreter. The
+; affected-version part needs CPython interpreter evidence the engine does not
+; publish (bifrost-dev#3867).
+; Engine contract: the sources are the reviewed os.environ and sys.argv keyed
+; reads of the shipped process-input-to-os-system rule. The sinks are the exact
+; reviewed webbrowser members in bifrost.python-stdlib-api-declarations 0.6.0,
+; closed by their complete summaries in bifrost.python-security-sink-summaries
+; 0.5.0. A controller returned by webbrowser.get() is not modeled, so its open()
+; call leaves the run inconclusive instead of clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.process-input-to-webbrowser-open"
+  :name "Process input reaches webbrowser.open"
+  :message "A process input reached the url argument of a webbrowser open function"
+  :severity warning
+  :description "Reports values read from the CPython process environment (os.environ) or the launch argument vector (sys.argv) that reach the url argument of webbrowser.open, webbrowser.open_new or webbrowser.open_new_tab. The URL selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser option (CVE-2026-4519, CVE-2026-4786). Source identity is the import binder plus the reviewed process-input model; sink identity is the exact reviewed webbrowser member."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "argument-injection" "cwe-88"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global os
+                      :container environ
+                      :key-kind static-property
+                      :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global sys
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id webbrowser-url
+              :display-name "webbrowser open url"
+              :categories [process.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (union
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.webbrowser.open
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "open"))))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.webbrowser.open_new
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "open_new"))))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.webbrowser.open_new_tab
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "open_new_tab")))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "88")))

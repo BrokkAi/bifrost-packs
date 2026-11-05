@@ -1,0 +1,490 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-05",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+    "semantic_pack_bundle": {
+      "release": "packs/v0.10.0",
+      "archive": "bifrost.public.packs-0.10.0-native.tar.gz",
+      "archive_sha256": "3f39f9f5ec2d028e293a238ff796260101915e50963a44a93c812d9d02860945"
+    },
+    "environment": {
+      "BIFROST_OPEN_SEMANTIC_PACK_BUNDLE": "<packs-0.10.0>/bifrost-semantic-packs",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_CACHE_DIR": "fresh per run"
+    },
+    "flags": [
+      "--policy-file",
+      "--no-builtin-policies",
+      "--no-incremental",
+      "--evaluation-date 2026-11-05"
+    ]
+  },
+  "version_evidence": [
+    {
+      "query": "probe/version-evidence/dependency-evidence.rql",
+      "observed": "No rows; semantic_analysis_partial: Python selected dependency publication unavailable: static dependency evidence is unavailable for this analyzer. pyproject.toml declares requires-python >=3.13.11,<3.13.12 and requests==2.31.0; .python-version is 3.13.11."
+    },
+    {
+      "query": "probe/version-evidence/interpreter-range.rql",
+      "observed": "Rejected: version_ranges requires exactly one supported ecosystem: cargo, rust-toolchain, npm, nuget, go-module or go-toolchain. There is no cpython (interpreter) ecosystem."
+    }
+  ],
+  "probes": [
+    {
+      "lead": 270,
+      "root": "probe/270-urlopen",
+      "policy": ".bifrost/policies/270-urlopen.rqlp",
+      "models": "published packs/v0.10.0 only",
+      "cases": [
+        {
+          "sources": "v-env",
+          "completion": "proven_by_summary",
+          "reported": [
+            "v-env/main.py:7 definite complete"
+          ]
+        },
+        {
+          "sources": "v-pos",
+          "completion": "proven_by_summary",
+          "reported": [
+            "v-pos/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "v-kw",
+          "completion": "failed (internal_invariant)",
+          "reported": [],
+          "diagnostics": [
+            "taint model compilation failed: external summary aliases require one synthetic unmaterialized call shape"
+          ]
+        },
+        {
+          "sources": "positive",
+          "completion": "failed (internal_invariant)",
+          "reported": [],
+          "note": "contains urlopen(url, timeout=5)"
+        },
+        {
+          "sources": "v-read",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "v-read/main.py:6 definite complete"
+          ],
+          "diagnostics": [
+            "call `read` ... has snapshot input status unknown"
+          ]
+        },
+        {
+          "sources": "unknown",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        },
+        {
+          "sources": "near-miss",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "note": "a workspace def urlopen beside import urllib.request; the same lookalike alone in its own module is complete and clean (fixture lookalike.py)"
+        }
+      ]
+    },
+    {
+      "lead": 271,
+      "root": "probe/271-expandvars and probe/271b",
+      "models": "research copies of bifrost.python-stdlib-api-declarations and bifrost.python-security-sink-summaries with os.path, posixpath and ntpath expandvars (271b: .py locators)",
+      "cases": [
+        {
+          "sources": "271-expandvars/from-import",
+          "completion": "proven_by_summary",
+          "reported": [
+            "from-import/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "271b/import-os-path",
+          "completion": "proven_by_summary",
+          "reported": [
+            "import-os-path/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "271b/os-path",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "call_bindings ... dispatch outcome=unproven, coverage=open, target_count=1"
+          ]
+        },
+        {
+          "sources": "271b/posix",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        },
+        {
+          "sources": "271-expandvars/near-miss",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "note": "same os.path dispatch gap"
+        }
+      ]
+    },
+    {
+      "lead": 272,
+      "root": "probe/272-webbrowser",
+      "models": "research copies with webbrowser.open, open_new, open_new_tab (promoted to semantic-packs/python)",
+      "cases": [
+        {
+          "sources": "attr",
+          "completion": "proven_by_summary",
+          "reported": [
+            "attr/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "from-import",
+          "completion": "proven_by_summary",
+          "reported": [
+            "from-import/main.py:7 definite complete"
+          ]
+        },
+        {
+          "sources": "tab",
+          "completion": "proven_by_summary",
+          "reported": [
+            "tab/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "kw",
+          "completion": "proven_by_summary",
+          "reported": [
+            "kw/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "positional",
+          "completion": "proven_by_summary",
+          "reported": [
+            "positional/main.py:6 definite complete"
+          ]
+        },
+        {
+          "sources": "near-miss",
+          "completion": "proven_by_summary",
+          "reported": []
+        },
+        {
+          "sources": "controller",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        },
+        {
+          "sources": "helper",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        }
+      ]
+    },
+    {
+      "lead": 273,
+      "root": "probe/273-imaplib",
+      "models": "research copies with imaplib.IMAP4.__init__ and IMAP4.xatom",
+      "cases": [
+        {
+          "sources": "argv-first",
+          "completion": "proven_by_summary",
+          "reported": [
+            "argv-first/main.py:8 definite complete"
+          ]
+        },
+        {
+          "sources": "positive",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "selector /analysis/sources/entries/sys-argv-read/selector discovery is Incomplete { codes: [] }"
+          ]
+        },
+        {
+          "sources": "near-miss",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "note": "same source gap"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "rule": "bifrost.security.python.process-input-to-urlopen",
+      "fixture": "fixtures/policy/bifrost.security/python-process-input-to-urlopen",
+      "policy_hash": "3f6c8cfbf567367dbd3e82b9852c25ac7c70ebe1cb368024381de5acba8fa9f3",
+      "activation": "opt-in",
+      "models": [
+        "bifrost.python-process-inputs 0.1.0",
+        "bifrost.python-stdlib-api-declarations 0.6.0",
+        "bifrost.python-security-sink-summaries 0.5.0"
+      ],
+      "roots": [
+        {
+          "root": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "main.py:8",
+            "main.py:13",
+            "main.py:17"
+          ]
+        },
+        {
+          "root": "incomplete",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "read/main.py:6"
+          ]
+        },
+        {
+          "root": "incomplete --sources read",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "read/main.py:6"
+          ]
+        },
+        {
+          "root": "incomplete --sources helper",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "bifrost.security.python.process-input-to-webbrowser-open",
+      "fixture": "fixtures/policy/bifrost.security/python-process-input-to-webbrowser-open",
+      "policy_hash": "eb87578a05c78e883000073e5530846f6529e4843e54c670abd324cc9fb81c8f",
+      "activation": "opt-in",
+      "models": [
+        "bifrost.python-process-inputs 0.1.0",
+        "bifrost.python-stdlib-api-declarations 0.6.0",
+        "bifrost.python-security-sink-summaries 0.5.0"
+      ],
+      "roots": [
+        {
+          "root": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "main.py:8",
+            "main.py:13",
+            "main.py:17",
+            "main.py:21",
+            "main.py:25"
+          ]
+        },
+        {
+          "root": "incomplete",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        },
+        {
+          "root": "incomplete --sources controller",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        },
+        {
+          "root": "incomplete --sources helper",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        }
+      ]
+    }
+  ],
+  "side_observations": [
+    {
+      "observation": "The shipped bifrost.security.python.xml-bomb fixture is not_run on Bifrost 0.15.1 with packs/v0.10.0: qualified call locator xml.dom.minidom.parseString resolves to two exact identities (the bifrost.python-stdlib typeshed member and member.python.xml.dom.minidom.parse-string). Out of scope for these leads; recorded for follow-up."
+    }
+  ],
+  "leads": [
+    {
+      "issue": 270,
+      "language": "python",
+      "advisory": "CVE-2025-15282",
+      "osv": "PSF-2026-2",
+      "analysis": "taint",
+      "outcome": "implemented",
+      "rule": "bifrost.security.python.process-input-to-urlopen",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9991",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999"
+      ],
+      "note": "The version-independent slice ships opt-in: os.environ and sys.argv keyed reads reaching the url of urllib.request.urlopen, through the existing reviewed models. Fixture: proven_by_summary, 3 definite findings, near misses clean. urlopen(url, timeout=5) fails the run with internal_invariant (bifrost-dev#9991); reading the response (.read()) is unmodeled and inconclusive; an input read after any modeled call is not selected (bifrost-dev#9999). The data: header-injection part needs CPython interpreter evidence (bifrost-dev#3867)."
+    },
+    {
+      "issue": 271,
+      "language": "python",
+      "advisory": "CVE-2025-6075",
+      "osv": "PSF-2025-13",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10006",
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867"
+      ],
+      "note": "Research models for os.path/posixpath/ntpath.expandvars bind for `from os.path import expandvars` and `import os.path` (proven_by_summary, definite). The dominant `import os; os.path.expandvars(...)` and `posixpath.expandvars(...)` stay dispatch-unproven (bifrost-dev#10006), so the rule would be inconclusive on ordinary code. Not shipped; models not promoted. CPU part needs interpreter evidence (bifrost-dev#3867)."
+    },
+    {
+      "issue": 272,
+      "language": "python",
+      "advisory": "CVE-2026-4519",
+      "osv": "PSF-2026-14",
+      "analysis": "taint",
+      "outcome": "implemented",
+      "rule": "bifrost.security.python.process-input-to-webbrowser-open",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999"
+      ],
+      "note": "The version-independent slice ships opt-in with new reviewed webbrowser.open/open_new/open_new_tab declarations (bifrost.python-stdlib-api-declarations 0.6.0) and summaries (bifrost.python-security-sink-summaries 0.5.0). Fixture: proven_by_summary, 5 definite findings including new=2 by keyword, near misses clean; webbrowser.get().open and an unresolved helper stay inconclusive. Also covers CVE-2026-4786 (PSF-2026-17). Leading-dash part needs interpreter evidence (bifrost-dev#3867)."
+    },
+    {
+      "issue": 273,
+      "language": "python",
+      "advisory": "CVE-2025-15366",
+      "osv": "PSF-2026-3",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999",
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867"
+      ],
+      "note": "Research models for imaplib.IMAP4 and IMAP4.xatom prove the version-independent xatom slice when sys.argv is read before the constructor (proven_by_summary, definite). With the usual order (construct, then read input) the sys.argv source is not selected at all (bifrost-dev#9999). The newline-injection part needs interpreter evidence (bifrost-dev#3867). Not shipped; models not promoted."
+    },
+    {
+      "issue": 274,
+      "language": "python",
+      "advisory": "CVE-2026-1502",
+      "osv": "PSF-2026-15",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999",
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867"
+      ],
+      "note": "Not probed separately. Same shape as #273: http.client.HTTPConnection is constructed before set_tunnel receives the input, so the source is not selected (bifrost-dev#9999). No public http.client models; the CRLF part needs interpreter evidence (bifrost-dev#3867)."
+    },
+    {
+      "issue": 275,
+      "language": "python",
+      "advisory": "CVE-2026-0865",
+      "osv": "PSF-2026-6",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867"
+      ],
+      "note": "Version-gated only: fixed interpreters reject the newline. No CPython interpreter evidence in policies (bifrost-dev#3867). Also needs WSGI environ request sources and wsgiref.headers.Headers models, neither of which exists publicly."
+    },
+    {
+      "issue": 276,
+      "language": "python",
+      "advisory": "CVE-2026-18503",
+      "osv": "PSF-2026-35",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999"
+      ],
+      "note": "Version-gated (the regular expressions were fixed); needs interpreter evidence (bifrost-dev#3867). csv.Sniffer() is constructed before sniff(), the #273 shape (bifrost-dev#9999). Needs csv.Sniffer models and a constant length-bound sanitizer."
+    },
+    {
+      "issue": 277,
+      "language": "python",
+      "advisory": "CVE-2024-6923",
+      "osv": "PSF-2024-8",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999"
+      ],
+      "note": "Version-gated on the default email policy; needs interpreter evidence (bifrost-dev#3867). The message object is constructed before the header write (bifrost-dev#9999). Needs EmailMessage subscript-assignment and serialization models; same-object write-then-serialize flow not probed."
+    },
+    {
+      "issue": 278,
+      "language": "python",
+      "advisory": "CVE-2026-0864",
+      "osv": "PSF-2026-29",
+      "analysis": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/3867",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9999"
+      ],
+      "note": "Version-gated; needs interpreter evidence (bifrost-dev#3867). ConfigParser() is constructed before set() receives the input (bifrost-dev#9999). Needs configparser models; same-object set-then-write flow not probed."
+    },
+    {
+      "issue": 279,
+      "language": "python",
+      "advisory": "CVE-2026-19553",
+      "osv": "PSF-2026-44",
+      "analysis": "typestate",
+      "outcome": "blocked",
+      "blocking_issues": [],
+      "note": "Not implemented and not probed. The blocker is content in this repository: no reviewed models for ssl.create_default_context, SSLContext.wrap_bio or check_hostname writes (only SSL protocol constants and SSLContext.__init__ exist). The defaulted server_hostname selector exists (binding_kind defaulted, as in insecure-default-protocol). Whether typestate can carry check_hostname state from the context factory to wrap_bio is unverified, so no engine issue is filed yet."
+    }
+  ],
+  "input_sha256": {
+    "probe/270-urlopen/.bifrost/policies/270-urlopen.rqlp": "9126aae92773a76682219a79d286b9e0f9ae7581fb29f72109844f0d9d1fb1a3",
+    "probe/270-urlopen/near-miss/main.py": "215e52a63cfc46b97f06fb370e71f6c37a3a04d5572bd094ff23dc22d16d64bd",
+    "probe/270-urlopen/positive/main.py": "95d49e6249ffdeadc51d0d863d17ecc516d7e9569e4655ed1c7fdc8259ef6bbd",
+    "probe/270-urlopen/pyproject.toml": "cc13da043f94794130e40d4b857547aea83dd7060f3f36dce29656ad93ae1f16",
+    "probe/270-urlopen/unknown/main.py": "3e2285ed14885c112cd9d3f9a68f283e7d4d44ca36761de162fe253bfac46b0e",
+    "probe/270-urlopen/v-env/main.py": "5bc53f082c256a1f77597c2eb782971ff798cb8b418b104385cc7d893add9e33",
+    "probe/270-urlopen/v-kw/main.py": "b14453582bc678a455abd3d02de2812bbf6e25892091e6aac2cf1dec2c1f219c",
+    "probe/270-urlopen/v-pos/main.py": "a617021a7c320efe146951781db43c0a642193a859f92180e7be1bd4469fc776",
+    "probe/270-urlopen/v-read/main.py": "c529366e3ee33c9fb4ef352bfe4aa9a20b4c9710e46d1f4abc11981410ea1a45",
+    "probe/271-expandvars/.bifrost/policies/271-expandvars.rqlp": "943a28e035159d838aa2b12fb3d3f040541a028e0cb18ca888f49925910ca0f8",
+    "probe/271-expandvars/.bifrost/semantic-models/bifrost.python-security-sink-summaries.json": "94a3b519f8d4a83f8662c1a3d6a0d6cb8e963c32c52090c307b1c79ab73fe854",
+    "probe/271-expandvars/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json": "d5f3afa4758cebef16b0a33b4b3271381504b013ce70b1c96c0cd82c1e04f1ab",
+    "probe/271-expandvars/from-import/main.py": "4f4ab740ca0e622cd0169849c004fbc07269e9037da01f9bdaffda97f2e62dab",
+    "probe/271-expandvars/near-miss/main.py": "1e8015df8f83bcce42f4b8c2ab4001622d2d0d8f18c7ad86645e9fd864d71040",
+    "probe/271-expandvars/os-path/main.py": "f1c605dbb25da166e5e28343e6c9d26d036e1b9c707b8173f400891fd2f07ac7",
+    "probe/271-expandvars/posix/main.py": "8d1c56edbe944a9ed0ec0ee96d9d85cf44fb1d12650f2a27220567de64600a00",
+    "probe/271-expandvars/pyproject.toml": "232f6e2de8ac2e6b2d9636396947f325c39fc4736e465ff8da400ce33f04bb5c",
+    "probe/271b/.bifrost/policies/271-expandvars.rqlp": "943a28e035159d838aa2b12fb3d3f040541a028e0cb18ca888f49925910ca0f8",
+    "probe/271b/.bifrost/semantic-models/bifrost.python-security-sink-summaries.json": "03a0c09c8526aab0bf402a26f29cb9b732599bed08571e3ec2ee91c154fa9eed",
+    "probe/271b/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json": "5f018989333464dda8130ce4ebf6b34be019ca7ca80e7f78096393ff38978b17",
+    "probe/271b/from-import/main.py": "4f4ab740ca0e622cd0169849c004fbc07269e9037da01f9bdaffda97f2e62dab",
+    "probe/271b/import-os-path/main.py": "61170700b5043b7e7eec912b4e2c651c13a28758dc91f51c3429b121678cee80",
+    "probe/271b/near-miss/main.py": "1e8015df8f83bcce42f4b8c2ab4001622d2d0d8f18c7ad86645e9fd864d71040",
+    "probe/271b/os-path/main.py": "f1c605dbb25da166e5e28343e6c9d26d036e1b9c707b8173f400891fd2f07ac7",
+    "probe/271b/posix/main.py": "8d1c56edbe944a9ed0ec0ee96d9d85cf44fb1d12650f2a27220567de64600a00",
+    "probe/271b/pyproject.toml": "232f6e2de8ac2e6b2d9636396947f325c39fc4736e465ff8da400ce33f04bb5c",
+    "probe/272-webbrowser/.bifrost/policies/272-webbrowser.rqlp": "385c1d6b52cb08d20590661a08e06af272d0f07f83ef5f6275d43051f725c16a",
+    "probe/272-webbrowser/.bifrost/semantic-models/bifrost.python-security-sink-summaries.json": "94a3b519f8d4a83f8662c1a3d6a0d6cb8e963c32c52090c307b1c79ab73fe854",
+    "probe/272-webbrowser/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json": "d5f3afa4758cebef16b0a33b4b3271381504b013ce70b1c96c0cd82c1e04f1ab",
+    "probe/272-webbrowser/attr/main.py": "06a2a17979d67e9d4341ac3ae561d31d5f0937b59c373edc65138096a91a2409",
+    "probe/272-webbrowser/controller/main.py": "3364b548fc50ed456a2fcfb4d0e7489987e56d4955593ae840fc0577a5e8565c",
+    "probe/272-webbrowser/from-import/main.py": "8503b225b6644f38410ad3c1f9b338c1d12f58727609ad3d17caee4d26ad8599",
+    "probe/272-webbrowser/helper/main.py": "c501d669eb5dce48eccfc98722231fb6135aa2efe0f3654c26ac541e44f6558c",
+    "probe/272-webbrowser/kw/main.py": "ce925949ff1b2e7f50959d4c15d1a72058f45da603c8aee7d966ed03f79b4a18",
+    "probe/272-webbrowser/near-miss/main.py": "f0b54e6f780f31e1964d5fca8112f1d5bbcc4dc89de29622a6a59c5b3119622b",
+    "probe/272-webbrowser/positional/main.py": "fd18aec0f39d350c76506ef47671e3e93f0fb75f8a5eac47a8152b23092f6801",
+    "probe/272-webbrowser/pyproject.toml": "c267fb580ee18999aec4a69d61494255fb952d0e9177332c963d4b25b8e52d4d",
+    "probe/272-webbrowser/tab/main.py": "828c9300b32f47c90f626b8ec03f3ebe7b6f6537044ba6393fa8f3e36f96e255",
+    "probe/273-imaplib/.bifrost/policies/273-imaplib.rqlp": "1145672f199299ff6100f722baef937defe0836ca4fc1d205830a83f5af989ec",
+    "probe/273-imaplib/.bifrost/semantic-models/bifrost.python-security-sink-summaries.json": "c4321309415d3dc44cf2389d963b6150e8f3d8c5faba178993c64fba93a4e036",
+    "probe/273-imaplib/.bifrost/semantic-models/bifrost.python-stdlib-api-declarations.json": "e8ed5c3063235a3e4d410d6edcc908ec0651c9eb809b12c5b7993b746d83e0ab",
+    "probe/273-imaplib/argv-first/main.py": "dff5780a49ad46b3fb3bffb5c41e528f846611f3accb04feba15df6b5b2070cd",
+    "probe/273-imaplib/near-miss/main.py": "502d65de8366c28efc5a4366d503d186c923742a0f8c6018d6fdd1702601ce26",
+    "probe/273-imaplib/positive/main.py": "ae965ae8624e2f78b3eae30389a7d55bf7d4c06fa3b5fc4256edf9856b21752b",
+    "probe/273-imaplib/pyproject.toml": "a98c548cf28a41d0297d610e2dd7faf2cbd710859245101196feaa4c22bc09ab",
+    "probe/version-evidence/dependency-evidence.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75",
+    "probe/version-evidence/interpreter-range.rql": "5cc004ea4ac2c312b5bec503d7a66bf293858ad848a35be13c11943354d15317",
+    "probe/version-evidence/main.py": "f534ff405feae5d6d2d53ef6c089cc3c31e3d3a68712e1cb4dbcd282e8a9a606",
+    "probe/version-evidence/pyproject.toml": "fc62335d20514e99d591794424e7f0f76d2fea0aad0a6b1ac5486f73ed50a7e8"
+  }
+}

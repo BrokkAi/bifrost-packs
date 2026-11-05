@@ -741,6 +741,48 @@
       "remediation": "Do not pass process input to os.system. Use subprocess.run with an argument list and shell=False, and validate the executable against an allowlist."
     },
     {
+      "path": "policies/python/process-input-to-urlopen.rqlp",
+      "id": "bifrost.security.python.process-input-to-urlopen",
+      "authored_hash": "3f6c8cfbf567367dbd3e82b9852c25ac7c70ebe1cb368024381de5acba8fa9f3",
+      "resolved_semantic_hash": "3f6c8cfbf567367dbd3e82b9852c25ac7c70ebe1cb368024381de5acba8fa9f3",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL taken from the process environment or the launch arguments selects the scheme handler of the default opener, so whoever controls it can read local files through file:, reach internal hosts, or supply a data: URL (CVE-2025-15282) on any CPython version.",
+      "remediation": "Do not pass process input to urlopen as a URL. Parse it, allow only the expected scheme (https) and an allowlisted host, and build the request from the validated parts.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/process-input-to-webbrowser-open.rqlp",
+      "id": "bifrost.security.python.process-input-to-webbrowser-open",
+      "authored_hash": "eb87578a05c78e883000073e5530846f6529e4843e54c670abd324cc9fb81c8f",
+      "resolved_semantic_hash": "eb87578a05c78e883000073e5530846f6529e4843e54c670abd324cc9fb81c8f",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "The URL passed to webbrowser.open selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser command-line option (CVE-2026-4519, CVE-2026-4786).",
+      "remediation": "Do not open process input as a URL. Parse it, require an https scheme and an expected host, and pass only the validated URL to webbrowser.open.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/declared-storage/python-store-requires-validation.rqlp",
       "id": "bifrost.security.python.store-requires-validation",
       "authored_hash": "f7e2f15e8f55363f6077a35f2f8daaf9b7e7de2900e0532b9666ce2928da9a92",
