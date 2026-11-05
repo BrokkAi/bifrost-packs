@@ -15,6 +15,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7"
+# The Go declaration models moved here when they gained callable_family_complete (#213).
+GO_DECLARATIONS_COMMIT = "f9c42f6854fff105e78bb961e7a56c56c63744e3"
 # The rule-only and runtime-value-only models were migrated in a later commit.
 RULE_ONLY_SOURCE_COMMIT = "825d2bcb1de3aea097b1149ae13ece24d920898c"
 FIRST_JOB = 12
@@ -94,7 +96,12 @@ class LegacyBuiltinNativeJobTests(unittest.TestCase):
                 self.assertGreaterEqual(model["schema_version"], 8)
                 self.assertNotIn("bifrost", model["compatibility"])
                 self.assertEqual(spec["artifact"]["sha256"], hashlib.sha256(model_bytes).hexdigest())
-                commit = RULE_ONLY_SOURCE_COMMIT if model["pack_id"] in RULE_ONLY else SOURCE_COMMIT
+                if model["pack_id"] in RULE_ONLY:
+                    commit = RULE_ONLY_SOURCE_COMMIT
+                elif job["name"].startswith("go-") and job["name"].endswith("-declarations"):
+                    commit = GO_DECLARATIONS_COMMIT
+                else:
+                    commit = SOURCE_COMMIT
                 if model["schema_version"] == 8:
                     self.assertEqual(
                         spec["artifact"]["url"],

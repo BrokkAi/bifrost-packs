@@ -1,0 +1,34 @@
+; Research probe for BrokkAi/bifrost-packs#192 (CVE-2024-34156), version-independent
+; slice only: encoding/gob documents that its decoder is not hardened against
+; adversarial input, so network bytes reaching gob.NewDecoder are reviewed on
+; any toolchain. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.go-cve.gob-network"
+  :name "Go network data decoded with gob (research probe)"
+  :message "bytes from a network connection reach gob.NewDecoder"
+  :severity warning
+  :description "Research probe. Reports net.Dial and net.Listener.Accept connections that reach the reader operand of encoding/gob.NewDecoder."
+  :tags ["research" "go" "deserialization" "cwe-502"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id net-dial :display-name "net.Dial connection" :categories [io.external]
+        :selector (rql :schema-version 1
+          (language go (resolved-call :resolves-to "net.Dial" :proof declared
+            (call-bindings (call-shape (call :callee (name "Dial") :arity 2))))))
+        :bind (result :index 0) :labels [untrusted])
+      (source :id net-accept :display-name "net.Listener.Accept connection" :categories [io.external]
+        :selector (rql :schema-version 1
+          (language go (resolved-call :resolves-to "net.Listener.Accept" :proof declared
+            (call-bindings (call-shape (call :callee (name "Accept") :arity 0))))))
+        :bind (result :index 0) :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id gob-reader :display-name "gob.NewDecoder reader" :categories [deserialization]
+        :selector (rql :schema-version 1
+          (language go (call-argument :formal-index 0
+            (resolved-call :resolves-to "encoding/gob.NewDecoder" :proof declared
+              (call-bindings (call-shape (call :callee (name "NewDecoder") :arity 1)))))))
+        :dangerous-operand (argument :index 0) :accepts [untrusted])])))
