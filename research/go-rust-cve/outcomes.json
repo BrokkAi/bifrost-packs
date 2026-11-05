@@ -84,6 +84,24 @@
     "192-gob-network/positive-dial/main.go": "a1bfb7ca2ae25f3796540add770c3d52ee2b50c2fa18f1386db53b0569308bb0",
     "192-gob-network/unknown-accept/main.go": "c7f31acb061e5803ee8122c925bfdbc3338936d655ac10ac351e761818c1176d",
     "192-gob-network/unknown-defer-close/main.go": "2bcfac3ea30dc80feb56e27e11f0ad164c8b1383b98d9742da36afccc9bf7ae1",
+    "platform-toolchain/.bifrost/policies/openfile-binding.rqlp": "de5514399d58d0d0d59fbbbecaf593c3ffb9932e8d7533edc8cda94d4f2a69ed",
+    "platform-toolchain/affected/go.mod": "ce1a535ef64cb0099e0835ffa2f417b974068e1cf138feec5e271b06160082b5",
+    "platform-toolchain/affected/lock_linux.go": "a474188add8a2a61dd355480f6d148c77737de324517f11cff321bec87f1f300",
+    "platform-toolchain/affected/lock_windows.go": "62d3a00f219b4af3e6597b714aa88b92fea488d3a591503409d70c8d69b98308",
+    "platform-toolchain/affected/main.go": "9584a03f15e449fed025ebe59e1072af48380e07b218db18f6af3ff062d5b006",
+    "platform-toolchain/build-configuration.rql": "96470816248baa699e280b9883a990e6f566a9eabaf36368cb74651dc9852e36",
+    "platform-toolchain/fixed/go.mod": "a0d61dd44ac33baf11769ccd285920f4377e62aa1da03e77a31b1d77b32a8b6e",
+    "platform-toolchain/fixed/lock_linux.go": "a474188add8a2a61dd355480f6d148c77737de324517f11cff321bec87f1f300",
+    "platform-toolchain/fixed/lock_windows.go": "62d3a00f219b4af3e6597b714aa88b92fea488d3a591503409d70c8d69b98308",
+    "platform-toolchain/fixed/main.go": "9584a03f15e449fed025ebe59e1072af48380e07b218db18f6af3ff062d5b006",
+    "platform-toolchain/none/go.mod": "3c1c46bdd999b2bd5b08fc0943ca3f364190e97d61f7a0910fb333f2101e2818",
+    "platform-toolchain/none/lock_linux.go": "a474188add8a2a61dd355480f6d148c77737de324517f11cff321bec87f1f300",
+    "platform-toolchain/none/lock_windows.go": "62d3a00f219b4af3e6597b714aa88b92fea488d3a591503409d70c8d69b98308",
+    "platform-toolchain/none/main.go": "9584a03f15e449fed025ebe59e1072af48380e07b218db18f6af3ff062d5b006",
+    "platform-toolchain/target-of.rql": "1c4d69a668e227ad444abbc1023908633bf9853b0ea210a631a93a71a4036b11",
+    "platform-toolchain/toolchain-exact.rql": "6d55c3d8d8a35b8b3c2c5bf19871b0ffa704504f8a8b21f590edca0166e9652b",
+    "platform-toolchain/toolchain-range.rql": "42900f810bda09365f8f8b84e55a2cdee1170dda26b33342a015de6a3f488305",
+    "platform-toolchain/toolchain-rows.rql": "ff6b13b318ef36cf9d12b19e5b51558124f6687fbd507f354a080721a5c6f300",
     "version-evidence/go-module/dependency-evidence.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75",
     "version-evidence/go-module/go.mod": "41c0783d6e76c40da048f01d7a77de9fe429cf25bf6841b433fe6b0addf8715b",
     "version-evidence/go-module/go.sum": "0841f86201b0467138f8de086acb634ab2fa5e0c69b38cab36147f4f7c80af64",
@@ -192,10 +210,10 @@
       "advisory": "CVE-2026-56857",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "bifrost-dev#9048 (GOOS)."
+      "note": "Rechecked on 0.15.1: GOOS facts work, but go-toolchain version ranges are always unresolved (constraint rows only) and Go code can't reach its module (bifrost-dev#9867). No public model declares os.OpenRoot or (*os.Root).MkdirAll.",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 173,
@@ -213,10 +231,10 @@
       "advisory": "CVE-2026-78667",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-packs/issues/213"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "Otherwise a version fact on an exact `http.FileServer`/`ServeContent` call, which also needs #213."
+      "note": "Rechecked on 0.15.1: #213 is fixed, but no public model declares net/http.FileServer, ServeContent or ServeFile (the locator resolves to no exact identity), and the toolchain gate can't resolve (bifrost-dev#9867).",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 175,
@@ -234,10 +252,10 @@
       "advisory": "CVE-2022-29804",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "bifrost-dev#9048 (GOOS)."
+      "note": "Rechecked on 0.15.1: GOOS facts work, but the toolchain gate can't resolve (bifrost-dev#9867). No public model declares filepath.Clean, and Go request sources still need modeling.",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 182,
@@ -245,10 +263,10 @@
       "advisory": "CVE-2023-45283",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "bifrost-dev#9048 (GOOS)."
+      "note": "Rechecked on 0.15.1: GOOS facts work, but the toolchain gate can't resolve (bifrost-dev#9867). No public model declares filepath.Clean, IsAbs or IsLocal.",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 183,
@@ -256,10 +274,10 @@
       "advisory": "CVE-2022-30580",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "bifrost-dev#9048 (GOOS)."
+      "note": "Rechecked on 0.15.1: GOOS facts work, but the toolchain gate can't resolve (bifrost-dev#9867). No public model declares exec.Cmd or its Run family, and struct-literal field-presence facts are unprobed.",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 184,
@@ -278,10 +296,10 @@
       "advisory": "CVE-2022-41720",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867"
       ],
-      "note": "bifrost-dev#9048 (GOOS)."
+      "note": "Rechecked on 0.15.1: GOOS facts work, but the toolchain gate can't resolve (bifrost-dev#9867). No public model declares http.Dir, http.FileServer or os.DirFS.",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 186,
@@ -372,10 +390,11 @@
       "advisory": "CVE-2025-0913",
       "outcome": "blocked_by_engine",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
-        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+        "https://github.com/BrokkAi/bifrost-dev/issues/9867",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9869"
       ],
-      "note": "bifrost-dev#9048 (GOOS)."
+      "note": "Rechecked on 0.15.1: GOOS facts work and os.OpenFile binds, but the toolchain gate can't resolve (bifrost-dev#9867). Calls in a _windows.go file stay unbound on a non-Windows scanner, and they bind as complete when go list fails (bifrost-dev#9869).",
+      "engine_version": "0.15.1"
     },
     {
       "issue": 58,
@@ -459,6 +478,86 @@
       "qualification": "docs/qualification/rust-cargo-ssh-git.json",
       "passed_cases": 10,
       "total_cases": 10
+    }
+  },
+  "platform_toolchain_probe": {
+    "evaluation_date": "2026-11-05",
+    "leads": [
+      172,
+      174,
+      181,
+      182,
+      183,
+      185,
+      194
+    ],
+    "bifrost": {
+      "version": "0.15.1",
+      "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+      "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+      "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+      "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+      "host_go": "go1.26.0 darwin/arm64",
+      "environment": {
+        "BIFROST_OPEN_PACKS_DISABLE": "1",
+        "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off"
+      }
+    },
+    "root": "probe/platform-toolchain",
+    "observations": [
+      {
+        "query": "toolchain-rows.rql",
+        "observed": "Five go-toolchain rows, all evidence_kind constraint: go1.26.8 and go1.27.2 (declared_toolchain_requirement), 1.26, 1.27 and 1.26 (declared_language_requirement). Incomplete: files-only root requirements do not establish the installed toolchain."
+      },
+      {
+        "query": "toolchain-range.rql",
+        "observed": "0 rows, truncated, incomplete. Every directive row of affected/, fixed/ and none/ reports 'dependency version predicate unresolved ... no complete exact version evidence'. Affected, fixed and unpinned modules are indistinguishable."
+      },
+      {
+        "query": "toolchain-exact.rql",
+        "observed": "0 rows, incomplete. No locked or installed Go toolchain row exists."
+      },
+      {
+        "query": "build-configuration.rql",
+        "observed": "9 rows. os darwin, os_source toolchain. main.go included, os_scope any. lock_windows.go excluded, os_scope restricted, os_values windows. lock_linux.go excluded, constraint 'linux && linux', os_values 'android linux'."
+      },
+      {
+        "query": "target-of.rql",
+        "observed": "0 rows, topology_derivation_incomplete: no build model declares the targets axis. A Go call site can't reach its module's declared_by."
+      },
+      {
+        "policy": ".bifrost/policies/openfile-binding.rqlp",
+        "models": [
+          "semantic-packs/models/go-stdlib-os-declarations.json",
+          "semantic-packs/models/go-stdlib-os.json"
+        ],
+        "run": "per module root, models copied to <module>/.bifrost/semantic-models, BIFROST_WORKSPACE_SEMANTIC_MODELS=on",
+        "observed": {
+          "affected": "1 finding main.go:10 definite; inconclusive (partial_discovery): calls in lock_windows.go and lock_linux.go stay dispatch unknown, coverage open",
+          "none": "same as affected",
+          "fixed": "go list fails (go.mod requires go >= 1.27, GOTOOLCHAIN=local); 3 definite findings including both excluded files, run complete. build-configuration-of still reports them excluded (bifrost-dev#9869)."
+        }
+      }
+    ],
+    "input_sha256": {
+      "platform-toolchain/.bifrost/policies/openfile-binding.rqlp": "de5514399d58d0d0d59fbbbecaf593c3ffb9932e8d7533edc8cda94d4f2a69ed",
+      "platform-toolchain/affected/go.mod": "ce1a535ef64cb0099e0835ffa2f417b974068e1cf138feec5e271b06160082b5",
+      "platform-toolchain/affected/lock_linux.go": "a474188add8a2a61dd355480f6d148c77737de324517f11cff321bec87f1f300",
+      "platform-toolchain/affected/lock_windows.go": "62d3a00f219b4af3e6597b714aa88b92fea488d3a591503409d70c8d69b98308",
+      "platform-toolchain/affected/main.go": "9584a03f15e449fed025ebe59e1072af48380e07b218db18f6af3ff062d5b006",
+      "platform-toolchain/build-configuration.rql": "96470816248baa699e280b9883a990e6f566a9eabaf36368cb74651dc9852e36",
+      "platform-toolchain/fixed/go.mod": "a0d61dd44ac33baf11769ccd285920f4377e62aa1da03e77a31b1d77b32a8b6e",
+      "platform-toolchain/fixed/lock_linux.go": "a474188add8a2a61dd355480f6d148c77737de324517f11cff321bec87f1f300",
+      "platform-toolchain/fixed/lock_windows.go": "62d3a00f219b4af3e6597b714aa88b92fea488d3a591503409d70c8d69b98308",
+      "platform-toolchain/fixed/main.go": "9584a03f15e449fed025ebe59e1072af48380e07b218db18f6af3ff062d5b006",
+      "platform-toolchain/none/go.mod": "3c1c46bdd999b2bd5b08fc0943ca3f364190e97d61f7a0910fb333f2101e2818",
+      "platform-toolchain/none/lock_linux.go": "a474188add8a2a61dd355480f6d148c77737de324517f11cff321bec87f1f300",
+      "platform-toolchain/none/lock_windows.go": "62d3a00f219b4af3e6597b714aa88b92fea488d3a591503409d70c8d69b98308",
+      "platform-toolchain/none/main.go": "9584a03f15e449fed025ebe59e1072af48380e07b218db18f6af3ff062d5b006",
+      "platform-toolchain/target-of.rql": "1c4d69a668e227ad444abbc1023908633bf9853b0ea210a631a93a71a4036b11",
+      "platform-toolchain/toolchain-exact.rql": "6d55c3d8d8a35b8b3c2c5bf19871b0ffa704504f8a8b21f590edca0166e9652b",
+      "platform-toolchain/toolchain-range.rql": "42900f810bda09365f8f8b84e55a2cdee1170dda26b33342a015de6a3f488305",
+      "platform-toolchain/toolchain-rows.rql": "ff6b13b318ef36cf9d12b19e5b51558124f6687fbd507f354a080721a5c6f300"
     }
   }
 }
