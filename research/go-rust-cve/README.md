@@ -124,6 +124,55 @@ inconclusive on almost all real code. It also can't report the server-side
 case the advisory describes. It stays a research probe until #213 and
 bifrost-dev#9053 land.
 
+## Bifrost 0.15.1 recheck: Windows and toolchain leads
+
+**Outcome: #172, #174, #181, #182, #183, #185 and #194 are still blocked by
+engine on Bifrost 0.15.1.** bifrost-dev#9047 and #9048 shipped, but only the
+platform half is usable. A toolchain range over Go evidence can never match,
+so a rule can't tell an affected toolchain from a fixed one.
+
+Engine: official `v0.15.1` release, `bifrost-v0.15.1-aarch64-apple-darwin.tar.gz`.
+
+- Archive SHA-256: `4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c`. It matches the release `.sha256`.
+- Binary SHA-256: `78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33`.
+- Build identity: `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`.
+- Host Go: `go1.26.0 darwin/arm64`.
+- Evaluation date: 2026-11-05.
+
+The probe is `probe/platform-toolchain/`. It has three modules, each with the
+same unconstrained `main.go`, a `lock_windows.go` and a `lock_linux.go`
+(`//go:build linux`):
+
+| Module | `go.mod` | Case |
+| --- | --- | --- |
+| `affected/` | `go 1.26`, `toolchain go1.26.8` | positive for the CVE-2026-78667 range |
+| `fixed/` | `go 1.27`, `toolchain go1.27.2` | fixed-toolchain near miss |
+| `none/` | `go 1.26`, no `toolchain` | unknown toolchain |
+
+What works:
+
+- `build-configuration-of` reports each file's own constraint, whatever the
+  host: `lock_windows.go` has `os_scope restricted`, `os_values windows`.
+  `lock_linux.go` has `os_values android linux`, so it is never built for
+  Windows. `main.go` has `os_scope any`, so it is undecided. This is enough
+  to drop the other-GOOS and constraint-excluded near misses.
+
+What still blocks a rule:
+
+| Gap | Observation | Issue |
+| --- | --- | --- |
+| No exact Go toolchain evidence | `go` and `toolchain` directives are only `constraint` rows. `toolchain-range.rql` (`<1.26.9 \|\| >=1.27 <1.27.2`) returns 0 rows for all three modules, each with `dependency version predicate unresolved ... no complete exact version evidence`. `toolchain-exact.rql` (`:kinds [locked installed]`) returns nothing. Affected, fixed and unpinned modules can't be told apart. | [bifrost-dev#9867](https://github.com/BrokkAi/bifrost-dev/issues/9867) |
+| No Go code-to-module ownership | `target-of.rql` returns no rows (`topology_derivation_incomplete`; the step reads Maven only). A call site can't reach the `declared_by` of its module's toolchain rows. | [bifrost-dev#9867](https://github.com/BrokkAi/bifrost-dev/issues/9867) |
+| Windows-only files aren't analyzed on other hosts | `openfile-binding.rqlp`, with the public `go-stdlib-os` models: in `affected/` and `none/`, only `main.go` binds. The calls in `lock_windows.go` and `lock_linux.go` stay `dispatch outcome=unknown, coverage=open`, so the run is inconclusive. That is correctly explicit, but a Windows-only call site needs a scan under `GOOS=windows`. | none needed |
+| Failed discovery reports complete | In `fixed/`, `go list` fails (`go.mod requires go >= 1.27`, `GOTOOLCHAIN=local`). All three calls bind as definite and the run is complete, while `build-configuration-of` still says the two files are `excluded`. | [bifrost-dev#9869](https://github.com/BrokkAi/bifrost-dev/issues/9869) |
+
+The public Go models also lack the leads' APIs. None declares
+`http.FileServer`, `ServeContent`, `ServeFile`, `http.Dir`, `os.DirFS`,
+`os.OpenRoot`, `(*os.Root).MkdirAll`, `filepath.Clean`, `IsAbs`, `IsLocal`
+or `exec.Cmd`. A `resolved-call "net/http.FileServer"` locator resolves to no
+exact identity. Only `os.OpenFile` (#194) binds. That model work belongs in
+this repository, but it is moot until the toolchain gate can answer.
+
 ## Rust leads on Bifrost 0.15.1
 
 **#60 ships as an opt-in rule. #58, #59 and #61 stay blocked.**
@@ -207,24 +256,24 @@ exercised.
 | #55 | CVE-2023-29409 | Blocked by engine | bifrost-dev#9867. No version-independent slice, because fixed toolchains cap the RSA key size. |
 | #56 | CVE-2021-41771 | Blocked by engine | bifrost-dev#9867. A version-independent slice exists, because `debug/macho` is documented as not hardened against adversarial input. It has no untrusted byte source: upload sources wait on #225, and `io.ReadAll` and `Conn.Read` are unmodeled. |
 | #57 | CVE-2021-33197 | Blocked by engine | bifrost-dev#9867. Not probed: proxy topology. |
-| #172 | CVE-2026-56857 | Blocked by engine | bifrost-dev#9048 (GOOS). |
+| #172 | CVE-2026-56857 | Blocked by engine | 0.15.1: no exact toolchain or module ownership (bifrost-dev#9867); no `os.Root` model. |
 | #173 | CVE-2026-94448 | Blocked by engine | bifrost-dev#9867. 0.15.1 has no html/template context rows. |
-| #174 | CVE-2026-78667 | Blocked by engine | Otherwise a version fact on an exact `http.FileServer`/`ServeContent` call, which also needs #213. |
+| #174 | CVE-2026-78667 | Blocked by engine | 0.15.1: bifrost-dev#9867. #213 is fixed, but no model declares `FileServer`/`ServeContent`/`ServeFile`. |
 | #175 | CVE-2026-42504 | Blocked by engine | bifrost-dev#9867. No version-independent slice. No public `mime` or `net/mail` model. |
-| #181 | CVE-2022-29804 | Blocked by engine | bifrost-dev#9048 (GOOS). |
-| #182 | CVE-2023-45283 | Blocked by engine | bifrost-dev#9048 (GOOS). |
-| #183 | CVE-2022-30580 | Blocked by engine | bifrost-dev#9048 (GOOS). |
+| #181 | CVE-2022-29804 | Blocked by engine | 0.15.1: bifrost-dev#9867; no `filepath.Clean` model or Go request source. |
+| #182 | CVE-2023-45283 | Blocked by engine | 0.15.1: bifrost-dev#9867; no `Clean`/`IsAbs`/`IsLocal` model. |
+| #183 | CVE-2022-30580 | Blocked by engine | 0.15.1: bifrost-dev#9867; no `exec.Cmd` model. Struct-literal field facts not probed. |
 | #184 | CVE-2025-47906 | Blocked by engine | bifrost-dev#9867. Request source into `exec.Command` waits on draft #225. |
-| #185 | CVE-2022-41720 | Blocked by engine | bifrost-dev#9048 (GOOS). |
+| #185 | CVE-2022-41720 | Blocked by engine | 0.15.1: bifrost-dev#9867; no `http.Dir`/`FileServer`/`os.DirFS` model. |
 | #186 | CVE-2023-45289 | Blocked by engine | bifrost-dev#9867. No public model declares `http.Client` fields or `CheckRedirect`. |
 | #187 | CVE-2025-47910 | Blocked by engine | bifrost-dev#9867 only. The code half is one exact call, `(*http.CrossOriginProtection).AddInsecureBypassPattern`, which needs only a declaration. No version-independent slice, because 1.25.1 fixes it. |
 | #188 | CVE-2024-24790 | Blocked by engine | bifrost-dev#9867. Not probed: guard-to-dial correlation. |
 | #189 | CVE-2025-22874 | Blocked by engine | bifrost-dev#9867. The public crypto/x509 declarations cover only `IsEncryptedPEMBlock`, so `VerifyOptions` isn't declared. |
 | #190 | CVE-2024-24785 | Blocked by engine | bifrost-dev#9867. 0.15.1 has no html/template context rows. |
 | #191 | CVE-2022-32190 | Blocked by engine | bifrost-dev#9867. A version-independent traversal slice exists, because `JoinPath` with an absolute base path still resolves `..` on fixed toolchains. It still needs request sources (draft #225). |
-| #192 | CVE-2024-34156 | **Version-independent slice implemented** | `bifrost.security.go.gob-decode-network-input` reports definite findings, but runs that decode are inconclusive (`Decode` is unmodeled). The affected-toolchain part is blocked by bifrost-dev#9867. |
+| #192 | CVE-2024-34156 | **Version-independent slice implemented** | `bifrost.security.go.gob-decode-network-input` (opt-in) reports definite findings, but runs that decode are inconclusive (`Decode` is unmodeled). The affected-toolchain part is blocked by bifrost-dev#9867. |
 | #193 | CVE-2024-24784 | Blocked by engine | bifrost-dev#9867. Not probed: result-field flow into comparisons. No public `net/mail` model. |
-| #194 | CVE-2025-0913 | Blocked by engine | bifrost-dev#9048 (GOOS). |
+| #194 | CVE-2025-0913 | Blocked by engine | 0.15.1: bifrost-dev#9867 and #9869. `os.OpenFile` binds. |
 | #58 | CVE-2024-24576 | Blocked (0.15.1) | Toolchain and target evidence now exist. `Command::arg` is unresolved without the std declarations in #208. |
 | #59 | CVE-2024-43402 | Blocked (0.15.1) | As #58, plus Windows program-name normalization. |
 | #60 | CVE-2022-46176 | Rule (0.15.1) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified`, opt-in. A workspace `git-fetch-with-cli = true` stays inconclusive: Cargo config is unread, although bifrost-dev#3768 is closed. |
@@ -239,6 +288,7 @@ probe/
   192-gob-network/                        one Go module; one package per case
   version-evidence/go-module/             go.mod with go/toolchain directives, a _windows.go file
   version-evidence/rust-crate/            Cargo.toml with an ssh git dependency, rust-toolchain.toml
+  platform-toolchain/                     0.15.1: affected/fixed/none modules, Windows- and Linux-only files
   version-evidence/rust-alt-registry/     alternate-registry dependency, Cargo.lock, .cargo/config.toml (0.15.1)
 ```
 
@@ -258,6 +308,27 @@ cd version-evidence/go-module && bifrost --root . --query-file dependency-eviden
 cd ../rust-crate && bifrost --root . --query-file dependency-evidence.rql
 ```
 
+For `probe/platform-toolchain/`, use the 0.15.1 engine. Run the queries from
+the probe root. Run the binding policy once per module, with the two public
+`go-stdlib-os` models copied into that module's `.bifrost/semantic-models/`:
+
+```sh
+cd probe/platform-toolchain
+for q in toolchain-rows toolchain-range toolchain-exact build-configuration target-of; do
+  BIFROST_OPEN_PACKS_DISABLE=1 BIFROST_SEMANTIC_PACK_DOWNLOAD=off \
+    bifrost --root . --query-file $q.rql
+done
+m=affected   # then fixed, none
+mkdir -p $m/.bifrost/semantic-models $m/.bifrost/policies
+cp ../../../../semantic-packs/models/go-stdlib-os-declarations.json \
+   ../../../../semantic-packs/models/go-stdlib-os.json $m/.bifrost/semantic-models/
+cp .bifrost/policies/openfile-binding.rqlp $m/.bifrost/policies/
+BIFROST_WORKSPACE_SEMANTIC_MODELS=on BIFROST_OPEN_PACKS_DISABLE=1 \
+  BIFROST_SEMANTIC_PACK_DOWNLOAD=off bifrost --policy --no-builtin-policies \
+  --no-incremental --root $m --policy-file .bifrost/policies/openfile-binding.rqlp
+rm -rf $m/.bifrost
+```
+
 [`outcomes.json`](outcomes.json) records the engine identity, input hashes and
 observations.
 
@@ -268,6 +339,12 @@ observations.
   The fixed-toolchain near miss must then be excluded, and an unknown
   toolchain must stay incomplete. Windows-only leads also need
   bifrost-dev#9048.
+- On 0.15.1, #172, #174, #181, #182, #183, #185 and #194 have the GOOS facts
+  they need, and wait on bifrost-dev#9867. Then add the public declaration
+  models for each lead's API, and rerun `probe/platform-toolchain/`.
+  `toolchain-range.rql` must match `affected/` only, `fixed/` must be a
+  complete non-match, and `none/` must stay incomplete. #194 also needs
+  bifrost-dev#9869, so that an excluded file can't produce a complete answer.
 - The #192 gob slice shipped on 0.15.1 (see the recheck above). Its
   affected-toolchain part follows the first criterion.
 - Bifrost 0.15.1 fixed bifrost-dev#9049, and #60 shipped on it. #58 and #59
