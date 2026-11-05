@@ -1,0 +1,27 @@
+;; Research probe for BrokkAi/bifrost-packs#281. Network bytes from
+;; Net::HTTP.get reaching formal 0 of CGI::Cookie.parse. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.ruby-osv-dataflow.cgi-cookie-parse"
+  :name "Ruby network bytes reach CGI::Cookie.parse (research probe)"
+  :message "bytes from Net::HTTP.get reach CGI::Cookie.parse"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#281. Reports the Net::HTTP.get response body reaching formal 0 of CGI::Cookie.parse."
+  :tags ["research" "ruby"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id net-http-get :display-name "Net::HTTP.get body" :categories [io.external]
+        :selector (rql :schema-version 1
+          (language ruby (resolved-call :resolves-to "Net::HTTP.get" :proof declared
+            (call-bindings (call-shape (call :callee (name "get")))))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id sink :display-name "CGI::Cookie.parse raw cookie" :categories [injection]
+        :selector (rql :schema-version 1
+          (language ruby (call-argument :formal-index 0
+            (resolved-call :resolves-to "CGI::Cookie.parse" :proof declared
+              (call-bindings (call-shape (call :callee (name "parse"))))))))
+        :dangerous-operand (argument :index 0) :accepts [untrusted])])))

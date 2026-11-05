@@ -1,0 +1,322 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.node-fs-javascript-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-node-models",
+    "version": "0.1.0"
+  },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Node.js fs API",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "shards": [
+    {
+      "id": "node-fs-declarations",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:generic/nodejs.org/node@22.11.0"
+          },
+          "targets": [],
+          "configurations": [
+            "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+          ],
+          "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.node.fs.javascript",
+            "name": "fs",
+            "type_kind": "module",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.node.fs.javascript.exists-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "existsSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "boolean"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.existsSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.stat-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "statSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Stats"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.statSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.lstat-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "lstatSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Stats"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.lstatSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.access-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "accessSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "mode",
+                  "type": {
+                    "kind": "named",
+                    "name": "number"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.accessSync(path, mode)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.write-file-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "writeFileSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.writeFileSync(path, data)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.append-file-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "appendFileSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.appendFileSync(path, data)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.open-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "openSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "flags",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "number"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.openSync(path, flags)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}
