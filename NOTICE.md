@@ -49,6 +49,14 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   and signatures from the .NET API reference and the dotnet/runtime reference
   assembly, and is MIT; see
   semantic-packs/dotnet/bifrost.dotnet.system-xml-csharp.json.
+- The authored System.Text.RegularExpressions declaration and summary model
+  records public Regex API names and signatures from the .NET API reference
+  and the dotnet/runtime reference assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.system-text-regularexpressions-csharp.json.
+- The authored System.Data declaration and summary model records public
+  DataSet and DataTable API names and signatures from the .NET API reference
+  and the dotnet/runtime reference assembly, and is MIT; see
+  semantic-packs/dotnet/bifrost.dotnet.system-data-csharp.json.
 - The authored Go encoding/gob declaration and summary models record public
   API names and signatures from the Go 1.26.0 `encoding/gob` documentation and
   are BSD-3-Clause; see semantic-packs/go/notices/go-1.26.0-BSD-3-Clause.txt

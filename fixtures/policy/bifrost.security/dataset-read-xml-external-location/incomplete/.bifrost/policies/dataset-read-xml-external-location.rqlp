@@ -1,0 +1,128 @@
+; Lead: BrokkAi/bifrost-packs#262 (CVE-2020-1147), version-independent part.
+; Product source contract: DataSet.ReadXml and DataTable.ReadXml instantiate
+; the column types the XML names. CVE-2020-1147 let crafted markup choose those
+; types. The fix added a type allow-list, but Microsoft's DataSet and DataTable
+; security guidance still says not to read XML from untrusted input on any
+; version. ReadXml(String) opens the file or URL it is given, so external input
+; that chooses that location chooses the document. That is reported on every
+; runtime. The CVE's affected-runtime part needs shared-framework evidence
+; (bifrost-dev#8779) and is not checked here.
+; Engine contract: sources bind exactly to the reviewed bifrost.dotnet.bcl-csharp
+; model. Sinks bind to the ReadXml(String) members of the reviewed
+; bifrost.dotnet.system-data-csharp model, narrowed by model_id. The model
+; declares only the String overloads of ReadXml and WriteXml: on Bifrost 0.15.1
+; same-arity overloads that differ by parameter type don't bind
+; (bifrost-dev#8296). A Stream, TextReader or XmlReader overload is therefore
+; unmodeled, and a run that reaches one with tainted data is inconclusive
+; instead of clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.dataset-read-xml-external-location"
+  :name "C# external input chooses the XML document read by DataSet or DataTable"
+  :message "external input chooses the file or URL that DataSet.ReadXml or DataTable.ReadXml reads"
+  :severity warning
+  :description "Reports Console.ReadLine and Environment.GetEnvironmentVariable data reaching the fileName operand of DataSet.ReadXml(String), DataSet.ReadXml(String, XmlReadMode) or DataTable.ReadXml(String) in the reviewed System.Data model. ReadXml instantiates the types the document names, and Microsoft's DataSet and DataTable security guidance says not to read XML from untrusted input on any version (CVE-2020-1147), so a caller-chosen file or URL is reported on every runtime."
+  :tags ["security" "csharp" "xml" "deserialization" "cwe-502"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id console-read-line
+              :display-name "Console.ReadLine external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Console.ReadLine"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "ReadLine") :arity 0))))))
+              :bind return-value
+              :labels [untrusted])
+            (source
+              :id environment-get-environment-variable
+              :display-name "Environment.GetEnvironmentVariable external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id dataset-read-xml-file-name
+              :display-name "DataSet.ReadXml(String) file name"
+              :categories [deserialization]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Data.DataSet.ReadXml"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-data-csharp.dataset.read-xml-file-name"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "ReadXml") :arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id dataset-read-xml-file-name-mode
+              :display-name "DataSet.ReadXml(String, XmlReadMode) file name"
+              :categories [deserialization]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Data.DataSet.ReadXml"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-data-csharp.dataset.read-xml-file-name-mode"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "ReadXml") :arity 2))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id datatable-read-xml-file-name
+              :display-name "DataTable.ReadXml(String) file name"
+              :categories [deserialization]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Data.DataTable.ReadXml"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-data-csharp.datatable.read-xml-file-name"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "ReadXml") :arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "502")))
