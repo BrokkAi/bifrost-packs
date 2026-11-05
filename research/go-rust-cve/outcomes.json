@@ -89,7 +89,17 @@
     "version-evidence/go-module/go.sum": "0841f86201b0467138f8de086acb634ab2fa5e0c69b38cab36147f4f7c80af64",
     "version-evidence/go-module/main.go": "04c7cdfe9eb43d137c4bb85c604588eee4e1b6c69a824d8f859f256a13ddf22f",
     "version-evidence/go-module/util_windows.go": "63217b90c4336fe560310a0a23d1ef1a95eb61b20e9b474703efe7e2238e5fef",
+    "version-evidence/rust-alt-registry/.cargo/config.toml": "79ab4bbf1f5bb7da76ca24df2bf8e75fc784f6a1398d8aa0c4813b8c4d22ead8",
+    "version-evidence/rust-alt-registry/Cargo.lock": "8896b066c53d1c1b41ef66e80f4acf2e4783a3f0d68f01251b25d38d05da533b",
+    "version-evidence/rust-alt-registry/Cargo.toml": "473d7fc8bb21e4c0d862096c100bb89d6680c8139c2c6d88a319cffb2017aec4",
+    "version-evidence/rust-alt-registry/alt-registry-declared.rqlp": "058c0a881bb49c4d40fc6deafe708dfb82550fcfead80e64bcc0b1b40d017edb",
+    "version-evidence/rust-alt-registry/alt-registry-locked.rqlp": "6af68f6ec4acc29f6fa142a3e74962a84fc2e004ab411703570be707692376fe",
+    "version-evidence/rust-alt-registry/dependency-evidence.rql": "8956a6a084cb95319faeca9b479089b90e42b5f446720b1af146ffce495a3c02",
+    "version-evidence/rust-alt-registry/rust-toolchain.toml": "3710bd686c26d02338b1dffc2f118ada3f1bc3d67baf9153e4bf4e2635af6a3a",
+    "version-evidence/rust-alt-registry/src/main.rs": "536e506bb90914c243a12b397b9a998f85ae2cbd9ba02dfd03a9e155ca5ca0f4",
     "version-evidence/rust-crate/Cargo.toml": "daef7878c44036f6c355285d366516ace7521c29ca455ce663efb6c119578300",
+    "version-evidence/rust-crate/build-configuration.rql": "af876b5a5b114fea1ed01cc0a19a23bc5e0395a77ade848a787941823cdb19dc",
+    "version-evidence/rust-crate/command-arg-bindings.rql": "29c666e6e3b6d54ecdbe608f8065ad2fd8629eb8ede644d86fcf0eed46cc6c8d",
     "version-evidence/rust-crate/dependency-evidence.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75",
     "version-evidence/rust-crate/rust-toolchain.toml": "c641e6f7d3b5fbdedc926bbbf279bbd016ddaa531fba1873df1c4b2025d4cd62",
     "version-evidence/rust-crate/src/main.rs": "8dd69f837200c867a61a73f7a6963bb146594f3a1955aecc167c1cc246fe03d7"
@@ -371,41 +381,84 @@
       "issue": 58,
       "language": "rust",
       "advisory": "CVE-2024-24576",
-      "outcome": "blocked_by_engine",
+      "outcome": "blocked",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
+        "https://github.com/BrokkAi/bifrost-packs/issues/208"
       ],
-      "note": "bifrost-dev#9049 (toolchain and Windows target)."
+      "note": "0.15.1: the toolchain and target evidence of bifrost-dev#9049 exist. Command::arg is callee_unresolved without std.process.Command declarations (#208). Program and argument builder correlation was not probed."
     },
     {
       "issue": 59,
       "language": "rust",
       "advisory": "CVE-2024-43402",
-      "outcome": "blocked_by_engine",
+      "outcome": "blocked",
       "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
+        "https://github.com/BrokkAi/bifrost-packs/issues/208"
       ],
-      "note": "bifrost-dev#9049 (toolchain and Windows target)."
+      "note": "0.15.1: as #58, plus Windows trailing-space and trailing-period normalization of the batch file name."
     },
     {
       "issue": 60,
       "language": "rust",
       "advisory": "CVE-2022-46176",
-      "outcome": "blocked_by_engine",
-      "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
-      ],
-      "note": "bifrost-dev#9049 (Cargo toolchain). The `git+ssh` dependency row exists. `net.git-fetch-with-cli` precedence belongs to bifrost-dev#3768."
+      "outcome": "rule",
+      "blocking_issues": [],
+      "note": "0.15.1: locked git+ssh Cargo rows joined to rust-toolchain rows before 1.66.1 through declared_by; 10/10 fixture cases pass. A workspace .cargo/config.toml (including git-fetch-with-cli = true) stays inconclusive: Cargo config is unread, although bifrost-dev#3768 is closed.",
+      "rule": "bifrost.security.rust.cargo-ssh-git-host-key-unverified"
     },
     {
       "issue": 61,
       "language": "rust",
       "advisory": "CVE-2022-36113",
       "outcome": "blocked_by_engine",
-      "blocking_issues": [
-        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
-      ],
-      "note": "bifrost-dev#9049 (Cargo toolchain). Alternate-registry rows were not probed."
+      "blocking_issues": [],
+      "note": "0.15.1: alternate-registry declarations never associate with their lock entries, because the [registries] index in .cargo/config.toml is unread. Every positive is inconclusive. A new engine issue is needed."
     }
-  ]
+  ],
+  "rust_0151": {
+    "evaluation_date": "2026-11-05",
+    "bifrost": {
+      "version": "0.15.1",
+      "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+      "asset": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+      "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+      "environment": {
+        "BIFROST_OPEN_PACKS_DISABLE": "1",
+        "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off"
+      }
+    },
+    "observations": [
+      {
+        "query": "probe/version-evidence/rust-crate/dependency-evidence.rql",
+        "observed": "rust-toolchain row from rust-toolchain.toml: evidence_kind locked, exact_version 1.77.0. rust-toolchain row from Cargo.toml rust-version: evidence_kind constraint, version_requirement 1.77.0. cargo row serde, source git+ssh://git@github.com/serde-rs/serde.git, declared. Incomplete: no Cargo.lock."
+      },
+      {
+        "query": "probe/version-evidence/rust-crate/build-configuration.rql",
+        "observed": "src/main.rs gets two rows: host aarch64-apple-darwin (os_source host) and x86_64-pc-windows-msvc (os windows, os_source toolchain) from the toolchain file targets list. file_status and os_scope are unknown."
+      },
+      {
+        "query": "probe/version-evidence/rust-crate/command-arg-bindings.rql",
+        "observed": "Command::new(\"run.bat\").arg(arg): reason callee_unresolved, dispatch_outcome unproven, dispatch_coverage open. No std.process.Command declarations (#208)."
+      },
+      {
+        "query": "probe/version-evidence/rust-alt-registry/dependency-evidence.rql",
+        "observed": "internal is declared with source registry-name:corp and locked with source sparse+https://crates.corp.example/index/. The declaration-to-lock association is unresolved, and the unassociated locked row has no declared_by. .cargo/config.toml is reported Unsupported (owned by #3768)."
+      },
+      {
+        "query": "probe/version-evidence/rust-alt-registry/alt-registry-declared.rqlp",
+        "observed": "Finding at Cargo.toml:7; the run is inconclusive (partial_discovery)."
+      },
+      {
+        "query": "probe/version-evidence/rust-alt-registry/alt-registry-locked.rqlp",
+        "observed": "No group, no finding; the run is inconclusive (partial_discovery)."
+      }
+    ],
+    "rule": {
+      "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
+      "authored_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
+      "qualification": "docs/qualification/rust-cargo-ssh-git.json",
+      "passed_cases": 10,
+      "total_cases": 10
+    }
+  }
 }
