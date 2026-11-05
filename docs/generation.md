@@ -75,6 +75,18 @@ schema-4 release during selection. The released v0.15.0 CLI reproduced all 254
 locked authoring identities unchanged. The published 0.8.0 releases stay
 immutable and keep the 0.14.0 generator they were built with.
 
+After `packs/v0.9.0`, both pins move to the v0.15.1 release (public commit
+`04fdd17d2606d13a7a5f13b012bfbe3ad9729d1e`). The producer is
+`bifrost-semantic-pack-v0.15.1-x86_64-unknown-linux-gnu.tar.gz` (archive
+SHA-256 `8989298644bda041997308823122f904291a22010d93359ed3580053aa052f8e`,
+executable SHA-256
+`7322cdbd653830aaba349c9a278eceb97573965739b2845412a3074080b6acc2`). The
+authoring CLI reports build identity `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`.
+The released v0.15.1 CLI reproduced all 264 locked authoring identities
+unchanged. Its pack-engine profile advertises the same capability names as
+0.15.0. The published `packs/v0.9.0` keeps the 0.15.0 producer it was built
+with.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
