@@ -26,10 +26,21 @@ packs. They carry only `rules` or `runtime_values` records. Their jobs, added
 after 0.8.0, use the `rule` and `runtime_exposure` measurement lookups from
 bifrost-dev#8324, which still require each lookup to resolve at least one
 record. They need the Bifrost 0.15.0 generator pin below and its release index
-schema 4. The prepared `packs/v0.9.0` ships them, built by the released
+schema 4. The published `packs/v0.9.0` ships them, built by the released
 0.15.0 producer binary. Its bundle index lists 62 packs, including all 46
 `pack_id` values under `crates/bifrost-semantic-packs/embedded/` on
 bifrost-dev master, and records no rejects for the six.
+
+The 13 Go declaration models among those jobs mark every function and
+method member `callable_family_complete` (#213). Go has no overloading, so a
+declared package function, or a method on its receiver type, is its whole
+callable family. Without the flag, Bifrost 0.15.0 refuses a `resolved-call`
+to `net.Dial`, `os.Open` or `sync.Mutex.Lock` as
+`qualified-call-locator-partial`. Each pack takes a minor version, and its
+spec pins the commit that made the change. Pack completeness stays
+`partial`, because the packages are not fully enumerated. Fields, receivers,
+identities and provenance are unchanged. The schema-2 errgroup and embed
+declaration models are not jobs and are left as they were.
 
 ## Previous native packaging repair
 
@@ -63,6 +74,18 @@ index schema its bundle actually has. Engines that read only schema 3 skip a
 schema-4 release during selection. The released v0.15.0 CLI reproduced all 254
 locked authoring identities unchanged. The published 0.8.0 releases stay
 immutable and keep the 0.14.0 generator they were built with.
+
+After `packs/v0.9.0`, both pins move to the v0.15.1 release (public commit
+`04fdd17d2606d13a7a5f13b012bfbe3ad9729d1e`). The producer is
+`bifrost-semantic-pack-v0.15.1-x86_64-unknown-linux-gnu.tar.gz` (archive
+SHA-256 `8989298644bda041997308823122f904291a22010d93359ed3580053aa052f8e`,
+executable SHA-256
+`7322cdbd653830aaba349c9a278eceb97573965739b2845412a3074080b6acc2`). The
+authoring CLI reports build identity `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`.
+The released v0.15.1 CLI reproduced all 264 locked authoring identities
+unchanged. Its pack-engine profile advertises the same capability names as
+0.15.0. The published `packs/v0.9.0` keeps the 0.15.0 producer it was built
+with.
 
 ## Pinned native candidate
 
