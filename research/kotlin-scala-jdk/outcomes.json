@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-03",
+  "bifrost": {
+    "version": "0.15.0",
+    "build_identity": "09a2503c5f7ced1630a9e3c445ead53dfc5925e8",
+    "archive": "bifrost-v0.15.0-universal-apple-darwin.tar.gz",
+    "archive_sha256": "c91c0bd38e4c6c0def86dc75acf8fa6d750b23a45894a28a76115fb8af034eda",
+    "binary_sha256": "47e3e2da0a64ba65b447337b43952478deebbed7af3aa92d835d3a5ad458da96",
+    "model_set_sha256": "91461455dea3dccbaabba343d7c2fd639002cead21eca7c4786a0b03876fd013",
+    "host_jdk": "21.0.8",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on"
+    }
+  },
+  "workspace_models": {
+    "semantic-packs/framework-decls/bifrost.jdk-framework-decls.json": "87f835777129ada208d47ed4525c4e12014de42fc02d1b3a5d74157adbee0655"
+  },
+  "inputs": {
+    "probe/.bifrost/packs.json": "910748c575b142cfe26d37fdce73a6c4549e2ba227aab5fd96bb55189b482da4",
+    "probe/.bifrost/policies/getenv-exec-java.rqlp": "2a78468083a03d6e6211dddfb930d40b1f2daee0012ccf7a9174c5c2307b2350",
+    "probe/.bifrost/policies/getenv-exec-kotlin.rqlp": "4d33dad118a05e89374dfc36e55771f62875c471517d56cda5c2d3ec2cb03ac3",
+    "probe/.bifrost/policies/getenv-exec-scala.rqlp": "edbfcc08e3611eaae0b9f0593eb1ff7b5c72b6b92f42877849bd9e47cd6394d6",
+    "probe/bind/java/Calls.java": "bce4e188d5ed545e558c8d40417078f28c16f8bf61398a69b1b05af9f4859e18",
+    "probe/bind/kotlin/Calls.kt": "20b8ce7cb3777b239dcb73da2cd7eeab0b9d3dbf44ec64196275c7ed0a2950cd",
+    "probe/bind/kotlin/Stdlib.kt": "5b3b396919f110e37b1061b62f41edc3bc00dd86f43ac43528765009a4341890",
+    "probe/bind/scala/Calls.scala": "abb68ca5df81d5c5a932f6ce167497c95d6779059dcaf15073c55a373302f5dc",
+    "probe/bind/scala/Stdlib.scala": "80c6291f89d46a6b2e12b3c2b12903bcfdd9bcd8833447cafd2a0a095a5fbe6d",
+    "probe/env/java/Main.java": "592d80a14ef42202ffef98409051596b530ec41a7dcba4ae2dc0012bb6949497",
+    "probe/env/kotlin/Main.kt": "271bc8623afeb1d9aeb148fc201b394d90d267e9b0ab6bc3b4b4a197dd163595",
+    "probe/env/scala/Main.scala": "4fed8bc8988e1fc3794bde2e8b1c50d355300ef193fe1efbb1fcd9ceebd7fbf9",
+    "probe/queries/call-bindings-java.rql": "70de82cecd1960ac5ebbb111a5eb79ed547df845c38e6df1e0844b0ca9e27761",
+    "probe/queries/call-bindings-kotlin.rql": "912056e56b6ebcf889c6660533d738bfc26a7225540cc4a361939e4d1eedfdd8",
+    "probe/queries/call-bindings-scala.rql": "fcfe2abba77720d82b7b016308d95ce88f5355f5790445473c5ca9ae93584f07",
+    "probe/run.py": "8dc566fc2af905e8b001ff0601e966436b28f81e3c3682a7e539fe443c0bbeb4"
+  },
+  "upstream_issues": {
+    "filed": [
+      "https://github.com/BrokkAi/bifrost-dev/issues/9323",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9324",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9325"
+    ],
+    "reused": []
+  },
+  "observations": {
+    "dispatch": {
+      "java": [
+        {
+          "line": 19,
+          "call": "new ZipInputStream(input)",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        },
+        {
+          "line": 20,
+          "call": "zis.getNextEntry()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 21,
+          "call": "entry.getName()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 22,
+          "call": "root.resolve(name)",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 23,
+          "call": "new FileOutputStream(target.toFile())",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 0
+        },
+        {
+          "line": 23,
+          "call": "target.toFile()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 27,
+          "call": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        },
+        {
+          "line": 28,
+          "call": "cipher.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(128, iv))",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 28,
+          "call": "new GCMParameterSpec(128, iv)",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        },
+        {
+          "line": 29,
+          "call": "new CipherInputStream(input, cipher)",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        },
+        {
+          "line": 33,
+          "call": "ctx.search(\"ou=people\", \"(uid=\" + user + \")\", new SearchControls())",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 33,
+          "call": "new SearchControls()",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        },
+        {
+          "line": 37,
+          "call": "new URL(address)",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        },
+        {
+          "line": 38,
+          "call": "url.openConnection()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 39,
+          "call": "System.getenv(\"HOME\")",
+          "outcome": "resolved",
+          "coverage": "exhaustive",
+          "targets": 1
+        }
+      ],
+      "kotlin": [
+        {
+          "line": 17,
+          "call": "ZipInputStream(input)",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 18,
+          "call": "zis.getNextEntry()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 19,
+          "call": "entry.getName()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 21,
+          "call": "root.resolve(name)",
+          "outcome": "ambiguous",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 22,
+          "call": "FileOutputStream(target.toFile())",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 22,
+          "call": "target.toFile()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 26,
+          "call": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 27,
+          "call": "cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, iv))",
+          "outcome": "ambiguous",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 27,
+          "call": "GCMParameterSpec(128, iv)",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 28,
+          "call": "CipherInputStream(input, cipher)",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 32,
+          "call": "ctx.search(\"ou=people\", \"(uid=\" + user + \")\", SearchControls())",
+          "outcome": "ambiguous",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 32,
+          "call": "SearchControls()",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 36,
+          "call": "URL(address)",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 37,
+          "call": "url.openConnection()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 38,
+          "call": "System.getenv(\"HOME\")",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        }
+      ],
+      "scala": [
+        {
+          "line": 14,
+          "call": "zis.getNextEntry()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 16,
+          "call": "root.resolve(name)",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 21,
+          "call": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 22,
+          "call": "cipher.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(128, iv))",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 27,
+          "call": "ctx.search(\"ou=people\", \"(uid=\" + user + \")\", new SearchControls())",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 27,
+          "call": "\"(uid=\" + user + \")\"",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 27,
+          "call": "\"(uid=\" + user",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 32,
+          "call": "url.openConnection()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 1
+        },
+        {
+          "line": 33,
+          "call": "System.getenv(\"HOME\")",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 0
+        }
+      ]
+    },
+    "stdlib_dispatch": {
+      "kotlin": [
+        {
+          "line": 6,
+          "call": "runCatching { input.toInt() }",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 6,
+          "call": "input.toInt()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 7,
+          "call": "SecretKeySpec(\"0123456789abcdef\".toByteArray(), \"AES\")",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 7,
+          "call": "\"0123456789abcdef\".toByteArray()",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 8,
+          "call": "parsed.getOrElse { key.encoded.size }",
+          "outcome": "unproven",
+          "coverage": "open",
+          "targets": 0
+        }
+      ],
+      "scala": [
+        {
+          "line": 8,
+          "call": "Process(command)",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 10,
+          "call": "pattern.matches(text) && exit == 0",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 10,
+          "call": "pattern.matches(text)",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        },
+        {
+          "line": 10,
+          "call": "exit == 0",
+          "outcome": "unknown",
+          "coverage": "open",
+          "targets": 0
+        }
+      ]
+    },
+    "call_binding_diagnostics": {
+      "kotlin": [
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=ambiguous, coverage=open, target_count=0, binding coverage=unknown)",
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=0, binding coverage=incomplete)",
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+        "call_bindings retained an incomplete callee lookup; original diagnostics: OpenBoundary: {\"kind\":\"OpenBoundary\",\"semantic\":\"{\\\"identity\\\":\\\"shared:41c613faa9a312ed3760a6ad5dfae4b7cb06a10d2f82259ca6beafa603aebee3\\\",\\\"intrinsic_types\\\":[\\\"java.lang.String\\\"]}\",\"site\":{\"column\":38,\"line\":6,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toInt\"}}; UnsupportedCallApplicability: {\"kind\":\"UnsupportedCallApplicability\",\"semantic\":\"unsupported_call_applicability\",\"site\":{\"column\":38,\"line\":6,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toInt\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin.text` has no selected source or classpath owner for `toInt`\",\"site\":{\"column\":38,\"line\":6,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toInt\"}}; incomplete_binding: selected native binding is incomplete: Incomplete [OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: shared:41c613faa9a312ed3760a6ad5dfae4b7cb06a10d2f82259ca6beafa603aebee3: external_declared_unindexed, UnsupportedSemantic: bind/kotlin/Stdlib.kt:6:38]; query_obligation: jvm-default-import-package-open:kotlin:unacquired; query_obligation: jvm-default-import-package-open:kotlin.text:unacquired",
+        "call_bindings retained an incomplete callee lookup; original diagnostics: OpenBoundary: {\"kind\":\"OpenBoundary\",\"semantic\":\"{\\\"identity\\\":\\\"shared:41c613faa9a312ed3760a6ad5dfae4b7cb06a10d2f82259ca6beafa603aebee3\\\",\\\"intrinsic_types\\\":[\\\"java.lang.String\\\"]}\",\"site\":{\"column\":48,\"line\":7,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toByteArray\"}}; UnsupportedCallApplicability: {\"kind\":\"UnsupportedCallApplicability\",\"semantic\":\"unsupported_call_applicability\",\"site\":{\"column\":48,\"line\":7,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toByteArray\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin.collections` has no selected source or classpath owner for `toByteArray`\",\"site\":{\"column\":48,\"line\":7,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toByteArray\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin.text` has no selected source or classpath owner for `toByteArray`\",\"site\":{\"column\":48,\"line\":7,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"toByteArray\"}}; incomplete_binding: selected native binding is incomplete: Incomplete [OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: shared:41c613faa9a312ed3760a6ad5dfae4b7cb06a10d2f82259ca6beafa603aebee3: external_declared_unindexed, UnsupportedSemantic: bind/kotlin/Stdlib.kt:7:48]",
+        "call_bindings retained an incomplete callee lookup; original diagnostics: UnsupportedCallApplicability: {\"kind\":\"UnsupportedCallApplicability\",\"semantic\":\"unsupported_call_applicability\",\"site\":{\"column\":18,\"line\":6,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"runCatching\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin` has no selected source or classpath owner for `runCatching`\",\"site\":{\"column\":18,\"line\":6,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"runCatching\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin` has no selected source or classpath owner for `runCatching`\",\"site\":{\"column\":18,\"line\":6,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"runCatching\"}}; incomplete_binding: selected native binding is incomplete: Incomplete [OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: semantic: external_declared_unindexed, UnsupportedSemantic: bind/kotlin/Stdlib.kt:6:18]",
+        "call_bindings retained an incomplete callee lookup; original diagnostics: UnsupportedCallApplicability: {\"kind\":\"UnsupportedCallApplicability\",\"semantic\":\"unsupported_call_applicability\",\"site\":{\"column\":19,\"line\":8,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"getOrElse\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin.collections` has no selected source or classpath owner for `getOrElse`\",\"site\":{\"column\":19,\"line\":8,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"getOrElse\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin.text` has no selected source or classpath owner for `getOrElse`\",\"site\":{\"column\":19,\"line\":8,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"getOrElse\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin` has no selected source or classpath owner for `getOrElse`\",\"site\":{\"column\":19,\"line\":8,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"getOrElse\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin` has no selected source or classpath owner for `runCatching`\",\"site\":{\"column\":19,\"line\":8,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"getOrElse\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `kotlin` has no selected source or classpath owner for `runCatching`\",\"site\":{\"column\":19,\"line\":8,\"path\":\"bind/kotlin/Stdlib.kt\",\"spelling\":\"getOrElse\"}}; incomplete_binding: selected native binding is incomplete: Incomplete [OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: semantic: external_declared_unindexed, OpenBoundary: semantic: external_declared_unindexed, UnsupportedSemantic: bind/kotlin/Stdlib.kt:8:19]",
+        "call_bindings retained an incomplete callee lookup; original diagnostics: UnsupportedCallApplicability: {\"kind\":\"UnsupportedCallApplicability\",\"semantic\":\"unsupported_call_applicability\",\"site\":{\"column\":26,\"line\":5,\"path\":\"env/kotlin/Main.kt\",\"spelling\":\"exec\"}}; UnsupportedExternalSignatureType: {\"kind\":\"UnsupportedExternalSignatureType\",\"semantic\":\"The external declaration type term has no proven exact native substitution\",\"site\":{\"column\":26,\"line\":5,\"path\":\"env/kotlin/Main.kt\",\"spelling\":\"exec\"}}; jvm-default-import-package-open: {\"kind\":\"jvm-default-import-package-open\",\"semantic\":\"kotlin default import package `java.lang` has no selected source or classpath owner for `Runtime`\",\"site\":{\"column\":26,\"line\":5,\"path\":\"env/kotlin/Main.kt\",\"spelling\":\"exec\"}}; incomplete_binding: selected native binding is incomplete: Incomplete [OpenBoundary: semantic: external_declared_unindexed, UnsupportedSemantic: env/kotlin/Main.kt:5:26, UnsupportedSemantic: semantic]"
+      ],
+      "scala": [
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=0, binding coverage=unknown)",
+        "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)"
+      ]
+    },
+    "getenv_exec": {
+      "java": {
+        "exit_code": 1,
+        "completion": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "findings": [
+          {
+            "certainty": "possible",
+            "proof": "unproven",
+            "completeness": "partial"
+          }
+        ]
+      },
+      "kotlin": {
+        "exit_code": 0,
+        "completion": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "findings": []
+      },
+      "scala": {
+        "exit_code": 0,
+        "completion": "inconclusive",
+        "reasons": [
+          "partial_discovery"
+        ],
+        "findings": []
+      }
+    }
+  },
+  "leads": [
+    {
+      "id": "jvm-zip-entry-containment",
+      "source": "research/stdlib/candidates.csv",
+      "languages": [
+        "kotlin",
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9323",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "ZipInputStream/FileOutputStream constructors: Kotlin unknown/open/0, Scala not a call site; getName via property syntax is not a call site; Kotlin Path.resolve ambiguous/open/0."
+    },
+    {
+      "id": "jvm-jndi-filter-escaping",
+      "source": "research/stdlib/candidates.csv",
+      "languages": [
+        "kotlin",
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9323",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "Kotlin DirContext.search ambiguous/open/0, so the raw-filter and filter-arguments overloads are not distinguished; Scala unproven/open/1."
+    },
+    {
+      "id": "jvm-aead-cipherinputstream-integrity",
+      "source": "research/stdlib/candidates.csv",
+      "languages": [
+        "kotlin",
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9323",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "CipherInputStream/GCMParameterSpec constructors unbound; Cipher.getInstance unproven; Cipher.init Kotlin ambiguous/open/0, Scala unknown/open/0."
+    },
+    {
+      "id": "gcm-nonce-reuse-same-key",
+      "source": "research/stdlib/candidates.csv",
+      "languages": [
+        "kotlin",
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9323",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "Same Cipher/GCMParameterSpec binding gaps; deferred-proof-heavy for Java as well."
+    },
+    {
+      "id": "lit-scala-03",
+      "source": "https://github.com/BrokkAi/bifrost-packs/issues/16",
+      "languages": [
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "\"...\".r is not a call site; Regex.matches unknown/open/0."
+    },
+    {
+      "id": "lit-scala-05",
+      "source": "https://github.com/BrokkAi/bifrost-packs/issues/16",
+      "languages": [
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "Process(command) unknown/open/0; postfix .! is not a call site."
+    },
+    {
+      "id": "lit-scala-06",
+      "source": "https://github.com/BrokkAi/bifrost-packs/issues/16",
+      "languages": [
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9325"
+      ],
+      "observed": "Needs a bound ObjectInputStream.readObject entry and the scala-library version; JVM dependency evidence is unavailable."
+    },
+    {
+      "id": "lit-scala-08",
+      "source": "https://github.com/BrokkAi/bifrost-packs/issues/16",
+      "languages": [
+        "scala"
+      ],
+      "outcome": "blocked-by-engine",
+      "blockers": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9324"
+      ],
+      "observed": "Same Process(String) binding gap as lit-scala-05."
+    }
+  ]
+}
