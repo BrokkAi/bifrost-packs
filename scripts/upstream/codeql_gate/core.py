@@ -678,6 +678,15 @@ def execute(args, test_dir, query_path, stager):
         command += ['--format', 'json']
         if args.models:
             shutil.copytree(args.models, dest / '.bifrost/semantic-models', dirs_exist_ok=True)
+        for pack in getattr(args, 'model_pack', []):
+            if not pack.is_file() or pack.suffix != '.json':
+                raise GateError(f'model pack must be a JSON file: {pack}')
+            model_dir = dest / '.bifrost/semantic-models'
+            model_dir.mkdir(parents=True, exist_ok=True)
+            target = model_dir / pack.name
+            if target.exists():
+                raise GateError(f'duplicate model pack basename: {pack.name}')
+            shutil.copy2(pack, target)
         env = os.environ.copy()
         env.update(HOME=str(run_dir / 'home'), USERPROFILE=str(run_dir / 'home'),
                    BIFROST_CACHE_ROOT=str(run_dir / 'cache'),
@@ -685,7 +694,7 @@ def execute(args, test_dir, query_path, stager):
                    XDG_CACHE_HOME=str(run_dir / 'xdg'), BIFROST_OPEN_PACKS_DISABLE='1',
                    BIFROST_PARALLELISM='4', RAYON_NUM_THREADS='4')
         env.update(stager.run_env(run_dir, prepared))
-        env['BIFROST_WORKSPACE_SEMANTIC_MODELS'] = 'on' if args.models else 'off'
+        env['BIFROST_WORKSPACE_SEMANTIC_MODELS'] = 'on' if args.models or getattr(args, 'model_pack', []) else 'off'
         (run_dir / 'home').mkdir()
         rc, timed_out = invoke(command, dest, env, run_dir, args.timeout)
         parse_error = None
@@ -731,6 +740,7 @@ def execute(args, test_dir, query_path, stager):
                       test_dirs=[str(test_dir.relative_to(args.codeql_root))], policy=str(args.policy),
                       extra_policies=list(map(str, args.extra_policy)), label=args.label,
                       staged_artifacts=list(getattr(prepared, 'staged_artifacts', ())),
+                      activated_model_files=[str(p) for p in getattr(args, 'model_pack', [])],
                       binary_sha256=hashlib.sha256(args.binary.read_bytes()).hexdigest(),
                       codeql_commit=subprocess.check_output(['git', '-C', str(args.codeql_root), 'rev-parse', 'HEAD'], text=True).strip(),
                       exit_code=rc, wall_seconds=round(time.monotonic() - started, 3), run_dir=str(run_dir), command=command)

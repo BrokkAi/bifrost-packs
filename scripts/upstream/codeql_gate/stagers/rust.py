@@ -24,7 +24,11 @@ class RustStager:
         files = sorted(test_dir.rglob('*.rs'))
         if not files:
             raise GateError(f'no Rust source files in {test_dir}')
-        digest = hashlib.sha256(b'rust-stager-v1\0' + str(test_dir.resolve()).encode())
+        options = test_dir / 'options.yml'
+        dependencies = self.dependencies(options)
+        extensions = sorted(test_dir.glob('*.ext.yml'))
+        digest = hashlib.sha256(b'rust-stager-v2\0' + str(test_dir.resolve()).encode())
+        digest.update(options.read_bytes() if options.exists() else b'')
         for path in files:
             digest.update(path.relative_to(test_dir).as_posix().encode() + b'\0')
             digest.update(hashlib.sha256(path.read_bytes()).digest())
@@ -42,11 +46,33 @@ class RustStager:
                 rel = primary.relative_to(test_dir).as_posix()
                 (temporary / 'Cargo.toml').write_text(
                     '[package]\nname = "codeql_fixture"\nversion = "0.0.0"\nedition = "2021"\n'
-                    f'[lib]\npath = "{rel}"\n')
+                    f'[lib]\npath = "{rel}"\n'
+                    + ('[dependencies]\n' + '\n'.join(dependencies) + '\n' if dependencies else ''))
                 temporary.rename(target)
             finally:
                 shutil.rmtree(temporary, ignore_errors=True)
-        return PreparedRoot(target, tuple(p.relative_to(test_dir).as_posix() for p in files))
+        artifacts = tuple({'kind': 'codeql_model_extension', 'path': p.name}
+                          for p in extensions)
+        return PreparedRoot(target, tuple(p.relative_to(test_dir).as_posix() for p in files), artifacts)
+
+    @staticmethod
+    def dependencies(options):
+        if not options.exists():
+            return []
+        entries = []
+        in_dependencies = False
+        for line in options.read_text().splitlines():
+            if re.match(r'^qltest_dependencies:\s*$', line):
+                in_dependencies = True
+                continue
+            if in_dependencies and line and not line[0].isspace():
+                break
+            if in_dependencies and line.strip() and not line.lstrip().startswith('#'):
+                match = re.fullmatch(r'\s*-\s*([A-Za-z_][\w-]*)\s*=\s*(\{.*\}|"[^"]*")\s*', line)
+                if not match:
+                    raise GateError(f'unsupported qltest dependency declaration: {line}')
+                entries.append(f'{match[1]} = {match[2]}')
+        return entries
 
     def run_env(self, run_dir, prepared):
         return {'BIFROST_OPEN_PACKS_DISABLE': '1', 'CARGO_NET_OFFLINE': 'true',

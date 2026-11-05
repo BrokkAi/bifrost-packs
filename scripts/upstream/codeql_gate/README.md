@@ -39,7 +39,13 @@ checkout locations. State defaults to `/tmp/codeql-gate`, overridden by
 and findings from **every** `runs[*]` are unioned for scoring. Policy basenames
 must be distinct. `--models DIR` copies the complete tree into
 `.bifrost/semantic-models` and enables `BIFROST_WORKSPACE_SEMANTIC_MODELS=on`.
-Without it workspace models are explicitly disabled. `--keep` retains the
+For Rust, repeat `--model-pack FILE` to copy an explicit set of reviewed JSON
+packs into that directory. The gate does not discover or download packs.
+The Rust stager writes `qltest_dependencies` from a test directory's
+`options.yml` into its synthetic Cargo manifest without running Cargo or
+creating a lockfile. Test-local `*.ext.yml` files are listed in
+`staged_artifacts` as CodeQL model extensions; they are not Bifrost models.
+Without either model option workspace models are explicitly disabled. `--keep` retains the
 private root and caches; otherwise they are removed even on timeout. Logs,
 exit status, `result.json`, and `result.md` remain in the unique run directory.
 `results.tsv` appends under a file lock. Exit status is 0 only for PASS, 1 for

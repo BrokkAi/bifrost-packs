@@ -37,6 +37,8 @@ def main(argv=None):
     parser.add_argument('--nuget-source', default='https://api.nuget.org/v3/index.json')
     parser.add_argument('--extra-policy', action='append', type=Path, default=[])
     parser.add_argument('--models', type=Path)
+    parser.add_argument('--model-pack', action='append', type=Path, default=[],
+                        help='reviewed semantic-pack JSON file to activate; repeat as needed')
     parser.add_argument('--label', default='')
     parser.add_argument('--timeout', type=float, default=600)
     parser.add_argument('--keep', action='store_true')
@@ -132,6 +134,9 @@ def main(argv=None):
     args.extra_policy = [p.resolve() for p in args.extra_policy]
     if args.models:
         args.models = args.models.resolve()
+    args.model_pack = [p.resolve() for p in args.model_pack]
+    if args.model_pack and args.language != 'rust':
+        parser.error('--model-pack currently supports Rust only')
     if args.timeout <= 0:
         raise GateError('timeout must be positive')
     args.anchors = json.loads(args.anchors.read_text()) if args.anchors else {}

@@ -591,6 +591,26 @@ if __name__ == '__main__':
     unittest.main()
 
 class RustStagerTests(unittest.TestCase):
+    def test_qltest_dependencies_and_extensions_are_staged_as_metadata(self):
+        from scripts.upstream.codeql_gate.stagers.rust import RustStager
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            test = root / 'fixture'
+            test.mkdir()
+            (test / 'lib.rs').write_text('pub fn example() {}\n')
+            (test / 'options.yml').write_text('qltest_dependencies:\n'
+                                               '    - poem = { version = "3.1.7" }\n'
+                                               '    - tokio = { version = "1", features = ["full"] }\n'
+                                               'qltest_cargo_check: true\n')
+            (test / 'local.ext.yml').write_text('extensions: []\n')
+            prepared = RustStager().prepare(test, root, root / 'cache')
+            manifest = (prepared.root / 'Cargo.toml').read_text()
+            self.assertIn('poem = { version = "3.1.7" }', manifest)
+            self.assertIn('tokio = { version = "1", features = ["full"] }', manifest)
+            self.assertFalse((prepared.root / 'Cargo.lock').exists())
+            self.assertEqual(prepared.staged_artifacts,
+                             ({'kind': 'codeql_model_extension', 'path': 'local.ext.yml'},))
+
     def test_stages_only_sources_without_running_fixture(self):
         from scripts.upstream.codeql_gate.stagers.rust import RustStager
         with tempfile.TemporaryDirectory() as temporary:
