@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-03",
+  "bifrost": {
+    "version": "0.15.0",
+    "build_identity": "09a2503c5f7ced1630a9e3c445ead53dfc5925e8",
+    "archive": "bifrost-v0.15.0-universal-apple-darwin.tar.gz",
+    "archive_sha256": "c91c0bd38e4c6c0def86dc75acf8fa6d750b23a45894a28a76115fb8af034eda",
+    "binary_sha256": "47e3e2da0a64ba65b447337b43952478deebbed7af3aa92d835d3a5ad458da96",
+    "environment": {
+      "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+      "BIFROST_OPEN_PACKS_DISABLE": "1",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental",
+      "--format",
+      "json"
+    ],
+    "production_php_pack": {
+      "pack_id": "bifrost.php-builtin",
+      "pack_version": "2026.9.4",
+      "release": "packs/v0.9.0",
+      "note": "selected only in the open-packs-enabled variant, through composer.json and .php-version"
+    }
+  },
+  "issues": {
+    "filed": [
+      "https://github.com/BrokkAi/bifrost-dev/issues/9334",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9335",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9337"
+    ],
+    "reused": [
+      "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9322",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9329",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+    ]
+  },
+  "version_evidence": [
+    {
+      "query": "probe/version-evidence/ruby-bundle/dependency-evidence.rql",
+      "observed": "No rows; semantic_analysis_partial: Ruby selected dependency publication unavailable: static dependency evidence is unavailable for this analyzer."
+    }
+  ],
+  "php_unserialize_probe": {
+    "policy": "probe/.bifrost/policies/php-unserialize-network.rqlp",
+    "cases": [
+      {
+        "sources": "php-unserialize/positive",
+        "completion": "proven_by_summary",
+        "exit_code": 1,
+        "reported": [
+          "app.php:7 definite complete"
+        ]
+      },
+      {
+        "sources": "php-unserialize/allowed-classes-false",
+        "completion": "proven_by_summary",
+        "exit_code": 1,
+        "reported": [
+          "app.php:7 definite complete"
+        ]
+      },
+      {
+        "sources": "php-unserialize/near-miss-json",
+        "completion": "complete",
+        "exit_code": 0,
+        "reported": [],
+        "diagnostics": [
+          "empty_selection: no sink endpoint"
+        ]
+      },
+      {
+        "sources": "php-unserialize/namespaced-lookalike",
+        "completion": "complete",
+        "exit_code": 0,
+        "reported": [],
+        "diagnostics": [
+          "empty_selection: no sink endpoint; the call binds the workspace App\\Codec\\unserialize"
+        ]
+      },
+      {
+        "sources": "php-unserialize/positive",
+        "variant": "open packs enabled; bifrost.php-builtin 2026.9.4 selected",
+        "completion": "not_run",
+        "exit_code": 2,
+        "diagnostics": [
+          "qualified-call-locator-partial: _php_global_.unserialize resolved only through partial or uncertain model evidence (member.255b7acd9ce5a0e1ab73b58a92b41964137e7ce4faa9e96fadd62a7bbb37d2b5)"
+        ]
+      }
+    ]
+  },
+  "ruby_marshal_probe": {
+    "policy": "probe/.bifrost/policies/ruby-marshal-network.rqlp",
+    "cases": [
+      {
+        "sources": "ruby-marshal/positive",
+        "completion": "inconclusive (partial_discovery)",
+        "exit_code": 0,
+        "reported": [],
+        "diagnostics": [
+          "source and sink selectors: call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)"
+        ]
+      },
+      {
+        "sources": "ruby-marshal/near-miss-safe-load",
+        "completion": "complete",
+        "exit_code": 0,
+        "reported": [],
+        "diagnostics": [
+          "empty_selection: vacuous, no sink endpoint"
+        ]
+      },
+      {
+        "sources": "ruby-marshal/workspace-lookalike",
+        "completion": "complete",
+        "exit_code": 0,
+        "reported": [],
+        "diagnostics": [
+          "empty_selection: vacuous"
+        ]
+      },
+      {
+        "sources": "ruby-marshal/constant-blob",
+        "completion": "complete",
+        "exit_code": 0,
+        "reported": [],
+        "diagnostics": [
+          "empty_selection: vacuous, no source endpoint"
+        ]
+      }
+    ]
+  },
+  "ruby_bindings": {
+    "workspace": "probe/ruby-bindings/app.rb (whole probe root, workspace models on)",
+    "rows": [
+      {
+        "call": "Net::HTTP.get(uri)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "Marshal.load(body)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "Marshal.restore(body)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "Psych.unsafe_load(text)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "YAML.unsafe_load(text)",
+        "targets": 0,
+        "dispatch": "unknown/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "Kernel.open(cmd)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "open(cmd)",
+        "targets": 0,
+        "dispatch": "unknown/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "Kernel.eval(text)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "eval(text)",
+        "targets": 0,
+        "dispatch": "unknown/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "File.open(cmd)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "callee_unresolved"
+      },
+      {
+        "call": "LocalCodec.decode(bytes)",
+        "targets": 1,
+        "dispatch": "unproven/open",
+        "reason": "call_binding_dispatch_partial; see ruby_load_dispatch"
+      }
+    ]
+  },
+  "ruby_load_dispatch": [
+    {
+      "root": "probe/ruby-load-dispatch/without-load",
+      "other_call": "Marshal.dump(x)",
+      "LocalCodec.decode": "resolved/exhaustive"
+    },
+    {
+      "root": "probe/ruby-load-dispatch/with-load",
+      "other_call": "Marshal.load(x)",
+      "LocalCodec.decode": "unproven/open"
+    }
+  ],
+  "input_sha256": {
+    ".bifrost/policies/php-unserialize-network.rqlp": "52bd5967e6bca4b10b5d05ea4378875a8a3b39cd6ffc382d6f57bca406d150c7",
+    ".bifrost/policies/ruby-marshal-network.rqlp": "ce806e2c269c03ce04e7e351fb6a073993e0925e542d13e2564a63a3769d14a4",
+    ".bifrost/semantic-models/bifrost.research.php-stdlib-probe.json": "c276a51375f28c593b123ce7f050a23100b9b3763bf738d95a8963b21ae32372",
+    ".bifrost/semantic-models/bifrost.research.ruby-stdlib-probe.json": "50879f525dacde0fa9f333748d6990d7f162f80895f6e888172097f02a5082d0",
+    ".bifrost/semantic-models/bifrost.web-network-ruby.json": "ddd6ac82150929aa3f24063301f82a8e8bff4b13d780bd14dbb8f5578385bf86",
+    ".php-version": "d5a01ad08782e3bb53bbd3f63e1d10a7dfd13cc1fbb43c25f3453391af041394",
+    "composer.json": "4421f4228e7f21f0e3212f2755677f7ab0564373333ef8ca2e208587ff3f41a9",
+    "php-unserialize/allowed-classes-false/app.php": "a2cbc9db20bd659f1b4c52cca13b91ac068b4f3206af233357f9502873b1df44",
+    "php-unserialize/namespaced-lookalike/app.php": "dceb4184a50164903990509c815db01e2dda8a8077339167592efe10928379c4",
+    "php-unserialize/near-miss-json/app.php": "f177713b10f0a8f58695d03d3b3329872a3b546b50e784a2e59ecbdf00335fc0",
+    "php-unserialize/positive/app.php": "520e38eaf3e57eb22f02d9f1106b5424d123c2bbda9876ea1577d61127b462b5",
+    "ruby-bindings/app.rb": "6477bde7e1d18a1a751d3279e2c641f697fb3a74e7705cabca09807d26bb7c62",
+    "ruby-bindings/decode.rql": "1aba0af28cf99ad3573d476e77ad8d47057543039be703517cd5a968695643cd",
+    "ruby-bindings/eval.rql": "baed519bc471a0e859b53c3af418207a40e01cdb3d90d38b76f344ec30e10c69",
+    "ruby-bindings/get.rql": "0a76d6b124539fa016ab13eecb149fe8562d71a5625f476b597eaa197b7515b1",
+    "ruby-bindings/load.rql": "4dc42b612772c1d0152c43242534170ef709e890a2ac8b887cec2ff008c38159",
+    "ruby-bindings/open.rql": "d0da5b0523be9577c065ab34ad2c250dce76dd274b0598569041af2704807ac4",
+    "ruby-bindings/restore.rql": "ee42c0a32e2459185c2c20863dbecdafa75fdf35e0e33b0976dec5cda7f24861",
+    "ruby-bindings/unsafe_load.rql": "147a8375ec09dc186f9d1160f9c0297531aaadc3d4c2cf0464d257d7e0ccc08f",
+    "ruby-load-dispatch/with-load/app.rb": "d5729307aad5066b2cb9c19c6ce4d8f6fc5c7f6148216f53dc9ff712d4deec0c",
+    "ruby-load-dispatch/with-load/decode.rql": "1aba0af28cf99ad3573d476e77ad8d47057543039be703517cd5a968695643cd",
+    "ruby-load-dispatch/without-load/app.rb": "eeb9e0c48dcbb027f734308ae23eb6d7d01261aa1fd48e6508e8be032eb30b55",
+    "ruby-load-dispatch/without-load/decode.rql": "1aba0af28cf99ad3573d476e77ad8d47057543039be703517cd5a968695643cd",
+    "ruby-marshal/constant-blob/app.rb": "78088887e971bdb90efb76260045d1f95e8fa46bab91db54421e4a93512061a9",
+    "ruby-marshal/near-miss-safe-load/app.rb": "74bd8c0efbe1578a7a8b5066cf0fffdf9f8be318108bc1e66d73bcaa6ec6297d",
+    "ruby-marshal/positive/app.rb": "9c66a4d59d64fb1b6c5e65ac8619186011b491636fa2300f04840871e4c12ddc",
+    "ruby-marshal/workspace-lookalike/app.rb": "a8d25dbb2a49cee38f4e9151678ae3bb1e416cb6a1acc31b4a6951ebe8a41640",
+    "version-evidence/ruby-bundle/.ruby-version": "33bdaf9e2d6bcbde2e4e613e865e403f8fe21fc621078d34c30b0bdc7f68d903",
+    "version-evidence/ruby-bundle/Gemfile": "518ccef035282d41c115b12b834f4d22441adf5caa7a1d0ae2e8eb2589c3520f",
+    "version-evidence/ruby-bundle/Gemfile.lock": "245ef7ec6d9e0762468cd13f7df5e9d20e01ba24a696a51e3bf9669f2020023c",
+    "version-evidence/ruby-bundle/app.rb": "185e202a8ab17d148558f55b38e6a4add9f4d2704def74fd2029c077a50af1a6",
+    "version-evidence/ruby-bundle/dependency-evidence.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75"
+  },
+  "leads": [
+    {
+      "lead": "BrokkAi/bifrost-packs#169",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: interpolated-string versus array operand facts on Net::IMAP#search. Request source belongs to bifrost-dev#9319.",
+      "language": "ruby",
+      "advisory": "CVE-2026-42257"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#170",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: URI.parse. Implicit-self Kernel calls such as URI(...) find no target on 0.15.0.",
+      "language": "ruby",
+      "advisory": "CVE-2023-28755"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#171",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: REXML::Parsers::SAX2Parser.new constant-path construction.",
+      "language": "ruby",
+      "advisory": "CVE-2024-41946"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#176",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: to_sym propagation and array-element operands.",
+      "language": "ruby",
+      "advisory": "CVE-2026-42258"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#177",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: hash-literal header values.",
+      "language": "ruby",
+      "advisory": "CVE-2021-33621"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#178",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: the limit: keyword fact.",
+      "language": "ruby",
+      "advisory": "CVE-2021-41817"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#179",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Not probed: same-object parse then serialize.",
+      "language": "ruby",
+      "advisory": "CVE-2021-28965"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#180",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "Also needs target-OS evidence, recorded on bifrost-dev#9318.",
+      "language": "ruby",
+      "advisory": "CVE-2021-28966"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#23 lit-ruby-05",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+      ],
+      "note": "Kernel.eval is unproven and eval has no target. A dynamic eval also opens workspace dispatch by design.",
+      "language": "ruby"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#23 lit-ruby-06",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+      ],
+      "note": "Not probed directly. It has the same implicit-self and Kernel. shapes as open and eval.",
+      "language": "ruby"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#23 lit-ruby-07",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9334",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+      ],
+      "note": "Probed: ruby-marshal cases.",
+      "language": "ruby"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#23 lit-ruby-09",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336"
+      ],
+      "note": "File.open is unproven. Typestate not probed.",
+      "language": "ruby"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#22 lit-php-08",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+      ],
+      "note": "Probed: php-unserialize cases. The network slice works with research declarations.",
+      "language": "php"
+    },
+    {
+      "lead": "BrokkAi/bifrost-packs#22 lit-php-01..07",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9330",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9337"
+      ],
+      "note": "Not probed: each needs request input from superglobals. lit-php-01 (PDO) also needs PHP class-member binding (bifrost-dev#9329).",
+      "language": "php"
+    },
+    {
+      "lead": "candidates.md#php-runtime-deserialization",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+      ],
+      "note": "Same as lit-php-08.",
+      "language": "php"
+    },
+    {
+      "lead": "candidates.md#php-proc-open-paired-ownership",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9337",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9330"
+      ],
+      "note": "proc_open has the same partial family. Not probed: the by-reference $pipes out-parameter, its element reads, or blocking order.",
+      "language": "php"
+    },
+    {
+      "lead": "candidates.md#ruby-marshal-untrusted-load",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9334",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+      ],
+      "note": "Same as lit-ruby-07.",
+      "language": "ruby"
+    },
+    {
+      "lead": "candidates.md#ruby-psych-unsafe-load-untrusted-yaml",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9335",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+      ],
+      "note": "Psych.unsafe_load is unproven and the YAML alias has no target. Psych 5.2.2 scoping needs runtime evidence.",
+      "language": "ruby"
+    },
+    {
+      "lead": "candidates.md#ruby-kernel-open-pipe-command-taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9335",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+      ],
+      "note": "Kernel.open is unproven and bare open has no target. Ruby 3.4-only scope needs runtime evidence. Leading-pipe string facts not probed.",
+      "language": "ruby"
+    },
+    {
+      "lead": "candidates.md#ruby-net-http-active-peer-verification-disabled",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+      ],
+      "note": "Net::HTTP.new is unproven. http.verify_mode = ... publishes no call row and field-write-value needs a member target; not probed further.",
+      "language": "ruby"
+    },
+    {
+      "lead": "candidates.md#ruby-open3-popen3-owned-pipe-closure",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+      ],
+      "note": "Not probed: Open3.popen3, which has the singleton shape above. The block form needs block-parameter receivers (bifrost-dev#9322).",
+      "language": "ruby"
+    },
+    {
+      "lead": "candidates.md#ruby-open3-popen3-paired-pipe-draining",
+      "outcome": "deferred",
+      "blocking_issues": [],
+      "note": "Remains proof-heavy: child output volume, pipe capacity and read order. Not probed.",
+      "language": "ruby"
+    },
+    {
+      "lead": "candidates.md#ruby-tempfile-create-unlinked-owner",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+      ],
+      "note": "Not probed: Tempfile.create. tempfile 0.3.1 scoping needs runtime evidence.",
+      "language": "ruby"
+    }
+  ]
+}

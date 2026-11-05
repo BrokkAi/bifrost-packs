@@ -1,0 +1,367 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.php-stdlib-probe",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs-research",
+    "version": "0.1.0"
+  },
+  "language": "php",
+  "ecosystem": "php",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://www.php.net/manual/ unserialize, json_decode, stream_socket_client, fread, base64_decode; research probe, not registered pack content",
+    "revision": "php-8.3"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.php-stdlib-probe.declarations",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+            "name": "_php_global_",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "Core/Core.php",
+              "symbol": "_php_global_"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.php-stdlib-research.unserialize",
+            "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+            "name": "unserialize",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "array"
+                  },
+                  "optional": true
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "standard/standard_4.php",
+              "symbol": "_php_global_.unserialize"
+            }
+          },
+          {
+            "id": "member.php-stdlib-research.json_decode",
+            "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+            "name": "json_decode",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "associative",
+                  "type": {
+                    "kind": "named",
+                    "name": "bool"
+                  },
+                  "optional": true
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "json/json.php",
+              "symbol": "_php_global_.json_decode"
+            }
+          },
+          {
+            "id": "member.php-stdlib-research.stream_socket_client",
+            "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+            "name": "stream_socket_client",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                {
+                  "name": "address",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "standard/streams.php",
+              "symbol": "_php_global_.stream_socket_client"
+            }
+          },
+          {
+            "id": "member.php-stdlib-research.fread",
+            "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+            "name": "fread",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                {
+                  "name": "stream",
+                  "type": {
+                    "kind": "named",
+                    "name": "mixed"
+                  }
+                },
+                {
+                  "name": "length",
+                  "type": {
+                    "kind": "named",
+                    "name": "int"
+                  }
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "standard/standard_5.php",
+              "symbol": "_php_global_.fread"
+            }
+          },
+          {
+            "id": "member.php-stdlib-research.base64_decode",
+            "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+            "name": "base64_decode",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "signature": {
+              "parameters": [
+                {
+                  "name": "string",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "strict",
+                  "type": {
+                    "kind": "named",
+                    "name": "bool"
+                  },
+                  "optional": true
+                }
+              ]
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "standard/basic.php",
+              "symbol": "_php_global_.base64_decode"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "research.php-stdlib-probe.summaries",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "php.research.unserialize.1",
+            "target": {
+              "path": "standard/standard_4.php",
+              "symbol": "_php_global_.unserialize(string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "php.research.unserialize.2",
+            "target": {
+              "path": "standard/standard_4.php",
+              "symbol": "_php_global_.unserialize(string, array)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "php.research.json_decode.1",
+            "target": {
+              "path": "json/json.php",
+              "symbol": "_php_global_.json_decode(string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "php.research.json_decode.2",
+            "target": {
+              "path": "json/json.php",
+              "symbol": "_php_global_.json_decode(string, bool)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "php.research.stream_socket_client.1",
+            "target": {
+              "path": "standard/streams.php",
+              "symbol": "_php_global_.stream_socket_client(string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "php.research.fread.2",
+            "target": {
+              "path": "standard/standard_5.php",
+              "symbol": "_php_global_.fread(mixed, int)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "php.research.base64_decode.1",
+            "target": {
+              "path": "standard/basic.php",
+              "symbol": "_php_global_.base64_decode(string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "php.research.base64_decode.2",
+            "target": {
+              "path": "standard/basic.php",
+              "symbol": "_php_global_.base64_decode(string, bool)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

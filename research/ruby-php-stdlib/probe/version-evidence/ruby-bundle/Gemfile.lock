@@ -1,0 +1,26 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    date (3.3.3)
+    net-imap (0.4.0)
+      date
+      net-protocol
+    net-protocol (0.2.1)
+      timeout
+    rexml (3.2.5)
+    timeout (0.4.0)
+    uri (0.12.0)
+
+PLATFORMS
+  arm64-darwin
+
+DEPENDENCIES
+  net-imap (= 0.4.0)
+  rexml (= 3.2.5)
+  uri (= 0.12.0)
+
+RUBY VERSION
+   ruby 3.2.0p0
+
+BUNDLED WITH
+   2.4.1

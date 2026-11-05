@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-02",
+  "bifrost": {
+    "version": "0.15.0",
+    "build_identity": "09a2503c5f7ced1630a9e3c445ead53dfc5925e8",
+    "archive": "bifrost-v0.15.0-universal-apple-darwin.tar.gz",
+    "archive_sha256": "c91c0bd38e4c6c0def86dc75acf8fa6d750b23a45894a28a76115fb8af034eda",
+    "binary_sha256": "47e3e2da0a64ba65b447337b43952478deebbed7af3aa92d835d3a5ad458da96",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental"
+    ]
+  },
+  "version_evidence": [
+    {
+      "query": "probe/version-evidence/go-module/dependency-evidence.rql",
+      "observed": "No rows; semantic_analysis_partial: Go selected dependency publication unavailable: static dependency evidence is unavailable for this analyzer."
+    },
+    {
+      "query": "probe/version-evidence/rust-crate/dependency-evidence.rql",
+      "observed": "One cargo row: serde, evidence_kind declared, source git+ssh://git@github.com/serde-rs/serde.git, activation unresolved. No row for rust-toolchain.toml channel 1.77.0, rust-version 1.77.0 or target x86_64-pc-windows-msvc."
+    }
+  ],
+  "gob_probe": {
+    "policy": "probe/.bifrost/policies/192-gob-network.rqlp",
+    "policy_hash": "46e4b967291788e0bd58e00b551d13a1796a91785c840d2ad67c3498ddcd61f0",
+    "cases": [
+      {
+        "sources": "192-gob-network/positive-dial",
+        "completion": "complete (proven by summary)",
+        "reported": [
+          "main.go:17 definite proven complete"
+        ]
+      },
+      {
+        "sources": "192-gob-network/unknown-defer-close",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [
+          "main.go:18 definite proven complete"
+        ],
+        "diagnostics": [
+          "taint discovery is incomplete: procedure value-flow snapshot for main.go.fetch is unknown"
+        ]
+      },
+      {
+        "sources": "192-gob-network/unknown-accept",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [],
+        "diagnostics": [
+          "source net.Listener.Accept connection: discovery incomplete: call_bindings dispatch outcome=unproven, coverage=open"
+        ]
+      },
+      {
+        "sources": "192-gob-network/near-miss-local-reader",
+        "completion": "complete",
+        "reported": []
+      },
+      {
+        "sources": "192-gob-network/positive-dial",
+        "variant": "without go-stdlib-net-declarations.callable-family-complete.json",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [],
+        "diagnostics": [
+          "qualified-call-locator-partial: net.Dial",
+          "qualified-call-locator-partial: net.Listener.Accept"
+        ]
+      }
+    ]
+  },
+  "input_sha256": {
+    ".bifrost/policies/192-gob-network.rqlp": "cd56fc96f50bbf93222d5db26e7594cf2522256ee5bd3e292cdded46a82922ad",
+    ".bifrost/semantic-models/bifrost.research.go-cve-probe-declarations.json": "91d034ffac9260204b0b23d1e335e04a5873d1b38462fbdfaad43c434c997959",
+    ".bifrost/semantic-models/bifrost.research.go-cve-probe.json": "237763ad8f6145d21ad553eb2b1d0126a0604e815471769bd5358e63d83f563a",
+    ".bifrost/semantic-models/go-stdlib-net-declarations.callable-family-complete.json": "9205fc1b8165c9081245e2a35cb59bb9981f22935ab6f8b2043a7cb6943d3133",
+    "192-gob-network/go-close-bindings.rql": "38906de25cdc2729667d56ef56ca30fd328414d6a957a41fbdad53acadf11f25",
+    "192-gob-network/go.mod": "39a9069587ca84ec1051916b74c659c2c2b73001540dd1f569a3dfb034ca4c95",
+    "192-gob-network/near-miss-local-reader/main.go": "d1b24c455d726212913152c644d521bc2bc99c410b1f97cfc2d7eae56e2fd533",
+    "192-gob-network/positive-dial/main.go": "a1bfb7ca2ae25f3796540add770c3d52ee2b50c2fa18f1386db53b0569308bb0",
+    "192-gob-network/unknown-accept/main.go": "c7f31acb061e5803ee8122c925bfdbc3338936d655ac10ac351e761818c1176d",
+    "192-gob-network/unknown-defer-close/main.go": "2bcfac3ea30dc80feb56e27e11f0ad164c8b1383b98d9742da36afccc9bf7ae1",
+    "version-evidence/go-module/dependency-evidence.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75",
+    "version-evidence/go-module/go.mod": "41c0783d6e76c40da048f01d7a77de9fe429cf25bf6841b433fe6b0addf8715b",
+    "version-evidence/go-module/go.sum": "0841f86201b0467138f8de086acb634ab2fa5e0c69b38cab36147f4f7c80af64",
+    "version-evidence/go-module/main.go": "04c7cdfe9eb43d137c4bb85c604588eee4e1b6c69a824d8f859f256a13ddf22f",
+    "version-evidence/go-module/util_windows.go": "63217b90c4336fe560310a0a23d1ef1a95eb61b20e9b474703efe7e2238e5fef",
+    "version-evidence/rust-crate/Cargo.toml": "daef7878c44036f6c355285d366516ace7521c29ca455ce663efb6c119578300",
+    "version-evidence/rust-crate/dependency-evidence.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75",
+    "version-evidence/rust-crate/rust-toolchain.toml": "c641e6f7d3b5fbdedc926bbbf279bbd016ddaa531fba1873df1c4b2025d4cd62",
+    "version-evidence/rust-crate/src/main.rs": "8dd69f837200c867a61a73f7a6963bb146594f3a1955aecc167c1cc246fe03d7"
+  },
+  "leads": [
+    {
+      "issue": 50,
+      "language": "go",
+      "advisory": "CVE-2023-39325",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: HTTP/2 server configuration facts."
+    },
+    {
+      "issue": 51,
+      "language": "go",
+      "advisory": "CVE-2023-29406",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-packs/issues/213"
+      ],
+      "note": "Not probed: request `Host` field flow. No public Go request source binds (#213)."
+    },
+    {
+      "issue": 52,
+      "language": "go",
+      "advisory": "CVE-2022-30633",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: struct-tag facts for `xml:\",any\"`."
+    },
+    {
+      "issue": 53,
+      "language": "go",
+      "advisory": "CVE-2023-24538",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: html/template context modeling."
+    },
+    {
+      "issue": 54,
+      "language": "go",
+      "advisory": "CVE-2022-2879",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: archive/tar input flow."
+    },
+    {
+      "issue": 55,
+      "language": "go",
+      "advisory": "CVE-2023-29409",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: TLS peer-certificate flow."
+    },
+    {
+      "issue": 56,
+      "language": "go",
+      "advisory": "CVE-2021-41771",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: debug/macho input flow."
+    },
+    {
+      "issue": 57,
+      "language": "go",
+      "advisory": "CVE-2021-33197",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: proxy topology."
+    },
+    {
+      "issue": 172,
+      "language": "go",
+      "advisory": "CVE-2026-56857",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+      ],
+      "note": "bifrost-dev#9048 (GOOS)."
+    },
+    {
+      "issue": 173,
+      "language": "go",
+      "advisory": "CVE-2026-94448",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: html/template context modeling."
+    },
+    {
+      "issue": 174,
+      "language": "go",
+      "advisory": "CVE-2026-78667",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-packs/issues/213"
+      ],
+      "note": "Otherwise a version fact on an exact `http.FileServer`/`ServeContent` call, which also needs #213."
+    },
+    {
+      "issue": 175,
+      "language": "go",
+      "advisory": "CVE-2026-42504",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: untrusted mail-header source."
+    },
+    {
+      "issue": 181,
+      "language": "go",
+      "advisory": "CVE-2022-29804",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+      ],
+      "note": "bifrost-dev#9048 (GOOS)."
+    },
+    {
+      "issue": 182,
+      "language": "go",
+      "advisory": "CVE-2023-45283",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+      ],
+      "note": "bifrost-dev#9048 (GOOS)."
+    },
+    {
+      "issue": 183,
+      "language": "go",
+      "advisory": "CVE-2022-30580",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+      ],
+      "note": "bifrost-dev#9048 (GOOS)."
+    },
+    {
+      "issue": 184,
+      "language": "go",
+      "advisory": "CVE-2025-47906",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-packs/issues/213"
+      ],
+      "note": "Not probed: request source into `exec.Command` (#213)."
+    },
+    {
+      "issue": 185,
+      "language": "go",
+      "advisory": "CVE-2022-41720",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+      ],
+      "note": "bifrost-dev#9048 (GOOS)."
+    },
+    {
+      "issue": 186,
+      "language": "go",
+      "advisory": "CVE-2023-45289",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: `http.Client` field facts and URL provenance."
+    },
+    {
+      "issue": 187,
+      "language": "go",
+      "advisory": "CVE-2025-47910",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: ServeMux registration facts."
+    },
+    {
+      "issue": 188,
+      "language": "go",
+      "advisory": "CVE-2024-24790",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: guard-to-dial correlation."
+    },
+    {
+      "issue": 189,
+      "language": "go",
+      "advisory": "CVE-2025-22874",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: composite-literal slice facts."
+    },
+    {
+      "issue": 190,
+      "language": "go",
+      "advisory": "CVE-2024-24785",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: template context modeling."
+    },
+    {
+      "issue": 191,
+      "language": "go",
+      "advisory": "CVE-2022-32190",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-packs/issues/213"
+      ],
+      "note": "No Go request source binds (#213). A version-independent traversal slice exists, because `JoinPath` with an absolute base path still resolves `..` on fixed toolchains. It needs request sources first."
+    },
+    {
+      "issue": 192,
+      "language": "go",
+      "advisory": "CVE-2024-34156",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9053",
+        "https://github.com/BrokkAi/bifrost-packs/issues/213"
+      ],
+      "note": "Version-independent slice probed above: bifrost-dev#9053 and #213."
+    },
+    {
+      "issue": 193,
+      "language": "go",
+      "advisory": "CVE-2024-24784",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047"
+      ],
+      "note": "Not probed: result-field flow into comparisons."
+    },
+    {
+      "issue": 194,
+      "language": "go",
+      "advisory": "CVE-2025-0913",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9047",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9048"
+      ],
+      "note": "bifrost-dev#9048 (GOOS)."
+    },
+    {
+      "issue": 58,
+      "language": "rust",
+      "advisory": "CVE-2024-24576",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
+      ],
+      "note": "bifrost-dev#9049 (toolchain and Windows target)."
+    },
+    {
+      "issue": 59,
+      "language": "rust",
+      "advisory": "CVE-2024-43402",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
+      ],
+      "note": "bifrost-dev#9049 (toolchain and Windows target)."
+    },
+    {
+      "issue": 60,
+      "language": "rust",
+      "advisory": "CVE-2022-46176",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
+      ],
+      "note": "bifrost-dev#9049 (Cargo toolchain). The `git+ssh` dependency row exists. `net.git-fetch-with-cli` precedence belongs to bifrost-dev#3768."
+    },
+    {
+      "issue": 61,
+      "language": "rust",
+      "advisory": "CVE-2022-36113",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9049"
+      ],
+      "note": "bifrost-dev#9049 (Cargo toolchain). Alternate-registry rows were not probed."
+    }
+  ]
+}
