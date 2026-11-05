@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -253,6 +253,44 @@
       "remediation": "Leave XmlDocument.XmlResolver at its default or set it to null. If entities must be resolved, use a resolver restricted to trusted resources, or load through XmlReader.Create with DtdProcessing.Prohibit."
     },
     {
+      "path": "policies/csharp/regex-pattern-injection.rqlp",
+      "id": "bifrost.security.csharp.regex-pattern-injection",
+      "authored_hash": "a49111555098e3a0d31fbaae6c8889d3055204ba9f5833b808b22c15036effc3",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A caller-written regular expression can backtrack catastrophically and hold a thread for as long as it runs; without a match timeout the cost is unbounded on any runtime (CVE-2019-0820).",
+      "remediation": "Escape untrusted text with Regex.Escape before building a pattern, or pass a matchTimeout (or use RegexOptions.NonBacktracking) whenever the pattern itself must come from outside."
+    },
+    {
+      "path": "policies/csharp/dataset-read-xml-external-location.rqlp",
+      "id": "bifrost.security.csharp.dataset-read-xml-external-location",
+      "authored_hash": "f9c163683ea0a156d2dcadf9c64838043202af047d7e15407410694f0d605a28",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "DataSet.ReadXml and DataTable.ReadXml instantiate the types an XML document names, so a caller who chooses the file or URL chooses that document; Microsoft's guidance is not to read XML from untrusted input on any version (CVE-2020-1147).",
+      "remediation": "Read only application-owned XML into DataSet or DataTable. For external data, deserialize into fixed types with a schema and size limits, or restrict the allowed DataSet types and validate the source."
+    },
+    {
       "path": "policies/declared-storage/go-store-requires-validation.rqlp",
       "id": "bifrost.security.go.store-requires-validation",
       "authored_hash": "e9e6ee052b90c7d83e5b25928c2dafeac3954ac4fbbc0d10f60915c1f2b99433",
@@ -309,6 +347,26 @@
       ],
       "severity_rationale": "A network peer controls every byte a gob decoder reads, and the decoder is documented as not hardened against adversarial input; a crafted stream can exhaust the stack (CVE-2024-34156) or other resources on any toolchain.",
       "remediation": "Do not decode gob from untrusted peers. Use a format with an explicit schema and size limits for network input, or authenticate the peer and bound the stream before decoding.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/go/network-read-all-unbounded.rqlp",
+      "id": "bifrost.security.go.network-read-all-unbounded",
+      "authored_hash": "01e9aa33b308535761ffafd882063e659ffb1672e2740e7229b122e67088b56a",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "go"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A network peer controls how many bytes io.ReadAll or io.Copy reads, and compress/gzip inflates without a size bound, so a small stream can exhaust memory or disk on any toolchain (CVE-2022-30631 shows the same reader is also a stack-exhaustion vector).",
+      "remediation": "Wrap the connection or the gzip reader in io.LimitReader (or http.MaxBytesReader for request bodies) with a limit the program can afford, and treat hitting the limit as an error.",
       "activation": "opt-in"
     },
     {
@@ -388,6 +446,25 @@
       ],
       "severity_rationale": "Attacker-controlled command text can execute unintended operating-system commands with the application's privileges.",
       "remediation": "Avoid passing untrusted text to Runtime.exec. Use a fixed executable and validate arguments against an allowlist."
+    },
+    {
+      "path": "policies/jvm/objectinputstream-read-without-filter.rqlp",
+      "id": "bifrost.security.java.objectinputstream-read-without-filter",
+      "authored_hash": "2ce2f8532a6a169802337732c4295fc354860a6f2c35620a744ab35dc856e297",
+      "resolved_semantic_hash": "2ce2f8532a6a169802337732c4295fc354860a6f2c35620a744ab35dc856e297",
+      "category": "security",
+      "supported_languages": [
+        "java"
+      ],
+      "required_capabilities": [
+        "typestate",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "An ObjectInputStream without a filter instantiates any serializable class its input names, so a caller who controls the bytes can trigger gadget chains (CVE-2026-41586) on any JDK.",
+      "remediation": "Call setObjectInputFilter with an allow-list filter before the first readObject, or replace Java serialization with a schema-checked format for data the application doesn't produce itself.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/declared-storage/javascript-store-requires-validation.rqlp",
@@ -681,6 +758,48 @@
       ],
       "severity_rationale": "A command string built from the process environment or the launch arguments runs in a subshell with the application's privileges, so attacker-controlled text changes the executed command.",
       "remediation": "Do not pass process input to os.system. Use subprocess.run with an argument list and shell=False, and validate the executable against an allowlist."
+    },
+    {
+      "path": "policies/python/process-input-to-urlopen.rqlp",
+      "id": "bifrost.security.python.process-input-to-urlopen",
+      "authored_hash": "3f6c8cfbf567367dbd3e82b9852c25ac7c70ebe1cb368024381de5acba8fa9f3",
+      "resolved_semantic_hash": "3f6c8cfbf567367dbd3e82b9852c25ac7c70ebe1cb368024381de5acba8fa9f3",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL taken from the process environment or the launch arguments selects the scheme handler of the default opener, so whoever controls it can read local files through file:, reach internal hosts, or supply a data: URL (CVE-2025-15282) on any CPython version.",
+      "remediation": "Do not pass process input to urlopen as a URL. Parse it, allow only the expected scheme (https) and an allowlisted host, and build the request from the validated parts.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/process-input-to-webbrowser-open.rqlp",
+      "id": "bifrost.security.python.process-input-to-webbrowser-open",
+      "authored_hash": "eb87578a05c78e883000073e5530846f6529e4843e54c670abd324cc9fb81c8f",
+      "resolved_semantic_hash": "eb87578a05c78e883000073e5530846f6529e4843e54c670abd324cc9fb81c8f",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "The URL passed to webbrowser.open selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser command-line option (CVE-2026-4519, CVE-2026-4786).",
+      "remediation": "Do not open process input as a URL. Parse it, require an https scheme and an expected host, and pass only the validated URL to webbrowser.open.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/declared-storage/python-store-requires-validation.rqlp",
@@ -978,6 +1097,48 @@
       ],
       "severity_rationale": "Caller-supplied code may panic while memory invariants are temporarily broken; this name-based ordering heuristic requires review.",
       "remediation": "Initialize or restore memory invariants before calling caller-supplied code and make unwinding safe.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-fs-write-path.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-fs-write-path",
+      "authored_hash": "99ac09db7ec74620c40ba6a49b4db91f12007c4fb9324596192a68ae3198ac6b",
+      "resolved_semantic_hash": "99ac09db7ec74620c40ba6a49b4db91f12007c4fb9324596192a68ae3198ac6b",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Whoever supplies the process argument chooses which file the program writes: path.join, path.normalize and path.resolve resolve `..` and keep absolute segments, and affected Windows runtimes also keep device names (CVE-2025-27210).",
+      "remediation": "Resolve the joined path, then reject it unless it stays inside the intended base directory (compare path.relative against `..` and absolute results), or map the argument to a fixed allowlist of file names.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-legacy-url-parse.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-legacy-url-parse",
+      "authored_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
+      "resolved_semantic_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Node documents the legacy url.parse as prone to host name spoofing and not for untrusted input, and issues no CVEs for it, so host checks built on its result can be bypassed; affected runtimes also crash in url.format (CVE-2026-21712).",
+      "remediation": "Parse untrusted URLs with the WHATWG URL API (new URL(input)) and check the resulting origin; do not pass untrusted strings to url.parse or url.format.",
       "activation": "opt-in"
     }
   ]

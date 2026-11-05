@@ -1,0 +1,19 @@
+; Research probe for proc-open-array-command. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.php-osv.proc-open-array-command"
+  :name "request value reaches the proc_open command (research probe)"
+  :message "request value reaches the proc_open command"
+  :severity warning
+  :description "Research probe for the PHP OSV data-flow lead proc-open-array-command."
+  :tags ["research" "php"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id request-param :display-name "request parameter" :categories [input.user-controlled]
+        :selector (rql :schema-version 1 (language php (call-sites-to :proof proven (enclosing-decl (function :name "request_param")))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id proc-open-command :display-name "proc-open-command" :categories [x] :selector (rql :schema-version 1 (language php (call-argument :formal-index 0 (resolved-call :resolves-to "_php_global_.proc_open" :proof declared (call-bindings (call-shape (call :callee (name "proc_open")))))))) :dangerous-operand (argument :index 0) :accepts [untrusted])])))

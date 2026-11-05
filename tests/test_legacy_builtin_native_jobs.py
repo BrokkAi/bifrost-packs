@@ -22,8 +22,16 @@ RULE_ONLY_SOURCE_COMMIT = "825d2bcb1de3aea097b1149ae13ece24d920898c"
 # bifrost.go.stdlib.net 2.1.0 added net.Conn and net.Listener summaries (#192).
 GO_NET_INTERFACE_SUMMARIES_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
 FIRST_JOB = 12
-# Authored jobs appended after the legacy set; pinned by test_go_gob_native_jobs.
-AUTHORED_AFTER_LEGACY = {"go-stdlib-encoding-gob", "go-stdlib-encoding-gob-declarations"}
+# Authored jobs appended after the legacy set; pinned by test_go_gob_native_jobs
+# and test_go_read_all_native_jobs.
+AUTHORED_AFTER_LEGACY = {
+    "go-stdlib-encoding-gob",
+    "go-stdlib-encoding-gob-declarations",
+    "go-stdlib-compress-gzip",
+    "go-stdlib-compress-gzip-declarations",
+    "go-stdlib-io",
+    "go-stdlib-io-declarations",
+}
 
 # Embedded pack IDs delivered by these jobs; Go os and the JDK and Python str
 # result-use packs were already native before this set.

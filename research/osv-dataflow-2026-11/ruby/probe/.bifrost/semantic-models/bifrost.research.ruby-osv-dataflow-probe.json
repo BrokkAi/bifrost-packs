@@ -1,0 +1,924 @@
+{
+ "schema_version": 8,
+ "pack_id": "bifrost.research.ruby-osv-dataflow-probe",
+ "version": "0.1.0",
+ "producer": {
+  "name": "bifrost-packs-research",
+  "version": "0.1.0"
+ },
+ "language": "ruby",
+ "ecosystem": "rubygems",
+ "compatibility": {
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "https://docs.ruby-lang.org/en/3.4/ Time, CGI, CGI::Cookie, REXML::Document, Net::IMAP, RDoc::RDoc and RubyGems Gem::Package, Gem::Specification, Gem::Installer; research probe, not registered pack content",
+  "revision": "ruby-3.4"
+ },
+ "license": "Apache-2.0",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "research.ruby-osv-dataflow.declarations",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.5cab3d58c883a906ae1227346b4fc07109f6b57bbd26f97f41e1b1e83fa8bb00",
+      "name": "Time",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "time.rb",
+       "symbol": "Time"
+      }
+     },
+     {
+      "id": "type.335a371aaa5117e65095d9436401a18a500816963707047a1ca27bd2b666a5b1",
+      "name": "CGI",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "cgi/util.rb",
+       "symbol": "CGI"
+      }
+     },
+     {
+      "id": "type.ec3555aaf4d33b634242e83003ea876a8526514a4c36595e1ed1fc78972a3d55",
+      "name": "CGI::Cookie",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "cgi/cookie.rb",
+       "symbol": "CGI::Cookie"
+      }
+     },
+     {
+      "id": "type.877d010fc0c1c39d0417a487a15a60a6872bcf36e28df28e7eeede3222a42474",
+      "name": "REXML::Document",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rexml/document.rb",
+       "symbol": "REXML::Document"
+      }
+     },
+     {
+      "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "Net::IMAP",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP"
+      }
+     },
+     {
+      "id": "type.f789e1c29189f8b7ed2d2c290fddfdbb55714395aa6915eec2a18b98b6dbd75c",
+      "name": "RDoc::RDoc",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rdoc/rdoc.rb",
+       "symbol": "RDoc::RDoc"
+      }
+     },
+     {
+      "id": "type.2aba574f06dbc4c96b415706c5c97f578c411ba070a205b62085a53b3856271d",
+      "name": "Gem::Package",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/package.rb",
+       "symbol": "Gem::Package"
+      }
+     },
+     {
+      "id": "type.3344c8b4c3f4da996c10e25f5d4a9a404799bb70db8421b6129dedd60d0e880d",
+      "name": "Gem::Specification",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/specification.rb",
+       "symbol": "Gem::Specification"
+      }
+     },
+     {
+      "id": "type.7085bed151071cac4065d4382f07dec17cbd84d1156592d48f6aef90c1115a76",
+      "name": "Gem::Installer",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer"
+      }
+     }
+    ],
+    "members": [
+     {
+      "id": "member.research.ruby-osv-dataflow.time.rfc2822",
+      "owner": "type.5cab3d58c883a906ae1227346b4fc07109f6b57bbd26f97f41e1b1e83fa8bb00",
+      "name": "rfc2822",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "time.rb",
+       "symbol": "Time.rfc2822"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "date",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.time.rfc822",
+      "owner": "type.5cab3d58c883a906ae1227346b4fc07109f6b57bbd26f97f41e1b1e83fa8bb00",
+      "name": "rfc822",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "time.rb",
+       "symbol": "Time.rfc822"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "date",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.time.httpdate",
+      "owner": "type.5cab3d58c883a906ae1227346b4fc07109f6b57bbd26f97f41e1b1e83fa8bb00",
+      "name": "httpdate",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "time.rb",
+       "symbol": "Time.httpdate"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "date",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.time.parse",
+      "owner": "type.5cab3d58c883a906ae1227346b4fc07109f6b57bbd26f97f41e1b1e83fa8bb00",
+      "name": "parse",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "time.rb",
+       "symbol": "Time.parse"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "date",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "now",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.cgi.escapeelement",
+      "owner": "type.335a371aaa5117e65095d9436401a18a500816963707047a1ca27bd2b666a5b1",
+      "name": "escapeElement",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "cgi/util.rb",
+       "symbol": "CGI.escapeElement"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "string",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "elements",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.cgi.unescapeelement",
+      "owner": "type.335a371aaa5117e65095d9436401a18a500816963707047a1ca27bd2b666a5b1",
+      "name": "unescapeElement",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "cgi/util.rb",
+       "symbol": "CGI.unescapeElement"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "string",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "elements",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.cgi-cookie.parse",
+      "owner": "type.ec3555aaf4d33b634242e83003ea876a8526514a4c36595e1ed1fc78972a3d55",
+      "name": "parse",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "cgi/cookie.rb",
+       "symbol": "CGI::Cookie.parse"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "raw_cookie",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.rexml-document.new",
+      "owner": "type.877d010fc0c1c39d0417a487a15a60a6872bcf36e28df28e7eeede3222a42474",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rexml/document.rb",
+       "symbol": "REXML::Document.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "source",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        },
+        {
+         "name": "context",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.877d010fc0c1c39d0417a487a15a60a6872bcf36e28df28e7eeede3222a42474"
+       }
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.net-imap.new",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "host",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
+       }
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.rdoc-rdoc.new",
+      "owner": "type.f789e1c29189f8b7ed2d2c290fddfdbb55714395aa6915eec2a18b98b6dbd75c",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rdoc/rdoc.rb",
+       "symbol": "RDoc::RDoc.new"
+      },
+      "signature": {
+       "parameters": [],
+       "returns": {
+        "kind": "declared",
+        "id": "type.f789e1c29189f8b7ed2d2c290fddfdbb55714395aa6915eec2a18b98b6dbd75c"
+       }
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.rdoc-rdoc.document",
+      "owner": "type.f789e1c29189f8b7ed2d2c290fddfdbb55714395aa6915eec2a18b98b6dbd75c",
+      "name": "document",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rdoc/rdoc.rb",
+       "symbol": "RDoc::RDoc.document"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.gem-package.new",
+      "owner": "type.2aba574f06dbc4c96b415706c5c97f578c411ba070a205b62085a53b3856271d",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/package.rb",
+       "symbol": "Gem::Package.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "gem",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "security_policy",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.2aba574f06dbc4c96b415706c5c97f578c411ba070a205b62085a53b3856271d"
+       }
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.gem-specification.from_yaml",
+      "owner": "type.3344c8b4c3f4da996c10e25f5d4a9a404799bb70db8421b6129dedd60d0e880d",
+      "name": "from_yaml",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/specification.rb",
+       "symbol": "Gem::Specification.from_yaml"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "input",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.research.ruby-osv-dataflow.gem-installer.at",
+      "owner": "type.7085bed151071cac4065d4382f07dec17cbd84d1156592d48f6aef90c1115a76",
+      "name": "at",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.at"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "path",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "research.ruby-osv-dataflow.summaries",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "procedure_summaries",
+    "summaries": [
+     {
+      "id": "summary.research.ruby-osv-dataflow.time.rfc2822-1",
+      "target": {
+       "path": "time.rb",
+       "symbol": "Time.rfc2822(date)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.time.rfc822-1",
+      "target": {
+       "path": "time.rb",
+       "symbol": "Time.rfc822(date)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.time.httpdate-1",
+      "target": {
+       "path": "time.rb",
+       "symbol": "Time.httpdate(date)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.time.parse-1",
+      "target": {
+       "path": "time.rb",
+       "symbol": "Time.parse(date)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.time.parse-2",
+      "target": {
+       "path": "time.rb",
+       "symbol": "Time.parse(date, now)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.cgi.escapeelement-1",
+      "target": {
+       "path": "cgi/util.rb",
+       "symbol": "CGI.escapeElement(string)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.cgi.escapeelement-2",
+      "target": {
+       "path": "cgi/util.rb",
+       "symbol": "CGI.escapeElement(string, elements)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.cgi.unescapeelement-1",
+      "target": {
+       "path": "cgi/util.rb",
+       "symbol": "CGI.unescapeElement(string)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.cgi.unescapeelement-2",
+      "target": {
+       "path": "cgi/util.rb",
+       "symbol": "CGI.unescapeElement(string, elements)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.cgi-cookie.parse-1",
+      "target": {
+       "path": "cgi/cookie.rb",
+       "symbol": "CGI::Cookie.parse(raw_cookie)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.rexml-document.new-0",
+      "target": {
+       "path": "rexml/document.rb",
+       "symbol": "REXML::Document.new()",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.rexml-document.new-1",
+      "target": {
+       "path": "rexml/document.rb",
+       "symbol": "REXML::Document.new(source)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.rexml-document.new-2",
+      "target": {
+       "path": "rexml/document.rb",
+       "symbol": "REXML::Document.new(source, context)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.net-imap.new-1",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.net-imap.new-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, options)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.rdoc-rdoc.new-0",
+      "target": {
+       "path": "rdoc/rdoc.rb",
+       "symbol": "RDoc::RDoc.new()",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.rdoc-rdoc.document-1",
+      "target": {
+       "path": "rdoc/rdoc.rb",
+       "symbol": "RDoc::RDoc.document(options)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.gem-package.new-1",
+      "target": {
+       "path": "rubygems/package.rb",
+       "symbol": "Gem::Package.new(gem)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.gem-package.new-2",
+      "target": {
+       "path": "rubygems/package.rb",
+       "symbol": "Gem::Package.new(gem, security_policy)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.gem-specification.from_yaml-1",
+      "target": {
+       "path": "rubygems/specification.rb",
+       "symbol": "Gem::Specification.from_yaml(input)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.gem-installer.at-1",
+      "target": {
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.at(path)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.research.ruby-osv-dataflow.gem-installer.at-2",
+      "target": {
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.at(path, options)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     }
+    ]
+   }
+  }
+ ]
+}

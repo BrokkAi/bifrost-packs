@@ -1,0 +1,135 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.os-exec-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/os/exec",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.os-exec.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.34d141827227db50e6630c1752869062caca37689bcc544afaa7337fdecf25d9",
+            "name": "os/exec",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "exec"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "os/exec/exec.go",
+              "symbol": "os/exec"
+            }
+          },
+          {
+            "id": "type.30726006203337b6df27a51cebf89f38599bba6ac02a9c767c014cb42cc59535",
+            "name": "os/exec.Cmd",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "os/exec/exec.go",
+              "symbol": "os/exec.Cmd"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.5cb5ed58b62966f282bb0e3ab0aad712d20ef7c710b723c518526166a27eb03f",
+            "owner": "type.34d141827227db50e6630c1752869062caca37689bcc544afaa7337fdecf25d9",
+            "name": "Command",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "arg",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "pointer",
+                "element": {
+                  "kind": "declared",
+                  "id": "type.30726006203337b6df27a51cebf89f38599bba6ac02a9c767c014cb42cc59535",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "os/exec/exec.go",
+              "symbol": "os/exec.Command"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

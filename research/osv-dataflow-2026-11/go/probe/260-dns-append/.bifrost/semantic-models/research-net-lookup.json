@@ -1,0 +1,63 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.net-lookup",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/net",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.net-lookup.summaries",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "net.lookup-txt",
+            "target": {
+              "path": "src/net/lookup.go",
+              "symbol": "net.LookupTXT(name string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "net.lookup-cname",
+            "target": {
+              "path": "src/net/lookup.go",
+              "symbol": "net.LookupCNAME(host string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}
