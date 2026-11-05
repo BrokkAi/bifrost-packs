@@ -1,0 +1,16 @@
+(policy :schema-version 1 :id "x.smtp-plain-before-starttls" :name "n" :message "m" :severity warning :description "d"
+  :analysis (analysis :type typestate :mode may :call-modeling (call-modeling :unmodeled paranoid)
+    :subjects (subject-set :entries [
+      (subject :id smtp-client :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net/smtp.Dial" :proof declared
+          (call-bindings (call-shape (call :callee (name "Dial") :arity 1)))))) :subject (result :index 0))])
+    :uncertainty (uncertainty :escape inconclusive)
+    :automaton (automaton :states [cleartext secured violated] :initial cleartext :accepting-states [cleartext secured] :error-states [violated]
+      :events [
+        (event :id start-tls :calls (calls :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net/smtp.Client.StartTLS" :proof declared
+          (call-bindings (call-shape (call :callee (name "StartTLS") :arity 1)))))) :subject receiver :phase after-normal-return))
+        (event :id auth :calls (calls :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net/smtp.Client.Auth" :proof declared
+          (call-bindings (call-shape (call :callee (name "Auth") :arity 1)))))) :subject receiver :phase before-call))]
+      :transitions [
+        (transition :from cleartext :on start-tls :to secured)
+        (transition :from cleartext :on auth :to violated)
+        (transition :from secured :on auth :to secured)])))
