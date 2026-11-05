@@ -1,0 +1,1139 @@
+{
+ "schema_version": 8,
+ "pack_id": "bifrost.research.php-osv-dataflow-probe",
+ "version": "0.1.0",
+ "producer": {
+  "name": "bifrost-packs-research",
+  "version": "0.1.0"
+ },
+ "language": "php",
+ "ecosystem": "php",
+ "compatibility": {
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "https://www.php.net/manual/ function reference for file_get_contents, filter_var, fread, fsockopen, openssl_private_decrypt, parse_url, proc_open, simplexml_load_file, simplexml_load_string, stream_context_create, stream_socket_client; research probe, not registered pack content",
+  "revision": "php-8.4"
+ },
+ "license": "Apache-2.0",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "research.php-osv-probe.declarations",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "_php_global_",
+      "type_kind": "module",
+      "visibility": "public",
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "Core/Core.php",
+       "symbol": "_php_global_"
+      }
+     }
+    ],
+    "members": [
+     {
+      "id": "member.php-osv-probe.file_get_contents",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "file_get_contents",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "filename",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        },
+        {
+         "name": "use_include_path",
+         "type": {
+          "kind": "named",
+          "name": "bool"
+         },
+         "optional": true
+        },
+        {
+         "name": "context",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         },
+         "optional": true
+        },
+        {
+         "name": "offset",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        },
+        {
+         "name": "length",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.file_get_contents"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.filter_var",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "filter_var",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "value",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         }
+        },
+        {
+         "name": "filter",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "filter/filter.php",
+       "symbol": "_php_global_.filter_var"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.fread",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "fread",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "stream",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         }
+        },
+        {
+         "name": "length",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         }
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.fread"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.fsockopen",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "fsockopen",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "hostname",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        },
+        {
+         "name": "port",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        },
+        {
+         "name": "error_code",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         },
+         "optional": true
+        },
+        {
+         "name": "error_message",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         },
+         "optional": true
+        },
+        {
+         "name": "timeout",
+         "type": {
+          "kind": "named",
+          "name": "float"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/standard_7.php",
+       "symbol": "_php_global_.fsockopen"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.openssl_private_decrypt",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "openssl_private_decrypt",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "data",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        },
+        {
+         "name": "decrypted_data",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         }
+        },
+        {
+         "name": "private_key",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         }
+        },
+        {
+         "name": "padding",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "openssl/openssl.php",
+       "symbol": "_php_global_.openssl_private_decrypt"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.parse_url",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "parse_url",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "url",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        },
+        {
+         "name": "component",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/standard_3.php",
+       "symbol": "_php_global_.parse_url"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.proc_open",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "proc_open",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "command",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         }
+        },
+        {
+         "name": "descriptor_spec",
+         "type": {
+          "kind": "named",
+          "name": "array"
+         }
+        },
+        {
+         "name": "pipes",
+         "type": {
+          "kind": "named",
+          "name": "mixed"
+         }
+        },
+        {
+         "name": "cwd",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         },
+         "optional": true
+        },
+        {
+         "name": "env_vars",
+         "type": {
+          "kind": "named",
+          "name": "array"
+         },
+         "optional": true
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "array"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/standard_2.php",
+       "symbol": "_php_global_.proc_open"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.simplexml_load_file",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "simplexml_load_file",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "filename",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        },
+        {
+         "name": "class_name",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         },
+         "optional": true
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        },
+        {
+         "name": "namespace_or_prefix",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         },
+         "optional": true
+        },
+        {
+         "name": "is_prefix",
+         "type": {
+          "kind": "named",
+          "name": "bool"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_file"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.simplexml_load_string",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "simplexml_load_string",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "data",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        },
+        {
+         "name": "class_name",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         },
+         "optional": true
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "int"
+         },
+         "optional": true
+        },
+        {
+         "name": "namespace_or_prefix",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         },
+         "optional": true
+        },
+        {
+         "name": "is_prefix",
+         "type": {
+          "kind": "named",
+          "name": "bool"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_string"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.stream_context_create",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "stream_context_create",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "array"
+         },
+         "optional": true
+        },
+        {
+         "name": "params",
+         "type": {
+          "kind": "named",
+          "name": "array"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/streams.php",
+       "symbol": "_php_global_.stream_context_create"
+      }
+     },
+     {
+      "id": "member.php-osv-probe.stream_socket_client",
+      "owner": "type.f4ebde2529e72edc1a041c3ed63b5a6284cd3d001a530fe512e521d6cbcc9c37",
+      "name": "stream_socket_client",
+      "member_kind": "function",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "signature": {
+       "parameters": [
+        {
+         "name": "address",
+         "type": {
+          "kind": "named",
+          "name": "string"
+         }
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "standard/streams.php",
+       "symbol": "_php_global_.stream_socket_client"
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "research.php-osv-probe.summaries",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "procedure_summaries",
+    "summaries": [
+     {
+      "id": "php.osv-probe.file_get_contents.1",
+      "target": {
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.file_get_contents(string)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.file_get_contents.2",
+      "target": {
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.file_get_contents(string, bool)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.file_get_contents.3",
+      "target": {
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.file_get_contents(string, bool, mixed)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.file_get_contents.4",
+      "target": {
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.file_get_contents(string, bool, mixed, int)",
+       "has_receiver": false,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.file_get_contents.5",
+      "target": {
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.file_get_contents(string, bool, mixed, int, int)",
+       "has_receiver": false,
+       "parameter_count": 5
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.filter_var.1",
+      "target": {
+       "path": "filter/filter.php",
+       "symbol": "_php_global_.filter_var(mixed)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.filter_var.2",
+      "target": {
+       "path": "filter/filter.php",
+       "symbol": "_php_global_.filter_var(mixed, int)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.filter_var.3",
+      "target": {
+       "path": "filter/filter.php",
+       "symbol": "_php_global_.filter_var(mixed, int, mixed)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.fread.2",
+      "target": {
+       "path": "standard/standard_5.php",
+       "symbol": "_php_global_.fread(mixed, int)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.fsockopen.1",
+      "target": {
+       "path": "standard/standard_7.php",
+       "symbol": "_php_global_.fsockopen(string)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.fsockopen.2",
+      "target": {
+       "path": "standard/standard_7.php",
+       "symbol": "_php_global_.fsockopen(string, int)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.fsockopen.3",
+      "target": {
+       "path": "standard/standard_7.php",
+       "symbol": "_php_global_.fsockopen(string, int, mixed)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.fsockopen.4",
+      "target": {
+       "path": "standard/standard_7.php",
+       "symbol": "_php_global_.fsockopen(string, int, mixed, mixed)",
+       "has_receiver": false,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.fsockopen.5",
+      "target": {
+       "path": "standard/standard_7.php",
+       "symbol": "_php_global_.fsockopen(string, int, mixed, mixed, float)",
+       "has_receiver": false,
+       "parameter_count": 5
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.openssl_private_decrypt.3",
+      "target": {
+       "path": "openssl/openssl.php",
+       "symbol": "_php_global_.openssl_private_decrypt(string, mixed, mixed)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.openssl_private_decrypt.4",
+      "target": {
+       "path": "openssl/openssl.php",
+       "symbol": "_php_global_.openssl_private_decrypt(string, mixed, mixed, int)",
+       "has_receiver": false,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.parse_url.1",
+      "target": {
+       "path": "standard/standard_3.php",
+       "symbol": "_php_global_.parse_url(string)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.parse_url.2",
+      "target": {
+       "path": "standard/standard_3.php",
+       "symbol": "_php_global_.parse_url(string, int)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.proc_open.3",
+      "target": {
+       "path": "standard/standard_2.php",
+       "symbol": "_php_global_.proc_open(mixed, array, mixed)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.proc_open.4",
+      "target": {
+       "path": "standard/standard_2.php",
+       "symbol": "_php_global_.proc_open(mixed, array, mixed, string)",
+       "has_receiver": false,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.proc_open.5",
+      "target": {
+       "path": "standard/standard_2.php",
+       "symbol": "_php_global_.proc_open(mixed, array, mixed, string, array)",
+       "has_receiver": false,
+       "parameter_count": 5
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.proc_open.6",
+      "target": {
+       "path": "standard/standard_2.php",
+       "symbol": "_php_global_.proc_open(mixed, array, mixed, string, array, array)",
+       "has_receiver": false,
+       "parameter_count": 6
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_file.1",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_file(string)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_file.2",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_file(string, string)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_file.3",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_file(string, string, int)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_file.4",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_file(string, string, int, string)",
+       "has_receiver": false,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_file.5",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_file(string, string, int, string, bool)",
+       "has_receiver": false,
+       "parameter_count": 5
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_string.1",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_string(string)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_string.2",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_string(string, string)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_string.3",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_string(string, string, int)",
+       "has_receiver": false,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_string.4",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_string(string, string, int, string)",
+       "has_receiver": false,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.simplexml_load_string.5",
+      "target": {
+       "path": "SimpleXML/SimpleXML.php",
+       "symbol": "_php_global_.simplexml_load_string(string, string, int, string, bool)",
+       "has_receiver": false,
+       "parameter_count": 5
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.stream_context_create.0",
+      "target": {
+       "path": "standard/streams.php",
+       "symbol": "_php_global_.stream_context_create()",
+       "has_receiver": false,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.stream_context_create.1",
+      "target": {
+       "path": "standard/streams.php",
+       "symbol": "_php_global_.stream_context_create(array)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.stream_context_create.2",
+      "target": {
+       "path": "standard/streams.php",
+       "symbol": "_php_global_.stream_context_create(array, array)",
+       "has_receiver": false,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "php.osv-probe.stream_socket_client.1",
+      "target": {
+       "path": "standard/streams.php",
+       "symbol": "_php_global_.stream_socket_client(string)",
+       "has_receiver": false,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "normal_result_count": 1,
+      "transfers": [],
+      "effects": []
+     }
+    ]
+   }
+  }
+ ]
+}
