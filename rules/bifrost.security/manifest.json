@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -253,6 +253,44 @@
       "remediation": "Leave XmlDocument.XmlResolver at its default or set it to null. If entities must be resolved, use a resolver restricted to trusted resources, or load through XmlReader.Create with DtdProcessing.Prohibit."
     },
     {
+      "path": "policies/csharp/regex-pattern-injection.rqlp",
+      "id": "bifrost.security.csharp.regex-pattern-injection",
+      "authored_hash": "a49111555098e3a0d31fbaae6c8889d3055204ba9f5833b808b22c15036effc3",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A caller-written regular expression can backtrack catastrophically and hold a thread for as long as it runs; without a match timeout the cost is unbounded on any runtime (CVE-2019-0820).",
+      "remediation": "Escape untrusted text with Regex.Escape before building a pattern, or pass a matchTimeout (or use RegexOptions.NonBacktracking) whenever the pattern itself must come from outside."
+    },
+    {
+      "path": "policies/csharp/dataset-read-xml-external-location.rqlp",
+      "id": "bifrost.security.csharp.dataset-read-xml-external-location",
+      "authored_hash": "f9c163683ea0a156d2dcadf9c64838043202af047d7e15407410694f0d605a28",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "DataSet.ReadXml and DataTable.ReadXml instantiate the types an XML document names, so a caller who chooses the file or URL chooses that document; Microsoft's guidance is not to read XML from untrusted input on any version (CVE-2020-1147).",
+      "remediation": "Read only application-owned XML into DataSet or DataTable. For external data, deserialize into fixed types with a schema and size limits, or restrict the allowed DataSet types and validate the source."
+    },
+    {
       "path": "policies/declared-storage/go-store-requires-validation.rqlp",
       "id": "bifrost.security.go.store-requires-validation",
       "authored_hash": "e9e6ee052b90c7d83e5b25928c2dafeac3954ac4fbbc0d10f60915c1f2b99433",
@@ -309,6 +347,26 @@
       ],
       "severity_rationale": "A network peer controls every byte a gob decoder reads, and the decoder is documented as not hardened against adversarial input; a crafted stream can exhaust the stack (CVE-2024-34156) or other resources on any toolchain.",
       "remediation": "Do not decode gob from untrusted peers. Use a format with an explicit schema and size limits for network input, or authenticate the peer and bound the stream before decoding.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/go/network-read-all-unbounded.rqlp",
+      "id": "bifrost.security.go.network-read-all-unbounded",
+      "authored_hash": "01e9aa33b308535761ffafd882063e659ffb1672e2740e7229b122e67088b56a",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "go"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A network peer controls how many bytes io.ReadAll or io.Copy reads, and compress/gzip inflates without a size bound, so a small stream can exhaust memory or disk on any toolchain (CVE-2022-30631 shows the same reader is also a stack-exhaustion vector).",
+      "remediation": "Wrap the connection or the gzip reader in io.LimitReader (or http.MaxBytesReader for request bodies) with a limit the program can afford, and treat hitting the limit as an error.",
       "activation": "opt-in"
     },
     {

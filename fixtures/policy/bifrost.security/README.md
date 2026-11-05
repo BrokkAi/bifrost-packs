@@ -11,10 +11,21 @@ XmlDocument part of the stdlib candidate
 `dotnet-xmlreader-external-dtd-resolution` against the reviewed
 `bifrost.dotnet.system-xml-csharp` model.
 
+`regex-pattern-injection` and `dataset-read-xml-external-location` are not
+CodeQL ports. They qualify the version-independent parts of the .NET CVE leads
+BrokkAi/bifrost-packs#263 (CVE-2019-0820) and #262 (CVE-2020-1147) against the
+reviewed `bifrost.dotnet.system-text-regularexpressions-csharp` and
+`bifrost.dotnet.system-data-csharp` models.
+
 `go-gob-decode-network-input` is not a CodeQL port. It qualifies the
 version-independent part of the Go CVE lead BrokkAi/bifrost-packs#192 against
 the reviewed `bifrost.go.stdlib.net` and `bifrost.go.stdlib.encoding-gob`
 models.
+
+`go-network-read-all-unbounded` is not a CodeQL port either. It qualifies the
+version-independent part of the Go CVE lead BrokkAi/bifrost-packs#252 against
+the reviewed `bifrost.go.stdlib.net`, `bifrost.go.stdlib.compress-gzip` and
+`bifrost.go.stdlib.io` models.
 
 The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.
 
