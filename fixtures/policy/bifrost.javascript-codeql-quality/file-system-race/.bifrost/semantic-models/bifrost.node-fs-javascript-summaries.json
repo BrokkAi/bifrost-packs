@@ -1,7 +1,7 @@
 {
   "schema_version": 4,
   "pack_id": "bifrost.node-fs-javascript-summaries",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "producer": {
     "name": "bifrost-reviewed-node-models",
     "version": "0.1.0"
@@ -59,6 +59,34 @@
             "target": {
               "path": "node/lib/fs.js",
               "symbol": "fs.writeFileSync",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.node.fs.append-file-sync",
+            "target": {
+              "path": "node/lib/fs.js",
+              "symbol": "fs.appendFileSync",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.node.fs.open-sync",
+            "target": {
+              "path": "node/lib/fs.js",
+              "symbol": "fs.openSync",
               "has_receiver": true,
               "parameter_count": 2
             },
