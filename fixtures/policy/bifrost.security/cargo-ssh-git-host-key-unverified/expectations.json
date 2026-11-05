@@ -1,0 +1,53 @@
+{
+  "policy_id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
+  "cases": [
+    {
+      "case": "positive-direct",
+      "findings": 1,
+      "anchor_line": 12
+    },
+    {
+      "case": "positive-transitive",
+      "findings": 1,
+      "anchor_line": 20
+    },
+    {
+      "case": "positive-legacy-toolchain-file",
+      "findings": 1,
+      "anchor_line": 12
+    },
+    {
+      "case": "near-miss-fixed-toolchain",
+      "findings": 0
+    },
+    {
+      "case": "near-miss-https-source",
+      "findings": 0
+    },
+    {
+      "case": "unknown-no-toolchain-file",
+      "findings": 0,
+      "completion": "inconclusive"
+    },
+    {
+      "case": "unknown-stable-channel",
+      "findings": 0,
+      "completion": "inconclusive"
+    },
+    {
+      "case": "unknown-msrv-only",
+      "findings": 0,
+      "completion": "inconclusive"
+    },
+    {
+      "case": "unknown-missing-lockfile",
+      "findings": 0,
+      "completion": "inconclusive"
+    },
+    {
+      "case": "unknown-workspace-git-fetch-with-cli",
+      "findings": 0,
+      "completion": "inconclusive"
+    }
+  ]
+}
