@@ -1,0 +1,20 @@
+(policy
+  :schema-version 1
+  :id "bifrost.rust.sleep-before-try-recv"
+  :name "Sleep near a nested try_recv call"
+  :message "Review whether this sleep can delay a nonblocking receive"
+  :severity note
+  :description "A call named sleep appears in a Rust function or method whose descendants contain a call named try_recv, possibly inside a nested closure or function. This structural relation does not prove execution order, repeated polling, or that either call uses a standard library or channel API."
+  :tags ["rust" "concurrency" "latency"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql :schema-version 1
+          (union
+            (language rust
+              (inside-decl (function (has (call :callee (name "try_recv"))))
+                (call :callee (name "sleep"))))
+            (language rust
+              (inside-decl (method (has (call :callee (name "try_recv"))))
+                (call :callee (name "sleep"))))))))
