@@ -8,7 +8,7 @@
   },
   "artifact": {
     "file_name": "go-stdlib-io-declarations.json",
-    "sha256": "d6ccd4b60b57533bcf5c238bfd281fc2eac255e02f2dcb48cf4137861c728446",
+    "sha256": "12f4f1550f232c9763c609f1fb8fffe674ca39754acd342d989ba337fd8b781e",
     "url": "https://github.com/BrokkAi/bifrost-packs/blob/e75885212acee0dfd9bacc3cdfd445f58b77a7c4/semantic-packs/models/go-stdlib-io-declarations.json",
     "container": null
   },
@@ -29,7 +29,7 @@
     }
   ],
   "provenance": {
-    "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/io/io.go (the 22 exported io interfaces and their methods and embeddings)",
+    "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/io/io.go (22 exported io interfaces, their methods and embeddings, and io.ReadAll, io.Copy, io.LimitReader functions)",
     "revision": "go1.26.0"
   },
   "license": "BSD-3-Clause",
@@ -64,6 +64,11 @@
     {
       "kind": "type",
       "name": "io.ReadWriteCloser"
+    },
+    {
+      "kind": "member",
+      "owner": "io",
+      "name": "ReadAll"
     }
   ]
 }

@@ -1,0 +1,21 @@
+; Research probe, not a rule. Does a call to the modeled os.OpenFile bind in
+; a platform-neutral file, a _windows.go file and a _linux.go file when the
+; analysis runs on a non-Windows host?
+(policy
+  :schema-version 1
+  :id "bifrost.research.go-cve-probe.openfile-binding"
+  :name "Go os.OpenFile binding probe"
+  :message "Call binds to the modeled os.OpenFile"
+  :severity note
+  :analysis (analysis :type assertion
+    (bind :name calls :query (rql :schema-version 1
+      (resolved-call
+        :resolves-to "os.OpenFile"
+        :proof declared
+        (call-bindings
+          (call-shape
+            (language go
+              (call :callee (name "OpenFile"))))))))
+    (group :name by-call :by (calls.site_id)
+      (aggregate :name selected-calls :op count))
+    (assert :group by-call :value selected-calls :cardinality (exactly 0))))

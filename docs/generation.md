@@ -42,6 +42,50 @@ spec pins the commit that made the change. Pack completeness stays
 identities and provenance are unchanged. The schema-2 errgroup and embed
 declaration models are not jobs and are left as they were.
 
+## Go gob jobs and net interface summaries
+
+Two authored jobs follow the legacy set: `go-stdlib-encoding-gob-declarations`
+and `go-stdlib-encoding-gob` (`bifrost.go.stdlib.encoding-gob-declarations` and
+`bifrost.go.stdlib.encoding-gob`, both 0.1.0, BSD-3-Clause, go1.26.0
+provenance). They declare `NewDecoder`, `NewEncoder`, `Register`,
+`RegisterName` and the pointer-receiver `Decoder` and `Encoder` methods, each a
+complete callable family. The summaries cover the same calls except
+`Decoder.Decode` and `Decoder.DecodeValue`.
+`bifrost.go.stdlib.net` moves to 2.1.0. It adds complete summaries for the
+`net.Conn` and `net.Listener` members other than `Read` and `Write`, and those
+summaries claim `covers_overrides`. On Bifrost 0.15.1 a call through a
+model-declared interface closes only through such a summary (bifrost-dev#9053).
+The specs pin commit `3745e66f03f8599337aa2d72b58c43611414d37e`, except the
+gob summaries spec, which pins `9849718fe0945d4c77011b28616b8f3ad375ba05`.
+`tests/test_go_gob_native_jobs.py` pins the jobs. The policy
+`bifrost.security.go.gob-decode-network-input` depends on all four Go net and
+gob packs.
+
+The semantic-model schema has no transfer output for a write through a pointer
+argument. A complete `Decode` summary with no transfers would claim that
+decoding writes nothing into its argument, so `Decode` and `DecodeValue` stay
+unmodeled. A `require-model` policy that sees a decode is therefore
+inconclusive. A summary pack's `complete` envelope covers the summaries it
+contains: Bifrost rejects complete summaries in a partial envelope
+(`summary.completeness_exceeds_pack`).
+
+## Go gzip and io jobs
+
+Four authored jobs follow the gob jobs: `go-stdlib-compress-gzip`,
+`go-stdlib-compress-gzip-declarations`, `go-stdlib-io` and
+`go-stdlib-io-declarations` (`bifrost.go.stdlib.compress-gzip`,
+`bifrost.go.stdlib.compress-gzip-declarations`, `bifrost.go.stdlib.io` and
+`bifrost.go.stdlib.io-declarations`, all 0.1.0, BSD-3-Clause, go1.26.0
+provenance). They declare `gzip.NewReader`, `Reader.Close`,
+`Reader.Multistream`, `io.ReadAll`, `io.Copy` and `io.LimitReader`, each a
+complete callable family. The summaries cover the same calls except `io.Copy`,
+whose write into `dst` the schema cannot express, as with gob `Decode`. The
+specs pin commit `65b68f55b537ab77b7ecd8569b0c838aac9be0ea`.
+`tests/test_go_read_all_native_jobs.py` pins the jobs. The policy
+`bifrost.security.go.network-read-all-unbounded` depends on the Go net, gzip
+and io packs. The io declarations pack does not yet declare the `io.Reader`
+family of interfaces that #209 asks for.
+
 ## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
@@ -74,6 +118,18 @@ index schema its bundle actually has. Engines that read only schema 3 skip a
 schema-4 release during selection. The released v0.15.0 CLI reproduced all 254
 locked authoring identities unchanged. The published 0.8.0 releases stay
 immutable and keep the 0.14.0 generator they were built with.
+
+After `packs/v0.9.0`, both pins move to the v0.15.1 release (public commit
+`04fdd17d2606d13a7a5f13b012bfbe3ad9729d1e`). The producer is
+`bifrost-semantic-pack-v0.15.1-x86_64-unknown-linux-gnu.tar.gz` (archive
+SHA-256 `8989298644bda041997308823122f904291a22010d93359ed3580053aa052f8e`,
+executable SHA-256
+`7322cdbd653830aaba349c9a278eceb97573965739b2845412a3074080b6acc2`). The
+authoring CLI reports build identity `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`.
+The released v0.15.1 CLI reproduced all 264 locked authoring identities
+unchanged. Its pack-engine profile advertises the same capability names as
+0.15.0. The published `packs/v0.9.0` keeps the 0.15.0 producer it was built
+with.
 
 ## Pinned native candidate
 
