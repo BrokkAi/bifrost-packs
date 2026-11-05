@@ -15,7 +15,17 @@ into `.bifrost/semantic-models`:
   2.1.0. The 2.1.0 summaries cover the `net.Conn` and `net.Listener` members
   and claim `covers_overrides`, so calls through those interfaces close.
 - `bifrost.go.stdlib.encoding-gob-declarations` 0.1.0 and
-  `bifrost.go.stdlib.encoding-gob` 0.1.0.
+  `bifrost.go.stdlib.encoding-gob` 0.1.0. The summaries pack has no summary
+  for `Decoder.Decode` or `Decoder.DecodeValue`. The semantic-model schema
+  can't express their write into the argument, and a complete summary with no
+  transfers would claim that decoding writes nothing there.
+
+**Every run that decodes is inconclusive on Bifrost 0.15.1.** Every real gob
+use calls `Decode`, which is unmodeled, and the policy uses `require-model`.
+The findings are still reported, definite and complete, but no run proves
+that it found every flow. The engine attributes the gap to the procedure's
+source call (`Dial`, `DialTimeout` or `Accept`) rather than to `Decode`. With
+a `Decode` summary in place, the same fixture is `proven_by_summary`.
 
 ## Cases
 
@@ -53,12 +63,19 @@ The authored policy hash is
 `9ff3e4211e721dce4ae46c0b1a2caf931b7dc991610cd76e77be6af0b4dc8ff9`. Its
 resolved identity is workspace-required.
 
-- This directory: `proven_by_summary`, with 5 findings, all definite and
-  complete: `probe.go:21`, `:33`, `:45`, `:57` and `:73`. The near misses
-  produce no findings.
+- This directory: inconclusive (`partial_discovery`), with 5 findings, all
+  definite and complete: `probe.go:21`, `:33`, `:45`, `:57` and `:73`. Each
+  function that calls `Decode` reports unknown call resolution, and that
+  includes the `restoreWhileConnected` near miss, which produces no finding.
+  The encoder-only near miss produces no finding and no diagnostic.
 - `incomplete/`: inconclusive (`partial_discovery`). Each case was also run
-  alone with `--sources <case>`. `deadline` is `proven_by_summary` with one
-  possible, partial finding. Every other case is inconclusive on its own.
+  alone with `--sources <case>`, and each is inconclusive on its own,
+  `deadline` included.
+- Before `Decode` and `DecodeValue` were removed from the summaries pack (an
+  earlier revision of this PR), this directory was `proven_by_summary` with
+  the same 5 findings, and `deadline` was `proven_by_summary` with one
+  possible finding. The shapes under `incomplete/` stay inconclusive for
+  their own reasons even with a `Decode` summary.
 - Without the two gob models: `not_run` (`qualified-call-locator-zero` for
   `encoding/gob.NewDecoder`).
 - With `bifrost.go.stdlib.net` 2.0.0, which has no interface-member
@@ -71,9 +88,9 @@ resolved identity is workspace-required.
   `*net.TCPListener.AcceptTCP` and HTTP request bodies have no reviewed
   source. A call to an unmodeled API leaves the run inconclusive instead of
   clean, because the policy uses `require-model`.
-- `Decoder.Decode` and `Decoder.DecodeValue` are modeled with no transfer into
-  the decoded value. The semantic-model schema has no output for a write
-  through a pointer argument. The rule is unaffected, because its sink is the
-  reader operand. Don't use these summaries for rules that follow decoded data.
+- `Decoder.Decode` and `Decoder.DecodeValue` have no summary, because the
+  semantic-model schema has no transfer output for a write through a pointer
+  argument. Runs that decode stay inconclusive until the schema can express
+  that write and the summaries are added.
 - A peer that is authenticated, or a stream that is bounded before decoding,
   is still reported. The policy can't see either guard.

@@ -55,32 +55,6 @@
             "effects": []
           },
           {
-            "id": "encoding-gob.decoder.decode",
-            "target": {
-              "path": "src/encoding/gob/decoder.go",
-              "symbol": "encoding/gob.Decoder.Decode(e any)",
-              "has_receiver": true,
-              "parameter_count": 1
-            },
-            "completeness": "complete",
-            "normal_result_count": 1,
-            "transfers": [],
-            "effects": []
-          },
-          {
-            "id": "encoding-gob.decoder.decode-value",
-            "target": {
-              "path": "src/encoding/gob/decoder.go",
-              "symbol": "encoding/gob.Decoder.DecodeValue(v reflect.Value)",
-              "has_receiver": true,
-              "parameter_count": 1
-            },
-            "completeness": "complete",
-            "normal_result_count": 1,
-            "transfers": [],
-            "effects": []
-          },
-          {
             "id": "encoding-gob.new-encoder",
             "target": {
               "path": "src/encoding/gob/encoder.go",
