@@ -139,9 +139,8 @@
             "id": "member.cq01.rust-std-env-args-os",
             "owner": "type.rust-sql.std-env",
             "name": "args_os",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -160,9 +159,8 @@
             "id": "member.cq01.rust-std-env-current-dir",
             "owner": "type.rust-sql.std-env",
             "name": "current_dir",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -181,9 +179,8 @@
             "id": "member.cq01.rust-std-env-current-exe",
             "owner": "type.rust-sql.std-env",
             "name": "current_exe",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -202,9 +199,8 @@
             "id": "member.cq01.rust-std-env-home-dir",
             "owner": "type.rust-sql.std-env",
             "name": "home_dir",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -223,24 +219,26 @@
             "id": "member.cq01.rust-std-env-var-os",
             "owner": "type.rust-sql.std-env",
             "name": "var_os",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [
                 {
                   "name": "key",
                   "type": {
-                    "kind": "named",
-                    "name": "untyped"
+                    "kind": "wildcard",
+                    "variance": "any"
                   }
                 }
               ],
               "returns": {
                 "kind": "named",
                 "name": "std.option.Option"
-              }
+              },
+              "type_parameters": [
+                "K"
+              ]
             },
             "locator": {
               "kind": "artifact",
@@ -252,9 +250,8 @@
             "id": "member.cq01.rust-std-env-vars",
             "owner": "type.rust-sql.std-env",
             "name": "vars",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -273,9 +270,8 @@
             "id": "member.cq01.rust-std-env-vars-os",
             "owner": "type.rust-sql.std-env",
             "name": "vars_os",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -344,9 +340,8 @@
             "id": "member.rust-sql.std-env.args",
             "owner": "type.rust-sql.std-env",
             "name": "args",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
@@ -365,24 +360,26 @@
             "id": "member.rust-sql.std-env.var",
             "owner": "type.rust-sql.std-env",
             "name": "var",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [
                 {
                   "name": "key",
                   "type": {
-                    "kind": "named",
-                    "name": "untyped"
+                    "kind": "wildcard",
+                    "variance": "any"
                   }
                 }
               ],
               "returns": {
                 "kind": "named",
                 "name": "std.result.Result"
-              }
+              },
+              "type_parameters": [
+                "K"
+              ]
             },
             "locator": {
               "kind": "artifact",
@@ -423,9 +420,8 @@
             "id": "member.rust-sql.std-io.stdin",
             "owner": "type.rust-sql.std-io",
             "name": "stdin",
-            "member_kind": "method",
+            "member_kind": "function",
             "visibility": "public",
-            "is_static": true,
             "callable_family_complete": true,
             "signature": {
               "parameters": [],
