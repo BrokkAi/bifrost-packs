@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.io",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "producer": {
     "name": "bifrost-packs",
     "version": "0.1.0"
@@ -9,12 +9,7 @@
   "language": "go",
   "ecosystem": "go-stdlib",
   "compatibility": {
-    "toolchains": [
-      {
-        "name": "go",
-        "requirement": ">=1.26.0, <2.0.0"
-      }
-    ]
+    "toolchains": []
   },
   "provenance": {
     "source": "https://pkg.go.dev/io",
@@ -30,12 +25,7 @@
     {
       "id": "go.stdlib.io.summaries",
       "activation": [
-        {
-          "toolchain": {
-            "name": "go",
-            "version": ">=1.26.0, <2.0.0"
-          }
-        }
+        {}
       ],
       "payload": {
         "kind": "procedure_summaries",
