@@ -15,9 +15,9 @@ from scripts.content import read_lock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
+SOURCE_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 # The gob summaries dropped Decode and DecodeValue in a later commit.
-GOB_SUMMARIES_COMMIT = "9849718fe0945d4c77011b28616b8f3ad375ba05"
+GOB_SUMMARIES_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 GOB_JOBS = {
     "go-stdlib-encoding-gob": {
         "spec": "semantic-packs/go/go-stdlib-encoding-gob.spec.json",

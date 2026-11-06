@@ -15,7 +15,7 @@ from scripts.content import read_lock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_COMMIT = "65b68f55b537ab77b7ecd8569b0c838aac9be0ea"
+SOURCE_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 JOBS = {
     "go-stdlib-compress-gzip": {
         "pack_id": "bifrost.go.stdlib.compress-gzip",
