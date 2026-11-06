@@ -9,7 +9,7 @@
   :id "bifrost.csharp-codeql-quality.recursive-equals-call"
   :name "C# recursive Equals call"
   :message "Equals may call itself recursively"
-  :severity error
+  :severity warning
   :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/RecursiveEquals.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports an Equals(object) override that calls the same target with its uncast parameter and implicit or this receiver."
   :tags ["csharp" "codeql" "quality" "recursion"]
   :analysis (analysis

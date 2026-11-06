@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.asserts-tuple"
   :name "Python asserts a tuple"
   :message "An assertion on a tuple is always truthy when the tuple is nonempty."
-  :severity error
+  :severity warning
   :description "Finds Python assert statements whose direct test expression is a tuple literal; scalar tests remain clean."
   :tags ["python" "codeql" "quality" "correctness"]
   :analysis (analysis

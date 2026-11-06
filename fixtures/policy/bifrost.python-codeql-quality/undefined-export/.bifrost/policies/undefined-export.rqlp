@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.undefined-export"
   :name "Name exported by __all__ is not defined"
   :message "The name listed in __all__ has no local definition"
-  :severity error
+  :severity warning
   :description "Select a static Python __all__ export whose local binding is structurally absent."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis

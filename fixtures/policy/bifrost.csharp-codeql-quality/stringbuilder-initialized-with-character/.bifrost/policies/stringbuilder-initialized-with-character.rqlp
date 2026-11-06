@@ -9,7 +9,7 @@
   :id "bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character"
   :name "C# StringBuilder initialized with a character"
   :message "StringBuilder receives a character"
-  :severity error
+  :severity warning
   :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/StringBuilderCharInit.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects the modeled StringBuilder constructor when a character literal or a parameter with a proven char-to-int32 call conversion reaches its one-argument overload."
   :tags ["csharp" "codeql" "quality" "stringbuilder"]
   :analysis (analysis :type assertion
