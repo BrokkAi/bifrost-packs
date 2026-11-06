@@ -5,7 +5,7 @@
   :id "bifrost.python-codeql-quality.print-during-import"
   :name "Python builtin print at module scope"
   :message "A builtin print call at module scope can produce output during import."
-  :severity warning
+  :severity note
   :description "Reports exact calls to Python's builtin print function in module-scope code outside an if __name__ == '__main__' guard. Such calls can produce unexpected output when the module is imported."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector
