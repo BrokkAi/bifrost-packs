@@ -5,7 +5,7 @@
   :id "bifrost.python-codeql-quality.overly-complex-delete"
   :name "Overly complex Python destructor"
   :message "overly complex '__del__' method"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL py/overly-complex-delete with the engine's reachable-block cyclomatic-complexity fact; incomplete control-flow results are not findings."
   :tags ["python" "codeql" "quality" "complexity"]
   :analysis (analysis :type match :selector

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.javascript-codeql-quality",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "Bifrost JavaScript CodeQL quality",
   "description": "Public JavaScript and TypeScript declaration, binding, class, property, and identifier quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -26,8 +26,8 @@
     {
       "path": "policies/variable-redeclaration.rqlp",
       "id": "bifrost.javascript-codeql-quality.variable-redeclaration",
-      "authored_hash": "a32b2746460904cb6bab07ed2e7da4313e19f1dc04159a57c6bea9504bd19b31",
-      "resolved_semantic_hash": "a32b2746460904cb6bab07ed2e7da4313e19f1dc04159a57c6bea9504bd19b31",
+      "authored_hash": "fd15ad61eafe05f1c198c4ad88effdce72e5847f3fbbad56b1cd7538969ae2c9",
+      "resolved_semantic_hash": "fd15ad61eafe05f1c198c4ad88effdce72e5847f3fbbad56b1cd7538969ae2c9",
       "category": "correctness",
       "supported_languages": [
         "javascript",
@@ -150,8 +150,8 @@
     {
       "path": "policies/misspelled-identifier.rqlp",
       "id": "bifrost.javascript-codeql-quality.misspelled-identifier",
-      "authored_hash": "4a0883d2744e55fa73e3716832af6c0d3a5a4e9a2d63b3d23356c0800e68e79c",
-      "resolved_semantic_hash": "4a0883d2744e55fa73e3716832af6c0d3a5a4e9a2d63b3d23356c0800e68e79c",
+      "authored_hash": "5ba7eb922481714708dd7de2f0892019c2f2d1fb7fd8260c061304d19a590840",
+      "resolved_semantic_hash": "5ba7eb922481714708dd7de2f0892019c2f2d1fb7fd8260c061304d19a590840",
       "category": "quality",
       "supported_languages": [
         "javascript",
@@ -168,8 +168,8 @@
     {
       "path": "policies/alert-call.rqlp",
       "id": "bifrost.javascript-codeql-quality.alert-call",
-      "authored_hash": "3348615fc0b8321b0a0ddd2d5a229fec25357763116cb4daf6b78cb9663501b2",
-      "resolved_semantic_hash": "3348615fc0b8321b0a0ddd2d5a229fec25357763116cb4daf6b78cb9663501b2",
+      "authored_hash": "c6e7dcc2ae72571b1efdffd449dd683e08480c45d280f9d8e6a6ea19ccfe4815",
+      "resolved_semantic_hash": "c6e7dcc2ae72571b1efdffd449dd683e08480c45d280f9d8e6a6ea19ccfe4815",
       "category": "quality",
       "supported_languages": [
         "javascript"

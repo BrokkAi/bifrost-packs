@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.mixed-tuple-returns"
   :name "Python callable returns tuples of varying lengths"
   :message "callable returns tuples with different lengths"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL py/mixed-tuple-returns at ae741615f3e178ce61289a651790dc67fcc18e19. Reports only complete proven tuple-return groups with different arities and no return annotation; supported local tuple aliases are followed."
   :tags ["python" "codeql" "quality" "correctness"]
   :analysis (analysis
