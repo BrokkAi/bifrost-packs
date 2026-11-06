@@ -7,7 +7,7 @@
   :id "bifrost.python-codeql-quality.old-style-octal-literal"
   :name "Python old-style octal literal"
   :message "Use the 0o prefix for octal literals."
-  :severity warning
+  :severity note
   :description "Finds legacy leading-zero octal token spellings while excluding zero and common permission masks."
   :tags ["python" "codeql" "quality" "correctness"]
   :analysis (analysis
