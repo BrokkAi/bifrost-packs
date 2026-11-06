@@ -1,0 +1,141 @@
+; Lead: BrokkAi/bifrost-packs#252 (CVE-2022-30631), version-independent part.
+; Product source contract: compress/gzip inflates without a size bound, and
+; io.ReadAll reads until EOF. A peer that controls a connection therefore
+; controls how much memory the program allocates, and a small gzip stream can
+; inflate to many gigabytes (CWE-409, CWE-400). Fixed toolchains keep that
+; behavior. CVE-2022-30631 (stack exhaustion in gzip Reader.Read) needs
+; toolchain evidence the engine does not have (research/osv-dataflow-2026-11/go).
+; Scope: the policy reports the connection whether or not it is inflated
+; first. A decompression-only policy needs a label added at gzip.NewReader,
+; and on Bifrost 0.15.1 a transform on a model-summarized call drops its
+; source origin, so the finding cannot be projected (bifrost-dev#9987).
+; Engine contract: sources, sinks and the io.LimitReader sanitizer bind
+; exactly to the reviewed bifrost.go.stdlib.net, bifrost.go.stdlib.io and
+; bifrost.go.stdlib.compress-gzip models. Any other call on the path must be
+; modeled, so an unmodeled wrapper such as bufio.NewReader leaves the run
+; inconclusive instead of clean. io.Copy is declared but has no summary (the
+; schema cannot express its write into dst), so an io.Copy finding is possible
+; and its run is inconclusive.
+(policy
+  :schema-version 1
+  :id "bifrost.security.go.network-read-all-unbounded"
+  :name "Go network connection read to EOF without a size bound"
+  :message "bytes from a network connection, possibly inflated with compress/gzip, are read to EOF without io.LimitReader"
+  :severity warning
+  :description "Reports net.Dial, net.DialTimeout and net.Listener.Accept connections that reach io.ReadAll or the source of io.Copy, directly or through compress/gzip.NewReader, with no io.LimitReader between them. The peer controls how much is read, and a small gzip stream can inflate without limit (CVE-2022-30631, CWE-409)."
+  :tags ["security" "go" "resource-exhaustion" "decompression-bomb" "cwe-400" "cwe-409"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id net-dial
+              :display-name "net.Dial connection"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (resolved-call
+                      :resolves-to "net.Dial"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "Dial") :arity 2))))))
+              :bind (result :index 0)
+              :labels [untrusted])
+            (source
+              :id net-dial-timeout
+              :display-name "net.DialTimeout connection"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (resolved-call
+                      :resolves-to "net.DialTimeout"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "DialTimeout") :arity 3))))))
+              :bind (result :index 0)
+              :labels [untrusted])
+            (source
+              :id net-listener-accept
+              :display-name "net.Listener.Accept connection"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (resolved-call
+                      :resolves-to "net.Listener.Accept"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "Accept") :arity 0))))))
+              :bind (result :index 0)
+              :labels [untrusted])])
+      :sanitizers
+        (endpoint-set
+          :entries [
+            (sanitizer
+              :id io-limit-reader
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "io.LimitReader"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "LimitReader") :arity 2)))))))
+              :input (argument :index 0)
+              :output return-value
+              :removes [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id io-read-all-reader
+              :display-name "io.ReadAll reader"
+              :categories [resource-consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "io.ReadAll"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "ReadAll") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id io-copy-source
+              :display-name "io.Copy source reader"
+              :categories [resource-consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language go
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "io.Copy"
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "Copy") :arity 2)))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))

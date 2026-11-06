@@ -1,0 +1,211 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.research.x509-probe",
+  "version": "0.0.1",
+  "producer": {
+    "name": "bifrost-reviewed-dotnet-models",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Probe model for bifrost-dev#9981: declares only the X509Certificate2(byte[]) constructor from the .NET API reference",
+    "revision": "dotnet-9.0"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-x509-probe",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.research.x509-probe"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.dotnet.x509-probe.x509certificate2",
+            "name": "System.Security.Cryptography.X509Certificates.X509Certificate2",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.dll",
+              "symbol": "System.Security.Cryptography.X509Certificates.X509Certificate2"
+            }
+          },
+          {
+            "id": "type.dotnet.x509-probe.convert",
+            "name": "System.Convert",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Convert"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.dotnet.x509-probe.x509certificate2.constructor-raw-data",
+            "owner": "type.dotnet.x509-probe.x509certificate2",
+            "name": "X509Certificate2",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "rawData",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Byte[]",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Security.Cryptography.dll",
+              "symbol": "System.Security.Cryptography.X509Certificates.X509Certificate2.X509Certificate2(System.Byte[])"
+            }
+          },
+          {
+            "id": "member.dotnet.x509-probe.convert.from-base64-string",
+            "owner": "type.dotnet.x509-probe.convert",
+            "name": "FromBase64String",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "s",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Byte[]",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Runtime.dll",
+              "symbol": "System.Convert.FromBase64String(System.String)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.dotnet-x509-probe",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.research.x509-probe"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.dotnet.x509-probe.x509certificate2.constructor-raw-data",
+            "target": {
+              "path": "System.Security.Cryptography.dll",
+              "symbol": "System.Security.Cryptography.X509Certificates.X509Certificate2.X509Certificate2(System.Byte[])",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.x509-probe.convert.from-base64-string",
+            "target": {
+              "path": "System.Runtime.dll",
+              "symbol": "System.Convert.FromBase64String(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

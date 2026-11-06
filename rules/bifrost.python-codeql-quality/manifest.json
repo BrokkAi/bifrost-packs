@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.python-codeql-quality",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "Bifrost Python CodeQL quality",
   "description": "Public Python structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -137,8 +137,8 @@
     {
       "path": "policies/unused-global-variable.rqlp",
       "id": "bifrost.python-codeql-quality.unused-global-variable",
-      "authored_hash": "5b02d20372329d1c4ad5901570e38594b425bdc58b320eb9f6247bf0f79db928",
-      "resolved_semantic_hash": "5b02d20372329d1c4ad5901570e38594b425bdc58b320eb9f6247bf0f79db928",
+      "authored_hash": "682c9e221930f1768977e9ccb8af0053d66787da0f9bda5384adbfcf5a4a8727",
+      "resolved_semantic_hash": "682c9e221930f1768977e9ccb8af0053d66787da0f9bda5384adbfcf5a4a8727",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -153,8 +153,8 @@
     {
       "path": "policies/useless-class.rqlp",
       "id": "bifrost.python-codeql-quality.useless-class",
-      "authored_hash": "a16352ad344e58f3196907188b6312826c3fee610ce9c9e8e91d23bc6030bbbc",
-      "resolved_semantic_hash": "a16352ad344e58f3196907188b6312826c3fee610ce9c9e8e91d23bc6030bbbc",
+      "authored_hash": "47e764668791ee70296f1b0c9a37e98597b8be275d61e1364fc9feedb4fe1f9b",
+      "resolved_semantic_hash": "47e764668791ee70296f1b0c9a37e98597b8be275d61e1364fc9feedb4fe1f9b",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -169,8 +169,8 @@
     {
       "path": "policies/overly-complex-delete.rqlp",
       "id": "bifrost.python-codeql-quality.overly-complex-delete",
-      "authored_hash": "fa530fb7534dadf0ec407ca438aa6d33ea3a90db425db70c81d77deda87a2bd9",
-      "resolved_semantic_hash": "fa530fb7534dadf0ec407ca438aa6d33ea3a90db425db70c81d77deda87a2bd9",
+      "authored_hash": "eb1f46744f3c1f125ed3864ddbed80859c8e021c1b635991b714e806efb9c115",
+      "resolved_semantic_hash": "eb1f46744f3c1f125ed3864ddbed80859c8e021c1b635991b714e806efb9c115",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -186,8 +186,8 @@
     {
       "path": "policies/import-and-import-from.rqlp",
       "id": "bifrost.python-codeql-quality.import-and-import-from",
-      "authored_hash": "6a7db1d2e14a780a473144a0a92e8452639307bbb48f7bf9c0bf9409c5f29e12",
-      "resolved_semantic_hash": "6a7db1d2e14a780a473144a0a92e8452639307bbb48f7bf9c0bf9409c5f29e12",
+      "authored_hash": "fdb788c6bbf5f199bf225920d155ad9809d42c58e67bf08e9b8a7b72b9427dc6",
+      "resolved_semantic_hash": "fdb788c6bbf5f199bf225920d155ad9809d42c58e67bf08e9b8a7b72b9427dc6",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -202,8 +202,8 @@
     {
       "path": "policies/import-own-module.rqlp",
       "id": "bifrost.python-codeql-quality.import-own-module",
-      "authored_hash": "fb0f828d0a016376737764616fd51799f19e769c400db002e1d1aa2e15d377df",
-      "resolved_semantic_hash": "fb0f828d0a016376737764616fd51799f19e769c400db002e1d1aa2e15d377df",
+      "authored_hash": "f126988f1d9c4be0c2992af428e01a0ae421f173f8fff332762e47a015750f7e",
+      "resolved_semantic_hash": "f126988f1d9c4be0c2992af428e01a0ae421f173f8fff332762e47a015750f7e",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -218,8 +218,8 @@
     {
       "path": "policies/polluting-import.rqlp",
       "id": "bifrost.python-codeql-quality.polluting-import",
-      "authored_hash": "29bf5860642e42f1927626bf96228af81012ef79f636c299691a736297ca4af5",
-      "resolved_semantic_hash": "29bf5860642e42f1927626bf96228af81012ef79f636c299691a736297ca4af5",
+      "authored_hash": "1d95cc1914fb3c67f76dc13bfcf193e08eeab11c1051b79452731cb938ef016b",
+      "resolved_semantic_hash": "1d95cc1914fb3c67f76dc13bfcf193e08eeab11c1051b79452731cb938ef016b",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -441,8 +441,8 @@
     {
       "path": "policies/old-style-octal-literal.rqlp",
       "id": "bifrost.python-codeql-quality.old-style-octal-literal",
-      "authored_hash": "0caa5d130620510ae47aac8ba20662da1005727f43a2819d74c1b0df081db01b",
-      "resolved_semantic_hash": "0caa5d130620510ae47aac8ba20662da1005727f43a2819d74c1b0df081db01b",
+      "authored_hash": "f0d1c619d631ee5a2020a56c0e61253f9a78e301025e6809e1124459c5279372",
+      "resolved_semantic_hash": "f0d1c619d631ee5a2020a56c0e61253f9a78e301025e6809e1124459c5279372",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -509,8 +509,8 @@
     {
       "path": "policies/should-be-context-manager.rqlp",
       "id": "bifrost.python-codeql-quality.should-be-context-manager",
-      "authored_hash": "d413ea1abe9dd78222c119bacb09dfa5c3c3e83c0f872f6421b7935a4d023056",
-      "resolved_semantic_hash": "d413ea1abe9dd78222c119bacb09dfa5c3c3e83c0f872f6421b7935a4d023056",
+      "authored_hash": "8c5bdafbfb8a9e11d6642647a2023447f643a814904259f046b85bc4bd439b67",
+      "resolved_semantic_hash": "8c5bdafbfb8a9e11d6642647a2023447f643a814904259f046b85bc4bd439b67",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -524,8 +524,8 @@
     {
       "path": "policies/mixed-returns.rqlp",
       "id": "bifrost.python-codeql-quality.mixed-returns",
-      "authored_hash": "45106fe06345cafbe3ee865973e0a28808649b39941244552875dd46f460b723",
-      "resolved_semantic_hash": "45106fe06345cafbe3ee865973e0a28808649b39941244552875dd46f460b723",
+      "authored_hash": "1998235f59a5c2fa8784e4089571d97500658db6b4c03dee5af8d1d7c6c6a871",
+      "resolved_semantic_hash": "1998235f59a5c2fa8784e4089571d97500658db6b4c03dee5af8d1d7c6c6a871",
       "category": "correctness",
       "supported_languages": [
         "python"
@@ -540,8 +540,8 @@
     {
       "path": "policies/mixed-tuple-returns.rqlp",
       "id": "bifrost.python-codeql-quality.mixed-tuple-returns",
-      "authored_hash": "9abd5c8afca3ae9f51540c0a4ffbdd2520a85d8cc19a0e1b5db5b157743aa6f3",
-      "resolved_semantic_hash": "9abd5c8afca3ae9f51540c0a4ffbdd2520a85d8cc19a0e1b5db5b157743aa6f3",
+      "authored_hash": "b064ba53476e69f4c31c3f853f36cdfff78f843cae4bfc1f5256a99e6861a9b7",
+      "resolved_semantic_hash": "b064ba53476e69f4c31c3f853f36cdfff78f843cae4bfc1f5256a99e6861a9b7",
       "category": "correctness",
       "supported_languages": [
         "python"
@@ -556,8 +556,8 @@
     {
       "path": "policies/unexpected-raise-in-special-method.rqlp",
       "id": "bifrost.python-codeql-quality.unexpected-raise-in-special-method",
-      "authored_hash": "a7d0582e7e63b2df7c6bee5bbec1ac28e1dfb4e31f2c37c4557e1f5826675240",
-      "resolved_semantic_hash": "a7d0582e7e63b2df7c6bee5bbec1ac28e1dfb4e31f2c37c4557e1f5826675240",
+      "authored_hash": "b92a6b773773eda770742d3bdc0b547c52bab2eedcfcf69a0db5753342f60206",
+      "resolved_semantic_hash": "b92a6b773773eda770742d3bdc0b547c52bab2eedcfcf69a0db5753342f60206",
       "category": "correctness",
       "supported_languages": [
         "python"
@@ -573,8 +573,8 @@
     {
       "path": "policies/assert-literal-constant.rqlp",
       "id": "bifrost.python-codeql-quality.assert-literal-constant",
-      "authored_hash": "1bc39cd138837ff7ce9342ac0f00dffabcb5488ca8ae938be4fcd4125376cf72",
-      "resolved_semantic_hash": "1bc39cd138837ff7ce9342ac0f00dffabcb5488ca8ae938be4fcd4125376cf72",
+      "authored_hash": "132c4228a6b03b1e56c4cdd793bada6a094aa8dfda0adda359a78e1ff43b6c3f",
+      "resolved_semantic_hash": "132c4228a6b03b1e56c4cdd793bada6a094aa8dfda0adda359a78e1ff43b6c3f",
       "category": "correctness",
       "supported_languages": [
         "python"
@@ -589,8 +589,8 @@
     {
       "path": "policies/commented-out-code.rqlp",
       "id": "bifrost.python-codeql-quality.commented-out-code",
-      "authored_hash": "de4a5f1b5aaa7762a673eda54abd4caf24d1f8a689c24907f0ef55b5a7594407",
-      "resolved_semantic_hash": "de4a5f1b5aaa7762a673eda54abd4caf24d1f8a689c24907f0ef55b5a7594407",
+      "authored_hash": "a29f46d57b36be91f7168ec5a8264c48d273fe7f00b800542153bb7d5ab0bca3",
+      "resolved_semantic_hash": "a29f46d57b36be91f7168ec5a8264c48d273fe7f00b800542153bb7d5ab0bca3",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -854,8 +854,8 @@
     {
       "path": "policies/missing-docstring.rqlp",
       "id": "bifrost.python-codeql-quality.missing-docstring",
-      "authored_hash": "e13622d44dc11ef712e3072a1b3f118504e9247b6f9cc7588ca6820b1bbdb558",
-      "resolved_semantic_hash": "e13622d44dc11ef712e3072a1b3f118504e9247b6f9cc7588ca6820b1bbdb558",
+      "authored_hash": "002276749053f6813310a31ec6654c8b176b3f468ed66f04b2de0cd526ee27d9",
+      "resolved_semantic_hash": "002276749053f6813310a31ec6654c8b176b3f468ed66f04b2de0cd526ee27d9",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -906,8 +906,8 @@
     {
       "path": "policies/not-named-cls.rqlp",
       "id": "bifrost.python-codeql-quality.not-named-cls",
-      "authored_hash": "1f76c34cd57036c400424d4795f6a97009edb923a85b4fc48bee14a6a9ef9652",
-      "resolved_semantic_hash": "1f76c34cd57036c400424d4795f6a97009edb923a85b4fc48bee14a6a9ef9652",
+      "authored_hash": "ff82c5d6b3b4b9449f3985d21271435eb2a17798798482bdd006c8321ac1c612",
+      "resolved_semantic_hash": "ff82c5d6b3b4b9449f3985d21271435eb2a17798798482bdd006c8321ac1c612",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -923,8 +923,8 @@
     {
       "path": "policies/not-named-self.rqlp",
       "id": "bifrost.python-codeql-quality.not-named-self",
-      "authored_hash": "37fe92ff0de36dfbd10a9052bf455f7b55e0b55f5f13b5b814bc33dd5c967a45",
-      "resolved_semantic_hash": "37fe92ff0de36dfbd10a9052bf455f7b55e0b55f5f13b5b814bc33dd5c967a45",
+      "authored_hash": "934ce06bc9b9dfdeceafef5273d2e75195b64b0ed6d13869635db6ee199776e6",
+      "resolved_semantic_hash": "934ce06bc9b9dfdeceafef5273d2e75195b64b0ed6d13869635db6ee199776e6",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -973,8 +973,8 @@
     {
       "path": "policies/print-during-import.rqlp",
       "id": "bifrost.python-codeql-quality.print-during-import",
-      "authored_hash": "2ca1e0710c676a1903a8e56abbcd3a981a39031573f6de24b274bc1f8c07bb7c",
-      "resolved_semantic_hash": "2ca1e0710c676a1903a8e56abbcd3a981a39031573f6de24b274bc1f8c07bb7c",
+      "authored_hash": "71a190709c7ed1bef369654219ee6964a216ec63a216af58af5a99c44c5559e6",
+      "resolved_semantic_hash": "71a190709c7ed1bef369654219ee6964a216ec63a216af58af5a99c44c5559e6",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1024,8 +1024,8 @@
     {
       "path": "policies/regex-backspace-escape.rqlp",
       "id": "bifrost.python-codeql-quality.regex-backspace-escape",
-      "authored_hash": "6e3d234ecc19702b22886adb3da62fceeee1854039193247469872fa250f51c4",
-      "resolved_semantic_hash": "6e3d234ecc19702b22886adb3da62fceeee1854039193247469872fa250f51c4",
+      "authored_hash": "71a6ccb5bc44313c08367a95af832b6855c611843879d7a7be4035a3401699ad",
+      "resolved_semantic_hash": "71a6ccb5bc44313c08367a95af832b6855c611843879d7a7be4035a3401699ad",
       "category": "correctness",
       "supported_languages": [
         "python"
@@ -1104,8 +1104,8 @@
     {
       "path": "policies/repeated-import.rqlp",
       "id": "bifrost.python-codeql-quality.repeated-import",
-      "authored_hash": "103ffb744c4cb039e14e6548c1d229ab46c29c66a609954fd57a7ca5afdca8c5",
-      "resolved_semantic_hash": "103ffb744c4cb039e14e6548c1d229ab46c29c66a609954fd57a7ca5afdca8c5",
+      "authored_hash": "8e4059150d47296408fd7e03ab7d9ff294a0b48b9107edcf7cc7a00ae83178f0",
+      "resolved_semantic_hash": "8e4059150d47296408fd7e03ab7d9ff294a0b48b9107edcf7cc7a00ae83178f0",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1185,8 +1185,8 @@
     {
       "path": "policies/unnecessary-lambda.rqlp",
       "id": "bifrost.python-codeql-quality.unnecessary-lambda",
-      "authored_hash": "0aa83ee8b76fb36672f1a0b35076004632fc6155512a71ac1f9e8486d4292961",
-      "resolved_semantic_hash": "0aa83ee8b76fb36672f1a0b35076004632fc6155512a71ac1f9e8486d4292961",
+      "authored_hash": "5afe521f633a0e8ee69d1948af387d3c391600c9f4faf677d7f1cc2eeeb8532d",
+      "resolved_semantic_hash": "5afe521f633a0e8ee69d1948af387d3c391600c9f4faf677d7f1cc2eeeb8532d",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1202,8 +1202,8 @@
     {
       "path": "policies/local-shadows-builtin.rqlp",
       "id": "bifrost.python-codeql-quality.local-shadows-builtin",
-      "authored_hash": "66adddbef702488df758990afc6fd7a48503e5cbbc9c8affbc2fcfdc748e5120",
-      "resolved_semantic_hash": "66adddbef702488df758990afc6fd7a48503e5cbbc9c8affbc2fcfdc748e5120",
+      "authored_hash": "11a146fb8f52effde2e78c8e1946bc6df7d322281de9ab0e48e588e967309cc4",
+      "resolved_semantic_hash": "11a146fb8f52effde2e78c8e1946bc6df7d322281de9ab0e48e588e967309cc4",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1218,8 +1218,8 @@
     {
       "path": "policies/local-shadows-global.rqlp",
       "id": "bifrost.python-codeql-quality.local-shadows-global",
-      "authored_hash": "c76dc840931967cf1f1ad4187d6102d93ec8566464cf092fce43b354c4be902a",
-      "resolved_semantic_hash": "c76dc840931967cf1f1ad4187d6102d93ec8566464cf092fce43b354c4be902a",
+      "authored_hash": "618bef16cf24baae616927da77a83ea9e42cf9cc41c6099fb7a4dfbe1d3d5f14",
+      "resolved_semantic_hash": "618bef16cf24baae616927da77a83ea9e42cf9cc41c6099fb7a4dfbe1d3d5f14",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1234,8 +1234,8 @@
     {
       "path": "policies/nested-loops-with-same-variable.rqlp",
       "id": "bifrost.python-codeql-quality.nested-loops-with-same-variable",
-      "authored_hash": "7ef74c4ad8411fea483b447ddd879569a7a4bbeb19dada92578822afa3dc70f1",
-      "resolved_semantic_hash": "7ef74c4ad8411fea483b447ddd879569a7a4bbeb19dada92578822afa3dc70f1",
+      "authored_hash": "cb5238a4b4efb6348e1b2ec503f73815468feb9b75b2dff5f538e893a24cdfe2",
+      "resolved_semantic_hash": "cb5238a4b4efb6348e1b2ec503f73815468feb9b75b2dff5f538e893a24cdfe2",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1266,8 +1266,8 @@
     {
       "path": "policies/unused-local-variable.rqlp",
       "id": "bifrost.python-codeql-quality.unused-local-variable",
-      "authored_hash": "11e36897075a2b224206b19fbd892371d114af880ffb4eadd4c003dcac68eea1",
-      "resolved_semantic_hash": "11e36897075a2b224206b19fbd892371d114af880ffb4eadd4c003dcac68eea1",
+      "authored_hash": "043e9cd5f0e5133f325f72a296c8e9b7d08015db941677960a69d4a51a4a706b",
+      "resolved_semantic_hash": "043e9cd5f0e5133f325f72a296c8e9b7d08015db941677960a69d4a51a4a706b",
       "category": "quality",
       "supported_languages": [
         "python"
@@ -1298,8 +1298,8 @@
     {
       "path": "policies/unused-parameter.rqlp",
       "id": "bifrost.python-codeql-quality.unused-parameter",
-      "authored_hash": "ed8bfb97b65ff134952f8e41fcc4496aa3c82db48b3b9df8631cfbfa1401559c",
-      "resolved_semantic_hash": "ed8bfb97b65ff134952f8e41fcc4496aa3c82db48b3b9df8631cfbfa1401559c",
+      "authored_hash": "8b1afdec61117c8126576a4ecb88fcf5379387487be7dde168352bfc0d1f5bf0",
+      "resolved_semantic_hash": "8b1afdec61117c8126576a4ecb88fcf5379387487be7dde168352bfc0d1f5bf0",
       "category": "quality",
       "supported_languages": [
         "python"

@@ -1,0 +1,69 @@
+{
+  "schema_version": 2,
+  "id": "bifrost.rust-generic",
+  "version": "0.1.0",
+  "name": "Generic Rust bug prompts",
+  "description": "Source-backed review prompts from public Rust bug fixes.",
+  "policies": [
+    {
+      "path": "policies/command-output-unwrap.rqlp",
+      "id": "bifrost.rust.command-output-unwrap",
+      "authored_hash": "b85425de849cab966557eed15a5af1db3ab0ae32d76fdb367907e46785236e4c",
+      "resolved_semantic_hash": "b85425de849cab966557eed15a5af1db3ab0ae32d76fdb367907e46785236e4c",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust operation.",
+      "remediation": "Check the output callee; if launching a command can fail, propagate the error or report build context."
+    },
+    {
+      "path": "policies/filesystem-expect.rqlp",
+      "id": "bifrost.rust.filesystem-expect",
+      "authored_hash": "94b32d13ccb38b7a841d4f0ab2d6c439153fe288e41ff3004e74cd689dc26974",
+      "resolved_semantic_hash": "94b32d13ccb38b7a841d4f0ab2d6c439153fe288e41ff3004e74cd689dc26974",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust operation.",
+      "remediation": "Check the read_dir or remove_file callee; handle or propagate a recoverable failure."
+    },
+    {
+      "path": "policies/home-env-expect.rqlp",
+      "id": "bifrost.rust.home-env-expect",
+      "authored_hash": "9bd4a429ceb293619ad66a818383a21175ea444acc127eabe9be02c9061c3f0f",
+      "resolved_semantic_hash": "9bd4a429ceb293619ad66a818383a21175ea444acc127eabe9be02c9061c3f0f",
+      "category": "correctness",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust environment access.",
+      "remediation": "Use a platform-aware home-directory API or handle a missing environment variable."
+    },
+    {
+      "path": "policies/sleep-before-try-recv.rqlp",
+      "id": "bifrost.rust.sleep-before-try-recv",
+      "authored_hash": "5c98e5250aae2b812492c10402d2eed31adc32ee112ac0051d4b810e2d68c0e9",
+      "resolved_semantic_hash": "5c98e5250aae2b812492c10402d2eed31adc32ee112ac0051d4b810e2d68c0e9",
+      "category": "performance",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Review prompt for source-backed Rust operation.",
+      "remediation": "Check whether the sleep delays polling; consider a blocking receive with timeout when appropriate."
+    }
+  ]
+}

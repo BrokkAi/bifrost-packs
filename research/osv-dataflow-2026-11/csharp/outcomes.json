@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-05",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_CACHE_DIR": "fresh per run"
+    },
+    "flags": [
+      "--policy-file",
+      "--no-builtin-policies",
+      "--no-incremental",
+      "--format json"
+    ]
+  },
+  "osv_source": "https://osv-vulnerabilities.storage.googleapis.com/NuGet/all.zip (downloaded 2026-11-05)",
+  "version_evidence": [
+    {
+      "query": "research/dotnet-cve/probe/nuget-version-gate/queries/pkcs-affected-locked.rql",
+      "observed": "NuGet dependency_evidence rows with exact versions, evidence_kind locked and installed, and declared_by project digests (unchanged from 0.14.4)."
+    },
+    {
+      "query": "research/dotnet-cve/probe/nuget-version-gate/queries/csharp-file-build-target.rql",
+      "observed": "0 rows, topology_derivation_incomplete: no build model declares the targets topology axis. A C# code row still can't reach its owning project (bifrost-dev#8778)."
+    },
+    {
+      "query": "research/dotnet-cve/probe/nuget-version-gate/queries/require-both-dependency.rql",
+      "observed": "Rejected: the configuration input of require_both must produce configuration_fact rows, but it produces dependency_evidence."
+    }
+  ],
+  "rule_probes": [
+    {
+      "rule": "bifrost.security.csharp.regex-pattern-injection",
+      "fixture": "fixtures/policy/bifrost.security/regex-pattern-injection",
+      "authored_hash": "a49111555098e3a0d31fbaae6c8889d3055204ba9f5833b808b22c15036effc3",
+      "cases": [
+        {
+          "sources": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "Probe.cs:10",
+            "Probe.cs:16",
+            "Probe.cs:22",
+            "Probe.cs:28",
+            "Probe.cs:33",
+            "Probe.cs:38",
+            "Probe.cs:43",
+            "Probe.cs:48",
+            "Probe.cs:53"
+          ],
+          "note": "all definite and complete; 7 near misses unreported"
+        },
+        {
+          "sources": "incomplete/typedlocal",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "call resolution ... is unknown (explicitly typed local from a call, bifrost-dev#8299 item 3)"
+          ]
+        },
+        {
+          "sources": "incomplete/field",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "source selector partial; bound no source endpoint"
+          ]
+        },
+        {
+          "sources": "incomplete/matchsuccess",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "MatchSuccess.cs:10 definite complete"
+          ],
+          "diagnostics": [
+            "access-path resolution ... is unknown"
+          ]
+        },
+        {
+          "sources": "incomplete/evaluator",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "Evaluator.cs:10 definite complete"
+          ],
+          "diagnostics": [
+            "procedure semantics ... is unknown"
+          ]
+        },
+        {
+          "sources": "without the Regex model",
+          "completion": "not_run",
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "bifrost.security.csharp.dataset-read-xml-external-location",
+      "fixture": "fixtures/policy/bifrost.security/dataset-read-xml-external-location",
+      "authored_hash": "f9c163683ea0a156d2dcadf9c64838043202af047d7e15407410694f0d605a28",
+      "cases": [
+        {
+          "sources": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "Probe.cs:10",
+            "Probe.cs:16",
+            "Probe.cs:21"
+          ],
+          "note": "all definite and complete; 3 near misses unreported"
+        },
+        {
+          "sources": "incomplete/varlocal",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "sink selector partial: dispatch outcome=unknown for a var receiver"
+          ]
+        },
+        {
+          "sources": "incomplete/field",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "sink selector partial for a field receiver"
+          ]
+        },
+        {
+          "sources": "incomplete/reader",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "call resolution ... is unknown (StringReader and the TextReader overload are unmodeled)"
+          ]
+        },
+        {
+          "sources": "without the System.Data model",
+          "completion": "not_run",
+          "reported": []
+        }
+      ]
+    }
+  ],
+  "engine_probes": [
+    {
+      "probe": "probe/x509-single-overload",
+      "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9981",
+      "completion": "proven_by_summary",
+      "reported": [
+        "Probe.cs:9 definite complete"
+      ],
+      "note": "A String argument binds to the only declared X509Certificate2(byte[]) constructor."
+    },
+    {
+      "probe": "probe/regex-static-instance-family",
+      "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9982",
+      "completion": "inconclusive (partial_discovery)",
+      "reported": [],
+      "note": "qualified-call-locator-ambiguous for every static IsMatch selector once the instance IsMatch(String) is declared."
+    }
+  ],
+  "input_sha256": {
+    "probe/regex-static-instance-family/Probe.cs": "cb93e14fb680628ba67e0e58073210e352cdff35247d4c291354bd3fcf8bbbf0",
+    "probe/regex-static-instance-family/.bifrost/policies/regex-static-instance-family.rqlp": "13d6e31f15b92d149ffe060184987812747b836c6fe2c4315cd2d6d8c68bc591",
+    "probe/regex-static-instance-family/.bifrost/semantic-models/bifrost.dotnet.bcl-csharp.json": "e833df83c52c67e0a60697120670eb056a5b34dbeddfb3dceacc21cf9b1b88ce",
+    "probe/regex-static-instance-family/.bifrost/semantic-models/bifrost.research.regex-static-instance-family.json": "ed643c13aacbae47747f0f1e1f006023fecb09d4f161ae08d03a7867083e3b76",
+    "probe/x509-single-overload/Probe.cs": "e23b8b0e97742918ba8d8fb2d262267b2293fab93534a85f4590b944d5cedf33",
+    "probe/x509-single-overload/.bifrost/policies/x509-single-overload.rqlp": "5173d00ce90d2d893e1b49902fe4c0fb7d7a31d6337901470062777b413b48b6",
+    "probe/x509-single-overload/.bifrost/semantic-models/bifrost.dotnet.bcl-csharp.json": "e833df83c52c67e0a60697120670eb056a5b34dbeddfb3dceacc21cf9b1b88ce",
+    "probe/x509-single-overload/.bifrost/semantic-models/bifrost.research.x509-probe.json": "055c3799ce75447ad87d099a77c71b34cc832c8f912ff00b836a9bcac7aefb28"
+  },
+  "leads": [
+    {
+      "issue": 262,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2020-1147",
+      "analysis_type": "taint",
+      "outcome": "implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8779",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8296",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8307"
+      ],
+      "rule": "bifrost.security.csharp.dataset-read-xml-external-location",
+      "note": "The version-independent slice ships: console or environment input choosing the file or URL of DataSet.ReadXml(String), ReadXml(String, XmlReadMode) or DataTable.ReadXml(String). New model bifrost.dotnet.system-data-csharp 0.1.0. Stream, TextReader and XmlReader overloads aren't declared (same-arity overloads don't bind, bifrost-dev#8296); request sources need bifrost-dev#8307; the affected-runtime gate needs bifrost-dev#8779."
+    },
+    {
+      "issue": 263,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2019-0820",
+      "analysis_type": "taint",
+      "outcome": "implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9982",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8296",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8299",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8778"
+      ],
+      "rule": "bifrost.security.csharp.regex-pattern-injection",
+      "note": "The version-independent slice ships: console or environment input reaching the pattern of the Regex constructors or static IsMatch, Match, Matches, Split and Replace overloads without a matchTimeout; Regex.Escape sanitizes. New model bifrost.dotnet.system-text-regularexpressions-csharp 0.1.0 omits instance methods (bifrost-dev#9982). Typed locals and fields stay inconclusive (bifrost-dev#8299). The 4.3.0 package gate needs bifrost-dev#8778."
+    },
+    {
+      "issue": 264,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2026-96958",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8778",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8302",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8307"
+      ],
+      "note": "Version-gated DoS (System.Security.Cryptography.Xml). 0.15.1: NuGet rows exist but no C# code row reaches its owning project (target-of is topology_derivation_incomplete; require-both rejects dependency rows). XML provenance needs XmlDocument.Load's write into its receiver and element flow (bifrost-dev#8302); no request-body source (bifrost-dev#8307). Not probed beyond the version gate."
+    },
+    {
+      "issue": 265,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2026-70162",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8778",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8349"
+      ],
+      "note": "Version- and platform-gated (Windows only). 0.15.1: no code-to-project ownership for the Pkcs lock rows (bifrost-dev#8778) and no target-platform evidence (bifrost-dev#8349). The EnvelopedCms.Decode sink itself was not probed."
+    },
+    {
+      "issue": 266,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2023-29331",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8296",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9981"
+      ],
+      "note": "Version-independent slice probed (probe/x509-single-overload). With X509Certificate2(byte[]) and X509Certificate2(String) declared, neither binds (UnsupportedExpression, bifrost-dev#8296). With only byte[] declared, a String argument binds to it as definite and complete (bifrost-dev#9981). A rule would carry the wrong member's provenance, so nothing ships."
+    },
+    {
+      "issue": 267,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2019-1075",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8307",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8779"
+      ],
+      "note": "The CWE-601 slice needs ASP.NET Core request sources (action parameters, HttpRequest.Query); none is selectable on 0.15.1 (bifrost-dev#8307). The affected shared-framework gate needs bifrost-dev#8779. No public ASP.NET Core model declares the redirect members yet. Not probed."
+    },
+    {
+      "issue": 268,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2026-21218",
+      "analysis_type": "typestate",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9498",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8302",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8778"
+      ],
+      "note": "Decode-before-verify is a typestate protocol on a CoseSign1Message local. C# typestate has no selected receiver evidence for class variables (bifrost-dev#9498, open), C# object identity is missing (bifrost-dev#8302), and no public typestate policy has a C# subject. Version gate: bifrost-dev#8778. No typestate probe was run."
+    },
+    {
+      "issue": 269,
+      "repository": "BrokkAi/bifrost-packs",
+      "placement": "open",
+      "language": "csharp",
+      "advisory": "CVE-2026-45491",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8779",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8307"
+      ],
+      "note": "Version-gated (fixed runtimes validate symlink targets), no version-independent slice. In-box System.Formats.Tar needs runtime version evidence (bifrost-dev#8779); upload streams need request sources (bifrost-dev#8307). Not probed."
+    },
+    {
+      "issue": 457,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "placement": "premium",
+      "language": "csharp",
+      "advisory": "CVE-2026-75513",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8778",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8307"
+      ],
+      "note": "Premium placement; not implemented here. Needs request sources (bifrost-dev#8307), lambda-capture position inside expression trees (indexer key vs compared value; no engine fact), a Marten model, and NuGet ownership (bifrost-dev#8778)."
+    },
+    {
+      "issue": 458,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "placement": "premium",
+      "language": "csharp",
+      "advisory": "CVE-2026-55254",
+      "analysis_type": "taint",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8778",
+        "https://github.com/BrokkAi/bifrost-dev/issues/8299"
+      ],
+      "note": "Premium placement; not implemented here. The version gate needs bifrost-dev#8778. A version-independent review slice (untrusted text into new NCalc.Expression(...).Evaluate()) needs an NCalc model; the receiver of a var local from new is not established on 0.15.1 (bifrost-dev#8299 comment)."
+    }
+  ]
+}
