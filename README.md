@@ -52,9 +52,9 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Category | performance | 11 |
 | Category | quality | 69 |
 | Category | security | 63 |
-| Severity | error | 73 |
+| Severity | error | 83 |
 | Severity | note | 81 |
-| Severity | warning | 124 |
+| Severity | warning | 114 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
 13 declared languages; 516 rule-language pairs.
