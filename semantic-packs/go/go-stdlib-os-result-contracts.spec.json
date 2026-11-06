@@ -1,22 +1,32 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.os",
-  "pack_version": "2.0.0",
+  "pack_version": "3.0.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-os.json",
-    "sha256": "ed81c97471e5ac56eb5a4323834b9b305948ebdaec4e4e2e1f7c4f31b96840ae",
+    "sha256": "c91180b94e527d7f1a3bee7a82a25982b26e73ffab070b456c322b549168ad56",
     "url": "https://github.com/BrokkAi/bifrost-packs/blob/230019e376d5c1198b079482d4334ed2d18217ba/semantic-packs/models/go-stdlib-os.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
     "source": "https://go.dev/src/os/",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.26.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "procedure",
