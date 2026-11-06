@@ -587,9 +587,6 @@ class ExecutionTests(unittest.TestCase):
         self.assertEqual(result['verdict'], 'ERROR')
 
 
-if __name__ == '__main__':
-    unittest.main()
-
 class RustStagerTests(unittest.TestCase):
     def test_qltest_dependencies_and_extensions_are_staged_as_metadata(self):
         from scripts.upstream.codeql_gate.stagers.rust import RustStager
@@ -636,3 +633,7 @@ class RustStagerTests(unittest.TestCase):
             self.assertEqual([r['start'] for r in oracle['missing']], [2])
             self.assertEqual([r['start'] for r in oracle['spurious']], [3])
             self.assertFalse(oracle['inline_alert'])
+
+
+if __name__ == '__main__':
+    unittest.main()
