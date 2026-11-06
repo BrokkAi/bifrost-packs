@@ -1,14 +1,16 @@
 ; CodeQL query: javascript/ql/src/Expressions/MisspelledIdentifier.ql
 ; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
-; Engine contract: normalized identifier parts require a co-occurring
-; correction in the same source file.
+; Engine contract: an identifier part is reported only when the run's
+; identifier typo table lists it as a known misspelling. This pack ships the
+; table (data/identifier-typos.txt, CC BY-SA 3.0, derived from CodeQL's
+; Wikipedia-based list); without a table the run is incomplete.
 (policy
   :schema-version 1
   :id "bifrost.javascript-codeql-quality.misspelled-identifier"
   :name "JavaScript misspelled identifier"
   :message "an identifier may be misspelled"
   :severity note
-  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports JavaScript and TypeScript identifiers for which a normalized spelling correction co-occurs in the same source file."
+  :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports parts of JavaScript and TypeScript identifiers that the identifier typo table shipped with this pack lists as known misspellings."
   :tags ["javascript" "typescript" "codeql" "quality"]
   :analysis (analysis :type match :selector
     (rql :schema-version 1
