@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.crypto-x509-declarations",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "producer": {
     "name": "bifrost",
     "version": "0.10.7"
@@ -9,7 +9,12 @@
   "language": "go",
   "ecosystem": "go-stdlib",
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "provenance": {
     "source": "https://pkg.go.dev/crypto/x509",
@@ -24,7 +29,14 @@
   "shards": [
     {
       "id": "go.stdlib.crypto-x509.declarations",
-      "activation": [{}],
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
       "payload": {
         "kind": "declaration_facts",
         "types": [

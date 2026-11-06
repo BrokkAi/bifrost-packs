@@ -1,22 +1,32 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.path-filepath",
-  "pack_version": "2.0.0",
+  "pack_version": "3.0.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-path-filepath.json",
-    "sha256": "219de7ceb0887f18aaa6c8c33b5bc75ba4bbb00c67989e114adbd11589abd958",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/models/go-stdlib-path-filepath.json",
+    "sha256": "e03719e3aaae94b1a0470b8f1922629c667a28bccfa33506ca4d8cfbc50071f6",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-path-filepath.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
     "source": "https://pkg.go.dev/path/filepath",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.26.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "type",
