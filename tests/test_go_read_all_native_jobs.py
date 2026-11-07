@@ -19,7 +19,7 @@ SOURCE_COMMITS = {
     "go-stdlib-compress-gzip": "a8f1458142c44fb9a94dcf0cd63771e965238fad",
     "go-stdlib-compress-gzip-declarations": "a8f1458142c44fb9a94dcf0cd63771e965238fad",
     "go-stdlib-io": "65b68f55b537ab77b7ecd8569b0c838aac9be0ea",
-    "go-stdlib-io-declarations": "65b68f55b537ab77b7ecd8569b0c838aac9be0ea",
+    "go-stdlib-io-declarations": "21151aab8d92052e3a766620c5d531f92bf87089",
 }
 JOBS = {
     "go-stdlib-compress-gzip": {
@@ -40,7 +40,7 @@ JOBS = {
     "go-stdlib-io-declarations": {
         "pack_id": "bifrost.go.stdlib.io-declarations",
         "completeness": "partial",
-        "source": "https://pkg.go.dev/io",
+        "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/io/io.go (22 exported io interfaces, their methods and embeddings, and io.ReadAll, io.Copy, io.LimitReader functions)",
     },
 }
 FIXTURE = ROOT / "fixtures/policy/bifrost.security/go-network-read-all-unbounded"
@@ -135,7 +135,7 @@ class GoReadAllNativeJobTests(unittest.TestCase):
         # a complete summary with no transfers would claim it writes nothing.
         payload = _load(_model("go-stdlib-io-declarations"))["shards"][0]["payload"]
         names = {row["locator"]["symbol"] for row in payload["members"]}
-        self.assertEqual(names, {"io.ReadAll", "io.Copy", "io.LimitReader"})
+        self.assertTrue({"io.ReadAll", "io.Copy", "io.LimitReader"} <= names)
         self.assertNotIn("io.Copy(dst io.Writer, src io.Reader)", _summaries("go-stdlib-io"))
         for name in ("go-stdlib-io-declarations", "go-stdlib-compress-gzip-declarations"):
             for row in _load(_model(name))["shards"][0]["payload"]["members"]:
