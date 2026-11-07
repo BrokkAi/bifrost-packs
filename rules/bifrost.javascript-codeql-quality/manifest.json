@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.javascript-codeql-quality",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "name": "Bifrost JavaScript CodeQL quality",
   "description": "Public JavaScript and TypeScript declaration, binding, class, property, and identifier quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -150,8 +150,8 @@
     {
       "path": "policies/misspelled-identifier.rqlp",
       "id": "bifrost.javascript-codeql-quality.misspelled-identifier",
-      "authored_hash": "5ba7eb922481714708dd7de2f0892019c2f2d1fb7fd8260c061304d19a590840",
-      "resolved_semantic_hash": "5ba7eb922481714708dd7de2f0892019c2f2d1fb7fd8260c061304d19a590840",
+      "authored_hash": "854c25428b7b37e2260270a9ac7b64fa91b7a7fa756c27db700ed5f907b182f9",
+      "resolved_semantic_hash": "854c25428b7b37e2260270a9ac7b64fa91b7a7fa756c27db700ed5f907b182f9",
       "category": "quality",
       "supported_languages": [
         "javascript",
@@ -217,5 +217,9 @@
       "severity_rationale": "Hard-coded password-like values in configuration can be exposed through source distribution or deployment artifacts.",
       "remediation": "Load secrets from a managed secret store or runtime-provided environment, and keep templates value-free."
     }
-  ]
+  ],
+  "identifier_typos": {
+    "path": "data/identifier-typos.txt",
+    "content_hash": "1ffb220663c37491aeb5471dca987438765c622ecff56a6df1dd531186c1a946"
+  }
 }

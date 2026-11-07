@@ -29,6 +29,15 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   pinned CodeQL CLI computed over `github/codeql` query tests at
   `ae741615f3e178ce61289a651790dc67fcc18e19`; see `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
+- The JavaScript identifier typo table
+  `rules/bifrost.javascript-codeql-quality/data/identifier-typos.txt` is
+  CC BY-SA 3.0, not Apache-2.0; see `licenses/CC-BY-SA-3.0.txt`. It is an
+  adaptation of `shared/typos/codeql/typos/TypoDatabase.qll` from `github/codeql`
+  at `ae741615f3e178ce61289a651790dc67fcc18e19`, which CodeQL generated from
+  Wikipedia's "Lists of common misspellings/For machines" (text by Wikipedia
+  contributors, with additions by GitHub, Inc.) and distributes under
+  CC BY-SA 3.0. `tools/codeql_typos.py` records the changes. Adaptations of
+  the table must keep CC BY-SA 3.0; the rest of this repository is unaffected.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded
   from the engine's published Cargo crate. They are included in this source
