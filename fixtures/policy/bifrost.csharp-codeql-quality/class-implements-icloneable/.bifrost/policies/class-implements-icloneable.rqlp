@@ -13,7 +13,7 @@
   :id "bifrost.csharp-codeql-quality.class-implements-icloneable"
   :name "C# class implements ICloneable"
   :message "type implements 'ICloneable'"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL csharp/ql/src/API Abuse/ClassImplementsICloneable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports non-sealed types that declare Clone and implement System.ICloneable directly or through a chain of source interfaces."
   :tags ["csharp" "codeql" "quality" "api-abuse"]
   :analysis (analysis :type match :selector

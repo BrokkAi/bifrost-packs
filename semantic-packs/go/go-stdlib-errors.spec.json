@@ -1,22 +1,32 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.errors",
-  "pack_version": "2.0.0",
+  "pack_version": "3.0.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-errors.json",
-    "sha256": "79207880a0cd4559695dda740a1d63a3142bdc7b3131b9116954582fa95bcb9c",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/models/go-stdlib-errors.json",
+    "sha256": "63fb9b9e407a4b4833fb3328b3712171a658cf2f97eaf45d2a19006ef8687587",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-errors.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.27.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.27.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
     "source": "https://pkg.go.dev/errors",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.27.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.27.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "procedure",

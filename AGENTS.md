@@ -10,6 +10,15 @@
 - Keep incomplete and unsupported outcomes explicit. An empty result under
   incomplete coverage is not evidence of a clean program.
 - Packaging and scanner enablement are separate from storing content here.
+- Every first-party pack must have `safety.review_required: false`: review-required
+  packs remain dormant until users enable them in `.bifrost/packs.json`, leaving
+  default language support without their models. The native release input check
+  enforces this rule for packs that reach users. The sole temporary exception is
+  `bifrost.rust-stdlib`: bifrost-dev #10045 (an active std pack's partial
+  callable family weakens authored locators) and bifrost-packs #325 (remodel
+  std.env.var/args sources as module functions) must both land before enabling
+  it stops losing findings. Remove the exception then. Source-only and staged
+  packs still need an owner decision before their review-required flags change.
 - Author public semantic packs and generation specifications here. The engine
   copy supplies existing embedded sources and focused fixtures; it is not a
   second public authoring destination. Reconcile reviewed baseline changes with

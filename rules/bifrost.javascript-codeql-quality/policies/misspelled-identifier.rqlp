@@ -7,7 +7,7 @@
   :id "bifrost.javascript-codeql-quality.misspelled-identifier"
   :name "JavaScript misspelled identifier"
   :message "an identifier may be misspelled"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports JavaScript and TypeScript identifiers for which a normalized spelling correction co-occurs in the same source file."
   :tags ["javascript" "typescript" "codeql" "quality"]
   :analysis (analysis :type match :selector
