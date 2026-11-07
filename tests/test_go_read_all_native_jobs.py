@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMITS = {
     "go-stdlib-compress-gzip": "a8f1458142c44fb9a94dcf0cd63771e965238fad",
     "go-stdlib-compress-gzip-declarations": "a8f1458142c44fb9a94dcf0cd63771e965238fad",
-    "go-stdlib-io": "65b68f55b537ab77b7ecd8569b0c838aac9be0ea",
+    "go-stdlib-io": "ab31a1ea90098012f6063c2663a62d4a0af9236a",
     "go-stdlib-io-declarations": "21151aab8d92052e3a766620c5d531f92bf87089",
 }
 JOBS = {
