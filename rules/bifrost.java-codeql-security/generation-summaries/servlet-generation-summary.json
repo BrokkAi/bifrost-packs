@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "codeql_repository": "https://github.com/github/codeql",
+    "codeql_commit": "ae741615f3e178ce61289a651790dc67fcc18e19",
+    "codeql_input": "java/ql/lib/ext",
+    "engine_repository": "https://github.com/BrokkAi/bifrost",
+    "engine_commit": "2eda68dc23",
+    "catalog_prefix": "servlet",
+    "catalog_version": 1,
+    "inputs": {
+      "jdk": {
+        "distribution": "Eclipse Temurin",
+        "runtime_version": "21+35-LTS",
+        "module_image_sha256": "1465b683efd50adb60af815a8554129f8bd1b03807444cc491a5d2800d6f2091"
+      },
+      "jars": [
+        {
+          "coordinate": "javax.servlet:javax.servlet-api:4.0.1",
+          "sha256": "83a03dd877d3674576f0da7b90755c8524af099ccf0607fc61aa971535ad7c60"
+        },
+        {
+          "coordinate": "jakarta.servlet:jakarta.servlet-api:6.0.0",
+          "sha256": "c034eb1afb158987dbb53a5fea0cadf611c8dae8daadd59c44d9d5ab70129cef"
+        }
+      ]
+    }
+  },
+  "catalog_version": 1,
+  "catalogs": {
+    "codeql-servlet-sinks-information-leak": {
+      "entries": 1,
+      "semantic_hash": "b76b73f516e53d629ebb9f2e76b024312483cdf58de3fbc09520573636c2261e"
+    },
+    "codeql-servlet-sinks-path-injection-read": {
+      "entries": 2,
+      "semantic_hash": "92e665cde8c17297bb3c8311f8254fd376ed0026cb5e5ba50c4e5f5cd6f1bb35"
+    },
+    "codeql-servlet-sinks-response-splitting": {
+      "entries": 5,
+      "semantic_hash": "7aa8a645eb7e12042957379e0cc98459826238f3d25f22119308346ec9f62f28"
+    },
+    "codeql-servlet-sinks-trust-boundary-violation": {
+      "entries": 4,
+      "semantic_hash": "00f4496563ea66e1158b06d94796bb717718fc941970768bf4af78fc3bf8dc25"
+    },
+    "codeql-servlet-sinks-url-forward": {
+      "entries": 6,
+      "semantic_hash": "424e98adebfa21ee37323e547ecc08c3b73ba7cd122389014d10e72e0c1f9c94"
+    },
+    "codeql-servlet-sources-remote": {
+      "entries": 48,
+      "semantic_hash": "3169b5217f6a3b12a7457c333b36a5e61d5023fe454451ec42ae127b7cee3343"
+    }
+  },
+  "codeql_commit": "ae741615f3e178ce61289a651790dc67fcc18e19",
+  "translated_rows": 59,
+  "collapsed_by_content_kind": {},
+  "conflicts": [],
+  "neutrals_by_kind": {
+    "sink": 22
+  },
+  "rows_by_extensible_and_kind": {
+    "barrierModel": {
+      "html-injection": 1,
+      "regex-use": 1,
+      "trust-boundary-violation": 14
+    },
+    "neutralModel": {
+      "sink": 22,
+      "summary": 21986
+    },
+    "sinkModel": {
+      "bean-validation": 1,
+      "command-injection": 24,
+      "credentials-key": 75,
+      "credentials-password": 101,
+      "credentials-username": 80,
+      "encryption-iv": 2,
+      "encryption-salt": 2,
+      "environment-injection": 8,
+      "file-content-store": 35,
+      "fragment-injection": 33,
+      "groovy-injection": 33,
+      "hostname-verification": 3,
+      "html-injection": 15,
+      "information-leak": 1,
+      "intent-redirection": 23,
+      "jexl-injection": 30,
+      "jndi-injection": 43,
+      "js-injection": 1,
+      "ldap-injection": 33,
+      "log-injection": 851,
+      "mvel-injection": 17,
+      "notification": 83,
+      "ognl-injection": 79,
+      "path-injection": 373,
+      "path-injection[read]": 88,
+      "pending-intents": 25,
+      "regex-use": 6,
+      "regex-use[-1]": 4,
+      "regex-use[0]": 8,
+      "regex-use[]": 3,
+      "regex-use[f-1]": 1,
+      "regex-use[f1]": 1,
+      "regex-use[f]": 2,
+      "request-forgery": 446,
+      "response-splitting": 6,
+      "sql-injection": 151,
+      "template-injection": 22,
+      "trust-boundary-violation": 6,
+      "unsafe-deserialization": 21,
+      "url-forward": 10,
+      "url-redirection": 15,
+      "xpath-injection": 28,
+      "xslt-injection": 9,
+      "xxe": 3
+    },
+    "sourceModel": {
+      "android-external-storage-dir": 6,
+      "commandargs": 1,
+      "contentprovider": 32,
+      "database": 1,
+      "environment": 8,
+      "file": 46,
+      "remote": 328
+    }
+  },
+  "rows_by_provenance": {
+    "ai-generated": 108,
+    "ai-manual": 220,
+    "df-generated": 21268,
+    "df-manual": 227,
+    "hq-generated": 162,
+    "hq-manual": 253,
+    "manual": 3024
+  },
+  "skipped_by_reason": {
+    "extensible_out_of_scope": 29095,
+    "guard_sanitizer_requires_conditional_guard_support": 15,
+    "kind_argument_qualifier_unsupported": 19,
+    "neutral_not_sink_or_source": 21986,
+    "unmatched_declaration": 3183
+  },
+  "skipped_targets_by_reason": {},
+  "source_kinds_without_threat_model": []
+}

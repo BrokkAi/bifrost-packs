@@ -1,0 +1,242 @@
+{
+  "files": [
+    {
+      "path": "rules/bifrost.java-codeql-security/README.md",
+      "source_path": "rules/bifrost.java-codeql-security/README.md",
+      "sha256": "47d2a434cc86f5948018ad2b7dd67f3fccaae565900d7bb507820db79c255341",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-barriers-regex-use.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-barriers-regex-use.json",
+      "sha256": "2038021bf670c916fab67b02ecf70b8a93a3e3c7691cd2ba328f682e6c86cc61",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-command-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-command-injection.json",
+      "sha256": "19d386f81cea03bc12e77952b80312fb78991d07dec9f61c89e61ad1c488f696",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-credentials-key.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-credentials-key.json",
+      "sha256": "f75ee6eb7971a4c4d0986e17dfacf4b75484ed6c6019d7266c3cb5046b56a520",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-credentials-password.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-credentials-password.json",
+      "sha256": "50020e6ce2e3e72ff0c8561e1aed956802b7c87afb6d0f4ecce0c5a4473d4cae",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-credentials-username.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-credentials-username.json",
+      "sha256": "851ce74cf1f03072edc087b0f4c79cf6c9650b1e1a5c582acf44a2214080eb28",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-encryption-iv.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-encryption-iv.json",
+      "sha256": "99dd0e9db5065df15b8c0a0c02bebea4cfcd6021a119a6e989e3f435939dddfc",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-encryption-salt.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-encryption-salt.json",
+      "sha256": "b1f065e073875bee68b3a063e087175d80d1e0b7681cece131477d663892fb70",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-environment-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-environment-injection.json",
+      "sha256": "693e08884667376947ec6db20732ad1efe00abd2b8e35c664486e7753ccb9105",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-file-content-store.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-file-content-store.json",
+      "sha256": "b19fa0fc94c2ebedcdec4aa2ff03bddb5ca8e66639c548ed80989389c9730baf",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-hostname-verification.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-hostname-verification.json",
+      "sha256": "50b85625ed1a127ce5482f124220c92d88eb5299994eae628d0f658cd5f868d5",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-jndi-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-jndi-injection.json",
+      "sha256": "16f4deb239c7de753ca124b7475214a075a1426bd75ce04757e76033d257a220",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-ldap-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-ldap-injection.json",
+      "sha256": "35def2ddfebb54a2f3d9c55cb377bc8b883a7c00e8b70572ef817f338b553f02",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-log-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-log-injection.json",
+      "sha256": "4117b85bd5422f4a08cd7ccc8fe57ac50e17f4594ea3d9e163a4c4492b574661",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-mvel-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-mvel-injection.json",
+      "sha256": "d62d17719ef89718e0451c39defb9d969e4b87d9e3a47a797c2a9df9438db516",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-path-injection-read.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-path-injection-read.json",
+      "sha256": "50c8cfabd0240def368ef57bf77e89aeb3895bf827c58b5974debe297fc7426d",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-path-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-path-injection.json",
+      "sha256": "1a697bff427eaf321b668620429d4cafa74d2e0ecc02547bc38b3f1d87e9edea",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-request-forgery.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-request-forgery.json",
+      "sha256": "ad65f27a7f6f550efd51c7ca4af7e378c64e243329f58dc2206e80342186339a",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-sql-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-sql-injection.json",
+      "sha256": "77f5a0881ec77d1d03afc62719dccc4e018821fd87f4dd55f6cc40e7adf45085",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-unsafe-deserialization.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-unsafe-deserialization.json",
+      "sha256": "f0affca54dd4b83e3a32e6120f8e135e583c369680a901d755d062243b4210d3",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-url-redirection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-url-redirection.json",
+      "sha256": "35cdfa72fec097ce243d9e7aff565dcb16fa7fcf4144b9ead9df40d722166db3",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-xpath-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-xpath-injection.json",
+      "sha256": "72e82cfd0538c6335e84d56d2466f72670583f1d48edc7895a98742ef9f9c746",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-xslt-injection.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sinks-xslt-injection.json",
+      "sha256": "a87b07ea7bf5c8a50c26cb47092091f7b50ef914d6272233980f5d05d26b38aa",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sources-database.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sources-database.json",
+      "sha256": "637aee6022ddc019a45e1542d2ddf3f36d2c8898cda268f8f902c6b10462b63b",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sources-environment.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sources-environment.json",
+      "sha256": "5aa17e00cc026ac57aea0bd236ba8d96d5e4a75287403298c7a31951d653ee7a",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sources-remote.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-jdk-sources-remote.json",
+      "sha256": "131770c65586495df8e20b5e08a6b7b3a5f44dac26af1eec7e11f53eeac91d7e",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/catalogs/codeql-servlet-sources-remote.json",
+      "source_path": "rules/bifrost.java-codeql-security/catalogs/codeql-servlet-sources-remote.json",
+      "sha256": "3b18a31a9dd327a53792edeaf44154b20b7650b77aff1cf155cd5cda74d01e97",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/generation-summaries/jdk-generation-summary.json",
+      "source_path": "rules/bifrost.java-codeql-security/generation-summaries/jdk-generation-summary.json",
+      "sha256": "a94066ad23eb127c1348f11362af304b54676f00e911f6d5aba083c24969ef71",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/generation-summaries/servlet-generation-summary.json",
+      "source_path": "rules/bifrost.java-codeql-security/generation-summaries/servlet-generation-summary.json",
+      "sha256": "18a9eadd9693db991e6629d3e9e13759fb54b632d6ed808a7a3f6414ded1f4f6",
+      "classification": "public",
+      "license": "MIT",
+      "source_revision": "ae741615f3e178ce61289a651790dc67fcc18e19"
+    },
+    {
+      "path": "rules/bifrost.java-codeql-security/manifest.json",
+      "source_path": "rules/bifrost.java-codeql-security/manifest.json",
+      "sha256": "b1c228d73bc804634cff178743d3fcc2f6978002d254b4ac8d75c5d645b3eaa9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    }
+  ]
+}

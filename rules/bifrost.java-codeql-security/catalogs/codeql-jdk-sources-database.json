@@ -1,0 +1,106 @@
+{
+  "categories": [
+    "database"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sources-database",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [],
+  "sources": [
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "database"
+      ],
+      "display_name": "java.sql.ResultSet.getString(int)",
+      "evidence": null,
+      "id": "codeql-949ebfa20054065bbb19ed80dbea0b4b51e7b30b92042dc1ab34f3dbde4fa3b6",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getString"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.31023b5f7a4a4edb146c89bfbec45f65167ba594aaaa567baa1af5eac969d1ca"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "database"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "database"
+      ],
+      "display_name": "java.sql.ResultSet.getString(java.lang.String)",
+      "evidence": null,
+      "id": "codeql-abb75cbcee72d0daa5c70bbe78d26814ad9ce9b9a4cfbbec3d5e8ffc6e54e128",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getString"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.8b4c5e6bb0de60da644d0526b8a504b29bff296e1252da037275c56d80b09a2d"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "database"
+    }
+  ],
+  "transforms": [],
+  "version": 1
+}

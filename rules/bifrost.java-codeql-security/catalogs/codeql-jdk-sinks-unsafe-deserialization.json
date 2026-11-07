@@ -1,0 +1,60 @@
+{
+  "categories": [
+    "unsafe-deserialization"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-unsafe-deserialization",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "unsafe-deserialization"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "java.beans.XMLDecoder.readObject()",
+      "id": "codeql-b580dbaeacc98aabfa246664fb5e49ae4f5e23ed0e380de76df0434d4c52737c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "readObject"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.163a3d90bb0236702eb5a3dd61b3c5cd5073c64543beb2d2749135f19ad7468b"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

@@ -1,0 +1,4553 @@
+{
+  "categories": [
+    "log-injection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-log-injection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.info(java.lang.String)",
+      "id": "codeql-00cb7ac8ec6981c603afc9b4f688eaf716debff1f9d206f7107beecc97925ddf",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "info"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1865bd99b2865fe2fed23db3be2d0e084227e4a1e6fc12d8a5da9d036cd72c03"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-0153aac402fff5b0728c0301fcd5052e164b2dcea9a2deec92a4aa6c6e7121cb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fbb9e771f3a7d9a944801391854ecc75fb832252d8897a3e851365ff0a610202"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.finer(java.util.function.Supplier)",
+      "id": "codeql-0303415ccfd126f5a505f0dc738e7e347a3c3a69c44fa5cfa2a25916dcc36fc6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "finer"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.70053cd2df52aff0996b4e7c2f576e78a487ca8fb47ce946225d71839c662018"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-034c68bb593bc630bf3caebf0092630103bbfcea5ec49273350dbd8ca027fc66",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0804882037b068eb1700b52232a0c63f0e9586ed3364e0152141b98607ce3379"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.finest(java.util.function.Supplier)",
+      "id": "codeql-0787bf741ba94f82f2489481f16323f3cc86db41824985e70294576e98265d28",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "finest"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2c824c62a4c9f62b9c9578bdf1103c9d8b818b4941d15ea17ca494893996c973"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.String,java.lang.Object)",
+      "id": "codeql-0838b65e2d34b0cd35051618185ccea23539551ebcad3f2740592709403e4ef9",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.e3492025749dcea7abf91f6c218d9e361abcf83d1e07cf07b5389da257ad716c"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.util.ResourceBundle,java.lang.String,java.lang.Object[])",
+      "id": "codeql-089d321d67e05d925cbff7d2e0dd6306ebcfd52036c8578a5b6d30b2025c94ad",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.40a0f4b50bc0c4ab2fd1dd42ecd6bbcafd69e8b301ed9e125b1fea2604034e8b"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-096d89b43a6aa29447ad44581131200e5a0664473ad496c9e5054af8b84aa8de",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.665a13db7c247bdce6ae9c3d4f6c69a6026402b0b78fb2f914b851dce9355640"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.String)",
+      "id": "codeql-0a557ce2dc3be146bfef1defea90c096c61930f5f373655cf4711af47a71ec95",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.478bcae9dc65471d9e917dd959f1613339df947e910f0018eb4bae7b4e289f6a"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-0b354259a7d100bdf2a8f11cc7c590afa8dc409140356d323e57f7df16fee751",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c1e8e0e7f8313ab2efafab2e6c38dc1724ee70b9c21ec0908dc3ad3bc4e8f9bc"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.String,java.lang.Object[])",
+      "id": "codeql-0c21fa3e9d2cc98747775d24122d96ef14b7752183eb606477df22d0fcdf0b65",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f1667a4fcc1b5460c57a91109da65dd6e4716dcd27433f54dd1694e19f7e459e"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-0d0bc361963af4f5f10940cf4a9d084f640e6cabee22f85271ffd1926f2ae214",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.30818bd145edb15287eb43fd14a3d00afe9ecea6afef1d53ab5c5988d0645934"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-131892cea2a71f668e05801d042a660c513693e18056fbf730804ecf94774443",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.65e753b91defec48dfb627ff670c4d61faee57d2f686ea369862c8b8aa290782"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.exiting(java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-15377995b77737827ee8b0309cb7e1f0bcb9f8dfa4381b903927eb59cb3dbfb1",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "exiting"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.564900c6eeb669e460ffff1b6b4f7aafcd2905c72ec8573620fb1dd28e93f330"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-162f92e1784d9cacb6af508289869e552b974a479fe93cf5767a1dabe9a86bcc",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2aafab341175164038f46314dd0c7c5252f7280a858935f790018f19a05f40e0"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.Throwable,java.util.function.Supplier)",
+      "id": "codeql-165751e066291fb803356f7a08a55ebc483b87fec4078ddded58f20361201133",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5139b8a5c0c30092feb7472d2245330248e8c73d8e4611da685920d57ab11227"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 5,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-173ef32ef7a484b545ffb0fe8c9aff58866252d15cb1ffd1b6c1f5d874318f57",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c1e8e0e7f8313ab2efafab2e6c38dc1724ee70b9c21ec0908dc3ad3bc4e8f9bc"
+              }
+            },
+            {
+              "formal_index": 5,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-195b4392dad646c8f6006471bb82e45a9810e02c95d88ab8cb9c4e79fae569bf",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2aafab341175164038f46314dd0c7c5252f7280a858935f790018f19a05f40e0"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-20e14229112217302b1728200df633ac7d6219aa93ce94c208bbb4b3f3af7386",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.665a13db7c247bdce6ae9c3d4f6c69a6026402b0b78fb2f914b851dce9355640"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.config(java.lang.String)",
+      "id": "codeql-21f17f923b35c300834159fd94b047c43a4abaf095ceff0153da9523216cf9e2",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "config"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.083558d21830ed960a9fb25ae730e2f797a732e38df5fb594a80e37cde8c7987"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.exiting(java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-2322066e073ff54cf2eab356cd3842d9f48d2962119503e994a918afd23dee2a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "exiting"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.564900c6eeb669e460ffff1b6b4f7aafcd2905c72ec8573620fb1dd28e93f330"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-27e3b7202e8ed6869a1b015afa2e83a749ecaf2d41c0410a491e1ea96292bf6a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0804882037b068eb1700b52232a0c63f0e9586ed3364e0152141b98607ce3379"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.severe(java.lang.String)",
+      "id": "codeql-284f89ae4cfaa49f151c9d521155a4454ae2967702e12d11b7a3e442c18b5c47",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "severe"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.93fc37818c0960f666340cfe08927e13a64a56ce05937d8ba73e898109dade15"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.Throwable,java.util.function.Supplier)",
+      "id": "codeql-2915045cd074f641fa5c81623000269de54c458178c50e9d5cf29d1d8cb9c831",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9ed0591686af782867cd347a981d5ed75505ae27a607cd4462345eec33038f75"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-2b881c253479be7d2da285e7616ff27961ca2ce174aa6bc5a9b3592ab2c2d1ba",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d494c9848bb50ce76e08a5def506f7c34b232bd39391daf611f8ae523976e5a8"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.util.function.Supplier)",
+      "id": "codeql-2f0087cb4cf51923d4698b4e6817ec72a385d13f6399dd7fc046a2fcdb39aaf0",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9bb8ba6c13f9a13afa2f04ef7622ac621d98cccb1a1dbd6b5c4d60e08d75a69d"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-3570d958bea4bbb98dd01b9139083efd03030518ed1024725450c81d2e40d68d",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.30818bd145edb15287eb43fd14a3d00afe9ecea6afef1d53ab5c5988d0645934"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-3f409d5719e4a1d7354f5c2d2ee246687cba004b0e29ab780a03a3049d3313b3",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.46bfe537b0e1b1ce9483efd8c4788c79486e50be0a34226706bbfbb53fc3856f"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-4303f308872735e2239067ca50bfa2257b13b5b08a5ca3e0b247b9c342a156d5",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.46bfe537b0e1b1ce9483efd8c4788c79486e50be0a34226706bbfbb53fc3856f"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.util.ResourceBundle,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-4555c52044b2279412b9a1929b1fd9680fc350c3a1f10d2789820eb7352175dc",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.76e4121e1a76c559f824bf9d32fc2a7ced2cb8f4f75e19a5adaade7a367a0a2b"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.LogRecord)",
+      "id": "codeql-462033ee99de871080c42507547abd11226ee780f98926d80bc23a62efb168a7",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f0078e10ecccad09faf8788575782291bd6c72479b81321ef2ac6aa324e2bb5e"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.String,java.lang.Object[])",
+      "id": "codeql-4622805aa5cc374c896e7cc884c57f0197d2ada10502748fa02d02d24fe217f8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f1667a4fcc1b5460c57a91109da65dd6e4716dcd27433f54dd1694e19f7e459e"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 5,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Object[])",
+      "id": "codeql-467e9ef6271132529ebbffd474a8237b20d9e52b0f7ecfa3b1f59c9830f46529",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.7631a2e3489abd14e032fbc98831c1b37074b395cd4d1aca98d1450d303a2115"
+              }
+            },
+            {
+              "formal_index": 5,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-4d1ec3abad4522ded184a682fdd41bfd59925553aab474f62b0ae43d47f3ecb4",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fbb9e771f3a7d9a944801391854ecc75fb832252d8897a3e851365ff0a610202"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-514221cd6ebd92a4c275da21ca3b09d0448bfbb6a04aae597ad17633734f902a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0804882037b068eb1700b52232a0c63f0e9586ed3364e0152141b98607ce3379"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-522c4a211649269389e9dfac1118c34a588ace07962cd65a1eb69cb71d55311f",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.30818bd145edb15287eb43fd14a3d00afe9ecea6afef1d53ab5c5988d0645934"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.info(java.util.function.Supplier)",
+      "id": "codeql-61c19a56050f8f887138c88b6fbb16945f0fa577db82ff792429bc1c4a236ba5",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "info"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d7f6d89fa3f6d42c20dff6de4a3e888a87b7765e0590a4cb37729eec4d893221"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-6cda1428851bd153eaff0dcfa1f09221a5eee283f8034f31a4e9c1f8f713a6fb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c1e8e0e7f8313ab2efafab2e6c38dc1724ee70b9c21ec0908dc3ad3bc4e8f9bc"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.String,java.lang.Object)",
+      "id": "codeql-6ce0ad7c09951f7ba24992268f7ab55fa3d7136bea62baacbe728f8eb2fa041c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.e3492025749dcea7abf91f6c218d9e361abcf83d1e07cf07b5389da257ad716c"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String)",
+      "id": "codeql-6e6aeb1fd1d136520af45f31e808c6ccb603dbf0fb7648cf63032f3a1c6ba428",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f186bffcce27a1979633c7d8a9e6da62b1c02167c20a05bc1090369d733ae724"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-6efdebfff533b7e441ea6f77cca2ff21f4418be62267197023797979c8967989",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2aafab341175164038f46314dd0c7c5252f7280a858935f790018f19a05f40e0"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-717e4cc5f685957002b9caf00ef3c55f30d1aee890328f467c32e703da81a5e2",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.bc68c543a4567f707ef8c8ca7b177819fd23bb43f739dc8395af932da25ecb70"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-72465c6b7e00df5f6803c8fc9400463ff698027724f37c195f1056d6b6084cfd",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0804882037b068eb1700b52232a0c63f0e9586ed3364e0152141b98607ce3379"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.fine(java.lang.String)",
+      "id": "codeql-7645eefddc4b7abd41ad5f46d5aa6ade9209d154057e81800129d1a23d893f26",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "fine"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0802a2dd48b0772edf49b82d544800fb49bd826c792688fc6eb52e19c5ce8db5"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-782fec3ad74c2ae2e892d5f3737fa695022443de2a1310767eac872f07c135a9",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.46bfe537b0e1b1ce9483efd8c4788c79486e50be0a34226706bbfbb53fc3856f"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-7a169cd3e96e8cf6fa57004b2666b1c1e20a6ce8a14953b5fd058f3bd04561d3",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1bc133c456e646065e714fc73c9fd8d33f0e772777dfff0ecb2b66c8c35b49e9"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.config(java.util.function.Supplier)",
+      "id": "codeql-8418eaf99c59a072329fb5fbccd1b8d7f1cf3c1aeee61fe64b4aed3f17fb3330",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "config"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1eb94d9a3ef8d5141f068a0f157148eced5934d89e82116205bd603f3d63dd98"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-86f445d139bc02057c8b82bc6aa65e35b9684b9d3b39804f1af01b38a150b928",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.46bfe537b0e1b1ce9483efd8c4788c79486e50be0a34226706bbfbb53fc3856f"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.lang.String,java.lang.Object[])",
+      "id": "codeql-893b126f37e4482b24cffdde833d6cbf1fd0917baec831309dd00c35ed9da1de",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.aea517d18cb7a362b9a3596d062ea3d487984746e75bc8f878e7624bf931a6bb"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-8a67e5fe0355e68ac42f1bec89cac354ddc332886a6cfe00aac96bed6a75b779",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1bc133c456e646065e714fc73c9fd8d33f0e772777dfff0ecb2b66c8c35b49e9"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-8b3532d938db76c19f41e8f12030a946a5b8ea6ebb49b06a5e2f7a7ee29a13d4",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.bc68c543a4567f707ef8c8ca7b177819fd23bb43f739dc8395af932da25ecb70"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-8da13faea2a4251f509dc4d9d0b3c9cb1a863e8ae4777b8b73dc33b39c52448e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2b0701cafd4538a76ced3a9616425822626d19a10578844a33ee18113a45eaa7"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.exiting(java.lang.String,java.lang.String)",
+      "id": "codeql-9321bffc59597a39a70a0d75160ba08bdf71f9591e038e1b7c3e1dd9a37b8b0b",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "exiting"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.069a58805c8309af7fd2aae134b61d87c59465e69da1a8844df21d0c0dbe2870"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.Throwable,java.util.function.Supplier)",
+      "id": "codeql-95365e4e35ca70fb4b2693a086b6df2e550b52e2dbfd79ea0fc308697ab45fdf",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5139b8a5c0c30092feb7472d2245330248e8c73d8e4611da685920d57ab11227"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.util.ResourceBundle,java.lang.String,java.lang.Object[])",
+      "id": "codeql-9549881f2291a19e65aa7116297f7f94803a33b9174137ade0a3540ed80cfbb1",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.40a0f4b50bc0c4ab2fd1dd42ecd6bbcafd69e8b301ed9e125b1fea2604034e8b"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.finest(java.lang.String)",
+      "id": "codeql-95febb91d3bdd73d78d456d270147f082fce64b5213d794a8eb25ddf223a4a6b",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "finest"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.840655bc6ab98af071c02925678b06bd3d5fd9c7d0eef7ad71c9436731873aac"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-9970e5a8a2deec1bfc3b0fea21cb0045313366e98d431f6a3858a0b182711ecb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.65e753b91defec48dfb627ff670c4d61faee57d2f686ea369862c8b8aa290782"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.fine(java.util.function.Supplier)",
+      "id": "codeql-9afcfc200540b4610da7c41ef0575b279f77cb60b82be425097e347ea3c0d06b",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "fine"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.dc191861487c1e07875f688e436159517d02aced17304f201789ad692a850d21"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-9d9f9cbdff7e53449676e39e9c1f151386b4ca8ef9ae8b69312e19261192511a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fbb9e771f3a7d9a944801391854ecc75fb832252d8897a3e851365ff0a610202"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-9f4fd13ff690b5a9049740a1e53b99e411c50accf482d98624a870df86123ecd",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d494c9848bb50ce76e08a5def506f7c34b232bd39391daf611f8ae523976e5a8"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 5,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-a2fa4a1286bce3640116fb45c5dd074eb4879a74e9257a3d98d843f54abb784c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0804882037b068eb1700b52232a0c63f0e9586ed3364e0152141b98607ce3379"
+              }
+            },
+            {
+              "formal_index": 5,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.exiting(java.lang.String,java.lang.String)",
+      "id": "codeql-a495d3c8b5822e2894f2e9adfafaf32cbe4196fc6859b2df9e2bdace6d8c7290",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "exiting"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.069a58805c8309af7fd2aae134b61d87c59465e69da1a8844df21d0c0dbe2870"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-ade0ca0af91ace283a38a21cc30da2789d83402b41804c6b608e5197c907c6a1",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c1e8e0e7f8313ab2efafab2e6c38dc1724ee70b9c21ec0908dc3ad3bc4e8f9bc"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.lang.String)",
+      "id": "codeql-bb9dc93793e89c7ff3fd3ee495ee5d0ce4dca4d2c76e9d653229959710082b8e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.a3862a89a062a11146b873ae4da961a5c75c62e434418f35b4e7f65c8e5d2b10"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String)",
+      "id": "codeql-c5f62e2622dca605cecb210ce012d14071cb98b4d2a8c0f3c30df6e5c9cdc3e8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f186bffcce27a1979633c7d8a9e6da62b1c02167c20a05bc1090369d733ae724"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.severe(java.util.function.Supplier)",
+      "id": "codeql-c7eb19de89111cb0f41cea858490111092448be793b6863ef27efe9e0bcb2921",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "severe"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.e6ad741115abc9cba03230f2f1c31dbab9b5a3a6e3356f28e2a62defac018d59"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.entering(java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-ca5be0a9baf91355c072fca0869d09435ae4384ef388a2aad5ff1538f6fc2dfc",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "entering"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.65e753b91defec48dfb627ff670c4d61faee57d2f686ea369862c8b8aa290782"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.warning(java.util.function.Supplier)",
+      "id": "codeql-cb00605123d4eaab82f36efc54b9002bb3a26ec5f30cbd54ccdb1323c2fd7414",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "warning"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.36c67e2260d18d4d1cc8fed441fb4cc9e899338024725115355e37f772846f9d"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-cd3c2a149e946b4800b4896e65f092760f41e1538f3756e1052fc23dca5c6b91",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0db1003f3257467e4cf7a9449cd825ec5ff327e34a90c58acae6d8c610fe926a"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.util.function.Supplier)",
+      "id": "codeql-cd97fd3171f6e970f440c64b4383fbc7a978bebb0981b1acd23837a31ed0357b",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9bb8ba6c13f9a13afa2f04ef7622ac621d98cccb1a1dbd6b5c4d60e08d75a69d"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.exiting(java.lang.String,java.lang.String,java.lang.Object)",
+      "id": "codeql-ce1b9a9e0e143d3748d5f7fe23b1264b98659d49b87a4d660e2237bdac16373a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "exiting"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.564900c6eeb669e460ffff1b6b4f7aafcd2905c72ec8573620fb1dd28e93f330"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-cf5c4f597c62edad33ea6e19f16474b6b8ce4765de61bbd6bf0549a1ff85cbe5",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2aafab341175164038f46314dd0c7c5252f7280a858935f790018f19a05f40e0"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Object[])",
+      "id": "codeql-cf9d103760dfe1cf5a7dcf517a2424307356478213a8354cb41a99fb000353c4",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.7631a2e3489abd14e032fbc98831c1b37074b395cd4d1aca98d1450d303a2115"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-d0a505e6c3f9f582b8b0683ac24b2009ecaa234abaa8a927244558c0dd53aabb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fbb9e771f3a7d9a944801391854ecc75fb832252d8897a3e851365ff0a610202"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-d2d50994746f5c6e6ae1e8da83edfb895bddcbd4444e0ab8a982c2b9752623bc",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.665a13db7c247bdce6ae9c3d4f6c69a6026402b0b78fb2f914b851dce9355640"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.log(java.util.logging.Level,java.util.function.Supplier)",
+      "id": "codeql-d58db0032246d094086cf84b3cfece6973efb120f0e8a2f9a1cd945c494d8325",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.595bfe2c458b91409310f5112203436d76392801ddfadd8fa98708626af3ad95"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.util.function.Supplier)",
+      "id": "codeql-d77449b48f6e45b3861ec9f14230120ac37d8e3eacebb713947f541f3502c43e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9bb8ba6c13f9a13afa2f04ef7622ac621d98cccb1a1dbd6b5c4d60e08d75a69d"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.lang.Object)",
+      "id": "codeql-d7b7387637e09bd4ef00a86b6b40f50251d1a15f30eb391a0859c6bdbf28d0ed",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f2e47cf9b6e41e863f6fc66a9e7b2c446e68e25394bdc8215c8ca598435f764d"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-dcd0d757039c9baf6fde42dd150c1f7978ff945914add9220230fd7f894dc622",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d494c9848bb50ce76e08a5def506f7c34b232bd39391daf611f8ae523976e5a8"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-de25131eba698fa838ca3ed6068f02bf342a650db1a15a7b879b351897890066",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.d494c9848bb50ce76e08a5def506f7c34b232bd39391daf611f8ae523976e5a8"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.warning(java.lang.String)",
+      "id": "codeql-de3a9b06c2ba5a44c710c21d7c03c16e34d54c4b29603fdd652feac7574e043c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "warning"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1609dee67ee4d52a8f5e167c86fcd736c2a3dfa44155d4c323307256f24f45db"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Object[])",
+      "id": "codeql-df7d5310f9ed77820594e6a549d85a50e39ec21acf06c0e86444132ac1ecd5bc",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.7631a2e3489abd14e032fbc98831c1b37074b395cd4d1aca98d1450d303a2115"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.lang.System.Logger.log(java.lang.System.Logger.Level,java.lang.String,java.lang.Object[])",
+      "id": "codeql-e2ae626ed850060e319bce91b8e495efeae215c20ec5c3698656996b1737bac8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "log"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.aea517d18cb7a362b9a3596d062ea3d487984746e75bc8f878e7624bf931a6bb"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.finer(java.lang.String)",
+      "id": "codeql-eaf0816830ec8f53d7c43818d6104b062269ab999f254683316fcaa4a9aac405",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "finer"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.4f497fbd38d806d41eb9bf110777282404ff047172b79014cadd39cb8867f60d"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Object[])",
+      "id": "codeql-eceb14e122b86af4eb0d1b6bdf764e4fe01a9361557359ea4ee7bdbc6b216ee8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c1e8e0e7f8313ab2efafab2e6c38dc1724ee70b9c21ec0908dc3ad3bc4e8f9bc"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 3,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.String)",
+      "id": "codeql-f644775fba336dda49a0b8656ac6f71cd6f7f7182f53d49175fec810e47f4c12",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.bc68c543a4567f707ef8c8ca7b177819fd23bb43f739dc8395af932da25ecb70"
+              }
+            },
+            {
+              "formal_index": 3,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 4,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Object[])",
+      "id": "codeql-fb5d72f4ddafac9b8dfdf41a9333a46b312f89351521520609f9625b0dcc3dc3",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.7631a2e3489abd14e032fbc98831c1b37074b395cd4d1aca98d1450d303a2115"
+              }
+            },
+            {
+              "formal_index": 4,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logp(java.util.logging.Level,java.lang.String,java.lang.String,java.lang.Throwable,java.util.function.Supplier)",
+      "id": "codeql-fbbfd6d14f1459fb0c828a7cd3480682f42e7ee9a6d1f9358499e12c3167eb1a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logp"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5139b8a5c0c30092feb7472d2245330248e8c73d8e4611da685920d57ab11227"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "log-injection"
+      ],
+      "dangerous_operand": {
+        "index": 2,
+        "type": "argument_index"
+      },
+      "display_name": "java.util.logging.Logger.logrb(java.util.logging.Level,java.lang.String,java.lang.String,java.util.ResourceBundle,java.lang.String,java.lang.Throwable)",
+      "id": "codeql-fcba00f2a4f1839e8e58ffa95f748ced455e7c160b67c20665e51ac7adc16b65",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "logrb"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1bc133c456e646065e714fc73c9fd8d33f0e772777dfff0ecb2b66c8c35b49e9"
+              }
+            },
+            {
+              "formal_index": 2,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

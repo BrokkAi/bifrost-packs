@@ -1,0 +1,1646 @@
+{
+  "categories": [
+    "ldap-injection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-ldap-injection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,javax.naming.directory.Attributes)",
+      "id": "codeql-093c933cf8593aaf9d88ad4316586a3e4882da8406b9d0db51df96b35206b4e3",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c4459d48840ffa71700a1dc1c39d98f3317289bbf075228ebe4f3ff2876e84bf"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-0de18564b88edf860081e9cd7b807b88fc8a6953d33707d10ae75128f4acc6e2",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0c180e986b786160822479e04fd016c058473168fc58d5e384eed9f4835183c0"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-13adffa1bd16ef9111e3090de3442d832be308744090b9ecd8d18a3a95d3409a",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0c180e986b786160822479e04fd016c058473168fc58d5e384eed9f4835183c0"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-198ad6af317bad6e2446f63000e412f768cc7ef20aaa5426f3e0a426f758ee1e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.02a58db15b65879c2c186c539fa6d5d5e700ff0ac6d53deaf2e8f3b3fe53eaa4"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-2b4bd2f37d132f4fd28fc0cb4a380acd4c7e73450b2137980ffa1b0c820639cb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5960f5f7d25b9f7bb30cb78b1e2e4749b2da4988c2c535fe963e55dcf07994bc"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-48857e2107e498db06d3204f905d29c37ed8c28252c606a34ad90b8f8fbd5cf7",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9563cc9e6e387eacf02b2358403ccde82899aac0a6846ed7f7880f63b9893d33"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,javax.naming.directory.Attributes)",
+      "id": "codeql-4923fa5bb87459539ee6f6dd0548b9bb16a1217d885a2ef08770a513872f6d65",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.58804d0e53826215efba0a32cb0c8044dfcf53a61a646effa47b0c552d3cb464"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,javax.naming.directory.Attributes)",
+      "id": "codeql-5e3d3eb8965e9190273dcfe7a711c7e48a10df7ad22db0c3b3813fe6add2d03c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.50013c3c361ffade1bc412111eeb01b198cd8978ba464f9e19f120eb369b7451"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-62d4142537066f9e3bf5102b02202950fccfb8f76b8974fd79741faed4bf8f31",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0879775af80d534ca6ae53f6be73755cf18f0592f28291279f5ccf7bd2ccc1f0"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-6d260538c08c81cb9c1756224c82bff4f6379b5513dbcbe71d83de36432d1071",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.40ff5e86ceca6e5a7976b39fc129bfecc3296bda310ce927b20b713430cdd2de"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,javax.naming.directory.Attributes)",
+      "id": "codeql-77f59a84245404f7f0701df37479902ecdead9a8fec60e5d67e06495413844e6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.58804d0e53826215efba0a32cb0c8044dfcf53a61a646effa47b0c552d3cb464"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-7e21e5e9e891b613028d24cdaa0894e90347cc4a17cf15ac330bad026c9bf496",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.40ff5e86ceca6e5a7976b39fc129bfecc3296bda310ce927b20b713430cdd2de"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-7fbec01cd71eda393ae33640d9b4f68b1d0c3c621321d3d2a457ddac3022d190",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.b847bc58d598e6e1d5ee5079a0a5c0d5a1802c3f2ad17c8f5ac216e83f92f143"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-8e5e2fedf0ed310f136e151afe525eb02c3ea09b507a2630e14a6522bdcb7d97",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.4d14ca0aad5d96b889327230aa81549a43fa4628493745d0512c94d091048cef"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-8eaddce094e349de99853cd1efd84d45cc7b6028b9200fc931cd7c7ea9219660",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f5e3490d440a8d22fcd7b46fbebdb91cffbd2c71fb73d5f04cc18e6a51411e11"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,javax.naming.directory.Attributes)",
+      "id": "codeql-985fa8c7a4d62d211d23aa33a56f721a614c019c7b8aa5ac21911243633443eb",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.26fd6e5a161f7d5752ac543d104de6f1f7f5831247d0c577544e96084eee508a"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-999b8f31a8477d52a60df8cb8a4760621721827a6ddac0af2a1637cd01488f42",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.02a58db15b65879c2c186c539fa6d5d5e700ff0ac6d53deaf2e8f3b3fe53eaa4"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-9a12e5eac3d1a90dc99c47e2b29e9a92f139abb0bf832b1e1e799b6ca76d4319",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.3481a368649bdfe86372739b36d1014c07585f44c6b4c087596c1decb98df24f"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,javax.naming.directory.Attributes)",
+      "id": "codeql-9d1ca92d7c1213ba132e3aa96793535860392eaa4984e425b1e5bf61f67fbecd",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.26fd6e5a161f7d5752ac543d104de6f1f7f5831247d0c577544e96084eee508a"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,javax.naming.directory.Attributes)",
+      "id": "codeql-a27e98077ec4f488289c6e0e2abd82ac490975e0bb9e8d7ea7cc70cf175829f3",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.c4459d48840ffa71700a1dc1c39d98f3317289bbf075228ebe4f3ff2876e84bf"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-a974207437b20850fb2bd0c7114e180ec1786aa009333257a484232a7b8e969c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.4d14ca0aad5d96b889327230aa81549a43fa4628493745d0512c94d091048cef"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,javax.naming.directory.Attributes,java.lang.String[])",
+      "id": "codeql-ab82691fc6e6edfc58de8bd2ea4dc05d4270356fc37d44552666eba96a7899e4",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9563cc9e6e387eacf02b2358403ccde82899aac0a6846ed7f7880f63b9893d33"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-b4fdbd3c977f85b6bca3c2ec54b567215ee8c0fcd46c30c0ab5991dc58ea4289",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.3481a368649bdfe86372739b36d1014c07585f44c6b4c087596c1decb98df24f"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-bec278bb7e0e044c28d668cafb202d3ced10aa19211639d746774713e7c62084",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0879775af80d534ca6ae53f6be73755cf18f0592f28291279f5ccf7bd2ccc1f0"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-c31c7619564d37075fa580de93d915071176fd3d0ae093aa837b519dc4febad5",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.b847bc58d598e6e1d5ee5079a0a5c0d5a1802c3f2ad17c8f5ac216e83f92f143"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-ce97daf488a59799b91ba36d2a711aeb62164047127411899684fa061fd15cd1",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fa1641e19bbb238efca605f698aa48be95b75759ee986f0b4d33e5e3f0b326ba"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-d1c71ad9795dfa63713364b0c0c166bcf272531443e5f1ba686fcc22a60077f6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5325ec27147113fe4127511fd23ec0f6524699c94122eae134d366b43ad5769b"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(java.lang.String,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-d4056f4d0c537ec482f1501147910cd08686e21110e17a6f806fb924199cd294",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5960f5f7d25b9f7bb30cb78b1e2e4749b2da4988c2c535fe963e55dcf07994bc"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(javax.naming.Name,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-d4815de87c63af9cee9fd01ea576952d49cb8dd33111a5eeaffa6427e490ae54",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.fa1641e19bbb238efca605f698aa48be95b75759ee986f0b4d33e5e3f0b326ba"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.DirContext.search(java.lang.String,javax.naming.directory.Attributes)",
+      "id": "codeql-d904198ce03854b46ff9f78536fc4067f8e2db958f8d17e85b60ac9a6a682970",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.50013c3c361ffade1bc412111eeb01b198cd8978ba464f9e19f120eb369b7451"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 1,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,java.lang.String,javax.naming.directory.SearchControls)",
+      "id": "codeql-db25799da343367b92a0f66a6f5694d0cecbf3785b0bceaaaaa5cc8f5186366e",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.5325ec27147113fe4127511fd23ec0f6524699c94122eae134d366b43ad5769b"
+              }
+            },
+            {
+              "formal_index": 1,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "ldap-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.naming.directory.InitialDirContext.search(javax.naming.Name,java.lang.String,java.lang.Object[],javax.naming.directory.SearchControls)",
+      "id": "codeql-eeab4fe15fb25bd1ab544a7ea5db11f2a064627dfb7663c3933634798654f5c9",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "search"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.f5e3490d440a8d22fcd7b46fbebdb91cffbd2c71fb73d5f04cc18e6a51411e11"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}
