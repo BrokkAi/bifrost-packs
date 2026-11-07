@@ -87,7 +87,7 @@ pre-commit hook; CI checks the generated tables for drift.
 The latest releases are `packs/v0.10.0` and `rules/v0.10.0`. `packs/v0.11.0`
 and `rules/v0.11.0` are prepared next. Both need Bifrost 0.15.1 or later.
 `packs/v0.11.0` adds the Go `io` and `compress/gzip` packs, requires Go 1.26.0
-or later for the 25 Go standard-library packs, and activates the TypeScript
+or later for its 27 Go standard-library packs, and activates the TypeScript
 and Node packs by default. `rules/v0.11.0` adds eight `bifrost.security`
 policies (two default-on C# and six opt-in), changes the severity of 61 CodeQL
 quality policies, and depends on `packs/v0.11.0`. See

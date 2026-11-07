@@ -28,12 +28,12 @@ release index schema 4 and the same semantic-model read schemas, lists 68
 packs, and needs Bifrost 0.15.1 or later. It has three kinds of change:
 
 - **Four new native Go packs.** `bifrost.go.stdlib.io-declarations` 1.0.0
-  (#244, partial) and `bifrost.go.stdlib.io` 0.1.0, `bifrost.go.stdlib.compress-gzip`
+  (#244, partial) and `bifrost.go.stdlib.io` 0.2.0, `bifrost.go.stdlib.compress-gzip`
   and `bifrost.go.stdlib.compress-gzip-declarations` 0.2.0 (#320). `io.Copy` has
   no summary, because the semantic-model schema cannot express its write into
   the destination.
-- **A tighter consumer requirement (#328).** The 25 Go standard-library packs
-  other than `bifrost.go.stdlib.io` declare the Go toolchain range
+- **A tighter consumer requirement (#328, #335).** All 27 Go standard-library
+  packs declare the Go toolchain range
   `>=1.26.0, <2.0.0` as compatibility and activation selector, because the
   exact-coordinate gate cannot bind a pack with an empty selector. A project
   built with an older Go toolchain, or one whose version Bifrost cannot read,
@@ -41,8 +41,7 @@ packs, and needs Bifrost 0.15.1 or later. It has three kinds of change:
   packs move to 3.0.0, and `encoding-gob` and its declarations pack move to
   0.2.0. Bifrost 0.15.1 reads these selectors in its dependency-pack
   activation, so the engine minimum does not change. The migration is to build
-  with Go 1.26.0 or later. `bifrost.go.stdlib.io` 0.1.0 still has an empty
-  selector.
+  with Go 1.26.0 or later.
 - **Default activation (#327).** Nine packs lose `review_required` and keep
   their versions: `bifrost.typescript-stdlib` 7.0.2 and eight Node packs
   (buffer, child-process and runtime-values, JavaScript and TypeScript). Their
