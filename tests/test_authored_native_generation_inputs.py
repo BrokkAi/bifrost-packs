@@ -36,7 +36,7 @@ IDENTITY_VALUE_FIELDS = {"name", "version"}
 SHA256_LENGTH = 64
 AUTHORED_KIND = "authored_semantic_model"
 MIN_MODEL_SCHEMA_VERSION = 8
-MAX_MODEL_SCHEMA_VERSION = 17
+MAX_MODEL_SCHEMA_VERSION = 22
 
 
 class SourceInputError(ValueError):
@@ -274,6 +274,9 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
             # std.env.var/args sources as module functions): enabling the Rust
             # std pack loses findings until both land; remove this entry then.
             "bifrost.rust-stdlib",
+            # Authored trust contract, intentionally opt-in and paired with
+            # rust-stdlib by the product recipe; never enabled independently.
+            "bifrost.rust-std-deref-summaries",
         }
         config = _load_json("native-generation.json")
         selected = {job["spec"] for job in config["jobs"]}
