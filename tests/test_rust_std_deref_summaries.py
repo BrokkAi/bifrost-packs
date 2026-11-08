@@ -1,4 +1,5 @@
 """Pin the reviewed implicit-adjustment trust boundary, not runtime qualification."""
+import hashlib
 import json
 from pathlib import Path
 import unittest
@@ -37,3 +38,19 @@ class RustStdDerefSummariesTests(unittest.TestCase):
                     "value_transfer": {"kind": {"kind": "conversion", "preservation": "identity"},
                                        "operation": {"kind": "none"}},
                 }])
+
+    def test_native_job_pins_reviewed_source_and_std_activation(self):
+        spec = json.loads((ROOT / "semantic-packs/rust/rust-std-deref-summaries.spec.json").read_text())
+        source = ROOT / "semantic-packs/rust/bifrost.rust-std-deref-summaries.json"
+        std = json.loads((ROOT / "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json").read_text())
+        self.assertEqual(spec["artifact"]["sha256"], hashlib.sha256(source.read_bytes()).hexdigest())
+        self.assertEqual(spec["kind"], {"artifact_kind": "authored_semantic_model"})
+        self.assertEqual(spec["activation"], std["activation"])
+        self.assertEqual(spec["measurement_activation"], std["measurement_activation"])
+        self.assertTrue(spec["safety"]["review_required"])
+        jobs = json.loads((ROOT / "native-generation.json").read_text())["jobs"]
+        self.assertEqual([job for job in jobs if job["name"] == "rust-std-deref-summaries"], [{
+            "name": "rust-std-deref-summaries",
+            "spec": "semantic-packs/rust/rust-std-deref-summaries.spec.json",
+            "artifact": "semantic-packs/rust/bifrost.rust-std-deref-summaries.json",
+        }])
