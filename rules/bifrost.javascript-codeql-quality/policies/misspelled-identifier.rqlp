@@ -2,8 +2,8 @@
 ; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
 ; Engine contract: an identifier part is reported only when the run's
 ; identifier typo table lists it as a known misspelling. This pack ships the
-; table (data/identifier-typos.txt, CC BY-SA 3.0, derived from CodeQL's
-; Wikipedia-based list); without a table the run is incomplete.
+; table (data/identifier-typos.txt, derived from Apache OpenOffice's en-US
+; AutoCorrect list); without a table the run is incomplete.
 (policy
   :schema-version 1
   :id "bifrost.javascript-codeql-quality.misspelled-identifier"
