@@ -17,10 +17,71 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-05, the latest published streams are `packs/v0.9.0`, tagged on
-`f52867e`, and `rules/v0.9.1`, tagged on `7112b80`. `packs/v0.10.0` and
-`rules/v0.10.0` are prepared next. Publish the packs release first, because
+As of 2026-11-07, the latest published streams are `packs/v0.10.0`, tagged on
+`03feb65`, and `rules/v0.10.0`, tagged on `03feb65`. `packs/v0.11.0` and
+`rules/v0.11.0` are prepared next. Publish the packs release first, because
 the rules release depends on it exactly.
+
+`packs/v0.11.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.10.0`, keeps
+release index schema 4 and the same semantic-model read schemas, lists 68
+packs, and needs Bifrost 0.15.1 or later. It has three kinds of change:
+
+- **Four new native Go packs.** `bifrost.go.stdlib.io-declarations` 1.0.0
+  (#244, partial) and `bifrost.go.stdlib.io` 0.2.0, `bifrost.go.stdlib.compress-gzip`
+  and `bifrost.go.stdlib.compress-gzip-declarations` 0.2.0 (#320). `io.Copy` has
+  no summary, because the semantic-model schema cannot express its write into
+  the destination.
+- **A tighter consumer requirement (#328, #335).** All 27 Go standard-library
+  packs declare the Go toolchain range
+  `>=1.26.0, <2.0.0` as compatibility and activation selector, because the
+  exact-coordinate gate cannot bind a pack with an empty selector. A project
+  built with an older Go toolchain, or one whose version Bifrost cannot read,
+  no longer gets these models and sees a version near-miss warning. Twenty-one
+  packs move to 3.0.0, and `encoding-gob` and its declarations pack move to
+  0.2.0. Bifrost 0.15.1 reads these selectors in its dependency-pack
+  activation, so the engine minimum does not change. The migration is to build
+  with Go 1.26.0 or later.
+- **Default activation (#327).** Nine packs lose `review_required` and keep
+  their versions: `bifrost.typescript-stdlib` 7.0.2 and eight Node packs
+  (buffer, child-process and runtime-values, JavaScript and TypeScript). Their
+  model content is unchanged, but findings that depend on them can now appear
+  without a `.bifrost/packs.json` entry. `bifrost.rust-stdlib` stays
+  review-required.
+
+`bifrost.python-stdlib-api-declarations` 0.6.0 and
+`bifrost.python-security-sink-summaries` 0.5.0 add the `webbrowser` module
+(#323). Source-only or staged, not native: the C# `System.Data` and
+`System.Text.RegularExpressions` models (#319), the Node path, url and fs
+models (#317), the CodeQL Rust standard-library summaries (#326) and the Rust
+`std` module-function remodel in `bifrost.rust-std-sql-taint` (#329).
+
+`rules/v0.11.0` is a minor release. It requires Bifrost 0.15.1 or later and
+depends exactly on `packs/v0.11.0`. `bifrost.security` 2.3.0 adds eight
+policies. Two C# taint policies are default-on:
+`bifrost.security.csharp.regex-pattern-injection` (CVE-2019-0820) and
+`bifrost.security.csharp.dataset-read-xml-external-location` (CVE-2020-1147).
+Six are opt-in: `go.network-read-all-unbounded` (CVE-2022-30631),
+`java.objectinputstream-read-without-filter` (CVE-2026-41586, typestate),
+`python.process-input-to-urlopen`, `python.process-input-to-webbrowser-open`,
+`javascript.process-input-to-fs-write-path` and
+`javascript.process-input-to-legacy-url-parse`. The two C# and the two
+JavaScript policies rely on source-only models, so without them the C#
+policies report `not_run` and the JavaScript policies report an inconclusive
+run with no findings. The Java policy reports every finding as possible and
+its runs as inconclusive on 0.15.1 (bifrost-dev#10001). The Python policies
+are opt-in because of bifrost-dev#9999 and #9991.
+
+Severity changes (#330, #331) leave detection logic unchanged. Fifty-one
+CodeQL-parity quality policies that upstream rates as recommendations move
+from warning to note, so a gate that fails on warning no longer fails on
+them. Ten that upstream rates as errors move from warning to error, so a gate
+that fails on error now fails on them. The packs are
+`bifrost.csharp-codeql-quality` 0.5.1 and `bifrost.java-codeql-quality`,
+`bifrost.javascript-codeql-quality` and `bifrost.python-codeql-quality` 0.1.2.
+The staged `bifrost.rust-codeql-security` catalogs (#326) enable nothing.
+
+The `packs/v0.10.0` and `rules/v0.10.0` notes follow.
 
 `packs/v0.10.0` is a minor release. It adds two native packs,
 `bifrost.go.stdlib.encoding-gob-declarations` and
