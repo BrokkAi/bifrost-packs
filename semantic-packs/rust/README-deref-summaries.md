@@ -1,0 +1,9 @@
+# Reviewed standard-library Deref summaries
+
+`bifrost.rust-std-deref-summaries.json` is an authored, review-required companion to the generated `bifrost.rust-stdlib` pack for Rust nightly 2026-08-24. It contains only the shared `String as Deref` and `PathBuf as Deref` procedure summaries. The generated pack remains a pure function of rustdoc input.
+
+Both packs must be active. Enabling the stdlib alone does not enable this reviewed companion. A consumer must first select the stdlib owner and its exact `core::ops::Deref` implementation, prove callable-family completeness, and match the complete summary by its full artifact locator, including the generated trait-member identity suffix. The summary does not certify callable-family completeness. In particular the older gate stdlib producer leaves String's deref family uncertified; that case must remain incomplete until independently repaired in the producer.
+
+The summaries state receiver-to-normal-return Conversion Identity, ordinary heap unchanged, no concurrency effects and no effects. String returns `self.as_str()`; PathBuf returns `Path::new(&self.inner)`. The differing target type views the same receiver storage. Missing, partial, ambiguous or inexact summaries cannot authorize an implicit adjustment. DerefMut is not covered.
+
+This source addition is not a release or activation claim. The native production and activation recipe gains a companion pack when integrated; keep its exact toolchain restriction aligned with the generated stdlib, and explicitly enable both reviewed packs. The hosted path-injection qualification inventory must include this companion as a sixth input and reject its absence as an unmet prerequisite, rather than score that run as a result.
