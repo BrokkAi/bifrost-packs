@@ -11,6 +11,7 @@ class RustStdDerefSummariesTests(unittest.TestCase):
     def test_only_exact_shared_std_deref_members_are_authorized(self):
         pack = json.loads((ROOT / "semantic-packs/rust/bifrost.rust-std-deref-summaries.json").read_text())
         std = json.loads((ROOT / "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json").read_text())
+        self.assertNotIn("bifrost", pack["compatibility"])
         self.assertTrue(pack["safety"]["review_required"])
         self.assertFalse(pack["safety"]["generated_code_only"])
         self.assertEqual(pack["compatibility"]["toolchains"], std["compatibility"]["toolchains"])
