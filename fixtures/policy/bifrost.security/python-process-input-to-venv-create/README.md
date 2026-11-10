@@ -36,7 +36,7 @@ Bifrost 0.15.1:
 
 ## Cases
 
-- **Positives** (`main.py`, lines 8, 13, 17, 21): `venv.create(sys.argv[1])`,
+- **Positives** (`main.py`, lines 10, 16, 21, 26): `venv.create(sys.argv[1])`,
   `os.environ["BUILD_ENV_DIR"]` through a local into `create` imported with
   `from`, `venv.create(sys.argv[1], False, True)` (positional `clear`) and
   `venv.create(env_dir=os.environ["BUILD_ENV_DIR"])`.
@@ -55,7 +55,7 @@ Bifrost `v0.15.1` (`bifrost-v0.15.1-aarch64-apple-darwin.tar.gz`, archive SHA-25
 
 | Root | Completion | Findings |
 | --- | --- | --- |
-| `.` | `proven_by_summary` | 4, all definite and complete (`main.py:8`, `:13`, `:17`, `:21`) |
+| `.` | `proven_by_summary` | 4, all definite and complete (`main.py:10`, `:16`, `:21`, `:26`) |
 | `incomplete/` `--sources builder` | `inconclusive (partial_discovery)` | 0 |
 | `incomplete/` `--sources helper` | `inconclusive (partial_discovery)` | 0 |
 
