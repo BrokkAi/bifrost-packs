@@ -84,13 +84,12 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.10.0` and `rules/v0.10.0`. `packs/v0.11.0`
-and `rules/v0.11.0` are prepared next. Both need Bifrost 0.15.1 or later.
-`packs/v0.11.0` adds the Go `io` and `compress/gzip` packs, requires Go 1.26.0
-or later for its 27 Go standard-library packs, and activates the TypeScript
-and Node packs by default. `rules/v0.11.0` adds eight `bifrost.security`
-policies (two default-on C# and six opt-in), changes the severity of 61 CodeQL
-quality policies, and depends on `packs/v0.11.0`. See
+The latest releases are `packs/v0.11.0` and `rules/v0.11.0`. `packs/v0.12.0`
+and `rules/v0.12.0` are prepared next. Both need Bifrost 0.15.1 or later.
+`packs/v0.12.0` adds the Python `venv.create` declaration and summary.
+`rules/v0.12.0` adds the opt-in `venv.create` process-input policy, fixes
+false positives in the Rust non-HTTPS URL and dynamic-evaluation policies, and
+depends on `packs/v0.12.0`. See
 [release streams](docs/release-streams.md).
 
 ## Source verification

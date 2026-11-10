@@ -17,10 +17,43 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-07, the latest published streams are `packs/v0.10.0`, tagged on
-`03feb65`, and `rules/v0.10.0`, tagged on `03feb65`. `packs/v0.11.0` and
-`rules/v0.11.0` are prepared next. Publish the packs release first, because
+As of 2026-11-10, the latest published streams are `packs/v0.11.0` and
+`rules/v0.11.0`, both tagged on `403fd14`. `packs/v0.12.0` and
+`rules/v0.12.0` are prepared next. Publish the packs release first, because
 the rules release depends on it exactly.
+
+`packs/v0.12.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.11.0`, keeps
+release index schema 4 and the same semantic-model read schemas, lists 68
+packs, and needs Bifrost 0.15.1 or later. Its only native change is the Python
+`venv` module (#355, #373): `bifrost.python-stdlib-api-declarations` 0.7.0
+declares `venv.create`, and `bifrost.python-security-sink-summaries` 0.6.0
+summarizes it, with escape events for `env_dir` and `prompt`. No consumer
+requirement changes. The `java.util` Map and HashMap collection-flow models
+in `bifrost.jdk-collection-flows` (#336, #337, #372) are source-only: the pack
+activates on 0.15.1 but changes no result until the engine change in
+bifrost-dev#10989 lands, so it is not in a release recipe.
+
+`rules/v0.12.0` is a minor release. It requires Bifrost 0.15.1 or later and
+depends exactly on `packs/v0.12.0`. `bifrost.security` 2.4.0 adds the opt-in
+`bifrost.security.python.process-input-to-venv-create` (CVE-2024-9287, the
+version-independent part), which reports process input that reaches the
+`env_dir` argument of `venv.create`. It is opt-in for the same reasons as the
+other Python process-input policies (bifrost-dev#9999, #9991), and the
+affected-interpreter check needs CPython version evidence (bifrost-dev#3867).
+Two false-positive fixes change findings without changing IDs or
+capabilities:
+
+- `bifrost.security.rust.non-https-url` (`bifrost.security` 2.4.0, #339, #340)
+  skips an `http://` literal whose authority is a format placeholder inside a
+  standard formatting macro, such as `format!("http://{}", addr)`.
+- `bifrost.correctness.dynamic-evaluation` (`bifrost.code-smells` 4.0.2,
+  #376, #379) matches builtin identity instead of the callee name, so member
+  calls such as `model.eval()`, `df.eval(...)` and `session.exec(...)` are no
+  longer reported. A shadowed Python `eval` leaves the run incomplete with no
+  finding, and `ImageMath.eval` is no longer reported.
+
+The `packs/v0.11.0` and `rules/v0.11.0` notes follow.
 
 `packs/v0.11.0` is a minor release. It is built by the same released,
 checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.10.0`, keeps
