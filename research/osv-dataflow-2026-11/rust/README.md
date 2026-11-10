@@ -4,6 +4,9 @@
 leads are blocked by the engine. The seven crate leads are premium, so they
 are not implemented here.
 
+The later 2026-11-10 batch (bifrost-packs#371 and the premium Rust leads
+#631–#662) is recorded in [`catalog-2026-11-10.md`](catalog-2026-11-10.md).
+
 The leads come from the OSV `crates.io` archive
 (`https://osv-vulnerabilities.storage.googleapis.com/crates.io/all.zip`,
 downloaded 2026-11-05) and from the Rust toolchain advisories

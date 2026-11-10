@@ -47,3 +47,8 @@ are not CodeQL ports. They qualify the version-independent parts of the Python
 CVE leads BrokkAi/bifrost-packs#270 and #272 against the reviewed
 `bifrost.python-process-inputs`, `bifrost.python-stdlib-api-declarations` and
 `bifrost.python-security-sink-summaries` models.
+
+`python-process-input-to-venv-create` is not a CodeQL port either. It
+qualifies the version-independent part of the Python CVE lead
+BrokkAi/bifrost-packs#355 (CVE-2024-9287) against the same reviewed models,
+which now declare and summarize `venv.create`.
