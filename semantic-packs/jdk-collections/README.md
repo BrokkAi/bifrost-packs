@@ -19,6 +19,19 @@ All 12 rows are Keyed rows with `coverage: complete`. They apply to both
 `keyed{key: K, value: V}`, and `receiverSubstitution` binds `K` and `V` from
 the receiver's type arguments.
 
+The pack declares `completeness: complete` for the members it lists, like the
+other curated JDK packs. A `jdk` pack that declares `partial` without
+extraction accounting is not activation-ready, and the engine then refuses
+every candidate for the JDK dependency, including `bifrost.jdk` itself.
+
+Every member claims `callable_family_complete`. The engine keys a callable
+family by owner, name, receiver form and arity, and each listed member is the
+only member of its family on `java.util.Map` and on `java.util.HashMap` in
+Java SE 17 and 21. For example, `remove(Object)` and `remove(Object, Object)`
+are different families. The extracted `bifrost.jdk` pack is partial, so
+without this claim the engine treats each composed member's family as
+uncertified and does not use its collection-flow row.
+
 | Member | Transfers |
 | --- | --- |
 | `put(K, V)` | parameter 0 → receiver . entry{key: parameter 0} . entry-key; parameter 1 → receiver . entry{key: parameter 0} . entry-value; old receiver . entry{key: parameter 0} . entry-value → result |
@@ -42,13 +55,16 @@ the call. That lets `put`, `putIfAbsent` and `remove` return the previous value.
   store, the same as `put`.
 - Other overloads and members are not modeled, for example `remove(Object,
   Object)`, `putAll`, `compute*`, `merge`, `keySet`, `values`, `entrySet` and
-  `forEach`. No member claims `callable_family_complete`.
+  `forEach`. They are separate callable families, so the
+  `callable_family_complete` claims above do not cover them.
 - List rows (`add(E)`, `add(int, E)`, `remove(int)`, `get(int)`, `set(int, E)`)
   need the CSMI Sequence shape from bifrost-dev#10989 Milestone 3. They are not
   in this pack yet.
-- The engine reads these rows only after its Java collection-flow consumer
-  lands (bifrost-dev#10989). Until then the pack is inert. It is not in a
-  native release recipe.
+- The engine reads these rows through its closed-container proof
+  (bifrost-dev#10989). That proof applies the rows on a real JDK only after
+  the engine keeps a curated member's family claim through composition and
+  accepts entry-key transfers. Until that engine change lands, the pack
+  activates but changes no result. It is not in a native release recipe.
 
 ## Validation
 
