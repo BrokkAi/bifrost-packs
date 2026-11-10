@@ -1,7 +1,7 @@
 ; CodeQL: python/ql/src/Expressions/UnnecessaryLambda.ql
 ; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
 ; Contract: Pass the wrapped callable directly when the lambda only forwards arguments.
-(policy :schema-version 1 :id "bifrost.python-codeql-quality.unnecessary-lambda" :name "Unnecessary lambda" :message "Pass the wrapped callable directly." :severity warning
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.unnecessary-lambda" :name "Unnecessary lambda" :message "Pass the wrapped callable directly." :severity note
   :description "Mirrors CodeQL python/ql/src/Expressions/UnnecessaryLambda.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Pass the wrapped callable directly when the lambda only forwards arguments."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

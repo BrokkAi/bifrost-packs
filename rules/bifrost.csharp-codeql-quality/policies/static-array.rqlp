@@ -7,7 +7,7 @@
   :id "bifrost.csharp-codeql-quality.static-array"
   :name "C# static array"
   :message "public static readonly array field is vulnerable to mutation"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL csharp/ql/src/Bad Practices/Implementation Hiding/StaticArray.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects public static readonly array fields whose every definition (a field initializer or a static-constructor assignment) is a non-empty or unknown-size array or null. A field with no definition also qualifies, because the condition holds for each of its zero definitions."
   :tags ["csharp" "codeql" "quality"]
   :analysis (analysis :type match :selector

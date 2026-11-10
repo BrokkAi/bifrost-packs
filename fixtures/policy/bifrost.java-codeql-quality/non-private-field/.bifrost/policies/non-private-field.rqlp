@@ -7,7 +7,7 @@
   :id "bifrost.java-codeql-quality.non-private-field"
   :name "Java non-private field"
   :message "unused non-private field should be private"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java non-private non-constant fields without external reads."
   :tags ["java" "codeql" "quality"]
   :analysis (analysis :type match :selector

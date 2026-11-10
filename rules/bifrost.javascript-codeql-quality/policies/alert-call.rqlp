@@ -7,7 +7,7 @@
   :id "bifrost.javascript-codeql-quality.alert-call"
   :name "JavaScript global alert call"
   :message "The browser alert global was called"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL JavaScript query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports calls to the global browser alert function while excluding member, constructor, and locally shadowed calls."
   :tags ["javascript" "codeql" "quality" "dom"]
   :analysis (analysis

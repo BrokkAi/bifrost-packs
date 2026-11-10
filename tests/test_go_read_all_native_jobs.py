@@ -15,7 +15,12 @@ from scripts.content import read_lock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_COMMIT = "65b68f55b537ab77b7ecd8569b0c838aac9be0ea"
+SOURCE_COMMITS = {
+    "go-stdlib-compress-gzip": "a8f1458142c44fb9a94dcf0cd63771e965238fad",
+    "go-stdlib-compress-gzip-declarations": "a8f1458142c44fb9a94dcf0cd63771e965238fad",
+    "go-stdlib-io": "ab31a1ea90098012f6063c2663a62d4a0af9236a",
+    "go-stdlib-io-declarations": "21151aab8d92052e3a766620c5d531f92bf87089",
+}
 JOBS = {
     "go-stdlib-compress-gzip": {
         "pack_id": "bifrost.go.stdlib.compress-gzip",
@@ -35,7 +40,7 @@ JOBS = {
     "go-stdlib-io-declarations": {
         "pack_id": "bifrost.go.stdlib.io-declarations",
         "completeness": "partial",
-        "source": "https://pkg.go.dev/io",
+        "source": "https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/io/io.go (22 exported io interfaces, their methods and embeddings, and io.ReadAll, io.Copy, io.LimitReader functions)",
     },
 }
 FIXTURE = ROOT / "fixtures/policy/bifrost.security/go-network-read-all-unbounded"
@@ -99,7 +104,7 @@ class GoReadAllNativeJobTests(unittest.TestCase):
                 self.assertEqual(spec["artifact"]["sha256"], _sha256(model_bytes))
                 self.assertEqual(
                     spec["artifact"]["url"],
-                    f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{_model(name)}",
+                    f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMITS[name]}/{_model(name)}",
                 )
 
     def test_summaries_pass_the_reader_through(self):
@@ -130,7 +135,7 @@ class GoReadAllNativeJobTests(unittest.TestCase):
         # a complete summary with no transfers would claim it writes nothing.
         payload = _load(_model("go-stdlib-io-declarations"))["shards"][0]["payload"]
         names = {row["locator"]["symbol"] for row in payload["members"]}
-        self.assertEqual(names, {"io.ReadAll", "io.Copy", "io.LimitReader"})
+        self.assertTrue({"io.ReadAll", "io.Copy", "io.LimitReader"} <= names)
         self.assertNotIn("io.Copy(dst io.Writer, src io.Reader)", _summaries("go-stdlib-io"))
         for name in ("go-stdlib-io-declarations", "go-stdlib-compress-gzip-declarations"):
             for row in _load(_model(name))["shards"][0]["payload"]["members"]:

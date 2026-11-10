@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.missing-docstring"
   :name "Public Python declaration is missing a docstring"
   :message "Add a docstring to this public Python declaration."
-  :severity warning
+  :severity note
   :description "CodeQL parity policy over complete Python documentation facts, including methods."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector
