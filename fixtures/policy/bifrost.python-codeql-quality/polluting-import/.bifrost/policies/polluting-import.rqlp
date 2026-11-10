@@ -5,7 +5,7 @@
   :id "bifrost.python-codeql-quality.polluting-import"
   :name "Python polluting wildcard import"
   :message "wildcard import pollutes the namespace because the module has no __all__"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL py/polluting-import for complete local module exports using parsed wildcard-import and __all__ facts. Unknown or unreadable export surfaces remain incomplete."
   :tags ["python" "codeql" "quality" "imports"]
   :analysis (analysis :type match :selector

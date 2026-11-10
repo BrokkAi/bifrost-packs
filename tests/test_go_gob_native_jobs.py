@@ -15,9 +15,9 @@ from scripts.content import read_lock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
+SOURCE_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 # The gob summaries dropped Decode and DecodeValue in a later commit.
-GOB_SUMMARIES_COMMIT = "9849718fe0945d4c77011b28616b8f3ad375ba05"
+GOB_SUMMARIES_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 GOB_JOBS = {
     "go-stdlib-encoding-gob": {
         "spec": "semantic-packs/go/go-stdlib-encoding-gob.spec.json",
@@ -59,10 +59,12 @@ def _sha256(data: bytes) -> str:
 class GoGobNativeJobTests(unittest.TestCase):
     """Pin the gob jobs, the net interface summaries and the fixture copies."""
 
-    def test_gob_jobs_are_the_last_two_and_bind_their_specs(self):
+    def test_gob_jobs_are_adjacent_and_bind_their_specs(self):
         jobs = _load("native-generation.json")["jobs"]
-        self.assertEqual([job["name"] for job in jobs[-2:]], list(GOB_JOBS))
-        for job in jobs[-2:]:
+        names = [job["name"] for job in jobs]
+        start = names.index("go-stdlib-encoding-gob")
+        self.assertEqual(names[start:start + 2], list(GOB_JOBS))
+        for job in jobs[start:start + 2]:
             expected = GOB_JOBS[job["name"]]
             with self.subTest(job=job["name"]):
                 self.assertEqual(job, {"name": job["name"], "spec": expected["spec"], "artifact": expected["model"]})
@@ -118,7 +120,7 @@ class GoGobNativeJobTests(unittest.TestCase):
 
     def test_net_interface_summaries_claim_every_implementation(self):
         model = _load(NET_MODEL)
-        self.assertEqual(model["version"], "2.1.0")
+        self.assertEqual(model["version"], "3.0.0")
         summaries = model["shards"][0]["payload"]["summaries"]
         claimed = {row["target"]["symbol"] for row in summaries if row.get("covers_overrides")}
         self.assertEqual(claimed, INTERFACE_SUMMARIES)
@@ -129,7 +131,7 @@ class GoGobNativeJobTests(unittest.TestCase):
                     self.assertEqual(row["completeness"], "complete")
                     self.assertEqual(row["transfers"], [])
         spec = _load("semantic-packs/go/go-stdlib-net.spec.json")
-        self.assertEqual(spec["pack_version"], "2.1.0")
+        self.assertEqual(spec["pack_version"], "3.0.0")
         self.assertEqual(
             spec["artifact"]["url"],
             f"https://github.com/BrokkAi/bifrost-packs/blob/{SOURCE_COMMIT}/{NET_MODEL}",

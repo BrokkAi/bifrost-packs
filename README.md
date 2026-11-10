@@ -29,7 +29,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**270 unique rules across 13 policy packs.**
+**279 unique rules across 13 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -45,37 +45,37 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
 | Pack | bifrost.rust-generic | 4 |
-| Pack | bifrost.security | 51 |
+| Pack | bifrost.security | 60 |
 | Category | correctness | 118 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 11 |
 | Category | quality | 69 |
-| Category | security | 55 |
-| Severity | error | 73 |
-| Severity | note | 30 |
-| Severity | warning | 167 |
+| Category | security | 64 |
+| Severity | error | 83 |
+| Severity | note | 81 |
+| Severity | warning | 115 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 508 rule-language pairs.
+13 declared languages; 517 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 19 |
 | cpp | 39 |
-| csharp | 57 |
-| go | 21 |
-| java | 51 |
-| javascript | 42 |
+| csharp | 59 |
+| go | 22 |
+| java | 52 |
+| javascript | 44 |
 | kotlin | 17 |
 | php | 20 |
-| python | 128 |
+| python | 131 |
 | ruby | 20 |
 | rust | 39 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 50, unspecified 220. Omitted labels remain unspecified.
+Activation labels: opt-in 57, unspecified 222. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -84,11 +84,13 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.9.0` and `rules/v0.9.0`. `packs/v0.9.0`
-ships compiled the last six packs that Bifrost's legacy embedded registry
-provides, so its bundle contains all 46. It is built by the Bifrost 0.15.0
-generator and needs Bifrost 0.15.0 or later to read it. `rules/v0.9.1` is
-prepared next; it moves the exact packs dependency to `packs/v0.9.0`. See
+The latest releases are `packs/v0.10.0` and `rules/v0.10.0`. `packs/v0.11.0`
+and `rules/v0.11.0` are prepared next. Both need Bifrost 0.15.1 or later.
+`packs/v0.11.0` adds the Go `io` and `compress/gzip` packs, requires Go 1.26.0
+or later for its 27 Go standard-library packs, and activates the TypeScript
+and Node packs by default. `rules/v0.11.0` adds eight `bifrost.security`
+policies (two default-on C# and six opt-in), changes the severity of 61 CodeQL
+quality policies, and depends on `packs/v0.11.0`. See
 [release streams](docs/release-streams.md).
 
 ## Source verification

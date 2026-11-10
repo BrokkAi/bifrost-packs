@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-05",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_CACHE_DIR": "fresh per run"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental"
+    ]
+  },
+  "osv_source": {
+    "ecosystem": "Bitnami",
+    "archive": "https://osv-vulnerabilities.storage.googleapis.com/Bitnami/all.zip",
+    "package": "node",
+    "note": "Node.js core advisories are published in OSV under Bitnami BIT-node-* records, not the npm ecosystem."
+  },
+  "version_evidence": [
+    {
+      "query": "probe/node-runtime-evidence/runtime-rows.rql",
+      "observed": "One row: npm-toolchain node 16.13.0, evidence_kind constraint, condition declared_toolchain=does_not_establish_installed_runtime, from package.json engines.node. No row for .nvmrc."
+    },
+    {
+      "query": "probe/node-runtime-evidence/exact-rows.rql",
+      "observed": "No rows."
+    },
+    {
+      "query": "probe/node-runtime-evidence/runtime-range.rql",
+      "observed": "Rejected: version_ranges requires exactly one supported ecosystem: cargo, rust-toolchain, npm, nuget, go-module or go-toolchain."
+    },
+    {
+      "query": "probe/node-runtime-evidence/target-of.rql",
+      "observed": "No rows; topology_derivation_incomplete."
+    }
+  ],
+  "input_sha256": {
+    "probe/node-runtime-evidence/.nvmrc": "1adbde37f71030cf3a6b16435e38b58e612ed147ad5ff174c135178e66bb5959",
+    "probe/node-runtime-evidence/exact-rows.rql": "bb15d47d703207c7786a8bfb3b9a3260e8f58451ce0a8f375843ec1dfac2c78b",
+    "probe/node-runtime-evidence/main.js": "f2f6527abc877b166f70116c1633f67d7ef60cc38b38810dd454517dab970637",
+    "probe/node-runtime-evidence/package.json": "67c707d51d4434479621800e4f5a9b1e704479ef12f4c2be99f96cab87323865",
+    "probe/node-runtime-evidence/runtime-range.rql": "78783a5945ef02dcc5188fb1ea470899ea52598a5a4d5e379eba2db11ff14dcb",
+    "probe/node-runtime-evidence/runtime-rows.rql": "2e7277888d4c051fc682cdac8a934b48b99eb6d393ed2b17977090ec657a9512",
+    "probe/node-runtime-evidence/target-of.rql": "80a3a688d6ecc9a0a268aa931353b6b058a5961528cb6cd49e37a6dc0c3f8726"
+  },
+  "rules": [
+    {
+      "rule": "bifrost.security.javascript.process-input-to-fs-write-path",
+      "authored_hash": "99ac09db7ec74620c40ba6a49b4db91f12007c4fb9324596192a68ae3198ac6b",
+      "fixture": "fixtures/policy/bifrost.security/javascript-process-input-to-fs-write-path",
+      "models": [
+        "bifrost.node-runtime-values-javascript 0.1.0",
+        "bifrost.node-fs-javascript-declarations 0.1.0",
+        "bifrost.node-fs-javascript-summaries 0.2.0",
+        "bifrost.node-path-javascript-declarations 0.1.0",
+        "bifrost.node-path-javascript-summaries 0.1.0"
+      ],
+      "cases": [
+        {
+          "sources": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "main.js:11",
+            "main.js:18",
+            "main.js:25",
+            "main.js:31",
+            "main.js:37"
+          ],
+          "certainty": "all definite, complete"
+        },
+        {
+          "sources": "incomplete/inline",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "process-argv-read selector discovery is Incomplete { codes: [] }"
+          ]
+        },
+        {
+          "sources": "incomplete/variadic",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "call resolution unknown: three-argument path.join has no summary"
+          ]
+        },
+        {
+          "sources": "incomplete/helper",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "call resolution unknown: path.basename has no summary"
+          ]
+        },
+        {
+          "sources": ".",
+          "variant": "without the bifrost.node-path-javascript models",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "main.js:11"
+          ]
+        },
+        {
+          "sources": ".",
+          "variant": "with bifrost.node-fs-javascript-summaries 0.1.0 (no appendFileSync or openSync summary)",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "main.js:11",
+            "main.js:18",
+            "main.js:37 definite",
+            "main.js:25 possible partial",
+            "main.js:31 possible partial"
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "bifrost.security.javascript.process-input-to-legacy-url-parse",
+      "authored_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
+      "fixture": "fixtures/policy/bifrost.security/javascript-process-input-to-legacy-url-parse",
+      "models": [
+        "bifrost.node-runtime-values-javascript 0.1.0",
+        "bifrost.node-url-javascript-declarations 0.1.0",
+        "bifrost.node-url-javascript-summaries 0.1.0"
+      ],
+      "cases": [
+        {
+          "sources": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "main.js:8",
+            "main.js:14",
+            "main.js:20",
+            "main.js:21"
+          ],
+          "certainty": "all definite, complete"
+        },
+        {
+          "sources": "incomplete/hostname",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [
+            "hostname/hostname.js:8 definite, complete"
+          ],
+          "diagnostics": [
+            "access-path resolution unknown: .hostname read on the parsed Url"
+          ]
+        },
+        {
+          "sources": ".",
+          "variant": "without the bifrost.node-url-javascript models",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "url-parse-input and url-format-input selectors Incomplete (SemanticAnalysisPartial)"
+          ]
+        }
+      ]
+    }
+  ],
+  "leads": [
+    {
+      "issue": 287,
+      "language": "javascript",
+      "advisory": "CVE-2025-27210",
+      "osv": "BIT-node-2025-27210",
+      "outcome": "implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9985",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9986"
+      ],
+      "note": "The version-independent slice ships: process.argv reaching the path of fs.writeFileSync, fs.appendFileSync or fs.openSync, directly or through path.join(base, segment), path.normalize(path) or path.resolve(base, segment). New public models: bifrost.node-path-javascript-declarations/-summaries 0.1.0; bifrost.node-fs-javascript-summaries 0.2.0 adds appendFileSync and openSync. The fixture run is proven_by_summary with 5 definite, complete findings. Other path.join arities stay inconclusive (bifrost-dev#9985), as does process.argv[i] passed inline (bifrost-dev#9986). The Windows device-name part needs runtime and platform evidence (bifrost-dev#9983).",
+      "rule": "bifrost.security.javascript.process-input-to-fs-write-path"
+    },
+    {
+      "issue": 288,
+      "language": "javascript",
+      "advisory": "CVE-2021-22931",
+      "osv": "BIT-node-2021-22931",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+        "https://github.com/BrokkAi/bifrost-dev/issues/2446"
+      ],
+      "note": "Version-gated: fixed runtimes validate returned names, so there is no version-independent slice. There is no reviewed dns model, and the sources are callback parameters or promise results (async and callback execution: bifrost-dev#2446). Not probed further: the runtime gate blocks every positive/near-miss pair first."
+    },
+    {
+      "issue": 289,
+      "language": "javascript",
+      "advisory": "CVE-2022-21824",
+      "osv": "BIT-node-2022-21824",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+      ],
+      "note": "Version-gated: fixed runtimes use a null-prototype row object. No reviewed model of the console global exists. Not probed further: the runtime gate blocks every positive/near-miss pair first."
+    },
+    {
+      "issue": 290,
+      "language": "javascript",
+      "advisory": "CVE-2023-30590",
+      "osv": "BIT-node-2023-30590",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+      ],
+      "note": "Version-gated per OSV. The typestate schema has the transitions this protocol needs (see bifrost.correctness.resource-lifecycle), but no reviewed crypto DiffieHellman model exists. Not probed further: the runtime gate blocks every positive/near-miss pair first."
+    },
+    {
+      "issue": 291,
+      "language": "javascript",
+      "advisory": "CVE-2024-22025",
+      "osv": "BIT-node-2024-22025",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+        "https://github.com/BrokkAi/bifrost-dev/issues/2446"
+      ],
+      "note": "The fetch part is version-gated. The version-independent zlib slice needs network or request-body sources and maxOutputLength option-shape binding; no reviewed Node HTTP source, fetch or zlib model exists, and fetch results are promises (bifrost-dev#2446). Not implemented."
+    },
+    {
+      "issue": 292,
+      "language": "javascript",
+      "advisory": "CVE-2026-21713",
+      "osv": "BIT-node-2026-21713",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+        "https://github.com/BrokkAi/bifrost-dev/issues/4385"
+      ],
+      "note": "The built-in verification part is version-gated. The version-independent slice needs a comparison-operator sink that joins an HMAC digest with request provenance; no such sink form is known (tracked broadly in the CodeQL JS/TS parity epic, bifrost-dev#4385). Not probed."
+    },
+    {
+      "issue": 293,
+      "language": "javascript",
+      "advisory": "CVE-2026-105482",
+      "osv": "BIT-node-2026-105482",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+      ],
+      "note": "Version-gated: fixed runtimes reject NUL host names. No reviewed dns model. Not probed further: the runtime gate blocks every positive/near-miss pair first."
+    },
+    {
+      "issue": 294,
+      "language": "javascript",
+      "advisory": "CVE-2026-21712",
+      "osv": "BIT-node-2026-21712",
+      "outcome": "implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9986"
+      ],
+      "note": "The version-independent slice ships: process.argv reaching legacy url.parse(urlString) or url.format(urlObject), which Node documents as unsafe for untrusted input on every release. New public models: bifrost.node-url-javascript-declarations/-summaries 0.1.0. The fixture run is proven_by_summary with 4 definite, complete findings; the WHATWG new URL near miss stays clean. Reading .hostname from the parsed result leaves the run inconclusive (no Url property model), with the finding kept. The url.format crash part needs runtime evidence (bifrost-dev#9983).",
+      "rule": "bifrost.security.javascript.process-input-to-legacy-url-parse"
+    },
+    {
+      "issue": 295,
+      "language": "javascript",
+      "advisory": "CVE-2024-36138",
+      "osv": "BIT-node-2024-36138",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+      ],
+      "note": "Version- and Windows-gated: fixed runtimes refuse batch files without a shell. No reviewed child_process.spawn model; executable resolution is also needed. Not probed further: the runtime gate blocks every positive/near-miss pair first."
+    },
+    {
+      "issue": 296,
+      "language": "javascript",
+      "advisory": "CVE-2026-58041",
+      "osv": "BIT-node-2026-58041",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+      ],
+      "note": "Version-gated. No reviewed node:sqlite model; the protocol also needs tagged-template call binding and iterator aliasing. Not probed further: the runtime gate blocks every positive/near-miss pair first."
+    }
+  ]
+}

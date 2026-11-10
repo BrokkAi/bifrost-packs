@@ -1,0 +1,407 @@
+{
+ "schema_version": 1,
+ "evaluation_date": "2026-11-05",
+ "bifrost": {
+  "version": "0.15.1",
+  "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+  "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+  "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+  "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+  "environment": {
+   "BIFROST_OPEN_PACKS_DISABLE": "1",
+   "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+   "BIFROST_CACHE_DIR": "fresh per run"
+  },
+  "flags": [
+   "--policy-file",
+   "--no-builtin-policies",
+   "--no-incremental"
+  ]
+ },
+ "selection": {
+  "source": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
+  "downloaded": "2026-11-05",
+  "rule": "Go standard library advisories whose theoretical policy is taint or typestate and whose reachability is decided by application code; deduplicated against every CVE- title in BrokkAi/bifrost-packs and BrokkAi/bifrost-premium-packs; native-memory, toolchain-command and upgrade-only advisories skipped."
+ },
+ "leads": [
+  {
+   "issue": 252,
+   "language": "go",
+   "advisory": "CVE-2022-30631",
+   "outcome": "implemented",
+   "rule": "bifrost.security.go.network-read-all-unbounded",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9987"
+   ],
+   "note": "Version-independent part ships (opt-in): net.Dial, DialTimeout and Listener.Accept connections that reach io.ReadAll or io.Copy, directly or through gzip.NewReader, without io.LimitReader. Fixture is proven_by_summary with 4 definite findings. A decompression-only scope needs a transform label, which loses its source origin on a model-summarized call (bifrost-dev#9987). The stack-exhaustion part is toolchain-gated (bifrost-dev#9867)."
+  },
+  {
+   "issue": 253,
+   "language": "go",
+   "advisory": "CVE-2021-27919",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/8282",
+    "https://github.com/BrokkAi/bifrost-dev/issues/4687",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "Zip slip needs zip.File.Name, a field of a model-declared struct reached through range over ReadCloser.File. The probe is inconclusive with no finding: model fields cannot be selected (bifrost-dev#8282) and indexed containers are open (bifrost-dev#4687). A defer in the same procedure makes it unsupported (exceptional_control_flow). The panic part is toolchain-gated."
+  },
+  {
+   "issue": 254,
+   "language": "go",
+   "advisory": "CVE-2025-58183",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/8282",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "Tar slip reads hdr.Name from the tar.Reader.Next result. Every procedure that reads the field is inconclusive (access-path resolution unknown): model fields cannot be selected (bifrost-dev#8282). The filepath.IsLocal guard near miss is not qualified. The allocation part is toolchain-gated."
+  },
+  {
+   "issue": 255,
+   "language": "go",
+   "advisory": "CVE-2022-24921",
+   "outcome": "blocked",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-packs/issues/225",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "The engine path works: with a workspace declaration and summary for net/http.Request.FormValue and regexp models, the probe is proven_by_summary with the positive found and the QuoteMeta near miss clean. The public request declarations are draft #225, which owns net-http-declarations, so no rule ships before it lands. The stack-exhaustion part is toolchain-gated."
+  },
+  {
+   "issue": 256,
+   "language": "go",
+   "advisory": "CVE-2022-30632",
+   "outcome": "blocked",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-packs/issues/225",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "Same request-source dependency as #255 (draft #225). bifrost.go.stdlib.path-filepath declares only Join and has no summaries, so Join and Glob also need reviewed models. Not probed past the source. The stack-exhaustion part is toolchain-gated."
+  },
+  {
+   "issue": 257,
+   "language": "go",
+   "advisory": "CVE-2020-16845",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "No version-independent part: fixed toolchains stop after MaxVarintLen64 bytes. Needs an exact toolchain row joined to the calling module (bifrost-dev#9867). The code half also needs a reviewed bufio model."
+  },
+  {
+   "issue": 258,
+   "language": "go",
+   "advisory": "CVE-2025-68121",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9990",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9431",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "The documented 'do not modify a Config after use' protocol needs a typestate event on field writes; the policy is rejected (unknown field :field-write for event), filed as bifrost-dev#9990. Events on reviewed external calls are also only possible (bifrost-dev#9431). The resumption part is toolchain-gated."
+  },
+  {
+   "issue": 259,
+   "language": "go",
+   "advisory": "CVE-2020-24553",
+   "outcome": "blocked",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-packs/issues/225",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "Needs public request sources (draft #225) before anything binds. The Content-Type header-state guard was not qualified because no source binds yet. The cgi/fcgi default part is toolchain-gated."
+  },
+  {
+   "issue": 260,
+   "language": "go",
+   "advisory": "CVE-2021-33195",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/4687",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9988",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9989",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "The version-independent LookupTXT part reads a slice element and is capability_incomplete (index_memory, bifrost-dev#4687). Appending a tainted value fails the whole run with internal_invariant (bifrost-dev#9988). exec.Command(name) with no variadic argument does not bind its summary (bifrost-dev#9989). LookupCNAME with exec.Command(name, arg) is definite and complete, but the name-returning lookups are the toolchain-gated part (bifrost-dev#9867)."
+  },
+  {
+   "issue": 261,
+   "language": "go",
+   "advisory": "CVE-2017-15042",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9431",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "note": "Toolchain-gated: fixed toolchains refuse PLAIN on cleartext (bifrost-dev#9867). The typestate code half is expressible with call events, but both the positive and the StartTLS near miss are possible/partial (typestate-external-call): reviewed external member summaries cannot state protocol-complete coverage (bifrost-dev#9431)."
+  }
+ ],
+ "shipped": {
+  "rule": "bifrost.security.go.network-read-all-unbounded",
+  "policy": "rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp",
+  "authored_hash": "01e9aa33b308535761ffafd882063e659ffb1672e2740e7229b122e67088b56a",
+  "activation": "opt-in",
+  "cases": [
+   {
+    "sources": "fixtures/policy/bifrost.security/go-network-read-all-unbounded",
+    "completion": "proven_by_summary",
+    "reported": [
+     "probe.go:24 definite complete",
+     "probe.go:38 definite complete",
+     "probe.go:48 definite complete",
+     "probe.go:66 definite complete"
+    ]
+   },
+   {
+    "sources": "fixtures/policy/bifrost.security/go-network-read-all-unbounded/incomplete",
+    "completion": "inconclusive (partial_discovery)",
+    "reported": [
+     "copied/copied.go:22 possible partial"
+    ]
+   },
+   {
+    "sources": "fixtures/policy/bifrost.security/go-network-read-all-unbounded/incomplete",
+    "variant": "--sources wrapped",
+    "completion": "inconclusive (partial_discovery)",
+    "reported": []
+   },
+   {
+    "sources": "fixtures/policy/bifrost.security/go-network-read-all-unbounded/incomplete",
+    "variant": "--sources copied",
+    "completion": "inconclusive (partial_discovery)",
+    "reported": [
+     "copied/copied.go:22 possible partial"
+    ]
+   },
+   {
+    "sources": "fixtures/policy/bifrost.security/go-network-read-all-unbounded/incomplete",
+    "variant": "--sources goroutine",
+    "completion": "inconclusive (partial_discovery)",
+    "reported": []
+   },
+   {
+    "sources": "fixtures/policy/bifrost.security/go-network-read-all-unbounded",
+    "variant": "without the gzip and io models",
+    "completion": "not_run",
+    "reported": []
+   }
+  ]
+ },
+ "probes": [
+  {
+   "probe": "probe/transform-origin-model",
+   "policy": "p.rqlp",
+   "exit_code": 0,
+   "completion": "inconclusive (partial_discovery)",
+   "reported": [],
+   "diagnostics": [
+    "1 candidate finding(s) retained no source origin evidence and could not be projected"
+   ]
+  },
+  {
+   "probe": "probe/transform-origin-model",
+   "policy": "ctl.rqlp",
+   "exit_code": 1,
+   "completion": "proven_by_summary",
+   "reported": [
+    "app.go:17 definite complete"
+   ],
+   "diagnostics": []
+  },
+  {
+   "probe": "probe/transform-origin-local",
+   "policy": "p.rqlp",
+   "exit_code": 1,
+   "completion": "complete",
+   "reported": [
+    "app.go:13 definite complete"
+   ],
+   "diagnostics": []
+  },
+  {
+   "probe": "probe/append-invariant",
+   "policy": "p.rqlp",
+   "exit_code": 2,
+   "completion": "failed (internal_invariant)",
+   "reported": [],
+   "diagnostics": [
+    "taint semantic provider failed: semantic provider failed: invalid value-flow snapshot: oracle relation does not belong to the required query arena and role"
+   ]
+  },
+  {
+   "probe": "probe/variadic-empty",
+   "policy": "p.rqlp",
+   "exit_code": 1,
+   "completion": "inconclusive (partial_discovery)",
+   "reported": [
+    "app.go:8 possible partial"
+   ],
+   "diagnostics": [
+    "taint discovery is incomplete: call resolution for app.go:app.go.NoVariadic is unknown"
+   ]
+  },
+  {
+   "probe": "probe/252-gzip-transform",
+   "policy": "transform.rqlp",
+   "exit_code": 0,
+   "completion": "inconclusive (partial_discovery)",
+   "reported": [],
+   "diagnostics": [
+    "1 candidate finding(s) retained no source origin evidence and could not be projected"
+   ]
+  },
+  {
+   "probe": "probe/253-zip-entry-name",
+   "policy": "p.rqlp",
+   "exit_code": 0,
+   "completion": "inconclusive (partial_discovery)",
+   "reported": [],
+   "diagnostics": [
+    "taint discovery is incomplete: procedure semantics for probe.go:probe.go.extract is unknown"
+   ]
+  },
+  {
+   "probe": "probe/254-tar-header-field",
+   "policy": "p.rqlp",
+   "exit_code": 0,
+   "completion": "inconclusive (partial_discovery)",
+   "reported": [],
+   "diagnostics": [
+    "taint discovery is incomplete: access-path resolution for probe.go:probe.go.extractBase is unknown",
+    "taint discovery is incomplete: access-path resolution for probe.go:probe.go.extractLocal is unknown",
+    "taint discovery is incomplete: access-path resolution for probe.go:probe.go.extractOne is unknown"
+   ]
+  },
+  {
+   "probe": "probe/255-regexp-request",
+   "policy": "p.rqlp",
+   "exit_code": 1,
+   "completion": "proven_by_summary",
+   "reported": [
+    "probe.go:10 definite complete"
+   ],
+   "diagnostics": []
+  },
+  {
+   "probe": "probe/258-tls-typestate",
+   "policy": "p.rqlp",
+   "exit_code": 2,
+   "completion": "rejected",
+   "diagnostics": [
+    "unknown field `:field-write` for `event`"
+   ]
+  },
+  {
+   "probe": "probe/260-dns-lookup",
+   "policy": "p.rqlp",
+   "exit_code": 1,
+   "completion": "inconclusive (capability_incomplete)",
+   "reported": [
+    "probe.go:14 definite complete",
+    "probe.go:23 possible partial"
+   ],
+   "diagnostics": [
+    "taint discovery is incomplete: access-path resolution for probe.go:probe.go.runTXT is unsupported (index_memory)"
+   ]
+  },
+  {
+   "probe": "probe/260-dns-append",
+   "policy": "p.rqlp",
+   "exit_code": 2,
+   "completion": "failed (internal_invariant)",
+   "reported": [],
+   "diagnostics": [
+    "taint semantic provider failed: semantic provider failed: invalid value-flow snapshot: oracle relation does not belong to the required query arena and role"
+   ]
+  },
+  {
+   "probe": "probe/261-smtp-typestate",
+   "policy": "p.rqlp",
+   "exit_code": 1,
+   "completion": "inconclusive (partial_discovery)",
+   "reported": [
+    "probe.go:26 possible partial",
+    "probe.go:14 possible partial"
+   ],
+   "diagnostics": []
+  }
+ ],
+ "input_sha256": {
+  "probe/252-gzip-transform/.bifrost/policies/transform.rqlp": "574f341d2cd22c9ff1188dc02ea25a2e77365aea101c273ad1018fbd412e3b98",
+  "probe/252-gzip-transform/.bifrost/semantic-models/go-stdlib-compress-gzip-declarations.json": "aa051001f0c3d89308c02473a7070789a9bdd2b23b24e9b96fc58c2343a98418",
+  "probe/252-gzip-transform/.bifrost/semantic-models/go-stdlib-compress-gzip.json": "7ab3f4055cda4d27c8e42ac6f01823ca9d43e938545ab1867284b65fb18d3ead",
+  "probe/252-gzip-transform/.bifrost/semantic-models/go-stdlib-io-declarations.json": "294e6718db7602a4844625a2e0ef450e439030be9c41e9bd030cd8d9a21f9e72",
+  "probe/252-gzip-transform/.bifrost/semantic-models/go-stdlib-io.json": "066f3201e390b11f781691a9a6e9283708693fb15f41e7f8a4a64bdc9704e0dd",
+  "probe/252-gzip-transform/.bifrost/semantic-models/go-stdlib-net-declarations.json": "bc2263ec5a2622b6ae5b04f93c30fb8d21a22c140e25149f2d2208eb8789ba15",
+  "probe/252-gzip-transform/.bifrost/semantic-models/go-stdlib-net.json": "eb3aa991d90947b54d68719a0adaa9609772b91321c04855836a85c299a9da1e",
+  "probe/252-gzip-transform/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/252-gzip-transform/probe.go": "989b6534201177d116aa67c0c11d9843ea83ce6cf50d6aade2d550f554ef1502",
+  "probe/253-zip-entry-name/.bifrost/policies/p.rqlp": "54fa88b8449ff259583025d84ef0d2c10a99007395da95f80022272d157ce219",
+  "probe/253-zip-entry-name/.bifrost/semantic-models/go-stdlib-os-declarations.json": "9cf2679ee596b599858721bd60919c550d4af9dbd730e693b47b2f4c3554e6fa",
+  "probe/253-zip-entry-name/.bifrost/semantic-models/go-stdlib-os.json": "ed81c97471e5ac56eb5a4323834b9b305948ebdaec4e4e2e1f7c4f31b96840ae",
+  "probe/253-zip-entry-name/.bifrost/semantic-models/research-archive-zip-declarations.json": "ba5a70eab3743679fe9515a8e1002057be7c3d4d2c42d55d0a47751948ce221b",
+  "probe/253-zip-entry-name/.bifrost/semantic-models/research-archive-zip.json": "1e0d446b4175eb99db4b3e4cbab9286c55912d346cbc19ecffa197bfa536015f",
+  "probe/253-zip-entry-name/.bifrost/semantic-models/research-path-filepath-declarations.json": "bbbd1ab091077effb334e4c8c6e862c60a857d26e5ca1b0d02f2d93e6275d551",
+  "probe/253-zip-entry-name/.bifrost/semantic-models/research-path-filepath.json": "4504081bf2289eaf409312430caeb6858a1f0060a28b8a3eda177f39d4d377f6",
+  "probe/253-zip-entry-name/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/253-zip-entry-name/probe.go": "dcb66ab694e755d6807897568d5a9b8947a83c622475d4bb6a4317dc5d190e19",
+  "probe/254-tar-header-field/.bifrost/policies/p.rqlp": "d259f09a4866b3d163734fd1993308a3186c55fdea79bd3a9c6294f3d4e8ca17",
+  "probe/254-tar-header-field/.bifrost/semantic-models/go-stdlib-archive-tar-declarations.json": "34b547952a0882bc2c269fba10489d7388e09e028c9db87c3a5ab8c24e54367c",
+  "probe/254-tar-header-field/.bifrost/semantic-models/go-stdlib-archive-tar.json": "9be6134f0f16ff4cad1b3ed360a69d214280069d633c2d725e9115372b87b24c",
+  "probe/254-tar-header-field/.bifrost/semantic-models/go-stdlib-os-declarations.json": "9cf2679ee596b599858721bd60919c550d4af9dbd730e693b47b2f4c3554e6fa",
+  "probe/254-tar-header-field/.bifrost/semantic-models/go-stdlib-os.json": "ed81c97471e5ac56eb5a4323834b9b305948ebdaec4e4e2e1f7c4f31b96840ae",
+  "probe/254-tar-header-field/.bifrost/semantic-models/research-path-filepath-declarations.json": "bbbd1ab091077effb334e4c8c6e862c60a857d26e5ca1b0d02f2d93e6275d551",
+  "probe/254-tar-header-field/.bifrost/semantic-models/research-path-filepath.json": "4504081bf2289eaf409312430caeb6858a1f0060a28b8a3eda177f39d4d377f6",
+  "probe/254-tar-header-field/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/254-tar-header-field/probe.go": "971321192126ea0debb067d80a0c6662f83c191447a88bfc21226b6cbddb7f2e",
+  "probe/255-regexp-request/.bifrost/policies/p.rqlp": "54258ebf3a6f495511b5fc7d4a9a538062c5ad642b3d6614edb7ef9709a6fc83",
+  "probe/255-regexp-request/.bifrost/semantic-models/research-net-http-request-declarations.json": "f8c97d76396e4f75c0dc929509afa724659acad8ef42b7f16a69a955da114186",
+  "probe/255-regexp-request/.bifrost/semantic-models/research-net-http-request.json": "585ca450cd194bb79c11263325d0691b6878b030ddb4beb5f6c931800693bbd4",
+  "probe/255-regexp-request/.bifrost/semantic-models/research-regexp-declarations.json": "3ed5d1a22dcec2d7234ee8b8fe61af15072d0f909a34131501501183cf46f210",
+  "probe/255-regexp-request/.bifrost/semantic-models/research-regexp.json": "85bf6f52fa909f3e56ca98d158ba9acac98c0c03e3965fded5ddc885a23ecfc8",
+  "probe/255-regexp-request/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/255-regexp-request/probe.go": "078f65573df495d6a62c2183a1ad1822a8505c3aa73bd8047a0c5530fcb23e8e",
+  "probe/258-tls-typestate/.bifrost/policies/p.rqlp": "33523ac8d23f7388339e4195615241ff8bb08ea3bc7353ae46fe2a43c558cb6d",
+  "probe/258-tls-typestate/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/258-tls-typestate/probe.go": "52e4c5dfbc85ef2e1294f9ad3cc145771d01f138d31cb7e468df770aed754900",
+  "probe/260-dns-append/.bifrost/policies/p.rqlp": "7df88ab417698512612675cd02192d0af19577b8bc533cb939e58fd6e88bd1b9",
+  "probe/260-dns-append/.bifrost/semantic-models/research-net-lookup-declarations.json": "5849019152b61203b76a59273d6db441d54670eb1ddf9de40fc8b19dfd6153a3",
+  "probe/260-dns-append/.bifrost/semantic-models/research-net-lookup.json": "f4d61f655d1e6f79594dec437eb5b0e3b5dde9280288cafd2dbaf2c63a4b23f1",
+  "probe/260-dns-append/.bifrost/semantic-models/research-os-exec-declarations.json": "7ebb2736b30db6de80a6cca6045e7073c920c2290259701af19ef0b091d9d1d0",
+  "probe/260-dns-append/.bifrost/semantic-models/research-os-exec.json": "39eb0cabdc300b88780183b6ad40a7d5a512d952824a595a3ce36f324bf55d06",
+  "probe/260-dns-append/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/260-dns-append/probe.go": "b8d4cbf5335487bc9b05d126a6f5813509d786f49928ad0fb16ead120aea357e",
+  "probe/260-dns-lookup/.bifrost/policies/p.rqlp": "7df88ab417698512612675cd02192d0af19577b8bc533cb939e58fd6e88bd1b9",
+  "probe/260-dns-lookup/.bifrost/semantic-models/research-net-lookup-declarations.json": "5849019152b61203b76a59273d6db441d54670eb1ddf9de40fc8b19dfd6153a3",
+  "probe/260-dns-lookup/.bifrost/semantic-models/research-net-lookup.json": "f4d61f655d1e6f79594dec437eb5b0e3b5dde9280288cafd2dbaf2c63a4b23f1",
+  "probe/260-dns-lookup/.bifrost/semantic-models/research-os-exec-declarations.json": "7ebb2736b30db6de80a6cca6045e7073c920c2290259701af19ef0b091d9d1d0",
+  "probe/260-dns-lookup/.bifrost/semantic-models/research-os-exec.json": "39eb0cabdc300b88780183b6ad40a7d5a512d952824a595a3ce36f324bf55d06",
+  "probe/260-dns-lookup/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/260-dns-lookup/probe.go": "45940e9b49617f9c3d32e5d43957564582cd732605970d46cc853e2887bd5351",
+  "probe/261-smtp-typestate/.bifrost/policies/p.rqlp": "37c0cd970511a2547b0baca553bef0c7a9f735ebfbf7497fc91d8be1d4d6114b",
+  "probe/261-smtp-typestate/.bifrost/semantic-models/research-net-smtp-declarations.json": "693d0b31bc256e25025a4f447c7b3427387f939623353fd61b318e1306605fad",
+  "probe/261-smtp-typestate/.bifrost/semantic-models/research-net-smtp.json": "41ff97f354a853d8348a9d1f757edbdd86241e10d53ede963661adb2fe665d07",
+  "probe/261-smtp-typestate/go.mod": "e69fac5536d23daa0ba75491f88df1211324ad5f92ab3984bb5c136b353f718c",
+  "probe/261-smtp-typestate/probe.go": "218c88f2be3095ae0a794010fea704af0949afe44b90584e0ec0fc250644b885",
+  "probe/append-invariant/.bifrost/policies/p.rqlp": "9c32137f8ed7ca62513f1cd076b4dda3e41f196cf639e9ca41115edcb61b136a",
+  "probe/append-invariant/app.go": "f10f3ec235d19398db0891a943ddff37757be23abcf3e45474dfd0bec7cf15b9",
+  "probe/append-invariant/go.mod": "e0766d397437e9e593bfe5c0ca20c745dd7892620dff7cf534406fecc89942d2",
+  "probe/transform-origin-local/.bifrost/policies/p.rqlp": "4311422324d8ff8b5e391263aaa31e13d39907d6423760895a8e1ed942c128bc",
+  "probe/transform-origin-local/app.go": "0ceb20a51982e7b559ccb167bef771de2ef89cc9f6ddbfa28aebd40ad67ea382",
+  "probe/transform-origin-local/go.mod": "e0766d397437e9e593bfe5c0ca20c745dd7892620dff7cf534406fecc89942d2",
+  "probe/transform-origin-model/.bifrost/policies/ctl.rqlp": "dfd6fe29b22ae728c6cea3919da3f43b5c90f4650a3b457a27098d55390fb1d4",
+  "probe/transform-origin-model/.bifrost/policies/p.rqlp": "e561cefc21b7079c7f7e5d548fecfdab1841c5f1f97ede2d01b8a86171f731f5",
+  "probe/transform-origin-model/.bifrost/semantic-models/go-stdlib-compress-gzip-declarations.json": "aa051001f0c3d89308c02473a7070789a9bdd2b23b24e9b96fc58c2343a98418",
+  "probe/transform-origin-model/.bifrost/semantic-models/go-stdlib-compress-gzip.json": "7ab3f4055cda4d27c8e42ac6f01823ca9d43e938545ab1867284b65fb18d3ead",
+  "probe/transform-origin-model/app.go": "a71add8eceff376a86b5422e76276c3a4220e5f9cd53603041c669ccd3b09954",
+  "probe/transform-origin-model/go.mod": "e0766d397437e9e593bfe5c0ca20c745dd7892620dff7cf534406fecc89942d2",
+  "probe/variadic-empty/.bifrost/policies/p.rqlp": "41e65d9c18765724cd09b6079c0f758e7d898c54680d2a746e8a0fac711e9dba",
+  "probe/variadic-empty/.bifrost/semantic-models/research-os-exec-declarations.json": "7ebb2736b30db6de80a6cca6045e7073c920c2290259701af19ef0b091d9d1d0",
+  "probe/variadic-empty/.bifrost/semantic-models/research-os-exec.json": "39eb0cabdc300b88780183b6ad40a7d5a512d952824a595a3ce36f324bf55d06",
+  "probe/variadic-empty/app.go": "e4a6fc96e6c026b62ab5ff2768e9c198f88caf2aaa2ab098a17201697b5cc087",
+  "probe/variadic-empty/go.mod": "e0766d397437e9e593bfe5c0ca20c745dd7892620dff7cf534406fecc89942d2"
+ }
+}

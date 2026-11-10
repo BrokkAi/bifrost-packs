@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.io",
+  "pack_version": "0.2.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-io.json",
+    "sha256": "ac11ff22bcb75e0702f11ecee931214ceed1441c8c81e33232a901165c9e7073",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ab31a1ea90098012f6063c2663a62d4a0af9236a/semantic-packs/models/go-stdlib-io.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://pkg.go.dev/io",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "go",
+      "owner": "io",
+      "name": "ReadAll",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}
