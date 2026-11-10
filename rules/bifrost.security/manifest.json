@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -799,6 +799,27 @@
       ],
       "severity_rationale": "The URL passed to webbrowser.open selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser command-line option (CVE-2026-4519, CVE-2026-4786).",
       "remediation": "Do not open process input as a URL. Parse it, require an https scheme and an expected host, and pass only the validated URL to webbrowser.open.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/process-input-to-venv-create.rqlp",
+      "id": "bifrost.security.python.process-input-to-venv-create",
+      "authored_hash": "52a10aaaa0589363950399d328b298299a957bf129e1295772160f8a99c2e251",
+      "resolved_semantic_hash": "52a10aaaa0589363950399d328b298299a957bf129e1295772160f8a99c2e251",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "The env_dir passed to venv.create picks where an interpreter and activation scripts are written and which directory clear=True empties, and on affected interpreters an unquoted directory name runs shell commands when the environment is activated (CVE-2024-9287).",
+      "remediation": "Do not let process input choose a virtual-environment directory. Build the path from a fixed base directory and a validated name (for example, letters, digits, dash and underscore only), and confirm the resolved path stays under that base.",
       "activation": "opt-in"
     },
     {
