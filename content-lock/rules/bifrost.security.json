@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "8b3f655c09c9ee0b2feca9d6ed101d077b0d9924a44595fa12eb4b3745153e84"
+      "sha256": "0af30e09d7cc342b6c01bbd45dc3adb6ab5e5b01815c17613a980c36c01da6d9"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -375,6 +375,13 @@
       "path": "rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp",
       "source_path": "rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp",
       "sha256": "be2be3b81003f12cfa0f942ba5f9b5920baf1af93a58d4d049be53b703d62950",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp",
+      "sha256": "c9fc71cf9f78a65c2c3ad83a6a3f0bdd8a5baa270db902868e357ac98c2bb194",
       "classification": "public",
       "license": "Apache-2.0"
     },

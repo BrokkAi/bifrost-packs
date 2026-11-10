@@ -1,5 +1,8 @@
 # Python data-flow CVE leads on Bifrost 0.15.1
 
+The 2026-11-09 catalog leads #346–#361 are recorded separately in
+[`catalog-2026-11-09.md`](catalog-2026-11-09.md).
+
 **Outcome: two of ten leads ship as opt-in rules. Seven are blocked by the
 engine, and one is blocked on models that this repository does not have yet.**
 

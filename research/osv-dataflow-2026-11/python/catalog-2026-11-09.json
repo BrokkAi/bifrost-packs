@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-10",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "semantic_pack_bundle": {
+      "release": "packs/v0.11.0",
+      "archive": "bifrost.public.packs-0.11.0-native.tar.gz",
+      "archive_sha256": "055f25dedf45dc44bf3fe49429e3af0cd3d3d779ba75415c08956fe35a7d9695"
+    },
+    "environment": {
+      "BIFROST_OPEN_SEMANTIC_PACK_BUNDLE": "<packs-0.11.0>/bifrost-semantic-packs",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_CACHE_DIR": "fresh per run"
+    },
+    "flags": [
+      "--policy-file",
+      "--no-builtin-policies",
+      "--no-incremental",
+      "--evaluation-date 2026-11-10"
+    ]
+  },
+  "leads": [
+    {
+      "issue": "BrokkAi/bifrost-packs#346",
+      "advisory": "CVE-2023-6507",
+      "osv": "PSF-2023-12",
+      "api": "subprocess extra_groups=[]",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Only CPython 3.12.0 mishandles an explicit empty extra_groups list; no version-independent part."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#347",
+      "advisory": "CVE-2026-19445",
+      "osv": "PSF-2026-43",
+      "api": "SSLContext sni_callback context switch",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Version-gated; also needs object-lifetime reasoning that no policy family offers (not filed: new analysis family, not a defect)."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#348",
+      "advisory": "CVE-2026-9669",
+      "osv": "PSF-2026-27",
+      "api": "bz2.BZ2Decompressor reuse after OSError",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867",
+        "bifrost-dev#11329"
+      ],
+      "note": "Fixed runtimes reject reuse, so the hazard is version-gated. See probe/348-bz2-typestate."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#349",
+      "advisory": "CVE-2026-6100",
+      "osv": "PSF-2026-18",
+      "api": "lzma/bz2/gzip decompressor reuse after MemoryError",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867",
+        "bifrost-dev#11329"
+      ],
+      "note": "Version-gated; same typestate shape as #348."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#350",
+      "advisory": "CVE-2026-8328",
+      "osv": "PSF-2026-24",
+      "api": "ftplib.ftpcp",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Fixed ftpcp binds the PASV address to the peer; no version-independent part."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#351",
+      "advisory": "CVE-2026-15806",
+      "osv": "PSF-2026-36",
+      "api": "urllib.request HTTPPasswordMgr",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Scheme-blind matching is fixed; version-gated."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#352",
+      "advisory": "CVE-2026-6019",
+      "osv": "PSF-2026-21",
+      "api": "http.cookies Morsel.js_output",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Fixed runtimes encode the value; version-gated."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#353",
+      "advisory": "CVE-2025-15367",
+      "osv": "PSF-2026-4",
+      "api": "poplib POP3.user/pass_",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867",
+        "bifrost-dev#9999"
+      ],
+      "note": "Fixed runtimes reject control characters; the client is built before the input is read (#273 shape)."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#354",
+      "advisory": "CVE-2024-4032",
+      "osv": "PSF-2024-5",
+      "api": "ipaddress is_private/is_global",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Classification data fixed; version-gated."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#355",
+      "advisory": "CVE-2024-9287",
+      "osv": "PSF-2024-12",
+      "api": "venv.create",
+      "outcome": "implemented",
+      "blockers": [
+        "bifrost-dev#9991",
+        "bifrost-dev#9999",
+        "bifrost-dev#3867"
+      ],
+      "note": "Version-independent part shipped as opt-in bifrost.security.python.process-input-to-venv-create; affected-version part blocked on bifrost-dev#3867."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#356",
+      "advisory": "CVE-2025-13836",
+      "osv": "PSF-2025-14",
+      "api": "http.client HTTPResponse.read()",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867",
+        "bifrost-dev#9999"
+      ],
+      "note": "Unbounded read is a version-independent slice, but urlopen(...).read() stays inconclusive and http.client is not modeled here (content follow-up)."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#357",
+      "advisory": "CVE-2026-116566",
+      "osv": "PSF-2026-48",
+      "api": "socket.getaddrinfo NUL truncation",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Truncation fixed; version-gated."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#358",
+      "advisory": "CVE-2026-3298",
+      "osv": "PSF-2026-20",
+      "api": "asyncio sock_recvfrom_into (Windows)",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Version- and platform-gated; also needs an nbytes <= len(buf) relation."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#359",
+      "advisory": "CVE-2025-12781",
+      "osv": "PSF-2026-7",
+      "api": "base64 urlsafe_b64decode/altchars",
+      "outcome": "not-a-flow-rule",
+      "blockers": [],
+      "note": "The fix only deprecates; the hazard is relying on the decoder to validate the alphabet, which flow evidence cannot show."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#360",
+      "advisory": "CVE-2026-3446",
+      "osv": "PSF-2026-16",
+      "api": "base64.b64decode trailing data",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Version-gated; also needs a correlated decoded-copy-checked/raw-copy-forwarded relation."
+    },
+    {
+      "issue": "BrokkAi/bifrost-packs#361",
+      "advisory": "CVE-2026-6879",
+      "osv": "PSF-2026-34",
+      "api": "xml.etree.ElementTree index predicates",
+      "outcome": "blocked",
+      "blockers": [
+        "bifrost-dev#3867"
+      ],
+      "note": "Quadratic scan fixed; version-gated."
+    }
+  ],
+  "probes": [
+    {
+      "lead": 355,
+      "root": "probe/355-venv",
+      "policy": "rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp",
+      "models": "bifrost.python-stdlib-api-declarations 0.7.0, bifrost.python-security-sink-summaries 0.6.0 (workspace copies)",
+      "cases": [
+        {
+          "sources": "pos",
+          "completion": "proven_by_summary",
+          "reported": [
+            "pos/main.py:7 definite complete"
+          ]
+        },
+        {
+          "sources": "posclear",
+          "completion": "proven_by_summary",
+          "reported": [
+            "posclear/main.py:7 definite complete"
+          ]
+        },
+        {
+          "sources": "kwenv",
+          "completion": "proven_by_summary",
+          "reported": [
+            "kwenv/main.py:7 definite complete"
+          ]
+        },
+        {
+          "sources": "kwpip",
+          "completion": "failed (internal_invariant)",
+          "reported": [],
+          "diagnostics": [
+            "taint model compilation failed: external summary aliases require one synthetic unmaterialized call shape"
+          ],
+          "upstream": "bifrost-dev#9991"
+        },
+        {
+          "sources": "constkw",
+          "completion": "complete",
+          "reported": []
+        }
+      ]
+    },
+    {
+      "lead": 355,
+      "root": "fixtures/policy/bifrost.security/python-process-input-to-venv-create",
+      "cases": [
+        {
+          "sources": ".",
+          "completion": "proven_by_summary",
+          "reported": [
+            "main.py:8",
+            "main.py:13",
+            "main.py:17",
+            "main.py:21"
+          ]
+        },
+        {
+          "sources": "incomplete/builder",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        },
+        {
+          "sources": "incomplete/helper",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": []
+        }
+      ]
+    },
+    {
+      "lead": 348,
+      "root": "probe/348-bz2-typestate",
+      "policy": ".bifrost/policies/348-bz2-reuse.rqlp",
+      "models": "research bz2.json (workspace)",
+      "cases": [
+        {
+          "sources": "reuse",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "typestate selector did not execute completely: /analysis/subjects/entries/decompressor/selector (semantic_analysis_partial: call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown))"
+          ]
+        },
+        {
+          "sources": "fresh",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "typestate selector did not execute completely: /analysis/subjects/entries/decompressor/selector (semantic_analysis_partial: call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown))"
+          ]
+        },
+        {
+          "sources": "ok",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "typestate selector did not execute completely: /analysis/subjects/entries/decompressor/selector (semantic_analysis_partial: call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown))"
+          ]
+        },
+        {
+          "sources": "reraise",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "typestate selector did not execute completely: /analysis/subjects/entries/decompressor/selector (semantic_analysis_partial: call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown))"
+          ]
+        },
+        {
+          "sources": "ftp-control",
+          "policy": ".bifrost/policies/ftp-control.rqlp",
+          "models": "bifrost.python-stdlib-api-declarations 0.7.0 (workspace copy)",
+          "completion": "inconclusive (partial_discovery)",
+          "reported": [],
+          "diagnostics": [
+            "call_bindings semantic model callable is incomplete: PartialModel; call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open)"
+          ]
+        }
+      ],
+      "upstream": "bifrost-dev#11329"
+    }
+  ],
+  "new_upstream_issues": [
+    "bifrost-dev#11329"
+  ]
+}
