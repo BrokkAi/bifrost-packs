@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -934,20 +934,6 @@
       ],
       "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
-    },
-    {
-      "path": "policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
-      "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
-      "authored_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
-      "resolved_semantic_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
-      "category": "security",
-      "supported_languages": [
-        "rust"
-      ],
-      "required_capabilities": [],
-      "severity_rationale": "Cargo releases before the one bundled with Rust 1.66.1 do not verify the SSH host key when fetching a git dependency, so an attacker on the network path can serve modified source that is then built into the project.",
-      "remediation": "Pin Rust 1.66.1 or later in rust-toolchain.toml. Until then, set net.git-fetch-with-cli = true so the git command line, which verifies host keys, does the fetch.",
-      "activation": "opt-in"
     },
     {
       "path": "policies/declared-storage/rust-store-requires-validation.rqlp",
