@@ -17,10 +17,23 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-10, the latest published streams are `packs/v0.11.0` and
-`rules/v0.11.0`, both tagged on `403fd14`. `packs/v0.12.0` and
-`rules/v0.12.0` are prepared next. Publish the packs release first, because
-the rules release depends on it exactly.
+As of 2026-11-11, the latest published streams are `packs/v0.12.0` and
+`rules/v0.12.0`. `rules/v0.12.1` is prepared next and depends exactly on
+`packs/v0.12.0`, which is already published.
+
+`rules/v0.12.1` is a patch release. It requires Bifrost 0.15.1 or later and
+changes no policy, policy ID, finding or required capability. It removes the
+staged `rules/bifrost.rust-codeql-security` directory (#326) from the shipped
+rules root. The directory held CodeQL Rust endpoint catalogs but no
+`manifest.json`, and released Bifrost engines through 0.15.2 load every
+directory under a policy pack root as a pack. With the default open packs,
+rules 0.11.0 and 0.12.0 therefore failed the whole catalog with
+"configured policy source `bifrost.rust-codeql-security/manifest.json` does
+not exist", and no policy loaded. bifrost-dev#10941 makes later engines skip
+such a directory. The catalogs now live in `research/rust-codeql-security/`,
+outside every release stream, until a policy pack registers them.
+
+The `packs/v0.12.0` and `rules/v0.12.0` notes follow.
 
 `packs/v0.12.0` is a minor release. It is built by the same released,
 checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.11.0`, keeps
@@ -113,6 +126,7 @@ that fails on error now fails on them. The packs are
 `bifrost.csharp-codeql-quality` 0.5.1 and `bifrost.java-codeql-quality`,
 `bifrost.javascript-codeql-quality` and `bifrost.python-codeql-quality` 0.1.2.
 The staged `bifrost.rust-codeql-security` catalogs (#326) enable nothing.
+(`rules/v0.12.1` moves them out of the shipped rules root.)
 
 The `packs/v0.10.0` and `rules/v0.10.0` notes follow.
 

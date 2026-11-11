@@ -25,6 +25,9 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
   typestate hypotheses, ownership routing and a proposed qualification queue.
   These are research leads, not enabled or qualified rules.
+- [`research/rust-codeql-security/`](research/rust-codeql-security/catalogs/README.md):
+  staged CodeQL Rust endpoint catalogs for a later policy pack. They are in no
+  release stream.
 
 ## Rule inventory
 
@@ -84,12 +87,11 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.11.0` and `rules/v0.11.0`. `packs/v0.12.0`
-and `rules/v0.12.0` are prepared next. Both need Bifrost 0.15.1 or later.
-`packs/v0.12.0` adds the Python `venv.create` declaration and summary.
-`rules/v0.12.0` adds the opt-in `venv.create` process-input policy, fixes
-false positives in the Rust non-HTTPS URL and dynamic-evaluation policies, and
-depends on `packs/v0.12.0`. See
+The latest releases are `packs/v0.12.0` and `rules/v0.12.0`. `rules/v0.12.1` is
+prepared next. It needs Bifrost 0.15.1 or later, depends on `packs/v0.12.0`,
+and removes the staged `bifrost.rust-codeql-security` directory, which has no
+`manifest.json`, from the shipped rules root: released engines through 0.15.2
+failed the whole default catalog on it. See
 [release streams](docs/release-streams.md).
 
 ## Source verification
