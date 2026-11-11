@@ -3,9 +3,9 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.12.1",
+  "release_version": "0.13.0",
   "artifact_role": "source",
-  "notes": "This patch release requires Bifrost 0.15.1 or later and depends exactly on bifrost.public.packs 0.12.0, as rules 0.12.0 did. It removes the staged rules/bifrost.rust-codeql-security directory (#326) from the shipped rules root. That directory held CodeQL Rust endpoint catalogs but no manifest.json, and released Bifrost engines through 0.15.2 load every directory under a policy pack root as a pack, so rules 0.11.0 and 0.12.0 failed the whole default catalog with \"configured policy source `bifrost.rust-codeql-security/manifest.json` does not exist\". The catalogs registered no policy, so no policy, ID, finding or required capability changes from rules 0.12.0. They now live in research/rust-codeql-security, outside every release stream. This release does not qualify the full policy set or imply complete analysis.",
+  "notes": "This minor release requires Bifrost 0.15.1 or later and depends exactly on bifrost.public.packs 0.12.0. It makes the default rules catalog load on released Bifrost engines again. Released engines through 0.15.2 reject the whole catalog for either of two defects present since rules 0.10.0: a directory under the rules root without manifest.json, and a policy whose required_capabilities list is empty (\"incomplete inventory metadata\"). It moves the staged rules/bifrost.rust-codeql-security catalogs (#326), which registered no policy, to research/rust-codeql-security. It holds out the opt-in policy bifrost.security.rust.cargo-ssh-git-host-key-unverified (#248), which declares no required capability, by moving it with its fixtures and qualification to research/rust-cargo-ssh-git; bifrost.security becomes 3.0.0. The policy returns in a rules release that requires an engine accepting an empty required_capabilities list (bifrost-dev#10941). No other policy, ID, finding or required capability changes from rules 0.12.0. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
