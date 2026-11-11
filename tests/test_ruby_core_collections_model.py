@@ -22,6 +22,8 @@ def _load(relative: str):
 
 
 class RubyCoreCollectionsModelTests(unittest.TestCase):
+    """Pin the draft model's contracts and its absence from the release recipe."""
+
     def test_model_is_not_a_native_job_yet(self):
         artifacts = {job["artifact"] for job in _load("native-generation.json")["jobs"]}
         self.assertNotIn(MODEL, artifacts)
