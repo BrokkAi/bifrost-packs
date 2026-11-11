@@ -1,0 +1,558 @@
+{
+ "schema_version": 8,
+ "pack_id": "bifrost.ruby.core-collections",
+ "version": "1.0.0",
+ "producer": {
+  "name": "bifrost-ruby-core-collections",
+  "version": "0.1.0"
+ },
+ "language": "ruby",
+ "ecosystem": "rubygems",
+ "compatibility": {
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "Ruby core RBS signatures for Hash and Array element access (core/hash.rbs, core/array.rbs)",
+  "revision": "ruby/rbs core review, draft for BrokkAi/bifrost-packs#385"
+ },
+ "license": "Ruby",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "ruby.core.collections.declarations",
+   "activation": [
+    {}
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "name": "Hash",
+      "type_kind": "class",
+      "visibility": "public",
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Hash"
+      }
+     },
+     {
+      "id": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "name": "Array",
+      "type_kind": "class",
+      "visibility": "public",
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Array"
+      }
+     }
+    ],
+    "members": [
+     {
+      "id": "ruby.core.hash.new",
+      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "argument0",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        },
+        {
+         "name": "argument1",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851"
+       }
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Hash.new"
+      }
+     },
+     {
+      "id": "ruby.core.hash.element-reference",
+      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "name": "[]",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "key",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Hash.[]"
+      }
+     },
+     {
+      "id": "ruby.core.hash.element-assignment",
+      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "name": "[]=",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "index",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "value",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Hash.[]="
+      }
+     },
+     {
+      "id": "ruby.core.hash.fetch",
+      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "name": "fetch",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "key",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "default",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Hash.fetch"
+      }
+     },
+     {
+      "id": "ruby.core.array.new",
+      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "argument0",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        },
+        {
+         "name": "argument1",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75"
+       }
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Array.new"
+      }
+     },
+     {
+      "id": "ruby.core.array.element-reference",
+      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "name": "[]",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "index",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "length",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Array.[]"
+      }
+     },
+     {
+      "id": "ruby.core.array.element-assignment",
+      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "name": "[]=",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "index",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "length_or_value",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "value",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Array.[]="
+      }
+     },
+     {
+      "id": "ruby.core.array.fetch",
+      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "name": "fetch",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "signature": {
+       "parameters": [
+        {
+         "name": "key",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "default",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      },
+      "locator": {
+       "kind": "artifact",
+       "path": "core.rbs",
+       "symbol": "Array.fetch"
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "ruby.core.collections.element-access",
+   "activation": [
+    {}
+   ],
+   "payload": {
+    "kind": "procedure_summaries",
+    "summaries": [
+     {
+      "id": "ruby.core.hash.element-reference",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Hash.[]",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "receiver"
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "ruby.core.hash.element-assignment",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Hash.[]=",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": false,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 1
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "receiver"
+        }
+       },
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 1
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "ruby.core.array.element-reference",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.[]",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "receiver"
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "ruby.core.array.element-reference-start-length",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.[](start, length)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "receiver"
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "ruby.core.array.element-assignment",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.[]=",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": false,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 1
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "receiver"
+        }
+       },
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 1
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "ruby.core.array.element-assignment-start-length",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.[]=(start, length, value)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": false,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 2
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "receiver"
+        }
+       },
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 2
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "ruby.core.hash.fetch-default",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Hash.fetch(key, default)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "receiver"
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       },
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 1
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     }
+    ]
+   }
+  }
+ ]
+}
