@@ -25,6 +25,12 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
   typestate hypotheses, ownership routing and a proposed qualification queue.
   These are research leads, not enabled or qualified rules.
+- [`research/rust-codeql-security/`](research/rust-codeql-security/catalogs/README.md):
+  staged CodeQL Rust endpoint catalogs for a later policy pack. They are in no
+  release stream.
+- [`research/rust-cargo-ssh-git/`](research/rust-cargo-ssh-git/README.md):
+  the held-out `bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy,
+  its fixtures and qualification. They are in no release stream.
 
 ## Rule inventory
 
@@ -69,9 +75,9 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | javascript | 44 |
 | kotlin | 17 |
 | php | 20 |
-| python | 130 |
+| python | 131 |
 | ruby | 20 |
-| rust | 39 |
+| rust | 38 |
 | scala | 17 |
 | typescript | 38 |
 
@@ -84,14 +90,14 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.10.0` and `rules/v0.10.0`. `packs/v0.11.0`
-and `rules/v0.11.0` are prepared next. Both need Bifrost 0.15.1 or later.
-`packs/v0.11.0` adds the Go `io` and `compress/gzip` packs, requires Go 1.26.0
-or later for its 27 Go standard-library packs, and activates the TypeScript
-and Node packs by default. `rules/v0.11.0` adds eight `bifrost.security`
-policies (two default-on C# and six opt-in), changes the severity of 61 CodeQL
-quality policies, and depends on `packs/v0.11.0`. See
-[release streams](docs/release-streams.md).
+The latest releases are `packs/v0.12.0` and `rules/v0.12.0`. `rules/v0.13.0` is
+prepared next. It needs Bifrost 0.15.1 or later, depends on `packs/v0.12.0`,
+and makes the default catalog load on released engines again: it moves the
+staged `bifrost.rust-codeql-security` directory, which has no `manifest.json`,
+out of the shipped rules root, and holds out the opt-in
+`bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy, which declares
+no required capability. Released engines through 0.15.2 failed the whole
+default catalog on either. See [release streams](docs/release-streams.md).
 
 ## Source verification
 

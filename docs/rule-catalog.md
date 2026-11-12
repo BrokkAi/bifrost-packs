@@ -277,9 +277,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
 | [Process input reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp) | `bifrost.security.python.process-input-to-urlopen` | python | security | warning |
+| [Process input chooses a venv.create directory](../rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp) | `bifrost.security.python.process-input-to-venv-create` | python | security | warning |
 | [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
-| [SSH git dependency fetched by a Cargo that skips host-key checks](../rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
 | [Stored type parameter lacks a Send or Sync bound](../rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp) | `bifrost.security.rust.unsound-send-sync-impl` | rust | security | error |
