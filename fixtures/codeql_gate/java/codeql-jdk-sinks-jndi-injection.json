@@ -1,0 +1,10 @@
+[
+  "Sink: javax.management.remote; JMXConnector; true; connect; ; ; Argument[this]; jndi-injection; manual",
+  "Sink: javax.management.remote; JMXConnectorFactory; false; connect; ; ; Argument[0]; jndi-injection; manual",
+  "Sink: javax.naming; Context; true; list; ; ; Argument[0]; jndi-injection; manual",
+  "Sink: javax.naming; Context; true; listBindings; ; ; Argument[0]; jndi-injection; manual",
+  "Sink: javax.naming; Context; true; lookup; ; ; Argument[0]; jndi-injection; manual",
+  "Sink: javax.naming; Context; true; lookupLink; ; ; Argument[0]; jndi-injection; manual",
+  "Sink: javax.naming; Context; true; rename; ; ; Argument[0]; jndi-injection; manual",
+  "Sink: javax.naming; InitialContext; true; doLookup; ; ; Argument[0]; jndi-injection; manual"
+]

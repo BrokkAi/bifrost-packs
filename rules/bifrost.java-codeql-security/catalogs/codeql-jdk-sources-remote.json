@@ -1,0 +1,106 @@
+{
+  "categories": [
+    "remote"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sources-remote",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [],
+  "sources": [
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "java.net.URLConnection.getInputStream()",
+      "evidence": null,
+      "id": "codeql-9fd22977d3f30e544b1859ff5b5409c8c993e57d28f53b178f9463e4880a5db0",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getInputStream"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.000abdedf67bd68ff65688152ed7672ef1183c61da7284bdb5056b2e658440ee"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    },
+    {
+      "bind": {
+        "type": "return_value"
+      },
+      "categories": [
+        "remote"
+      ],
+      "display_name": "java.net.Socket.getInputStream()",
+      "evidence": null,
+      "id": "codeql-d8a7cf45003180ff67345c1257e8d124e13a3a9fdd7259992b2a2cc18b32e07c",
+      "labels": [
+        "attacker-controlled"
+      ],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "getInputStream"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.71aee58bcb27635b25f31d2c45da091bd279bd3ba939e695ca826b228c552036"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "threat_model": "remote"
+    }
+  ],
+  "transforms": [],
+  "version": 1
+}

@@ -35,7 +35,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**279 unique rules across 13 policy packs.**
+**279 unique rules across 14 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -47,6 +47,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.csharp-codeql-quality | 31 |
 | Pack | bifrost.effects | 12 |
 | Pack | bifrost.java-codeql-quality | 20 |
+| Pack | bifrost.java-codeql-security | 0 |
 | Pack | bifrost.javascript-codeql-quality | 12 |
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
