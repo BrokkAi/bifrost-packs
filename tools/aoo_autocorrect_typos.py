@@ -75,6 +75,7 @@ def keep(wrong: str, right: str) -> bool:
 
 
 def autocorrect_pairs(archive: bytes) -> set[tuple[str, str]]:
+    """Return the admissible pairs from an AutoCorrect `.dat` archive, minus REAL_WORDS."""
     with zipfile.ZipFile(io.BytesIO(archive)) as dat:
         root = ElementTree.fromstring(dat.read("DocumentList.xml"))
     pairs = set()
@@ -87,6 +88,7 @@ def autocorrect_pairs(archive: bytes) -> set[tuple[str, str]]:
 
 
 def supplement_pairs(text: str) -> set[tuple[str, str]]:
+    """Parse the supplement and raise ValueError on any inadmissible line."""
     pairs = set()
     for number, line in enumerate(text.splitlines(), 1):
         line = line.strip()
@@ -100,6 +102,7 @@ def supplement_pairs(text: str) -> set[tuple[str, str]]:
 
 
 def content_hash(pairs: set[tuple[str, str]]) -> str:
+    """Return the domain-separated SHA-256 of the sorted pairs that the manifest pins."""
     digest = hashlib.sha256(DIGEST_DOMAIN)
     for wrong, right in sorted(pairs):
         digest.update(f"{wrong}\0{right}\n".encode("ascii"))
@@ -107,6 +110,7 @@ def content_hash(pairs: set[tuple[str, str]]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Write the typo table and print its content hash."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("acor_dat", type=Path, help=f"{AOO_PATH} at {AOO_COMMIT}")
     parser.add_argument("output", type=Path)
