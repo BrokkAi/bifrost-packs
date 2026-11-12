@@ -1,0 +1,65 @@
+{
+ "schema_version": 1,
+ "evaluation_date": "2026-11-10",
+ "bifrost": {
+  "version": "0.15.1",
+  "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+  "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+  "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+  "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+  "go_toolchain_on_path": "go1.26.0 darwin/arm64",
+  "environment": {
+   "BIFROST_OPEN_PACKS_DISABLE": "1",
+   "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+   "BIFROST_CACHE_DIR": "fresh per run"
+  }
+ },
+ "leads": [
+  {
+   "issue": 341,
+   "language": "go",
+   "advisory": "CVE-2026-42507",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867",
+    "https://github.com/BrokkAi/bifrost-dev/issues/10005"
+   ],
+   "note": "Taint from net/textproto Reader errors to a line-oriented log. Fixed toolchains quote the peer input in the error, so there is no version-independent part; the sink must be gated on the building toolchain, which no Go row or taint selector can express."
+  },
+  {
+   "issue": 342,
+   "language": "go",
+   "advisory": "CVE-2026-39822",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867",
+    "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+    "https://github.com/BrokkAi/bifrost-packs/issues/225"
+   ],
+   "note": "Untrusted relative path to os.Root.Open/OpenFile/ReadFile on an affected Unix toolchain. On fixed toolchains this is the intended confinement, so the finding is wholly toolchain-gated. Also needs request-path sources (draft bifrost-packs#225)."
+  },
+  {
+   "issue": 343,
+   "language": "go",
+   "advisory": "CVE-2025-61726",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867"
+   ],
+   "probe": "probe/343-parseform-toolchain",
+   "note": "An assertion (ParseForm/FormValue/PostFormValue or url.ParseQuery called in a module built by an affected toolchain) needs no flow, but go-toolchain rows are constraint-only, so the range predicate is unresolved, and target-of gives no module for a Go file (topology_derivation_incomplete)."
+  },
+  {
+   "issue": 344,
+   "language": "go",
+   "advisory": "CVE-2022-41716",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9867",
+    "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+    "https://github.com/BrokkAi/bifrost-packs/issues/225"
+   ],
+   "note": "Request value concatenated into a Cmd.Env entry, then Cmd.Start/Run, on an affected Windows toolchain. Fixed toolchains reject NUL, so the finding is wholly toolchain-gated; Windows-only files also need an analysis run with GOOS=windows."
+  }
+ ]
+}

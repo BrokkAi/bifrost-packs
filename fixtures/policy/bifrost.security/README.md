@@ -35,15 +35,16 @@ and every finding is `possible`; see its `README.md`.
 
 The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.
 
-`cargo-ssh-git-host-key-unverified` qualifies the Rust CVE lead
-BrokkAi/bifrost-packs#60 (CVE-2022-46176). It needs Bifrost 0.15.1 Cargo and
-`rust-toolchain` dependency evidence, and no semantic models. Its 10 cases
-include five where the toolchain or configuration is unknown, and those must
-stay inconclusive. See its `README.md` and
-`docs/qualification/rust-cargo-ssh-git.json`.
+`cargo-ssh-git-host-key-unverified` is held out of the shipped rules; its
+fixtures and qualification moved to `research/rust-cargo-ssh-git/`.
 
 `python-process-input-to-urlopen` and `python-process-input-to-webbrowser-open`
 are not CodeQL ports. They qualify the version-independent parts of the Python
 CVE leads BrokkAi/bifrost-packs#270 and #272 against the reviewed
 `bifrost.python-process-inputs`, `bifrost.python-stdlib-api-declarations` and
 `bifrost.python-security-sink-summaries` models.
+
+`python-process-input-to-venv-create` is not a CodeQL port either. It
+qualifies the version-independent part of the Python CVE lead
+BrokkAi/bifrost-packs#355 (CVE-2024-9287) against the same reviewed models,
+which now declare and summarize `venv.create`.

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -802,6 +802,27 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/python/process-input-to-venv-create.rqlp",
+      "id": "bifrost.security.python.process-input-to-venv-create",
+      "authored_hash": "52a10aaaa0589363950399d328b298299a957bf129e1295772160f8a99c2e251",
+      "resolved_semantic_hash": "52a10aaaa0589363950399d328b298299a957bf129e1295772160f8a99c2e251",
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "The env_dir passed to venv.create picks where an interpreter and activation scripts are written and which directory clear=True empties, and on affected interpreters an unquoted directory name runs shell commands when the environment is activated (CVE-2024-9287).",
+      "remediation": "Do not let process input choose a virtual-environment directory. Build the path from a fixed base directory and a validated name (for example, letters, digits, dash and underscore only), and confirm the resolved path stays under that base.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/declared-storage/python-store-requires-validation.rqlp",
       "id": "bifrost.security.python.store-requires-validation",
       "authored_hash": "f7e2f15e8f55363f6077a35f2f8daaf9b7e7de2900e0532b9666ce2928da9a92",
@@ -902,8 +923,8 @@
     {
       "path": "policies/rust/non-https-url.rqlp",
       "id": "bifrost.security.rust.non-https-url",
-      "authored_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
-      "resolved_semantic_hash": "13f311f4a34aba87c6d89bbb29993a9e570be5ebb02ea0ec2518f140d9e9a150",
+      "authored_hash": "156b4284addee7647c803d3942129aaeb0f93d0650cec7a0584eb1f62d00e07f",
+      "resolved_semantic_hash": "156b4284addee7647c803d3942129aaeb0f93d0650cec7a0584eb1f62d00e07f",
       "category": "security",
       "supported_languages": [
         "rust"
@@ -913,20 +934,6 @@
       ],
       "severity_rationale": "An external cleartext HTTP URL can expose request contents or credentials to network observers and permit endpoint tampering.",
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
-    },
-    {
-      "path": "policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
-      "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
-      "authored_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
-      "resolved_semantic_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
-      "category": "security",
-      "supported_languages": [
-        "rust"
-      ],
-      "required_capabilities": [],
-      "severity_rationale": "Cargo releases before the one bundled with Rust 1.66.1 do not verify the SSH host key when fetching a git dependency, so an attacker on the network path can serve modified source that is then built into the project.",
-      "remediation": "Pin Rust 1.66.1 or later in rust-toolchain.toml. Until then, set net.git-fetch-with-cli = true so the git command line, which verifies host keys, does the fetch.",
-      "activation": "opt-in"
     },
     {
       "path": "policies/declared-storage/rust-store-requires-validation.rqlp",

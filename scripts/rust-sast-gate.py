@@ -12,8 +12,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-RULES = ('unsound-send-sync-impl', 'callback-after-invalid-state',
-         'cargo-ssh-git-host-key-unverified')
+RULES = ('unsound-send-sync-impl', 'callback-after-invalid-state')
 
 
 def digest(path):
