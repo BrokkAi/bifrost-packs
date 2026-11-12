@@ -23,7 +23,7 @@ RULE_ONLY_SOURCE_COMMIT = "825d2bcb1de3aea097b1149ae13ece24d920898c"
 # bifrost.go.stdlib.net 2.1.0 added net.Conn and net.Listener summaries (#192).
 GO_NET_INTERFACE_SUMMARIES_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
 # bifrost.go.stdlib.net-http-declarations 3.1.0 added Request.FormValue (#224).
-GO_NET_HTTP_FORM_VALUE_COMMIT = "MODELCOMMIT"
+GO_NET_HTTP_FORM_VALUE_COMMIT = "77bd26fe98b687801b0fb2b0218b59bea266ff50"
 FIRST_JOB = 12
 # Authored jobs that are not legacy built-ins; pinned by test_go_gob_native_jobs,
 # test_go_read_all_native_jobs and test_authored_native_generation_inputs.
