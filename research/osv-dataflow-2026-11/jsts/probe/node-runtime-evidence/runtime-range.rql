@@ -1,0 +1,2 @@
+; The runtime gate a Node core CVE rule needs (CVE-2022-21824, 16.x branch).
+(dependency-evidence :ecosystem npm-toolchain :version-range "<16.13.2")

@@ -7,7 +7,7 @@
   :id "bifrost.csharp-codeql-quality.use-number-constant"
   :name "C# use number constant"
   :message "integer literal duplicates a visible constant"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL csharp/ql/src/Bad Practices/Magic Constants/MagicNumbersUseConstant.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Selects an integer literal whose decoded value equals a visible const or static readonly initializer in its declaring type."
   :tags ["csharp" "codeql" "quality"]
   :analysis (analysis :type match :selector

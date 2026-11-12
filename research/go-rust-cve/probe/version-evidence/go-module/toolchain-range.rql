@@ -1,0 +1,2 @@
+; The toolchain gate a Go stdlib CVE rule would need (CVE-2022-32190 range).
+(dependency-evidence :ecosystem go-toolchain :version-range "<1.19.1")

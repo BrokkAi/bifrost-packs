@@ -1,0 +1,97 @@
+; Lead: BrokkAi/bifrost-packs#301 (CVE-2026-41586), version-independent part.
+; Product source contract: the java.io.ObjectInputStream documentation and JEP
+; 290 put the defence against hostile serialized data in an ObjectInputFilter
+; set on the stream before its first read. CVE-2026-41586 (fabric-sdk-java)
+; reads caller bytes with no filter. The JDK contract does not depend on the
+; library version, so a stream that is read before setObjectInputFilter is
+; reported on every JDK. The library's affected-version part is not checked.
+; Engine contract: the subject and both events bind with :proof declared to the
+; generated JDK members for ObjectInputStream(InputStream),
+; setObjectInputFilter(ObjectInputFilter) and readObject(). Their IDs are the
+; same on JDK 17.0.16 and 21.0.8. On Bifrost 0.15.1 every finding is possible
+; (typestate-external-call) and every run is inconclusive with no diagnostic
+; (bifrost-dev#10001, #9431). Reviewed summaries for the three members don't
+; change that, so none ship. A clean run is not evidence of no unfiltered read.
+; A process-wide filter (ObjectInputFilter.Config.setSerialFilter,
+; jdk.serialFilter) is deployment knowledge the policy can't see, so those
+; streams are still reported for review.
+(policy
+  :schema-version 1
+  :id "bifrost.security.java.objectinputstream-read-without-filter"
+  :name "ObjectInputStream read before an ObjectInputFilter is set"
+  :message "ObjectInputStream.readObject() runs before setObjectInputFilter on this stream"
+  :severity warning
+  :description "Reports a java.io.ObjectInputStream, created with ObjectInputStream(InputStream), whose readObject() runs before setObjectInputFilter is called on the same stream. Without a filter the stream instantiates any serializable class the input names (CWE-502, CVE-2026-41586)."
+  :tags ["security" "java" "deserialization" "cwe-502"]
+  :analysis
+    (analysis
+      :type typestate
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :subjects
+        (subject-set
+          :entries [
+            (subject
+              :id object-input-stream
+              :selector
+                (rql
+                  :schema-version 1
+                  (language java
+                    (resolved-call
+                      :resolves-to member.7dc60e6847cb9945364968ab78f8ae7479b086308cf24a3d859838e2a14da0d8
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "ObjectInputStream") :arity 1))))))
+              :subject return-value)])
+      :uncertainty
+        (uncertainty
+          :escape inconclusive)
+      :automaton
+        (automaton
+          :states [unfiltered filtered violated]
+          :initial unfiltered
+          :accepting-states [unfiltered filtered]
+          :error-states [violated]
+          :events [
+            (event
+              :id set-filter
+              :calls
+                (calls
+                  :selector
+                    (rql
+                      :schema-version 1
+                      (language java
+                        (resolved-call
+                          :resolves-to member.c1c638aa5b27bad18b4d6fed873fb6c0354bea04de41cca00239bd344a0b500c
+                          :proof declared
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "setObjectInputFilter") :arity 1))))))
+                  :subject receiver
+                  :phase after-normal-return))
+            (event
+              :id read-object
+              :calls
+                (calls
+                  :selector
+                    (rql
+                      :schema-version 1
+                      (language java
+                        (resolved-call
+                          :resolves-to member.99d78a26d6e3ffae40276c86680eea4dc6923d977dbf42b0113d441121baa69c
+                          :proof declared
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "readObject") :arity 0))))))
+                  :subject receiver
+                  :phase after-normal-return))]
+          :transitions [
+            (transition :from unfiltered :on set-filter :to filtered)
+            (transition :from unfiltered :on read-object :to violated)
+            (transition :from filtered :on set-filter :to filtered)
+            (transition :from filtered :on read-object :to filtered)]
+          :terminal-expectations []))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "502")))

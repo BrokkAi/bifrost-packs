@@ -1,0 +1,441 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.encoding-gob-declarations",
+  "version": "0.2.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/encoding/gob",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.encoding-gob.declarations",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.25e0e90a58545cfce10e264d5b95085afc37fde58f45557ae45ef2eca4cca30a",
+            "name": "encoding/gob",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "gob"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/doc.go",
+              "symbol": "encoding/gob"
+            }
+          },
+          {
+            "id": "type.d70dbf6dde2b04eca1bc85f314a0dbdb2cbba16dd4ba555edd02554d5862c2f6",
+            "name": "encoding/gob.Decoder",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/decoder.go",
+              "symbol": "encoding/gob.Decoder"
+            }
+          },
+          {
+            "id": "type.8cb590060eb2b70aba243da7899bea4ce757d70531f1d3bab19831fdb7457937",
+            "name": "encoding/gob.Encoder",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/encoder.go",
+              "symbol": "encoding/gob.Encoder"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.bb3630d40701b0ec10c465557214e262437f2daccda653fdcc433fc118837381",
+            "owner": "type.25e0e90a58545cfce10e264d5b95085afc37fde58f45557ae45ef2eca4cca30a",
+            "name": "NewDecoder",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "r",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Reader",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "pointer",
+                "element": {
+                  "kind": "declared",
+                  "id": "type.d70dbf6dde2b04eca1bc85f314a0dbdb2cbba16dd4ba555edd02554d5862c2f6",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/decoder.go",
+              "symbol": "encoding/gob.NewDecoder"
+            }
+          },
+          {
+            "id": "member.95cc4fbf59f1a20236aefe1e9026b430e39638e3e9d92b1a50c179f443a57aa8",
+            "owner": "type.25e0e90a58545cfce10e264d5b95085afc37fde58f45557ae45ef2eca4cca30a",
+            "name": "NewEncoder",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "w",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Writer",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "pointer",
+                "element": {
+                  "kind": "declared",
+                  "id": "type.8cb590060eb2b70aba243da7899bea4ce757d70531f1d3bab19831fdb7457937",
+                  "arguments": [],
+                  "nullable": false
+                }
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/encoder.go",
+              "symbol": "encoding/gob.NewEncoder"
+            }
+          },
+          {
+            "id": "member.684840cbcd3f1352824afb8968cf6b8f194e08f138ad77e6ab710b71ec17452b",
+            "owner": "type.25e0e90a58545cfce10e264d5b95085afc37fde58f45557ae45ef2eca4cca30a",
+            "name": "Register",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/type.go",
+              "symbol": "encoding/gob.Register"
+            }
+          },
+          {
+            "id": "member.5ac18b8c3768584d01842d717aee20e96f3be8d6aa5d7f128b5fa87232e21c01",
+            "owner": "type.25e0e90a58545cfce10e264d5b95085afc37fde58f45557ae45ef2eca4cca30a",
+            "name": "RegisterName",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/type.go",
+              "symbol": "encoding/gob.RegisterName"
+            }
+          },
+          {
+            "id": "member.db9a32c6d9d1c072f8df8ae7cf8ad5efad3e4bd5bd722aafc08a86a87b34d725",
+            "owner": "type.d70dbf6dde2b04eca1bc85f314a0dbdb2cbba16dd4ba555edd02554d5862c2f6",
+            "name": "Decode",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/decoder.go",
+              "symbol": "encoding/gob.Decoder.Decode"
+            }
+          },
+          {
+            "id": "member.ed0f43d9fc86f0c7f14689cab033800bcaec62d4e265e27860de21395869c74f",
+            "owner": "type.d70dbf6dde2b04eca1bc85f314a0dbdb2cbba16dd4ba555edd02554d5862c2f6",
+            "name": "DecodeValue",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "v",
+                  "type": {
+                    "kind": "named",
+                    "name": "reflect.Value",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/decoder.go",
+              "symbol": "encoding/gob.Decoder.DecodeValue"
+            }
+          },
+          {
+            "id": "member.b9d3e5586e436f1036dbb8c82ef305921d547569db628bc715b85cc633419a16",
+            "owner": "type.8cb590060eb2b70aba243da7899bea4ce757d70531f1d3bab19831fdb7457937",
+            "name": "Encode",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "kind": "named",
+                    "name": "any",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/encoder.go",
+              "symbol": "encoding/gob.Encoder.Encode"
+            }
+          },
+          {
+            "id": "member.d0d574181e7bd1e6013f8e3d413092bed9349d448f11f1a024ce053e8b572cc1",
+            "owner": "type.8cb590060eb2b70aba243da7899bea4ce757d70531f1d3bab19831fdb7457937",
+            "name": "EncodeValue",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "named",
+                    "name": "reflect.Value",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "error",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "encoding/gob/encoder.go",
+              "symbol": "encoding/gob.Encoder.EncodeValue"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.go.gzip-network-unbounded-read"
+  :name "n" :message "m" :severity warning :description "d"
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source :id net-dial :display-name "net.Dial connection" :categories [io.external]
+              :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net.Dial" :proof declared
+                (call-bindings (call-shape (call :callee (name "Dial") :arity 2))))))
+              :bind (result :index 0) :labels [untrusted])])
+      :transforms
+        (endpoint-set
+          :entries [
+            (transform :id gzip-new-reader
+              :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "compress/gzip.NewReader" :proof declared
+                (call-bindings (call-shape (call :callee (name "NewReader") :arity 1))))))
+              :input (argument :index 0) :output (result :index 0) :adds [decompressed])])
+      :sanitizers
+        (endpoint-set
+          :entries [
+            (sanitizer :id io-limit-reader
+              :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "io.LimitReader" :proof declared
+                (call-bindings (call-shape (call :callee (name "LimitReader") :arity 2)))))))
+              :input (argument :index 0) :output return-value :removes [decompressed])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink :id io-read-all :display-name "io.ReadAll reader" :categories [resource-consumption]
+              :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "io.ReadAll" :proof declared
+                (call-bindings (call-shape (call :callee (name "ReadAll") :arity 1)))))))
+              :dangerous-operand (argument :index 0) :accepts [decompressed])])))

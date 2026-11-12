@@ -1,0 +1,97 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.compress-gzip",
+  "version": "0.2.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/compress/gzip",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.compress-gzip.summaries",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "compress-gzip.new-reader",
+            "target": {
+              "path": "src/compress/gzip/gunzip.go",
+              "symbol": "compress/gzip.NewReader(r io.Reader)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "indexed_normal_return",
+                  "ordinal": 0
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "compress-gzip.reader.close",
+            "target": {
+              "path": "src/compress/gzip/gunzip.go",
+              "symbol": "compress/gzip.Reader.Close()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "compress-gzip.reader.multistream",
+            "target": {
+              "path": "src/compress/gzip/gunzip.go",
+              "symbol": "compress/gzip.Reader.Multistream(ok bool)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

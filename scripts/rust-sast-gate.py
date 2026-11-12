@@ -35,6 +35,8 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--timeout', type=int, default=300)
+    parser.add_argument('--rule', action='append', choices=RULES,
+                        help='run only this rule; repeatable (default: every rule)')
     args = parser.parse_args()
     binary = args.binary.resolve(strict=True)
     output = args.output.resolve()
@@ -51,7 +53,7 @@ def main():
                    version=version.stdout.strip(), qualification='focused fixture gate', cases=[])
     manifest = json.loads((ROOT / 'rules/bifrost.security/manifest.json').read_text())
     identities = {p['id']: p for p in manifest['policies']}
-    for rule in RULES:
+    for rule in args.rule or RULES:
         fixtures = ROOT / 'fixtures/policy/bifrost.security' / rule
         spec = json.loads((fixtures / 'expectations.json').read_text())
         policy = ROOT / 'rules/bifrost.security/policies/rust' / (rule + '.rqlp')
@@ -66,7 +68,9 @@ def main():
             command = [str(binary), '--root', str(workspace), '--no-builtin-policies',
                        '--policy-file', 'rule.rqlp', '--format', 'json',
                        '--fail-on', 'never', '--output', str(run / 'report.json')]
+            expected_completion = case.get('completion', 'complete')
             record = dict(rule=rule, case=case['case'], expected_findings=case['findings'],
+                          expected_completion=expected_completion,
                           command=command, environment={k: env[k] for k in env if
                           k.startswith(('BIFROST_', 'XDG_CACHE', 'RAYON_')) or k == 'JAVA_HOME'},
                           policy_sha256=digest(policy), fixture_hashes={
@@ -89,16 +93,20 @@ def main():
                 record.update(completion=result.get('completion'), findings=findings,
                               finding_count=len(findings), policy_hash=result.get('policy_hash'),
                               report_sha256=digest(run / 'report.json'))
-                if result.get('completion', {}).get('type') != 'complete':
-                    raise ValueError('incomplete or unsupported run')
+                if result.get('completion', {}).get('type') != expected_completion:
+                    raise ValueError(f'expected a {expected_completion} run, got '
+                                     f"{result.get('completion')!r}")
                 record['diagnostics'] = result.get('diagnostics')
                 diagnostics = report.get('diagnostics', []) + result.get('diagnostics', [])
                 allowed_empty = case['findings'] == 0 and all(
                     d.get('code', {}).get('type') == 'empty_selection'
                     and d.get('impact') == 'advisory' and d.get('severity') == 'note'
                     for d in diagnostics)
-                if diagnostics and not allowed_empty:
+                # An expected-inconclusive case must say why; a complete one may not.
+                if expected_completion == 'complete' and diagnostics and not allowed_empty:
                     raise ValueError('analysis diagnostics present')
+                if expected_completion != 'complete' and not diagnostics:
+                    raise ValueError('inconclusive run carries no diagnostic')
                 if len(findings) != case['findings']:
                     raise ValueError(f"expected {case['findings']} findings, got {len(findings)}")
                 expected_hash = identities[spec['policy_id']]['resolved_semantic_hash']
@@ -106,7 +114,7 @@ def main():
                     raise ValueError('runtime semantic identity differs from manifest')
                 for finding in findings:
                     if case.get('anchor_line') is not None and finding.get('primary', {}).get('region', {}).get('start_line') != case['anchor_line']:
-                        raise ValueError('marker finding does not anchor on the impl header')
+                        raise ValueError('finding does not anchor on the expected line')
                     if finding.get('certainty', {}).get('type') not in ('definite', 'possible'):
                         raise ValueError('missing or invalid finding certainty')
                     if finding.get('policy_id') != spec['policy_id']:

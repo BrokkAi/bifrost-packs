@@ -15,11 +15,27 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7"
+GO_TOOLCHAIN_SOURCE_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 # The Go declaration models moved here when they gained callable_family_complete (#213).
 GO_DECLARATIONS_COMMIT = "f9c42f6854fff105e78bb961e7a56c56c63744e3"
 # The rule-only and runtime-value-only models were migrated in a later commit.
 RULE_ONLY_SOURCE_COMMIT = "825d2bcb1de3aea097b1149ae13ece24d920898c"
+# bifrost.go.stdlib.net 2.1.0 added net.Conn and net.Listener summaries (#192).
+GO_NET_INTERFACE_SUMMARIES_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
+# bifrost.go.stdlib.net-http-declarations 3.1.0 added Request.FormValue (#224).
+GO_NET_HTTP_FORM_VALUE_COMMIT = "MODELCOMMIT"
 FIRST_JOB = 12
+# Authored jobs that are not legacy built-ins; pinned by test_go_gob_native_jobs,
+# test_go_read_all_native_jobs and test_authored_native_generation_inputs.
+AUTHORED_AFTER_LEGACY = {
+    "go-stdlib-database-sql-declarations",
+    "go-stdlib-encoding-gob",
+    "go-stdlib-encoding-gob-declarations",
+    "go-stdlib-compress-gzip",
+    "go-stdlib-compress-gzip-declarations",
+    "go-stdlib-io",
+    "go-stdlib-io-declarations",
+}
 
 # Embedded pack IDs delivered by these jobs; Go os and the JDK and Python str
 # result-use packs were already native before this set.
@@ -83,7 +99,10 @@ class LegacyBuiltinNativeJobTests(unittest.TestCase):
     """Pin the delivered built-in packs, including the rule-only ones."""
 
     def test_every_delivered_builtin_pack_is_a_version_independent_job(self):
-        jobs = _load("native-generation.json")["jobs"][FIRST_JOB:]
+        jobs = [
+            job for job in _load("native-generation.json")["jobs"][FIRST_JOB:]
+            if job["name"] not in AUTHORED_AFTER_LEGACY
+        ]
         self.assertEqual(len(jobs), len(DELIVERED | RULE_ONLY))
         seen = set()
         for job in jobs:
@@ -96,10 +115,16 @@ class LegacyBuiltinNativeJobTests(unittest.TestCase):
                 self.assertGreaterEqual(model["schema_version"], 8)
                 self.assertNotIn("bifrost", model["compatibility"])
                 self.assertEqual(spec["artifact"]["sha256"], hashlib.sha256(model_bytes).hexdigest())
-                if model["pack_id"] in RULE_ONLY:
+                if job["name"] == "go-stdlib-net-http-declarations":
+                    commit = GO_NET_HTTP_FORM_VALUE_COMMIT
+                elif job["name"].startswith("go-stdlib-"):
+                    commit = GO_TOOLCHAIN_SOURCE_COMMIT
+                elif model["pack_id"] in RULE_ONLY:
                     commit = RULE_ONLY_SOURCE_COMMIT
                 elif job["name"].startswith("go-") and job["name"].endswith("-declarations"):
                     commit = GO_DECLARATIONS_COMMIT
+                elif job["name"] == "go-stdlib-net":
+                    commit = GO_NET_INTERFACE_SUMMARIES_COMMIT
                 else:
                     commit = SOURCE_COMMIT
                 if model["schema_version"] == 8:
