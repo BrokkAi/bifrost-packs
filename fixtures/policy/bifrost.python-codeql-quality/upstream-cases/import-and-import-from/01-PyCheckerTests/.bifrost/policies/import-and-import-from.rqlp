@@ -5,7 +5,7 @@
   :id "bifrost.python-codeql-quality.import-and-import-from"
   :name "Python module imported with both forms"
   :message "module is imported with both 'import' and 'from ... import'"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL py/import-and-import-from for complete, locally resolved imports, using exact parsed import-form and same-scope module-group facts."
   :tags ["python" "codeql" "quality" "imports"]
   :analysis (analysis :type match :selector

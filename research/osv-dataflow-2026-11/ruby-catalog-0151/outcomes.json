@@ -1,0 +1,189 @@
+{
+ "schema_version": 1,
+ "evaluation_date": "2026-11-10",
+ "bifrost": {
+  "version": "0.15.1",
+  "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+  "archive": "bifrost-v0.15.1-universal-apple-darwin.tar.gz",
+  "archive_sha256": "d7ca6901787455bdabf18ec9c36453032a9be354180e54b5ff183b1e4bf83038",
+  "binary_sha256": "00b279126297d5e9f7805390799493e915eaf4a2d5940dc3e755138a577a6df9",
+  "environment": {
+   "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+   "BIFROST_OPEN_PACKS_DISABLE": "1",
+   "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+   "BIFROST_CACHE_DIR": "fresh per run"
+  }
+ },
+ "issues": {
+  "filed": [
+   "https://github.com/BrokkAi/bifrost-dev/issues/11368",
+   "https://github.com/BrokkAi/bifrost-dev/issues/11369"
+  ],
+  "reused": [
+   "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+   "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+   "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+  ],
+  "fixed_on_master_not_released": [
+   {
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+    "fix": "https://github.com/BrokkAi/bifrost-dev/pull/9425"
+   },
+   {
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "fix": "release cut from master"
+   },
+   {
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "fix": "https://github.com/BrokkAi/bifrost-dev/pull/9371 (points 1, 2, 4)"
+   },
+   {
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "fix": "https://github.com/BrokkAi/bifrost-dev/pull/10010"
+   }
+  ]
+ },
+ "probe_inputs_sha256": {
+  "probe/.bifrost/semantic-models/bifrost.research.ruby-catalog-0151-probe.json": "cc4209b0fba0118a3748430b7b8fb48fe47935f1fac708b87893ab82852a9d06",
+  "probe/bindings/app.rb": "7ae26add2954f4c16e655edf43ad2bd2e8dcdfb4fa4c0c23a529db6a52f2986a",
+  "probe/bindings/fetch.rql": "d3d80eef95f94938833d8d09985541b25c6a18c25fca2caaf413de1926a647ea",
+  "probe/bindings/new.rql": "f63e0af114988d882d27ffc5ab66e12a34760009da794b6cc9336d3131da6808",
+  "probe/bindings/parse.rql": "08f211db0c3e665ea92e1b135fb6b2e92befb571135b20c79f26febee4364d04",
+  "probe/bindings/partial_value.rql": "534b32665671232177c55eeb9063cd80e8088b70095924c88bf0de494e001389",
+  "probe/bindings/search.rql": "d97b102292925fbecb3db1db17f05eee05825cbd67b37f0f85e8cc2614e4b86d",
+  "probe/bindings/sort.rql": "8351c3524447ec278a1c26b8775887ba10fdeb8a7ab51ab18fa77e9cf4229e3e",
+  "probe/bindings/uid_search.rql": "449b27eb8cb7548b16f92c83441e1c4e58b80b419e2c0c9cd38156a881d8fcc1",
+  "probe/deps/affected/Gemfile": "ec235d669e3c838f19b4eb1762a1b3827db130813dd06d0acd7171b6e8e7ae14",
+  "probe/deps/affected/Gemfile.lock": "bd7b6ae65126e6f1d49825a2b45926ac9d6c8b636a2034589664e4e27fc14ff7",
+  "probe/deps/affected/app.rb": "7ae26add2954f4c16e655edf43ad2bd2e8dcdfb4fa4c0c23a529db6a52f2986a",
+  "probe/deps/all.rql": "86c06463127b8619e09fe34f2881c21fa95c75805b0ad6ff70c987858da0dd75",
+  "probe/deps/fixed/Gemfile": "2edc304eeaf701435bd8ffd89b7d5eba3c6d342e44fd70c41cd0fe183ad8e399",
+  "probe/deps/fixed/Gemfile.lock": "8eafadd254533ddc14d9753a7c4dcd5731ae984e94a4ada89e7a1393a31033ad",
+  "probe/deps/fixed/app.rb": "7ae26add2954f4c16e655edf43ad2bd2e8dcdfb4fa4c0c23a529db6a52f2986a",
+  "probe/deps/no-lock/Gemfile": "ec235d669e3c838f19b4eb1762a1b3827db130813dd06d0acd7171b6e8e7ae14",
+  "probe/deps/no-lock/app.rb": "7ae26add2954f4c16e655edf43ad2bd2e8dcdfb4fa4c0c23a529db6a52f2986a",
+  "probe/deps/range.rql": "027d905025930d0560a8ac9df396a67c0403f5fb4a1b248f78ab53cb44ce70f4",
+  "probe/deps/rubygems.rql": "96552a0ef4b4e77b77a351ab39d9d6b82de1c14a0b068636863cdcef6eabe730",
+  "probe/keywords/app.rb": "c177a769eee8c9e960aaade00b66d14a447cb2773c9ebebbba1644a2bcd651e3",
+  "probe/keywords/fetch.rql": "d3d80eef95f94938833d8d09985541b25c6a18c25fca2caaf413de1926a647ea",
+  "probe/workspace-control/app.rb": "a5b6f430966b4fb6b58666b2090f049b7fefd01b863c7c1099b4fba17a372a0b",
+  "probe/workspace-control/calls.rql": "e20569293199cfac21232ab3759b814e4eee7aeb8503a3291e4639afea90d4e1",
+  "probe/workspace-control/fetch.rql": "d3d80eef95f94938833d8d09985541b25c6a18c25fca2caaf413de1926a647ea"
+ },
+ "leads": [
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/362",
+   "advisory": "CVE-2023-36617",
+   "gem": "uri",
+   "policy_kind": "taint",
+   "sink": "URI.parse",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/10005"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/363",
+   "advisory": "CVE-2024-35176",
+   "gem": "rexml",
+   "policy_kind": "taint",
+   "sink": "REXML::Document.new",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/10005"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/364",
+   "advisory": "CVE-2025-58767",
+   "gem": "rexml",
+   "policy_kind": "taint",
+   "sink": "REXML::Document.new",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/10005"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/365",
+   "advisory": "CVE-2025-25186",
+   "gem": "net-imap",
+   "policy_kind": "value-flow",
+   "sink": "Net::IMAP.new host + parser_use_deprecated_uidplus_data",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/11368"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/366",
+   "advisory": "CVE-2025-43857",
+   "gem": "net-imap",
+   "policy_kind": "value-flow",
+   "sink": "Net::IMAP.new host + max_response_size",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/11368"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/367",
+   "advisory": "CVE-2026-42256",
+   "gem": "net-imap",
+   "policy_kind": "value-flow",
+   "sink": "Net::IMAP#authenticate SCRAM max_iterations",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/11368"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/368",
+   "advisory": "CVE-2026-47240",
+   "gem": "net-imap",
+   "policy_kind": "typestate",
+   "sink": "Net::IMAP#search/#uid_search/#sort/#thread/#fetch raw string",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/369",
+   "advisory": "CVE-2026-47241",
+   "gem": "net-imap",
+   "policy_kind": "typestate",
+   "sink": "Net::IMAP#search/#uid_search/#fetch raw string",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+   ]
+  },
+  {
+   "issue": "https://github.com/BrokkAi/bifrost-packs/issues/370",
+   "advisory": "CVE-2026-71847",
+   "gem": "json",
+   "policy_kind": "typestate",
+   "sink": "JSON::ResumableParser#partial_value",
+   "outcome": "blocked",
+   "blocked_on": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318"
+   ]
+  }
+ ]
+}

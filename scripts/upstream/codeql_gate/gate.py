@@ -3,26 +3,29 @@
 import argparse
 import json
 import os
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 # -I excludes the script directory; add only this repository's package root.
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from core import GateError, execute, load_oracle
+from core import GateError, execute, invoke, load_oracle
 from scoped import validate_attributions
 from stagers.go import GoStager
 from stagers.java import JavaStager
 from stagers.csharp import CSharpStager
+from stagers.rust import RustStager
 from ql_classes import generate_cache
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('expected', 'prepare', 'run', 'summary', 'ql-classes'))
+    parser.add_argument('command', choices=('expected', 'prepare', 'run', 'summary', 'ql-classes', 'fixture'))
     parser.add_argument('query', nargs='?')
     parser.add_argument('policy', nargs='?', type=Path)
-    parser.add_argument('--language', choices=('go', 'java', 'csharp'), default='go')
+    parser.add_argument('--language', choices=('go', 'java', 'csharp', 'rust'), default='go')
     parser.add_argument('--codeql-root', type=Path, default=os.environ.get('CODEQL_ROOT'))
     parser.add_argument('--test-dir', action='append', type=Path, default=[], help='relative to CodeQL root; repeat for multi-dir queries')
     parser.add_argument('--query-path', help='query: value in .qlref; inferred from @id when omitted')
@@ -36,6 +39,10 @@ def main(argv=None):
     parser.add_argument('--nuget-source', default='https://api.nuget.org/v3/index.json')
     parser.add_argument('--extra-policy', action='append', type=Path, default=[])
     parser.add_argument('--models', type=Path)
+    parser.add_argument('--model-pack', action='append', type=Path, default=[],
+                        help='reviewed semantic-pack JSON file to activate; repeat as needed')
+    parser.add_argument('--fixture-root', type=Path,
+                        help='engine CQ fixture directory containing app/ and sibling stubs/')
     parser.add_argument('--label', default='')
     parser.add_argument('--timeout', type=float, default=600)
     parser.add_argument('--keep', action='store_true')
@@ -88,6 +95,48 @@ def main(argv=None):
                 latest[tuple(row[1:3])] = line
         print('\n'.join(latest.values()))
         return 0 if all(line.split('\t')[4] in ('EXACT', 'SCOPED-EXACT') for line in latest.values()) and latest else 1
+    if args.command == 'fixture':
+        if args.language != 'rust' or not args.fixture_root or not args.policy or not args.binary:
+            parser.error('fixture requires --language rust, --fixture-root, POLICY and --binary')
+        fixture = args.fixture_root.resolve()
+        if not (fixture / 'app').is_dir():
+            raise GateError('fixture root must contain app/')
+        args.state_dir.mkdir(parents=True, exist_ok=True)
+        run_dir = Path(tempfile.mkdtemp(prefix='rust-fixture-', dir=args.state_dir))
+        shutil.copytree(fixture, run_dir / 'fixture')
+        app = run_dir / 'fixture/app'
+        model_dir = app / '.bifrost/semantic-models'
+        model_dir.mkdir(parents=True, exist_ok=True)
+        for pack in args.model_pack:
+            if not pack.is_file() or pack.suffix != '.json' or (model_dir / pack.name).exists():
+                raise GateError(f'invalid or duplicate model pack: {pack}')
+            shutil.copy2(pack, model_dir / pack.name)
+        policy = args.policy
+        if policy.is_absolute():
+            shutil.copy2(policy, app / policy.name)
+            policy = Path(policy.name)
+        command = [str(Path(args.binary).resolve()), '--root', str(app), '--no-builtin-policies',
+                   '--policy-file', policy.as_posix(), '--evaluation-date', '2026-10-02',
+                   '--fail-on', 'never', '--format', 'json']
+        env = dict(os.environ, BIFROST_OPEN_PACKS_DISABLE='1',
+                   BIFROST_WORKSPACE_SEMANTIC_MODELS='on', BIFROST_PARALLELISM='1',
+                   RAYON_NUM_THREADS='1', BIFROST_CACHE_ROOT=str(run_dir / 'cache'),
+                   BIFROST_SEMANTIC_PACK_CACHE_ROOT=str(run_dir / 'pack-cache'))
+        rc, timed_out = invoke(command, app, env, run_dir, args.timeout)
+        if timed_out:
+            raise GateError(f'fixture timed out; logs: {run_dir}')
+        report = json.loads((run_dir / 'stdout.json').read_text())
+        runs = report.get('runs', [])
+        if len(runs) != 1:
+            raise GateError(f'fixture expected one policy run; logs: {run_dir}')
+        run = runs[0]
+        print(json.dumps({'run_dir': str(run_dir), 'exit_code': rc,
+                          'completion': run['completion']['type'],
+                          'finding_lines': sorted(f['primary']['region']['start_line']
+                                                  for f in run['findings']),
+                          'diagnostic_families': sorted(set(d['family']
+                                                            for d in run['diagnostics']))}, indent=2))
+        return 0 if rc in (0, 2) else 1
     if not args.query or not args.codeql_root:
         parser.error('query and --codeql-root (or CODEQL_ROOT) are required')
     args.codeql_root = args.codeql_root.resolve()
@@ -95,7 +144,7 @@ def main(argv=None):
         stager = CSharpStager(args.dotnet_root, args.nuget_packages or args.state_dir / 'nuget-packages',
                               args.nuget_source)
     else:
-        stager = GoStager() if args.language == 'go' else JavaStager(args.java_home)
+        stager = {'go': GoStager, 'rust': RustStager}.get(args.language, lambda: JavaStager(args.java_home))()
     if hasattr(stager, 'validate_ql_endpoints'):
         stager.validate_ql_endpoints(args.codeql_root)
     query_path = args.query_path
@@ -131,6 +180,9 @@ def main(argv=None):
     args.extra_policy = [p.resolve() for p in args.extra_policy]
     if args.models:
         args.models = args.models.resolve()
+    args.model_pack = [p.resolve() for p in args.model_pack]
+    if args.model_pack and args.language != 'rust':
+        parser.error('--model-pack currently supports Rust only')
     if args.timeout <= 0:
         raise GateError('timeout must be positive')
     args.anchors = json.loads(args.anchors.read_text()) if args.anchors else {}

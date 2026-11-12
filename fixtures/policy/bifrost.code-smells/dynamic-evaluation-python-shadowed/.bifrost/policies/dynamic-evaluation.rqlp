@@ -1,0 +1,60 @@
+; Python arms require builtin identity; JavaScript and TypeScript arms require
+; an unqualified callee with no lexical binding. Member calls such as
+; model.eval(), df.eval(...), session.exec(...) and ImageMath.eval(...) are
+; excluded structurally (#376). occurrences-in also yields argument
+; identifiers, so the JavaScript and TypeScript arms intersect with identifiers
+; spelled eval or Function, and the Python arm filters on the builtin target.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.dynamic-evaluation"
+  :name "Dynamic code evaluation"
+  :message "Replace dynamic evaluation with explicit parsing or dispatch"
+  :severity warning
+  :description "Calls that evaluate source text as code are difficult to validate and can execute unintended behavior. Prefer a data-only representation and explicit operations. Python reports an unqualified eval or exec call only when builtin identity proves builtins.eval or builtins.exec, plus a direct builtins.eval or builtins.exec member call on a receiver named builtins. A shadowed or unresolved Python name stays typed incomplete with no finding. JavaScript and TypeScript report an unqualified eval or Function call, including new Function, whose callee has no lexical binding. Member calls with these method names, such as model.eval(), df.eval(...), session.exec(...) or ImageMath.eval(...), are not reported even when the library evaluates its argument internally."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "security" "code-smell"]
+  :analysis
+    (analysis
+      :type match
+      :selector
+        (rql
+          :schema-version 1
+          (union
+            (filter :where ((relation eq builtin_identity)
+                            (outcome eq builtin)
+                            (proof eq proven)
+                            (completeness eq complete)
+                            (target_id in ["builtins.eval" "builtins.exec"]))
+              (python-builtin-identity
+                (occurrences-in :class reference :role value_reference
+                  (except
+                    (language python (call :callee (name/regex "^(eval|exec)$")))
+                    (language python
+                      (call :callee (name/regex "^(eval|exec)$") :receiver (text/regex "(?s).+")))))))
+            (language python (call :callee (name/regex "^(eval|exec)$") :receiver (name "builtins")))
+            (except
+              (intersect
+                (occurrences-in :class reference :role value_reference
+                  (except
+                    (language javascript (call :callee (name/regex "^(eval|Function)$")))
+                    (language javascript
+                      (call :callee (name/regex "^(eval|Function)$") :receiver (text/regex "(?s).+")))))
+                (occurrences-in :class reference :role value_reference
+                  (language javascript (identifier (name/regex "^(eval|Function)$")))))
+              (binding-uses
+                (binding-of
+                  (occurrences-in :class reference :role value_reference
+                    (language javascript (identifier (name/regex "^(eval|Function)$")))))))
+            (except
+              (intersect
+                (occurrences-in :class reference :role value_reference
+                  (except
+                    (language typescript (call :callee (name/regex "^(eval|Function)$")))
+                    (language typescript
+                      (call :callee (name/regex "^(eval|Function)$") :receiver (text/regex "(?s).+")))))
+                (occurrences-in :class reference :role value_reference
+                  (language typescript (identifier (name/regex "^(eval|Function)$")))))
+              (binding-uses
+                (binding-of
+                  (occurrences-in :class reference :role value_reference
+                    (language typescript (identifier (name/regex "^(eval|Function)$")))))))))))

@@ -1,22 +1,32 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.compress-gzip",
-  "pack_version": "0.1.0",
+  "pack_version": "0.2.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-compress-gzip.json",
-    "sha256": "7ab3f4055cda4d27c8e42ac6f01823ca9d43e938545ab1867284b65fb18d3ead",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/65b68f55b537ab77b7ecd8569b0c838aac9be0ea/semantic-packs/models/go-stdlib-compress-gzip.json",
+    "sha256": "2c157ec1e821cf40eb4ebb340138f97a2b96d75259711eb9efcbcaa40c229279",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-compress-gzip.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
     "source": "https://pkg.go.dev/compress/gzip",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.26.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "procedure",

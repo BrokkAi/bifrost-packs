@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.local-shadows-builtin"
   :name "Python local shadows a builtin"
   :message "Local variable shadows a builtin name."
-  :severity warning
+  :severity note
   :description "Reports the first function-local definition whose name is a Python builtin, excluding CodeQL's allowlist and optimizing parameters."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

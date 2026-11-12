@@ -1,7 +1,7 @@
 {
   "schema_version": 14,
   "pack_id": "bifrost.python-security-sink-summaries",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -17,8 +17,8 @@
     ]
   },
   "provenance": {
-    "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, webbrowser, and credential APIs",
-    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, webbrowser launch, exact factory, and I/O write summaries"
+    "source": "Python standard-library reference and pinned Typeshed stubs for socket, XML, regex, logging, file-output, webbrowser, venv, and credential APIs",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket input, urllib request, webbrowser launch, venv creation, exact factory, and I/O write summaries"
   },
   "license": "PSF-2.0",
   "completeness": "complete",
@@ -2121,6 +2121,71 @@
                 "input": {
                   "kind": "parameter",
                   "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "summary.python.venv.create",
+            "target": {
+              "path": "venv/__init__.pyi",
+              "symbol": "venv.create(env_dir, system_site_packages, clear, symlinks, with_pip, prompt, upgrade_deps, scm_ignore_files)",
+              "has_receiver": false,
+              "parameter_count": 8,
+              "formals": [
+                {
+                  "name": "env_dir"
+                },
+                {
+                  "name": "system_site_packages",
+                  "optional": true
+                },
+                {
+                  "name": "clear",
+                  "optional": true
+                },
+                {
+                  "name": "symlinks",
+                  "optional": true
+                },
+                {
+                  "name": "with_pip",
+                  "optional": true
+                },
+                {
+                  "name": "prompt",
+                  "optional": true
+                },
+                {
+                  "name": "upgrade_deps",
+                  "optional": true
+                },
+                {
+                  "name": "scm_ignore_files",
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "python.venv.create.env_dir",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              },
+              {
+                "kind": "escape",
+                "event": "python.venv.create.prompt",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 5
                 }
               }
             ]

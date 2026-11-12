@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.unused-local-variable"
   :name "Python unused local variable"
   :message "Local variable definition is not used."
-  :severity warning
+  :severity note
   :description "Reports a function-local definition with no reaching lexical read, excluding nonlocals, annotation-only bindings, decorated declarations, and CodeQL's accepted ignored-name patterns."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

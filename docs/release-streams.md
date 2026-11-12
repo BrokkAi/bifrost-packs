@@ -17,10 +17,131 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-05, the latest published streams are `packs/v0.9.0`, tagged on
-`f52867e`, and `rules/v0.9.1`, tagged on `7112b80`. `packs/v0.10.0` and
-`rules/v0.10.0` are prepared next. Publish the packs release first, because
-the rules release depends on it exactly.
+As of 2026-11-11, the latest published streams are `packs/v0.12.0` and
+`rules/v0.12.0`. `rules/v0.13.0` is prepared next and depends exactly on
+`packs/v0.12.0`, which is already published.
+
+`rules/v0.13.0` is a minor release. It requires Bifrost 0.15.1 or later and
+makes the default rules catalog load on released engines again. Released
+Bifrost engines through 0.15.2 reject the whole catalog, and load no policy,
+for either of two defects that rules 0.10.0 through 0.12.0 contain:
+
+- A directory under the rules root without `manifest.json`. The staged
+  `rules/bifrost.rust-codeql-security` catalogs (#326) were one, so rules
+  0.11.0 and 0.12.0 failed with "configured policy source
+  `bifrost.rust-codeql-security/manifest.json` does not exist". The catalogs
+  registered no policy. They now live in `research/rust-codeql-security/`,
+  outside every release stream, until a policy pack registers them.
+- A policy whose `required_capabilities` list is empty, which these engines
+  report as "incomplete inventory metadata". The opt-in
+  `bifrost.security.rust.cargo-ssh-git-host-key-unverified` (#248, CVE-2022-46176)
+  declares none, because no capability name covers the Rust toolchain
+  dependency evidence it reads, so rules 0.10.0 and later failed with it.
+  This release holds the policy out: it moves to
+  `research/rust-cargo-ssh-git/` with its fixtures, qualification and manifest
+  entry, and `bifrost.security` becomes 3.0.0.
+
+bifrost-dev#10941 makes later engines skip a manifest-less directory and
+accept an empty capability list. The held-out policy returns in a rules
+release that requires such an engine. No other policy, policy ID, finding or
+required capability changes from `rules/v0.12.0`.
+
+The `packs/v0.12.0` and `rules/v0.12.0` notes follow.
+
+`packs/v0.12.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.11.0`, keeps
+release index schema 4 and the same semantic-model read schemas, lists 68
+packs, and needs Bifrost 0.15.1 or later. Its only native change is the Python
+`venv` module (#355, #373): `bifrost.python-stdlib-api-declarations` 0.7.0
+declares `venv.create`, and `bifrost.python-security-sink-summaries` 0.6.0
+summarizes it, with escape events for `env_dir` and `prompt`. No consumer
+requirement changes. The `java.util` Map and HashMap collection-flow models
+in `bifrost.jdk-collection-flows` (#336, #337, #372) are source-only: the pack
+activates on 0.15.1 but changes no result until the engine change in
+bifrost-dev#10989 lands, so it is not in a release recipe.
+
+`rules/v0.12.0` is a minor release. It requires Bifrost 0.15.1 or later and
+depends exactly on `packs/v0.12.0`. `bifrost.security` 2.4.0 adds the opt-in
+`bifrost.security.python.process-input-to-venv-create` (CVE-2024-9287, the
+version-independent part), which reports process input that reaches the
+`env_dir` argument of `venv.create`. It is opt-in for the same reasons as the
+other Python process-input policies (bifrost-dev#9999, #9991), and the
+affected-interpreter check needs CPython version evidence (bifrost-dev#3867).
+Two false-positive fixes change findings without changing IDs or
+capabilities:
+
+- `bifrost.security.rust.non-https-url` (`bifrost.security` 2.4.0, #339, #340)
+  skips an `http://` literal whose authority is a format placeholder inside a
+  standard formatting macro, such as `format!("http://{}", addr)`.
+- `bifrost.correctness.dynamic-evaluation` (`bifrost.code-smells` 4.0.2,
+  #376, #379) matches builtin identity instead of the callee name, so member
+  calls such as `model.eval()`, `df.eval(...)` and `session.exec(...)` are no
+  longer reported. A shadowed Python `eval` leaves the run incomplete with no
+  finding, and `ImageMath.eval` is no longer reported.
+
+The `packs/v0.11.0` and `rules/v0.11.0` notes follow.
+
+`packs/v0.11.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.10.0`, keeps
+release index schema 4 and the same semantic-model read schemas, lists 68
+packs, and needs Bifrost 0.15.1 or later. It has three kinds of change:
+
+- **Four new native Go packs.** `bifrost.go.stdlib.io-declarations` 1.0.0
+  (#244, partial) and `bifrost.go.stdlib.io` 0.2.0, `bifrost.go.stdlib.compress-gzip`
+  and `bifrost.go.stdlib.compress-gzip-declarations` 0.2.0 (#320). `io.Copy` has
+  no summary, because the semantic-model schema cannot express its write into
+  the destination.
+- **A tighter consumer requirement (#328, #335).** All 27 Go standard-library
+  packs declare the Go toolchain range
+  `>=1.26.0, <2.0.0` as compatibility and activation selector, because the
+  exact-coordinate gate cannot bind a pack with an empty selector. A project
+  built with an older Go toolchain, or one whose version Bifrost cannot read,
+  no longer gets these models and sees a version near-miss warning. Twenty-one
+  packs move to 3.0.0, and `encoding-gob` and its declarations pack move to
+  0.2.0. Bifrost 0.15.1 reads these selectors in its dependency-pack
+  activation, so the engine minimum does not change. The migration is to build
+  with Go 1.26.0 or later.
+- **Default activation (#327).** Nine packs lose `review_required` and keep
+  their versions: `bifrost.typescript-stdlib` 7.0.2 and eight Node packs
+  (buffer, child-process and runtime-values, JavaScript and TypeScript). Their
+  model content is unchanged, but findings that depend on them can now appear
+  without a `.bifrost/packs.json` entry. `bifrost.rust-stdlib` stays
+  review-required.
+
+`bifrost.python-stdlib-api-declarations` 0.6.0 and
+`bifrost.python-security-sink-summaries` 0.5.0 add the `webbrowser` module
+(#323). Source-only or staged, not native: the C# `System.Data` and
+`System.Text.RegularExpressions` models (#319), the Node path, url and fs
+models (#317), the CodeQL Rust standard-library summaries (#326) and the Rust
+`std` module-function remodel in `bifrost.rust-std-sql-taint` (#329).
+
+`rules/v0.11.0` is a minor release. It requires Bifrost 0.15.1 or later and
+depends exactly on `packs/v0.11.0`. `bifrost.security` 2.3.0 adds eight
+policies. Two C# taint policies are default-on:
+`bifrost.security.csharp.regex-pattern-injection` (CVE-2019-0820) and
+`bifrost.security.csharp.dataset-read-xml-external-location` (CVE-2020-1147).
+Six are opt-in: `go.network-read-all-unbounded` (CVE-2022-30631),
+`java.objectinputstream-read-without-filter` (CVE-2026-41586, typestate),
+`python.process-input-to-urlopen`, `python.process-input-to-webbrowser-open`,
+`javascript.process-input-to-fs-write-path` and
+`javascript.process-input-to-legacy-url-parse`. The two C# and the two
+JavaScript policies rely on source-only models, so without them the C#
+policies report `not_run` and the JavaScript policies report an inconclusive
+run with no findings. The Java policy reports every finding as possible and
+its runs as inconclusive on 0.15.1 (bifrost-dev#10001). The Python policies
+are opt-in because of bifrost-dev#9999 and #9991.
+
+Severity changes (#330, #331) leave detection logic unchanged. Fifty-one
+CodeQL-parity quality policies that upstream rates as recommendations move
+from warning to note, so a gate that fails on warning no longer fails on
+them. Ten that upstream rates as errors move from warning to error, so a gate
+that fails on error now fails on them. The packs are
+`bifrost.csharp-codeql-quality` 0.5.1 and `bifrost.java-codeql-quality`,
+`bifrost.javascript-codeql-quality` and `bifrost.python-codeql-quality` 0.1.2.
+The staged `bifrost.rust-codeql-security` catalogs (#326) enable nothing.
+(`rules/v0.13.0` moves them out of the shipped rules root.)
+
+The `packs/v0.10.0` and `rules/v0.10.0` notes follow.
 
 `packs/v0.10.0` is a minor release. It adds two native packs,
 `bifrost.go.stdlib.encoding-gob-declarations` and
@@ -43,7 +164,8 @@ proven standard-library identity, and need only `structural-match`.
 `bifrost.security` 2.2.0 adds two opt-in policies. `bifrost.security.rust.cargo-ssh-git-host-key-unverified`
 (CVE-2022-46176) uses the Rust toolchain dependency evidence that 0.15.1
 introduced. No capability name covers that evidence, so it declares none, and
-Bifrost 0.15.0 rejects it at validation.
+Bifrost 0.15.0 rejects it at validation. (Every released engine through
+0.15.2 rejects it, and with it the whole catalog; `rules/v0.13.0` holds it out.)
 `bifrost.security.go.gob-decode-network-input` (CVE-2024-34156) needs the
 `packs/v0.10.0` gob and `net` models and 0.15.1's binding of calls through
 model-declared interfaces. Its runs that reach `Decoder.Decode` are
