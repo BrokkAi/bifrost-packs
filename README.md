@@ -25,6 +25,12 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
   typestate hypotheses, ownership routing and a proposed qualification queue.
   These are research leads, not enabled or qualified rules.
+- [`research/rust-codeql-security/`](research/rust-codeql-security/catalogs/README.md):
+  staged CodeQL Rust endpoint catalogs for a later policy pack. They are in no
+  release stream.
+- [`research/rust-cargo-ssh-git/`](research/rust-cargo-ssh-git/README.md):
+  the held-out `bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy,
+  its fixtures and qualification. They are in no release stream.
 
 ## Rule inventory
 
@@ -52,9 +58,9 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Category | performance | 11 |
 | Category | quality | 69 |
 | Category | security | 64 |
-| Severity | error | 73 |
-| Severity | note | 30 |
-| Severity | warning | 176 |
+| Severity | error | 83 |
+| Severity | note | 81 |
+| Severity | warning | 115 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
 13 declared languages; 517 rule-language pairs.
@@ -69,9 +75,9 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | javascript | 44 |
 | kotlin | 17 |
 | php | 20 |
-| python | 130 |
+| python | 131 |
 | ruby | 20 |
-| rust | 40 |
+| rust | 39 |
 | scala | 17 |
 | typescript | 38 |
 
@@ -84,14 +90,14 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.9.0` and `rules/v0.9.1`. `packs/v0.10.0`
-and `rules/v0.10.0` are prepared next. Both need Bifrost 0.15.1 or later.
-`packs/v0.10.0` adds the Go `encoding/gob` packs and `net` 2.1.0 interface
-summaries and is built by the released 0.15.1 producer. `rules/v0.10.0` adds
-the default-on `bifrost.rust-generic` review prompts and two opt-in
-`bifrost.security` policies (Cargo SSH git host keys and gob decoding of
-network input), and depends on `packs/v0.10.0`. See
-[release streams](docs/release-streams.md).
+The latest releases are `packs/v0.12.0` and `rules/v0.12.0`. `rules/v0.13.0` is
+prepared next. It needs Bifrost 0.15.1 or later, depends on `packs/v0.12.0`,
+and makes the default catalog load on released engines again: it moves the
+staged `bifrost.rust-codeql-security` directory, which has no `manifest.json`,
+out of the shipped rules root, and holds out the opt-in
+`bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy, which declares
+no required capability. Released engines through 0.15.2 failed the whole
+default catalog on either. See [release streams](docs/release-streams.md).
 
 ## Source verification
 

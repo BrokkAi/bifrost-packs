@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "a9e8f9611f1005e8854f0bd61c76636562f8d161d8ba567f17786039edffbd69"
+      "sha256": "01923c3abdc650f19321f4d0e92cb6bcc0d57ef7ef6bdacbe5dd0e550ac0768d"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -379,6 +379,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp",
+      "sha256": "c9fc71cf9f78a65c2c3ad83a6a3f0bdd8a5baa270db902868e357ac98c2bb194",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp",
       "source_path": "rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp",
       "sha256": "dd14c4c590adad77ab5f18a25281439b54b3ef7c73503d7394a2e4600b78f7a8",
@@ -400,13 +407,6 @@
       "license": "Apache-2.0"
     },
     {
-      "path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
-      "source_path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
-      "sha256": "520e85d3c6e0f31ba1f5f79fb870e6f6fd98068d77b384445210deef2e302727",
-      "classification": "public",
-      "license": "Apache-2.0"
-    },
-    {
       "path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/cleartext-logging.rqlp",
       "sha256": "238e5f69772d38e924f1657866b3b466d8862986c1c54d5360bdb98d1d13cfbf",
@@ -415,11 +415,10 @@
     },
     {
       "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
-      "source_path": "tests/fixtures/rust-codeql-parity/non-https-url/policies/non-https-url.rqlp",
-      "sha256": "584265b59c2c21360fa59829f996b0e5cbf3a8788092eb88135b84bd1ccd5a6d",
+      "source_path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
+      "sha256": "af3a42089e3e38620b001fd0db6f464829cd79e85da51c78f02e632334e4baaa",
       "classification": "public",
-      "license": "Apache-2.0",
-      "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+      "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp",

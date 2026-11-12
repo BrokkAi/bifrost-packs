@@ -9,7 +9,7 @@
   :id "bifrost.java-codeql-quality.underscore-identifier"
   :name "Java underscore identifier"
   :message "underscore is not a valid Java declaration identifier"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java package segments and declaration names spelled as a single underscore; legacy recovery-shaped declarations can leave the run structured-incomplete."
   :tags ["java" "codeql" "quality"]
   :analysis (analysis :type match :selector

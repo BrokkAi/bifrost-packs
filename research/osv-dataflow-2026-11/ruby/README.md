@@ -24,6 +24,9 @@ bifrost-dev#9334 (closed the same day) also still reproduces. Both fixes behave
 as if they're missing from the release. Filed as
 [bifrost-dev#9979](https://github.com/BrokkAi/bifrost-dev/issues/9979).
 
+The later catalog leads #362 to #370 (`uri`, `rexml`, `net-imap`, `json`) are
+recorded in [`../ruby-catalog-0151/`](../ruby-catalog-0151/README.md).
+
 The files under `probe/` are research inputs, not registered pack content.
 They don't change locked policy or semantic-pack content.
 
