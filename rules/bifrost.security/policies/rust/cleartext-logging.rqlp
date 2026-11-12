@@ -7,9 +7,10 @@
 ; shared/concepts/codeql/concepts/internal/SensitiveDataHeuristics.qll,
 ; rust/ql/lib/codeql/rust/frameworks/log.model.yml.
 ; See licenses/CodeQL-MIT.txt. Third-party logging sinks are deliberately omitted.
-; Engine deviations: boolean/fieldless-enum flow barriers, closest-source
-; barrier-in, and recursive field-parent sources are not expressible by the
-; current endpoint schema. Call-result sources use structured callee names;
+; CodeQL's boolean and fieldless-enum barriers are value-type barriers; only a
+; proven bool or fieldless enum stops taint, and undecided types stay
+; traversable. Engine deviations: closest-source barrier-in and recursive
+; field-parent sources are not expressible by the current endpoint schema. Call-result sources use structured callee names;
 ; they do not add CodeQL's resolved Function/Variant target guard. Unresolved
 ; call and recursive field-parent source coverage still needs engine support.
 ; Do not interpret incomplete coverage as clean.
@@ -187,6 +188,10 @@
               (resolved-call :resolves-to "core.option.Option.expect" :proof declared
                 (call-bindings (call-shape (call :callee (name "expect"))))))))
         :dangerous-operand (argument :index 0) :accepts [sensitive])
+    ])
+    :barriers (endpoint-set :entries [
+      (barrier :id boolean :value-type (intrinsic bool))
+      (barrier :id fieldless-enum :value-type (enum :fieldless true))
     ]))
   :classification (classification
     :fallback (classification-id :taxonomy "CWE" :id "312")))

@@ -26,8 +26,9 @@ using it as evidence that a program is clean.
   same-named trait control. Source models retain standard trait identities;
   unsupported native impl binding is not replaced with inherent methods.
 - `barrier-near-miss`: CodeQL's boolean and fieldless-enum barriers prevent
-  logging those values from being reported. Expected: zero findings. This is
-  an explicit engine-gap witness, not a passing qualification claim.
+  logging those values from being reported. The rule declares them as
+  `:barriers` value types. Expected: zero findings; the run stays inconclusive
+  under partial discovery.
 
 Install a byte-identical copy of the policy under
 `.bifrost/policies/cleartext-logging.rqlp` in each project, and configure the
@@ -112,17 +113,53 @@ ToOwned nevertheless produces a definite finding with both current and prior
 model sources, so that positive is not evidence that the new trait summary
 bound. Zero findings under incomplete discovery do not establish safety.
 
-This candidate is **not behavior-qualified for release**. All 182 source
-policy identities were certified separately using the public producer pinned
-in `native-generation.json` (0.13.1); it was used only for identities. The rule
-authored hash remains
-`b7fddb06e44b9823848d5fb0d7142ad47c1f52dbba9f5cd2f101f709c1520545`.
-Authoring certification does not establish released-engine coverage. No
-release, native recipe change or model/policy byte change is included in this
-activation-documentation update.
+This candidate is **not behavior-qualified for release**. Authoring
+certification does not establish released-engine coverage. See the 0.15.2
+re-check below for the current rule authored hash.
 
 See the [source role audit](ROLE_AUDIT.md). I/O source version 0.4.0 keeps the
 precise borrowed string/byte-slice returns and CodeQL standard trait conversion
 models. Generic Into element projections and unmodeled into_bytes remain
 explicit omissions. Workspace enablement and summary binding/completeness
 remain separate from storing this source catalog.
+
+## Re-check on Bifrost 0.15.2 (2026-11-12)
+
+Public v0.15.2 macOS arm64 release, build
+`340cbbdcea3fc565f6ea8066084ed24962c369d3`, checksum verified. Fresh
+workspaces and caches; the command above. Run A enables both public models.
+Run B also enables `bifrost.rust-stdlib` 1.100.0-nightly from the verified
+`packs/v0.12.0` bundle, which activates approximately for an unpinned
+toolchain.
+
+The rule now declares the boolean and fieldless-enum barriers
+(`(intrinsic bool)` and `(enum :fieldless true)`). Its authored hash is
+`4df36d66aa3fa2d4da86499f25c851bd145025ab8270dd4efc96bb02f8784239`, the same
+from the 0.15.1 and 0.15.2 producers. Model bytes are unchanged.
+
+| Gate | Run A | Run B (with rust-stdlib) |
+| --- | --- | --- |
+| positive | 3 definite/complete; partial discovery | same |
+| near-miss | 0; proven by summary | 0; partial discovery |
+| name-lookalike | 0; partial discovery, capability incomplete | same |
+| barrier-near-miss | **0**; partial discovery (2 definite before the barriers) | **0**; partial discovery |
+| String::as_str through a local | 1 definite/complete; proven by summary | **0**; partial discovery |
+| receiver-field, lines 15 and 20 | 2 definite/complete; proven by summary | **0**; partial discovery |
+| `password.len()` / `.is_empty()` counterexample | 0 | 0 |
+| upstream standard sinks | 15/19, 0 extras; 229 possible/partial; 242, 245, 248, 251 missing | **14/19**, 0 extras; 229 and 242-251 missing |
+
+Run A conversion witnesses are unchanged from 0.15.1: Clone 2/2, str and
+String ToString 1/1 each, ToOwned 1/1, From 2/2, all definite; into_bytes and
+Into<String> 0/1 as expected omissions; trait lookalike 0.
+
+Run B no longer fails with `internal_invariant` (bifrost-dev#9903 is fixed),
+but it loses recall. Every function that calls a summarized std method
+(`as_str`, `as_bytes`, `Stdout`/`StdoutLock` `write`) reports `procedure
+semantics ... is unknown` (bifrost-dev#12054). The `option-expect` sink fails with
+`qualified-call-locator-ambiguous`, because `core.option.Option.expect` is
+declared by both `bifrost.rust-stdlib` and `bifrost.rust-core-logging`
+(bifrost-dev#12055). Only
+the ToOwned witness keeps its finding in Run B.
+
+The line 229 proof stays possible/partial in Run A. Lines 242-251 stay
+unresolved without the stdlib pack (bifrost-dev#5222).
