@@ -4,27 +4,26 @@ Original Brokk-authored Java, Apache-2.0. The CodeQL query identity is
 `java/missing-override-annotation` at upstream commit
 `ae741615f3e178ce61289a651790dc67fcc18e19`; no upstream fixture is copied.
 
-This rule is held. Bifrost 0.15.0 (build
-`09a2503c5f7ced1630a9e3c445ead53dfc5925e8`) includes `BrokkAi/bifrost-dev#7465`
-(#7179 step C) and the overload member ids of `BrokkAi/bifrost-dev#7505`, but
-its Java member families match a subclass method to a superclass method of the
-same name and parameter count without comparing parameter types. The
-same-arity overload at line 13 is therefore reported as an override, with a
-proven and complete edge. Passing the upstream query's small regression
-fixture does not establish overload or JDK inheritance coverage.
+The rule needs Bifrost 0.15.2 or later (build
+`340cbbdcea3fc565f6ea8066084ed24962c369d3`). Earlier engines matched a subclass
+method to a superclass method of the same name and parameter count without
+comparing parameter types, so the same-arity overload at line 13 was reported
+as an override with a proven and complete edge (`BrokkAi/bifrost-dev#9900`).
+0.15.2 compares erased parameter types. Passing the upstream query's small
+regression fixture does not establish overload or JDK inheritance coverage.
 
 ## Expected and observed answers
 
 The CodeQL answer for `Example.java` includes every unannotated overriding or
 implementing method at lines 9, 25, 26, 32, 33, 34, 35, 39, 43 and 44. The
-observed answers are from the public Bifrost 0.15.0 release (macOS arm64,
-build `09a2503c5f7ced1630a9e3c445ead53dfc5925e8`), with and without
+observed answers are from the public Bifrost 0.15.2 release (macOS arm64,
+build `340cbbdcea3fc565f6ea8066084ed24962c369d3`), with and without
 `JAVA_HOME`:
 
 | Declaration | Line | CodeQL answer | Observed answer |
 | --- | ---: | --- | --- |
 | ExpressDelivery.status | 9 | Finding: superclass override | Finding |
-| ExpressDelivery.status(String) | 13 | No finding: overload | False positive |
+| ExpressDelivery.status(String) | 13 | No finding: overload | No finding |
 | Square.area | 25 | Finding: interface default implementation | Finding |
 | Square.perimeter | 26 | Finding: abstract interface implementation | Finding |
 | JdkTask.run | 32 | Finding: Runnable implementation | Missed; run inconclusive |
@@ -37,14 +36,15 @@ build `09a2503c5f7ced1630a9e3c445ead53dfc5925e8`), with and without
 | RetriedDelivery.status(int) | 44 | Finding: superclass override | Finding |
 
 The run completes as `inconclusive` with reason `partial_discovery`. Its
-findings are lines 9, 13, 25, 26, 39, 43 and 44.
+findings are lines 9, 25, 26, 39, 43 and 44.
 
-- Line 13 is a false positive. The engine emits a proven, complete
-  `overrides` edge from `ExpressDelivery.status(String)` to
-  `Delivery.status(int)`. A two-class reproduction shows the same edge for
-  `f(String)` and `f(long)` against `f(int)`. The policy cannot exclude these
-  edges because the edge row carries no parameter-type comparison; the engine
-  must match override candidates by parameter types (erasure, for Java).
+- Line 13 is not reported. Before 0.15.2 the engine emitted a proven,
+  complete `overrides` edge from `ExpressDelivery.status(String)` to
+  `Delivery.status(int)`, and the policy could not exclude it because the
+  edge row carries no parameter-type comparison. A three-class reproduction on
+  0.15.2 (`A.f(int)`; `B extends A` with `f(String)`, `f(long)` and `f(int)`)
+  reports only `B.f(int)`. Generic overrides (`H extends G<String>`, with
+  `g(String)` against `G.g(T)`) are still reported.
 - Lines 32 to 35: the engine reads no JDK hierarchy on the default Java route.
   Each member family reports its ancestor side as open, with reason
   `ancestor_external_unindexed` and the unread supertypes (`Runnable`,
@@ -88,9 +88,9 @@ advertised pack requirement; the manifest keeps `structural-match`.
 
 ## Validation
 
-The rule was validated against the public Bifrost 0.15.0 release (build
-`09a2503c5f7ced1630a9e3c445ead53dfc5925e8`). The upstream CodeQL query-test
+The rule was validated against the public Bifrost 0.15.2 release (build
+`340cbbdcea3fc565f6ea8066084ed24962c369d3`). The upstream CodeQL query-test
 gate is EXACT: 1 true positive, zero false positives and zero misses, complete
-analysis. That upstream fixture has no same-arity overload or JDK cases, so
-the gate does not remove the hold. The pack manifest's 0.2.0 minor version
+analysis. That upstream fixture has no same-arity overload or JDK cases; this
+fixture covers them. The pack manifest's 0.2.0 minor version
 reflects the new policy; publication and scanner enablement remain separate.
