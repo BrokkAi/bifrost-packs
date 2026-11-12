@@ -111,3 +111,29 @@ silent, not because the guards were proven; they still need the support
 described above. The native run still reports one unresolved call
 resolution, on the staged servlet `getParameter` call in `Test.source`. The native route is test-support only and is not in the
 released binary.
+
+### Bifrost 0.15.2 rerun
+
+On 2026-11-12 the same test, scope union and attributions ran on the public
+v0.15.2 release (macOS arm64, build
+`340cbbdcea3fc565f6ea8066084ed24962c369d3`) with Temurin JDK 21.0.8, on the
+default route. Both `bifrost.external.java@0.15.2` and
+`bifrost.java-codeql-jdk-summaries@1.0.0` activate. The result is
+`SCOPED-FAIL`, full `EXACT-INCOMPLETE`, run completion `inconclusive`
+(partial discovery): 17 true positives, zero extras, 42 in-scope misses and
+20 deferrals. Public v0.15.1 matched 21 sites.
+
+The four lost sites are `Test.java:101, 102, 132, 141`
+(`Files.copy`, `Files.newBufferedWriter(Path, Charset)` and
+`Files.writeString(Path, CharSequence, Charset)`). On 0.15.2 their sink
+selectors report `call_bindings model signature conversion is unavailable:
+SignatureApplicability` when the overload family has another
+arity-compatible sibling, or when the actuals are casts. This is an engine
+regression, BrokkAi/bifrost-dev#12057. The sites are abstentions under the
+inconclusive run, not proven negatives.
+
+`TaintedPath.java` is still silent. Its source chain starts at
+`sock.getInputStream()`, an instance call on a non-final JDK receiver whose
+dispatch stays unproven and open, so the `BufferedReader` constructor's input
+is unknown. The staged servlet `getParameter` call in `Test.source` stays
+unresolved for the same reason. Both are BrokkAi/bifrost-dev#9998.
