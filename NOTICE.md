@@ -29,6 +29,18 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   pinned CodeQL CLI computed over `github/codeql` query tests at
   `ae741615f3e178ce61289a651790dc67fcc18e19`; see `licenses/CodeQL-MIT.txt`.
 - Joern reduced flow corpus: Apache-2.0, same pinned metadata file.
+- The JavaScript identifier typo table
+  `rules/bifrost.javascript-codeql-quality/data/identifier-typos.txt` is
+  Apache-2.0. `tools/aoo_autocorrect_typos.py` builds it from two sources:
+  - the en-US AutoCorrect list
+    `main/extras/source/autotext/lang/en-US/acor_en-US.dat` of Apache
+    OpenOffice at `17d397d7eb7e2935ed88d281ee3068516ad1cd47`. Apache
+    OpenOffice, Copyright 2011- The Apache Software Foundation. This product
+    includes software developed at The Apache Software Foundation
+    (http://www.apache.org/). Portions copyright 2000-2011 Oracle and/or its
+    affiliates.
+  - `tools/identifier-typos-supplement.txt`, a supplement authored by Brokk,
+    Apache-2.0.
 - OpenJDK source fixtures: GPL-2.0-only WITH Classpath-exception-2.0; see
   `licenses/OpenJDK-*` and the fixture headers. These fixtures were excluded
   from the engine's published Cargo crate. They are included in this source
