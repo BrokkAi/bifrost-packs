@@ -17,10 +17,36 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-10, the latest published streams are `packs/v0.11.0` and
-`rules/v0.11.0`, both tagged on `403fd14`. `packs/v0.12.0` and
-`rules/v0.12.0` are prepared next. Publish the packs release first, because
-the rules release depends on it exactly.
+As of 2026-11-11, the latest published streams are `packs/v0.12.0` and
+`rules/v0.12.0`. `rules/v0.13.0` is prepared next and depends exactly on
+`packs/v0.12.0`, which is already published.
+
+`rules/v0.13.0` is a minor release. It requires Bifrost 0.15.1 or later and
+makes the default rules catalog load on released engines again. Released
+Bifrost engines through 0.15.2 reject the whole catalog, and load no policy,
+for either of two defects that rules 0.10.0 through 0.12.0 contain:
+
+- A directory under the rules root without `manifest.json`. The staged
+  `rules/bifrost.rust-codeql-security` catalogs (#326) were one, so rules
+  0.11.0 and 0.12.0 failed with "configured policy source
+  `bifrost.rust-codeql-security/manifest.json` does not exist". The catalogs
+  registered no policy. They now live in `research/rust-codeql-security/`,
+  outside every release stream, until a policy pack registers them.
+- A policy whose `required_capabilities` list is empty, which these engines
+  report as "incomplete inventory metadata". The opt-in
+  `bifrost.security.rust.cargo-ssh-git-host-key-unverified` (#248, CVE-2022-46176)
+  declares none, because no capability name covers the Rust toolchain
+  dependency evidence it reads, so rules 0.10.0 and later failed with it.
+  This release holds the policy out: it moves to
+  `research/rust-cargo-ssh-git/` with its fixtures, qualification and manifest
+  entry, and `bifrost.security` becomes 3.0.0.
+
+bifrost-dev#10941 makes later engines skip a manifest-less directory and
+accept an empty capability list. The held-out policy returns in a rules
+release that requires such an engine. No other policy, policy ID, finding or
+required capability changes from `rules/v0.12.0`.
+
+The `packs/v0.12.0` and `rules/v0.12.0` notes follow.
 
 `packs/v0.12.0` is a minor release. It is built by the same released,
 checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.11.0`, keeps
@@ -113,6 +139,7 @@ that fails on error now fails on them. The packs are
 `bifrost.csharp-codeql-quality` 0.5.1 and `bifrost.java-codeql-quality`,
 `bifrost.javascript-codeql-quality` and `bifrost.python-codeql-quality` 0.1.2.
 The staged `bifrost.rust-codeql-security` catalogs (#326) enable nothing.
+(`rules/v0.13.0` moves them out of the shipped rules root.)
 
 The `packs/v0.10.0` and `rules/v0.10.0` notes follow.
 
@@ -137,7 +164,8 @@ proven standard-library identity, and need only `structural-match`.
 `bifrost.security` 2.2.0 adds two opt-in policies. `bifrost.security.rust.cargo-ssh-git-host-key-unverified`
 (CVE-2022-46176) uses the Rust toolchain dependency evidence that 0.15.1
 introduced. No capability name covers that evidence, so it declares none, and
-Bifrost 0.15.0 rejects it at validation.
+Bifrost 0.15.0 rejects it at validation. (Every released engine through
+0.15.2 rejects it, and with it the whole catalog; `rules/v0.13.0` holds it out.)
 `bifrost.security.go.gob-decode-network-input` (CVE-2024-34156) needs the
 `packs/v0.10.0` gob and `net` models and 0.15.1's binding of calls through
 model-declared interfaces. Its runs that reach `Decoder.Decode` are
