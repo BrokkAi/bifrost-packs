@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 278 unique rule IDs from 13 manifest packs.
+This catalog lists 279 unique rule IDs from 13 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -281,5 +281,6 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
+| [Cleartext logging of sensitive information](../rules/bifrost.security/policies/rust/cleartext-logging.rqlp) | `bifrost.security.rust.cleartext-logging` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
 | [Stored type parameter lacks a Send or Sync bound](../rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp) | `bifrost.security.rust.unsound-send-sync-impl` | rust | security | error |
