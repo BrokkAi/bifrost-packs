@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# The pinned engine (Bifrost 0.15.0) has codeql-jvm-catalogs and
-# codeql-jdk-summaries, but both refuse the pinned JDK image: its reader marks
-# the JDK declarations incomplete for local and anonymous classes
-# (java.class.unresolved_type_parameter). The servlet run reproduces the
-# committed catalog. Until a release accepts the JDK image, set
-# BIFROST_SEMANTIC_PACK_GENERATOR to the compatible generator executable
-# (engine 2eda68dc23 produced the committed content).
+# The generator is the bifrost-semantic-pack executable from the public Bifrost
+# v0.15.2 release asset bifrost-semantic-pack-v0.15.2-x86_64-unknown-linux-gnu
+# (x86_64 Linux only). Releases before 0.15.2 refuse the pinned JDK image
+# (BrokkAi/bifrost-dev#9901). Set BIFROST_SEMANTIC_PACK_GENERATOR to that
+# executable; its SHA-256 is checked below.
 if [[ $# -ne 1 ]]; then
   echo "usage: $0 SCRATCH_DIR" >&2
   exit 2
@@ -16,6 +14,7 @@ fi
 scratch=$(realpath -m "$1")
 repository_root=$(CDPATH='' cd -- "$(dirname -- "$0")/../../.." && pwd)
 generator=${BIFROST_SEMANTIC_PACK_GENERATOR:?set BIFROST_SEMANTIC_PACK_GENERATOR}
+generator_sha256=5353bf2d6d95c9f5592f1e385d3649b89c4c3c1ab9d64da58fb7545e856b830c
 codeql_ext=${CODEQL_JAVA_EXT:?set CODEQL_JAVA_EXT to java/ql/lib/ext}
 java_home=${JAVA_HOME:?set JAVA_HOME to pinned Temurin JDK 21}
 codeql_commit=ae741615f3e178ce61289a651790dc67fcc18e19
@@ -23,6 +22,10 @@ java_release=21+35-LTS
 jdk_modules_sha256=1465b683efd50adb60af815a8554129f8bd1b03807444cc491a5d2800d6f2091
 
 [[ -x "$generator" ]] || { echo "generator is not executable: $generator" >&2; exit 2; }
+echo "$generator_sha256  $generator" | sha256sum --check --status || {
+  echo "generator is not the pinned Bifrost v0.15.2 bifrost-semantic-pack" >&2
+  exit 2
+}
 [[ -d "$codeql_ext" ]] || { echo "CodeQL extension directory is missing: $codeql_ext" >&2; exit 2; }
 [[ $(git -C "$codeql_ext" rev-parse HEAD) == "$codeql_commit" ]] || {
   echo "CodeQL checkout does not match pinned commit $codeql_commit" >&2
@@ -116,7 +119,8 @@ manifest = {
 (rule / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 codeql_commit = "ae741615f3e178ce61289a651790dc67fcc18e19"
-engine_commit = "2eda68dc23"
+engine_release = "v0.15.2"
+engine_build_identity = "340cbbdcea3fc565f6ea8066084ed24962c369d3"
 jdk_input = {
     "distribution": "Eclipse Temurin",
     "runtime_version": "21+35-LTS",
@@ -138,7 +142,8 @@ def write_catalog_summary(report_path, destination, prefix, inputs):
             "codeql_commit": codeql_commit,
             "codeql_input": "java/ql/lib/ext",
             "engine_repository": "https://github.com/BrokkAi/bifrost",
-            "engine_commit": engine_commit,
+            "engine_release": engine_release,
+            "engine_build_identity": engine_build_identity,
             "catalog_prefix": prefix,
             "catalog_version": 1,
             "inputs": inputs,
@@ -191,7 +196,8 @@ compact_report = {
         "codeql_commit": codeql_commit,
         "codeql_input": "java/ql/lib/ext",
         "engine_repository": "https://github.com/BrokkAi/bifrost",
-        "engine_commit": engine_commit,
+        "engine_release": engine_release,
+        "engine_build_identity": engine_build_identity,
         "generator": "codeql-jdk-summaries",
         "jdk": jdk_input,
     },
