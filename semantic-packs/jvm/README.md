@@ -21,7 +21,7 @@ compatibility unit:
 
 | Pack | Extracted from | Requirement |
 | --- | --- | --- |
-| `bifrost.jdk` | Temurin 21.0.8+9 | `>=21.0.0, <22.0.0` |
+| `bifrost.jdk` | Temurin 21.0.8+9; 21.0.13+9 source also pinned | `>=21.0.0, <22.0.0` |
 | `bifrost.kotlin-stdlib` | kotlin-stdlib 2.2.20 | `>=2.2.0, <2.3.0` |
 | `bifrost.scala-library` | scala-library 2.13.16 | `>=2.13.0, <2.14.0` |
 
@@ -32,7 +32,8 @@ host that did not run the one build it was extracted from: a host reporting
 `21.0.0` was rejected with `workspace toolchain jdk 21.0.0 does not satisfy the
 pack requirement =21.0.8`.
 
-The exact build stays recorded, as the pack's own version, its pinned artifact
+Each source recipe pins its own exact build. The exact build stays recorded as
+the pack's own version, its pinned artifact
 and container digests, and the upstream revision in `provenance`. Only the
 selection predicate widened. A requirement with no upper bound is rejected by
 `validate`, so a pack cannot answer for an API surface it was never extracted
