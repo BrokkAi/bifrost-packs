@@ -29,6 +29,7 @@ FIRST_JOB = 12
 # test_go_read_all_native_jobs and test_authored_native_generation_inputs.
 AUTHORED_AFTER_LEGACY = {
     "go-stdlib-database-sql-declarations",
+    "rust-std-deref-summaries",
     "go-stdlib-encoding-gob",
     "go-stdlib-encoding-gob-declarations",
     "go-stdlib-compress-gzip",
