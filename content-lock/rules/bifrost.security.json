@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "f2e2c89715c203194b3fe14aad2ad4844e1c8ba85f339f288d36c28818f9d811"
+      "sha256": "1227d4df37c6454a9902f702d97ee74e17e1a89ac6d2855c32749929f8be25d0"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -46,6 +46,13 @@
       "path": "rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp",
       "source_path": "rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp",
       "sha256": "feb54098c1faad4fef5e4651f9f0e77dab9838ef56028250af4475d36166fd64",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/csharp/webassembly-debugging-affected-version.rqlp",
+      "source_path": "rules/bifrost.security/policies/csharp/webassembly-debugging-affected-version.rqlp",
+      "sha256": "afc2ec442e230aa4e85e1c46d0704f4d5de7b80504fc7865a90f3bf03c20c689",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -396,6 +403,34 @@
       "path": "rules/bifrost.security/policies/python/xml-bomb.rqlp",
       "source_path": "rules/bifrost.security/policies/python/xml-bomb.rqlp",
       "sha256": "645f888c99c5dc9be84427718b7093bd6ced57baef9a29a56dc7e0701c1f5a51",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/ruby/network-input-to-gem-installer.rqlp",
+      "source_path": "rules/bifrost.security/policies/ruby/network-input-to-gem-installer.rqlp",
+      "sha256": "33170cacf9990e3e4c69b26d2ff22cfd6f0de440f61d9d379a71e9b03deedaf5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp",
+      "source_path": "rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp",
+      "sha256": "186224e7c60f6b952b45a2ed686f41c1e476e1295a241e0a573286b61b243f30",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp",
+      "source_path": "rules/bifrost.security/policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp",
+      "sha256": "34b20725e83195bdcceee9ee11714f53a43e72f8add14e40e56811760e4fea54",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp",
+      "source_path": "rules/bifrost.security/policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp",
+      "sha256": "32f5a4d6cb678190de8b5b6fca1c5f964e96cf1f40a539eb78d64d4c1b2abe8e",
       "classification": "public",
       "license": "Apache-2.0"
     },

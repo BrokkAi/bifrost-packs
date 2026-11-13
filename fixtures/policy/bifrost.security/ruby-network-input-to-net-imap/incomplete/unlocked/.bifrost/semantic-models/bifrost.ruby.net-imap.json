@@ -1,0 +1,1404 @@
+{
+ "schema_version": 2,
+ "pack_id": "bifrost.ruby.net-imap",
+ "version": "0.1.0",
+ "producer": {
+  "name": "bifrost-reviewed-ruby-models",
+  "version": "1.0.0"
+ },
+ "language": "ruby",
+ "ecosystem": "rubygems",
+ "compatibility": {
+  "bifrost": ">=0.15.2, <1.0.0",
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "ruby/net-imap Net::IMAP.new, login, select, examine, logout, disconnect and the search, uid_search, sort, uid_sort, thread, uid_thread, fetch and uid_fetch commands in lib/net/imap.rb (0.5.x and 0.6.x); OSV GHSA-8p34-64r3-mwg8 and GHSA-c4fp-cxrr-mj66 version ranges",
+  "revision": "net-imap 0.5.14, 0.5.15, 0.6.4, 0.6.4.1"
+ },
+ "license": "Apache-2.0",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "types.ruby.net-imap",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": "<0.5.15"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.0, <0.6.4"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.5.15, <0.6.0"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.5"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "Net::IMAP",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP"
+      }
+     }
+    ],
+    "members": [],
+    "relations": []
+   }
+  },
+  {
+   "id": "members.ruby.net-imap.affected",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": "<0.5.15"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.0, <0.6.4"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [],
+    "members": [
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.new",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "host",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "port_or_options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
+       }
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.login",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "login",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.login"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "user",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "password",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.select",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "select",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.select"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "mailbox",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.examine",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "examine",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.examine"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "mailbox",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.logout",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "logout",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.logout"
+      },
+      "signature": {
+       "parameters": []
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.disconnect",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "disconnect",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.disconnect"
+      },
+      "signature": {
+       "parameters": []
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.search",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "search",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.search"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.uid_search",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_search",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_search"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.sort",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "sort",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.sort"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "sort_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.uid_sort",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_sort",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_sort"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "sort_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.thread",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "thread",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.thread"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "algorithm",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.uid_thread",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_thread",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_thread"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "algorithm",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.fetch",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "fetch",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.fetch"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "set",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "attr",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "mod",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.affected.net-imap.uid_fetch",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_fetch",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_fetch"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "set",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "attr",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "mod",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "members.ruby.net-imap.unaffected",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.5.15, <0.6.0"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.5"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [],
+    "members": [
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.new",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "host",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "port_or_options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
+       }
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.login",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "login",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.login"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "user",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "password",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.select",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "select",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.select"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "mailbox",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.examine",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "examine",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.examine"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "mailbox",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.logout",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "logout",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.logout"
+      },
+      "signature": {
+       "parameters": []
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.disconnect",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "disconnect",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.disconnect"
+      },
+      "signature": {
+       "parameters": []
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.search",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "search",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.search"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.uid_search",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_search",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_search"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.sort",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "sort",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.sort"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "sort_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.uid_sort",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_sort",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_sort"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "sort_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.thread",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "thread",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.thread"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "algorithm",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.uid_thread",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_thread",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_thread"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "algorithm",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "search_keys",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "charset",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.fetch",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "fetch",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.fetch"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "set",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "attr",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "mod",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     },
+     {
+      "id": "member.ruby.net-imap.unaffected.net-imap.uid_fetch",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "uid_fetch",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_fetch"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "set",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "attr",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "mod",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ]
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "summaries.ruby.net-imap",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": "<0.5.15"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.0, <0.6.4"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.5.15, <0.6.0"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.5"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "procedure_summaries",
+    "summaries": [
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-1",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.login-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.login(user, password)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.select-1",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.select(mailbox)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.examine-1",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.examine(mailbox)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.logout-0",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.logout()",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.disconnect-0",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.disconnect()",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.search-1",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.search(keys)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.search-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.search(keys, charset)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.uid_search-1",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_search(keys)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.uid_search-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_search(keys, charset)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.sort-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.sort(sort_keys, search_keys, charset)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.uid_sort-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_sort(sort_keys, search_keys, charset)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.thread-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.thread(algorithm, search_keys, charset)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.uid_thread-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_thread(algorithm, search_keys, charset)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.fetch-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.fetch(set, attr)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.fetch-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.fetch(set, attr, mod)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.uid_fetch-2",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_fetch(set, attr)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.uid_fetch-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.uid_fetch(set, attr, mod)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+; Lead: BrokkAi/bifrost-packs#286 (CVE-2017-0903, GHSA-mqwr-4qf2-2hcv),
+; version-independent install part.
+; Product source contract: Gem::Installer.at(path) opens the gem archive at path
+; (Gem::Package.new also accepts an IO) and returns an installer for it.
+; Installing a gem runs its extension builds and plugins, so the gem's author
+; runs code on the installing host on every RubyGems release. CVE-2017-0903 is
+; the separate, affected-version part: before RubyGems 2.6.14 merely loading the
+; gem's YAML specification could run code. That part needs RubyGems runtime
+; version evidence, which Bifrost 0.15.2 does not have, and is not covered.
+; Engine contract: the source is the return value of the reviewed
+; member.web-network.ruby.net-http.get. The sink is formal 0 of
+; Gem::Installer.at as declared by bifrost.ruby.rubygems-installer, which
+; activates for every Ruby workspace (RubyGems ships with the interpreter).
+; Only call sources are expressible: an upload read through params[] is not a
+; call shape on 0.15.2 (bifrost-dev#11369).
+(policy
+  :schema-version 1
+  :id "bifrost.security.ruby.network-input-to-gem-installer"
+  :name "Network input chooses the gem Gem::Installer installs"
+  :message "A network response chooses the gem archive passed to Gem::Installer.at; installing a gem runs its extension builds and plugins, so only install archives from a trusted source"
+  :severity warning
+  :description "Reports a Net::HTTP.get response body that reaches the path argument of Gem::Installer.at. Installing a gem runs its extension builds and plugins on the installing host, on every RubyGems release, so whoever chooses the archive runs code there. On RubyGems before 2.6.14 merely loading the archive specification could also run code (CVE-2017-0903); that version-specific part is not checked."
+  :help-uri "https://github.com/advisories/GHSA-mqwr-4qf2-2hcv"
+  :tags ["security" "ruby" "rubygems" "code-injection" "cve-2017-0903" "cwe-94"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id net-http-get
+              :display-name "Net::HTTP.get response body"
+              :categories [io.external network.response]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (resolved-call
+                      :resolves-to member.web-network.ruby.net-http.get
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "get")))))))
+              :bind return-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id gem-installer-at-path
+              :display-name "Gem::Installer.at path"
+              :categories [code.execution package.install]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.ruby.rubygems-installer.all.gem-installer.at
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "at"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "94")))

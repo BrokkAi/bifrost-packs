@@ -1,0 +1,186 @@
+{
+ "schema_version": 2,
+ "pack_id": "bifrost.ruby.rubygems-installer",
+ "version": "0.1.0",
+ "producer": {
+  "name": "bifrost-reviewed-ruby-models",
+  "version": "1.0.0"
+ },
+ "language": "ruby",
+ "ecosystem": "rubygems",
+ "compatibility": {
+  "bifrost": ">=0.15.2, <1.0.0",
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb; Gem::Installer.at builds Gem::Package.new(path, security_policy) and an installer for it on every RubyGems release",
+  "revision": "rubygems 3.5"
+ },
+ "license": "Apache-2.0",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "types.ruby.rubygems-installer",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.7085bed151071cac4065d4382f07dec17cbd84d1156592d48f6aef90c1115a76",
+      "name": "Gem::Installer",
+      "type_kind": "class",
+      "visibility": "public",
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer"
+      }
+     }
+    ],
+    "members": [],
+    "relations": []
+   }
+  },
+  {
+   "id": "members.ruby.rubygems-installer.all",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [],
+    "members": [
+     {
+      "id": "member.ruby.rubygems-installer.all.gem-installer.at",
+      "owner": "type.7085bed151071cac4065d4382f07dec17cbd84d1156592d48f6aef90c1115a76",
+      "name": "at",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.at"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "path",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.7085bed151071cac4065d4382f07dec17cbd84d1156592d48f6aef90c1115a76"
+       }
+      }
+     },
+     {
+      "id": "member.ruby.rubygems-installer.all.gem-installer.install",
+      "owner": "type.7085bed151071cac4065d4382f07dec17cbd84d1156592d48f6aef90c1115a76",
+      "name": "install",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.install"
+      },
+      "signature": {
+       "parameters": []
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "summaries.ruby.rubygems-installer",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "procedure_summaries",
+    "summaries": [
+     {
+      "id": "summary.ruby.rubygems-installer.gem-installer.at-1",
+      "target": {
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.at(path)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.rubygems-installer.gem-installer.at-2",
+      "target": {
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.at(path, options)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     },
+     {
+      "id": "summary.ruby.rubygems-installer.gem-installer.install-0",
+      "target": {
+       "path": "rubygems/installer.rb",
+       "symbol": "Gem::Installer.install()",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": []
+     }
+    ]
+   }
+  }
+ ]
+}
