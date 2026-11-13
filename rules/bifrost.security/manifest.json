@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "2.4.0",
+  "version": "3.1.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -936,20 +936,6 @@
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
     },
     {
-      "path": "policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
-      "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
-      "authored_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
-      "resolved_semantic_hash": "6e27a37b6e1f966ab42e45a3b743fbcfdca585342a973a6f069d04fd3da69f6f",
-      "category": "security",
-      "supported_languages": [
-        "rust"
-      ],
-      "required_capabilities": [],
-      "severity_rationale": "Cargo releases before the one bundled with Rust 1.66.1 do not verify the SSH host key when fetching a git dependency, so an attacker on the network path can serve modified source that is then built into the project.",
-      "remediation": "Pin Rust 1.66.1 or later in rust-toolchain.toml. Until then, set net.git-fetch-with-cli = true so the git command line, which verifies host keys, does the fetch.",
-      "activation": "opt-in"
-    },
-    {
       "path": "policies/declared-storage/rust-store-requires-validation.rqlp",
       "id": "bifrost.security.rust.store-requires-validation",
       "authored_hash": "30a1ae97228c03bc77d2df9cc341b98e70e022b216e83480dafc20a57cd4a1cf",
@@ -1141,6 +1127,104 @@
       ],
       "severity_rationale": "Node documents the legacy url.parse as prone to host name spoofing and not for untrusted input, and issues no CVEs for it, so host checks built on its result can be bypassed; affected runtimes also crash in url.format (CVE-2026-21712).",
       "remediation": "Parse untrusted URLs with the WHATWG URL API (new URL(input)) and check the resulting origin; do not pass untrusted strings to url.parse or url.format.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/csharp/webassembly-debugging-affected-version.rqlp",
+      "id": "bifrost.security.csharp.webassembly-debugging-affected-version",
+      "authored_hash": "ec07a090217d4a6957c8ab4fc30afe2b34241ea770e8433ad1fa71fa0e739bd5",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "csharp"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "The WebAssembly debug proxy endpoints mapped by UseWebAssemblyDebugging reflect exception text without encoding on the affected Microsoft.AspNetCore.Components.WebAssembly.Server releases, whether or not the call is guarded by IsDevelopment() (CVE-2026-96230).",
+      "remediation": "Upgrade Microsoft.AspNetCore.Components.WebAssembly.Server to 8.0.32, 9.0.21, 10.0.13 or 11.0.0-rc.2 or later, and keep UseWebAssemblyDebugging behind an IsDevelopment() check.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/ruby/network-input-to-gem-installer.rqlp",
+      "id": "bifrost.security.ruby.network-input-to-gem-installer",
+      "authored_hash": "691a4a850d4c4d64318bb5d0c7bee415250215bcea85fa7c455899236ac3ad39",
+      "resolved_semantic_hash": "691a4a850d4c4d64318bb5d0c7bee415250215bcea85fa7c455899236ac3ad39",
+      "category": "security",
+      "supported_languages": [
+        "ruby"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Installing a gem runs its extension builds and plugins on the installing host, so a network sender who chooses the archive that Gem::Installer#install installs runs code there; RubyGems before 2.6.14 could also run code while loading the archive's specification (CVE-2017-0903).",
+      "remediation": "Install only archives from a trusted, pinned source: verify a signature or a known checksum before calling Gem::Installer.at, and never let a remote response choose the archive path.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/ruby/network-input-to-net-imap-raw-arguments.rqlp",
+      "id": "bifrost.security.ruby.network-input-to-net-imap-raw-arguments",
+      "authored_hash": "ebe21fca228b4017538284daa93d742e5ae5e9536adbfc0c0735f56e35f07c14",
+      "resolved_semantic_hash": "ebe21fca228b4017538284daa93d742e5ae5e9536adbfc0c0735f56e35f07c14",
+      "category": "security",
+      "supported_languages": [
+        "ruby"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "On affected net-imap releases raw command text from a network sender can carry a non-synchronizing literal or a zero-length literal marker that the server reads as further commands or that hangs the connection (CVE-2026-47240, CVE-2026-47241).",
+      "remediation": "Upgrade net-imap to 0.5.15, or 0.6.4.1 or later. Build search, sort, thread and fetch arguments as arrays of structured criteria instead of raw strings from external input.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp",
+      "id": "bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos",
+      "authored_hash": "8052f429d36ce2f2d28521756a0e7395369a56cf2fb1e242548bd6c4bdd81244",
+      "resolved_semantic_hash": "8052f429d36ce2f2d28521756a0e7395369a56cf2fb1e242548bd6c4bdd81244",
+      "category": "security",
+      "supported_languages": [
+        "ruby"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "On rexml before 3.2.7 a network sender who controls an XML document's attribute values controls how long REXML::Document.new spends parsing it (CVE-2024-35176).",
+      "remediation": "Upgrade rexml to 3.2.7 or later (3.4.2 or later also fixes CVE-2025-58767), and bound the size of untrusted XML before parsing.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp",
+      "id": "bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos",
+      "authored_hash": "5632682ec9748240c423944e52c7d65df3ef41fb7dae6396537300e07b3cafbd",
+      "resolved_semantic_hash": "5632682ec9748240c423944e52c7d65df3ef41fb7dae6396537300e07b3cafbd",
+      "category": "security",
+      "supported_languages": [
+        "ruby"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "On rexml 3.3.3 to 3.4.1 a network sender who repeats the XML declaration makes REXML::Document.new do unbounded work instead of rejecting the document (CVE-2025-58767).",
+      "remediation": "Upgrade rexml to 3.4.2 or later, and bound the size of untrusted XML before parsing.",
       "activation": "opt-in"
     }
   ]

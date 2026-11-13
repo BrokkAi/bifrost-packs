@@ -35,12 +35,8 @@ and every finding is `possible`; see its `README.md`.
 
 The Rust SAST fixtures cover unsafe marker impl bounds and caller-supplied calls after invalid-state APIs. Their isolated positive and near-miss crates are fresh public sources. See each `expectations.json` and `scripts/rust-sast-gate.py`. All 37 cases pass on public Bifrost 0.15.0; see `docs/qualification/rust-sast.json`.
 
-`cargo-ssh-git-host-key-unverified` qualifies the Rust CVE lead
-BrokkAi/bifrost-packs#60 (CVE-2022-46176). It needs Bifrost 0.15.1 Cargo and
-`rust-toolchain` dependency evidence, and no semantic models. Its 10 cases
-include five where the toolchain or configuration is unknown, and those must
-stay inconclusive. See its `README.md` and
-`docs/qualification/rust-cargo-ssh-git.json`.
+`cargo-ssh-git-host-key-unverified` is held out of the shipped rules; its
+fixtures and qualification moved to `research/rust-cargo-ssh-git/`.
 
 `python-process-input-to-urlopen` and `python-process-input-to-webbrowser-open`
 are not CodeQL ports. They qualify the version-independent parts of the Python
@@ -52,3 +48,19 @@ CVE leads BrokkAi/bifrost-packs#270 and #272 against the reviewed
 qualifies the version-independent part of the Python CVE lead
 BrokkAi/bifrost-packs#355 (CVE-2024-9287) against the same reviewed models,
 which now declare and summarize `venv.create`.
+
+`csharp-webassembly-debugging-affected-version` is not a CodeQL port. It
+qualifies the affected-version part of the .NET CVE lead
+BrokkAi/bifrost-packs#167 (CVE-2026-96230) against the new
+`bifrost.dotnet.aspnetcore-webassembly-server-csharp` and
+`bifrost.dotnet.aspnetcore-hosting-csharp` models. The version gate comes from
+restored NuGet evidence.
+
+`ruby-network-xml-to-rexml`, `ruby-network-input-to-net-imap` and
+`ruby-network-input-to-gem-installer` qualify the Ruby CVE leads
+BrokkAi/bifrost-packs#363 and #364 (rexml), #368 and #369 (net-imap), and the
+version-independent install part of #286 (RubyGems) against the new
+`bifrost.ruby.rexml`, `bifrost.ruby.net-imap` and
+`bifrost.ruby.rubygems-installer` models and the reviewed
+`bifrost.web-network-ruby` source. The rexml and net-imap gates come from
+Gemfile.lock. All of these cases run on Bifrost 0.15.2.

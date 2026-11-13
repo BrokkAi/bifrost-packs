@@ -22,10 +22,14 @@ GO_DECLARATIONS_COMMIT = "f9c42f6854fff105e78bb961e7a56c56c63744e3"
 RULE_ONLY_SOURCE_COMMIT = "825d2bcb1de3aea097b1149ae13ece24d920898c"
 # bifrost.go.stdlib.net 2.1.0 added net.Conn and net.Listener summaries (#192).
 GO_NET_INTERFACE_SUMMARIES_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
+# bifrost.go.stdlib.net-http-declarations 3.1.0 added Request.FormValue (#224).
+GO_NET_HTTP_FORM_VALUE_COMMIT = "77bd26fe98b687801b0fb2b0218b59bea266ff50"
 FIRST_JOB = 12
-# Authored jobs appended after the legacy set; pinned by test_go_gob_native_jobs
-# and test_go_read_all_native_jobs.
+# Authored jobs that are not legacy built-ins; pinned by test_go_gob_native_jobs,
+# test_go_read_all_native_jobs and test_authored_native_generation_inputs.
 AUTHORED_AFTER_LEGACY = {
+    "go-stdlib-database-sql-declarations",
+    "rust-std-deref-summaries",
     "go-stdlib-encoding-gob",
     "go-stdlib-encoding-gob-declarations",
     "go-stdlib-compress-gzip",
@@ -112,7 +116,9 @@ class LegacyBuiltinNativeJobTests(unittest.TestCase):
                 self.assertGreaterEqual(model["schema_version"], 8)
                 self.assertNotIn("bifrost", model["compatibility"])
                 self.assertEqual(spec["artifact"]["sha256"], hashlib.sha256(model_bytes).hexdigest())
-                if job["name"].startswith("go-stdlib-"):
+                if job["name"] == "go-stdlib-net-http-declarations":
+                    commit = GO_NET_HTTP_FORM_VALUE_COMMIT
+                elif job["name"].startswith("go-stdlib-"):
                     commit = GO_TOOLCHAIN_SOURCE_COMMIT
                 elif model["pack_id"] in RULE_ONLY:
                     commit = RULE_ONLY_SOURCE_COMMIT

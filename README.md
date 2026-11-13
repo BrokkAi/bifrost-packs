@@ -25,11 +25,17 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - [`research/stdlib/`](research/stdlib/README.md): source-linked stdlib taint and
   typestate hypotheses, ownership routing and a proposed qualification queue.
   These are research leads, not enabled or qualified rules.
+- [`research/rust-codeql-security/`](research/rust-codeql-security/catalogs/README.md):
+  staged CodeQL Rust endpoint catalogs for a later policy pack. They are in no
+  release stream.
+- [`research/rust-cargo-ssh-git/`](research/rust-cargo-ssh-git/README.md):
+  the held-out `bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy,
+  its fixtures and qualification. They are in no release stream.
 
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**279 unique rules across 13 policy packs.**
+**284 unique rules across 14 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -40,42 +46,43 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.cpp-power-of-10 | 2 |
 | Pack | bifrost.csharp-codeql-quality | 31 |
 | Pack | bifrost.effects | 12 |
-| Pack | bifrost.java-codeql-quality | 19 |
+| Pack | bifrost.java-codeql-quality | 20 |
+| Pack | bifrost.java-codeql-security | 0 |
 | Pack | bifrost.javascript-codeql-quality | 12 |
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 1 |
 | Pack | bifrost.rust-generic | 4 |
-| Pack | bifrost.security | 60 |
+| Pack | bifrost.security | 64 |
 | Category | correctness | 118 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 11 |
-| Category | quality | 69 |
-| Category | security | 64 |
+| Category | quality | 70 |
+| Category | security | 68 |
 | Severity | error | 83 |
 | Severity | note | 81 |
-| Severity | warning | 115 |
+| Severity | warning | 120 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 517 rule-language pairs.
+13 declared languages; 522 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
 | c | 19 |
 | cpp | 39 |
-| csharp | 59 |
+| csharp | 60 |
 | go | 22 |
-| java | 52 |
+| java | 53 |
 | javascript | 44 |
 | kotlin | 17 |
 | php | 20 |
 | python | 131 |
-| ruby | 20 |
-| rust | 39 |
+| ruby | 24 |
+| rust | 38 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 57, unspecified 222. Omitted labels remain unspecified.
+Activation labels: opt-in 61, unspecified 223. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -84,13 +91,14 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.11.0` and `rules/v0.11.0`. `packs/v0.12.0`
-and `rules/v0.12.0` are prepared next. Both need Bifrost 0.15.1 or later.
-`packs/v0.12.0` adds the Python `venv.create` declaration and summary.
-`rules/v0.12.0` adds the opt-in `venv.create` process-input policy, fixes
-false positives in the Rust non-HTTPS URL and dynamic-evaluation policies, and
-depends on `packs/v0.12.0`. See
-[release streams](docs/release-streams.md).
+The latest releases are `packs/v0.12.0` and `rules/v0.13.0`. `packs/v0.13.0`
+and `rules/v0.14.0` are prepared next. `packs/v0.13.0` needs Bifrost 0.15.1 or
+later and adds the Go `database/sql` declarations and `net/http.Request.FormValue`.
+`rules/v0.14.0` needs Bifrost **0.15.2** or later, depends on `packs/v0.13.0`,
+adds the Java missing-override-annotation policy, ships the JavaScript identifier
+typo table, reports the Rust ctor caller search as inconclusive at its depth
+bound, and adds the Java CodeQL security catalogs without a policy. Bifrost
+0.15.1 rejects its whole catalog. See [release streams](docs/release-streams.md).
 
 ## Source verification
 

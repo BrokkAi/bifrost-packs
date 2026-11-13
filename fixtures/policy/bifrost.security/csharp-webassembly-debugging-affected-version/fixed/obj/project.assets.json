@@ -1,0 +1,64 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Microsoft.AspNetCore.Components.WebAssembly.Server/8.0.32": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Microsoft.AspNetCore.Components.WebAssembly.Server.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Components.WebAssembly.Server.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.AspNetCore.Components.WebAssembly.Server/8.0.32": {
+      "type": "package",
+      "path": "microsoft.aspnetcore.components.webassembly.server/8.0.32",
+      "files": [
+        "lib/net8.0/Microsoft.AspNetCore.Components.WebAssembly.Server.dll"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Microsoft.AspNetCore.Components.WebAssembly.Server >= 8.0.32"
+    ]
+  },
+  "packageFolders": {
+    ".nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "App.csproj",
+      "projectName": "App",
+      "projectPath": "App.csproj",
+      "packagesPath": ".nuget/packages/",
+      "outputPath": "obj/",
+      "projectStyle": "PackageReference",
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.WebAssembly.Server": {
+            "target": "Package",
+            "version": "[8.0.32, )"
+          }
+        }
+      }
+    }
+  }
+}
