@@ -1,0 +1,211 @@
+{
+ "schema_version": 2,
+ "pack_id": "bifrost.dotnet.aspnetcore-webassembly-server-csharp",
+ "version": "0.1.0",
+ "producer": {
+  "name": "bifrost-reviewed-dotnet-models",
+  "version": "0.1.0"
+ },
+ "language": "csharp",
+ "ecosystem": "nuget",
+ "compatibility": {
+  "bifrost": ">=0.15.2, <1.0.0",
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "dotnet/aspnetcore src/Components/WebAssembly/Server WebAssemblyNetDebugProxyAppBuilderExtensions.UseWebAssemblyDebugging(this IApplicationBuilder app), unchanged across the 8.0, 9.0 and 10.0 servicing branches; OSV GHSA-qjpx-jqm5-h2c4 version ranges. Two shards declare the same API, one per side of the fix.",
+  "revision": "Microsoft.AspNetCore.Components.WebAssembly.Server 8.0.31, 8.0.32, 9.0.20, 9.0.21, 10.0.12, 10.0.13"
+ },
+ "license": "Apache-2.0",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "declarations.dotnet.aspnetcore-webassembly-server-csharp.affected",
+   "activation": [
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=8.0.0, <8.0.32"
+     }
+    },
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=9.0.0, <9.0.21"
+     }
+    },
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=10.0.0, <10.0.13"
+     }
+    },
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=11.0.0-preview.1, <11.0.0-rc.2"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.dotnet.aspnetcore-webassembly-server-csharp.affected.webassemblynetdebugproxyappbuilderextensions",
+      "name": "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions",
+      "type_kind": "class",
+      "visibility": "public",
+      "is_abstract": true,
+      "is_sealed": true,
+      "type_parameters": [],
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.Components.WebAssembly.Server.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions"
+      }
+     }
+    ],
+    "members": [
+     {
+      "id": "member.dotnet.aspnetcore-webassembly-server-csharp.affected.usewebassemblydebugging",
+      "owner": "type.dotnet.aspnetcore-webassembly-server-csharp.affected.webassemblynetdebugproxyappbuilderextensions",
+      "name": "UseWebAssemblyDebugging",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.Components.WebAssembly.Server.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions.UseWebAssemblyDebugging"
+      },
+      "signature": {
+       "type_parameters": [],
+       "parameters": [
+        {
+         "name": "app",
+         "type": {
+          "kind": "named",
+          "name": "Microsoft.AspNetCore.Builder.IApplicationBuilder",
+          "arguments": [],
+          "nullable": false
+         }
+        }
+       ],
+       "returns": {
+        "kind": "named",
+        "name": "System.Void",
+        "arguments": [],
+        "nullable": false
+       }
+      },
+      "extension_receiver": {
+       "kind": "named",
+       "name": "Microsoft.AspNetCore.Builder.IApplicationBuilder",
+       "arguments": [],
+       "nullable": false
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "declarations.dotnet.aspnetcore-webassembly-server-csharp.fixed",
+   "activation": [
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=8.0.32, <9.0.0"
+     }
+    },
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=9.0.21, <10.0.0"
+     }
+    },
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=10.0.13, <11.0.0-preview.1"
+     }
+    },
+    {
+     "package": {
+      "name": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "version": ">=11.0.0-rc.2"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.dotnet.aspnetcore-webassembly-server-csharp.fixed.webassemblynetdebugproxyappbuilderextensions",
+      "name": "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions",
+      "type_kind": "class",
+      "visibility": "public",
+      "is_abstract": true,
+      "is_sealed": true,
+      "type_parameters": [],
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.Components.WebAssembly.Server.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions"
+      }
+     }
+    ],
+    "members": [
+     {
+      "id": "member.dotnet.aspnetcore-webassembly-server-csharp.fixed.usewebassemblydebugging",
+      "owner": "type.dotnet.aspnetcore-webassembly-server-csharp.fixed.webassemblynetdebugproxyappbuilderextensions",
+      "name": "UseWebAssemblyDebugging",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.Components.WebAssembly.Server.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions.UseWebAssemblyDebugging"
+      },
+      "signature": {
+       "type_parameters": [],
+       "parameters": [
+        {
+         "name": "app",
+         "type": {
+          "kind": "named",
+          "name": "Microsoft.AspNetCore.Builder.IApplicationBuilder",
+          "arguments": [],
+          "nullable": false
+         }
+        }
+       ],
+       "returns": {
+        "kind": "named",
+        "name": "System.Void",
+        "arguments": [],
+        "nullable": false
+       }
+      },
+      "extension_receiver": {
+       "kind": "named",
+       "name": "Microsoft.AspNetCore.Builder.IApplicationBuilder",
+       "arguments": [],
+       "nullable": false
+      }
+     }
+    ],
+    "relations": []
+   }
+  }
+ ]
+}
