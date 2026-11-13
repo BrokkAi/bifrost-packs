@@ -3,25 +3,29 @@
 Qualifies the version-independent install part of BrokkAi/bifrost-packs#286
 (CVE-2017-0903) as `bifrost.security.ruby.network-input-to-gem-installer`.
 Installing a gem runs its extension builds and plugins on every RubyGems
-release, so a network response that chooses the archive passed to
-`Gem::Installer.at` chooses code that runs on the host. The CVE itself, YAML
+release, so a network response that chooses the archive an installer installs
+chooses code that runs on the host. The CVE itself, YAML
 specification loading before RubyGems 2.6.14, needs RubyGems runtime version
 evidence that Bifrost 0.15.2 doesn't have, so the parse-only slice
 (`Gem::Package.new`, `Gem::Specification.from_yaml`) isn't covered.
 
-The source is the reviewed `bifrost.web-network-ruby` `Net::HTTP.get`. The
-sink is formal 0 of `Gem::Installer.at` in `bifrost.ruby.rubygems-installer`
-0.1.0, which also declares `Gem::Installer#install` and activates in every Ruby
-workspace (RubyGems ships with the interpreter). The rule uses `require-model`
-and is opt-in.
+The source is the reviewed `bifrost.web-network-ruby` `Net::HTTP.get`.
+`bifrost.ruby.rubygems-installer` 0.1.0 activates in every Ruby workspace
+(RubyGems ships with the interpreter) and summarizes `Gem::Installer.at` as
+passing its path argument to the installer it returns. The sink is the receiver
+of `Gem::Installer#install`: building an installer without installing is not
+reported. The rule uses `require-model` and is opt-in.
 
 Each case directory is its own workspace. Run each one separately.
 
 ## Cases
 
-- `install/mirror_agent.rb`: positives at line 8 (`Gem::Installer.at(gem_path)`
-  after `gem_path = Net::HTTP.get(control_uri)`) and line 12 (inline), and a near
-  miss at line 16 that installs a vendored archive by constant path.
+- `install/mirror_agent.rb`: positives at line 8
+  (`Gem::Installer.at(gem_path).install` after
+  `gem_path = Net::HTTP.get(control_uri)`) and line 13 (`installer.install` on an
+  installer built from the inline response). Near misses: line 17 builds an
+  installer from the response but doesn't install it, and line 21 installs a
+  vendored archive by constant path.
 - `incomplete/helper`: the response passes through an unresolved
   `ArchiveCache.store`; inconclusive.
 - `incomplete/lookalike`: the `install` sources plus an application class
@@ -37,11 +41,11 @@ Bifrost `v0.15.2` (`bifrost-v0.15.2-aarch64-apple-darwin.tar.gz`, archive SHA-25
 
 | Case | Completion | Findings |
 | --- | --- | --- |
-| `install` | `proven_by_summary` | 2 definite (lines 8, 12) |
+| `install` | `proven_by_summary` | 2 definite (lines 8, 13) |
 | `incomplete/helper` | `inconclusive (partial_discovery)` | 0 |
-| `incomplete/lookalike` | `inconclusive (partial_discovery)` | 2 possible (lines 8, 12) |
+| `incomplete/lookalike` | `inconclusive (partial_discovery)` | 2 possible (lines 8, 13) |
 
-Authored hash `aa8bf09bee99e76bf6922b969ace6c108e439d6b0276fc1886b6d2862b50cd98`.
+Authored hash `691a4a850d4c4d64318bb5d0c7bee415250215bcea85fa7c455899236ac3ad39`.
 
 Run from a case directory:
 

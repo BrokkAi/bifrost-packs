@@ -9,7 +9,7 @@ qualified in `fixtures/policy/bifrost.security/ruby-*`:
 | #363 CVE-2024-35176 | `bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos` | Gemfile.lock rexml <3.2.7 |
 | #364 CVE-2025-58767 | `bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos` | Gemfile.lock rexml >=3.3.3, <3.4.2 |
 | #368 CVE-2026-47240, #369 CVE-2026-47241 | `bifrost.security.ruby.network-input-to-net-imap-raw-arguments` | Gemfile.lock net-imap <0.5.15 or >=0.6.0, <0.6.4 |
-| #286 CVE-2017-0903 (install part) | `bifrost.security.ruby.network-input-to-gem-installer` | none (version-independent) |
+| #286 CVE-2017-0903 (install part) | `bifrost.security.ruby.network-input-to-gem-installer` | none (version-independent); the sink is `Gem::Installer#install` |
 
 `generator/genmodels.py` writes the three models in `semantic-packs/ruby/` and
 `generator/mkfx.py` stages the fixture workspaces. Both run from the repository
@@ -27,7 +27,8 @@ root.
   only the members by version. Member ids are free-form; each names its split,
   so a policy selects the affected declarations by exact member id.
 - Summaries are keyed by locator, not member id, so one summaries shard serves
-  every split.
+  every split. Complete summaries close effect coverage, so every Net::IMAP
+  summary declares `bifrost.network_io`.
 - A clean near miss needs a fixed-version shard that declares the same API. With
   no matching shard the call stays unbound and the run is inconclusive.
 - Four-segment gem versions read as three segments plus build metadata (0.6.4.1

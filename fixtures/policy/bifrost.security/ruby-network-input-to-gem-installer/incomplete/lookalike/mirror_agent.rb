@@ -8,7 +8,12 @@ module MirrorAgent
     Gem::Installer.at(gem_path).install
   end
 
-  def self.install_inline(control_uri)
+  def self.install_staged(control_uri)
+    installer = Gem::Installer.at(Net::HTTP.get(control_uri))
+    installer.install
+  end
+
+  def self.prepare_next(control_uri)
     Gem::Installer.at(Net::HTTP.get(control_uri))
   end
 

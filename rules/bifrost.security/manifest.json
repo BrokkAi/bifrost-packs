@@ -1150,8 +1150,8 @@
     {
       "path": "policies/ruby/network-input-to-gem-installer.rqlp",
       "id": "bifrost.security.ruby.network-input-to-gem-installer",
-      "authored_hash": "aa8bf09bee99e76bf6922b969ace6c108e439d6b0276fc1886b6d2862b50cd98",
-      "resolved_semantic_hash": "aa8bf09bee99e76bf6922b969ace6c108e439d6b0276fc1886b6d2862b50cd98",
+      "authored_hash": "691a4a850d4c4d64318bb5d0c7bee415250215bcea85fa7c455899236ac3ad39",
+      "resolved_semantic_hash": "691a4a850d4c4d64318bb5d0c7bee415250215bcea85fa7c455899236ac3ad39",
       "category": "security",
       "supported_languages": [
         "ruby"
@@ -1163,7 +1163,7 @@
         "semantic-model-provenance",
         "scoped-callable-completeness"
       ],
-      "severity_rationale": "Installing a gem runs its extension builds and plugins on the installing host, so a network sender who chooses the archive passed to Gem::Installer.at runs code there; RubyGems before 2.6.14 could also run code while loading the archive's specification (CVE-2017-0903).",
+      "severity_rationale": "Installing a gem runs its extension builds and plugins on the installing host, so a network sender who chooses the archive that Gem::Installer#install installs runs code there; RubyGems before 2.6.14 could also run code while loading the archive's specification (CVE-2017-0903).",
       "remediation": "Install only archives from a trusted, pinned source: verify a signature or a known checksum before calling Gem::Installer.at, and never let a remote response choose the archive path.",
       "activation": "opt-in"
     },

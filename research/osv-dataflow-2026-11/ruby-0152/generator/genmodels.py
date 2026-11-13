@@ -72,8 +72,13 @@ def member(member_id, owner, owner_name, name, path, params, static, returns=Non
     }
 
 
-def summaries(prefix, owner_name, name, path, params):
-    """One complete summary per accepted arity: no transfers, no effects."""
+NETWORK_IO = {"id": "bifrost.network_io", "timing": "immediate", "certainty": "definite"}
+# Argument 0 flows to the return value (Gem::Installer.at wraps the archive it is given).
+PARAM0_TO_RETURN = {"input": {"kind": "parameter", "ordinal": 0}, "exit_kind": "normal", "output": {"kind": "normal_return"}}
+
+
+def summaries(prefix, owner_name, name, path, params, transfers=(), effects=()):
+    """One complete summary per accepted arity, with the given transfers and declared effects."""
     required = [p for p in params if not p.get("optional")]
     out = []
     for count in range(len(required), len(params) + 1):
@@ -90,9 +95,9 @@ def summaries(prefix, owner_name, name, path, params):
                 "completeness": "complete",
                 "covers_overrides": True,
                 "locations": [],
-                "transfers": [],
+                "transfers": list(transfers),
                 "effects": [],
-                "declared_effects": [],
+                "declared_effects": list(effects),
             }
         )
     return out
@@ -121,8 +126,11 @@ def pack(pack_id, version, source, revision, shards):
     }
 
 
-def gated_pack(pack_id, version, source, revision, gem, slug, ranges, api):
+def gated_pack(pack_id, version, source, revision, gem, slug, ranges, api, behavior=None):
     """api: list of (owner_name, path, [(name, params, static, returns_self)]).
+
+    behavior maps a method name to {"transfers": [...], "effects": [...]} for its
+    summaries; every other method is summarized with no transfers or effects.
 
     Types carry Bifrost's canonical id, which is the same for every version, so
     they live in one shard that activates for the union of the ranges. Each
@@ -161,7 +169,12 @@ def gated_pack(pack_id, version, source, revision, gem, slug, ranges, api):
     for owner_name, path, methods in api:
         owner_slug = owner_name.lower().replace("::", "-")
         for name, params, _static, _returns in methods:
-            sums.extend(summaries(f"{slug}.{owner_slug}", owner_name, name, path, params))
+            extra = (behavior or {}).get(name, {})
+            sums.extend(
+                summaries(
+                    f"{slug}.{owner_slug}", owner_name, name, path, params, extra.get("transfers", ()), extra.get("effects", ())
+                )
+            )
     shards.append({"id": f"summaries.{slug}", "activation": union, "payload": {"kind": "procedure_summaries", "summaries": sums}})
     return pack(pack_id, version, source, revision, shards)
 
@@ -247,6 +260,8 @@ def main():
             "ruby.net-imap",
             IMAP_RANGES,
             IMAP_API,
+            # Every modeled Net::IMAP method opens, uses or closes the server connection.
+            {name: {"effects": [NETWORK_IO]} for name, *_ in IMAP_API[0][2]},
         ),
     )
     write(
@@ -254,12 +269,13 @@ def main():
         gated_pack(
             "bifrost.ruby.rubygems-installer",
             "0.1.0",
-            "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb; Gem::Installer.at builds Gem::Package.new(path, security_policy) and an installer for it on every RubyGems release",
+            "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb. On every RubyGems release Gem::Installer.at wraps the archive at path (Gem::Package.new) in an installer, and #install unpacks it and runs its extension builds and plugins",
             "rubygems 3.5",
             "rubygems",
             "ruby.rubygems-installer",
             [("all", None)],
             INSTALLER_API,
+            {"at": {"transfers": [PARAM0_TO_RETURN]}},
         ),
     )
 

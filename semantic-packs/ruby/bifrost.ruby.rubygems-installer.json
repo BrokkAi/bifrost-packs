@@ -13,7 +13,7 @@
   "toolchains": []
  },
  "provenance": {
-  "source": "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb; Gem::Installer.at builds Gem::Package.new(path, security_policy) and an installer for it on every RubyGems release",
+  "source": "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb. On every RubyGems release Gem::Installer.at wraps the archive at path (Gem::Package.new) in an installer, and #install unpacks it and runs its extension builds and plugins",
   "revision": "rubygems 3.5"
  },
  "license": "Apache-2.0",
@@ -145,7 +145,18 @@
       "completeness": "complete",
       "covers_overrides": true,
       "locations": [],
-      "transfers": [],
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
       "effects": [],
       "declared_effects": []
      },
@@ -160,7 +171,18 @@
       "completeness": "complete",
       "covers_overrides": true,
       "locations": [],
-      "transfers": [],
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
       "effects": [],
       "declared_effects": []
      },
