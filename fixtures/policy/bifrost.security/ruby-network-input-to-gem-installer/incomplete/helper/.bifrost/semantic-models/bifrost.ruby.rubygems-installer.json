@@ -13,7 +13,7 @@
   "toolchains": []
  },
  "provenance": {
-  "source": "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb. On every RubyGems release Gem::Installer.at wraps the archive at path (Gem::Package.new) in an installer, and #install unpacks it and runs its extension builds and plugins",
+  "source": "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb. On every RubyGems release Gem::Installer.at wraps the archive at path (Gem::Package.new) in an installer, and #install unpacks it and runs its extension builds and plugins, so #install may perform any effect, network I/O included",
   "revision": "rubygems 3.5"
  },
  "license": "Apache-2.0",
@@ -199,7 +199,13 @@
       "locations": [],
       "transfers": [],
       "effects": [],
-      "declared_effects": []
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "unknown",
+        "certainty": "possible"
+       }
+      ]
      }
     ]
    }

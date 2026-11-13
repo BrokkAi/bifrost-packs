@@ -73,12 +73,13 @@ def member(member_id, owner, owner_name, name, path, params, static, returns=Non
 
 
 NETWORK_IO = {"id": "bifrost.network_io", "timing": "immediate", "certainty": "definite"}
+POSSIBLE_NETWORK_IO = {"id": "bifrost.network_io", "timing": "unknown", "certainty": "possible"}
 # Argument 0 flows to the return value (Gem::Installer.at wraps the archive it is given).
 PARAM0_TO_RETURN = {"input": {"kind": "parameter", "ordinal": 0}, "exit_kind": "normal", "output": {"kind": "normal_return"}}
 
 
 def summaries(prefix, owner_name, name, path, params, transfers=(), effects=()):
-    """One complete summary per accepted arity, with the given transfers and declared effects."""
+    """One summary per accepted arity, with the given transfers and declared effects."""
     required = [p for p in params if not p.get("optional")]
     out = []
     for count in range(len(required), len(params) + 1):
@@ -172,7 +173,13 @@ def gated_pack(pack_id, version, source, revision, gem, slug, ranges, api, behav
             extra = (behavior or {}).get(name, {})
             sums.extend(
                 summaries(
-                    f"{slug}.{owner_slug}", owner_name, name, path, params, extra.get("transfers", ()), extra.get("effects", ())
+                    f"{slug}.{owner_slug}",
+                    owner_name,
+                    name,
+                    path,
+                    params,
+                    extra.get("transfers", ()),
+                    extra.get("effects", ()),
                 )
             )
     shards.append({"id": f"summaries.{slug}", "activation": union, "payload": {"kind": "procedure_summaries", "summaries": sums}})
@@ -269,13 +276,16 @@ def main():
         gated_pack(
             "bifrost.ruby.rubygems-installer",
             "0.1.0",
-            "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb. On every RubyGems release Gem::Installer.at wraps the archive at path (Gem::Package.new) in an installer, and #install unpacks it and runs its extension builds and plugins",
+            "rubygems Gem::Installer.at(path, options = {}) and Gem::Installer#install in lib/rubygems/installer.rb. On every RubyGems release Gem::Installer.at wraps the archive at path (Gem::Package.new) in an installer, and #install unpacks it and runs its extension builds and plugins, so #install may perform any effect, network I/O included",
             "rubygems 3.5",
             "rubygems",
             "ruby.rubygems-installer",
             [("all", None)],
             INSTALLER_API,
-            {"at": {"transfers": [PARAM0_TO_RETURN]}},
+            # #install runs the gem's extension builds and plugins, which may do
+            # anything, so its summary declares possible network I/O at an unknown
+            # time instead of an empty effect set that would close coverage.
+            {"at": {"transfers": [PARAM0_TO_RETURN]}, "install": {"effects": [POSSIBLE_NETWORK_IO]}},
         ),
     )
 

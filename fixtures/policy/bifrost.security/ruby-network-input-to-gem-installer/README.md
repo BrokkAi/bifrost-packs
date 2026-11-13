@@ -12,7 +12,9 @@ evidence that Bifrost 0.15.2 doesn't have, so the parse-only slice
 The source is the reviewed `bifrost.web-network-ruby` `Net::HTTP.get`.
 `bifrost.ruby.rubygems-installer` 0.1.0 activates in every Ruby workspace
 (RubyGems ships with the interpreter) and summarizes `Gem::Installer.at` as
-passing its path argument to the installer it returns. The sink is the receiver
+passing its path argument to the installer it returns. Its `Gem::Installer#install`
+summary declares possible network I/O at an unknown time, because the gem's own
+extension builds and plugins run there. The sink is the receiver
 of `Gem::Installer#install`: building an installer without installing is not
 reported. The rule uses `require-model` and is opt-in.
 
