@@ -74,12 +74,16 @@ def member(member_id, owner, owner_name, name, path, params, static, returns=Non
 
 NETWORK_IO = {"id": "bifrost.network_io", "timing": "immediate", "certainty": "definite"}
 POSSIBLE_NETWORK_IO = {"id": "bifrost.network_io", "timing": "unknown", "certainty": "possible"}
+POSSIBLE_IMMEDIATE_NETWORK_IO = {"id": "bifrost.network_io", "timing": "immediate", "certainty": "possible"}
 # Argument 0 flows to the return value (Gem::Installer.at wraps the archive it is given).
 PARAM0_TO_RETURN = {"input": {"kind": "parameter", "ordinal": 0}, "exit_kind": "normal", "output": {"kind": "normal_return"}}
 
 
-def summaries(prefix, owner_name, name, path, params, transfers=(), effects=()):
-    """One summary per accepted arity, with the given transfers and declared effects."""
+def summaries(prefix, owner_name, name, path, params, transfers=(), effects=(), effects_from_arity=0):
+    """One complete summary per accepted arity, with the given transfers and declared effects.
+
+    Effects apply only to arities of at least effects_from_arity.
+    """
     required = [p for p in params if not p.get("optional")]
     out = []
     for count in range(len(required), len(params) + 1):
@@ -98,7 +102,7 @@ def summaries(prefix, owner_name, name, path, params, transfers=(), effects=()):
                 "locations": [],
                 "transfers": list(transfers),
                 "effects": [],
-                "declared_effects": list(effects),
+                "declared_effects": list(effects) if count >= effects_from_arity else [],
             }
         )
     return out
@@ -180,6 +184,7 @@ def gated_pack(pack_id, version, source, revision, gem, slug, ranges, api, behav
                     params,
                     extra.get("transfers", ()),
                     extra.get("effects", ()),
+                    extra.get("effects_from_arity", 0),
                 )
             )
     shards.append({"id": f"summaries.{slug}", "activation": union, "payload": {"kind": "procedure_summaries", "summaries": sums}})
@@ -248,12 +253,15 @@ def main():
         gated_pack(
             "bifrost.ruby.rexml",
             "0.1.0",
-            "ruby/rexml REXML::Document.new(source = nil, context = {}) in lib/rexml/document.rb, identical across 3.2.6, 3.2.7, 3.4.1 and 3.4.2; OSV GHSA-vg3r-rm7w-2xgh and GHSA-c2f4-jgmc-q2r5 version ranges",
+            "ruby/rexml REXML::Document.new(source = nil, context = {}) in lib/rexml/document.rb, identical across 3.2.6, 3.2.7, 3.4.1 and 3.4.2; source may be a String or an IO that the constructor reads while parsing; OSV GHSA-vg3r-rm7w-2xgh and GHSA-c2f4-jgmc-q2r5 version ranges",
             "rexml 3.2.6, 3.2.7, 3.4.1, 3.4.2",
             "rexml",
             "ruby.rexml",
             REXML_RANGES,
             REXML_API,
+            # A source may be an IO, such as a socket, that the constructor reads
+            # while it parses, so a call with a source may perform network I/O.
+            {"new": {"effects": [POSSIBLE_IMMEDIATE_NETWORK_IO], "effects_from_arity": 1}},
         ),
     )
     write(

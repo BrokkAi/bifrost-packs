@@ -28,8 +28,10 @@ root.
   so a policy selects the affected declarations by exact member id.
 - Summaries are keyed by locator, not member id, so one summaries shard serves
   every split. Complete summaries close effect coverage, so every Net::IMAP
-  summary declares `bifrost.network_io`, and `Gem::Installer#install` (which runs
-  the gem's own code) declares it as `possible` with `unknown` timing. A partial
+  summary declares `bifrost.network_io`. `Gem::Installer#install` (which runs
+  the gem's own code) declares it as `possible` with `unknown` timing, and
+  `REXML::Document.new` with a source (which may be a socket it reads) as
+  `possible` and `immediate`. A partial
   summary is no alternative: it must declare an effect or transfer and can't
   cover overrides, and dropping the summary leaves the sink call unmodeled.
 - A clean near miss needs a fixed-version shard that declares the same API. With

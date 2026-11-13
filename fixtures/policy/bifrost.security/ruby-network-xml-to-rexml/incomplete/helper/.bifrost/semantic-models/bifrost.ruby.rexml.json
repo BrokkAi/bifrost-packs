@@ -13,7 +13,7 @@
   "toolchains": []
  },
  "provenance": {
-  "source": "ruby/rexml REXML::Document.new(source = nil, context = {}) in lib/rexml/document.rb, identical across 3.2.6, 3.2.7, 3.4.1 and 3.4.2; OSV GHSA-vg3r-rm7w-2xgh and GHSA-c2f4-jgmc-q2r5 version ranges",
+  "source": "ruby/rexml REXML::Document.new(source = nil, context = {}) in lib/rexml/document.rb, identical across 3.2.6, 3.2.7, 3.4.1 and 3.4.2; source may be a String or an IO that the constructor reads while parsing; OSV GHSA-vg3r-rm7w-2xgh and GHSA-c2f4-jgmc-q2r5 version ranges",
   "revision": "rexml 3.2.6, 3.2.7, 3.4.1, 3.4.2"
  },
  "license": "Apache-2.0",
@@ -331,7 +331,13 @@
       "locations": [],
       "transfers": [],
       "effects": [],
-      "declared_effects": []
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "possible"
+       }
+      ]
      },
      {
       "id": "summary.ruby.rexml.rexml-document.new-2",
@@ -346,7 +352,13 @@
       "locations": [],
       "transfers": [],
       "effects": [],
-      "declared_effects": []
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "possible"
+       }
+      ]
      }
     ]
    }
