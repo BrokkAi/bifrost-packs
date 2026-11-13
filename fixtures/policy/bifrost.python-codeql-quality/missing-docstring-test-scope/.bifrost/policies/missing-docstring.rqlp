@@ -1,0 +1,31 @@
+; CodeQL: python/ql/src/Statements/DocStrings.ql
+; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Add docstrings to public declarations selected by CodeQL, except
+; test code and script entry points (bifrost-dev#11358). The engine classifies
+; both structurally: test_scope is yes inside a pytest-collected test module,
+; a unittest.TestCase subclass or a pytest/nose test function; entry_point is
+; yes for a module-level function called from the module's
+; `if __name__ == "__main__":` block. Rows whose classification is unknown are
+; not reported.
+(policy
+  :schema-version 1
+  :id "bifrost.python-codeql-quality.missing-docstring"
+  :name "Public Python declaration is missing a docstring"
+  :message "Add a docstring to this public Python declaration."
+  :severity note
+  :description "CodeQL parity policy over complete Python documentation facts, including methods, excluding test code and script entry points."
+  :tags ["python" "codeql" "quality"]
+  :analysis (analysis :type match :selector
+    (rql :schema-version 1
+      (filter :where ((relation eq documentation)
+                      (outcome eq issue)
+                      (completeness eq complete)
+                      (scope_is_public eq true)
+                      (test_scope eq no)
+                      (entry_point eq no))
+        (python-documentation
+          (enclosing-decl
+            (union (language python (module))
+                   (language python (class))
+                   (language python (function))
+                   (language python (method)))))))))

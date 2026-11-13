@@ -2,7 +2,7 @@
 
 Mirrors CodeQL `python/ql/src/Statements/DocStrings.ql` at commit `ae741615f3e178ce61289a651790dc67fcc18e19`.
 
-Validated with Bifrost 0.12.0, build identity `fbad32f32763d2561338f93c61a1523354849a43`, evaluation date `2026-10-08`. The fixture run reports policy hash `e13622d44dc11ef712e3072a1b3f118504e9247b6f9cc7588ca6820b1bbdb558` and is `complete` with 4 findings.
+Validated with Bifrost 0.15.2 from bifrost-dev 11358-python-docstring-test-scope (BrokkAi/bifrost-dev#11705), evaluation date `2026-11-11`. The fixture run reports policy hash `5b2e47dc476874ba2e643db1f2e61c69af7a637d627c8a9765084755802d2acc` and is `complete` with 4 findings. None of the upstream declarations is test code or a script entry point, so the test-scope and entry-point exclusions leave the CodeQL comparison unchanged.
 
 ## Upstream CodeQL test gate
 
