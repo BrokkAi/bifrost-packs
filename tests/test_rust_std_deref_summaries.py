@@ -8,6 +8,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RustStdDerefSummariesTests(unittest.TestCase):
+    """Pin the companion to the exact String and PathBuf Deref members of the pinned stdlib."""
+
     def test_only_exact_shared_std_deref_members_are_authorized(self):
         pack = json.loads((ROOT / "semantic-packs/rust/bifrost.rust-std-deref-summaries.json").read_text())
         std = json.loads((ROOT / "semantic-packs/rust/rust-stdlib-nightly-2026-08-24.json").read_text())
