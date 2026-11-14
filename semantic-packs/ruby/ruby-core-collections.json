@@ -31,7 +31,7 @@
     "kind": "declaration_facts",
     "types": [
      {
-      "id": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "id": "type.64489e9be0f30c4eec2aa68b24ecc48130d3cff3b3853194338074588f27f095",
       "name": "Hash",
       "type_kind": "class",
       "visibility": "public",
@@ -43,7 +43,7 @@
       }
      },
      {
-      "id": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "id": "type.9496b95837796c7cacdb09e1be1dc74a43d427560b421a8a934c95f3d9689f7e",
       "name": "Array",
       "type_kind": "class",
       "visibility": "public",
@@ -57,8 +57,8 @@
     ],
     "members": [
      {
-      "id": "ruby.core.hash.new",
-      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "id": "member.ruby.core.hash.new",
+      "owner": "type.64489e9be0f30c4eec2aa68b24ecc48130d3cff3b3853194338074588f27f095",
       "name": "new",
       "member_kind": "method",
       "visibility": "public",
@@ -85,7 +85,7 @@
        ],
        "returns": {
         "kind": "declared",
-        "id": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851"
+        "id": "type.64489e9be0f30c4eec2aa68b24ecc48130d3cff3b3853194338074588f27f095"
        }
       },
       "locator": {
@@ -95,8 +95,8 @@
       }
      },
      {
-      "id": "ruby.core.hash.element-reference",
-      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "id": "member.ruby.core.hash.element-reference",
+      "owner": "type.64489e9be0f30c4eec2aa68b24ecc48130d3cff3b3853194338074588f27f095",
       "name": "[]",
       "member_kind": "method",
       "visibility": "public",
@@ -120,8 +120,8 @@
       }
      },
      {
-      "id": "ruby.core.hash.element-assignment",
-      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "id": "member.ruby.core.hash.element-assignment",
+      "owner": "type.64489e9be0f30c4eec2aa68b24ecc48130d3cff3b3853194338074588f27f095",
       "name": "[]=",
       "member_kind": "method",
       "visibility": "public",
@@ -152,8 +152,8 @@
       }
      },
      {
-      "id": "ruby.core.hash.fetch",
-      "owner": "type.e63724b24d807786ced8efe3cc55083a7543c8eef5985370f0c53d5913079851",
+      "id": "member.ruby.core.hash.fetch",
+      "owner": "type.64489e9be0f30c4eec2aa68b24ecc48130d3cff3b3853194338074588f27f095",
       "name": "fetch",
       "member_kind": "method",
       "visibility": "public",
@@ -185,8 +185,8 @@
       }
      },
      {
-      "id": "ruby.core.array.new",
-      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "id": "member.ruby.core.array.new",
+      "owner": "type.9496b95837796c7cacdb09e1be1dc74a43d427560b421a8a934c95f3d9689f7e",
       "name": "new",
       "member_kind": "method",
       "visibility": "public",
@@ -213,7 +213,7 @@
        ],
        "returns": {
         "kind": "declared",
-        "id": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75"
+        "id": "type.9496b95837796c7cacdb09e1be1dc74a43d427560b421a8a934c95f3d9689f7e"
        }
       },
       "locator": {
@@ -223,8 +223,8 @@
       }
      },
      {
-      "id": "ruby.core.array.element-reference",
-      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "id": "member.ruby.core.array.element-reference",
+      "owner": "type.9496b95837796c7cacdb09e1be1dc74a43d427560b421a8a934c95f3d9689f7e",
       "name": "[]",
       "member_kind": "method",
       "visibility": "public",
@@ -256,8 +256,8 @@
       }
      },
      {
-      "id": "ruby.core.array.element-assignment",
-      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "id": "member.ruby.core.array.element-assignment",
+      "owner": "type.9496b95837796c7cacdb09e1be1dc74a43d427560b421a8a934c95f3d9689f7e",
       "name": "[]=",
       "member_kind": "method",
       "visibility": "public",
@@ -296,8 +296,8 @@
       }
      },
      {
-      "id": "ruby.core.array.fetch",
-      "owner": "type.76360b90926f96809ff34f2d2e1c37ea0e189198978e97a1807a618586196b75",
+      "id": "member.ruby.core.array.fetch",
+      "owner": "type.9496b95837796c7cacdb09e1be1dc74a43d427560b421a8a934c95f3d9689f7e",
       "name": "fetch",
       "member_kind": "method",
       "visibility": "public",
@@ -341,7 +341,46 @@
     "kind": "procedure_summaries",
     "summaries": [
      {
-      "id": "ruby.core.hash.element-reference",
+      "id": "summary.ruby.core.hash.new",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Hash.new",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "summary.ruby.core.hash.new-default",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Hash.new(default)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "summary.ruby.core.hash.element-reference",
       "target": {
        "path": "core.rbs",
        "symbol": "Hash.[]",
@@ -365,7 +404,7 @@
       "effects": []
      },
      {
-      "id": "ruby.core.hash.element-assignment",
+      "id": "summary.ruby.core.hash.element-assignment",
       "target": {
        "path": "core.rbs",
        "symbol": "Hash.[]=",
@@ -400,7 +439,60 @@
       "effects": []
      },
      {
-      "id": "ruby.core.array.element-reference",
+      "id": "summary.ruby.core.array.new",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.new",
+       "has_receiver": true,
+       "parameter_count": 0
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "summary.ruby.core.array.new-size",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.new(size)",
+       "has_receiver": true,
+       "parameter_count": 1
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [],
+      "effects": []
+     },
+     {
+      "id": "summary.ruby.core.array.new-size-default",
+      "target": {
+       "path": "core.rbs",
+       "symbol": "Array.new(size, default)",
+       "has_receiver": true,
+       "parameter_count": 2
+      },
+      "completeness": "complete",
+      "ordinary_heap_unchanged": true,
+      "covers_overrides": true,
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 1
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
+      "effects": []
+     },
+     {
+      "id": "summary.ruby.core.array.element-reference",
       "target": {
        "path": "core.rbs",
        "symbol": "Array.[]",
@@ -424,7 +516,7 @@
       "effects": []
      },
      {
-      "id": "ruby.core.array.element-reference-start-length",
+      "id": "summary.ruby.core.array.element-reference-start-length",
       "target": {
        "path": "core.rbs",
        "symbol": "Array.[](start, length)",
@@ -448,7 +540,7 @@
       "effects": []
      },
      {
-      "id": "ruby.core.array.element-assignment",
+      "id": "summary.ruby.core.array.element-assignment",
       "target": {
        "path": "core.rbs",
        "symbol": "Array.[]=",
@@ -483,7 +575,7 @@
       "effects": []
      },
      {
-      "id": "ruby.core.array.element-assignment-start-length",
+      "id": "summary.ruby.core.array.element-assignment-start-length",
       "target": {
        "path": "core.rbs",
        "symbol": "Array.[]=(start, length, value)",
@@ -518,7 +610,7 @@
       "effects": []
      },
      {
-      "id": "ruby.core.hash.fetch-default",
+      "id": "summary.ruby.core.hash.fetch-default",
       "target": {
        "path": "core.rbs",
        "symbol": "Hash.fetch(key, default)",
