@@ -78,6 +78,10 @@ class RubyCoreCollectionsModelTests(unittest.TestCase):
                 self.assertEqual(row["ordinary_heap_unchanged"], not writes)
                 outputs = {transfer["output"]["kind"] for transfer in row["transfers"]}
                 self.assertEqual("receiver" in outputs, writes)
+                # `Array.new(array)` copies its argument's elements, so a
+                # constructor that takes arguments must carry one to the result.
+                if ".new" in symbol and row["target"]["parameter_count"] > 0:
+                    self.assertIn("normal_return", outputs)
         # dig calls `dig` on nested values, so it is not a pure accessor.
         members = {row["name"] for row in model["shards"][0]["payload"]["members"]}
         self.assertNotIn("dig", members)

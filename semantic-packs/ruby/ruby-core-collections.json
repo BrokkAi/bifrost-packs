@@ -453,17 +453,28 @@
       "effects": []
      },
      {
-      "id": "summary.ruby.core.array.new-size",
+      "id": "summary.ruby.core.array.new-size-or-copy",
       "target": {
        "path": "core.rbs",
-       "symbol": "Array.new(size)",
+       "symbol": "Array.new(size_or_array)",
        "has_receiver": true,
        "parameter_count": 1
       },
       "completeness": "complete",
       "ordinary_heap_unchanged": true,
       "covers_overrides": true,
-      "transfers": [],
+      "transfers": [
+       {
+        "input": {
+         "kind": "parameter",
+         "ordinal": 0
+        },
+        "exit_kind": "normal",
+        "output": {
+         "kind": "normal_return"
+        }
+       }
+      ],
       "effects": []
      },
      {
