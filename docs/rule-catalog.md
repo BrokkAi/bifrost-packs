@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 284 unique rule IDs from 14 manifest packs.
+This catalog lists 285 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -287,5 +287,6 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Network XML parsed by REXML before 3.2.7](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos` | ruby | security | warning |
 | [Network XML parsed by REXML 3.3.3 to 3.4.1](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos` | ruby | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
+| [Cleartext logging of sensitive information](../rules/bifrost.security/policies/rust/cleartext-logging.rqlp) | `bifrost.security.rust.cleartext-logging` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
 | [Stored type parameter lacks a Send or Sync bound](../rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp) | `bifrost.security.rust.unsound-send-sync-impl` | rust | security | error |
