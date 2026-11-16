@@ -1,0 +1,11 @@
+[
+  "Sink: java.sql; Connection; true; prepareCall; ; ; Argument[0]; sql-injection; manual",
+  "Sink: java.sql; Connection; true; prepareStatement; ; ; Argument[0]; sql-injection; manual",
+  "Sink: java.sql; DatabaseMetaData; true; getColumns; (String,String,String,String); ; Argument[2]; sql-injection; ai-manual",
+  "Sink: java.sql; DatabaseMetaData; true; getPrimaryKeys; (String,String,String); ; Argument[2]; sql-injection; ai-manual",
+  "Sink: java.sql; Statement; true; addBatch; ; ; Argument[0]; sql-injection; manual",
+  "Sink: java.sql; Statement; true; execute; ; ; Argument[0]; sql-injection; manual",
+  "Sink: java.sql; Statement; true; executeLargeUpdate; ; ; Argument[0]; sql-injection; manual",
+  "Sink: java.sql; Statement; true; executeQuery; ; ; Argument[0]; sql-injection; manual",
+  "Sink: java.sql; Statement; true; executeUpdate; ; ; Argument[0]; sql-injection; manual"
+]

@@ -5,7 +5,7 @@ on:
       version:
         description: Independent pack release version (raw generation evidence only until native migration)
         required: true
-        default: '0.10.0'
+        default: '0.13.0'
   # Regenerate only when generator inputs or packs release tooling change; content.yml
   # runs content verification and the unit tests on every pull request and push.
   pull_request:
