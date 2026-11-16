@@ -52,7 +52,7 @@ Declarations, activation, summary applicability and behavior qualification
 remain separate. This source addition does not select the model in a native
 release recipe, publish an artifact, or enable it for arbitrary workspaces.
 
-## Target-independent family claims (schema 43)
+## Target-independent family claims (schema 44)
 
 `Option::expect` (here) and `StdoutLock::write`, `StdoutLock::write_all` and
 `StderrLock::write` (in `bifrost.rust-std-io-write`) carry
@@ -66,5 +66,5 @@ dependency version is also uncertain. Evidence at rust-lang/rust `fb6531d55`
 (nightly-2026-08-24): `library/std/src/io/stdio.rs:848/849/862` (StdoutLock),
 `:1080/1081` (StderrLock) and `library/core/src/option.rs:966` (expect), none
 with a target `cfg`. `assert_failed` is deliberately not marked. The field
-requires schema 43, which is the compatibility floor: an engine that does not read
-schema 43 rejects the pack whole (schema 8 and later forbid `compatibility.bifrost`).
+requires schema 44, which is the compatibility floor: an engine that does not read
+schema 44 rejects the pack whole (schema 8 and later forbid `compatibility.bifrost`).
