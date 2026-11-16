@@ -10,7 +10,7 @@ Source adapted from bifrost-dev tests/fixtures/golden/codeql-cq14/access-after-l
 `live_owner_remains_valid` keeps its owner alive and is the near miss.
 
 Recorded outcome on 0.15.2 (`bifrost --root crate --policy-file .bifrost/policies/access-after-lifetime-ended.rqlp`):
-one finding at crate/src/lib.rs:5:14, certainty possible, proof unproven, completeness partial; run incomplete
+one finding at crate/src/lib.rs:5:14 (the engine row has proof `proven`, which the policy filters on; the finding's certainty is possible and its completeness partial); run incomplete
 (`semantic_analysis_partial`, `partial_discovery`). No stdlib pointer model is active here, so the pointer solver
 reports unknown allocation extent and ambiguous alias. The near miss reports nothing. An empty result on this
 fixture under incomplete coverage would not show a clean program.

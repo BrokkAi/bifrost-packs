@@ -34,7 +34,8 @@ pub fn read_on_some_path(flag: bool) -> i32 {
     total
 }
 
-// Near miss: an underscore name is intentionally unused.
+// Known deviation, not a near miss: CodeQL excludes underscore names, but the engine row has no
+// name to filter on, so this write is reported (BrokkAi/bifrost-dev#13914).
 pub fn discarded() {
     let _scratch = compute();
 }

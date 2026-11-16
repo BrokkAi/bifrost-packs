@@ -8,3 +8,7 @@ misses and a README that records the engine and the observed outcome. Run one wi
 - `access-after-lifetime-ended`, `access-invalid-pointer`: raw-pointer accesses after a stack origin ended or an allocation was released.
 - `unused-variable`: unread bindings with the CodeQL exclusions as near misses.
 - `unused-value`: locals written and never read, with read-before-replace near misses.
+
+## Declared capabilities
+
+The engine derives no `required_capabilities` from a policy. Each manifest entry lists names the authors chose from the engine registry (`ENGINE_POLICY_CAPABILITIES`) for the features the policy uses: `lexical-environment` for `bindings`, and `assignment-relations` and `reaching-definitions` for the dead-write relation. The two pointer policies declare only `structural-match` because the registry has no pointer capability for `rust-pointer-findings`.

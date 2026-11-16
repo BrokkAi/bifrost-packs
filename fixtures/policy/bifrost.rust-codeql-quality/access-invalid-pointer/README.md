@@ -9,5 +9,5 @@ Source adapted from bifrost-dev tests/fixtures/golden/codeql-cq14/access-invalid
 `read_after_release` reads a pointer after `release` deallocated it; `read_before_release` reads before the
 release and is the near miss.
 
-Recorded outcome on 0.15.2: one finding at crate/src/lib.rs:6:14, certainty possible, proof unproven,
+Recorded outcome on 0.15.2: one finding at crate/src/lib.rs:6:14, certainty possible,
 completeness partial; run incomplete (`semantic_analysis_partial`). The near miss reports nothing.
