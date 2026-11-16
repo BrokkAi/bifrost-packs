@@ -101,13 +101,13 @@
           },
           {
             "id": "type.rust-codeql.std-io-stdout-lock",
-            "name": "std.io.StdoutLock",
+            "name": "std.io.stdio.StdoutLock",
             "type_kind": "struct",
             "visibility": "public",
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StdoutLock"
+              "symbol": "std.io.stdio.StdoutLock"
             },
             "hierarchy": [
               {
@@ -119,17 +119,20 @@
                   "nullable": false
                 }
               }
+            ],
+            "aliases": [
+              "std.io.StdoutLock"
             ]
           },
           {
             "id": "type.rust-codeql.std-io-stderr-lock",
-            "name": "std.io.StderrLock",
+            "name": "std.io.stdio.StderrLock",
             "type_kind": "struct",
             "visibility": "public",
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StderrLock"
+              "symbol": "std.io.stdio.StderrLock"
             },
             "hierarchy": [
               {
@@ -141,6 +144,9 @@
                   "nullable": false
                 }
               }
+            ],
+            "aliases": [
+              "std.io.StderrLock"
             ]
           },
           {
@@ -657,9 +663,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write"
+            },
+            "aliases": [
+              "std.io.StdoutLock.write"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stdout-lock-write-all",
@@ -687,9 +696,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write_all"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write_all"
+            },
+            "aliases": [
+              "std.io.StdoutLock.write_all"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stderr-lock-write",
@@ -717,9 +729,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write"
+            },
+            "aliases": [
+              "std.io.StderrLock.write"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stderr-lock-write-all",
@@ -746,9 +761,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write_all"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write_all"
+            },
+            "aliases": [
+              "std.io.StderrLock.write_all"
+            ]
           },
           {
             "id": "member.rust-codeql.std-primitive-str-as-bytes",
@@ -1121,8 +1139,11 @@
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StdoutLock.write_fmt"
-            }
+              "symbol": "std.io.stdio.StdoutLock.write_fmt"
+            },
+            "aliases": [
+              "std.io.StdoutLock.write_fmt"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stderr-lock-write-fmt",
@@ -1150,8 +1171,11 @@
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StderrLock.write_fmt"
-            }
+              "symbol": "std.io.stdio.StderrLock.write_fmt"
+            },
+            "aliases": [
+              "std.io.StderrLock.write_fmt"
+            ]
           },
           {
             "id": "member.rust-codeql.std-clone-clone-clone",
