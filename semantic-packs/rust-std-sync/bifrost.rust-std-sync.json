@@ -1,0 +1,112 @@
+{
+  "schema_version": 22,
+  "pack_id": "bifrost.rust-std-sync",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-authored-rust-std-sync",
+    "version": "0.1.0"
+  },
+  "language": "rust",
+  "ecosystem": "cargo",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "rust",
+        "requirement": "=1.100.0-nightly"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "Rust stdlib nightly 2026-08-24 std::sync::poison Mutex::lock, RwLock::read and RwLock::write (library/std/src/sync/poison/mutex.rs, rwlock.rs): each blocks until the lock is acquired and returns a guard whose drop releases it. Exact members from bifrost.rust-stdlib rustdoc declarations. try_lock, try_read and try_write are not modeled: they return a Result, not a boolean, and cannot block.",
+    "revision": "fb6531d550e0075b9eb9a51464f404805eec87d9"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.rust.std-sync",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "rust",
+            "version": "=1.100.0-nightly"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "std-sync.mutex.lock",
+            "target": {
+              "path": "std.json",
+              "symbol": "std.sync.poison.mutex.Mutex.lock#member.e50a941f88aa6543d38d99d873e5e4b61621e8bc9a126517e109c952b796cf52",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "transfers": [],
+            "concurrency_effects": [
+              {
+                "kind": "lock_acquire",
+                "lock": {
+                  "kind": "receiver"
+                },
+                "mode": "exclusive"
+              }
+            ]
+          },
+          {
+            "id": "std-sync.rwlock.read",
+            "target": {
+              "path": "std.json",
+              "symbol": "std.sync.poison.rwlock.RwLock.read#member.cfe56f28b2a17eb264693b67ace00d0b9b0caa66bdfd3fc4ac293d909de31e45",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "transfers": [],
+            "concurrency_effects": [
+              {
+                "kind": "lock_acquire",
+                "lock": {
+                  "kind": "receiver"
+                },
+                "mode": "shared"
+              }
+            ]
+          },
+          {
+            "id": "std-sync.rwlock.write",
+            "target": {
+              "path": "std.json",
+              "symbol": "std.sync.poison.rwlock.RwLock.write#member.818c02310eef5412824636334a6ddf6bdb7db5493d254a24df2675c7720c4a6f",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "transfers": [],
+            "concurrency_effects": [
+              {
+                "kind": "lock_acquire",
+                "lock": {
+                  "kind": "receiver"
+                },
+                "mode": "exclusive"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
