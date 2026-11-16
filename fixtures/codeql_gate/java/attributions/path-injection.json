@@ -1,0 +1,171 @@
+[
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 145,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.commons.io; FileUtils; true; openInputStream; (File); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 147,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.codehaus.cargo.container.installer; ZipURLInstaller; true; ZipURLInstaller; (URL,String,String); ; Argument[1]; path-injection; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 149,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.codehaus.cargo.container.installer; ZipURLInstaller; true; ZipURLInstaller; (URL,String,String); ; Argument[2]; path-injection; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 151,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.springframework.util; FileCopyUtils; false; copy; (byte[],File); ; Argument[1]; path-injection; manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 153,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.springframework.util; FileCopyUtils; false; copy; (File,File); ; Argument[0]; path-injection[read]; manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 155,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.springframework.util; FileCopyUtils; false; copy; (File,File); ; Argument[1]; path-injection; manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 160,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant; AntClassLoader; true; addPathComponent; (File); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 162,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant; AntClassLoader; true; AntClassLoader; (ClassLoader,Project,Path,boolean); ; Argument[2]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 164,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant; AntClassLoader; true; AntClassLoader; (Project,Path,boolean); ; Argument[1]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 166,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant; AntClassLoader; true; AntClassLoader; (Project,Path); ; Argument[1]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 168,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.kohsuke.stapler.framework.io; LargeText; true; LargeText; (File,Charset,boolean,boolean); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 181,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant; DirectoryScanner; true; setBasedir; (File); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 186,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant.taskdefs; Copy; true; addFileset; (FileSet); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 188,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant.taskdefs; Copy; true; setFile; (File); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 190,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant.taskdefs; Copy; true; setTodir; (File); ; Argument[0]; path-injection; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 192,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant.taskdefs; Copy; true; setTofile; (File); ; Argument[0]; path-injection; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 197,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant.taskdefs; Expand; true; setDest; (File); ; Argument[0]; path-injection; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 199,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.apache.tools.ant.taskdefs; Expand; true; setSrc; (File); ; Argument[0]; path-injection[read]; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "Test.java",
+    "line": 204,
+    "attribution": "framework-endpoint-absent",
+    "endpoint": "Sink: org.openjdk.jmh.runner.options; ChainedOptionsBuilder; true; result; (String); ; Argument[0]; path-injection; ai-manual",
+    "justification": "This framework endpoint is absent from the supplied public JDK and servlet catalogs."
+  },
+  {
+    "test_dir": "java/ql/test/query-tests/security/CWE-022/semmle/tests",
+    "path": "SanitizationTests2.java",
+    "line": 16,
+    "attribution": "framework-endpoint-absent",
+    "ql_endpoint": {
+      "id": "spring-servlet-input-parameter",
+      "nodes": [
+        {
+          "path": "SanitizationTests2.java",
+          "line": 14,
+          "column": 59
+        }
+      ]
+    },
+    "justification": "The Spring request-mapping parameter source is outside the supplied public JDK and servlet catalogs."
+  }
+]
