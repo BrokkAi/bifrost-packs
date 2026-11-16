@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 284 unique rule IDs from 14 manifest packs.
+This catalog lists 288 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -220,7 +220,11 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python unused parameter](../rules/bifrost.python-codeql-quality/policies/unused-parameter.rqlp) | `bifrost.python-codeql-quality.unused-parameter` | python | quality | note |
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | note |
+| [Rust access after lifetime ended](../rules/bifrost.rust-codeql-quality/policies/rust/access-after-lifetime-ended.rqlp) | `bifrost.rust-codeql-quality.access-after-lifetime-ended` | rust | quality | error |
+| [Rust access through invalid pointer](../rules/bifrost.rust-codeql-quality/policies/rust/access-invalid-pointer.rqlp) | `bifrost.rust-codeql-quality.access-invalid-pointer` | rust | quality | error |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
+| [Rust unused value](../rules/bifrost.rust-codeql-quality/policies/rust/unused-value.rqlp) | `bifrost.rust-codeql-quality.unused-value` | rust | quality | note |
+| [Rust unused variable](../rules/bifrost.rust-codeql-quality/policies/rust/unused-variable.rqlp) | `bifrost.rust-codeql-quality.unused-variable` | rust | quality | note |
 | [Unwrap of a call named output in a build script](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
 | [Expect on a call named read_dir or remove_file](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
 | [Expect on a var call for a home-directory key](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
