@@ -1,0 +1,14 @@
+Rust standard-library lock models
+
+bifrost.rust-std-sync is original Brokk work under the Apache License,
+Version 2.0. It states the lock-acquisition behavior of three public members
+of the Rust standard library, std::sync::Mutex::lock, std::sync::RwLock::read
+and std::sync::RwLock::write, and names them by the declaration identities of
+bifrost.rust-stdlib (generated from the rustdoc JSON of nightly-2026-08-24,
+rustc 1.100.0-nightly (fb6531d55 2026-08-23)). No standard-library source or
+documentation text is copied. Rust is dual-licensed under the Apache License,
+Version 2.0 and the MIT License.
+
+Project: https://www.rust-lang.org/
+Source: https://github.com/rust-lang/rust/blob/fb6531d550e0075b9eb9a51464f404805eec87d9/library/std/src/sync/poison/mutex.rs
+License: https://github.com/rust-lang/rust/blob/fb6531d550e0075b9eb9a51464f404805eec87d9/LICENSE-APACHE

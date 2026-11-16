@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.rust-std-sync",
+  "pack_version": "0.1.0",
+  "ecosystem": "cargo",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.rust-std-sync.json",
+    "sha256": "960238b755b18f61d100e5e2662a6f228c18d1b2a66f3d6eb60c32b524dbca23",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/67e38477d8b91b59dc295b0db75430f9994cf144/semantic-packs/rust-std-sync/bifrost.rust-std-sync.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "rust",
+        "requirement": "=1.100.0-nightly"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "rust",
+        "version": "=1.100.0-nightly"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Rust stdlib nightly 2026-08-24 std::sync::poison Mutex::lock, RwLock::read and RwLock::write (library/std/src/sync/poison/mutex.rs, rwlock.rs): each blocks until the lock is acquired and returns a guard whose drop releases it. Exact members from bifrost.rust-stdlib rustdoc declarations. try_lock, try_read and try_write are not modeled: they return a Result, not a boolean, and cannot block.",
+    "revision": "fb6531d550e0075b9eb9a51464f404805eec87d9"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "measurement_activation": {
+    "toolchain": {
+      "name": "rust",
+      "version": "=1.100.0-nightly"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "rust",
+      "owner": "std.sync.poison.mutex.Mutex.lock#member",
+      "name": "e50a941f88aa6543d38d99d873e5e4b61621e8bc9a126517e109c952b796cf52",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "rust",
+      "owner": "std.sync.poison.rwlock.RwLock.read#member",
+      "name": "cfe56f28b2a17eb264693b67ace00d0b9b0caa66bdfd3fc4ac293d909de31e45",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "rust",
+      "owner": "std.sync.poison.rwlock.RwLock.write#member",
+      "name": "818c02310eef5412824636334a6ddf6bdb7db5493d254a24df2675c7720c4a6f",
+      "has_receiver": true,
+      "parameter_count": 0
+    }
+  ],
+  "notices": [
+    "notices/rust-std-sync.txt"
+  ]
+}
