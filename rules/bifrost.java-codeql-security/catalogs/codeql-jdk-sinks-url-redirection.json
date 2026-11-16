@@ -1,0 +1,65 @@
+{
+  "categories": [
+    "url-redirection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-url-redirection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "url-redirection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "java.awt.Desktop.browse(java.net.URI)",
+      "id": "codeql-1c9f0695b06d66cb94adee1e4a9502cd28bc936c51440b3ed393ad1f0efac4a2",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "browse"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.397e31ab896385e8af3600d836e3c6d06dadf47c7c4c49dbdc527baef0264662"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

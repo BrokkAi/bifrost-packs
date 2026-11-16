@@ -1,0 +1,152 @@
+{
+  "categories": [
+    "mvel-injection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-mvel-injection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "mvel-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.script.CompiledScript.eval()",
+      "id": "codeql-04b8d96731210b82eecf3a98b9a9140440cb95f1d8c2d446db5545e94844be43",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "eval"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.1ab37eb2e701b73fa3111d3fa2cbc17db3510908574410de166f2bb0ceb83740"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "mvel-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.script.CompiledScript.eval(javax.script.Bindings)",
+      "id": "codeql-090acef7d41549f43b3309495dd4cec06668ba335ee4399c511743c5baa6ba6f",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "eval"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.774331df9480adf3adb6f5f58ae998d10a4a9f5f4aef0808a3bcfcb9c6d2b4ae"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "mvel-injection"
+      ],
+      "dangerous_operand": {
+        "type": "receiver"
+      },
+      "display_name": "javax.script.CompiledScript.eval(javax.script.ScriptContext)",
+      "id": "codeql-2838310b2aa6cee876d325ffb28fe2d29579dd545afb6659c2a9aa23e6f9b3c8",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "eval"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.7f96952ed034af990ab75220bd5b8a4670ad1e6c968ebdb594c091752c6d963d"
+              }
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}

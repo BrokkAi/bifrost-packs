@@ -17,9 +17,47 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-11, the latest published streams are `packs/v0.12.0` and
-`rules/v0.12.0`. `rules/v0.13.0` is prepared next and depends exactly on
-`packs/v0.12.0`, which is already published.
+As of 2026-11-12, the latest published streams are `packs/v0.12.0` and
+`rules/v0.13.0`. `packs/v0.13.0` and `rules/v0.14.0` are prepared next; tag
+`packs/v0.13.0` first, because `rules/v0.14.0` depends on it exactly.
+
+`packs/v0.13.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.12.0`, keeps
+release index schema 4 and the same semantic-model read schemas, and needs
+Bifrost 0.15.1 or later. It adds the native
+`bifrost.go.stdlib.database-sql-declarations` 1.0.0 (`sql.DB`, `sql.Tx`,
+`sql.Stmt`, `sql.Result` and their `Exec` methods), and
+`bifrost.go.stdlib.net-http-declarations` 3.1.0 adds `net/http.Request` and
+`FormValue` (#224, #225). Both activate only on a Go toolchain of 1.26.0 or
+later. The CodeQL-generated Java JDK summary pack (#143) is source-only and not
+in a release recipe. No consumer requirement changes.
+
+`rules/v0.14.0` is a minor release that raises the engine requirement to
+Bifrost **0.15.2** or later. Bifrost 0.15.1 rejects its whole catalog:
+`bifrost.javascript-codeql-quality` declares an `identifier_typos` table, and
+`bifrost.rust-codeql-quality.ctor-initialization` declares
+`:completion (inconclusive-on [depth_bound_reached])`. Both are read only by
+0.15.2. To migrate, upgrade to Bifrost 0.15.2, or stay on `rules/v0.13.0`.
+Every locked policy identity verifies on the released 0.15.2, whose capability
+names are the same as 0.15.1's. It depends exactly on `packs/v0.13.0` and
+contains:
+
+- `bifrost.java-codeql-quality` 0.2.0: the new
+  `missing-override-annotation` policy (#120). Same-arity overloads are no
+  longer reported on 0.15.2 (bifrost-dev#9900). Overrides of JDK methods whose
+  ancestor is unread stay unreported and make the run inconclusive
+  (bifrost-dev#7027).
+- `bifrost.javascript-codeql-quality` 0.2.0: an Apache-2.0 identifier typo
+  table, so `misspelled-identifier` reports only known misspellings instead of
+  leaving every run inconclusive (#332, bifrost-dev#10386).
+- `bifrost.rust-codeql-quality` 0.2.0: `ctor-initialization` reports an
+  inconclusive run when its caller search reaches the depth bound, instead of a
+  complete run that could miss deeper calls (#333, bifrost-dev#10088).
+- `bifrost.java-codeql-security` 0.1.0: 26 CodeQL-generated Java and Servlet
+  source and sink catalogs (#143). It registers no policy and enables nothing.
+
+No other policy, policy ID or required capability changes from
+`rules/v0.13.0`. The `rules/v0.13.0` notes follow.
 
 `rules/v0.13.0` is a minor release. It requires Bifrost 0.15.1 or later and
 makes the default rules catalog load on released engines again. Released

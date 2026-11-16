@@ -8,7 +8,7 @@ on:
         required: true
       version:
         type: string
-        default: '0.10.0'
+        default: '0.14.0'
         required: true
   push:
     tags:
@@ -77,15 +77,15 @@ jobs:
           archive=$(find "$RUNNER_TEMP/dist" -name '*.tar.gz')
           python3 -B release-contract/release.py verify-artifact \
             --manifest "$RUNNER_TEMP/dist/pack-release.json" --artifact "$archive"
-      - name: Test current locked rules with matching Bifrost v0.15.1 binary
+      - name: Test current locked rules with matching Bifrost v0.15.2 binary
         if: ${{ startsWith(github.ref_name, 'rules/') || inputs.component == 'rules' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          engine_asset=bifrost-v0.15.1-x86_64-unknown-linux-gnu.tar.gz
-          engine_checksum=6a9cd59c297ef6195fd5ed28306ff618d31b903a96a0420bacfce7c65461384b
-          gh release download v0.15.1 --repo BrokkAi/bifrost \
+          engine_asset=bifrost-v0.15.2-x86_64-unknown-linux-gnu.tar.gz
+          engine_checksum=cd659db91ac5c42cbba94ba9fa52a54f5c2fe56b6e7368368fd4ef99c1bd09d7
+          gh release download v0.15.2 --repo BrokkAi/bifrost \
             --pattern "$engine_asset" --pattern "$engine_asset.sha256" --dir "$RUNNER_TEMP"
           test "$(awk '{print $1}' "$RUNNER_TEMP/$engine_asset.sha256")" = "$engine_checksum"
           (cd "$RUNNER_TEMP" && sha256sum -c "$engine_asset.sha256")

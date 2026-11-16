@@ -1,0 +1,76 @@
+; Lead: BrokkAi/bifrost-packs#364 (CVE-2025-58767, GHSA-c2f4-jgmc-q2r5).
+; OSV: rubygems rexml introduced 3.3.3, fixed 3.4.2.
+; Product source contract: REXML::Document.new(source) parses source eagerly.
+; From 3.3.3 to 3.4.1 a malformed document with repeated XML declarations makes
+; the parser do unbounded work instead of rejecting it, so a sender that controls
+; the document controls parse time (denial of service). 3.4.2 rejects it.
+; Engine contract: the source is the return value of the reviewed
+; member.web-network.ruby.net-http.get (bifrost.web-network-ruby). The sink is
+; formal 0 of REXML::Document.new as declared by bifrost.ruby.rexml. That pack
+; declares the same API in three shards, one per Gemfile.lock version split
+; (CVE-2024-35176, CVE-2025-58767, unaffected), and each shard's member id names
+; its split. The sink selects only the cve-2025-58767 member, so a project whose
+; Gemfile.lock pins another rexml version binds the call to a different record
+; and the run completes clean. Without a Gemfile.lock entry for rexml no shard
+; activates, the call stays unbound and the run is not clean (require-model).
+; rexml has been a bundled gem since Ruby 3.0, so a Bundler project that loads it
+; locks it. Ruby runtime and default-gem versions are not activation evidence on
+; Bifrost 0.15.2, so a project that loads rexml from the interpreter without
+; Bundler stays incomplete. Only call sources are expressible: request params[]
+; and env[] reads are not call shapes on 0.15.2 (bifrost-dev#11369).
+(policy
+  :schema-version 1
+  :id "bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos"
+  :name "Network XML parsed by REXML 3.3.3 to 3.4.1"
+  :message "A network response reaches REXML::Document.new on rexml 3.3.3 to 3.4.1, where repeated XML declarations make parsing do unbounded work (CVE-2025-58767); upgrade rexml to 3.4.2 or later"
+  :severity warning
+  :description "Reports a Net::HTTP.get response body that reaches the source argument of REXML::Document.new in a project whose Gemfile.lock selects rexml 3.3.3 to 3.4.1. In those releases a malformed document with repeated XML declarations is processed with unbounded work instead of being rejected, so whoever controls the document controls parse time (CVE-2025-58767, GHSA-c2f4-jgmc-q2r5). The version comes from Gemfile.lock; without a locked rexml version the run is incomplete rather than clean."
+  :help-uri "https://github.com/ruby/rexml/security/advisories/GHSA-c2f4-jgmc-q2r5"
+  :tags ["security" "ruby" "rexml" "denial-of-service" "cve-2025-58767" "cwe-400"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id net-http-get
+              :display-name "Net::HTTP.get response body"
+              :categories [io.external network.response]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (resolved-call
+                      :resolves-to member.web-network.ruby.net-http.get
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "get")))))))
+              :bind return-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id rexml-document-source
+              :display-name "REXML::Document.new source"
+              :categories [xml.parse resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.ruby.rexml.cve-2025-58767.rexml-document.new
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "new"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))
