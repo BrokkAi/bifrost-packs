@@ -53,13 +53,15 @@ class RustIoWriteStrTrimTests(unittest.TestCase):
         self.assertEqual(self.pack["version"], "0.6.0")
         self.assertIn("core.model.yml:132 at 1be292a1e54696ca543b4ad0f9b4537b9687caa7", self.pack["provenance"]["source"])
 
-    def test_every_summary_has_a_declared_member_and_ids_are_unique(self):
+    def test_every_summary_targets_a_declared_member_and_ids_are_unique(self):
         symbols = {m["locator"]["symbol"] for m in self.members}
-        for s in self.summaries:
-            if s["target"]["symbol"] == TRIM:
-                self.assertIn(TRIM, symbols)
-        ids = [m["id"] for m in self.members]
-        self.assertEqual(len(ids), len(set(ids)))
+        symbols |= {alias for m in self.members for alias in m.get("aliases", [])}
+        missing = [s["id"] for s in self.summaries if s["target"]["symbol"] not in symbols]
+        self.assertEqual(missing, [])
+        member_ids = [m["id"] for m in self.members]
+        summary_ids = [s["id"] for s in self.summaries]
+        self.assertEqual(len(member_ids), len(set(member_ids)))
+        self.assertEqual(len(summary_ids), len(set(summary_ids)))
 
 
 if __name__ == "__main__":

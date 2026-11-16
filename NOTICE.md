@@ -32,8 +32,10 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   summaries translate `codeql/rust/frameworks/stdlib/alloc.model.yml` and
   `core.model.yml` at
   `dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6`, MIT, Copyright (c) GitHub, Inc.;
-  see `licenses/CodeQL-MIT.txt`. Its `str::trim` summary translates
-  `core.model.yml:132` at `1be292a1e54696ca543b4ad0f9b4537b9687caa7`. Other authored entries retain Apache-2.0.
+  see `licenses/CodeQL-MIT.txt`. The Rust I/O model's `str::trim` summary
+  translates `core.model.yml:132` at
+  `1be292a1e54696ca543b4ad0f9b4537b9687caa7`, under the same MIT terms. Other
+  authored entries retain Apache-2.0.
 - Generated Java CodeQL security catalogs, JDK summary pack, generation summaries,
   and gate scope lists are MIT, Copyright (c) GitHub, Inc., derived from
   `github/codeql` at
