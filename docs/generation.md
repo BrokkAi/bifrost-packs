@@ -131,6 +131,16 @@ unchanged. Its pack-engine profile advertises the same capability names as
 0.15.0. The published `packs/v0.9.0` keeps the 0.15.0 producer it was built
 with.
 
+After `packs/v0.12.0`, the authoring CLI pin and the rules smoke test move to
+the v0.15.2 release (public commit `75e40e74aae46ba90cc675dd95ee46f57ffab727`):
+`bifrost-v0.15.2-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`cd659db91ac5c42cbba94ba9fa52a54f5c2fe56b6e7368368fd4ef99c1bd09d7`, executable
+SHA-256 `3fd1cc9c81543103f290449549b51f08c803814ecd4aeb9998cde7394d87a6fe`,
+build identity `340cbbdcea3fc565f6ea8066084ed24962c369d3`). The released
+v0.15.2 CLI reproduced all 278 locked authoring identities unchanged, and its
+pack-engine profile advertises the same capability names as 0.15.1. The native
+producer stays at 0.15.1 until a packs release needs the 0.15.2 producer.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,

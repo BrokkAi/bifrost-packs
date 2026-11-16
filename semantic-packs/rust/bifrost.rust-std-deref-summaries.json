@@ -1,0 +1,117 @@
+{
+  "schema_version": 22,
+  "pack_id": "bifrost.rust-std-deref-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-rust-std-deref",
+    "version": "0.1.0"
+  },
+  "language": "rust",
+  "ecosystem": "cargo",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "rust",
+        "requirement": "=1.100.0-nightly"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "Rust stdlib nightly 2026-08-24 String and PathBuf Deref implementations; exact members from bifrost.rust-stdlib rustdoc declarations. Source byte views are borrowed from the receiver storage and perform no writes, escapes or concurrency effects.",
+    "revision": "fb6531d550e0075b9eb9a51464f404805eec87d9"
+  },
+  "license": "MIT OR Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "shards": [
+    {
+      "id": "summaries.rust.std-deref",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "rust",
+            "version": "=1.100.0-nightly"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "std-deref.string",
+            "target": {
+              "path": "alloc.json",
+              "symbol": "alloc.string.String.deref#member.03659981b112f2f6540f8fee6a96014d286ca2c538c7513316eac7890e3f019c.trait.ac985e876244e7bb8472f4a4fb5e238c8722da4cbbb82df600d0ebeba0d17573",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "no_concurrency_effects": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                },
+                "value_transfer": {
+                  "kind": {
+                    "kind": "conversion",
+                    "preservation": "identity"
+                  },
+                  "operation": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "std-deref.pathbuf",
+            "target": {
+              "path": "std.json",
+              "symbol": "std.path.PathBuf.deref#member.00c10d3f6a56b967a178a91289acfcb2c815b1c664da0352ff712ea324628c07.trait.49bfe6addd6729ac7567f39fc70981cb7c84f19c9dd3502aa76f546529cdcc1c",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "ordinary_heap_unchanged": true,
+            "no_concurrency_effects": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                },
+                "value_transfer": {
+                  "kind": {
+                    "kind": "conversion",
+                    "preservation": "identity"
+                  },
+                  "operation": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

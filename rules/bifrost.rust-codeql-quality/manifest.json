@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "id": "bifrost.rust-codeql-quality",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "Bifrost Rust CodeQL quality",
   "description": "Public Rust quality policies aligned with reviewed CodeQL query identities and supported engine facts.",
   "policies": [
     {
       "path": "policies/rust/ctor-initialization.rqlp",
       "id": "bifrost.rust-codeql-quality.ctor-initialization",
-      "authored_hash": "424e78aebbb2a5517c4dbd3a64381795b0ecbac3f1bc0f3747bbb53bd6b731be",
-      "resolved_semantic_hash": "424e78aebbb2a5517c4dbd3a64381795b0ecbac3f1bc0f3747bbb53bd6b731be",
+      "authored_hash": "a9cea88477c5727b1f53e3fa1ea05f8679ceedfc186de99fba3302197b2014c0",
+      "resolved_semantic_hash": "a9cea88477c5727b1f53e3fa1ea05f8679ceedfc186de99fba3302197b2014c0",
       "category": "quality",
       "supported_languages": [
         "rust"

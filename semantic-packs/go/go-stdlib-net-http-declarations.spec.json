@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.net-http-declarations",
-  "pack_version": "3.0.0",
+  "pack_version": "3.1.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-net-http-declarations.json",
-    "sha256": "9b5be858b2b568d5b14bd6e1cc97fa74ed0c2c865fb00acd3b344dce384cbe6d",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-net-http-declarations.json",
+    "sha256": "8b7c51989236f88962973ce61b4bb4f911ffddfe2dcc9d84861fb5d3f9fab90a",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/77bd26fe98b687801b0fb2b0218b59bea266ff50/semantic-packs/models/go-stdlib-net-http-declarations.json",
     "container": null
   },
   "compatibility": {
@@ -29,7 +29,7 @@
     }
   ],
   "provenance": {
-    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get)",
+    "source": "https://go.dev/src/net/http/server.go (http.Handle, http.HandleFunc, http.Serve, http.ListenAndServe, http.NewServeMux, http.ServeMux.Handle, http.ServeMux.HandleFunc, http.Handler, http.ServeMux, http.HandlerFunc) and https://go.dev/src/net/http/client.go (http.Get) and https://github.com/golang/go/blob/d90b98e65320778f3b1f99a6951ab20f04d218b3/src/net/http/request.go (http.Request, (*Request).FormValue)",
     "revision": "go1.26.0"
   },
   "license": "BSD-3-Clause",
@@ -55,6 +55,11 @@
       "kind": "member",
       "owner": "net/http",
       "name": "NewServeMux"
+    },
+    {
+      "kind": "member",
+      "owner": "net/http.Request",
+      "name": "FormValue"
     }
   ]
 }
