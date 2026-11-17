@@ -1123,6 +1123,69 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/javascript/process-input-to-fs-path.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-fs-path",
+      "authored_hash": "0eaec72f2b05da3d2807d3cf4644db9d9c37115313423bf81fe23462cd2afdc1",
+      "resolved_semantic_hash": "0eaec72f2b05da3d2807d3cf4644db9d9c37115313423bf81fe23462cd2afdc1",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A process argument that reaches an fs read, list, probe or remove path lets the caller read, enumerate, detect or delete any file the process can reach.",
+      "remediation": "Resolve the path under a fixed base and check that the result stays inside it, or accept only names from an allow-list.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-child-process-command.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-child-process-command",
+      "authored_hash": "6a62043a811ccf907bb8ecb5eec3443d391836fedc795035c665a90cb54d577c",
+      "resolved_semantic_hash": "6a62043a811ccf907bb8ecb5eec3443d391836fedc795035c665a90cb54d577c",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "execSync runs its command string in a shell, so shell metacharacters in a process argument run further commands with the process's privileges.",
+      "remediation": "Use execFileSync or spawnSync with an argument array and no shell, or validate the value against an allow-list.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-vm-code.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-vm-code",
+      "authored_hash": "223cc1d7ad208b47baacd017a72c578401d9e2ebe9c3abce8d2137658c4e745d",
+      "resolved_semantic_hash": "223cc1d7ad208b47baacd017a72c578401d9e2ebe9c3abce8d2137658c4e745d",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "The vm module is not a security boundary, so a process argument evaluated as code runs with the process's privileges.",
+      "remediation": "Do not evaluate caller-supplied strings as code; parse the input as data, or use a real sandbox process with no access to the host.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/javascript/process-input-to-legacy-url-parse.rqlp",
       "id": "bifrost.security.javascript.process-input-to-legacy-url-parse",
       "authored_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",

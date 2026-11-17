@@ -1,0 +1,158 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.node-path-javascript-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-node-models",
+    "version": "0.1.0"
+  },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Node.js path API",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "shards": [
+    {
+      "id": "declarations.path-string-composition",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:generic/nodejs.org/node@22.11.0"
+          },
+          "targets": [],
+          "configurations": [
+            "70db7f8c799decb554bc25e8bf410079c8b377f2852ee2a982d56db40f054056"
+          ],
+          "artifact_sha256": "24e5130fa7bc1eaab218a0c9cb05e03168fa381bb9e3babddc6a11f655799222"
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.node.path.javascript",
+            "name": "path",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/path.js",
+              "symbol": "path"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.node.path.javascript.join-2",
+            "owner": "type.node.path.javascript",
+            "name": "join",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "base",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "segment",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/path.js",
+              "symbol": "path.join(base, segment)"
+            }
+          },
+          {
+            "id": "member.node.path.javascript.normalize-1",
+            "owner": "type.node.path.javascript",
+            "name": "normalize",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/path.js",
+              "symbol": "path.normalize(path)"
+            }
+          },
+          {
+            "id": "member.node.path.javascript.resolve-2",
+            "owner": "type.node.path.javascript",
+            "name": "resolve",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "base",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "segment",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/path.js",
+              "symbol": "path.resolve(base, segment)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

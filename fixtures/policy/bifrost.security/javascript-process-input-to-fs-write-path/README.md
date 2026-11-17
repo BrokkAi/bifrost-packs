@@ -13,8 +13,9 @@ bind through the reviewed models copied into `.bifrost/semantic-models` and
 enabled in `.bifrost/packs.json`:
 
 - `bifrost.node-runtime-values-javascript` 0.1.0 (`process.argv`).
-- `bifrost.node-fs-javascript-declarations` 0.1.0 and
-  `bifrost.node-fs-javascript-summaries` 0.2.0.
+- `bifrost.node-fs-javascript-declarations` 0.2.0 and
+  `bifrost.node-fs-javascript-summaries` 0.3.0 (validated below with 0.1.0 and
+  0.2.0; see the 0.15.3 note).
 - `bifrost.node-path-javascript-declarations` 0.1.0 and
   `bifrost.node-path-javascript-summaries` 0.1.0.
 
@@ -58,6 +59,12 @@ The authored policy hash is
 - With `bifrost.node-fs-javascript-summaries` 0.1.0, which has no
   `appendFileSync` or `openSync` summary: inconclusive, and `main.js:25` and
   `:31` drop to possible and partial.
+
+On Bifrost 0.15.3 (build identity
+`cc7ebd1676e002b657e10304cfd977bc289e25ed`, evaluation date `2026-11-17`) with
+the 0.2.0 declarations and 0.3.0 summaries (#393): this directory is still
+`proven_by_summary` with the same 5 definite findings, and `incomplete/` is
+still inconclusive with no finding.
 
 ## Known limits
 
