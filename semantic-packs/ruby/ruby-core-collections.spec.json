@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.ruby.core-collections",
+  "pack_version": "1.0.0",
+  "ecosystem": "rubygems",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "ruby-core-collections.json",
+    "sha256": "b463d31f274d0513f137ea6e5a78205f39c286f4a341724c15d8f4069b5f8a64",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/45ad15b259eba1994f292d25d6a2ea3485c52591/semantic-packs/ruby/ruby-core-collections.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Ruby core RBS signatures for Hash and Array element access (core/hash.rbs, core/array.rbs)",
+    "revision": "ruby/rbs core review for BrokkAi/bifrost-packs#385; verified on Bifrost 0.15.3"
+  },
+  "license": "Ruby",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/ruby-rbs-core-collections.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "ruby",
+      "owner": "Hash",
+      "name": "[]",
+      "has_receiver": true,
+      "parameter_count": 1
+    },
+    {
+      "kind": "procedure",
+      "language": "ruby",
+      "owner": "Array",
+      "name": "[]=",
+      "has_receiver": true,
+      "parameter_count": 2
+    }
+  ]
+}

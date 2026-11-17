@@ -30,6 +30,7 @@ FIRST_JOB = 12
 AUTHORED_AFTER_LEGACY = {
     "go-stdlib-database-sql-declarations",
     "rust-std-deref-summaries",
+    "ruby-core-collections",
     "go-stdlib-encoding-gob",
     "go-stdlib-encoding-gob-declarations",
     "go-stdlib-compress-gzip",

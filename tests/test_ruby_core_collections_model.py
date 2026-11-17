@@ -1,9 +1,7 @@
-"""Pin the Ruby core collection model (#385).
+"""Pin the Ruby core collection model's contracts (#385).
 
-On Bifrost master after BrokkAi/bifrost-dev#11873 and #11874 it closes
-element access, `fetch` and `new` on literal and constructed Hash/Array
-receivers, but not on untyped parameters, so it is not a native job yet.
-These checks keep it out of the release recipe and pin its contracts.
+The model's scope and its accepted callback residual are documented in
+semantic-packs/ruby/README-core-collections.md.
 """
 
 from __future__ import annotations
@@ -24,11 +22,7 @@ def _load(relative: str):
 
 
 class RubyCoreCollectionsModelTests(unittest.TestCase):
-    """Pin the draft model's contracts and its absence from the release recipe."""
-
-    def test_model_is_not_a_native_job_yet(self):
-        artifacts = {job["artifact"] for job in _load("native-generation.json")["jobs"]}
-        self.assertNotIn(MODEL, artifacts)
+    """Pin the model's identities and summary contracts."""
 
     def test_identifiers_are_unique_across_shards(self):
         # A summary that reused a member id made discovery refuse the whole
