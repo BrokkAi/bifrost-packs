@@ -1,0 +1,233 @@
+{
+ "schema_version": 2,
+ "pack_id": "bifrost.dotnet.aspnetcore-hosting-csharp",
+ "version": "0.1.0",
+ "producer": {
+  "name": "bifrost-reviewed-dotnet-models",
+  "version": "0.1.0"
+ },
+ "language": "csharp",
+ "ecosystem": "nuget",
+ "compatibility": {
+  "bifrost": ">=0.15.2, <1.0.0",
+  "toolchains": []
+ },
+ "provenance": {
+  "source": "ASP.NET Core shared framework (Microsoft.AspNetCore.App) reference assemblies: WebApplication.CreateBuilder overloads, WebApplicationBuilder.Build and WebApplication's IApplicationBuilder implementation; identical in .NET 8, 9 and 10",
+  "revision": "Microsoft.AspNetCore.App 8.0, 9.0, 10.0"
+ },
+ "license": "Apache-2.0",
+ "completeness": "complete",
+ "safety": {
+  "generated_code_only": false,
+  "review_required": false
+ },
+ "shards": [
+  {
+   "id": "declarations.dotnet.aspnetcore-hosting-csharp",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": []
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [
+     {
+      "id": "type.dotnet.aspnetcore-hosting-csharp.iapplicationbuilder",
+      "name": "Microsoft.AspNetCore.Builder.IApplicationBuilder",
+      "type_kind": "interface",
+      "visibility": "public",
+      "is_abstract": true,
+      "is_sealed": false,
+      "type_parameters": [],
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.Http.Abstractions.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.IApplicationBuilder"
+      }
+     },
+     {
+      "id": "type.dotnet.aspnetcore-hosting-csharp.webapplication",
+      "name": "Microsoft.AspNetCore.Builder.WebApplication",
+      "type_kind": "class",
+      "visibility": "public",
+      "is_abstract": false,
+      "is_sealed": true,
+      "type_parameters": [],
+      "hierarchy": [
+       {
+        "hierarchy_kind": "implements",
+        "target": {
+         "kind": "named",
+         "name": "Microsoft.AspNetCore.Builder.IApplicationBuilder",
+         "arguments": [],
+         "nullable": false
+        }
+       }
+      ],
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplication"
+      }
+     },
+     {
+      "id": "type.dotnet.aspnetcore-hosting-csharp.webapplicationbuilder",
+      "name": "Microsoft.AspNetCore.Builder.WebApplicationBuilder",
+      "type_kind": "class",
+      "visibility": "public",
+      "is_abstract": false,
+      "is_sealed": true,
+      "type_parameters": [],
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplicationBuilder"
+      }
+     },
+     {
+      "id": "type.dotnet.aspnetcore-hosting-csharp.webapplicationoptions",
+      "name": "Microsoft.AspNetCore.Builder.WebApplicationOptions",
+      "type_kind": "class",
+      "visibility": "public",
+      "is_abstract": false,
+      "is_sealed": false,
+      "type_parameters": [],
+      "hierarchy": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplicationOptions"
+      }
+     }
+    ],
+    "members": [
+     {
+      "id": "member.dotnet.aspnetcore-hosting-csharp.webapplication.createbuilder.0",
+      "owner": "type.dotnet.aspnetcore-hosting-csharp.webapplication",
+      "name": "CreateBuilder",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder"
+      },
+      "signature": {
+       "type_parameters": [],
+       "parameters": [],
+       "returns": {
+        "kind": "named",
+        "name": "Microsoft.AspNetCore.Builder.WebApplicationBuilder",
+        "arguments": [],
+        "nullable": false
+       }
+      }
+     },
+     {
+      "id": "member.dotnet.aspnetcore-hosting-csharp.webapplication.createbuilder.args",
+      "owner": "type.dotnet.aspnetcore-hosting-csharp.webapplication",
+      "name": "CreateBuilder",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder"
+      },
+      "signature": {
+       "type_parameters": [],
+       "parameters": [
+        {
+         "name": "args",
+         "type": {
+          "kind": "array",
+          "element": {
+           "kind": "named",
+           "name": "System.String",
+           "arguments": [],
+           "nullable": false
+          }
+         }
+        }
+       ],
+       "returns": {
+        "kind": "named",
+        "name": "Microsoft.AspNetCore.Builder.WebApplicationBuilder",
+        "arguments": [],
+        "nullable": false
+       }
+      }
+     },
+     {
+      "id": "member.dotnet.aspnetcore-hosting-csharp.webapplication.createbuilder.options",
+      "owner": "type.dotnet.aspnetcore-hosting-csharp.webapplication",
+      "name": "CreateBuilder",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder"
+      },
+      "signature": {
+       "type_parameters": [],
+       "parameters": [
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "Microsoft.AspNetCore.Builder.WebApplicationOptions",
+          "arguments": [],
+          "nullable": false
+         }
+        }
+       ],
+       "returns": {
+        "kind": "named",
+        "name": "Microsoft.AspNetCore.Builder.WebApplicationBuilder",
+        "arguments": [],
+        "nullable": false
+       }
+      }
+     },
+     {
+      "id": "member.dotnet.aspnetcore-hosting-csharp.webapplicationbuilder.build",
+      "owner": "type.dotnet.aspnetcore-hosting-csharp.webapplicationbuilder",
+      "name": "Build",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": false,
+      "callable_family_complete": true,
+      "locator": {
+       "kind": "artifact",
+       "path": "Microsoft.AspNetCore.dll",
+       "symbol": "Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build"
+      },
+      "signature": {
+       "type_parameters": [],
+       "parameters": [],
+       "returns": {
+        "kind": "named",
+        "name": "Microsoft.AspNetCore.Builder.WebApplication",
+        "arguments": [],
+        "nullable": false
+       }
+      }
+     }
+    ],
+    "relations": []
+   }
+  }
+ ]
+}

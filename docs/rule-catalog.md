@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 278 unique rule IDs from 13 manifest packs.
+This catalog lists 288 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -111,6 +111,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Java inconsistent Javadoc throws](../rules/bifrost.java-codeql-quality/policies/inconsistent-javadoc-throws.rqlp) | `bifrost.java-codeql-quality.inconsistent-javadoc-throws` | java | quality | note |
 | [Java misnamed constant](../rules/bifrost.java-codeql-quality/policies/misnamed-constant.rqlp) | `bifrost.java-codeql-quality.misnamed-constant` | java | quality | note |
 | [Java misnamed variable](../rules/bifrost.java-codeql-quality/policies/misnamed-variable.rqlp) | `bifrost.java-codeql-quality.misnamed-variable` | java | quality | note |
+| [Missing Override annotation](../rules/bifrost.java-codeql-quality/policies/missing-override-annotation.rqlp) | `bifrost.java-codeql-quality.missing-override-annotation` | java | quality | warning |
 | [Java non-final immutable field](../rules/bifrost.java-codeql-quality/policies/non-final-immutable-field.rqlp) | `bifrost.java-codeql-quality.non-final-immutable-field` | java | quality | note |
 | [Java non-private field](../rules/bifrost.java-codeql-quality/policies/non-private-field.rqlp) | `bifrost.java-codeql-quality.non-private-field` | java | quality | note |
 | [Raw generic constructor invocation](../rules/bifrost.java-codeql-quality/policies/raw-constructor-invocation.rqlp) | `bifrost.java-codeql-quality.raw-constructor-invocation` | java | quality | note |
@@ -219,7 +220,11 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python unused parameter](../rules/bifrost.python-codeql-quality/policies/unused-parameter.rqlp) | `bifrost.python-codeql-quality.unused-parameter` | python | quality | note |
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | note |
+| [Rust access after lifetime ended](../rules/bifrost.rust-codeql-quality/policies/rust/access-after-lifetime-ended.rqlp) | `bifrost.rust-codeql-quality.access-after-lifetime-ended` | rust | quality | error |
+| [Rust access through invalid pointer](../rules/bifrost.rust-codeql-quality/policies/rust/access-invalid-pointer.rqlp) | `bifrost.rust-codeql-quality.access-invalid-pointer` | rust | quality | error |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
+| [Rust unused value](../rules/bifrost.rust-codeql-quality/policies/rust/unused-value.rqlp) | `bifrost.rust-codeql-quality.unused-value` | rust | quality | note |
+| [Rust unused variable](../rules/bifrost.rust-codeql-quality/policies/rust/unused-variable.rqlp) | `bifrost.rust-codeql-quality.unused-variable` | rust | quality | note |
 | [Unwrap of a call named output in a build script](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
 | [Expect on a call named read_dir or remove_file](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
 | [Expect on a var call for a home-directory key](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
@@ -230,6 +235,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [C# LDAP injection](../rules/bifrost.security/policies/csharp/ldap-injection.rqlp) | `bifrost.security.csharp.ldap-injection` | csharp | security | error |
 | [C# external input used as a regular-expression pattern without a timeout](../rules/bifrost.security/policies/csharp/regex-pattern-injection.rqlp) | `bifrost.security.csharp.regex-pattern-injection` | csharp | security | warning |
 | [C# XML signature checked with the document's embedded key](../rules/bifrost.security/policies/csharp/signedxml-embedded-key-trust.rqlp) | `bifrost.security.csharp.signedxml-embedded-key-trust` | csharp | security | warning |
+| [WebAssembly debugging middleware on an affected ASP.NET Core release](../rules/bifrost.security/policies/csharp/webassembly-debugging-affected-version.rqlp) | `bifrost.security.csharp.webassembly-debugging-affected-version` | csharp | security | warning |
 | [C# XML injection](../rules/bifrost.security/policies/csharp/xml-injection.rqlp) | `bifrost.security.csharp.xml-injection` | csharp | security | error |
 | [C# XmlDocument resolves external entities](../rules/bifrost.security/policies/csharp/xmldocument-url-resolver.rqlp) | `bifrost.security.csharp.xmldocument-url-resolver` | csharp | security | warning |
 | [C# XPath injection](../rules/bifrost.security/policies/csharp/xpath-injection.rqlp) | `bifrost.security.csharp.xpath-injection` | csharp | security | error |
@@ -280,6 +286,10 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Process input chooses a venv.create directory](../rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp) | `bifrost.security.python.process-input-to-venv-create` | python | security | warning |
 | [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
+| [Network input chooses the gem Gem::Installer installs](../rules/bifrost.security/policies/ruby/network-input-to-gem-installer.rqlp) | `bifrost.security.ruby.network-input-to-gem-installer` | ruby | security | warning |
+| [Network input sent as raw net-imap command text on an affected release](../rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp) | `bifrost.security.ruby.network-input-to-net-imap-raw-arguments` | ruby | security | warning |
+| [Network XML parsed by REXML before 3.2.7](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos` | ruby | security | warning |
+| [Network XML parsed by REXML 3.3.3 to 3.4.1](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos` | ruby | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
 | [Stored type parameter lacks a Send or Sync bound](../rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp) | `bifrost.security.rust.unsound-send-sync-impl` | rust | security | error |

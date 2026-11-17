@@ -1,0 +1,76 @@
+; Lead: BrokkAi/bifrost-packs#363 (CVE-2024-35176, GHSA-vg3r-rm7w-2xgh).
+; OSV: rubygems rexml introduced 0, fixed 3.2.7.
+; Product source contract: REXML::Document.new(source) parses source eagerly.
+; Before 3.2.7 an attribute value with many `<` characters makes the attribute
+; scanner do quadratic work, so a sender that controls the document controls
+; parse time (denial of service). The fix bounds that scan.
+; Engine contract: the source is the return value of the reviewed
+; member.web-network.ruby.net-http.get (bifrost.web-network-ruby). The sink is
+; formal 0 of REXML::Document.new as declared by bifrost.ruby.rexml. That pack
+; declares the same API in three shards, one per Gemfile.lock version split
+; (CVE-2024-35176, CVE-2025-58767, unaffected), and each shard's member id names
+; its split. The sink selects only the cve-2024-35176 member, so a project whose
+; Gemfile.lock pins another rexml version binds the call to a different record
+; and the run completes clean. Without a Gemfile.lock entry for rexml no shard
+; activates, the call stays unbound and the run is not clean (require-model).
+; rexml has been a bundled gem since Ruby 3.0, so a Bundler project that loads it
+; locks it. Ruby runtime and default-gem versions are not activation evidence on
+; Bifrost 0.15.2, so a project that loads rexml from the interpreter without
+; Bundler stays incomplete. Only call sources are expressible: request params[]
+; and env[] reads are not call shapes on 0.15.2 (bifrost-dev#11369).
+(policy
+  :schema-version 1
+  :id "bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos"
+  :name "Network XML parsed by REXML before 3.2.7"
+  :message "A network response reaches REXML::Document.new on a rexml release before 3.2.7, where attribute values with many `<` characters take quadratic time to parse (CVE-2024-35176); upgrade rexml to 3.2.7 or later"
+  :severity warning
+  :description "Reports a Net::HTTP.get response body that reaches the source argument of REXML::Document.new in a project whose Gemfile.lock selects rexml before 3.2.7. In those releases an attribute value containing many `<` characters makes the parser do quadratic work, so whoever controls the document controls parse time (CVE-2024-35176, GHSA-vg3r-rm7w-2xgh). The version comes from Gemfile.lock; without a locked rexml version the run is incomplete rather than clean."
+  :help-uri "https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh"
+  :tags ["security" "ruby" "rexml" "denial-of-service" "cve-2024-35176" "cwe-400"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id net-http-get
+              :display-name "Net::HTTP.get response body"
+              :categories [io.external network.response]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (resolved-call
+                      :resolves-to member.web-network.ruby.net-http.get
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "get")))))))
+              :bind return-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id rexml-document-source
+              :display-name "REXML::Document.new source"
+              :categories [xml.parse resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.ruby.rexml.cve-2024-35176.rexml-document.new
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "new"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))

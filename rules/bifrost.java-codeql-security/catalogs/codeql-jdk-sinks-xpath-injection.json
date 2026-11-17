@@ -1,0 +1,473 @@
+{
+  "categories": [
+    "xpath-injection"
+  ],
+  "external_models": [],
+  "name": "codeql-jdk-sinks-xpath-injection",
+  "sanitizers": [],
+  "schema_version": 1,
+  "sinks": [
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluateExpression(java.lang.String,java.lang.Object,java.lang.Class)",
+      "id": "codeql-0525dc53a79175054690316269d0e306df9242d444e815db1f7c6152c7f1aaa6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluateExpression"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.86203c30d41500d98b95555c73998b135ec22ae54123f3d0ed4572252199706a"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluate(java.lang.String,java.lang.Object)",
+      "id": "codeql-123c8059866cc017a343fb54638b9e7c0b2118a0637d4e4f83da72decfe0ec19",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluate"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.52914ab81515d96537e6acc4d770b788ce3543aa08aa6863bb5c7d872f9be590"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluateExpression(java.lang.String,org.xml.sax.InputSource,java.lang.Class)",
+      "id": "codeql-38004075f681637fa8e642cc07aa1fd471a953a31abd1b06234069ddfe86e973",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluateExpression"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.0d9304d7359af90b7053089176eceda050513f4918a787be7f0d1c55f5aa0057"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluateExpression(java.lang.String,java.lang.Object)",
+      "id": "codeql-578360dff87dfa26c3f495aec36760be293ec30ff870e581a3b9590ce1305bd6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluateExpression"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.9a41b9e264aa3425223b1e63dd73486eb618340682d9e74a35188e8b248b875e"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluate(java.lang.String,org.xml.sax.InputSource,javax.xml.namespace.QName)",
+      "id": "codeql-67c6da5a2db6cc847ca2b58361ec2245fde408a218b2f36aae0ac32b1cbd4872",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluate"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.2beb8141393ec93cb3706d57edd464232c4df00215d6c3ef3d197fd00f490080"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluateExpression(java.lang.String,org.xml.sax.InputSource)",
+      "id": "codeql-96092d856525fbcbd792abb59c2395ff21329b635d557a2eba90802c520d9012",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluateExpression"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.eaa42c2026d6af54794e01650848219e4c3e21c883302ea942c5c96f4a66c1a0"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluate(java.lang.String,org.xml.sax.InputSource)",
+      "id": "codeql-a86b3d6d9805d112bc5ecca7bde91dc320272acc3a254f3b0909543ae46edc62",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluate"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.495d09063452bd1c081beaea12f726b5d0e67908f49f2899cf67374069bfaba7"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.compile(java.lang.String)",
+      "id": "codeql-cd1f5502efad921ebcdf8751ec82612ed82023f3340d032f57ffd29316eb46a6",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "compile"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.275d89a64499f2ce87f2aad99faaac5dd0992159e6b7496e3cf299aaa3697df6"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    },
+    {
+      "accepts": [
+        "attacker-controlled"
+      ],
+      "categories": [
+        "xpath-injection"
+      ],
+      "dangerous_operand": {
+        "index": 0,
+        "type": "argument_index"
+      },
+      "display_name": "javax.xml.xpath.XPath.evaluate(java.lang.String,java.lang.Object,javax.xml.namespace.QName)",
+      "id": "codeql-f3482e81aea1dba794adacc785045ee02f4da5676be65e5424b393748a28a42c",
+      "impacts": [],
+      "selector": {
+        "query": {
+          "languages": [
+            "java"
+          ],
+          "match": {
+            "callee": {
+              "name": "evaluate"
+            },
+            "kind": "call"
+          },
+          "schema_version": 1,
+          "steps": [
+            {
+              "op": "call_shape"
+            },
+            {
+              "op": "call_bindings"
+            },
+            {
+              "call_proof": "declared",
+              "op": "resolved_call",
+              "resolves_to": {
+                "stable": "member.55da106a9579dd86e9c72cf5b30961c83b243fd3eade7eac2e94922e9d627cd3"
+              }
+            },
+            {
+              "formal_index": 0,
+              "op": "call_argument"
+            }
+          ]
+        },
+        "schema_version": 1,
+        "type": "inline"
+      },
+      "tags": []
+    }
+  ],
+  "sources": [],
+  "transforms": [],
+  "version": 1
+}
