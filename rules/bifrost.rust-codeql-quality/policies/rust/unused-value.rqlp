@@ -1,0 +1,30 @@
+; CodeQL: rust/ql/src/queries/unusedentities/UnusedValue.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a value written to an ordinary Rust local that no modeled
+; continuation reads: either replaced before any read or left unread at the end
+; of its scope. The right-hand side has already run at the write; no fix is
+; offered because removing the write could remove side effects.
+(policy
+  :schema-version 1
+  :id "bifrost.rust-codeql-quality.unused-value"
+  :name "Rust unused value"
+  :message "the local value is never explicitly read"
+  :severity note
+  :description "An exact ordinary Rust local write whose value is not read on any modeled continuation. The row keeps the first explicit read, when one is live, as evidence. A write is reported when the value is replaced before a read and when it is never read at all. Review the write and the side effects of its right-hand side before removing it; no automatic removal is offered."
+  :tags ["rust" "codeql" "quality" "maintainability" "assignment"]
+  :analysis (analysis
+    :type assertion
+    (bind :name dead-write
+      :query (rql :schema-version 1
+        (filter :where ((relation_kind eq dead_write)
+                        (storage_kind eq ordinary_local)
+                        (verdict eq dead)
+                        (proof eq exact)
+                        (coverage eq exhaustive))
+          (language rust
+            (assignment-relations :relation [dead-write]
+              (procedure-of
+                (callable)))))))
+    (group :name by-assignment :by (dead-write.id)
+      (aggregate :name unused-values :op count))
+    (assert :group by-assignment :value unused-values :cardinality (exactly 0))))
