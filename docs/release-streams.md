@@ -17,9 +17,42 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-12, the latest published streams are `packs/v0.12.0` and
-`rules/v0.13.0`. `packs/v0.13.0` and `rules/v0.14.0` are prepared next; tag
-`packs/v0.13.0` first, because `rules/v0.14.0` depends on it exactly.
+As of 2026-11-17, the latest published streams are `packs/v0.13.0` and
+`rules/v0.14.0`. `packs/v0.14.0` and `rules/v0.15.0` are prepared next; tag
+`packs/v0.14.0` first, because `rules/v0.15.0` depends on it exactly.
+
+`packs/v0.14.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 producer, keeps release index
+schema 4 and the same semantic-model read schemas, and needs Bifrost 0.15.1 or
+later. Its only native addition is `bifrost.rust-std-deref-summaries` 0.1.0
+(#338): complete `<String as Deref>::deref` and `<PathBuf as Deref>::deref`
+summaries for the pinned Rust nightly 2026-08-24 stdlib. The pack is
+review-required, so it stays dormant until a consumer enables it together with
+the matching `bifrost.rust-stdlib`, and a missing companion must fail closed. It
+does not certify callable-family completeness. The engine change that consumes
+these summaries is not in a Bifrost release yet. The Ruby `rexml`, `net-imap`
+and `rubygems-installer` models and the C# ASP.NET Core WebAssembly server and
+hosting models (#392) are source-only and not in a release recipe. No consumer
+requirement changes.
+
+`rules/v0.15.0` is a minor release. It requires Bifrost 0.15.2 or later, as
+`rules/v0.14.0` did, and depends exactly on `packs/v0.14.0`:
+
+- `bifrost.rust-codeql-quality` 0.3.0 adds `access-after-lifetime-ended`,
+  `access-invalid-pointer`, `unused-variable` and `unused-value` (#400).
+  `unused-value` also reports `_`-prefixed locals that CodeQL excludes
+  (bifrost-dev#13914).
+- `bifrost.security` 3.1.0 adds five opt-in policies (#392): the two REXML
+  denial-of-service rules (CVE-2024-35176, CVE-2025-58767), Net::IMAP raw
+  arguments (CVE-2026-47240, CVE-2026-47241), `Gem::Installer` install
+  (CVE-2017-0903, install part) and the ASP.NET Core WebAssembly debugging
+  affected-version rule (CVE-2026-96230). Their models are not in
+  `packs/v0.14.0`. With the released packs alone, Bifrost 0.15.2 reports these
+  runs as inconclusive (`partial_discovery`) with no findings, never clean. A
+  project can supply the models under `.bifrost/semantic-models`.
+
+No other policy, policy ID or required capability changes from
+`rules/v0.14.0`. The `packs/v0.13.0` and `rules/v0.14.0` notes follow.
 
 `packs/v0.13.0` is a minor release. It is built by the same released,
 checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.12.0`, keeps
