@@ -91,14 +91,14 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.12.0` and `rules/v0.13.0`. `packs/v0.13.0`
-and `rules/v0.14.0` are prepared next. `packs/v0.13.0` needs Bifrost 0.15.1 or
-later and adds the Go `database/sql` declarations and `net/http.Request.FormValue`.
-`rules/v0.14.0` needs Bifrost **0.15.2** or later, depends on `packs/v0.13.0`,
-adds the Java missing-override-annotation policy, ships the JavaScript identifier
-typo table, reports the Rust ctor caller search as inconclusive at its depth
-bound, and adds the Java CodeQL security catalogs without a policy. Bifrost
-0.15.1 rejects its whole catalog. See [release streams](docs/release-streams.md).
+The latest releases are `packs/v0.13.0` and `rules/v0.14.0`. `packs/v0.14.0`
+and `rules/v0.15.0` are prepared next. `packs/v0.14.0` needs Bifrost 0.15.1 or
+later and adds the review-required Rust `String`/`PathBuf` Deref companion
+summaries. `rules/v0.15.0` needs Bifrost **0.15.2** or later, depends on
+`packs/v0.14.0`, adds four Rust CodeQL quality policies, and adds five opt-in
+Ruby and C# CVE policies whose models are still source-only, so those runs are
+inconclusive with the released packs alone. See
+[release streams](docs/release-streams.md).
 
 ## Source verification
 
