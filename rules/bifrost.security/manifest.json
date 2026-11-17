@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -1085,6 +1085,20 @@
       ],
       "severity_rationale": "Caller-supplied code may panic while memory invariants are temporarily broken; this name-based ordering heuristic requires review.",
       "remediation": "Initialize or restore memory invariants before calling caller-supplied code and make unwinding safe.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
+      "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
+      "authored_hash": "b5179d04ae335487e2726278f15775ad0f1fa1d8fafe796790db172bc94a3294",
+      "resolved_semantic_hash": "b5179d04ae335487e2726278f15775ad0f1fa1d8fafe796790db172bc94a3294",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [],
+      "severity_rationale": "Cargo releases before the one bundled with Rust 1.66.1 do not verify the SSH host key when fetching a git dependency, so an attacker on the network path can serve modified source that is then built into the project.",
+      "remediation": "Pin Rust 1.66.1 or later in rust-toolchain.toml. Until then, set net.git-fetch-with-cli = true in the workspace-root .cargo/config.toml so the git command line, which verifies host keys, does the fetch.",
       "activation": "opt-in"
     },
     {

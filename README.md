@@ -28,14 +28,11 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - [`research/rust-codeql-security/`](research/rust-codeql-security/catalogs/README.md):
   staged CodeQL Rust endpoint catalogs for a later policy pack. They are in no
   release stream.
-- [`research/rust-cargo-ssh-git/`](research/rust-cargo-ssh-git/README.md):
-  the held-out `bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy,
-  its fixtures and qualification. They are in no release stream.
 
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**288 unique rules across 14 policy packs.**
+**289 unique rules across 14 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -52,19 +49,19 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 5 |
 | Pack | bifrost.rust-generic | 4 |
-| Pack | bifrost.security | 64 |
+| Pack | bifrost.security | 65 |
 | Category | correctness | 118 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 11 |
 | Category | quality | 74 |
-| Category | security | 68 |
+| Category | security | 69 |
 | Severity | error | 85 |
 | Severity | note | 83 |
-| Severity | warning | 120 |
+| Severity | warning | 121 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 526 rule-language pairs.
+13 declared languages; 527 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -78,11 +75,11 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | php | 20 |
 | python | 131 |
 | ruby | 24 |
-| rust | 42 |
+| rust | 43 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 61, unspecified 227. Omitted labels remain unspecified.
+Activation labels: opt-in 62, unspecified 227. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -91,14 +88,12 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.13.0` and `rules/v0.14.0`. `packs/v0.14.0`
-and `rules/v0.15.0` are prepared next. `packs/v0.14.0` needs Bifrost 0.15.1 or
-later and adds the review-required Rust `String`/`PathBuf` Deref companion
-summaries. `rules/v0.15.0` needs Bifrost **0.15.2** or later, depends on
-`packs/v0.14.0`, adds four Rust CodeQL quality policies, and adds five opt-in
-Ruby and C# CVE policies whose models are still source-only, so those runs are
-inconclusive with the released packs alone. See
-[release streams](docs/release-streams.md).
+The latest releases are `packs/v0.14.0` and `rules/v0.15.0`. `rules/v0.16.0`
+is prepared next. It needs Bifrost **0.15.3** or later, depends on
+`packs/v0.14.0`, and restores the opt-in Cargo SSH git host-key policy
+(CVE-2022-46176), which declares no required capability: earlier engines reject
+the whole catalog for that. It also stops `missing-docstring` from reporting
+test code and script entry points (#383). See [release streams](docs/release-streams.md).
 
 ## Source verification
 
