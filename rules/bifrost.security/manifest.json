@@ -1202,6 +1202,26 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/ruby/network-input-to-net-imap-host.rqlp",
+      "id": "bifrost.security.ruby.network-input-to-net-imap-host",
+      "authored_hash": "ece269ca1aefe8b795e74eba4f2bef8d5fe65c19a768836ab5424a0497cffeca",
+      "resolved_semantic_hash": "ece269ca1aefe8b795e74eba4f2bef8d5fe65c19a768836ab5424a0497cffeca",
+      "category": "security",
+      "supported_languages": [
+        "ruby"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Affected net-imap releases rescan the whole receive buffer for every literal, so a server chosen by untrusted input can keep the client CPU busy with responses below max_response_size.",
+      "remediation": "Upgrade net-imap to 0.4.24, 0.5.14 or 0.6.4 or later, or connect only to configured IMAP servers.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp",
       "id": "bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos",
       "authored_hash": "8052f429d36ce2f2d28521756a0e7395369a56cf2fb1e242548bd6c4bdd81244",

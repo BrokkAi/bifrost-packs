@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 289 unique rule IDs from 14 manifest packs.
+This catalog lists 290 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -287,6 +287,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Network input chooses the gem Gem::Installer installs](../rules/bifrost.security/policies/ruby/network-input-to-gem-installer.rqlp) | `bifrost.security.ruby.network-input-to-gem-installer` | ruby | security | warning |
+| [Network-chosen IMAP server on an affected net-imap release](../rules/bifrost.security/policies/ruby/network-input-to-net-imap-host.rqlp) | `bifrost.security.ruby.network-input-to-net-imap-host` | ruby | security | warning |
 | [Network input sent as raw net-imap command text on an affected release](../rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp) | `bifrost.security.ruby.network-input-to-net-imap-raw-arguments` | ruby | security | warning |
 | [Network XML parsed by REXML before 3.2.7](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos` | ruby | security | warning |
 | [Network XML parsed by REXML 3.3.3 to 3.4.1](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos` | ruby | security | warning |
