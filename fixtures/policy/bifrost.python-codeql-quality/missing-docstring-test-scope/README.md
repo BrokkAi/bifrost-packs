@@ -6,7 +6,7 @@ default check because its test classes, test functions or `main()` lack
 docstrings. The upstream CodeQL query is recommendation-level and has no such
 exclusion, so this is a deliberate departure from CodeQL parity.
 
-The engine classifies both structurally on each `python-documentation` row:
+Bifrost 0.15.3 and later classify both structurally on each `python-documentation` row:
 
 - `test_scope` is `yes` for every declaration in a module pytest collects by
   default (`test_*.py`, `*_test.py`) or in `conftest.py`, inside a class whose
@@ -36,3 +36,9 @@ Expected findings:
 
 Not reported: everything in `test_example.py`, `widgets_test.py` and
 `conftest.py`.
+
+Validated with the released Bifrost 0.15.3, build identity
+`cc7ebd1676e002b657e10304cfd977bc289e25ed`, evaluation date `2026-11-17`: policy
+hash `5b2e47dc476874ba2e643db1f2e61c69af7a637d627c8a9765084755802d2acc`, 9
+findings as listed above, completion `inconclusive` (`partial_discovery`) from
+`derived.py`.
