@@ -6,7 +6,8 @@ summaries with no effects:
 
 - **Reads** pass the receiver to the result.
 - **Writes** pass the value into the receiver and to the result, and do not
-  claim that the heap is unchanged.
+  claim that the heap is unchanged. `Hash#[]=` also passes the key into the
+  receiver, because the hash stores it.
 - **Constructors** that take an argument pass it to the result, so
   `Array.new(array)` keeps the copied flow.
 

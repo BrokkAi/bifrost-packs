@@ -76,6 +76,13 @@ class RubyCoreCollectionsModelTests(unittest.TestCase):
                 # constructor that takes arguments must carry one to the result.
                 if ".new" in symbol and row["target"]["parameter_count"] > 0:
                     self.assertIn("normal_return", outputs)
+        # A hash stores its keys, so `h[secret] = 1` must carry `secret`.
+        stored = {
+            transfer["input"].get("ordinal")
+            for transfer in summaries["Hash.[]="]["transfers"]
+            if transfer["output"]["kind"] == "receiver"
+        }
+        self.assertEqual(stored, {0, 1})
         # dig calls `dig` on nested values, so it is not a pure accessor.
         members = {row["name"] for row in model["shards"][0]["payload"]["members"]}
         self.assertNotIn("dig", members)
