@@ -141,6 +141,17 @@ v0.15.2 CLI reproduced all 278 locked authoring identities unchanged, and its
 pack-engine profile advertises the same capability names as 0.15.1. The native
 producer stays at 0.15.1 until a packs release needs the 0.15.2 producer.
 
+The authoring CLI pin then moves to the v0.15.3 release (public commit
+`f7e104a77b4f869f342dd73af0cc622c4a1a0584`):
+`bifrost-v0.15.3-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`d170344aa72a9fdc12d070ecc4e2435bb3e2fad911fe6ddb298976c994928df4`, executable
+SHA-256 `cec64c7da4980684ac1cb68f005b50a51f3ac4a2ff563cb8638723a26ef0b050`,
+build identity `cc7ebd1676e002b657e10304cfd977bc289e25ed`). The released
+v0.15.3 CLI reproduced all 288 locked authoring identities unchanged. v0.15.3
+is the first release whose `python-documentation` rows carry `test_scope` and
+`entry_point` (bifrost-dev#11705). The rules smoke test in `pack-release.yml`
+moves with the first rules release that needs 0.15.3.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
