@@ -21,7 +21,9 @@ members `existsSync`, `statSync`, `lstatSync`, `accessSync`, `writeFileSync`,
 Version 0.2.0 adds `readFileSync(path)`, `readFileSync(path, options)`,
 `readdirSync(path)`, `unlinkSync(path)`, `rmSync(path)` and
 `rmSync(path, options)` for the `process-input-to-fs-path` security policy
-(#393). It also declares, with no summaries, the callback forms
+(#393). Version 0.2.1 declares the `Buffer` return of `readFileSync(path)`,
+which has no encoding, and `any` for `readFileSync(path, options)`, whose result
+is a string or a `Buffer` depending on the options. It also declares, with no summaries, the callback forms
 `readFile(path, callback)`, `readFile(path, options, callback)`,
 `readdir(path, callback)` and `unlink(path, callback)`, and an `fs/promises`
 module with `readFile`, `readdir`, `unlink` and `rm`. They run callbacks or

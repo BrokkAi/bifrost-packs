@@ -10,7 +10,7 @@ through the reviewed models copied into `.bifrost/semantic-models` and
 enabled in `.bifrost/packs.json`:
 
 - `bifrost.node-runtime-values-javascript` 0.1.0 (`process.argv`).
-- `bifrost.node-fs-javascript-declarations` 0.2.0 and
+- `bifrost.node-fs-javascript-declarations` 0.2.1 and
   `bifrost.node-fs-javascript-summaries` 0.3.0, which add the read, list and
   remove members, declarations for the callback and `fs/promises` forms,
   and the missing summaries (#393).

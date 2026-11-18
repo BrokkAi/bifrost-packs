@@ -13,7 +13,7 @@ bind through the reviewed models copied into `.bifrost/semantic-models` and
 enabled in `.bifrost/packs.json`:
 
 - `bifrost.node-runtime-values-javascript` 0.1.0 (`process.argv`).
-- `bifrost.node-fs-javascript-declarations` 0.2.0 and
+- `bifrost.node-fs-javascript-declarations` 0.2.1 and
   `bifrost.node-fs-javascript-summaries` 0.3.0 (validated below with 0.1.0 and
   0.2.0; see the 0.15.3 note).
 - `bifrost.node-path-javascript-declarations` 0.1.0 and
