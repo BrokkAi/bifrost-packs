@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "pack_id": "bifrost.node-fs-javascript-declarations",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "producer": {
     "name": "bifrost-reviewed-node-models",
     "version": "0.1.0"
@@ -58,6 +58,26 @@
               "kind": "artifact",
               "path": "node/lib/fs.js",
               "symbol": "fs"
+            }
+          },
+          {
+            "id": "type.node.fs-promises.javascript",
+            "name": "fs/promises",
+            "type_kind": "module",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises"
             }
           }
         ],
@@ -312,6 +332,581 @@
               "kind": "artifact",
               "path": "node/lib/fs.js",
               "symbol": "fs.openSync(path, flags)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.read-file-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "readFileSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.readFileSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.read-file-sync-2",
+            "owner": "type.node.fs.javascript",
+            "name": "readFileSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.readFileSync(path, options)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.readdir-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "readdirSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Array"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.readdirSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.unlink-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "unlinkSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.unlinkSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.rm-sync",
+            "owner": "type.node.fs.javascript",
+            "name": "rmSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.rmSync(path)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.rm-sync-2",
+            "owner": "type.node.fs.javascript",
+            "name": "rmSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.rmSync(path, options)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.read-file-2-callback",
+            "owner": "type.node.fs.javascript",
+            "name": "readFile",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "callback",
+                  "type": {
+                    "kind": "named",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.readFile(path, callback)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.read-file-3-callback",
+            "owner": "type.node.fs.javascript",
+            "name": "readFile",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "callback",
+                  "type": {
+                    "kind": "named",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.readFile(path, options, callback)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.readdir-2-callback",
+            "owner": "type.node.fs.javascript",
+            "name": "readdir",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "callback",
+                  "type": {
+                    "kind": "named",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.readdir(path, callback)"
+            }
+          },
+          {
+            "id": "member.node.fs.javascript.unlink-2-callback",
+            "owner": "type.node.fs.javascript",
+            "name": "unlink",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "callback",
+                  "type": {
+                    "kind": "named",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "void"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/fs.js",
+              "symbol": "fs.unlink(path, callback)"
+            }
+          },
+          {
+            "id": "member.node.fs-promises.javascript.read-file-1",
+            "owner": "type.node.fs-promises.javascript",
+            "name": "readFile",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Promise"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises.readFile(path)"
+            }
+          },
+          {
+            "id": "member.node.fs-promises.javascript.read-file-2",
+            "owner": "type.node.fs-promises.javascript",
+            "name": "readFile",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Promise"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises.readFile(path, options)"
+            }
+          },
+          {
+            "id": "member.node.fs-promises.javascript.readdir-1",
+            "owner": "type.node.fs-promises.javascript",
+            "name": "readdir",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Promise"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises.readdir(path)"
+            }
+          },
+          {
+            "id": "member.node.fs-promises.javascript.unlink-1",
+            "owner": "type.node.fs-promises.javascript",
+            "name": "unlink",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Promise"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises.unlink(path)"
+            }
+          },
+          {
+            "id": "member.node.fs-promises.javascript.rm-1",
+            "owner": "type.node.fs-promises.javascript",
+            "name": "rm",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Promise"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises.rm(path)"
+            }
+          },
+          {
+            "id": "member.node.fs-promises.javascript.rm-2",
+            "owner": "type.node.fs-promises.javascript",
+            "name": "rm",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Promise"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/internal/fs/promises.js",
+              "symbol": "fs/promises.rm(path, options)"
             }
           }
         ],

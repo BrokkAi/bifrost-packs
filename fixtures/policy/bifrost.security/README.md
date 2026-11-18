@@ -70,6 +70,15 @@ version-independent install part of #286 (RubyGems) against the new
 `bifrost.web-network-ruby` source. The rexml and net-imap gates come from
 Gemfile.lock. All of these cases run on Bifrost 0.15.2.
 
+`javascript-process-input-to-fs-path`,
+`javascript-process-input-to-child-process-command` and
+`javascript-process-input-to-vm-code` qualify the path-traversal,
+command-injection and code-injection parts of the Node core lead
+BrokkAi/bifrost-packs#393 on Bifrost 0.15.3. Each has a positive and near-miss
+workspace and an `incomplete/` workspace that must stay inconclusive. The
+command fixture also has an `uncovered/` workspace for `execFile` with an
+argument array, which runs no shell and is not a sink. See each `README.md`.
+
 `ruby-network-input-to-net-imap-host` qualifies BrokkAi/bifrost-packs#284
 (CVE-2026-42245): a `Net::HTTP.get` body that chooses the server of
 `Net::IMAP.new` on an affected net-imap. It needs Bifrost 0.15.3, which binds

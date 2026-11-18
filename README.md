@@ -32,7 +32,7 @@ rule catalog is empty. Pack versions are independent of engine versions.
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**290 unique rules across 14 policy packs.**
+**293 unique rules across 14 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -49,19 +49,19 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.python-codeql-quality | 82 |
 | Pack | bifrost.rust-codeql-quality | 5 |
 | Pack | bifrost.rust-generic | 4 |
-| Pack | bifrost.security | 66 |
+| Pack | bifrost.security | 69 |
 | Category | correctness | 118 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 11 |
 | Category | quality | 74 |
-| Category | security | 70 |
+| Category | security | 73 |
 | Severity | error | 85 |
 | Severity | note | 83 |
-| Severity | warning | 122 |
+| Severity | warning | 125 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 528 rule-language pairs.
+13 declared languages; 531 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -70,7 +70,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | csharp | 60 |
 | go | 22 |
 | java | 53 |
-| javascript | 44 |
+| javascript | 47 |
 | kotlin | 17 |
 | php | 20 |
 | python | 131 |
@@ -79,7 +79,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 63, unspecified 227. Omitted labels remain unspecified.
+Activation labels: opt-in 66, unspecified 227. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -93,7 +93,8 @@ is prepared next. It needs Bifrost **0.15.3** or later, depends on
 `packs/v0.14.0`, and restores the opt-in Cargo SSH git host-key policy
 (CVE-2022-46176), which declares no required capability: earlier engines reject
 the whole catalog for that. It also adds an opt-in Net::IMAP server-choice
-policy (CVE-2026-42245) and stops `missing-docstring` from reporting test code
+policy (CVE-2026-42245), three opt-in Node core taint policies (fs path,
+`execSync` command, `vm` code) and stops `missing-docstring` from reporting test code
 and script entry points (#383). See [release streams](docs/release-streams.md).
 
 ## Source verification

@@ -48,6 +48,20 @@ authoring identity unchanged.
   `packs/v0.14.0`; with the released packs alone the run is inconclusive, never
   clean. 0.6.4 and 0.6.4.1, an unlocked net-imap and a `**opts` splat stay
   inconclusive.
+- `bifrost.security` 3.2.0 also adds three opt-in Node core taint policies
+  (#393), each from a `process.argv` keyed read:
+  `javascript.process-input-to-fs-path` (`fs.readFileSync`, `readdirSync`,
+  `existsSync`, `statSync`, `lstatSync`, `accessSync`, `unlinkSync`, `rmSync`,
+  and as possible findings the callback and `fs/promises` forms; CWE-22), `javascript.process-input-to-child-process-command`
+  (`child_process.execSync(command)`; CWE-78) and
+  `javascript.process-input-to-vm-code` (`vm.runInNewContext`,
+  `vm.runInThisContext`, `new vm.Script`; CWE-94; every finding is possible
+  and the run inconclusive, because evaluated code can escape its context). The command policy works with the released
+  `packs/v0.14.0` models. The fs policy needs the source-only, review-required
+  `bifrost.node-fs-javascript-*` packs, and the vm policy the new source-only
+  `bifrost.node-vm-javascript-declarations` pack; without them those runs are
+  inconclusive, never clean. Open redirects through `http.ServerResponse`
+  headers, `exec`, `spawn` and the `shell: true` forms are not covered.
 - `bifrost.python-codeql-quality` 0.1.2 narrows `missing-docstring` (#383,
   bifrost-dev#11358): it no longer reports test code (pytest-collected modules,
   `unittest.TestCase` subclasses, `test*` functions in modules that import
@@ -65,6 +79,16 @@ now bind, so `network-input-to-net-imap-raw-arguments` reports what follows such
 a call instead of staying inconclusive. Its fixtures with four sinks in one
 method are inconclusive on Bifrost 0.15.3 although every finding stays
 definite (bifrost-dev#14210).
+
+Source-only Node model changes, not in any packs release yet:
+`bifrost.node-fs-javascript-declarations` 0.2.0 adds `readFileSync`,
+`readdirSync`, `unlinkSync` and `rmSync`, plus declarations with no summary for
+the callback `readFile`, `readdir` and `unlink` and an `fs/promises` module;
+`bifrost.node-fs-javascript-summaries` 0.3.0 adds summaries for the new
+synchronous members and for `statSync`, `lstatSync` and `accessSync`;
+`bifrost.node-vm-javascript-declarations` 0.1.0 is new and has no summaries
+on purpose, because evaluated code can escape its context; every throwing fs
+summary carries all of its arguments to the exceptional return.
 
 No other policy, policy ID or required capability changes from
 `rules/v0.15.0`. The `packs/v0.14.0` and `rules/v0.15.0` notes follow.
