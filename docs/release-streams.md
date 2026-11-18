@@ -17,15 +17,40 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-17, the latest published streams are `packs/v0.14.0` and
-`rules/v0.15.0`. `rules/v0.16.0` is prepared next. It depends exactly on
-`packs/v0.14.0`.
+As of 2026-11-18, the latest published streams are `packs/v0.14.0` and
+`rules/v0.15.0`. `packs/v0.15.0` and `rules/v0.16.0` are prepared next; tag
+`packs/v0.15.0` first, because `rules/v0.16.0` depends on it exactly. Both
+require Bifrost **0.15.3** or later.
+
+`packs/v0.15.0` is a minor release that raises the consumer requirement to
+Bifrost 0.15.3 (#311). It is built by the released, checksum-pinned
+`bifrost-semantic-pack` 0.15.3 (public commit
+`f7e104a77b4f869f342dd73af0cc622c4a1a0584`) instead of 0.15.1. Migration: the
+regenerated `bifrost.rust-stdlib` manifest uses semantic-model schema 40, so
+the bundle's read schemas become 8, 14, 16, 19, 22 and 40, and Bifrost 0.15.2
+rejects the whole bundle ("unsupported semantic-model schema version 40",
+checked with the released 0.15.2 `install-semantic-packs`); 0.15.3 installs
+it. The release index stays schema 4, with the same 71 packs, IDs and
+versions. Seven generated packs get new manifests:
+
+- `bifrost.php-builtin` is now certified callable-family complete
+  (bifrost-dev#9337), shard `4d5075c2…`, so builtin sinks such as `proc_open`
+  bind as complete. The shard was reproduced locally in linux/amd64 Docker
+  with the same producer.
+- `bifrost.jdk`, `bifrost.rust-stdlib` (producer `0.15.3+rust-pack-12`, with
+  bifrost-dev#12213, #12073 and #12364) and `bifrost.scala-library` change
+  semantically. `bifrost.rust-stdlib` stays review-required.
+- `bifrost.kotlin-stdlib`, `bifrost.python-stdlib` and
+  `bifrost.typescript-stdlib` keep their semantic hashes; only the producer
+  version and content hash change.
+
+The source-only models listed below are not in this native release.
 
 `rules/v0.16.0` is a minor release that raises the engine requirement to
 Bifrost **0.15.3** or later. Migration: Bifrost 0.15.2 and earlier reject its
 whole catalog, because the restored policy below declares an empty
 `required_capabilities` list ("incomplete inventory metadata"); upgrade the
-engine, or stay on `rules/v0.15.0`. Bifrost 0.15.3 accepts an empty list
+engine, or stay on `rules/v0.15.0`. It depends exactly on `packs/v0.15.0`. Bifrost 0.15.3 accepts an empty list
 (bifrost-dev#10941). The policy authoring CLI pin and the rules smoke test move
 to the released v0.15.3 (build identity
 `cc7ebd1676e002b657e10304cfd977bc289e25ed`); it reproduces every locked
@@ -45,23 +70,34 @@ authoring identity unchanged.
   CVE-2026-42245): a `Net::HTTP.get` body that chooses the server of
   `Net::IMAP.new` on net-imap before 0.4.24, 0.5.0 to 0.5.13 or 0.6.0 to 0.6.3.
   It needs the source-only `bifrost.ruby.net-imap` 0.2.0, which is not in
-  `packs/v0.14.0`; with the released packs alone the run is inconclusive, never
+  `packs/v0.15.0`; with the released packs alone the run is inconclusive, never
   clean. 0.6.4 and 0.6.4.1, an unlocked net-imap and a `**opts` splat stay
   inconclusive.
 - `bifrost.security` 3.2.0 also adds three opt-in Node core taint policies
   (#393), each from a `process.argv` keyed read:
   `javascript.process-input-to-fs-path` (`fs.readFileSync`, `readdirSync`,
   `existsSync`, `statSync`, `lstatSync`, `accessSync`, `unlinkSync`, `rmSync`,
-  and as possible findings the callback and `fs/promises` forms; CWE-22), `javascript.process-input-to-child-process-command`
+  and as possible findings the callback and `fs/promises` forms; CWE-22),
+  `javascript.process-input-to-child-process-command`
   (`child_process.execSync(command)`; CWE-78) and
   `javascript.process-input-to-vm-code` (`vm.runInNewContext`,
   `vm.runInThisContext`, `new vm.Script`; CWE-94; every finding is possible
-  and the run inconclusive, because evaluated code can escape its context). The command policy works with the released
-  `packs/v0.14.0` models. The fs policy needs the source-only, review-required
+  and the run inconclusive, because evaluated code can escape its context).
+  The command policy works with the released `packs/v0.14.0` and the prepared
+  `packs/v0.15.0` models. The fs policy needs the source-only, review-required
   `bifrost.node-fs-javascript-*` packs, and the vm policy the new source-only
   `bifrost.node-vm-javascript-declarations` pack; without them those runs are
   inconclusive, never clean. Open redirects through `http.ServerResponse`
   headers, `exec`, `spawn` and the `shell: true` forms are not covered.
+- `bifrost.security` 3.2.0 also adds the opt-in, first PHP security policy
+  `bifrost.security.php.request-input-to-proc-open-command` (#311,
+  CVE-2024-1874, version- and OS-independent part): a `$_GET` value that
+  reaches the `proc_open` command as a string or as an array element. It needs
+  a `bifrost.php-builtin` pack from `bifrost-semantic-pack` 0.15.2 or later and
+  the source-only `bifrost.php-process-summaries` 0.1.0. `packs/v0.15.0` is the
+  first release with such a php-builtin pack. With `packs/v0.14.0`, whose shard
+  comes from the 0.15.1 producer, every run is inconclusive. The Windows and
+  PHP runtime check of the CVE is not made.
 - `bifrost.python-codeql-quality` 0.1.2 narrows `missing-docstring` (#383,
   bifrost-dev#11358): it no longer reports test code (pytest-collected modules,
   `unittest.TestCase` subclasses, `test*` functions in modules that import

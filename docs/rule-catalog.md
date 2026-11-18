@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 293 unique rule IDs from 14 manifest packs.
+This catalog lists 294 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -275,6 +275,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [ObjectInputStream read before an ObjectInputFilter is set](../rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp) | `bifrost.security.java.objectinputstream-read-without-filter` | java | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
+| [Request value reaches a proc_open command](../rules/bifrost.security/policies/php/request-input-to-proc-open-command.rqlp) | `bifrost.security.php.request-input-to-proc-open-command` | php | security | warning |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
 | [Python hard-coded standard-library credentials](../rules/bifrost.security/policies/python/hardcoded-credentials.rqlp) | `bifrost.security.python.hardcoded-credentials` | python | security | error |
 | [Python incomplete hostname regular expression](../rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp) | `bifrost.security.python.incomplete-hostname-regexp` | python | security | warning |

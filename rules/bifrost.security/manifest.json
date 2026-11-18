@@ -1323,6 +1323,26 @@
       "severity_rationale": "On rexml 3.3.3 to 3.4.1 a network sender who repeats the XML declaration makes REXML::Document.new do unbounded work instead of rejecting the document (CVE-2025-58767).",
       "remediation": "Upgrade rexml to 3.4.2 or later, and bound the size of untrusted XML before parsing.",
       "activation": "opt-in"
+    },
+    {
+      "path": "policies/php/request-input-to-proc-open-command.rqlp",
+      "id": "bifrost.security.php.request-input-to-proc-open-command",
+      "authored_hash": "1e3cb7882c000706e764c9dc4caabe39e49f624eeea62bc698878e028ac582fe",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "php"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A request value in a proc_open command string runs through the system shell, and in an array command it can run commands through cmd.exe on affected Windows runtimes (CVE-2024-1874), so an attacker can execute commands as the PHP process.",
+      "remediation": "Pass a constant program and validated arguments in the array form, upgrade PHP to 8.1.28, 8.2.18 or 8.3.5 or later on Windows, and never pass request values to a batch file.",
+      "activation": "opt-in"
     }
   ]
 }
