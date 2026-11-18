@@ -45,6 +45,10 @@ identity `cc7ebd1676e002b657e10304cfd977bc289e25ed`), evaluation date
 
 ## Known limits
 
+- `new vm.Script(source)` compiles without running. The rule reports the
+  constructor as a possible sink anyway, so compiling input only to check its
+  syntax is a possible false positive.
+
 - Only `process.argv` is a source.
 - `vm.compileFunction`, `vm.runInContext` and the options forms are not
   sinks. `eval` and the `Function` constructor are reported by

@@ -10,6 +10,9 @@
 ; anything the process can reach, which no complete summary may claim. So
 ; every finding is possible and a run that reaches a vm call is inconclusive,
 ; never clean.
+; new vm.Script(code) only compiles the string; the code runs when a runIn*
+; method is called on the script. The constructor is still a sink, so code
+; that compiles input only to check its syntax gets a possible finding.
 ; Not covered: vm.compileFunction, vm.runInContext, the options
 ; argument, eval and the Function constructor (the lexical
 ; bifrost.correctness.dynamic-evaluation rule reports eval and Function calls).

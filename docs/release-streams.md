@@ -117,7 +117,7 @@ method are inconclusive on Bifrost 0.15.3 although every finding stays
 definite (bifrost-dev#14210).
 
 Source-only Node model changes, not in any packs release yet:
-`bifrost.node-fs-javascript-declarations` 0.2.0 adds `readFileSync`,
+`bifrost.node-fs-javascript-declarations` 0.2.1 adds `readFileSync`,
 `readdirSync`, `unlinkSync` and `rmSync`, plus declarations with no summary for
 the callback `readFile`, `readdir` and `unlink` and an `fs/promises` module;
 `bifrost.node-fs-javascript-summaries` 0.3.0 adds summaries for the new
