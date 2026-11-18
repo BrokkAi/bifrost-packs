@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "pack_id": "bifrost.ruby.net-imap",
- "version": "0.1.0",
+ "version": "0.2.0",
  "producer": {
   "name": "bifrost-reviewed-ruby-models",
   "version": "1.0.0"
@@ -13,8 +13,8 @@
   "toolchains": []
  },
  "provenance": {
-  "source": "ruby/net-imap Net::IMAP.new, login, select, examine, logout, disconnect and the search, uid_search, sort, uid_sort, thread, uid_thread, fetch and uid_fetch commands in lib/net/imap.rb (0.5.x and 0.6.x); OSV GHSA-8p34-64r3-mwg8 and GHSA-c4fp-cxrr-mj66 version ranges",
-  "revision": "net-imap 0.5.14, 0.5.15, 0.6.4, 0.6.4.1"
+  "source": "ruby/net-imap Net::IMAP.new (Net::IMAP::DeprecatedClientOptions#initialize(host, port_or_options = nil, *deprecated, **options), prepended to Net::IMAP), login, select, examine, logout, disconnect and the search, uid_search, sort, uid_sort, thread, uid_thread, fetch and uid_fetch commands in lib/net/imap.rb and lib/net/imap/deprecated_client_options.rb (0.4.x, 0.5.x and 0.6.x); OSV GHSA-8p34-64r3-mwg8 and GHSA-c4fp-cxrr-mj66 version ranges (search and fetch members) and GHSA-q2mw-fvj9-vvcw version ranges (Net::IMAP.new)",
+  "revision": "net-imap 0.4.23, 0.4.24, 0.5.13, 0.5.14, 0.5.15, 0.6.3, 0.6.4, 0.6.4.1"
  },
  "license": "Apache-2.0",
  "completeness": "complete",
@@ -103,44 +103,6 @@
     "kind": "declaration_facts",
     "types": [],
     "members": [
-     {
-      "id": "member.ruby.net-imap.affected.net-imap.new",
-      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
-      "name": "new",
-      "member_kind": "method",
-      "visibility": "public",
-      "is_static": true,
-      "callable_family_complete": true,
-      "aliases": [],
-      "locator": {
-       "kind": "artifact",
-       "path": "net/imap.rb",
-       "symbol": "Net::IMAP.new"
-      },
-      "signature": {
-       "parameters": [
-        {
-         "name": "host",
-         "type": {
-          "kind": "named",
-          "name": "untyped"
-         }
-        },
-        {
-         "name": "port_or_options",
-         "type": {
-          "kind": "named",
-          "name": "untyped"
-         },
-         "optional": true
-        }
-       ],
-       "returns": {
-        "kind": "declared",
-        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
-       }
-      }
-     },
      {
       "id": "member.ruby.net-imap.affected.net-imap.login",
       "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
@@ -601,44 +563,6 @@
     "types": [],
     "members": [
      {
-      "id": "member.ruby.net-imap.unaffected.net-imap.new",
-      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
-      "name": "new",
-      "member_kind": "method",
-      "visibility": "public",
-      "is_static": true,
-      "callable_family_complete": true,
-      "aliases": [],
-      "locator": {
-       "kind": "artifact",
-       "path": "net/imap.rb",
-       "symbol": "Net::IMAP.new"
-      },
-      "signature": {
-       "parameters": [
-        {
-         "name": "host",
-         "type": {
-          "kind": "named",
-          "name": "untyped"
-         }
-        },
-        {
-         "name": "port_or_options",
-         "type": {
-          "kind": "named",
-          "name": "untyped"
-         },
-         "optional": true
-        }
-       ],
-       "returns": {
-        "kind": "declared",
-        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
-       }
-      }
-     },
-     {
       "id": "member.ruby.net-imap.unaffected.net-imap.login",
       "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
       "name": "login",
@@ -1074,6 +998,192 @@
    }
   },
   {
+   "id": "members.ruby.net-imap.new.cve-2026-42245-affected",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": "<0.4.24"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.5.0, <0.5.14"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.0, <0.6.4"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [],
+    "members": [
+     {
+      "id": "member.ruby.net-imap.cve-2026-42245-affected.net-imap.new",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "host",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "port_or_options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        },
+        {
+         "name": "deprecated",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true,
+         "variadic": true
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true,
+         "passing_mode": "named_only",
+         "variadic": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
+       }
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "members.ruby.net-imap.new.cve-2026-42245-unaffected",
+   "activation": [
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.4.24, <0.5.0"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.5.14, <0.6.0"
+     }
+    },
+    {
+     "targets": [],
+     "configurations": [],
+     "package": {
+      "name": "net-imap",
+      "version": ">=0.6.5"
+     }
+    }
+   ],
+   "payload": {
+    "kind": "declaration_facts",
+    "types": [],
+    "members": [
+     {
+      "id": "member.ruby.net-imap.cve-2026-42245-unaffected.net-imap.new",
+      "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+      "name": "new",
+      "member_kind": "method",
+      "visibility": "public",
+      "is_static": true,
+      "callable_family_complete": true,
+      "aliases": [],
+      "locator": {
+       "kind": "artifact",
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new"
+      },
+      "signature": {
+       "parameters": [
+        {
+         "name": "host",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         }
+        },
+        {
+         "name": "port_or_options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true
+        },
+        {
+         "name": "deprecated",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true,
+         "variadic": true
+        },
+        {
+         "name": "options",
+         "type": {
+          "kind": "named",
+          "name": "untyped"
+         },
+         "optional": true,
+         "passing_mode": "named_only",
+         "variadic": true
+        }
+       ],
+       "returns": {
+        "kind": "declared",
+        "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
+       }
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
    "id": "summaries.ruby.net-imap",
    "activation": [
     {
@@ -1140,6 +1250,132 @@
        "symbol": "Net::IMAP.new(host, port_or_options)",
        "has_receiver": true,
        "parameter_count": 2
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "definite"
+       }
+      ]
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-3",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options, options_1)",
+       "has_receiver": true,
+       "parameter_count": 3
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "definite"
+       }
+      ]
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-4",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options, options_1, options_2)",
+       "has_receiver": true,
+       "parameter_count": 4
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "definite"
+       }
+      ]
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-5",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options, options_1, options_2, options_3)",
+       "has_receiver": true,
+       "parameter_count": 5
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "definite"
+       }
+      ]
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-6",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options, options_1, options_2, options_3, options_4)",
+       "has_receiver": true,
+       "parameter_count": 6
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "definite"
+       }
+      ]
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-7",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options, options_1, options_2, options_3, options_4, options_5)",
+       "has_receiver": true,
+       "parameter_count": 7
+      },
+      "completeness": "complete",
+      "covers_overrides": true,
+      "locations": [],
+      "transfers": [],
+      "effects": [],
+      "declared_effects": [
+       {
+        "id": "bifrost.network_io",
+        "timing": "immediate",
+        "certainty": "definite"
+       }
+      ]
+     },
+     {
+      "id": "summary.ruby.net-imap.net-imap.new-8",
+      "target": {
+       "path": "net/imap.rb",
+       "symbol": "Net::IMAP.new(host, port_or_options, options_1, options_2, options_3, options_4, options_5, options_6)",
+       "has_receiver": true,
+       "parameter_count": 8
       },
       "completeness": "complete",
       "covers_overrides": true,

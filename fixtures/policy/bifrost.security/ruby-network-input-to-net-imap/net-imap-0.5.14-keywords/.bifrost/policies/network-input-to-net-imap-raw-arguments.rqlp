@@ -22,7 +22,9 @@
 ; incomplete. Without a locked net-imap version the run is not clean either.
 ; Keyword arguments to model members get no target on 0.15.2
 ; (bifrost-dev#11368), so Net::IMAP.new(host, port: 993, ssl: true) leaves the
-; run inconclusive. Server capabilities are runtime state and are not checked.
+; run inconclusive there. Bifrost 0.15.3 binds them to the **options formal of
+; the constructor that bifrost.ruby.net-imap 0.2.0 declares. Server
+; capabilities are runtime state and are not checked.
 (policy
   :schema-version 1
   :id "bifrost.security.ruby.network-input-to-net-imap-raw-arguments"

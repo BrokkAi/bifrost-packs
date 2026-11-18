@@ -1,0 +1,85 @@
+; Lead: BrokkAi/bifrost-packs#284 (CVE-2026-42245, GHSA-q2mw-fvj9-vvcw).
+; OSV: rubygems net-imap introduced 0, fixed 0.4.24; introduced 0.5.0, fixed
+; 0.5.14; introduced 0.6.0, fixed 0.6.4.
+; Product source contract: Net::IMAP::ResponseReader in affected releases
+; rescans the whole receive buffer for every literal, so a hostile IMAP server
+; can keep the client busy for a long time with responses below
+; max_response_size. Which server the client talks to is the application's
+; choice, so the rule reports a host chosen by untrusted input.
+; Engine contract: the source is the return value of the reviewed
+; member.web-network.ruby.net-http.get, for example a mail autoconfiguration
+; document that names the IMAP server. The sink is formal 0 (host) of
+; Net::IMAP.new as declared by the `cve-2026-42245-affected` shard of
+; bifrost.ruby.net-imap, which activates from a Gemfile.lock net-imap version
+; before 0.4.24, from 0.5.0 up to 0.5.14, or from 0.6.0 up to 0.6.4. The
+; `cve-2026-42245-unaffected` shard declares the same constructor for the fixed
+; ranges, so those projects complete clean. Bifrost reads a four-segment gem
+; version such as 0.6.4.1 as 0.6.4 with build metadata, and the model leaves
+; 0.6.4 inactive for the other net-imap advisories, so a project locked to
+; 0.6.4 or 0.6.4.1 stays inconclusive rather than clean. Without a locked
+; net-imap version the run is not clean either.
+; The constructor is declared as the entry point net-imap prepends,
+; DeprecatedClientOptions#initialize(host, port_or_options = nil, *deprecated,
+; **options), so keyword calls such as Net::IMAP.new(host, port: 993,
+; ssl: true) bind; that needs Bifrost 0.15.3 (bifrost-dev#11368). A
+; double-splat call, Net::IMAP.new(host, **opts), does not bind and leaves the
+; run inconclusive.
+; Not covered: request parameters as sources (no reviewed Rails or Rack model
+; binds them yet), a host stored and read back later, and the server's
+; response sizes, which are runtime state.
+(policy
+  :schema-version 1
+  :id "bifrost.security.ruby.network-input-to-net-imap-host"
+  :name "Network-chosen IMAP server on an affected net-imap release"
+  :message "A network response chooses the IMAP server for a net-imap release whose response reader rescans the buffer for every literal (CVE-2026-42245); a hostile server can exhaust the client CPU. Upgrade net-imap to 0.4.24, 0.5.14 or 0.6.4, or only connect to configured servers"
+  :severity warning
+  :description "Reports a Net::HTTP.get response body that reaches the host argument of Net::IMAP.new in a project whose Gemfile.lock selects net-imap before 0.4.24, 0.5.0 to 0.5.13, or 0.6.0 to 0.6.3. Those releases rescan the whole receive buffer for every literal, so a server chosen by untrusted input can pin the client CPU (CVE-2026-42245). The version comes from Gemfile.lock; without a locked net-imap version, or with 0.6.4 or 0.6.4.1, the run is incomplete rather than clean."
+  :help-uri "https://github.com/advisories/GHSA-q2mw-fvj9-vvcw"
+  :tags ["security" "ruby" "net-imap" "denial-of-service" "cve-2026-42245" "cwe-400"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id net-http-get
+              :display-name "Net::HTTP.get response body"
+              :categories [io.external network.response]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (resolved-call
+                      :resolves-to member.web-network.ruby.net-http.get
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "get")))))))
+              :bind return-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id net-imap-new-host
+              :display-name "Net::IMAP.new host"
+              :categories [network.request]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language ruby
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.ruby.net-imap.cve-2026-42245-affected.net-imap.new
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "new"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))

@@ -40,6 +40,14 @@ authoring identity unchanged.
   Rust 1.39.0 or later, unless a `.cargo/config.toml` in a subdirectory sets it
   to anything else, where earlier engines left the run inconclusive. 16 fixture
   cases pass on Bifrost 0.15.3; see `docs/qualification/rust-cargo-ssh-git.json`.
+- `bifrost.security` 3.2.0 also adds the opt-in
+  `bifrost.security.ruby.network-input-to-net-imap-host` (#284,
+  CVE-2026-42245): a `Net::HTTP.get` body that chooses the server of
+  `Net::IMAP.new` on net-imap before 0.4.24, 0.5.0 to 0.5.13 or 0.6.0 to 0.6.3.
+  It needs the source-only `bifrost.ruby.net-imap` 0.2.0, which is not in
+  `packs/v0.14.0`; with the released packs alone the run is inconclusive, never
+  clean. 0.6.4 and 0.6.4.1, an unlocked net-imap and a `**opts` splat stay
+  inconclusive.
 - `bifrost.python-codeql-quality` 0.1.2 narrows `missing-docstring` (#383,
   bifrost-dev#11358): it no longer reports test code (pytest-collected modules,
   `unittest.TestCase` subclasses, `test*` functions in modules that import
@@ -47,6 +55,16 @@ authoring identity unchanged.
   `test_scope` and `entry_point` fields that Bifrost 0.15.3 first emits
   (bifrost-dev#11705); an undecided row is withheld, never reported clean.
   This departs from CodeQL parity on purpose.
+
+Source-only model change, not in any packs release yet: `bifrost.ruby.net-imap`
+0.2.0 declares `Net::IMAP.new` as the constructor net-imap prepends,
+`(host, port_or_options = nil, *deprecated, **options)`, in shards split at the
+CVE-2026-42245 fixed versions, and summarizes it for 1 to 8 arguments. On
+Bifrost 0.15.3 keyword calls such as `Net::IMAP.new(host, port: 993, ssl: true)`
+now bind, so `network-input-to-net-imap-raw-arguments` reports what follows such
+a call instead of staying inconclusive. Its fixtures with four sinks in one
+method are inconclusive on Bifrost 0.15.3 although every finding stays
+definite (bifrost-dev#14210).
 
 No other policy, policy ID or required capability changes from
 `rules/v0.15.0`. The `packs/v0.14.0` and `rules/v0.15.0` notes follow.
