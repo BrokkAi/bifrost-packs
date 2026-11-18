@@ -150,7 +150,7 @@ build identity `cc7ebd1676e002b657e10304cfd977bc289e25ed`). The released
 v0.15.3 CLI reproduced all 288 locked authoring identities unchanged. v0.15.3
 is the first release whose `python-documentation` rows carry `test_scope` and
 `entry_point` (bifrost-dev#11705). The rules smoke test in `pack-release.yml`
-moves with the first rules release that needs 0.15.3.
+moves to v0.15.3 with `rules/v0.16.0`, the first rules release that needs it.
 
 ## Pinned native candidate
 

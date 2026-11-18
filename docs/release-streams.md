@@ -17,9 +17,39 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-17, the latest published streams are `packs/v0.13.0` and
-`rules/v0.14.0`. `packs/v0.14.0` and `rules/v0.15.0` are prepared next; tag
-`packs/v0.14.0` first, because `rules/v0.15.0` depends on it exactly.
+As of 2026-11-17, the latest published streams are `packs/v0.14.0` and
+`rules/v0.15.0`. `rules/v0.16.0` is prepared next. It depends exactly on
+`packs/v0.14.0`.
+
+`rules/v0.16.0` is a minor release that raises the engine requirement to
+Bifrost **0.15.3** or later. Migration: Bifrost 0.15.2 and earlier reject its
+whole catalog, because the restored policy below declares an empty
+`required_capabilities` list ("incomplete inventory metadata"); upgrade the
+engine, or stay on `rules/v0.15.0`. Bifrost 0.15.3 accepts an empty list
+(bifrost-dev#10941). The policy authoring CLI pin and the rules smoke test move
+to the released v0.15.3 (build identity
+`cc7ebd1676e002b657e10304cfd977bc289e25ed`); it reproduces every locked
+authoring identity unchanged.
+
+- `bifrost.security` 3.2.0 restores the opt-in
+  `bifrost.security.rust.cargo-ssh-git-host-key-unverified` (#248, #387,
+  CVE-2022-46176), held out since `rules/v0.13.0`. Bifrost 0.15.3 no longer
+  reports a workspace `.cargo/config.toml` as unsupported dependency evidence,
+  so the policy now reads the root file's `net.git-fetch-with-cli` TOML
+  configuration fact: the boolean `true` suppresses the finding for a pinned
+  Rust 1.39.0 or later, unless a `.cargo/config.toml` in a subdirectory sets it
+  to anything else, where earlier engines left the run inconclusive. 16 fixture
+  cases pass on Bifrost 0.15.3; see `docs/qualification/rust-cargo-ssh-git.json`.
+- `bifrost.python-codeql-quality` 0.1.2 narrows `missing-docstring` (#383,
+  bifrost-dev#11358): it no longer reports test code (pytest-collected modules,
+  `unittest.TestCase` subclasses, `test*` functions in modules that import
+  pytest or nose) or a function a module's `__main__` block calls. It reads the
+  `test_scope` and `entry_point` fields that Bifrost 0.15.3 first emits
+  (bifrost-dev#11705); an undecided row is withheld, never reported clean.
+  This departs from CodeQL parity on purpose.
+
+No other policy, policy ID or required capability changes from
+`rules/v0.15.0`. The `packs/v0.14.0` and `rules/v0.15.0` notes follow.
 
 `packs/v0.14.0` is a minor release. It is built by the same released,
 checksum-pinned `bifrost-semantic-pack` 0.15.1 producer, keeps release index
@@ -113,8 +143,8 @@ for either of two defects that rules 0.10.0 through 0.12.0 contain:
   entry, and `bifrost.security` becomes 3.0.0.
 
 bifrost-dev#10941 makes later engines skip a manifest-less directory and
-accept an empty capability list. The held-out policy returns in a rules
-release that requires such an engine. No other policy, policy ID, finding or
+accept an empty capability list. The held-out policy returns in
+`rules/v0.16.0`, which requires Bifrost 0.15.3. No other policy, policy ID, finding or
 required capability changes from `rules/v0.12.0`.
 
 The `packs/v0.12.0` and `rules/v0.12.0` notes follow.

@@ -17,11 +17,42 @@
       "anchor_line": 12
     },
     {
+      "case": "positive-git-fetch-with-cli-false",
+      "findings": 1,
+      "anchor_line": 12
+    },
+    {
+      "case": "positive-nested-git-fetch-with-cli-false",
+      "findings": 1,
+      "anchor_line": 12
+    },
+    {
+      "case": "positive-pre-1-39-config-toml",
+      "findings": 1,
+      "anchor_line": 12
+    },
+    {
       "case": "near-miss-fixed-toolchain",
       "findings": 0
     },
     {
       "case": "near-miss-https-source",
+      "findings": 0
+    },
+    {
+      "case": "near-miss-workspace-git-fetch-with-cli",
+      "findings": 0
+    },
+    {
+      "case": "near-miss-dotted-git-fetch-with-cli",
+      "findings": 0
+    },
+    {
+      "case": "near-miss-legacy-toolchain-git-fetch-with-cli",
+      "findings": 0
+    },
+    {
+      "case": "near-miss-unrelated-toml-override",
       "findings": 0
     },
     {
@@ -41,11 +72,6 @@
     },
     {
       "case": "unknown-missing-lockfile",
-      "findings": 0,
-      "completion": "inconclusive"
-    },
-    {
-      "case": "unknown-workspace-git-fetch-with-cli",
       "findings": 0,
       "completion": "inconclusive"
     }
