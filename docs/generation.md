@@ -152,6 +152,18 @@ is the first release whose `python-documentation` rows carry `test_scope` and
 `entry_point` (bifrost-dev#11705). The rules smoke test in `pack-release.yml`
 moves to v0.15.3 with `rules/v0.16.0`, the first rules release that needs it.
 
+The native producer moves to the v0.15.3 release as well (#311):
+`bifrost-semantic-pack-v0.15.3-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`62a133b303783b51072433a933235172c4cbdb5baa6180c14a4dcdae91fd0379`, executable
+SHA-256 `31fd713a01021de631c95841c61327f1cb066ecb1e123992af39dc7b4205710f`),
+public commit `f7e104a77b4f869f342dd73af0cc622c4a1a0584`. The 0.15.2 and later
+producers contain bifrost-dev#9337, so `bifrost.php-builtin` gets
+`callable_family_complete` certification: the pinned phpstorm-stubs slice
+regenerates as shard
+`4d5075c28ba2aafa4b56205874648b8e33a15f04c6094fa680ddff832194a803`, and with it
+a `proc_open` sink binds as complete. With the 0.15.1 shard `e8e6ad9c…`, which
+has no certified records, it can never complete.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
