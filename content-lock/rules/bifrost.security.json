@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "b29a7db9130d6d57583523ad34589ed24186f0552c68fe95b2b28254e158daab"
+      "sha256": "e4632d6e17f566e162a768867ffb46fb8b4ca7a6a79072885d8d2f0340b48e92"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -340,6 +340,34 @@
       "path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
       "source_path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
       "sha256": "28905c34786ef3547b340cf5289a8661cf4115a5316ecba3d1554e53b3114560",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/django-request-to-os-system.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/django-request-to-os-system.rqlp",
+      "sha256": "65e0f1f8961e10e193d4b7d5fb3453fd86baa06593ac5e918ab03bb53391a1ba",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
+      "sha256": "ded3858c1769a47e53e3ba95d79596b5bdf0973b5c5406d3ce5903f5d4c6277b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/flask-request-to-os-system.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/flask-request-to-os-system.rqlp",
+      "sha256": "b713ca4d4aeb31284128d4cf87fe29231e1e4760ea80f6549eb3cd2735e442a6",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp",
+      "sha256": "05a499f3304d827d38f852534ef309aa506ac16a7cf6c4fbbd6a070431990dbc",
       "classification": "public",
       "license": "Apache-2.0"
     },

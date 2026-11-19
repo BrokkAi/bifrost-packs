@@ -1,0 +1,145 @@
+; A Flask request value reaching the shell command of os.system.
+;
+; Each source is an exact call on a class the reviewed Werkzeug model pins:
+; `flask.request` proxies `werkzeug.wrappers.Request`, whose `args`, `form`
+; and `cookies` are exactly `ImmutableMultiDict` and whose `headers` is
+; exactly `EnvironHeaders`. A same-named `get` on any other receiver is not
+; selected. Subscript reads (`request.args["q"]`) are not sources yet
+; (bifrost-dev#4651). `request.values` is excluded: it is a
+; `CombinedMultiDict`, which overrides `get`.
+;
+; The Flask and Werkzeug packs activate on `pkg:pypi/flask` and
+; `pkg:pypi/werkzeug` evidence. Until bifrost-dev#14580 derives that evidence
+; from lockfiles, no source binds outside a declared wheel environment.
+;
+; The sink is the exact reviewed os.system member, so a workspace function with the same
+; name is not selected.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.flask-request-to-os-system"
+  :name "Flask request value reaches os.system"
+  :message "A Flask request value reached the command argument of os.system(command)"
+  :severity error
+  :description "Reports Flask request query, form, cookie, header and JSON values that reach the command argument of os.system(command). The command runs in a subshell, so attacker-controlled text in it changes the executed command. Source identity is the reviewed Werkzeug request model's exact receiver classes; sink identity is the exact reviewed os.system member."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "flask" "command-injection" "cwe-78"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id request-multidict-get
+              :display-name "Flask request.args/form/cookies get"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "werkzeug.datastructures.structures.ImmutableMultiDict.get"
+                        :proof exact
+                        :receiver-type "werkzeug.datastructures.structures.ImmutableMultiDict"
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "get"))))))))
+              :bind return-value
+              :labels [attacker-controlled])
+            (source
+              :id request-multidict-getlist
+              :display-name "Flask request.args/form/cookies getlist"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "werkzeug.datastructures.structures.ImmutableMultiDict.getlist"
+                        :proof exact
+                        :receiver-type "werkzeug.datastructures.structures.ImmutableMultiDict"
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "getlist"))))))))
+              :bind return-value
+              :labels [attacker-controlled])
+            (source
+              :id request-headers-get
+              :display-name "Flask request.headers get"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "werkzeug.datastructures.headers.EnvironHeaders.get"
+                        :proof exact
+                        :receiver-type "werkzeug.datastructures.headers.EnvironHeaders"
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "get"))))))))
+              :bind return-value
+              :labels [attacker-controlled])
+            (source
+              :id request-headers-getlist
+              :display-name "Flask request.headers getlist"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "werkzeug.datastructures.headers.EnvironHeaders.getlist"
+                        :proof exact
+                        :receiver-type "werkzeug.datastructures.headers.EnvironHeaders"
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "getlist"))))))))
+              :bind return-value
+              :labels [attacker-controlled])
+            (source
+              :id request-get-json
+              :display-name "Flask request.get_json"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-call
+                        :resolves-to "werkzeug.wrappers.Request.get_json"
+                        :proof exact
+                        :receiver-type "werkzeug.wrappers.Request"
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "get_json")))))))
+              :bind return-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id os-system-command
+              :display-name "os.system command"
+              :categories [process.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.os.system-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "system") (arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "78")))

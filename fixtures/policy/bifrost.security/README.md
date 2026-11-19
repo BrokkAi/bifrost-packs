@@ -89,3 +89,10 @@ later and the reviewed `bifrost.php-process-summaries`. See its `README.md`.
 `Net::IMAP.new` on an affected net-imap. It needs Bifrost 0.15.3, which binds
 keyword arguments to model members, and `bifrost.ruby.net-imap` 0.2.0. See its
 `README.md`.
+
+`python-flask-request-sources` and `python-django-request-sources` are for the
+opt-in Flask and Django request-to-`os.system` and request-to-`urlopen`
+policies of bifrost-dev#14549. They need the source-only packs in
+`semantic-packs/python/web-request/`, which activate only after bifrost-dev#14580
+derives `pkg:pypi` evidence from lockfiles. Until then every case fails with the
+packs reported incompatible. See each `README.md`.

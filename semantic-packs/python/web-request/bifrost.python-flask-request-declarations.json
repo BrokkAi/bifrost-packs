@@ -1,0 +1,82 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-flask-request-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Flask 3.1.0 source (src/flask/globals.py, src/flask/wrappers.py)",
+    "revision": "pallets/flask 3.1.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-flask-request",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/flask",
+            "version": ">=3.1.0, <3.2.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.flask",
+            "name": "flask",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "flask"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "flask/__init__.py",
+              "symbol": "flask"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.flask.request",
+            "owner": "type.python.flask",
+            "name": "request",
+            "member_kind": "field",
+            "visibility": "public",
+            "is_static": true,
+            "value_type": {
+              "kind": "named",
+              "name": "werkzeug.local.LocalProxy"
+            },
+            "proxied_type": {
+              "kind": "named",
+              "name": "werkzeug.wrappers.Request"
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "flask/globals.py",
+              "symbol": "flask.request"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

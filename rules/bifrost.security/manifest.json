@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -799,6 +799,86 @@
       ],
       "severity_rationale": "The URL passed to webbrowser.open selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser command-line option (CVE-2026-4519, CVE-2026-4786).",
       "remediation": "Do not open process input as a URL. Parse it, require an https scheme and an expected host, and pass only the validated URL to webbrowser.open.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-to-os-system.rqlp",
+      "id": "bifrost.security.python.flask-request-to-os-system",
+      "authored_hash": "c8a30c1cd192bb25b1948fefb74c6658c8d138b0a9c71dd77bdecee9d615a1e7",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A command string built from a Flask request query, form, cookie, header or JSON value runs in a subshell with the application's privileges, so a remote client can change the executed command.",
+      "remediation": "Do not pass request values to os.system. Use subprocess.run with an argument list and shell=False, and validate the value against an allowlist.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-to-urlopen.rqlp",
+      "id": "bifrost.security.python.flask-request-to-urlopen",
+      "authored_hash": "127b5db71bf09080a35950e75c95df5720896d08a6f66a23563247611b85760a",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL built from a Flask request query, form, cookie, header or JSON value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/django-request-to-os-system.rqlp",
+      "id": "bifrost.security.python.django-request-to-os-system",
+      "authored_hash": "686410e1106d0b8845bd3712d77abfa5978677acfc0638dcc8d2dfcd3e10f110",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A command string built from a Django request query or form value runs in a subshell with the application's privileges, so a remote client can change the executed command.",
+      "remediation": "Do not pass request values to os.system. Use subprocess.run with an argument list and shell=False, and validate the value against an allowlist.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/django-request-to-urlopen.rqlp",
+      "id": "bifrost.security.python.django-request-to-urlopen",
+      "authored_hash": "b1a950b99035d7f427383183d264f00f13c8284425509c538bca855776dfcfdd",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL built from a Django request query or form value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
       "activation": "opt-in"
     },
     {

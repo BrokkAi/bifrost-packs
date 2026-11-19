@@ -1,0 +1,146 @@
+{
+  "schema_version": 14,
+  "pack_id": "bifrost.python-django-request-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Django 5.2 source (django/utils/datastructures.py)",
+    "revision": "django/django stable/5.2.x"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.python-django-request",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/django",
+            "version": ">=5.2.0, <5.3.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.python.django.query-dict.get",
+            "target": {
+              "path": "django/utils/datastructures.py",
+              "symbol": "django.http.QueryDict.get(key, default)",
+              "has_receiver": true,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "default"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.django.query-dict.getlist",
+            "target": {
+              "path": "django/utils/datastructures.py",
+              "symbol": "django.http.QueryDict.getlist(key, default)",
+              "has_receiver": true,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "default"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

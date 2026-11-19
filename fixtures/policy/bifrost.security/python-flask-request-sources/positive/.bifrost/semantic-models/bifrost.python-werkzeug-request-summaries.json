@@ -1,0 +1,318 @@
+{
+  "schema_version": 14,
+  "pack_id": "bifrost.python-werkzeug-request-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Werkzeug 3.1.0 source (src/werkzeug/wrappers/request.py, datastructures/)",
+    "revision": "pallets/werkzeug 3.1.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.python-werkzeug-request",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/werkzeug",
+            "version": ">=3.1.0, <3.2.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.python.werkzeug.immutable-multi-dict.get",
+            "target": {
+              "path": "werkzeug/datastructures/structures.py",
+              "symbol": "werkzeug.datastructures.structures.ImmutableMultiDict.get(key, default, type)",
+              "has_receiver": true,
+              "parameter_count": 3,
+              "formals": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "default"
+                },
+                {
+                  "name": "type"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 2
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.werkzeug.immutable-multi-dict.getlist",
+            "target": {
+              "path": "werkzeug/datastructures/structures.py",
+              "symbol": "werkzeug.datastructures.structures.ImmutableMultiDict.getlist(key, type)",
+              "has_receiver": true,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "type"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.werkzeug.environ-headers.get",
+            "target": {
+              "path": "werkzeug/datastructures/headers.py",
+              "symbol": "werkzeug.datastructures.headers.EnvironHeaders.get(key, default, type)",
+              "has_receiver": true,
+              "parameter_count": 3,
+              "formals": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "default"
+                },
+                {
+                  "name": "type"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 2
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.werkzeug.environ-headers.getlist",
+            "target": {
+              "path": "werkzeug/datastructures/headers.py",
+              "symbol": "werkzeug.datastructures.headers.EnvironHeaders.getlist(key, type)",
+              "has_receiver": true,
+              "parameter_count": 2,
+              "formals": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "type"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.werkzeug.request.get-json",
+            "target": {
+              "path": "werkzeug/wrappers/request.py",
+              "symbol": "werkzeug.wrappers.Request.get_json(force, silent, cache)",
+              "has_receiver": true,
+              "parameter_count": 3,
+              "formals": [
+                {
+                  "name": "force"
+                },
+                {
+                  "name": "silent"
+                },
+                {
+                  "name": "cache"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}
