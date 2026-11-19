@@ -26,10 +26,12 @@ GO_NET_INTERFACE_SUMMARIES_COMMIT = "3745e66f03f8599337aa2d72b58c43611414d37e"
 GO_NET_HTTP_FORM_VALUE_COMMIT = "77bd26fe98b687801b0fb2b0218b59bea266ff50"
 FIRST_JOB = 12
 # Authored jobs that are not legacy built-ins; pinned by test_go_gob_native_jobs,
-# test_go_read_all_native_jobs and test_authored_native_generation_inputs.
+# test_go_read_all_native_jobs, test_jdk_object_input_stream_summaries and
+# test_authored_native_generation_inputs.
 AUTHORED_AFTER_LEGACY = {
     "go-stdlib-database-sql-declarations",
     "rust-std-deref-summaries",
+    "jdk-object-input-stream-summaries",
     "ruby-core-collections",
     "go-stdlib-encoding-gob",
     "go-stdlib-encoding-gob-declarations",

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.jdk-object-input-stream-summaries",
+  "pack_version": "0.1.0",
+  "ecosystem": "jdk",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.jdk-object-input-stream-summaries.json",
+    "sha256": "272ecc244355c8cdb82da980f9d10789640c4df86bf336e58579c8fe715bdfa1",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/4a1cf253d6b383650c393581e47cfebfffc64073/semantic-packs/jvm/object-input-stream/bifrost.jdk-object-input-stream-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "jdk",
+        "requirement": ">=17.0.0, <22.0.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "jdk",
+        "version": ">=17.0.0, <22.0.0"
+      },
+      "targets": [
+        "jvm"
+      ],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Java SE 17 and 21 API specification of java.io.ObjectInputStream(InputStream): the constructor returns a new stream that wraps the given input and reads it on later calls; reviewed against Temurin 21.0.8+9 java.base/java/io/ObjectInputStream.java",
+    "revision": "jdk-21.0.8+9"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/jdk-object-input-stream-summaries.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "jdk",
+      "version": "=21.0.13"
+    },
+    "targets": [
+      "jvm"
+    ],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "java",
+      "owner": "java.io.ObjectInputStream",
+      "name": "<init>",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

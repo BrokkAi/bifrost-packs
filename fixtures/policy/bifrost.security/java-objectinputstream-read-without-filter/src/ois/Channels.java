@@ -39,4 +39,39 @@ public class Channels {
     public ObjectInputStream openOnly(byte[] bytes) throws IOException {
         return new ObjectInputStream(new ByteArrayInputStream(bytes));
     }
+
+    /** Positive: an unrelated, unmodeled call runs between construction and the read. */
+    public Object deserializeAfterLogging(InputStream in) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(in);
+        System.err.println("deserializing caller bytes");
+        return ois.readObject();
+    }
+
+    /** Positive: two streams in one method, each read with no filter. */
+    public Object[] deserializeBoth(InputStream header, InputStream body)
+            throws IOException, ClassNotFoundException {
+        ObjectInputStream first = new ObjectInputStream(header);
+        ObjectInputStream second = new ObjectInputStream(body);
+        Object head = first.readObject();
+        return new Object[] {head, second.readObject()};
+    }
+
+    /** Positive and near miss: only the first of two streams gets a filter. */
+    public Object[] filterOnlyFirst(InputStream header, InputStream body, ObjectInputFilter filter)
+            throws IOException, ClassNotFoundException {
+        ObjectInputStream first = new ObjectInputStream(header);
+        ObjectInputStream second = new ObjectInputStream(body);
+        first.setObjectInputFilter(filter);
+        Object head = first.readObject();
+        return new Object[] {head, second.readObject()};
+    }
+
+    /** Near miss: a filter is installed before the read, with an unmodeled call between. */
+    public Object deserializeFilteredAfterLogging(InputStream in, ObjectInputFilter filter)
+            throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(in);
+        ois.setObjectInputFilter(filter);
+        System.err.println("deserializing filtered bytes");
+        return ois.readObject();
+    }
 }
