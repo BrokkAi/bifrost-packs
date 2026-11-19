@@ -1,7 +1,7 @@
 import os
 from urllib.request import urlopen
 
-from django.http import HttpRequest
+from django.http import HttpRequest, QueryDict
 
 DEFAULTS = {"command": "uptime"}
 
@@ -18,9 +18,7 @@ def status() -> int:
     return os.system(DEFAULTS.get("command"))
 
 
-def health() -> bytes:
-    # The request value only selects between two constant URLs.
-    request = HttpRequest()
-    if request.GET.get("region") == "eu":
-        return urlopen("https://eu.status.example.com/").read()
-    return urlopen("https://status.example.com/").read()
+def health():
+    # A QueryDict the application built is not request input.
+    defaults = QueryDict("status=https://status.example.com/")
+    return urlopen(defaults.get("status"))

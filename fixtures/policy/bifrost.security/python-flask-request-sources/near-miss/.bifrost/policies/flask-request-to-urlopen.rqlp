@@ -1,26 +1,29 @@
 ; A Flask request value reaching the URL of urllib.request.urlopen.
 ;
-; Each source is an exact call on a class the reviewed Werkzeug model pins:
-; `flask.request` proxies `werkzeug.wrappers.Request`, whose `args`, `form`
-; and `cookies` are exactly `ImmutableMultiDict` and whose `headers` is
-; exactly `EnvironHeaders`. A same-named `get` on any other receiver is not
-; selected. Subscript reads (`request.args["q"]`) are not sources yet
-; (bifrost-dev#4651). `request.values` is excluded: it is a
-; `CombinedMultiDict`, which overrides `get`.
+; Each source is an exact read of a request accessor the reviewed Werkzeug
+; model declares: `request.args`, `form`, `cookies` and `headers`, where
+; `flask.request` proxies `werkzeug.wrappers.Request`. The read itself is the
+; source, so only values that come from the request are tainted. The model's
+; `get` and `getlist` summaries carry the taint to their results. Another
+; `ImmutableMultiDict` built by the application is not a source. Subscript
+; reads (`request.args["q"]`) are not traced yet (bifrost-dev#4651).
+; `request.values` is excluded: it is a `CombinedMultiDict`.
+; `request.get_json()` is declared but is not a source here, because the call
+; through the proxy does not bind exactly yet.
 ;
 ; The Flask and Werkzeug packs activate on `pkg:pypi/flask` and
 ; `pkg:pypi/werkzeug` evidence. Until bifrost-dev#14580 derives that evidence
 ; from lockfiles, no source binds outside a declared wheel environment.
 ;
-; The sink is formal 0 of the exact reviewed urllib.request.urlopen member, so a workspace function with the same
-; name is not selected.
+; The sink is formal 0 of the exact reviewed urllib.request.urlopen member.
+; A workspace function with the same name is not selected.
 (policy
   :schema-version 1
   :id "bifrost.security.python.flask-request-to-urlopen"
   :name "Flask request value reaches urllib.request.urlopen"
   :message "A Flask request value reached the url argument of urllib.request.urlopen"
   :severity error
-  :description "Reports Flask request query, form, cookie, header and JSON values that reach the url argument of urllib.request.urlopen. urlopen dispatches on the URL scheme, so a request value there can read a local file (file:), reach an internal host, or return a data: URL. Source identity is the reviewed Werkzeug request model's exact receiver classes; sink identity is formal 0 of the exact reviewed urllib.request.urlopen member."
+  :description "Reports Flask request query, form, cookie and header values that reach the url argument of urllib.request.urlopen. urlopen dispatches on the URL scheme, so a request value there can read a local file (file:), reach an internal host, or return a data: URL. Source identity is an exact read of a reviewed Werkzeug Request accessor; sink identity is formal 0 of the exact reviewed urllib.request.urlopen member."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
   :tags ["security" "python" "flask" "ssrf" "cwe-918"]
   :analysis
@@ -32,93 +35,60 @@
         (endpoint-set
           :entries [
             (source
-              :id request-multidict-get
-              :display-name "Flask request.args/form/cookies get"
+              :id request-args
+              :display-name "Flask request.args"
               :categories [input.user-controlled io.external]
               :selector
                 (rql
                   :schema-version 1
                   (language python
-                    (call-argument :formal-index 0
-                      (resolved-call
-                        :resolves-to "werkzeug.datastructures.structures.ImmutableMultiDict.get"
-                        :proof exact
-                        :receiver-type "werkzeug.datastructures.structures.ImmutableMultiDict"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "get"))))))))
-              :bind return-value
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.args"
+                      :proof exact
+                      (field_access :field (name "args")))))
+              :bind matched-value
               :labels [attacker-controlled])
             (source
-              :id request-multidict-getlist
-              :display-name "Flask request.args/form/cookies getlist"
+              :id request-form
+              :display-name "Flask request.form"
               :categories [input.user-controlled io.external]
               :selector
                 (rql
                   :schema-version 1
                   (language python
-                    (call-argument :formal-index 0
-                      (resolved-call
-                        :resolves-to "werkzeug.datastructures.structures.ImmutableMultiDict.getlist"
-                        :proof exact
-                        :receiver-type "werkzeug.datastructures.structures.ImmutableMultiDict"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "getlist"))))))))
-              :bind return-value
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.form"
+                      :proof exact
+                      (field_access :field (name "form")))))
+              :bind matched-value
               :labels [attacker-controlled])
             (source
-              :id request-headers-get
-              :display-name "Flask request.headers get"
+              :id request-cookies
+              :display-name "Flask request.cookies"
               :categories [input.user-controlled io.external]
               :selector
                 (rql
                   :schema-version 1
                   (language python
-                    (call-argument :formal-index 0
-                      (resolved-call
-                        :resolves-to "werkzeug.datastructures.headers.EnvironHeaders.get"
-                        :proof exact
-                        :receiver-type "werkzeug.datastructures.headers.EnvironHeaders"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "get"))))))))
-              :bind return-value
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.cookies"
+                      :proof exact
+                      (field_access :field (name "cookies")))))
+              :bind matched-value
               :labels [attacker-controlled])
             (source
-              :id request-headers-getlist
-              :display-name "Flask request.headers getlist"
+              :id request-headers
+              :display-name "Flask request.headers"
               :categories [input.user-controlled io.external]
               :selector
                 (rql
                   :schema-version 1
                   (language python
-                    (call-argument :formal-index 0
-                      (resolved-call
-                        :resolves-to "werkzeug.datastructures.headers.EnvironHeaders.getlist"
-                        :proof exact
-                        :receiver-type "werkzeug.datastructures.headers.EnvironHeaders"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "getlist"))))))))
-              :bind return-value
-              :labels [attacker-controlled])
-            (source
-              :id request-get-json
-              :display-name "Flask request.get_json"
-              :categories [input.user-controlled io.external]
-              :selector
-                (rql
-                  :schema-version 1
-                  (language python
-                    (resolved-call
-                        :resolves-to "werkzeug.wrappers.Request.get_json"
-                        :proof exact
-                        :receiver-type "werkzeug.wrappers.Request"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "get_json")))))))
-              :bind return-value
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.headers"
+                      :proof exact
+                      (field_access :field (name "headers")))))
+              :bind matched-value
               :labels [attacker-controlled])])
       :sinks
         (endpoint-set

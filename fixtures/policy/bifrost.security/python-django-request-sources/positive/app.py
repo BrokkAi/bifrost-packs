@@ -16,7 +16,7 @@ def replay() -> int:
     return os.system("tar czf out.tgz " + " ".join(names))
 
 
-def fetch() -> bytes:
+def fetch():
     request = HttpRequest()
     feed = request.GET.get("feed")
-    return urlopen(feed).read()
+    return urlopen(feed)

@@ -2,8 +2,11 @@ import os
 from urllib.request import urlopen
 
 from flask import Flask, request
+from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask(__name__)
+
+DEFAULTS = ImmutableMultiDict([("status", "https://status.example.com/")])
 
 
 class Settings:
@@ -29,7 +32,5 @@ def status():
 
 @app.route("/health")
 def health():
-    # The request value only selects between two constant URLs.
-    if request.args.get("region") == "eu":
-        return urlopen("https://eu.status.example.com/").read()
-    return urlopen("https://status.example.com/").read()
+    # An ImmutableMultiDict the application built is not request input.
+    return urlopen(DEFAULTS.get("status"))

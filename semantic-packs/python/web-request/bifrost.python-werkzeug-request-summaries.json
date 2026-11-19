@@ -49,10 +49,12 @@
                   "name": "key"
                 },
                 {
-                  "name": "default"
+                  "name": "default",
+                  "optional": true
                 },
                 {
-                  "name": "type"
+                  "name": "type",
+                  "optional": true
                 }
               ]
             },
@@ -113,7 +115,8 @@
                   "name": "key"
                 },
                 {
-                  "name": "type"
+                  "name": "type",
+                  "optional": true
                 }
               ]
             },
@@ -164,10 +167,12 @@
                   "name": "key"
                 },
                 {
-                  "name": "default"
+                  "name": "default",
+                  "optional": true
                 },
                 {
-                  "name": "type"
+                  "name": "type",
+                  "optional": true
                 }
               ]
             },
@@ -228,7 +233,8 @@
                   "name": "key"
                 },
                 {
-                  "name": "type"
+                  "name": "type",
+                  "optional": true
                 }
               ]
             },
@@ -276,13 +282,16 @@
               "parameter_count": 3,
               "formals": [
                 {
-                  "name": "force"
+                  "name": "force",
+                  "optional": true
                 },
                 {
-                  "name": "silent"
+                  "name": "silent",
+                  "optional": true
                 },
                 {
-                  "name": "cache"
+                  "name": "cache",
+                  "optional": true
                 }
               ]
             },

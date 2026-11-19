@@ -27,11 +27,11 @@ def greet():
 @app.route("/fetch")
 def fetch():
     feed = request.cookies.get("feed")
-    return urlopen(feed).read()
+    return urlopen(feed)
 
 
-@app.route("/hook", methods=["POST"])
-def hook():
-    # The JSON body is a callback URL string.
-    callback = request.get_json()
-    return urlopen(callback).read()
+@app.route("/proxy")
+def proxy():
+    query = request.args
+    target = query.get("url")
+    return urlopen(target)

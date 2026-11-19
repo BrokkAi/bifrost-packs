@@ -73,11 +73,23 @@ Django:
 ## Summaries
 
 Every summary is complete: a receiver-to-result transfer, a transfer from each
-default or `type` argument to the result, and a receiver-to-exception transfer.
-The exception transfer exists because a `type` callback or JSON parsing can
-raise. `covers_overrides` is false. `CombinedMultiDict`, for example, subclasses
-`ImmutableMultiDict` and overrides `get`. The summaries describe only the exact
-declared receiver, which is the class the accessors return.
+optional default or `type` argument to the result, and a receiver-to-exception
+transfer. The exception transfer exists because a `type` callback or JSON
+parsing can raise. `covers_overrides` is false. `CombinedMultiDict`, for
+example, subclasses `ImmutableMultiDict` and overrides `get`. With simulated
+activation on bifrost-dev 709884428bf, the summaries carry request taint
+through `get` and `getlist` with this setting.
+
+## How the rules use these packs
+
+The rules select the accessor read (`request.args`, `request.GET`) with
+`resolved-value`, not the `get` call. So a value is tainted only when it comes
+from a request, and a `QueryDict` or `ImmutableMultiDict` the application
+built is not a source. A `:receiver-type` qualifier on a call source would not
+work here anyway: the policy locator rejects receiver types from a pack whose
+completeness is `partial` (`qualified-receiver-locator-partial`).
+`Request.get_json` is declared and summarized, but no rule uses it as a source
+yet. Called through the `LocalProxy`, it gives `CallBindingDispatchPartial`.
 
 ## Excluded on purpose
 

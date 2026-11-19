@@ -1,24 +1,25 @@
 ; A Django request value reaching the shell command of os.system.
 ;
-; Each source is an exact call on `django.http.QueryDict`, the class the
-; reviewed Django model pins for `HttpRequest.GET` and `HttpRequest.POST`.
-; A same-named `get` on any other receiver is not selected. `COOKIES` and
-; `META` are plain dicts, so they are not sources: a `dict.get` source would
-; select every dictionary in the program.
+; Each source is an exact read of `HttpRequest.GET` or `HttpRequest.POST`,
+; which the reviewed Django model declares as exactly `django.http.QueryDict`.
+; The read itself is the source, so only values that come from the request are
+; tainted. The model's `QueryDict.get` and `getlist` summaries carry the taint
+; to their results. A `QueryDict` built by the application is not a source.
+; `COOKIES` and `META` are plain dicts and are not declared.
 ;
 ; The Django pack activates on `pkg:pypi/django` evidence (bifrost-dev#14580).
 ; View-function `request` parameters do not bind to `HttpRequest` yet
 ; (bifrost-dev#14566), so only constructed requests are sources today.
 ;
-; The sink is the exact reviewed os.system member, so a workspace function with the same
-; name is not selected.
+; The sink is the exact reviewed os.system member.
+; A workspace function with the same name is not selected.
 (policy
   :schema-version 1
   :id "bifrost.security.python.django-request-to-os-system"
   :name "Django request value reaches os.system"
   :message "A Django request value reached the command argument of os.system(command)"
   :severity error
-  :description "Reports Django request query and form values (HttpRequest.GET and HttpRequest.POST) that reach the command argument of os.system(command). The command runs in a subshell, so attacker-controlled text in it changes the executed command. Source identity is the reviewed Django request model's exact QueryDict class; sink identity is the exact reviewed os.system member."
+  :description "Reports Django request query and form values (HttpRequest.GET and HttpRequest.POST) that reach the command argument of os.system(command). The command runs in a subshell, so attacker-controlled text in it changes the executed command. Source identity is an exact read of a reviewed Django HttpRequest accessor; sink identity is the exact reviewed os.system member."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
   :tags ["security" "python" "django" "command-injection" "cwe-78"]
   :analysis
@@ -30,40 +31,32 @@
         (endpoint-set
           :entries [
             (source
-              :id request-querydict-get
-              :display-name "Django request.GET/POST get"
+              :id request-get
+              :display-name "Django request.GET"
               :categories [input.user-controlled io.external]
               :selector
                 (rql
                   :schema-version 1
                   (language python
-                    (call-argument :formal-index 0
-                      (resolved-call
-                        :resolves-to "django.http.QueryDict.get"
-                        :proof exact
-                        :receiver-type "django.http.QueryDict"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "get"))))))))
-              :bind return-value
+                    (resolved-value
+                      :resolves-to "django.http.HttpRequest.GET"
+                      :proof exact
+                      (field_access :field (name "GET")))))
+              :bind matched-value
               :labels [attacker-controlled])
             (source
-              :id request-querydict-getlist
-              :display-name "Django request.GET/POST getlist"
+              :id request-post
+              :display-name "Django request.POST"
               :categories [input.user-controlled io.external]
               :selector
                 (rql
                   :schema-version 1
                   (language python
-                    (call-argument :formal-index 0
-                      (resolved-call
-                        :resolves-to "django.http.QueryDict.getlist"
-                        :proof exact
-                        :receiver-type "django.http.QueryDict"
-                        (call-bindings
-                          (call-shape
-                            (call :callee (name "getlist"))))))))
-              :bind return-value
+                    (resolved-value
+                      :resolves-to "django.http.HttpRequest.POST"
+                      :proof exact
+                      (field_access :field (name "POST")))))
+              :bind matched-value
               :labels [attacker-controlled])])
       :sinks
         (endpoint-set
