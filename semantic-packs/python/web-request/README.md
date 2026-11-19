@@ -23,10 +23,10 @@ declared Python environment with wheel archives produces it. bifrost-dev#14581
 (pull request bifrost-dev#14666) derives that evidence from `uv.lock`,
 `poetry.lock` or pinned requirements. The
 owner decided on 2026-11-19 that such evidence may bind these members
-`:proof exact`. Until a release carries #14666, every pack reports
+`:proof exact`. Until a release carries bifrost-dev#14666, every pack reports
 `incompatible: no activation evidence names package pkg:pypi/<name>`. No native
 release recipe includes the packs, and none should until they are qualified on
-an engine release that contains #14666.
+an engine release that contains bifrost-dev#14666.
 
 ## Reviewed claims
 
