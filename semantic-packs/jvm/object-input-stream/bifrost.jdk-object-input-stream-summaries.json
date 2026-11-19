@@ -12,7 +12,7 @@
     "toolchains": [
       {
         "name": "jdk",
-        "requirement": ">=17.0.0"
+        "requirement": ">=17.0.0, <22.0.0"
       }
     ]
   },
@@ -33,7 +33,7 @@
         {
           "toolchain": {
             "name": "jdk",
-            "version": ">=17.0.0"
+            "version": ">=17.0.0, <22.0.0"
           },
           "targets": [
             "jvm"

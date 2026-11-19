@@ -21,8 +21,10 @@ The summary does not claim `ordinary_heap_unchanged`: the constructor reads
 the stream header from the input, which advances it.
 
 The target is matched by artifact path and signature, like the generated
-`bifrost.jdk` declarations, so the pack applies on every JDK from 17 on. The
-member IDs that the policy selects are the same on JDK 17.0.16 and 21.0.8.
+`bifrost.jdk` declarations. The pack activates on JDK 17 through 21, the
+feature releases it was checked on (17.0.16 and 21.0.8); the member IDs that
+the policy selects are the same on both. The generator requires an upper bound,
+so a later JDK needs a new check and a widened range.
 
 The generated `bifrost.java-codeql-jdk-summaries` pack carries a plain
 parameter-to-return transfer for the same constructor and no allocation. That
