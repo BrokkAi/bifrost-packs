@@ -82,7 +82,7 @@ through `get` and `getlist` with this setting.
 
 ## How the rules use these packs
 
-The rules select the accessor read (`request.args`, `request.GET`) with
+The `flask-request-to-urlopen` and `django-request-to-urlopen` rules select the accessor read (`request.args`, `request.GET`) with
 `resolved-value`, not the `get` call. So a value is tainted only when it comes
 from a request, and a `QueryDict` or `ImmutableMultiDict` the application
 built is not a source. A `:receiver-type` qualifier on a call source would not

@@ -1,22 +1,20 @@
-import os
 from urllib.request import urlopen
 
 from django.http import HttpRequest, HttpResponse
 
 
-def ping(request: HttpRequest) -> HttpResponse:
+def feed(request: HttpRequest) -> HttpResponse:
     # A view parameter: reported once bifrost-dev#14566 binds it.
-    host = request.GET.get("host")
-    return HttpResponse(str(os.system("ping -c 1 " + host)))
+    return HttpResponse(urlopen(request.GET.get("url")))
 
 
-def replay() -> int:
+def replay():
     request = HttpRequest()
-    names = request.POST.getlist("name")
-    return os.system("tar czf out.tgz " + " ".join(names))
+    target = request.GET.get("target")
+    return urlopen(target)
 
 
-def fetch():
+def callback():
     request = HttpRequest()
-    feed = request.GET.get("feed")
-    return urlopen(feed)
+    hooks = request.POST.getlist("hook")
+    return urlopen(hooks[0])

@@ -802,26 +802,6 @@
       "activation": "opt-in"
     },
     {
-      "path": "policies/python/flask-request-to-os-system.rqlp",
-      "id": "bifrost.security.python.flask-request-to-os-system",
-      "authored_hash": "75dd697274bab7801687d15b8e09d2647bcf81809b2fc2d4b5e1bc027e1b15ca",
-      "resolved_semantic_hash": null,
-      "category": "security",
-      "supported_languages": [
-        "python"
-      ],
-      "required_capabilities": [
-        "taint",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "semantic-model-provenance",
-        "scoped-callable-completeness"
-      ],
-      "severity_rationale": "A command string built from a Flask request query, form, cookie or header value runs in a subshell with the application's privileges, so a remote client can change the executed command.",
-      "remediation": "Do not pass request values to os.system. Use subprocess.run with an argument list and shell=False, and validate the value against an allowlist.",
-      "activation": "opt-in"
-    },
-    {
       "path": "policies/python/flask-request-to-urlopen.rqlp",
       "id": "bifrost.security.python.flask-request-to-urlopen",
       "authored_hash": "a272cdf324e31a0deaad4ffa4e5380200078fa77de18490ae5c17905bc7c7c53",
@@ -839,26 +819,6 @@
       ],
       "severity_rationale": "A URL built from a Flask request query, form, cookie or header value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
       "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
-      "activation": "opt-in"
-    },
-    {
-      "path": "policies/python/django-request-to-os-system.rqlp",
-      "id": "bifrost.security.python.django-request-to-os-system",
-      "authored_hash": "b73e9117bbe6b3fa15773a0298155b994ff94d0dafffb3a3ff292f55918c7b22",
-      "resolved_semantic_hash": null,
-      "category": "security",
-      "supported_languages": [
-        "python"
-      ],
-      "required_capabilities": [
-        "taint",
-        "exact-call-target",
-        "actual-to-formal-binding",
-        "semantic-model-provenance",
-        "scoped-callable-completeness"
-      ],
-      "severity_rationale": "A command string built from a Django request query or form value runs in a subshell with the application's privileges, so a remote client can change the executed command.",
-      "remediation": "Do not pass request values to os.system. Use subprocess.run with an argument list and shell=False, and validate the value against an allowlist.",
       "activation": "opt-in"
     },
     {
