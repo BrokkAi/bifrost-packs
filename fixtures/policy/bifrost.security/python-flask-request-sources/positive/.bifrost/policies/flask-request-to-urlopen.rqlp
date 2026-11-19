@@ -12,7 +12,7 @@
 ; through the proxy does not bind exactly yet.
 ;
 ; The Flask and Werkzeug packs activate on `pkg:pypi/flask` and
-; `pkg:pypi/werkzeug` evidence. Until bifrost-dev#14580 derives that evidence
+; `pkg:pypi/werkzeug` evidence. Until bifrost-dev#14581 derives that evidence
 ; from lockfiles, no source binds outside a declared wheel environment.
 ;
 ; The sink is formal 0 of the exact reviewed urllib.request.urlopen member.

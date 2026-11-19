@@ -7,7 +7,7 @@
 ; to their results. A `QueryDict` built by the application is not a source.
 ; `COOKIES` and `META` are plain dicts and are not declared.
 ;
-; The Django pack activates on `pkg:pypi/django` evidence (bifrost-dev#14580).
+; The Django pack activates on `pkg:pypi/django` evidence (bifrost-dev#14581).
 ; View-function `request` parameters do not bind to `HttpRequest` yet
 ; (bifrost-dev#14566), so only constructed requests are sources today.
 ;

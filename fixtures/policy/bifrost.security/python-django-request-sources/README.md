@@ -22,7 +22,13 @@ run. Each case was run twice.
 - **As committed:** both cases are `failed` (`endpoint_role_unresolved`) with no
   findings. The request packs report
   `incompatible: no activation evidence names package pkg:pypi/...`, so each
-  source reports `qualified-value-locator-zero`. bifrost-dev#14580 closes this gap.
+  source reports `qualified-value-locator-zero`. bifrost-dev#14581 closes this gap.
+- **With bifrost-dev#14666 (unreleased, 2026-11-19):** a run on that pull
+  request's build gave 3 findings on `positive` and 0 on `near-miss`, with the
+  request packs activated and no simulation. That
+  run used a name-matched `urlopen` sink, because the CPython stdlib sink packs
+  in these fixtures did not activate (toolchain `cpython`) on that build. The
+  fixtures as committed have not yet been rerun on a release.
 - **Simulated activation:** a scratch copy of each case with the request packs'
   shard activation replaced by `{"targets": [], "configurations": []}` stands in
   for lockfile evidence. The results are below. Every run is `inconclusive`

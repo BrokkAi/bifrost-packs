@@ -19,13 +19,14 @@ and approved.
 
 No engine release activates these packs in an ordinary checkout. Third-party
 Python packs need `pkg:pypi/<name>` activation evidence, and today only a
-declared Python environment with wheel archives produces it. bifrost-dev#14580
-derives that evidence from `uv.lock`, `poetry.lock` or pinned requirements. The
+declared Python environment with wheel archives produces it. bifrost-dev#14581
+(pull request bifrost-dev#14666) derives that evidence from `uv.lock`,
+`poetry.lock` or pinned requirements. The
 owner decided on 2026-11-19 that such evidence may bind these members
-`:proof exact`. Until #14580 ships, every pack reports
+`:proof exact`. Until a release carries #14666, every pack reports
 `incompatible: no activation evidence names package pkg:pypi/<name>`. No native
 release recipe includes the packs, and none should until they are qualified on
-an engine that contains #14580.
+an engine release that contains #14666.
 
 ## Reviewed claims
 
