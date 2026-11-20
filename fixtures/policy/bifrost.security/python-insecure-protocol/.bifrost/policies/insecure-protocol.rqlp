@@ -2,6 +2,8 @@
 ; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
 ; Contract: explicit SSLv2, SSLv3, TLSv1.0, and TLSv1.1 selections are reported
 ; at exact ssl.wrap_socket and ssl.SSLContext constructor calls.
+; Only calls whose callee is spelled wrap_socket or SSLContext are bound, so an
+; API imported under another name is not examined.
 (policy
   :schema-version 1
   :id "bifrost.security.python.insecure-protocol"
@@ -23,7 +25,7 @@
                 :resolves-to "ssl.wrap_socket"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "wrap_socket"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_SSLv3"
             :proof exact
@@ -32,7 +34,7 @@
                 :resolves-to "ssl.wrap_socket"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "wrap_socket"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_TLSv1"
             :proof exact
@@ -41,7 +43,7 @@
                 :resolves-to "ssl.wrap_socket"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "wrap_socket"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_TLSv1_1"
             :proof exact
@@ -50,7 +52,7 @@
                 :resolves-to "ssl.wrap_socket"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "wrap_socket"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_SSLv2"
             :proof exact
@@ -59,7 +61,7 @@
                 :resolves-to "ssl.SSLContext.__init__"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "SSLContext"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_SSLv3"
             :proof exact
@@ -68,7 +70,7 @@
                 :resolves-to "ssl.SSLContext.__init__"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "SSLContext"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_TLSv1"
             :proof exact
@@ -77,7 +79,7 @@
                 :resolves-to "ssl.SSLContext.__init__"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call)))))))
+                  (call-shape (language python (call :callee (name "SSLContext"))))))))
           (resolved-value
             :resolves-to "ssl.PROTOCOL_TLSv1_1"
             :proof exact
@@ -86,7 +88,7 @@
                 :resolves-to "ssl.SSLContext.__init__"
                 :proof exact
                 (call-bindings
-                  (call-shape (language python (call))))))))))
+                  (call-shape (language python (call :callee (name "SSLContext")))))))))))
     (group :name by-call :by (explicit-insecure-protocols.site_id)
       (aggregate :name insecure-protocols :op count))
     (assert :group by-call :value insecure-protocols :cardinality (exactly 0))))
