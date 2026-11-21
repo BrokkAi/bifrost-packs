@@ -14,28 +14,24 @@ a `pyproject.toml` and `requirements.txt` that pin `django==5.2.0`.
 
 ## Validation
 
-Bifrost 0.15.3 development build 709884428bfc548ceaf4e2f2ebaed1f0539bdb91,
-evaluation date `2026-11-19`, `BIFROST_WORKSPACE_SEMANTIC_MODELS=on`,
-`BIFROST_SEMANTIC_PACK_DOWNLOAD=off` and a fresh `BIFROST_CACHE_DIR` for each
-run. Each case was run twice.
+Released Bifrost 0.15.4 (`bifrost-v0.15.4-aarch64-apple-darwin`, build identity
+`ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`), evaluation date `2026-11-21`,
+`BIFROST_WORKSPACE_SEMANTIC_MODELS=on`, `BIFROST_SEMANTIC_PACK_DOWNLOAD=off`,
+`BIFROST_OPEN_SEMANTIC_PACK_BUNDLE` set to the extracted `bifrost-semantic-packs`
+directory of `packs/v0.15.0` (native archive SHA-256
+`7421ad60d21d322aca49a027407f5f256b9151d51f2026aec9c5c1bccee79b3f`), and a fresh
+home and `BIFROST_CACHE_DIR` for each run. Each case was run twice with the same
+result, as committed and with no simulated activation.
 
-- **As committed:** both cases are `failed` (`endpoint_role_unresolved`) with no
-  findings. The request packs report
-  `incompatible: no activation evidence names package pkg:pypi/...`, so each
-  source reports `qualified-value-locator-zero`. bifrost-dev#14581 closes this gap.
-- **With bifrost-dev#14666 (unreleased, 2026-11-19):** a run on that pull
-  request's build gave 3 findings on `positive` and 0 on `near-miss`, with the
-  request packs activated and no simulation. That
-  run used a name-matched `urlopen` sink, because the CPython stdlib sink packs
-  in these fixtures did not activate (toolchain `cpython`) on that build. The
-  fixtures as committed have not yet been rerun on a release.
-- **Simulated activation:** a scratch copy of each case with the request packs'
-  shard activation replaced by `{"targets": [], "configurations": []}` stands in
-  for lockfile evidence. The results are below. Every run is `inconclusive`
-  (`partial_discovery`), because the enclosing functions' procedure semantics
-  stay unknown. The findings are still reported.
+The request packs activate from the pins in `requirements.txt`
+(bifrost-dev#14581). The reviewed stdlib `urlopen` sink activates only when the
+open packs are available: without them, the run is `failed`
+(`endpoint_role_unresolved`) with `no activation evidence names toolchain
+cpython`. Every run below is `inconclusive` (`partial_discovery`), because the
+enclosing functions' procedure semantics stay unknown. The findings are still
+reported.
 
-| Case | Simulated result |
+| Case | Result |
 | --- | --- |
 | `positive` | 2 definite findings and 1 possible finding. Line 14 (`GET.get`) and line 20 (`POST.getlist(...)[0]`) read constructed `HttpRequest()` objects and are definite. Line 8, in the `feed` view, is possible, because view parameters do not bind to `HttpRequest` yet (bifrost-dev#14566) |
 | `near-miss` | 0 findings. Line 10 reads a request value that never reaches the URL. Line 16 opens a value from a `QueryDict` the application built, which is not a source |

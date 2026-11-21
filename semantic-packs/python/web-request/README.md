@@ -15,18 +15,17 @@ and approved.
 | `bifrost.python-django-request-declarations` | 0.1.0 | `pkg:pypi/django` `>=5.2.0, <5.3.0` | declarations |
 | `bifrost.python-django-request-summaries` | 0.1.0 | `pkg:pypi/django` `>=5.2.0, <5.3.0` | procedure summaries |
 
-## Not active yet
+## Activation
 
-No engine release activates these packs in an ordinary checkout. Third-party
-Python packs need `pkg:pypi/<name>` activation evidence, and today only a
-declared Python environment with wheel archives produces it. bifrost-dev#14581
-(pull request bifrost-dev#14666) derives that evidence from `uv.lock`,
-`poetry.lock` or pinned requirements. The
-owner decided on 2026-11-19 that such evidence may bind these members
-`:proof exact`. Until a release carries bifrost-dev#14666, every pack reports
-`incompatible: no activation evidence names package pkg:pypi/<name>`. No native
-release recipe includes the packs, and none should until they are qualified on
-an engine release that contains bifrost-dev#14666.
+Third-party Python packs need `pkg:pypi/<name>` activation evidence. From
+Bifrost 0.15.4 on, the engine derives it from `uv.lock`, `poetry.lock` or pinned
+requirements as well as from a declared Python environment with wheel archives
+(bifrost-dev#14581). The owner decided on 2026-11-19 that such evidence may bind
+these members `:proof exact`. Earlier engines report `incompatible: no
+activation evidence names package pkg:pypi/<name>`.
+
+These packs are source-only. No native release recipe includes them yet, so a
+released bundle does not deliver them. The fixtures qualify them on 0.15.4.
 
 ## Reviewed claims
 
