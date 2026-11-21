@@ -164,6 +164,21 @@ regenerates as shard
 a `proc_open` sink binds as complete. With the 0.15.1 shard `e8e6ad9c…`, which
 has no certified records, it can never complete.
 
+The authoring CLI pin moves to the v0.15.4 release (public commit
+`6c889183c1b0e81c74aa80f6d362bc547315b99b`, build identity
+`ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`):
+`bifrost-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`067bdf199dc1e389f25f35a0a30f8fd24ead29668419df2d2b74c5da5f6ec747`, executable
+SHA-256 `9375d159a40f1e3f36fdfc0b53af079e863692f8c6b438e31fa5d4665efc48a3`).
+The released v0.15.4 CLI reproduced all 294 locked authoring identities
+unchanged. The rules smoke test in `pack-release.yml` stays on v0.15.3 until a
+rules release requires 0.15.4.
+
+The native producer stays on v0.15.3. The v0.15.4 producer writes a native
+bundle index schema that `release-contract/native_generation.py` does not
+accept (it accepts 3 and 4), so moving it needs a reviewed release-contract
+change.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,
