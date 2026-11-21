@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -799,6 +799,46 @@
       ],
       "severity_rationale": "The URL passed to webbrowser.open selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser command-line option (CVE-2026-4519, CVE-2026-4786).",
       "remediation": "Do not open process input as a URL. Parse it, require an https scheme and an expected host, and pass only the validated URL to webbrowser.open.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-to-urlopen.rqlp",
+      "id": "bifrost.security.python.flask-request-to-urlopen",
+      "authored_hash": "a272cdf324e31a0deaad4ffa4e5380200078fa77de18490ae5c17905bc7c7c53",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL built from a Flask request query, form, cookie or header value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/django-request-to-urlopen.rqlp",
+      "id": "bifrost.security.python.django-request-to-urlopen",
+      "authored_hash": "ff282ab857ddca3450dba7e9f7a2d4ff4321f7f29ecd4a1676463c19852b6f90",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL built from a Django request query or form value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
       "activation": "opt-in"
     },
     {
