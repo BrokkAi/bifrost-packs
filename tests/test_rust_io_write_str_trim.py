@@ -9,6 +9,8 @@ TRIM = "std.primitive.str.trim"
 
 
 class RustIoWriteStrTrimTests(unittest.TestCase):
+    """Verify the str::trim member declaration and taint summary shape."""
+
     def setUp(self):
         self.pack = json.loads(PACK.read_text())
         self.members = self.pack["shards"][0]["payload"]["members"]
