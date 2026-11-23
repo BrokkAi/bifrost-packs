@@ -47,7 +47,18 @@
       (rql :schema-version 1
         (language javascript
           (control-relations :relation [reaches]
-            (procedure-of (call))))))
+            (intersect
+              (procedure-of
+                (union
+                  (call :callee (name "existsSync"))
+                  (call :callee (name "statSync"))
+                  (call :callee (name "lstatSync"))
+                  (call :callee (name "accessSync"))))
+              (procedure-of
+                (union
+                  (call :callee (name "writeFileSync"))
+                  (call :callee (name "appendFileSync"))
+                  (call :callee (name "openSync")))))))))
     (join :left checks :right reaches :on ((program_point_id source_id)))
     (join :left reaches :right uses :on ((target_id program_point_id)))
     (group :name by-use :by (uses.id)
