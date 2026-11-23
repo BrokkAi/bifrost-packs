@@ -1,0 +1,20 @@
+; CodeQL: rust/ql/src/queries/security/CWE-825/AccessAfterLifetime.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a raw-pointer access whose stack origin has ended, when the
+; engine proves the pointer reaches the access. Findings the engine cannot
+; prove stay out of this policy.
+(policy
+  :schema-version 1
+  :id "bifrost.rust-codeql-quality.access-after-lifetime-ended"
+  :name "Rust access after lifetime ended"
+  :message "A raw pointer is accessed after its stack origin ended"
+  :severity error
+  :description "Reports a read or write through a raw pointer whose stack place has gone out of scope, such as a pointer to a local returned from its function. The engine's pointer-provenance solver proves the pointer reaches the access. Several engine rows can describe one access through different origins, and the policy reports each row."
+  :tags ["rust" "codeql" "quality" "memory-safety" "cwe-825"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq access_after_lifetime_ended)
+                    (proof eq proven))
+      (rust-pointer-findings
+        (procedure-of (language rust (function)))))))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "825")))

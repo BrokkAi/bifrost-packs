@@ -1,0 +1,33 @@
+; CodeQL: rust/ql/src/queries/unusedentities/UnusedVariable.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a Rust local, parameter, pattern binder or loop variable with
+; no use, after CodeQL's exclusions: names that begin with an underscore, `self`,
+; a binding initialized by `let name = value` (CodeQL counts an initializer as a
+; use; the unused-value policy covers that case), and an uppercase name that is
+; a whole match-arm pattern (a constant or enum variant path).
+; Opaque macro and incomplete callable access must remain Open in the engine.
+(policy
+  :schema-version 1
+  :id "bifrost.rust-codeql-quality.unused-variable"
+  :name "Rust unused variable"
+  :message "Variable is not used."
+  :severity note
+  :description "Reports a Rust binding (local, parameter, pattern binder or loop variable) that no use in its scope refers to. Names that begin with an underscore, the receiver `self`, a binding initialized by `let name = value` (the unused-value policy covers an initializer that is never read), and an uppercase identifier that forms a whole match-arm pattern are not reported. Uses inside macro arguments the engine cannot read leave the binding open instead of reporting it."
+  :tags ["rust" "codeql" "quality" "maintainability"]
+  :analysis (analysis :type match
+    :selector (rql :schema-version 1
+      (except
+        (except
+          (filter :where ((name regex "^[^_]")
+                          (name ne "self")
+                          (whole_let_initializer eq false))
+            (language rust
+              (bindings :kind [local parameter pattern_binder loop_variable])))
+          (filter :where ((name regex "^[A-Z]")
+                          (whole_match_arm_identifier eq true))
+            (language rust
+              (bindings :kind [local parameter pattern_binder loop_variable]))))
+        (binding-of
+          (binding-uses
+            (language rust
+              (bindings :kind [local parameter pattern_binder loop_variable]))))))))

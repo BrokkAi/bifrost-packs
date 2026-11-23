@@ -1,0 +1,70 @@
+; Lead: BrokkAi/bifrost-packs#393 (OpenSSF CVE Benchmark, command injection).
+; Product source contract: child_process.execSync(command) runs the command
+; string in a shell (Node v22.11.0 doc/api/child_process.md), so shell
+; metacharacters in a caller-chosen command run further commands.
+; Engine contract: the source is a keyed read of the reviewed Node runtime
+; `process.argv` model. The sink binds exactly to the one-argument
+; member.node.child-process.javascript.exec-sync-1 of the released
+; bifrost.node-child-process-javascript-declarations pack; its reviewed
+; summary carries the command to the result. String concatenation is
+; built-in value flow. Any other call on the command must be modeled.
+; Not covered: execSync with an options argument, exec, execFile, spawn and
+; spawnSync, including the shell: true forms, which have no reviewed model
+; yet. A tainted command passed to them leaves the run inconclusive, never
+; clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.javascript.process-input-to-child-process-command"
+  :name "Process argument reaches a Node shell command"
+  :message "a process argument reached the command string of child_process.execSync, which runs it in a shell"
+  :severity warning
+  :description "Reports process.argv values that reach the command argument of child_process.execSync(command). The command runs in a shell, so metacharacters in a caller-chosen value run further commands."
+  :tags ["security" "javascript" "command-injection" "cwe-78" "node"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id process-argv-read
+              :display-name "process.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (keyed-read-value
+                      :runtime node
+                      :global process
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id child-process-exec-sync-command
+              :display-name "child_process.execSync command"
+              :categories [command.text]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.child-process.javascript.exec-sync-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "execSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "78")))

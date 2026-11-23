@@ -50,7 +50,9 @@ def native_contents(archive, baseline=None, generator_version=None):
     expected_version = baseline['tag'][1:] if baseline is not None else generator_version
     # Index schema 4 adds the rule and runtime-exposure measurement lookups
     # (bifrost-dev#8324); engines that read only schema 3 must skip it.
-    if index['schema_version'] not in (3, 4) or not expected_version or index['generator']['version'] != expected_version:
+    # Schema 5 adds verified input slots to generated productions; engines
+    # that read only schemas 3 and 4 must skip it.
+    if index['schema_version'] not in (3, 4, 5) or not expected_version or index['generator']['version'] != expected_version:
         release.fail('integrity-error', 'native release index version differs')
     if not index['packs'] and not index.get('generated_productions', []):
         release.fail('invalid-manifest', 'native bundle has no packs')
