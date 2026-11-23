@@ -17,10 +17,35 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-18, the latest published streams are `packs/v0.14.0` and
-`rules/v0.15.0`. `packs/v0.15.0` and `rules/v0.16.0` are prepared next; tag
-`packs/v0.15.0` first, because `rules/v0.16.0` depends on it exactly. Both
-require Bifrost **0.15.3** or later.
+As of 2026-11-23, the latest published streams are `packs/v0.15.0` and
+`rules/v0.16.0`. `packs/v0.16.0` and `rules/v0.17.0` are prepared next; tag
+`packs/v0.16.0` first, because `rules/v0.17.0` depends on it exactly. Both load
+on Bifrost **0.15.3** or later and are qualified on 0.15.4.
+
+`packs/v0.16.0` is a minor release that adds the reviewed, authored
+`bifrost.jdk-object-input-stream-summaries` 0.1.0 (#408). The other 71 packs
+keep their IDs, versions and manifests, and the index stays schema 4. It stays
+on the 0.15.3 producer because a 0.15.4-produced bundle panics Java analysis on
+released 0.15.4 when loaded through `BIFROST_OPEN_SEMANTIC_PACK_BUNDLE` with a
+detected JDK 21.0.8. All 282 open policy fixtures were compared on 0.15.4
+against `packs/v0.15.0`, and 281 are identical. In the other,
+`java-objectinputstream-read-without-filter`, 7 findings become 0, still
+inconclusive, when a workspace also carries its own copy of the new pack;
+removing the copy restores all 7.
+
+`rules/v0.17.0` is a minor release that depends exactly on `packs/v0.16.0`:
+
+- New opt-in `python.flask-request-to-urlopen` and
+  `python.django-request-to-urlopen` (#409, CWE-918). Their Flask, Werkzeug and
+  Django request packs are source-only and not in `packs/v0.16.0`, so with the
+  released packs alone these flows are not reported and the run is not clean.
+- `java.objectinputstream-read-without-filter` uses the new summary. On Bifrost
+  0.15.4 its fixture reports 7 findings instead of 3, and every run stays
+  inconclusive (#408).
+- The Python SSL rules are narrowed to calls named `wrap_socket` or
+  `SSLContext` (#411).
+
+The earlier release notes follow.
 
 `packs/v0.15.0` is a minor release that raises the consumer requirement to
 Bifrost 0.15.3 (#311). It is built by the released, checksum-pinned

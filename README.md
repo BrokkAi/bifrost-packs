@@ -88,17 +88,13 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.14.0` and `rules/v0.15.0`. `packs/v0.15.0`
-and `rules/v0.16.0` are prepared next, and both need Bifrost **0.15.3** or
-later. `packs/v0.15.0` is built by the 0.15.3 producer, which certifies the
-PHP builtin pack and rebuilds the Rust stdlib pack with semantic-model schema
-40. `rules/v0.16.0` depends on `packs/v0.15.0` and restores the opt-in Cargo SSH git host-key policy
-(CVE-2022-46176), which declares no required capability: earlier engines reject
-the whole catalog for that. It also adds an opt-in Net::IMAP server-choice
-policy (CVE-2026-42245), three opt-in Node core taint policies (fs path,
-`execSync` command, `vm` code) and an opt-in PHP `proc_open` command policy
-(CVE-2024-1874), and stops `missing-docstring` from reporting test code and
-script entry points (#383). See [release streams](docs/release-streams.md).
+The latest releases are `packs/v0.15.0` and `rules/v0.16.0`. `packs/v0.16.0`
+and `rules/v0.17.0` are prepared next. Both load on Bifrost **0.15.3** or later
+and are qualified on 0.15.4. `packs/v0.16.0` stays on the 0.15.3 producer and
+adds the reviewed `ObjectInputStream` constructor summary. `rules/v0.17.0`
+depends on it, adds opt-in Flask and Django request-to-`urlopen` policies whose
+request packs are still source-only, and narrows the Python SSL rules. See
+[release streams](docs/release-streams.md).
 
 ## Source verification
 
