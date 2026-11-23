@@ -1,0 +1,210 @@
+{
+  "schema_version": 35,
+  "pack_id": "bifrost.rust-std-transfers",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-rust-codeql-parity-models",
+    "version": "0.1.0"
+  },
+  "language": "rust",
+  "ecosystem": "cargo",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "CodeQL 1be292a1e54696ca543b4ad0f9b4537b9687caa7 (MIT, Copyright (c) GitHub, Inc.): rust/ql/lib/codeql/rust/frameworks/stdlib/core.model.yml:131 (<core::str>::parse -> ReturnValue.Field[core::result::Result::Ok(0)]), rust/ql/lib/codeql/rust/frameworks/stdlib/fs.model.yml:84 (<std::fs::Metadata>::is_dir), and rust/ql/lib/ext/generated/modelgenerator/rust.model.yml:4169,4172-4174 (<core::result::Result>::unwrap, unwrap_or, unwrap_or_default). Result::Ok(0) maps to the canonical Rust standard-library variant declaration member.593c436f45bdfb0723c1654b44557afc46096c2941607dcb171927fea64b05d9 followed by tuple field 0. Only inherent methods are modeled (covers_overrides: true).",
+    "revision": "1be292a1e54696ca543b4ad0f9b4537b9687caa7"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.bifrost.rust-std-transfers",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.rust-codeql.core-result-unwrap",
+            "target": {
+              "path": "library/core/src/result.rs",
+              "symbol": "core.result.Result.unwrap",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver",
+                  "path": [
+                    {
+                      "variant": {
+                        "declaration": "member.593c436f45bdfb0723c1654b44557afc46096c2941607dcb171927fea64b05d9"
+                      }
+                    },
+                    {
+                      "tuple": 0
+                    }
+                  ]
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.core-result-unwrap-or",
+            "target": {
+              "path": "library/core/src/result.rs",
+              "symbol": "core.result.Result.unwrap_or",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver",
+                  "path": [
+                    {
+                      "variant": {
+                        "declaration": "member.593c436f45bdfb0723c1654b44557afc46096c2941607dcb171927fea64b05d9"
+                      }
+                    },
+                    {
+                      "tuple": 0
+                    }
+                  ]
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.core-result-unwrap-or-default",
+            "target": {
+              "path": "library/core/src/result.rs",
+              "symbol": "core.result.Result.unwrap_or_default",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver",
+                  "path": [
+                    {
+                      "variant": {
+                        "declaration": "member.593c436f45bdfb0723c1654b44557afc46096c2941607dcb171927fea64b05d9"
+                      }
+                    },
+                    {
+                      "tuple": 0
+                    }
+                  ]
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-fs-metadata-is-dir",
+            "target": {
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs.Metadata.is_dir",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.core-str-parse",
+            "target": {
+              "path": "library/core/src/str/mod.rs",
+              "symbol": "core.str.parse",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return",
+                  "path": [
+                    {
+                      "variant": {
+                        "declaration": "member.593c436f45bdfb0723c1654b44557afc46096c2941607dcb171927fea64b05d9"
+                      }
+                    },
+                    {
+                      "tuple": 0
+                    }
+                  ]
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          }
+        ]
+      }
+    }
+  ]
+}

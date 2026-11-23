@@ -52,6 +52,14 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   from the engine's published Cargo crate. They are included in this source
   repository/source archive only and must remain separate from runtime bundles.
 - Rust declaration specifications retain MIT OR Apache-2.0 metadata.
+- The authored Rust standard-library transfer summary model
+  (`semantic-packs/rust-codeql-parity/bifrost.rust-std-transfers.json`)
+  translates five CodeQL Rust standard-library model rows
+  (`rust/ql/lib/codeql/rust/frameworks/stdlib/core.model.yml:131`,
+  `stdlib/fs.model.yml:84`, and
+  `ext/generated/modelgenerator/rust.model.yml:4169,4172-4174`) from
+  `github/codeql` at `1be292a1e54696ca543b4ad0f9b4537b9687caa7`, MIT,
+  Copyright (c) GitHub, Inc.; see `licenses/CodeQL-MIT.txt`.
 - The authored .NET BCL declaration and summary model retains the .NET
   Foundation and Contributors MIT terms; see licenses/DotNet-Runtime-MIT.txt
   and semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json.
