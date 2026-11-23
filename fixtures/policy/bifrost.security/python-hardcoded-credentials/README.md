@@ -1,6 +1,6 @@
 # Python Hardcoded Credentials
 
-Expected findings on Bifrost 0.15.3 and 0.15.4: `main.py:7, 13, 16` and `hmac_overloads.py:10, 14, 18, 23, 27, 31`.
+Expected findings on Bifrost 0.15.3 and 0.15.4: `main.py:7, 13, 16` and `hmac_overloads.py:11, 15, 19, 25, 29, 33`.
 
 Near misses: the short HMAC keys, long messages and digest names, spread arguments, a caller-defined `new`, `hashlib.new`, and a third-party `requests` call.
 

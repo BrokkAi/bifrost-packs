@@ -1,3 +1,4 @@
+"""Positive and near-miss hmac.new call shapes."""
 import hashlib
 import hmac
 import hmac as hmac_alias
@@ -19,6 +20,7 @@ def keyword_key():
 
 
 def local_key():
+    """Pass the key through a local variable."""
     secret = b"hardcoded-hmac-key-value"
     return hmac.new(secret, b"payload", digestmod=hashlib.sha256)
 
@@ -56,12 +58,15 @@ def unrelated_hash():
 
 
 class Signer:
+    def __init__(self, prefix):
+        self.prefix = prefix
+
     def new(self, key, msg, digestmod):
-        return key
+        return self.prefix + key + msg + digestmod.encode()
 
 
 def caller_defined_new():
-    return Signer().new(b"hardcoded-hmac-key-value", b"payload", "sha256")
+    return Signer(b"v1:").new(b"hardcoded-hmac-key-value", b"payload", "sha256")
 
 
 def third_party_call():
