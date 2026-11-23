@@ -17,9 +17,150 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-12, the latest published streams are `packs/v0.12.0` and
-`rules/v0.13.0`. `packs/v0.13.0` and `rules/v0.14.0` are prepared next; tag
-`packs/v0.13.0` first, because `rules/v0.14.0` depends on it exactly.
+As of 2026-11-18, the latest published streams are `packs/v0.14.0` and
+`rules/v0.15.0`. `packs/v0.15.0` and `rules/v0.16.0` are prepared next; tag
+`packs/v0.15.0` first, because `rules/v0.16.0` depends on it exactly. Both
+require Bifrost **0.15.3** or later.
+
+`packs/v0.15.0` is a minor release that raises the consumer requirement to
+Bifrost 0.15.3 (#311). It is built by the released, checksum-pinned
+`bifrost-semantic-pack` 0.15.3 (public commit
+`f7e104a77b4f869f342dd73af0cc622c4a1a0584`) instead of 0.15.1. Migration: the
+regenerated `bifrost.rust-stdlib` manifest uses semantic-model schema 40, so
+the bundle's read schemas become 8, 14, 16, 19, 22 and 40, and Bifrost 0.15.2
+rejects the whole bundle ("unsupported semantic-model schema version 40",
+checked with the released 0.15.2 `install-semantic-packs`); 0.15.3 installs
+it. The release index stays schema 4, with the same 71 packs, IDs and
+versions. Seven generated packs get new manifests:
+
+- `bifrost.php-builtin` is now certified callable-family complete
+  (bifrost-dev#9337), shard `4d5075c2…`, so builtin sinks such as `proc_open`
+  bind as complete. The shard was reproduced locally in linux/amd64 Docker
+  with the same producer.
+- `bifrost.jdk`, `bifrost.rust-stdlib` (producer `0.15.3+rust-pack-12`, with
+  bifrost-dev#12213, #12073 and #12364) and `bifrost.scala-library` change
+  semantically. `bifrost.rust-stdlib` stays review-required.
+- `bifrost.kotlin-stdlib`, `bifrost.python-stdlib` and
+  `bifrost.typescript-stdlib` keep their semantic hashes; only the producer
+  version and content hash change.
+
+The source-only models listed below are not in this native release.
+
+`rules/v0.16.0` is a minor release that raises the engine requirement to
+Bifrost **0.15.3** or later. Migration: Bifrost 0.15.2 and earlier reject its
+whole catalog, because the restored policy below declares an empty
+`required_capabilities` list ("incomplete inventory metadata"); upgrade the
+engine, or stay on `rules/v0.15.0`. It depends exactly on `packs/v0.15.0`. Bifrost 0.15.3 accepts an empty list
+(bifrost-dev#10941). The policy authoring CLI pin and the rules smoke test move
+to the released v0.15.3 (build identity
+`cc7ebd1676e002b657e10304cfd977bc289e25ed`); it reproduces every locked
+authoring identity unchanged.
+
+- `bifrost.security` 3.2.0 restores the opt-in
+  `bifrost.security.rust.cargo-ssh-git-host-key-unverified` (#248, #387,
+  CVE-2022-46176), held out since `rules/v0.13.0`. Bifrost 0.15.3 no longer
+  reports a workspace `.cargo/config.toml` as unsupported dependency evidence,
+  so the policy now reads the root file's `net.git-fetch-with-cli` TOML
+  configuration fact: the boolean `true` suppresses the finding for a pinned
+  Rust 1.39.0 or later, unless a `.cargo/config.toml` in a subdirectory sets it
+  to anything else, where earlier engines left the run inconclusive. 16 fixture
+  cases pass on Bifrost 0.15.3; see `docs/qualification/rust-cargo-ssh-git.json`.
+- `bifrost.security` 3.2.0 also adds the opt-in
+  `bifrost.security.ruby.network-input-to-net-imap-host` (#284,
+  CVE-2026-42245): a `Net::HTTP.get` body that chooses the server of
+  `Net::IMAP.new` on net-imap before 0.4.24, 0.5.0 to 0.5.13 or 0.6.0 to 0.6.3.
+  It needs the source-only `bifrost.ruby.net-imap` 0.2.0, which is not in
+  `packs/v0.15.0`; with the released packs alone the run is inconclusive, never
+  clean. 0.6.4 and 0.6.4.1, an unlocked net-imap and a `**opts` splat stay
+  inconclusive.
+- `bifrost.security` 3.2.0 also adds three opt-in Node core taint policies
+  (#393), each from a `process.argv` keyed read:
+  `javascript.process-input-to-fs-path` (`fs.readFileSync`, `readdirSync`,
+  `existsSync`, `statSync`, `lstatSync`, `accessSync`, `unlinkSync`, `rmSync`,
+  and as possible findings the callback and `fs/promises` forms; CWE-22),
+  `javascript.process-input-to-child-process-command`
+  (`child_process.execSync(command)`; CWE-78) and
+  `javascript.process-input-to-vm-code` (`vm.runInNewContext`,
+  `vm.runInThisContext`, `new vm.Script`; CWE-94; every finding is possible
+  and the run inconclusive, because evaluated code can escape its context).
+  The command policy works with the released `packs/v0.14.0` and the prepared
+  `packs/v0.15.0` models. The fs policy needs the source-only, review-required
+  `bifrost.node-fs-javascript-*` packs, and the vm policy the new source-only
+  `bifrost.node-vm-javascript-declarations` pack; without them those runs are
+  inconclusive, never clean. Open redirects through `http.ServerResponse`
+  headers, `exec`, `spawn` and the `shell: true` forms are not covered.
+- `bifrost.security` 3.2.0 also adds the opt-in, first PHP security policy
+  `bifrost.security.php.request-input-to-proc-open-command` (#311,
+  CVE-2024-1874, version- and OS-independent part): a `$_GET` value that
+  reaches the `proc_open` command as a string or as an array element. It needs
+  a `bifrost.php-builtin` pack from `bifrost-semantic-pack` 0.15.2 or later and
+  the source-only `bifrost.php-process-summaries` 0.1.0. `packs/v0.15.0` is the
+  first release with such a php-builtin pack. With `packs/v0.14.0`, whose shard
+  comes from the 0.15.1 producer, every run is inconclusive. The Windows and
+  PHP runtime check of the CVE is not made.
+- `bifrost.python-codeql-quality` 0.1.2 narrows `missing-docstring` (#383,
+  bifrost-dev#11358): it no longer reports test code (pytest-collected modules,
+  `unittest.TestCase` subclasses, `test*` functions in modules that import
+  pytest or nose) or a function a module's `__main__` block calls. It reads the
+  `test_scope` and `entry_point` fields that Bifrost 0.15.3 first emits
+  (bifrost-dev#11705); an undecided row is withheld, never reported clean.
+  This departs from CodeQL parity on purpose.
+
+Source-only model change, not in any packs release yet: `bifrost.ruby.net-imap`
+0.2.0 declares `Net::IMAP.new` as the constructor net-imap prepends,
+`(host, port_or_options = nil, *deprecated, **options)`, in shards split at the
+CVE-2026-42245 fixed versions, and summarizes it for 1 to 8 arguments. On
+Bifrost 0.15.3 keyword calls such as `Net::IMAP.new(host, port: 993, ssl: true)`
+now bind, so `network-input-to-net-imap-raw-arguments` reports what follows such
+a call instead of staying inconclusive. Its fixtures with four sinks in one
+method are inconclusive on Bifrost 0.15.3 although every finding stays
+definite (bifrost-dev#14210).
+
+Source-only Node model changes, not in any packs release yet:
+`bifrost.node-fs-javascript-declarations` 0.2.1 adds `readFileSync`,
+`readdirSync`, `unlinkSync` and `rmSync`, plus declarations with no summary for
+the callback `readFile`, `readdir` and `unlink` and an `fs/promises` module;
+`bifrost.node-fs-javascript-summaries` 0.3.0 adds summaries for the new
+synchronous members and for `statSync`, `lstatSync` and `accessSync`;
+`bifrost.node-vm-javascript-declarations` 0.1.0 is new and has no summaries
+on purpose, because evaluated code can escape its context; every throwing fs
+summary carries all of its arguments to the exceptional return.
+
+No other policy, policy ID or required capability changes from
+`rules/v0.15.0`. The `packs/v0.14.0` and `rules/v0.15.0` notes follow.
+
+`packs/v0.14.0` is a minor release. It is built by the same released,
+checksum-pinned `bifrost-semantic-pack` 0.15.1 producer, keeps release index
+schema 4 and the same semantic-model read schemas, and needs Bifrost 0.15.1 or
+later. Its only native addition is `bifrost.rust-std-deref-summaries` 0.1.0
+(#338): complete `<String as Deref>::deref` and `<PathBuf as Deref>::deref`
+summaries for the pinned Rust nightly 2026-08-24 stdlib. The pack is
+review-required, so it stays dormant until a consumer enables it together with
+the matching `bifrost.rust-stdlib`, and a missing companion must fail closed. It
+does not certify callable-family completeness. The engine change that consumes
+these summaries is not in a Bifrost release yet. The Ruby `rexml`, `net-imap`
+and `rubygems-installer` models and the C# ASP.NET Core WebAssembly server and
+hosting models (#392) are source-only and not in a release recipe. No consumer
+requirement changes.
+
+`rules/v0.15.0` is a minor release. It requires Bifrost 0.15.2 or later, as
+`rules/v0.14.0` did, and depends exactly on `packs/v0.14.0`:
+
+- `bifrost.rust-codeql-quality` 0.3.0 adds `access-after-lifetime-ended`,
+  `access-invalid-pointer`, `unused-variable` and `unused-value` (#400).
+  `unused-value` also reports `_`-prefixed locals that CodeQL excludes
+  (bifrost-dev#13914).
+- `bifrost.security` 3.1.0 adds five opt-in policies (#392): the two REXML
+  denial-of-service rules (CVE-2024-35176, CVE-2025-58767), Net::IMAP raw
+  arguments (CVE-2026-47240, CVE-2026-47241), `Gem::Installer` install
+  (CVE-2017-0903, install part) and the ASP.NET Core WebAssembly debugging
+  affected-version rule (CVE-2026-96230). Their models are not in
+  `packs/v0.14.0`. With the released packs alone, Bifrost 0.15.2 reports these
+  runs as inconclusive (`partial_discovery`) with no findings, never clean. A
+  project can supply the models under `.bifrost/semantic-models`.
+
+No other policy, policy ID or required capability changes from
+`rules/v0.14.0`. The `packs/v0.13.0` and `rules/v0.14.0` notes follow.
 
 `packs/v0.13.0` is a minor release. It is built by the same released,
 checksum-pinned `bifrost-semantic-pack` 0.15.1 as `packs/v0.12.0`, keeps
@@ -80,8 +221,8 @@ for either of two defects that rules 0.10.0 through 0.12.0 contain:
   entry, and `bifrost.security` becomes 3.0.0.
 
 bifrost-dev#10941 makes later engines skip a manifest-less directory and
-accept an empty capability list. The held-out policy returns in a rules
-release that requires such an engine. No other policy, policy ID, finding or
+accept an empty capability list. The held-out policy returns in
+`rules/v0.16.0`, which requires Bifrost 0.15.3. No other policy, policy ID, finding or
 required capability changes from `rules/v0.12.0`.
 
 The `packs/v0.12.0` and `rules/v0.12.0` notes follow.

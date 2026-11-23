@@ -1,0 +1,195 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-django-request-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Django 5.2 source (django/http/request.py, django/core/handlers/wsgi.py, django/utils/datastructures.py)",
+    "revision": "django/django stable/5.2.x"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-django-request",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/django",
+            "version": ">=5.2.0, <5.3.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.django.http.http-request",
+            "name": "django.http.HttpRequest",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "django/http/request.py",
+              "symbol": "django.http.HttpRequest"
+            }
+          },
+          {
+            "id": "type.python.django.http.query-dict",
+            "name": "django.http.QueryDict",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "django/http/request.py",
+              "symbol": "django.http.QueryDict"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.django.http-request.get",
+            "owner": "type.python.django.http.http-request",
+            "name": "GET",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "django.http.QueryDict"
+              }
+            ],
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "django.http.QueryDict"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "django/http/request.py",
+              "symbol": "django.http.HttpRequest.GET"
+            }
+          },
+          {
+            "id": "member.python.django.http-request.post",
+            "owner": "type.python.django.http.http-request",
+            "name": "POST",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "django.http.QueryDict"
+              }
+            ],
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "django.http.QueryDict"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "django/http/request.py",
+              "symbol": "django.http.HttpRequest.POST"
+            }
+          },
+          {
+            "id": "member.python.django.query-dict.get",
+            "owner": "type.python.django.http.query-dict",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "default",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "django/utils/datastructures.py",
+              "symbol": "django.http.QueryDict.get(key, default)"
+            }
+          },
+          {
+            "id": "member.python.django.query-dict.getlist",
+            "owner": "type.python.django.http.query-dict",
+            "name": "getlist",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "default",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.list"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "django/utils/datastructures.py",
+              "symbol": "django.http.QueryDict.getlist(key, default)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

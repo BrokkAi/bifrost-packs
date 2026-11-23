@@ -8,10 +8,14 @@
 ; Engine contract: the subject and both events bind with :proof declared to the
 ; generated JDK members for ObjectInputStream(InputStream),
 ; setObjectInputFilter(ObjectInputFilter) and readObject(). Their IDs are the
-; same on JDK 17.0.16 and 21.0.8. On Bifrost 0.15.1 every finding is possible
-; (typestate-external-call) and every run is inconclusive with no diagnostic
-; (bifrost-dev#10001, #9431). Reviewed summaries for the three members don't
-; change that, so none ship. A clean run is not evidence of no unfiltered read.
+; same on JDK 17.0.16 and 21.0.8. :unmodeled require-model needs each stream to
+; be a fresh subject, so an unmodeled call, or a second stream, provably can't
+; reach it before readObject(). The reviewed constructor summary in
+; bifrost.jdk-object-input-stream-summaries supplies that with an allocation of
+; the normal return; it needs a Bifrost with bifrost-dev#14546. Without it, a
+; stream with any such call before its read reports nothing. Every finding is
+; still possible (typestate-external-call) and every run inconclusive
+; (bifrost-dev#10001, #9431). A clean run is not evidence of no unfiltered read.
 ; A process-wide filter (ObjectInputFilter.Config.setSerialFilter,
 ; jdk.serialFilter) is deployment knowledge the policy can't see, so those
 ; streams are still reported for review.

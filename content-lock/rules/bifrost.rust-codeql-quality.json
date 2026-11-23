@@ -3,7 +3,21 @@
     {
       "path": "rules/bifrost.rust-codeql-quality/manifest.json",
       "source_path": "rules/bifrost.rust-codeql-quality/manifest.json",
-      "sha256": "79c22db6cdf25054f5c65b59d2fea5574634bdb580889f64d7dbb67893146e94",
+      "sha256": "9f7206cca3d2e963b04dae53ac6f46196299172e827d2b42e8f8eae18166296f",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.rust-codeql-quality/policies/rust/access-after-lifetime-ended.rqlp",
+      "source_path": "rules/bifrost.rust-codeql-quality/policies/rust/access-after-lifetime-ended.rqlp",
+      "sha256": "f46446acb13a33399593afa65a76cedfa24e17008ea22dd10e0be5776aec2693",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.rust-codeql-quality/policies/rust/access-invalid-pointer.rqlp",
+      "source_path": "rules/bifrost.rust-codeql-quality/policies/rust/access-invalid-pointer.rqlp",
+      "sha256": "b6bc385d5bb58f195e6fcda88036952db93c57e5d711fae9815146326a296b53",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -14,6 +28,20 @@
       "classification": "public",
       "license": "Apache-2.0",
       "source_revision": "26c360ce219bab07f6224a490468741151b64623"
+    },
+    {
+      "path": "rules/bifrost.rust-codeql-quality/policies/rust/unused-value.rqlp",
+      "source_path": "rules/bifrost.rust-codeql-quality/policies/rust/unused-value.rqlp",
+      "sha256": "fd16c80a19bb6a6e9d878cfb0a63519c0a8b5a70b81f7677e62c1973c93e7040",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.rust-codeql-quality/policies/rust/unused-variable.rqlp",
+      "source_path": "rules/bifrost.rust-codeql-quality/policies/rust/unused-variable.rqlp",
+      "sha256": "6f5e5001507e1efd5ba3a3e9fdf0c748aa737f5e557851fac21a173af39df2e8",
+      "classification": "public",
+      "license": "Apache-2.0"
     }
   ]
 }

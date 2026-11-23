@@ -141,6 +141,48 @@ v0.15.2 CLI reproduced all 278 locked authoring identities unchanged, and its
 pack-engine profile advertises the same capability names as 0.15.1. The native
 producer stays at 0.15.1 until a packs release needs the 0.15.2 producer.
 
+The authoring CLI pin then moves to the v0.15.3 release (public commit
+`f7e104a77b4f869f342dd73af0cc622c4a1a0584`):
+`bifrost-v0.15.3-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`d170344aa72a9fdc12d070ecc4e2435bb3e2fad911fe6ddb298976c994928df4`, executable
+SHA-256 `cec64c7da4980684ac1cb68f005b50a51f3ac4a2ff563cb8638723a26ef0b050`,
+build identity `cc7ebd1676e002b657e10304cfd977bc289e25ed`). The released
+v0.15.3 CLI reproduced all 288 locked authoring identities unchanged. v0.15.3
+is the first release whose `python-documentation` rows carry `test_scope` and
+`entry_point` (bifrost-dev#11705). The rules smoke test in `pack-release.yml`
+moves to v0.15.3 with `rules/v0.16.0`, the first rules release that needs it.
+
+The native producer moves to the v0.15.3 release as well (#311):
+`bifrost-semantic-pack-v0.15.3-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`62a133b303783b51072433a933235172c4cbdb5baa6180c14a4dcdae91fd0379`, executable
+SHA-256 `31fd713a01021de631c95841c61327f1cb066ecb1e123992af39dc7b4205710f`),
+public commit `f7e104a77b4f869f342dd73af0cc622c4a1a0584`. The 0.15.2 and later
+producers contain bifrost-dev#9337, so `bifrost.php-builtin` gets
+`callable_family_complete` certification: the pinned phpstorm-stubs slice
+regenerates as shard
+`4d5075c28ba2aafa4b56205874648b8e33a15f04c6094fa680ddff832194a803`, and with it
+a `proc_open` sink binds as complete. With the 0.15.1 shard `e8e6ad9c…`, which
+has no certified records, it can never complete.
+
+The authoring CLI pin moves to the v0.15.4 release (public commit
+`6c889183c1b0e81c74aa80f6d362bc547315b99b`, build identity
+`ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`):
+`bifrost-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`067bdf199dc1e389f25f35a0a30f8fd24ead29668419df2d2b74c5da5f6ec747`, executable
+SHA-256 `9375d159a40f1e3f36fdfc0b53af079e863692f8c6b438e31fa5d4665efc48a3`).
+The released v0.15.4 CLI reproduced all 294 locked authoring identities
+unchanged. The rules smoke test in `pack-release.yml` stays on v0.15.3 until a
+rules release requires 0.15.4.
+
+The native producer moves to the v0.15.4 release:
+`bifrost-semantic-pack-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`49926bc351762fcf77a8bbe320d6c50dc1af557b4289c15c38bd754da868fe13`, executable
+SHA-256 `b715444f05b70f155f692a4ee5d8139766ecb84b3cfb961125569f3148ba830a`),
+public commit `6c889183c1b0e81c74aa80f6d362bc547315b99b`. It writes native bundle
+index schema 5, which adds verified `input_slots` to generated productions. The
+release contract now accepts schemas 3, 4 and 5. Engines that read only schemas
+3 and 4 refuse a schema 5 bundle.
+
 ## Pinned native candidate
 
 The published `packs/v0.6.0`, `rules/v0.5.0`, `packs/v0.5.0`, `rules/v0.4.0`,

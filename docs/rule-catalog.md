@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 285 unique rule IDs from 14 manifest packs.
+This catalog lists 297 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -220,7 +220,11 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python unused parameter](../rules/bifrost.python-codeql-quality/policies/unused-parameter.rqlp) | `bifrost.python-codeql-quality.unused-parameter` | python | quality | note |
 | [Python use of exit or quit](../rules/bifrost.python-codeql-quality/policies/use-of-exit-or-quit.rqlp) | `bifrost.python-codeql-quality.use-of-exit-or-quit` | python | quality | warning |
 | [Python useless class](../rules/bifrost.python-codeql-quality/policies/useless-class.rqlp) | `bifrost.python-codeql-quality.useless-class` | python | quality | note |
+| [Rust access after lifetime ended](../rules/bifrost.rust-codeql-quality/policies/rust/access-after-lifetime-ended.rqlp) | `bifrost.rust-codeql-quality.access-after-lifetime-ended` | rust | quality | error |
+| [Rust access through invalid pointer](../rules/bifrost.rust-codeql-quality/policies/rust/access-invalid-pointer.rqlp) | `bifrost.rust-codeql-quality.access-invalid-pointer` | rust | quality | error |
 | [Constructor reaches standard library](../rules/bifrost.rust-codeql-quality/policies/rust/ctor-initialization.rqlp) | `bifrost.rust-codeql-quality.ctor-initialization` | rust | quality | error |
+| [Rust unused value](../rules/bifrost.rust-codeql-quality/policies/rust/unused-value.rqlp) | `bifrost.rust-codeql-quality.unused-value` | rust | quality | note |
+| [Rust unused variable](../rules/bifrost.rust-codeql-quality/policies/rust/unused-variable.rqlp) | `bifrost.rust-codeql-quality.unused-variable` | rust | quality | note |
 | [Unwrap of a call named output in a build script](../rules/bifrost.rust-generic/policies/command-output-unwrap.rqlp) | `bifrost.rust.command-output-unwrap` | rust | correctness | note |
 | [Expect on a call named read_dir or remove_file](../rules/bifrost.rust-generic/policies/filesystem-expect.rqlp) | `bifrost.rust.filesystem-expect` | rust | correctness | note |
 | [Expect on a var call for a home-directory key](../rules/bifrost.rust-generic/policies/home-env-expect.rqlp) | `bifrost.rust.home-env-expect` | rust | correctness | note |
@@ -263,12 +267,18 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
 | [Go network connection decoded with encoding/gob](../rules/bifrost.security/policies/go/gob-decode-network-input.rqlp) | `bifrost.security.go.gob-decode-network-input` | go | security | warning |
 | [Go network connection read to EOF without a size bound](../rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp) | `bifrost.security.go.network-read-all-unbounded` | go | security | warning |
+| [Process argument reaches a Node shell command](../rules/bifrost.security/policies/javascript/process-input-to-child-process-command.rqlp) | `bifrost.security.javascript.process-input-to-child-process-command` | javascript | security | warning |
+| [Process argument reaches a Node fs read, list, test or remove path](../rules/bifrost.security/policies/javascript/process-input-to-fs-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-path` | javascript | security | warning |
 | [Process argument reaches a Node fs write path](../rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-write-path` | javascript | security | warning |
 | [Process argument parsed by legacy url.parse](../rules/bifrost.security/policies/javascript/process-input-to-legacy-url-parse.rqlp) | `bifrost.security.javascript.process-input-to-legacy-url-parse` | javascript | security | warning |
+| [Process argument reaches Node vm code](../rules/bifrost.security/policies/javascript/process-input-to-vm-code.rqlp) | `bifrost.security.javascript.process-input-to-vm-code` | javascript | security | warning |
 | [ObjectInputStream read before an ObjectInputFilter is set](../rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp) | `bifrost.security.java.objectinputstream-read-without-filter` | java | security | warning |
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
+| [Request value reaches a proc_open command](../rules/bifrost.security/policies/php/request-input-to-proc-open-command.rqlp) | `bifrost.security.php.request-input-to-proc-open-command` | php | security | warning |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
+| [Django request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp) | `bifrost.security.python.django-request-to-urlopen` | python | security | error |
+| [Flask request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp) | `bifrost.security.python.flask-request-to-urlopen` | python | security | error |
 | [Python hard-coded standard-library credentials](../rules/bifrost.security/policies/python/hardcoded-credentials.rqlp) | `bifrost.security.python.hardcoded-credentials` | python | security | error |
 | [Python incomplete hostname regular expression](../rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp) | `bifrost.security.python.incomplete-hostname-regexp` | python | security | warning |
 | [Python incomplete URL substring sanitization](../rules/bifrost.security/policies/python/incomplete-url-substring-sanitization.rqlp) | `bifrost.security.python.incomplete-url-substring-sanitization` | python | security | warning |
@@ -283,10 +293,12 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Network input chooses the gem Gem::Installer installs](../rules/bifrost.security/policies/ruby/network-input-to-gem-installer.rqlp) | `bifrost.security.ruby.network-input-to-gem-installer` | ruby | security | warning |
+| [Network-chosen IMAP server on an affected net-imap release](../rules/bifrost.security/policies/ruby/network-input-to-net-imap-host.rqlp) | `bifrost.security.ruby.network-input-to-net-imap-host` | ruby | security | warning |
 | [Network input sent as raw net-imap command text on an affected release](../rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp) | `bifrost.security.ruby.network-input-to-net-imap-raw-arguments` | ruby | security | warning |
 | [Network XML parsed by REXML before 3.2.7](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos` | ruby | security | warning |
 | [Network XML parsed by REXML 3.3.3 to 3.4.1](../rules/bifrost.security/policies/ruby/network-xml-to-rexml-repeated-declaration-dos.rqlp) | `bifrost.security.ruby.network-xml-to-rexml-repeated-declaration-dos` | ruby | security | warning |
 | [Caller-supplied code after an invalid-state API](../rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp) | `bifrost.security.rust.callback-after-invalid-state` | rust | security | warning |
+| [SSH git dependency fetched by a Cargo that skips host-key checks](../rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp) | `bifrost.security.rust.cargo-ssh-git-host-key-unverified` | rust | security | warning |
 | [Cleartext logging of sensitive information](../rules/bifrost.security/policies/rust/cleartext-logging.rqlp) | `bifrost.security.rust.cleartext-logging` | rust | security | warning |
 | [Non-HTTPS URL literal](../rules/bifrost.security/policies/rust/non-https-url.rqlp) | `bifrost.security.rust.non-https-url` | rust | security | warning |
 | [Stored type parameter lacks a Send or Sync bound](../rules/bifrost.security/policies/rust/unsound-send-sync-impl.rqlp) | `bifrost.security.rust.unsound-send-sync-impl` | rust | security | error |

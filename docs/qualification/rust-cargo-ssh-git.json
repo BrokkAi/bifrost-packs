@@ -1,0 +1,220 @@
+{
+  "status": "focused-fixture-release-only",
+  "released_engine_qualified": true,
+  "lead": "BrokkAi/bifrost-packs#60 (CVE-2022-46176); restored by BrokkAi/bifrost-packs#387",
+  "scope": "16 isolated Cargo packages: 6 positives, 6 near misses and 4 unknown-toolchain or missing-lockfile cases, each run with fresh caches",
+  "schemas": {
+    "policy": 1,
+    "rql": 1,
+    "policy_pack_manifest": 2
+  },
+  "semantic_models": "None; run with BIFROST_OPEN_PACKS_DISABLE=1 and isolated caches",
+  "reproduction": "python3 scripts/rust-sast-gate.py --binary /path/to/bifrost-v0.15.3 --output /empty/evidence/directory --rule cargo-ssh-git-host-key-unverified",
+  "engine_version": "0.15.3",
+  "build_identity": "cc7ebd1676e002b657e10304cfd977bc289e25ed",
+  "binary": "bifrost-v0.15.3-aarch64-apple-darwin release asset",
+  "binary_sha256": "1e8d45ae76f1b2920aa7a113e8e80083346f6acbed839c3e113058ae36c8acbc",
+  "evaluation_date": "2026-11-17",
+  "passed_cases": 16,
+  "total_cases": 16,
+  "cases": [
+    {
+      "case": "positive-direct",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "positive-transitive",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:20"
+      ]
+    },
+    {
+      "case": "positive-legacy-toolchain-file",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "positive-git-fetch-with-cli-false",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "positive-nested-git-fetch-with-cli-false",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "positive-pre-1-39-config-toml",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 1,
+      "anchor": [
+        "Cargo.lock:12"
+      ]
+    },
+    {
+      "case": "near-miss-fixed-toolchain",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "near-miss-https-source",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "near-miss-workspace-git-fetch-with-cli",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "near-miss-dotted-git-fetch-with-cli",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "near-miss-legacy-toolchain-git-fetch-with-cli",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "near-miss-unrelated-toml-override",
+      "status": "passed",
+      "expected_completion": "complete",
+      "completion": "complete",
+      "completion_reasons": [],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-no-toolchain-file",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-stable-channel",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-msrv-only",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    },
+    {
+      "case": "unknown-missing-lockfile",
+      "status": "passed",
+      "expected_completion": "inconclusive",
+      "completion": "inconclusive",
+      "completion_reasons": [
+        "partial_discovery"
+      ],
+      "findings": 0,
+      "anchor": []
+    }
+  ],
+  "policy_identity": {
+    "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
+    "source_sha256": "5fc9f3461507c594469850d1a494c4c8df81f88b396719c68547a0fafbb72cb7",
+    "authored_hash": "b5179d04ae335487e2726278f15775ad0f1fa1d8fafe796790db172bc94a3294",
+    "resolved_semantic_hash": "b5179d04ae335487e2726278f15775ad0f1fa1d8fafe796790db172bc94a3294"
+  },
+  "required_capabilities": {
+    "declared": [],
+    "note": "Bifrost 0.15.3 advertises no capability name for dependency evidence, rust-toolchain version ranges, TOML configuration facts or relational assertions. The manifest declares none rather than a name that does not describe the policy. Bifrost 0.15.3 is the first release that accepts an empty list (bifrost-dev#10941)."
+  },
+  "older_engines": [
+    {
+      "engine_version": "0.15.2",
+      "build_identity": "340cbbdcea3fc565f6ea8066084ed24962c369d3",
+      "binary": "bifrost-v0.15.2-aarch64-apple-darwin release asset",
+      "binary_sha256": "f06a8760f4099db712d91dcb0acb406589cd84a66ec3ccacaf4d0d6dbc3952dc",
+      "outcome": "The whole rules catalog is rejected: built-in policy `bifrost.security.rust.cargo-ssh-git-host-key-unverified` has incomplete inventory metadata. No policy runs."
+    },
+    {
+      "engine_version": "0.15.2",
+      "build_identity": "340cbbdcea3fc565f6ea8066084ed24962c369d3",
+      "outcome": "The pre-#387 policy (authored hash 6e27a37b…, no configuration negation), run alone: unknown-workspace-git-fetch-with-cli was inconclusive because 0.15.2 reported .cargo/config.toml as unsupported dependency evidence. On 0.15.3 that row is gone and the same policy gave a complete definite false positive at Cargo.lock:12, which the configuration negation removes."
+    }
+  ],
+  "coverage_limits": [
+    "Ambient Cargo and git configuration is not read: $CARGO_HOME/config.toml, CARGO_NET_GIT_FETCH_WITH_CLI, git insteadOf rewrites",
+    "Only workspace .cargo/config.toml files are read. Only the root one suppresses the finding, with the boolean true; a subdirectory one that sets anything else keeps it. A .cargo/config.toml above the root and the legacy extensionless .cargo/config are not read; Cargo prefers .cargo/config over .cargo/config.toml in the same directory, and CARGO_NET_GIT_FETCH_WITH_CLI=false overrides every file, so either can make a suppressed project use the built-in fetcher again",
+    "Cargo before 1.39.0 does not read .cargo/config.toml, so a root git-fetch-with-cli = true suppresses the finding only for a pinned Rust 1.39.0 or later",
+    "Rustup overrides and RUSTUP_TOOLCHAIN are not observed (rust.toolchain_override: unobserved)",
+    "Independently patched Cargo builds match by release number",
+    "SSH registry indexes are not covered",
+    "An unpinned channel, rust-version minimum or missing Cargo.lock is inconclusive, never clean"
+  ],
+  "versioning": "bifrost.security 3.1.0 -> 3.2.0 restores one opt-in policy. The rules stream moves to 0.16.0 because the minimum engine rises to Bifrost 0.15.3."
+}
