@@ -174,10 +174,14 @@ The released v0.15.4 CLI reproduced all 294 locked authoring identities
 unchanged. The rules smoke test in `pack-release.yml` stays on v0.15.3 until a
 rules release requires 0.15.4.
 
-The native producer stays on v0.15.3. The v0.15.4 producer writes a native
-bundle index schema that `release-contract/native_generation.py` does not
-accept (it accepts 3 and 4), so moving it needs a reviewed release-contract
-change.
+The native producer moves to the v0.15.4 release:
+`bifrost-semantic-pack-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`49926bc351762fcf77a8bbe320d6c50dc1af557b4289c15c38bd754da868fe13`, executable
+SHA-256 `b715444f05b70f155f692a4ee5d8139766ecb84b3cfb961125569f3148ba830a`),
+public commit `6c889183c1b0e81c74aa80f6d362bc547315b99b`. It writes native bundle
+index schema 5, which adds verified `input_slots` to generated productions. The
+release contract now accepts schemas 3, 4 and 5. Engines that read only schemas
+3 and 4 refuse a schema 5 bundle.
 
 ## Pinned native candidate
 
