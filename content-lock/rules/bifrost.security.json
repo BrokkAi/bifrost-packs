@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "adc3134c3e772b89bbf2c4ba09f3478faa6c5de903d2effee139c2b7b4b684a2"
+      "sha256": "2f7b32be22be4dd717b43a02006e58298a17935d058ede9b291618209d12daf3"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -274,6 +274,20 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/javascript/process-input-to-child-process-command.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/process-input-to-child-process-command.rqlp",
+      "sha256": "601934e443f9493dcb739e411645a42c1becc9518b0571d9cde4b4ef36b3549c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/javascript/process-input-to-fs-path.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/process-input-to-fs-path.rqlp",
+      "sha256": "3f705d5d93c3184a4547431819a8e502f85768f2b24925431572b0a06968cf41",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp",
       "source_path": "rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp",
       "sha256": "cfe16cb708541c66cfe68c10418650a53e323ae953bba6e67e500bf021207682",
@@ -288,9 +302,16 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/javascript/process-input-to-vm-code.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/process-input-to-vm-code.rqlp",
+      "sha256": "0697a6c791f787d712a8537ee23eb3cdaeec58c51ab1634918d615466a835496",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp",
       "source_path": "rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp",
-      "sha256": "30ea22de724a0b38932f3c44667e32823e6e129f4a4cd652c5c05df07744e8e8",
+      "sha256": "ff94f94856f9a837461dd6fff60b478f60d8e849e29079f63d60dc6d24721f99",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -309,9 +330,30 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/php/request-input-to-proc-open-command.rqlp",
+      "source_path": "rules/bifrost.security/policies/php/request-input-to-proc-open-command.rqlp",
+      "sha256": "3eabb6997d0189eceba4cd3417511d8e0cf06fba47c12d495106f4cde3c95593",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
       "source_path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
       "sha256": "28905c34786ef3547b340cf5289a8661cf4115a5316ecba3d1554e53b3114560",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
+      "sha256": "ba67413eb5116d884d57d647d0f4f1db3e76716d2eea569dc19738458dac1b92",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp",
+      "sha256": "4cabd3a20d47e2aa7b3a8bd8c69d8a0a0b36a523d76a09baac7742cb6beeccb0",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -339,14 +381,14 @@
     {
       "path": "rules/bifrost.security/policies/python/insecure-default-protocol.rqlp",
       "source_path": "rules/bifrost.security/policies/python/insecure-default-protocol.rqlp",
-      "sha256": "f1af5c68f19c33656401c5a7d9c08246a826810299031b621c8092250144dca7",
+      "sha256": "2d454854f3b1867f0276ad46ac074d8343bd2dd045ea2174b38369315059b8ed",
       "classification": "public",
       "license": "Apache-2.0"
     },
     {
       "path": "rules/bifrost.security/policies/python/insecure-protocol.rqlp",
       "source_path": "rules/bifrost.security/policies/python/insecure-protocol.rqlp",
-      "sha256": "e306cc2b8857c5702f9451bc631ef4285c4bbaf9a4be4172ffcdacf3308a6365",
+      "sha256": "c008da078da7a6115711fbc7f0f699c4172ef47b92738aeb47c2368906406a68",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -414,9 +456,16 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/ruby/network-input-to-net-imap-host.rqlp",
+      "source_path": "rules/bifrost.security/policies/ruby/network-input-to-net-imap-host.rqlp",
+      "sha256": "33330d342092bb81a93e7439127ed1f3fa20b6d4dc8123e44c9ff02fd280ea04",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp",
       "source_path": "rules/bifrost.security/policies/ruby/network-input-to-net-imap-raw-arguments.rqlp",
-      "sha256": "186224e7c60f6b952b45a2ed686f41c1e476e1295a241e0a573286b61b243f30",
+      "sha256": "c360e47afb4d992f6ae45219a8e011452996ac98f868dd672d91f8adc7ccac01",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -438,6 +487,13 @@
       "path": "rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/callback-after-invalid-state.rqlp",
       "sha256": "f0777dedd61dac0f12a9c1f8a3c2daef06141a5d7dfa646cde137036b15bb670",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
+      "sha256": "5fc9f3461507c594469850d1a494c4c8df81f88b396719c68547a0fafbb72cb7",
       "classification": "public",
       "license": "Apache-2.0"
     },

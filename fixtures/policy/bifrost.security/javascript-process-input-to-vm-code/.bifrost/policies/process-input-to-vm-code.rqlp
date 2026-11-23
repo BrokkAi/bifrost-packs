@@ -1,0 +1,125 @@
+; Lead: BrokkAi/bifrost-packs#393 (OpenSSF CVE Benchmark, code injection).
+; Product source contract: vm.runInNewContext and vm.runInThisContext compile
+; and run their code string; the vm module is not a security mechanism
+; (Node v22.11.0 doc/api/vm.md), so a caller-chosen string runs as code.
+; Engine contract: the source is a keyed read of the reviewed Node runtime
+; `process.argv` model. The sinks bind exactly to the members of the reviewed
+; bifrost.node-vm-javascript-declarations pack: runInNewContext with one or
+; two arguments, runInThisContext with one, and the Script(code) constructor.
+; The pack has no summaries: evaluated code can escape its context and touch
+; anything the process can reach, which no complete summary may claim. So
+; every finding is possible and a run that reaches a vm call is inconclusive,
+; never clean.
+; new vm.Script(code) only compiles the string; the code runs when a runIn*
+; method is called on the script. The constructor is still a sink, so code
+; that compiles input only to check its syntax gets a possible finding.
+; Not covered: vm.compileFunction, vm.runInContext, the options
+; argument, eval and the Function constructor (the lexical
+; bifrost.correctness.dynamic-evaluation rule reports eval and Function calls).
+(policy
+  :schema-version 1
+  :id "bifrost.security.javascript.process-input-to-vm-code"
+  :name "Process argument reaches Node vm code"
+  :message "a process argument reached the code string that a Node vm member compiles and runs"
+  :severity warning
+  :description "Reports process.argv values that reach the code argument of vm.runInNewContext, vm.runInThisContext or new vm.Script. The vm module is not a security mechanism, so a caller-chosen string runs as code with the process's privileges."
+  :tags ["security" "javascript" "code-injection" "cwe-94" "node"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id process-argv-read
+              :display-name "process.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (keyed-read-value
+                      :runtime node
+                      :global process
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id vm-run-in-new-context-code
+              :display-name "vm.runInNewContext code"
+              :categories [code.text]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.vm.javascript.run-in-new-context-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "runInNewContext"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id vm-run-in-new-context-with-context-code
+              :display-name "vm.runInNewContext code (with context)"
+              :categories [code.text]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.vm.javascript.run-in-new-context-2
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "runInNewContext"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id vm-run-in-this-context-code
+              :display-name "vm.runInThisContext code"
+              :categories [code.text]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.vm.javascript.run-in-this-context-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "runInThisContext"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id vm-script-code
+              :display-name "new vm.Script code"
+              :categories [code.text]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.vm.javascript.script-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "Script"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "94")))

@@ -28,14 +28,11 @@ rule catalog is empty. Pack versions are independent of engine versions.
 - [`research/rust-codeql-security/`](research/rust-codeql-security/catalogs/README.md):
   staged CodeQL Rust endpoint catalogs for a later policy pack. They are in no
   release stream.
-- [`research/rust-cargo-ssh-git/`](research/rust-cargo-ssh-git/README.md):
-  the held-out `bifrost.security.rust.cargo-ssh-git-host-key-unverified` policy,
-  its fixtures and qualification. They are in no release stream.
 
 ## Rule inventory
 
 <!-- rule-stats:start -->
-**285 unique rules across 14 policy packs.**
+**297 unique rules across 14 policy packs.**
 
 | Breakdown | Value | Rules |
 | --- | --- | ---: |
@@ -50,21 +47,21 @@ rule catalog is empty. Pack versions are independent of engine versions.
 | Pack | bifrost.java-codeql-security | 0 |
 | Pack | bifrost.javascript-codeql-quality | 12 |
 | Pack | bifrost.python-codeql-quality | 82 |
-| Pack | bifrost.rust-codeql-quality | 1 |
+| Pack | bifrost.rust-codeql-quality | 5 |
 | Pack | bifrost.rust-generic | 4 |
-| Pack | bifrost.security | 65 |
+| Pack | bifrost.security | 73 |
 | Category | correctness | 118 |
 | Category | effects | 12 |
 | Category | maintainability | 5 |
 | Category | performance | 11 |
-| Category | quality | 70 |
-| Category | security | 69 |
-| Severity | error | 83 |
-| Severity | note | 81 |
-| Severity | warning | 121 |
+| Category | quality | 74 |
+| Category | security | 77 |
+| Severity | error | 87 |
+| Severity | note | 83 |
+| Severity | warning | 127 |
 
 Languages are explicit manifest declarations; a rule may appear in multiple rows.
-13 declared languages; 523 rule-language pairs.
+13 declared languages; 535 rule-language pairs.
 
 | Manifest supported language | Rules |
 | --- | ---: |
@@ -73,16 +70,16 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | csharp | 60 |
 | go | 22 |
 | java | 53 |
-| javascript | 44 |
+| javascript | 47 |
 | kotlin | 17 |
-| php | 20 |
-| python | 131 |
-| ruby | 24 |
-| rust | 39 |
+| php | 21 |
+| python | 133 |
+| ruby | 25 |
+| rust | 44 |
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 61, unspecified 224. Omitted labels remain unspecified.
+Activation labels: opt-in 69, unspecified 228. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -91,14 +88,17 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.12.0` and `rules/v0.13.0`. `packs/v0.13.0`
-and `rules/v0.14.0` are prepared next. `packs/v0.13.0` needs Bifrost 0.15.1 or
-later and adds the Go `database/sql` declarations and `net/http.Request.FormValue`.
-`rules/v0.14.0` needs Bifrost **0.15.2** or later, depends on `packs/v0.13.0`,
-adds the Java missing-override-annotation policy, ships the JavaScript identifier
-typo table, reports the Rust ctor caller search as inconclusive at its depth
-bound, and adds the Java CodeQL security catalogs without a policy. Bifrost
-0.15.1 rejects its whole catalog. See [release streams](docs/release-streams.md).
+The latest releases are `packs/v0.14.0` and `rules/v0.15.0`. `packs/v0.15.0`
+and `rules/v0.16.0` are prepared next, and both need Bifrost **0.15.3** or
+later. `packs/v0.15.0` is built by the 0.15.3 producer, which certifies the
+PHP builtin pack and rebuilds the Rust stdlib pack with semantic-model schema
+40. `rules/v0.16.0` depends on `packs/v0.15.0` and restores the opt-in Cargo SSH git host-key policy
+(CVE-2022-46176), which declares no required capability: earlier engines reject
+the whole catalog for that. It also adds an opt-in Net::IMAP server-choice
+policy (CVE-2026-42245), three opt-in Node core taint policies (fs path,
+`execSync` command, `vm` code) and an opt-in PHP `proc_open` command policy
+(CVE-2024-1874), and stops `missing-docstring` from reporting test code and
+script entry points (#383). See [release streams](docs/release-streams.md).
 
 ## Source verification
 

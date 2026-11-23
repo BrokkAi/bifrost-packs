@@ -46,6 +46,35 @@ RULES = {
             NODE / "path/javascript/bifrost.node-path-javascript-summaries.json",
         ],
     },
+    "process-input-to-fs-path": {
+        "lead": "BrokkAi/bifrost-packs#393 (OpenSSF CVE Benchmark, path traversal)",
+        "fixture": "javascript-process-input-to-fs-path",
+        "models": [
+            NODE / "runtime-values/javascript/bifrost.node-runtime-values.json",
+            NODE / "fs/javascript/bifrost.node-fs-javascript-declarations.json",
+            NODE / "fs/javascript/bifrost.node-fs-javascript-summaries.json",
+            NODE / "path/javascript/bifrost.node-path-javascript-declarations.json",
+            NODE / "path/javascript/bifrost.node-path-javascript-summaries.json",
+        ],
+    },
+    "process-input-to-child-process-command": {
+        "lead": "BrokkAi/bifrost-packs#393 (OpenSSF CVE Benchmark, command injection)",
+        "fixture": "javascript-process-input-to-child-process-command",
+        "workspaces": ("", "incomplete", "uncovered"),
+        "models": [
+            NODE / "runtime-values/javascript/bifrost.node-runtime-values.json",
+            NODE / "child-process/javascript/bifrost.node-child-process-declarations.json",
+            NODE / "child-process/javascript/bifrost.node-child-process-summaries.json",
+        ],
+    },
+    "process-input-to-vm-code": {
+        "lead": "BrokkAi/bifrost-packs#393 (OpenSSF CVE Benchmark, code injection)",
+        "fixture": "javascript-process-input-to-vm-code",
+        "models": [
+            NODE / "runtime-values/javascript/bifrost.node-runtime-values.json",
+            NODE / "vm/javascript/bifrost.node-vm-javascript-declarations.json",
+        ],
+    },
     "process-input-to-legacy-url-parse": {
         "lead": "BrokkAi/bifrost-packs#294 (CVE-2026-21712)",
         "fixture": "javascript-process-input-to-legacy-url-parse",
@@ -99,9 +128,23 @@ class NodePathUrlModelTests(unittest.TestCase):
 
     def test_fs_summaries_cover_every_sink_member(self):
         summaries = _load(NODE / "fs/javascript/bifrost.node-fs-javascript-summaries.json")
-        self.assertEqual(summaries["version"], "0.2.0")
-        symbols = {row["target"]["symbol"] for row in summaries["shards"][0]["payload"]["summaries"]}
-        self.assertEqual(symbols, {"fs.existsSync", "fs.writeFileSync", "fs.appendFileSync", "fs.openSync"})
+        self.assertEqual(summaries["version"], "0.3.0")
+        rows = summaries["shards"][0]["payload"]["summaries"]
+        symbols = {row["target"]["symbol"] for row in rows}
+        self.assertEqual(symbols, {
+            "fs.existsSync", "fs.writeFileSync", "fs.appendFileSync", "fs.openSync",
+            "fs.statSync", "fs.lstatSync", "fs.accessSync", "fs.readFileSync",
+            "fs.readFileSync(path, options)", "fs.readdirSync", "fs.unlinkSync",
+            "fs.rmSync", "fs.rmSync(path, options)",
+        })
+        for row in rows:
+            with self.subTest(summary=row["id"]):
+                # No fs result is argument data.
+                self.assertFalse([t for t in row["transfers"] if t["output"]["kind"] == "normal_return"])
+                # Every argument can appear in a thrown error, except from existsSync.
+                thrown = {t["input"]["ordinal"] for t in row["transfers"] if t["output"]["kind"] == "exceptional_return"}
+                expected = set() if row["target"]["symbol"] == "fs.existsSync" else set(range(row["target"]["parameter_count"]))
+                self.assertEqual(thrown, expected)
 
     def test_rules_carry_lead_and_fixture_copies_match(self):
         manifest = {p["path"]: p for p in _load(ROOT / "rules/bifrost.security/manifest.json")["policies"]}
@@ -115,7 +158,7 @@ class NodePathUrlModelTests(unittest.TestCase):
                 self.assertEqual(entry["id"], f"bifrost.security.javascript.{name}")
                 self.assertEqual(entry["activation"], "opt-in")
                 self.assertEqual(entry["supported_languages"], ["javascript"])
-                for workspace in ("", "incomplete"):
+                for workspace in expected.get("workspaces", ("", "incomplete")):
                     root = FIXTURES / expected["fixture"] / workspace
                     self.assertEqual((root / ".bifrost/policies" / policy.name).read_bytes(), policy.read_bytes())
                     copies = sorted((root / ".bifrost/semantic-models").iterdir())

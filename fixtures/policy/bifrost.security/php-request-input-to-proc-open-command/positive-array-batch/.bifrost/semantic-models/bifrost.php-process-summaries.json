@@ -1,0 +1,128 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.php-process-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-php-models",
+    "version": "0.1.0"
+  },
+  "language": "php",
+  "ecosystem": "php",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "PHP manual proc_open (https://www.php.net/manual/en/function.proc-open.php) and the phpstorm-stubs standard/standard_2.php declaration pinned by semantic-packs/php/phpstorm-stubs-2026.8.29.json",
+    "revision": "php-8.3"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.php-proc-open",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "php.process.proc-open-3",
+            "target": {
+              "path": "standard/standard_2.php",
+              "symbol": "_php_global_.proc_open(mixed, array, mixed)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "php.proc-open.command",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "php.process.proc-open-4",
+            "target": {
+              "path": "standard/standard_2.php",
+              "symbol": "_php_global_.proc_open(mixed, array, mixed, string)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "php.proc-open.command",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "php.process.proc-open-5",
+            "target": {
+              "path": "standard/standard_2.php",
+              "symbol": "_php_global_.proc_open(mixed, array, mixed, string, array)",
+              "has_receiver": false,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "php.proc-open.command",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          },
+          {
+            "id": "php.process.proc-open-6",
+            "target": {
+              "path": "standard/standard_2.php",
+              "symbol": "_php_global_.proc_open(mixed, array, mixed, string, array, array)",
+              "has_receiver": false,
+              "parameter_count": 6
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": [
+              {
+                "kind": "escape",
+                "event": "php.proc-open.command",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

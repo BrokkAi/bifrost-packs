@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "3.1.0",
+  "version": "3.3.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -654,7 +654,7 @@
     {
       "path": "policies/python/insecure-default-protocol.rqlp",
       "id": "bifrost.security.python.insecure-default-protocol",
-      "authored_hash": "cc4b48bdca31818a8487bd3b11c0d3a745697b0683cae95617d9e4328e3a90e1",
+      "authored_hash": "248841b7d62c0a430fd1cf514310777004544ba5904083aadc0e89facb9b9a73",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
@@ -671,7 +671,7 @@
     {
       "path": "policies/python/insecure-protocol.rqlp",
       "id": "bifrost.security.python.insecure-protocol",
-      "authored_hash": "2414ce4455d0daeffa2a621e53263069a5b5d2541af287cf1c9afbfb32c07c3a",
+      "authored_hash": "11c7ac7d158c2e6d0856ccba70c150af1444e130085cd445041d28ced0a9f3af",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
@@ -799,6 +799,46 @@
       ],
       "severity_rationale": "The URL passed to webbrowser.open selects the local browser or URI handler that runs, and on affected interpreters a leading dash becomes a browser command-line option (CVE-2026-4519, CVE-2026-4786).",
       "remediation": "Do not open process input as a URL. Parse it, require an https scheme and an expected host, and pass only the validated URL to webbrowser.open.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-to-urlopen.rqlp",
+      "id": "bifrost.security.python.flask-request-to-urlopen",
+      "authored_hash": "a272cdf324e31a0deaad4ffa4e5380200078fa77de18490ae5c17905bc7c7c53",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL built from a Flask request query, form, cookie or header value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/django-request-to-urlopen.rqlp",
+      "id": "bifrost.security.python.django-request-to-urlopen",
+      "authored_hash": "ff282ab857ddca3450dba7e9f7a2d4ff4321f7f29ecd4a1676463c19852b6f90",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A URL built from a Django request query or form value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
       "activation": "opt-in"
     },
     {
@@ -1107,6 +1147,20 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
+      "id": "bifrost.security.rust.cargo-ssh-git-host-key-unverified",
+      "authored_hash": "b5179d04ae335487e2726278f15775ad0f1fa1d8fafe796790db172bc94a3294",
+      "resolved_semantic_hash": "b5179d04ae335487e2726278f15775ad0f1fa1d8fafe796790db172bc94a3294",
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [],
+      "severity_rationale": "Cargo releases before the one bundled with Rust 1.66.1 do not verify the SSH host key when fetching a git dependency, so an attacker on the network path can serve modified source that is then built into the project.",
+      "remediation": "Pin Rust 1.66.1 or later in rust-toolchain.toml. Until then, set net.git-fetch-with-cli = true in the workspace-root .cargo/config.toml so the git command line, which verifies host keys, does the fetch.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/javascript/process-input-to-fs-write-path.rqlp",
       "id": "bifrost.security.javascript.process-input-to-fs-write-path",
       "authored_hash": "99ac09db7ec74620c40ba6a49b4db91f12007c4fb9324596192a68ae3198ac6b",
@@ -1125,6 +1179,69 @@
       ],
       "severity_rationale": "Whoever supplies the process argument chooses which file the program writes: path.join, path.normalize and path.resolve resolve `..` and keep absolute segments, and affected Windows runtimes also keep device names (CVE-2025-27210).",
       "remediation": "Resolve the joined path, then reject it unless it stays inside the intended base directory (compare path.relative against `..` and absolute results), or map the argument to a fixed allowlist of file names.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-fs-path.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-fs-path",
+      "authored_hash": "0eaec72f2b05da3d2807d3cf4644db9d9c37115313423bf81fe23462cd2afdc1",
+      "resolved_semantic_hash": "0eaec72f2b05da3d2807d3cf4644db9d9c37115313423bf81fe23462cd2afdc1",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A process argument that reaches an fs read, list, probe or remove path lets the caller read, enumerate, detect or delete any file the process can reach.",
+      "remediation": "Resolve the path under a fixed base and check that the result stays inside it, or accept only names from an allow-list.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-child-process-command.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-child-process-command",
+      "authored_hash": "6a62043a811ccf907bb8ecb5eec3443d391836fedc795035c665a90cb54d577c",
+      "resolved_semantic_hash": "6a62043a811ccf907bb8ecb5eec3443d391836fedc795035c665a90cb54d577c",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "execSync runs its command string in a shell, so shell metacharacters in a process argument run further commands with the process's privileges.",
+      "remediation": "Use execFileSync or spawnSync with an argument array and no shell, or validate the value against an allow-list.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-vm-code.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-vm-code",
+      "authored_hash": "223cc1d7ad208b47baacd017a72c578401d9e2ebe9c3abce8d2137658c4e745d",
+      "resolved_semantic_hash": "223cc1d7ad208b47baacd017a72c578401d9e2ebe9c3abce8d2137658c4e745d",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "The vm module is not a security boundary, so a process argument evaluated as code runs with the process's privileges.",
+      "remediation": "Do not evaluate caller-supplied strings as code; parse the input as data, or use a real sandbox process with no access to the host.",
       "activation": "opt-in"
     },
     {
@@ -1207,6 +1324,26 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/ruby/network-input-to-net-imap-host.rqlp",
+      "id": "bifrost.security.ruby.network-input-to-net-imap-host",
+      "authored_hash": "ece269ca1aefe8b795e74eba4f2bef8d5fe65c19a768836ab5424a0497cffeca",
+      "resolved_semantic_hash": "ece269ca1aefe8b795e74eba4f2bef8d5fe65c19a768836ab5424a0497cffeca",
+      "category": "security",
+      "supported_languages": [
+        "ruby"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Affected net-imap releases rescan the whole receive buffer for every literal, so a server chosen by untrusted input can keep the client CPU busy with responses below max_response_size.",
+      "remediation": "Upgrade net-imap to 0.4.24, 0.5.14 or 0.6.4 or later, or connect only to configured IMAP servers.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/ruby/network-xml-to-rexml-attribute-value-dos.rqlp",
       "id": "bifrost.security.ruby.network-xml-to-rexml-attribute-value-dos",
       "authored_hash": "8052f429d36ce2f2d28521756a0e7395369a56cf2fb1e242548bd6c4bdd81244",
@@ -1244,6 +1381,26 @@
       ],
       "severity_rationale": "On rexml 3.3.3 to 3.4.1 a network sender who repeats the XML declaration makes REXML::Document.new do unbounded work instead of rejecting the document (CVE-2025-58767).",
       "remediation": "Upgrade rexml to 3.4.2 or later, and bound the size of untrusted XML before parsing.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/php/request-input-to-proc-open-command.rqlp",
+      "id": "bifrost.security.php.request-input-to-proc-open-command",
+      "authored_hash": "1e3cb7882c000706e764c9dc4caabe39e49f624eeea62bc698878e028ac582fe",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "php"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A request value in a proc_open command string runs through the system shell, and in an array command it can run commands through cmd.exe on affected Windows runtimes (CVE-2024-1874), so an attacker can execute commands as the PHP process.",
+      "remediation": "Pass a constant program and validated arguments in the array form, upgrade PHP to 8.1.28, 8.2.18 or 8.3.5 or later on Windows, and never pass request values to a batch file.",
       "activation": "opt-in"
     }
   ]
