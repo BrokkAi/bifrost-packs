@@ -49,9 +49,13 @@ models from `semantic-packs/python/web-request/` (all 0.1.0, Apache-2.0). Their
 shards activate on `pkg:pypi/flask`, `pkg:pypi/werkzeug` and `pkg:pypi/django`
 version ranges, so they stay inactive until a workspace pins one of those
 distributions and the engine is Bifrost 0.15.4 or later (bifrost-dev#14581).
-The specs pin commit `b208ba26f90c74652eee6ace2418b5b75250f4d3`. Delivering the
-packs does not enable `python.flask-request-to-urlopen` or
-`python.django-request-to-urlopen`, which remain opt-in.
+The specs pin commit `b208ba26f90c74652eee6ace2418b5b75250f4d3`. The rules that
+use them, `python.flask-request-to-urlopen` and
+`python.django-request-to-urlopen`, run by default from the first rules release
+after `rules/v0.17.0` (where they are opt-in). That release needs an engine that
+reports a taint rule whose source identities are absent as not run, not failed
+(bifrost-dev#15470), or every Python repository without the framework would
+report the rule as failed.
 
 ## Go gob jobs and net interface summaries
 

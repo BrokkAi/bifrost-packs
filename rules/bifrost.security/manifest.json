@@ -818,8 +818,7 @@
         "scoped-callable-completeness"
       ],
       "severity_rationale": "A URL built from a Flask request query, form, cookie or header value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
-      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
-      "activation": "opt-in"
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it."
     },
     {
       "path": "policies/python/django-request-to-urlopen.rqlp",
@@ -838,8 +837,7 @@
         "scoped-callable-completeness"
       ],
       "severity_rationale": "A URL built from a Django request query or form value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
-      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it.",
-      "activation": "opt-in"
+      "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it."
     },
     {
       "path": "policies/python/process-input-to-venv-create.rqlp",
