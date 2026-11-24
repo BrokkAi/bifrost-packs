@@ -1,0 +1,121 @@
+; CodeQL parity rule: rust/uncontrolled-allocation-size (CWE-770 / CWE-789) for std::alloc / alloc::alloc.
+; Matches CodeQL 0.1.46 (github/codeql@1be292a1e54696ca543b4ad0f9b4537b9687caa7)
+; frameworks/stdlib/alloc.model.yml standard-library allocation sinks:
+; - std::alloc / alloc::alloc::{alloc, alloc_zeroed} (argument 0, Layout)
+; - std::alloc / alloc::alloc::realloc (argument 2, new_size)
+; - std::alloc::{GlobalAlloc, System}::{alloc, alloc_zeroed} (argument 0), realloc (argument 2)
+; - std::alloc::Allocator::{allocate, allocate_zeroed} (argument 0), {grow, grow_zeroed} (argument 2)
+;
+; Engine contract:
+; - Sources: reviewed standard-library untrusted process inputs in bifrost.rust-std-sql-taint.
+; - Sinks and Layout taint transfers: reviewed declarations and complete summaries in
+;   bifrost.rust-std-alloc.
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.uncontrolled-allocation-size"
+  :name "Rust uncontrolled allocation size via std::alloc"
+  :message "untrusted input controls an allocation size or Layout passed to std::alloc"
+  :severity error
+  :description "Reports untrusted process input from std::env or std::io::stdin flowing into standard-library std::alloc / alloc::alloc, GlobalAlloc, System, or Allocator allocation sinks (directly as realloc new_size or through std::alloc::Layout constructors and transformers). Sources and sinks are resolved structurally via resolved-call against reviewed standard-library declarations, so constant layouts and local same-named functions are not reported."
+  :tags ["security" "rust" "denial-of-service" "cwe-770" "cwe-789" "codeql"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id rust-std-env-input
+        :display-name "std::env process input"
+        :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (resolved-call :resolves-to "std.env.var" :proof declared
+                (call-bindings (call-shape (call :callee (name "var") :arity 1))))
+              (resolved-call :resolves-to "std.env.var_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "var_os") :arity 1))))
+              (resolved-call :resolves-to "std.env.args" :proof declared
+                (call-bindings (call-shape (call :callee (name "args") :arity 0))))
+              (resolved-call :resolves-to "std.env.args_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "args_os") :arity 0))))
+              (resolved-call :resolves-to "std.env.vars" :proof declared
+                (call-bindings (call-shape (call :callee (name "vars") :arity 0))))
+              (resolved-call :resolves-to "std.env.vars_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "vars_os") :arity 0)))))))
+        :bind return-value
+        :labels [attacker-controlled])
+      (source :id rust-std-stdin-read-line
+        :display-name "std::io::Stdin::read_line"
+        :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (resolved-call :resolves-to "std.io.Stdin.read_line" :proof declared
+              (call-bindings (call-shape (call :callee (name "read_line") :arity 1))))))
+        :bind (argument :index 0)
+        :labels [attacker-controlled])])
+    :sinks (endpoint-set :entries [
+      (sink :id rust-std-alloc-layout-arg0
+        :display-name "std::alloc Layout operand (argument 0)"
+        :categories [memory.allocation]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.alloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.alloc_zeroed" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc_zeroed") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "alloc.alloc.alloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "alloc.alloc.alloc_zeroed" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc_zeroed") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.GlobalAlloc.alloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.GlobalAlloc.alloc_zeroed" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc_zeroed") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.System.alloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.System.alloc_zeroed" :proof declared
+                  (call-bindings (call-shape (call :callee (name "alloc_zeroed") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.Allocator.allocate" :proof declared
+                  (call-bindings (call-shape (call :callee (name "allocate") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.alloc.Allocator.allocate_zeroed" :proof declared
+                  (call-bindings (call-shape (call :callee (name "allocate_zeroed") :arity 1))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])
+      (sink :id rust-std-alloc-size-or-layout-arg2
+        :display-name "std::alloc realloc / Allocator grow size or Layout (argument 2)"
+        :categories [memory.allocation]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 2
+                (resolved-call :resolves-to "std.alloc.realloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "realloc") :arity 3)))))
+              (call-argument :formal-index 2
+                (resolved-call :resolves-to "alloc.alloc.realloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "realloc") :arity 3)))))
+              (call-argument :formal-index 2
+                (resolved-call :resolves-to "std.alloc.GlobalAlloc.realloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "realloc") :arity 3)))))
+              (call-argument :formal-index 2
+                (resolved-call :resolves-to "std.alloc.System.realloc" :proof declared
+                  (call-bindings (call-shape (call :callee (name "realloc") :arity 3)))))
+              (call-argument :formal-index 2
+                (resolved-call :resolves-to "std.alloc.Allocator.grow" :proof declared
+                  (call-bindings (call-shape (call :callee (name "grow") :arity 3)))))
+              (call-argument :formal-index 2
+                (resolved-call :resolves-to "std.alloc.Allocator.grow_zeroed" :proof declared
+                  (call-bindings (call-shape (call :callee (name "grow_zeroed") :arity 3))))))))
+        :dangerous-operand (argument :index 2)
+        :accepts [attacker-controlled])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "770")))
