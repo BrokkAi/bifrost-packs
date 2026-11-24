@@ -961,6 +961,26 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/rust/command-line-injection.rqlp",
+      "id": "bifrost.security.rust.command-line-injection",
+      "authored_hash": "276b34940da2cc0785dcc97cf10203239dde2c16f35bbeb1739921a448aead51",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted process input passed to std::process::Command::new, arg, or args can execute unintended programs or inject hazardous command arguments.",
+      "remediation": "Restrict command programs to a fixed allowlist and validate or constrain user-supplied arguments rather than passing untrusted input directly to std::process::Command.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/rust/non-https-url.rqlp",
       "id": "bifrost.security.rust.non-https-url",
       "authored_hash": "156b4284addee7647c803d3942129aaeb0f93d0650cec7a0584eb1f62d00e07f",
