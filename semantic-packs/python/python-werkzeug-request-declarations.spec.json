@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-werkzeug-request-declarations",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-werkzeug-request-declarations.json",
+    "sha256": "39e87017ef1e36264dc2b62802f52301185c21164a61580338c5a1f6baa738f1",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/b208ba26f90c74652eee6ace2418b5b75250f4d3/semantic-packs/python/web-request/bifrost.python-werkzeug-request-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:pypi/werkzeug",
+        "version": ">=3.1.0, <3.2.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Werkzeug 3.1.0 source (src/werkzeug/wrappers/request.py, sansio/request.py, datastructures/)",
+    "revision": "pallets/werkzeug 3.1.0"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/python-web-request-models.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:pypi/werkzeug",
+      "version": "=3.1.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "werkzeug.wrappers.Request",
+      "name": "args"
+    }
+  ]
+}
