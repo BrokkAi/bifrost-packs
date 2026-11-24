@@ -1,0 +1,173 @@
+; CodeQL parity rule: rust/path-injection (CWE-22 / CWE-23 / CWE-36 / CWE-73 / CWE-99) for std::fs.
+; Matches all 24 standard-library path-injection sinks in CodeQL 0.1.46
+; (github/codeql@1be292a1e54696ca543b4ad0f9b4537b9687caa7) frameworks/stdlib/fs.model.yml:
+; - std::fs::{copy, create_dir, create_dir_all, hard_link, metadata, read, read_dir,
+;   read_link, read_to_string, remove_dir, remove_dir_all, remove_file, rename,
+;   set_permissions, soft_link, symlink_metadata, write}
+; - std::fs::File::{create, create_buffered, create_new, open, open_buffered}
+; - std::fs::OpenOptions::open, std::fs::DirBuilder::create
+;
+; Engine contract:
+; - Sources: reviewed standard-library untrusted process inputs in bifrost.rust-std-sql-taint.
+; - Sinks: reviewed std::fs declarations and complete summaries in bifrost.rust-std-fs.
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.path-injection"
+  :name "Rust uncontrolled data used in std::fs path expression"
+  :message "untrusted input flows into a std::fs filesystem path"
+  :severity error
+  :description "Reports untrusted process input from std::env or std::io::stdin flowing into standard-library std::fs path APIs (free functions, File, OpenOptions, DirBuilder). Sources and sinks are resolved structurally via resolved-call against reviewed standard-library declarations, so constant paths and local same-named types are not reported."
+  :tags ["security" "rust" "path-traversal" "cwe-22" "cwe-23" "cwe-36" "cwe-73" "cwe-99" "codeql"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id rust-std-env-input
+        :display-name "std::env process input"
+        :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (resolved-call :resolves-to "std.env.var" :proof declared
+                (call-bindings (call-shape (call :callee (name "var") :arity 1))))
+              (resolved-call :resolves-to "std.env.var_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "var_os") :arity 1))))
+              (resolved-call :resolves-to "std.env.args" :proof declared
+                (call-bindings (call-shape (call :callee (name "args") :arity 0))))
+              (resolved-call :resolves-to "std.env.args_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "args_os") :arity 0))))
+              (resolved-call :resolves-to "std.env.vars" :proof declared
+                (call-bindings (call-shape (call :callee (name "vars") :arity 0))))
+              (resolved-call :resolves-to "std.env.vars_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "vars_os") :arity 0)))))))
+        :bind return-value
+        :labels [attacker-controlled])
+      (source :id rust-std-stdin-read-line
+        :display-name "std::io::Stdin::read_line"
+        :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (resolved-call :resolves-to "std.io.Stdin.read_line" :proof declared
+              (call-bindings (call-shape (call :callee (name "read_line") :arity 1))))))
+        :bind (argument :index 0)
+        :labels [attacker-controlled])])
+    :sinks (endpoint-set :entries [
+      (sink :id rust-std-fs-free-1arg
+        :display-name "std::fs unary path function (argument 0)"
+        :categories [file.path]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.create_dir" :proof declared
+                  (call-bindings (call-shape (call :callee (name "create_dir") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.create_dir_all" :proof declared
+                  (call-bindings (call-shape (call :callee (name "create_dir_all") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.metadata" :proof declared
+                  (call-bindings (call-shape (call :callee (name "metadata") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.read" :proof declared
+                  (call-bindings (call-shape (call :callee (name "read") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.read_dir" :proof declared
+                  (call-bindings (call-shape (call :callee (name "read_dir") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.read_link" :proof declared
+                  (call-bindings (call-shape (call :callee (name "read_link") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.read_to_string" :proof declared
+                  (call-bindings (call-shape (call :callee (name "read_to_string") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.remove_dir" :proof declared
+                  (call-bindings (call-shape (call :callee (name "remove_dir") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.remove_dir_all" :proof declared
+                  (call-bindings (call-shape (call :callee (name "remove_dir_all") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.remove_file" :proof declared
+                  (call-bindings (call-shape (call :callee (name "remove_file") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.symlink_metadata" :proof declared
+                  (call-bindings (call-shape (call :callee (name "symlink_metadata") :arity 1))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])
+      (sink :id rust-std-fs-free-2arg-arg0
+        :display-name "std::fs binary path function (argument 0)"
+        :categories [file.path]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.copy" :proof declared
+                  (call-bindings (call-shape (call :callee (name "copy") :arity 2)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.hard_link" :proof declared
+                  (call-bindings (call-shape (call :callee (name "hard_link") :arity 2)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.rename" :proof declared
+                  (call-bindings (call-shape (call :callee (name "rename") :arity 2)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.set_permissions" :proof declared
+                  (call-bindings (call-shape (call :callee (name "set_permissions") :arity 2)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.soft_link" :proof declared
+                  (call-bindings (call-shape (call :callee (name "soft_link") :arity 2)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.write" :proof declared
+                  (call-bindings (call-shape (call :callee (name "write") :arity 2))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])
+      (sink :id rust-std-fs-types-arg0
+        :display-name "std::fs File/OpenOptions/DirBuilder path (argument 0)"
+        :categories [file.path]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.File.create" :proof declared
+                  (call-bindings (call-shape (call :callee (name "create") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.File.create_buffered" :proof declared
+                  (call-bindings (call-shape (call :callee (name "create_buffered") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.File.create_new" :proof declared
+                  (call-bindings (call-shape (call :callee (name "create_new") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.File.open" :proof declared
+                  (call-bindings (call-shape (call :callee (name "open") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.File.open_buffered" :proof declared
+                  (call-bindings (call-shape (call :callee (name "open_buffered") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.OpenOptions.open" :proof declared
+                  (call-bindings (call-shape (call :callee (name "open") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.fs.DirBuilder.create" :proof declared
+                  (call-bindings (call-shape (call :callee (name "create") :arity 1))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])
+      (sink :id rust-std-fs-free-2arg-arg1
+        :display-name "std::fs destination path (argument 1)"
+        :categories [file.path]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 1
+                (resolved-call :resolves-to "std.fs.copy" :proof declared
+                  (call-bindings (call-shape (call :callee (name "copy") :arity 2)))))
+              (call-argument :formal-index 1
+                (resolved-call :resolves-to "std.fs.hard_link" :proof declared
+                  (call-bindings (call-shape (call :callee (name "hard_link") :arity 2)))))
+              (call-argument :formal-index 1
+                (resolved-call :resolves-to "std.fs.rename" :proof declared
+                  (call-bindings (call-shape (call :callee (name "rename") :arity 2)))))
+              (call-argument :formal-index 1
+                (resolved-call :resolves-to "std.fs.soft_link" :proof declared
+                  (call-bindings (call-shape (call :callee (name "soft_link") :arity 2))))))))
+        :dangerous-operand (argument :index 1)
+        :accepts [attacker-controlled])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "22")))
