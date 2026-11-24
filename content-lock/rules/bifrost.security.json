@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "68ab824dd44d72f2cfe3d12281b0dd97804cc9ea9384177518e4216d3046e233"
+      "sha256": "3109d2829251eb5aafc509ada8a1b2bfa5b0cc84ca9ec3597f0489918718eed5"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -494,6 +494,13 @@
       "path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/cargo-ssh-git-host-key-unverified.rqlp",
       "sha256": "5fc9f3461507c594469850d1a494c4c8df81f88b396719c68547a0fafbb72cb7",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/command-line-injection.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/command-line-injection.rqlp",
+      "sha256": "b66007d7af09379a3924590020165e3cc6c6aa8d84413e21c352e273a03aa587",
       "classification": "public",
       "license": "Apache-2.0"
     },

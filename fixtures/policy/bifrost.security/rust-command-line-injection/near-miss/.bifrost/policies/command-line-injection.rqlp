@@ -1,0 +1,75 @@
+; CodeQL parity rule: rust/command-line-injection (CWE-78 / CWE-88) for std::process::Command.
+; Matches CodeQL 0.1.46 (github/codeql@1be292a1e54696ca543b4ad0f9b4537b9687caa7)
+; frameworks/stdlib/process.model.yml standard-library command-injection sinks:
+; - std::process::Command::new (argument 0)
+; - std::process::Command::arg (argument 0)
+; - std::process::Command::args (argument 0)
+;
+; Engine contract:
+; - Sources: reviewed standard-library untrusted process inputs in
+;   bifrost.rust-std-sql-taint (std::env::{var, var_os, args, args_os, vars, vars_os}
+;   and std::io::Stdin::read_line).
+; - Sinks: reviewed std::process::Command declarations and complete summaries in
+;   bifrost.rust-std-process.
+(policy
+  :schema-version 1
+  :id "bifrost.security.rust.command-line-injection"
+  :name "Rust OS command injection via std::process::Command"
+  :message "untrusted input flows into std::process::Command program or arguments"
+  :severity error
+  :description "Reports untrusted process input from std::env or std::io::stdin flowing into std::process::Command::{new, arg, args}. Sources and sinks are resolved structurally via resolved-call against reviewed standard-library declarations, so constant commands and local same-named Command types are not reported."
+  :tags ["security" "rust" "command-injection" "cwe-78" "cwe-88" "codeql"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id rust-std-env-input
+        :display-name "std::env process input"
+        :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (resolved-call :resolves-to "std.env.var" :proof declared
+                (call-bindings (call-shape (call :callee (name "var") :arity 1))))
+              (resolved-call :resolves-to "std.env.var_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "var_os") :arity 1))))
+              (resolved-call :resolves-to "std.env.args" :proof declared
+                (call-bindings (call-shape (call :callee (name "args") :arity 0))))
+              (resolved-call :resolves-to "std.env.args_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "args_os") :arity 0))))
+              (resolved-call :resolves-to "std.env.vars" :proof declared
+                (call-bindings (call-shape (call :callee (name "vars") :arity 0))))
+              (resolved-call :resolves-to "std.env.vars_os" :proof declared
+                (call-bindings (call-shape (call :callee (name "vars_os") :arity 0)))))))
+        :bind return-value
+        :labels [attacker-controlled])
+      (source :id rust-std-stdin-read-line
+        :display-name "std::io::Stdin::read_line"
+        :categories [input.user-controlled io.external]
+        :selector (rql :schema-version 1
+          (language rust
+            (resolved-call :resolves-to "std.io.Stdin.read_line" :proof declared
+              (call-bindings (call-shape (call :callee (name "read_line") :arity 1))))))
+        :bind (argument :index 0)
+        :labels [attacker-controlled])])
+    :sinks (endpoint-set :entries [
+      (sink :id rust-std-command-injection
+        :display-name "std::process::Command program or argument"
+        :categories [command.text]
+        :selector (rql :schema-version 1
+          (language rust
+            (union
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.process.Command.new" :proof declared
+                  (call-bindings (call-shape (call :callee (name "new") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.process.Command.arg" :proof declared
+                  (call-bindings (call-shape (call :callee (name "arg") :arity 1)))))
+              (call-argument :formal-index 0
+                (resolved-call :resolves-to "std.process.Command.args" :proof declared
+                  (call-bindings (call-shape (call :callee (name "args") :arity 1))))))))
+        :dangerous-operand (argument :index 0)
+        :accepts [attacker-controlled])]))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "78")))
