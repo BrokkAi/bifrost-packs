@@ -976,6 +976,26 @@
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
     },
     {
+      "path": "policies/rust/path-injection.rqlp",
+      "id": "bifrost.security.rust.path-injection",
+      "authored_hash": "da0ba34508982cf867879bcb77bf51eba8885211e3e033766843ee579fc2fa3b",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted process input used as a std::fs path can traverse outside intended directories and read, modify, or delete arbitrary files.",
+      "remediation": "Validate or canonicalize user-supplied path components against an expected base directory, or map input through a fixed allowlist before calling std::fs.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/declared-storage/rust-store-requires-validation.rqlp",
       "id": "bifrost.security.rust.store-requires-validation",
       "authored_hash": "30a1ae97228c03bc77d2df9cc341b98e70e022b216e83480dafc20a57cd4a1cf",
