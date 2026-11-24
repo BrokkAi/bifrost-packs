@@ -976,6 +976,26 @@
       "remediation": "Use an HTTPS URL for external services; retain HTTP only for explicitly reviewed local or private endpoints."
     },
     {
+      "path": "policies/rust/uncontrolled-allocation-size.rqlp",
+      "id": "bifrost.security.rust.uncontrolled-allocation-size",
+      "authored_hash": "de2563a2e9148c5d0c6f7c5335aa29a7c3990309264cce6a1ddf5f453e7ea3ff",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Untrusted input controlling a std::alloc Layout or reallocation size can cause excessive memory allocation, allocation failures, or denial of service.",
+      "remediation": "Validate and enforce an explicit upper bound on untrusted sizes before constructing a std::alloc::Layout or calling std::alloc::{alloc, alloc_zeroed, realloc}.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/declared-storage/rust-store-requires-validation.rqlp",
       "id": "bifrost.security.rust.store-requires-validation",
       "authored_hash": "30a1ae97228c03bc77d2df9cc341b98e70e022b216e83480dafc20a57cd4a1cf",

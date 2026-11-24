@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "68ab824dd44d72f2cfe3d12281b0dd97804cc9ea9384177518e4216d3046e233"
+      "sha256": "90bb378b407cd607fd00ef9cb6ed46d5e3028d17b1a40d3406fbd8d959e307c6"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -501,6 +501,13 @@
       "path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
       "source_path": "rules/bifrost.security/policies/rust/non-https-url.rqlp",
       "sha256": "af3a42089e3e38620b001fd0db6f464829cd79e85da51c78f02e632334e4baaa",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/rust/uncontrolled-allocation-size.rqlp",
+      "source_path": "rules/bifrost.security/policies/rust/uncontrolled-allocation-size.rqlp",
+      "sha256": "4a8be6d538f883ca3c7d6b06b12de56238b8d360ea4f7bd6cbc829f981fa9e12",
       "classification": "public",
       "license": "Apache-2.0"
     },

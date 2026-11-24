@@ -1,0 +1,2058 @@
+{
+  "schema_version": 32,
+  "pack_id": "bifrost.rust-std-alloc",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-rust-codeql-parity-models",
+    "version": "0.1.0"
+  },
+  "language": "rust",
+  "ecosystem": "cargo",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Rust standard library std::alloc / alloc::alloc public API declarations and summaries covering CodeQL 0.1.46 (github/codeql@1be292a1e54696ca543b4ad0f9b4537b9687caa7) frameworks/stdlib/alloc.model.yml alloc-layout and alloc-size sinks (alloc, alloc_zeroed, realloc; GlobalAlloc::{alloc, alloc_zeroed, realloc}; Allocator::{allocate, allocate_zeroed, grow, grow_zeroed}) and Layout taint-transfer summaries. Shares type.rust-sql.std with bifrost.rust-std-sql-taint.",
+    "revision": "rust-std-1.100; CodeQL 1be292a1e54696ca543b4ad0f9b4537b9687caa7"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.bifrost.rust-std-alloc",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.rust-sql.std",
+            "name": "std",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/lib.rs",
+              "symbol": "std"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-alloc",
+            "name": "std.alloc",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-alloc-layout",
+            "name": "std.alloc.Layout",
+            "type_kind": "struct",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-alloc-global-alloc",
+            "name": "std.alloc.GlobalAlloc",
+            "type_kind": "trait",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-alloc-system",
+            "name": "std.alloc.System",
+            "type_kind": "struct",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System"
+            }
+          },
+          {
+            "id": "type.rust-codeql.std-alloc-allocator",
+            "name": "std.alloc.Allocator",
+            "type_kind": "trait",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator"
+            }
+          },
+          {
+            "id": "type.rust-codeql.alloc",
+            "name": "alloc",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/lib.rs",
+              "symbol": "alloc"
+            }
+          },
+          {
+            "id": "type.rust-codeql.alloc-alloc",
+            "name": "alloc.alloc",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc"
+            }
+          },
+          {
+            "id": "type.rust-codeql.alloc-alloc-layout",
+            "name": "alloc.alloc.Layout",
+            "type_kind": "struct",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.rust-codeql.std-alloc-alloc",
+            "owner": "type.rust-codeql.std-alloc",
+            "name": "alloc",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc.alloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-alloc-zeroed",
+            "owner": "type.rust-codeql.std-alloc",
+            "name": "alloc_zeroed",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc.alloc_zeroed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-realloc",
+            "owner": "type.rust-codeql.std-alloc",
+            "name": "realloc",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "ptr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "new_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc.realloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-alloc",
+            "owner": "type.rust-codeql.alloc-alloc",
+            "name": "alloc",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc.alloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-alloc-zeroed",
+            "owner": "type.rust-codeql.alloc-alloc",
+            "name": "alloc_zeroed",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc.alloc_zeroed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-realloc",
+            "owner": "type.rust-codeql.alloc-alloc",
+            "name": "realloc",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "ptr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "new_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc.realloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-from-size-align",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "from_size_align",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.from_size_align"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-from-size-align-unchecked",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "from_size_align_unchecked",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.alloc.Layout"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.from_size_align_unchecked"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-array",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "array",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.array"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-repeat",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "repeat",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.repeat"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-repeat-packed",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "repeat_packed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.repeat_packed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-extend",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "extend",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "next",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.extend"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-extend-packed",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "extend_packed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "next",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.extend_packed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-align-to",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "align_to",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.align_to"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-pad-to-align",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "pad_to_align",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "std.alloc.Layout"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.pad_to_align"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-layout-size",
+            "owner": "type.rust-codeql.std-alloc-layout",
+            "name": "size",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.size"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-from-size-align",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "from_size_align",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.from_size_align"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-from-size-align-unchecked",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "from_size_align_unchecked",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "alloc.alloc.Layout"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.from_size_align_unchecked"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-array",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "array",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.array"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-repeat",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "repeat",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.repeat"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-repeat-packed",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "repeat_packed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.repeat_packed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-extend",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "extend",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "next",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.extend"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-extend-packed",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "extend_packed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "next",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.extend_packed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-align-to",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "align_to",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.align_to"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-pad-to-align",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "pad_to_align",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "alloc.alloc.Layout"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.pad_to_align"
+            }
+          },
+          {
+            "id": "member.rust-codeql.alloc-alloc-layout-size",
+            "owner": "type.rust-codeql.alloc-alloc-layout",
+            "name": "size",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.size"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-globalalloc-alloc",
+            "owner": "type.rust-codeql.std-alloc-global-alloc",
+            "name": "alloc",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc.alloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-globalalloc-alloc-zeroed",
+            "owner": "type.rust-codeql.std-alloc-global-alloc",
+            "name": "alloc_zeroed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc.alloc_zeroed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-globalalloc-realloc",
+            "owner": "type.rust-codeql.std-alloc-global-alloc",
+            "name": "realloc",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "ptr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "new_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc.realloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-system-alloc",
+            "owner": "type.rust-codeql.std-alloc-system",
+            "name": "alloc",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System.alloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-system-alloc-zeroed",
+            "owner": "type.rust-codeql.std-alloc-system",
+            "name": "alloc_zeroed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System.alloc_zeroed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-system-realloc",
+            "owner": "type.rust-codeql.std-alloc-system",
+            "name": "realloc",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "ptr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "new_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "untyped"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System.realloc"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-allocator-allocate",
+            "owner": "type.rust-codeql.std-alloc-allocator",
+            "name": "allocate",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.allocate"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-allocator-allocate-zeroed",
+            "owner": "type.rust-codeql.std-alloc-allocator",
+            "name": "allocate_zeroed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.allocate_zeroed"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-allocator-grow",
+            "owner": "type.rust-codeql.std-alloc-allocator",
+            "name": "grow",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "ptr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "old_layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "new_layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.grow"
+            }
+          },
+          {
+            "id": "member.rust-codeql.std-alloc-allocator-grow-zeroed",
+            "owner": "type.rust-codeql.std-alloc-allocator",
+            "name": "grow_zeroed",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "ptr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "old_layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "new_layout",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.grow_zeroed"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.bifrost.rust-std-alloc",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.rust-codeql.std-alloc-alloc",
+            "target": {
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc.alloc",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-alloc-zeroed",
+            "target": {
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc.alloc_zeroed",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-realloc",
+            "target": {
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "std.alloc.realloc",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-alloc",
+            "target": {
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc.alloc",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-alloc-zeroed",
+            "target": {
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc.alloc_zeroed",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-realloc",
+            "target": {
+              "path": "library/alloc/src/alloc.rs",
+              "symbol": "alloc.alloc.realloc",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-from-size-align",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.from_size_align",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-from-size-align-unchecked",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.from_size_align_unchecked",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-array",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.array",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-repeat",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.repeat",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-repeat-packed",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.repeat_packed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-extend",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.extend",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-extend-packed",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.extend_packed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-align-to",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.align_to",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-pad-to-align",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.pad_to_align",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-layout-size",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "std.alloc.Layout.size",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-from-size-align",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.from_size_align",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-from-size-align-unchecked",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.from_size_align_unchecked",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-array",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.array",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-repeat",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.repeat",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-repeat-packed",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.repeat_packed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-extend",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.extend",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-extend-packed",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.extend_packed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-align-to",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.align_to",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-pad-to-align",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.pad_to_align",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.alloc-alloc-layout-size",
+            "target": {
+              "path": "library/core/src/alloc/layout.rs",
+              "symbol": "alloc.alloc.Layout.size",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-globalalloc-alloc",
+            "target": {
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc.alloc",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-globalalloc-alloc-zeroed",
+            "target": {
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc.alloc_zeroed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-globalalloc-realloc",
+            "target": {
+              "path": "library/core/src/alloc/global.rs",
+              "symbol": "std.alloc.GlobalAlloc.realloc",
+              "has_receiver": true,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-system-alloc",
+            "target": {
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System.alloc",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-system-alloc-zeroed",
+            "target": {
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System.alloc_zeroed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-system-realloc",
+            "target": {
+              "path": "library/std/src/sys/alloc/mod.rs",
+              "symbol": "std.alloc.System.realloc",
+              "has_receiver": true,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-allocator-allocate",
+            "target": {
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.allocate",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-allocator-allocate-zeroed",
+            "target": {
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.allocate_zeroed",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-allocator-grow",
+            "target": {
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.grow",
+              "has_receiver": true,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          },
+          {
+            "id": "summary.rust-codeql.std-alloc-allocator-grow-zeroed",
+            "target": {
+              "path": "library/core/src/alloc/mod.rs",
+              "symbol": "std.alloc.Allocator.grow_zeroed",
+              "has_receiver": true,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "covers_overrides": true
+          }
+        ]
+      }
+    }
+  ]
+}
