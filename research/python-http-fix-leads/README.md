@@ -47,9 +47,11 @@ httpcore and h11 contributed no lead of their own.
 ## Pre-images to check with the shipped rules
 
 These are the pre-fix files and lines where a run of the shipped rules (engine
-0.15.4, rules 0.17.0, packs 0.16.0) is most informative. The first four have an
-existing rule that should fire. The rest have no rule, so they give a baseline
-for qualification.
+0.15.4, rules 0.17.0, packs 0.16.0) is most informative. The first six rows
+belong to a lead that names an existing rule. The Expectation column says
+whether that rule should fire or is expected to miss; an expected miss is the
+gap the lead records, not a regression. The last three rows have no rule and
+give a baseline for qualification.
 
 | Issue | Repository @ pre-fix commit | File and lines | Expectation |
 | --- | --- | --- | --- |
