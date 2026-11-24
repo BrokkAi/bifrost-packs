@@ -42,6 +42,17 @@ spec pins the commit that made the change. Pack completeness stays
 identities and provenance are unchanged. The schema-2 errgroup and embed
 declaration models are not jobs and are left as they were.
 
+## Python web-request jobs
+
+Five authored jobs deliver the reviewed Flask, Werkzeug and Django request-read
+models from `semantic-packs/python/web-request/` (all 0.1.0, Apache-2.0). Their
+shards activate on `pkg:pypi/flask`, `pkg:pypi/werkzeug` and `pkg:pypi/django`
+version ranges, so they stay inactive until a workspace pins one of those
+distributions and the engine is Bifrost 0.15.4 or later (bifrost-dev#14581).
+The specs pin commit `b208ba26f90c74652eee6ace2418b5b75250f4d3`. Delivering the
+packs does not enable `python.flask-request-to-urlopen` or
+`python.django-request-to-urlopen`, which remain opt-in.
+
 ## Go gob jobs and net interface summaries
 
 Two authored jobs follow the legacy set: `go-stdlib-encoding-gob-declarations`

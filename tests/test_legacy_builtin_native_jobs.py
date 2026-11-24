@@ -39,6 +39,11 @@ AUTHORED_AFTER_LEGACY = {
     "go-stdlib-compress-gzip-declarations",
     "go-stdlib-io",
     "go-stdlib-io-declarations",
+    "python-flask-request-declarations",
+    "python-werkzeug-request-declarations",
+    "python-werkzeug-request-summaries",
+    "python-django-request-declarations",
+    "python-django-request-summaries",
 }
 
 # Embedded pack IDs delivered by these jobs; Go os and the JDK and Python str
