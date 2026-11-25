@@ -127,7 +127,8 @@ Taint rules read these summaries too. A `complete` summary with no transfers
 claims that nothing reaches the return value, and that cut the flow in
 `urlopen(json.loads(sys.argv[1]))`, reporting it clean. 1.2.0 therefore declares
 input-to-return transfers on every summary whose result carries input data:
-all parameters for `json`, `pickle` and `re.compile`, the iterable for `sorted`,
+all parameters for `json` and `pickle`, the pattern for `re.compile` (as the 3.13.5
+security-sink summary declares, so the two agree), the iterable for `sorted`,
 `args` for `subprocess.run`, and the receiver for buffered `read` and
 `sqlite3.Cursor.execute`. 1.1.0 already had that gap for `pickle.loads`.
 `fixtures/policy/bifrost.code-smells/python-performance-stdlib-models/` holds
