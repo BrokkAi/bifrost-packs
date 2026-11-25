@@ -109,5 +109,5 @@ BrokkAi/bifrost-packs#443 (requests CVE-2026-25645) on Bifrost 0.15.4. It needs
 only the typeshed stdlib pack from the open bundle. See its `README.md`.
 
 `python-flask-request-in-assert` qualifies BrokkAi/bifrost-packs#433 (aiohttp
-CVE-2025-69227): a Flask request value that reaches an `assert` statement. It
-needs only the Flask and Werkzeug request packs. See its `README.md`.
+CVE-2025-69227): a Flask request value that reaches an `assert` statement (opt-in).
+It needs only the Flask and Werkzeug request packs. See its `README.md`.

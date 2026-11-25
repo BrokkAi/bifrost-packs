@@ -10,10 +10,12 @@
 ; reviewed get and getlist summaries carry the taint to their results.
 ;
 ; The sink is a value read inside an assert statement: an identifier, or the
-; result of a call, anywhere in the asserted condition or its message. The rule
-; does not look for another check of the same value: an assert that repeats an
-; earlier if/raise is still reported, because the assert is then redundant and
-; misleads readers about where the check lives.
+; result of a call, anywhere in the asserted condition or its message. RQL has
+; no role that separates the condition from the message, so a request value
+; that appears only in the message (assert ready, request.args.get("id")) is
+; reported too, although removing that assert skips no request check. The rule
+; is opt-in for that reason. It does not look for another check of the same
+; value: an assert that repeats an earlier if/raise is still reported.
 (policy
   :schema-version 1
   :id "bifrost.security.python.flask-request-in-assert"

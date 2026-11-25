@@ -705,7 +705,7 @@
     {
       "path": "policies/python/predictable-temporary-path.rqlp",
       "id": "bifrost.security.python.predictable-temporary-path",
-      "authored_hash": "588f39a33df6bb971abd40bb23a6c315bea57e32352d6fbad70dbe090b563189",
+      "authored_hash": "9c717bee3c2d8d67b586f1c96e0ff504d655ae628b338bdc4096cf95890c7f7a",
       "resolved_semantic_hash": null,
       "category": "security",
       "supported_languages": [
@@ -893,7 +893,8 @@
         "scoped-callable-completeness"
       ],
       "severity_rationale": "Python removes assert statements under -O and PYTHONOPTIMIZE, so a request check written as an assert vanishes in optimized deployments and the code continues with input it meant to reject.",
-      "remediation": "Validate request input with an explicit check that cannot be optimized away, for example `if value not in ALLOWED: abort(400)` or `raise ValueError(...)`. Keep assert for internal invariants only."
+      "remediation": "Validate request input with an explicit check that cannot be optimized away, for example `if value not in ALLOWED: abort(400)` or `raise ValueError(...)`. Keep assert for internal invariants only.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/python/django-request-to-urlopen.rqlp",

@@ -79,3 +79,16 @@ class Segments:
 def unrelated_join():
     """Pass the temporary directory to an unrelated join method."""
     return Segments().join(tempfile.gettempdir(), "cache")
+
+
+class Route:
+    """A local object whose path attribute has its own join method."""
+
+    def __init__(self):
+        """Use a Segments helper as the path attribute."""
+        self.path = Segments()
+
+
+def attribute_join():
+    """Pass the temporary directory to a join method on an attribute named path."""
+    return Route().path.join(tempfile.gettempdir(), "cache")

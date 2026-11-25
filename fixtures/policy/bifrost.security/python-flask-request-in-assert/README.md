@@ -8,8 +8,9 @@ written as an assert is gone in optimized deployments.
 Sources are the exact Werkzeug `Request` accessor reads of
 `flask-request-to-urlopen` (`request.args`, `form`, `cookies`, `headers`).
 The sink is a value read inside an `assert` statement: an identifier, or the
-result of a call. The rule needs only the Flask and Werkzeug request packs, so
-it runs by default like the Flask `urlopen` rule.
+result of a call. The rule needs only the Flask and Werkzeug request packs. It is
+opt-in because a request value that appears only in the assert message is
+reported too (see Known limits).
 
 Each case directory is its own workspace with the policy, the Flask and
 Werkzeug request packs, and a `pyproject.toml` and `requirements.txt` that pin
@@ -33,6 +34,10 @@ semantics stay unknown; the findings are still reported.
 
 ## Known limits
 
+- A request value that appears only in the assert message
+  (`assert ready, request.args.get("id")`) is reported, although removing that
+  assert skips no request check: RQL has no role that separates an assert's
+  condition from its message.
 - One finding is reported per tainted read inside the assert, so an assert that
   reads the same request value twice is reported twice.
 - The rule does not look for another check of the same value. An assert that
