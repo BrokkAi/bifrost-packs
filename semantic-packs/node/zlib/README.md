@@ -12,7 +12,9 @@ policy, the version-independent part of BrokkAi/bifrost-packs#291
 For each of `gunzipSync`, `inflateSync`, `inflateRawSync`, `unzipSync` and
 `brotliDecompressSync`, the declarations pack has two members: the
 one-argument `zlib.<name>(buffer)` and the two-argument
-`zlib.<name>(buffer, options)`. Both return a `Buffer`.
+`zlib.<name>(buffer, options)`. The one-argument form returns a `Buffer`. The
+two-argument form returns `any`: with `info: true` the result is an object
+holding `buffer` and `engine`.
 
 The source is `doc/api/zlib.md` at Node `v22.11.0` (SHA-256
 `9ec5e920cb53e58b84d0b74836c1cb995fe5f6dce9079daf77b860ed5b3e956a`, from
@@ -31,6 +33,9 @@ Each summary is complete and covers one declared member:
 - The `buffer` argument flows to the normal return. The result is the
   decompressed form of the input, so data chosen by whoever wrote the input
   stays in it.
+- In the two-argument form, `options` also flows to the normal return. A
+  `dictionary` supplies bytes of the inflated output, and `info: true` returns
+  an object that holds the result.
 - Every argument flows to the exceptional return. A failed call throws an
   error, and a may-analysis must not assume that the error drops its inputs.
 - There are no effects. The methods only compute a new buffer.

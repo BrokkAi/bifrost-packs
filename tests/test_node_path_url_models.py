@@ -187,9 +187,10 @@ class NodePathUrlModelTests(unittest.TestCase):
             with self.subTest(summary=row["id"]):
                 self.assertEqual(row["completeness"], "complete")
                 self.assertEqual(row["effects"], [])
-                # Only the input buffer reaches the decompressed result.
+                # The input buffer reaches the result, and so do the options:
+                # a dictionary supplies output bytes and info wraps the result.
                 returned = {t["input"].get("ordinal") for t in row["transfers"] if t["output"]["kind"] == "normal_return"}
-                self.assertEqual(returned, {0})
+                self.assertEqual(returned, set(range(row["target"]["parameter_count"])))
                 thrown = {t["input"]["ordinal"] for t in row["transfers"] if t["output"]["kind"] == "exceptional_return"}
                 self.assertEqual(thrown, set(range(row["target"]["parameter_count"])))
 
