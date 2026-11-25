@@ -54,14 +54,14 @@ bifrost --root . --policy-file .bifrost/policies/<library>-tls-verification-disa
 | `requests/incomplete-with-target` | inconclusive (`partial_discovery`); 1 definite finding at line 8. The `with requests.Session() as s` target leaves the receiver lookup open |
 | `requests/incomplete-session-factory` | inconclusive (`partial_discovery`); 0 findings. `requests.session()` binds, but its declared result doesn't give `s.request` an exact receiver |
 | `requests/unpinned` | `not_run` (`qualified-call-locator-zero`): no `pkg:pypi/requests` evidence, so the pack doesn't activate |
-| `httpx/positive` | complete; 5 definite findings: lines 5 (`httpx.get`), 9 (`httpx.post`), 13 (`httpx.stream`), 18 (`httpx.Client(...)`) and 23 (`httpx.AsyncClient(...)`) |
+| `httpx/positive` | complete; 6 definite findings: lines 5 (`httpx.get`), 9 (`httpx.post`), 13 (`httpx.stream`), 18 (`httpx.Client(...)`), 23 (`httpx.AsyncClient(...)`) and 29 (`httpx.Client(verify=False, mounts={})`: no mount matches, so the default transport is used) |
 | `httpx/near-miss` | complete; 0 findings. No `verify`, `verify=True`, a CA-bundle path, an `ssl.create_default_context()` context, `verify=settings.VERIFY`, `follow_redirects=False`, and a client given its own verifying `transport` |
 | `httpx/unpinned` | `not_run` (`qualified-call-locator-zero`) |
 | `aiohttp/positive` | complete; 5 definite findings: lines 6 (`session.post(..., verify_ssl=False)`), 11 (`TCPConnector(ssl=False)`), 15 (`aiohttp.request`), 21 (`session.get`) and 26 (`session.ws_connect(..., verify_ssl=False)`) |
 | `aiohttp/near-miss` | complete; 0 findings. No `ssl`, an `ssl.create_default_context()` context, `TCPConnector(ssl=True)`, `allow_redirects=False`, and `aiohttp.request(..., ssl=False, connector=...)` with a connector that pins a `Fingerprint` |
 | `aiohttp/incomplete-with-target` | inconclusive (`partial_discovery`); 2 definite findings at lines 8 and 14. The `async with aiohttp.ClientSession() as session` target leaves the receiver lookup open |
 | `aiohttp/unpinned` | `not_run` (`qualified-call-locator-zero`) |
-| `urllib3/positive` | complete; 6 definite findings: lines 6 (`PoolManager(cert_reqs="CERT_NONE")`), 11 (`PoolManager(..., cert_reqs="NONE")`), 15 (`assert_hostname=False`), 19 (`ProxyManager`), 23 (`HTTPSConnectionPool`) and 27 (`connection_from_url`) |
+| `urllib3/positive` | complete; 7 definite findings: lines 6 (`PoolManager(cert_reqs="CERT_NONE")`), 11 (`PoolManager(..., cert_reqs="NONE")`), 15 (`assert_hostname=False`), 19 (`ProxyManager`), 23 (`HTTPSConnectionPool`), 27 (`connection_from_url`) and 32 (`assert_fingerprint=""`, which urllib3 skips) |
 | `urllib3/near-miss` | complete; 0 findings. `cert_reqs="CERT_REQUIRED"`, no settings, a pinned `assert_hostname` string, `ca_certs`, `cert_reqs=settings.CERT_REQS`, and `cert_reqs="CERT_NONE"` with `assert_fingerprint` |
 | `urllib3/unpinned` | `not_run` (`qualified-call-locator-zero`) |
 
@@ -79,7 +79,7 @@ simply stay inactive.
   adapters are not covered.
 - `with` and `async with` targets keep the run inconclusive (above).
 - A call that also passes a configuration that can still authenticate the peer
-  is not reported: httpx `transport=`/`mounts=`, urllib3 `assert_fingerprint=`,
+  is not reported: httpx `transport=`, a non-empty urllib3 `assert_fingerprint=`,
   and `aiohttp.request(..., connector=...)`. A `ClientSession` method can't see
   its session's connector, so a session whose connector pins a `Fingerprint`
   is still reported when a request passes `ssl=False`.

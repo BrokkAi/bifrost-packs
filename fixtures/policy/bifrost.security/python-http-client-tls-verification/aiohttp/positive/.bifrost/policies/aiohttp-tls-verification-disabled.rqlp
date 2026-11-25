@@ -43,7 +43,7 @@
                     (or
                         (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
                         (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(connector (not (null_literal)))])))))))
+                    (not (call :kwargs [(connector (not (or (null_literal) (string_literal (value "")))))])))))))
           (resolved-call :resolves-to "aiohttp.client.ClientSession.request" :proof exact
             (call-bindings
               (call-shape

@@ -22,3 +22,8 @@ def client(url):
 async def async_client(url):
     async with httpx.AsyncClient(verify=False) as c:
         return await c.get(url)
+
+
+def empty_mounts(url):
+    # No mount matches, so the unverified default transport handles the URL.
+    return httpx.Client(verify=False, mounts={}).get(url)
