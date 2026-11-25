@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 297 unique rule IDs from 14 manifest packs.
+This catalog lists 298 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -267,6 +267,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Stored request value reaches pg SQL (TypeScript)](../rules/bifrost.security/policies/declared-storage/typescript-stored-request-to-sql.rqlp) | `bifrost.security.typescript.stored-request-to-sql` | typescript | security | error |
 | [Go network connection decoded with encoding/gob](../rules/bifrost.security/policies/go/gob-decode-network-input.rqlp) | `bifrost.security.go.gob-decode-network-input` | go | security | warning |
 | [Go network connection read to EOF without a size bound](../rules/bifrost.security/policies/go/network-read-all-unbounded.rqlp) | `bifrost.security.go.network-read-all-unbounded` | go | security | warning |
+| [File content decompressed without an output limit](../rules/bifrost.security/policies/javascript/file-content-to-unbounded-decompression.rqlp) | `bifrost.security.javascript.file-content-to-unbounded-decompression` | javascript | security | warning |
 | [Process argument reaches a Node shell command](../rules/bifrost.security/policies/javascript/process-input-to-child-process-command.rqlp) | `bifrost.security.javascript.process-input-to-child-process-command` | javascript | security | warning |
 | [Process argument reaches a Node fs read, list, test or remove path](../rules/bifrost.security/policies/javascript/process-input-to-fs-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-path` | javascript | security | warning |
 | [Process argument reaches a Node fs write path](../rules/bifrost.security/policies/javascript/process-input-to-fs-write-path.rqlp) | `bifrost.security.javascript.process-input-to-fs-write-path` | javascript | security | warning |

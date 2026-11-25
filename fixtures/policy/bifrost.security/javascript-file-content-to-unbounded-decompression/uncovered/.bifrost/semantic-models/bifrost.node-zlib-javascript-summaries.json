@@ -1,0 +1,530 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.node-zlib-javascript-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-node-models",
+    "version": "0.1.0"
+  },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Node.js zlib API (doc/api/zlib.md)",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.zlib-sync-decompress",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.node.zlib.gunzip-sync-1",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.gunzipSync",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.gunzip-sync-2",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.gunzipSync(buffer, options)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.inflate-sync-1",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateSync",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.inflate-sync-2",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateSync(buffer, options)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.inflate-raw-sync-1",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateRawSync",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.inflate-raw-sync-2",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateRawSync(buffer, options)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.unzip-sync-1",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.unzipSync",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.unzip-sync-2",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.unzipSync(buffer, options)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.brotli-decompress-sync-1",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.brotliDecompressSync",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.node.zlib.brotli-decompress-sync-2",
+            "target": {
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.brotliDecompressSync(buffer, options)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 1
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

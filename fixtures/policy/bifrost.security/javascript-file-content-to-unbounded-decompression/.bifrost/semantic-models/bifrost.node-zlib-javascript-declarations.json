@@ -1,0 +1,408 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.node-zlib-javascript-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-node-models",
+    "version": "0.1.0"
+  },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Node.js zlib API (doc/api/zlib.md)",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.zlib-sync-decompress",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.node.zlib.javascript",
+            "name": "zlib",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.node.zlib.javascript.gunzip-sync-1",
+            "owner": "type.node.zlib.javascript",
+            "name": "gunzipSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.gunzipSync(buffer)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.gunzip-sync-2",
+            "owner": "type.node.zlib.javascript",
+            "name": "gunzipSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.gunzipSync(buffer, options)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.inflate-sync-1",
+            "owner": "type.node.zlib.javascript",
+            "name": "inflateSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateSync(buffer)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.inflate-sync-2",
+            "owner": "type.node.zlib.javascript",
+            "name": "inflateSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateSync(buffer, options)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.inflate-raw-sync-1",
+            "owner": "type.node.zlib.javascript",
+            "name": "inflateRawSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateRawSync(buffer)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.inflate-raw-sync-2",
+            "owner": "type.node.zlib.javascript",
+            "name": "inflateRawSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.inflateRawSync(buffer, options)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.unzip-sync-1",
+            "owner": "type.node.zlib.javascript",
+            "name": "unzipSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.unzipSync(buffer)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.unzip-sync-2",
+            "owner": "type.node.zlib.javascript",
+            "name": "unzipSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.unzipSync(buffer, options)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.brotli-decompress-sync-1",
+            "owner": "type.node.zlib.javascript",
+            "name": "brotliDecompressSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.brotliDecompressSync(buffer)"
+            }
+          },
+          {
+            "id": "member.node.zlib.javascript.brotli-decompress-sync-2",
+            "owner": "type.node.zlib.javascript",
+            "name": "brotliDecompressSync",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "buffer",
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Buffer"
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/zlib.js",
+              "symbol": "zlib.brotliDecompressSync(buffer, options)"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

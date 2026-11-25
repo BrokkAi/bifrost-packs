@@ -1,4 +1,4 @@
-"""Pin the Node path and url models and the two JavaScript CVE-slice rules (#287, #294).
+"""Pin the Node path, url and zlib models and the JavaScript CVE-slice rules (#287, #291, #294).
 
 These checks pin source inputs only. Runtime behavior is recorded in the
 fixture READMEs and research/osv-dataflow-2026-11/jsts/outcomes.json.
@@ -75,6 +75,17 @@ RULES = {
             NODE / "vm/javascript/bifrost.node-vm-javascript-declarations.json",
         ],
     },
+    "file-content-to-unbounded-decompression": {
+        "lead": "BrokkAi/bifrost-packs#291 (CVE-2024-22025)",
+        "fixture": "javascript-file-content-to-unbounded-decompression",
+        "workspaces": ("", "incomplete", "uncovered"),
+        "models": [
+            NODE / "fs/javascript/bifrost.node-fs-javascript-declarations.json",
+            NODE / "fs/javascript/bifrost.node-fs-javascript-summaries.json",
+            NODE / "zlib/javascript/bifrost.node-zlib-javascript-declarations.json",
+            NODE / "zlib/javascript/bifrost.node-zlib-javascript-summaries.json",
+        ],
+    },
     "process-input-to-legacy-url-parse": {
         "lead": "BrokkAi/bifrost-packs#294 (CVE-2026-21712)",
         "fixture": "javascript-process-input-to-legacy-url-parse",
@@ -145,6 +156,33 @@ class NodePathUrlModelTests(unittest.TestCase):
                 thrown = {t["input"]["ordinal"] for t in row["transfers"] if t["output"]["kind"] == "exceptional_return"}
                 expected = set() if row["target"]["symbol"] == "fs.existsSync" else set(range(row["target"]["parameter_count"]))
                 self.assertEqual(thrown, expected)
+
+    def test_zlib_models_pair_each_sink_member_with_a_summary(self):
+        names = ["gunzipSync", "inflateSync", "inflateRawSync", "unzipSync", "brotliDecompressSync"]
+        declarations = _load(NODE / "zlib/javascript/bifrost.node-zlib-javascript-declarations.json")
+        summaries = _load(NODE / "zlib/javascript/bifrost.node-zlib-javascript-summaries.json")
+        for model in (declarations, summaries):
+            self.assertEqual(model["provenance"]["revision"], "v22.11.0")
+            self.assertFalse(model["safety"]["review_required"])
+        members = declarations["shards"][0]["payload"]["members"]
+        self.assertEqual(
+            sorted((m["name"], len(m["signature"]["parameters"])) for m in members),
+            sorted((n, a) for n in names for a in (1, 2)),
+        )
+        rows = summaries["shards"][0]["payload"]["summaries"]
+        self.assertEqual(
+            sorted((r["target"]["symbol"].split(".", 1)[1].split("(")[0], r["target"]["parameter_count"]) for r in rows),
+            sorted((n, a) for n in names for a in (1, 2)),
+        )
+        for row in rows:
+            with self.subTest(summary=row["id"]):
+                self.assertEqual(row["completeness"], "complete")
+                self.assertEqual(row["effects"], [])
+                # Only the input buffer reaches the decompressed result.
+                returned = {t["input"].get("ordinal") for t in row["transfers"] if t["output"]["kind"] == "normal_return"}
+                self.assertEqual(returned, {0})
+                thrown = {t["input"]["ordinal"] for t in row["transfers"] if t["output"]["kind"] == "exceptional_return"}
+                self.assertEqual(thrown, set(range(row["target"]["parameter_count"])))
 
     def test_rules_carry_lead_and_fixture_copies_match(self):
         manifest = {p["path"]: p for p in _load(ROOT / "rules/bifrost.security/manifest.json")["policies"]}
