@@ -1,4 +1,4 @@
-"""Pin the Node path, url and zlib models and the JavaScript CVE-slice rules (#287, #291, #294).
+"""Pin the Node path, url and zlib models and the JavaScript CVE-slice rules (#287, #291, #294, #478).
 
 These checks pin source inputs only. Runtime behavior is recorded in the
 fixture READMEs and research/osv-dataflow-2026-11/jsts/outcomes.json.
@@ -84,6 +84,15 @@ RULES = {
             NODE / "fs/javascript/bifrost.node-fs-javascript-summaries.json",
             NODE / "zlib/javascript/bifrost.node-zlib-javascript-declarations.json",
             NODE / "zlib/javascript/bifrost.node-zlib-javascript-summaries.json",
+        ],
+    },
+    "process-input-to-fetch-url": {
+        "lead": "BrokkAi/bifrost-packs#478 (CVE-2025-27152)",
+        "fixture": "javascript-process-input-to-fetch-url",
+        "workspaces": ("", "incomplete", "inline"),
+        "models": [
+            NODE / "runtime-values/javascript/bifrost.node-runtime-values.json",
+            ROOT / "semantic-packs/web-network/javascript/bifrost.web-network-javascript.json",
         ],
     },
     "process-input-to-legacy-url-parse": {
@@ -183,6 +192,25 @@ class NodePathUrlModelTests(unittest.TestCase):
                 self.assertEqual(returned, {0})
                 thrown = {t["input"]["ordinal"] for t in row["transfers"] if t["output"]["kind"] == "exceptional_return"}
                 self.assertEqual(thrown, set(range(row["target"]["parameter_count"])))
+
+    def test_fetch_model_declares_both_arities_with_summaries(self):
+        model = _load(ROOT / "semantic-packs/web-network/javascript/bifrost.web-network-javascript.json")
+        self.assertEqual(model["version"], "1.1.0")
+        members = model["shards"][0]["payload"]["members"]
+        self.assertEqual(
+            sorted((m["id"], len(m["signature"]["parameters"])) for m in members),
+            [("member.web-network.javascript.global-this.fetch", 2),
+             ("member.web-network.javascript.global-this.fetch-1", 1)],
+        )
+        rows = model["shards"][1]["payload"]["summaries"]
+        self.assertEqual(sorted(r["target"]["parameter_count"] for r in rows), [1, 2])
+        for row in rows:
+            with self.subTest(summary=row["id"]):
+                # Only the input reaches the returned promise; init never does.
+                self.assertEqual(
+                    [(t["input"]["ordinal"], t["output"]["kind"]) for t in row["transfers"]],
+                    [(0, "normal_return")],
+                )
 
     def test_rules_carry_lead_and_fixture_copies_match(self):
         manifest = {p["path"]: p for p in _load(ROOT / "rules/bifrost.security/manifest.json")["policies"]}

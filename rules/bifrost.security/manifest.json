@@ -1264,6 +1264,27 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/javascript/process-input-to-fetch-url.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-fetch-url",
+      "authored_hash": "f19054380c25daf8991c4a64d72dcb41602f39536558de9d7cb71ec5dc945c81",
+      "resolved_semantic_hash": "f19054380c25daf8991c4a64d72dcb41602f39536558de9d7cb71ec5dc945c81",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A process argument that chooses the URL of an outbound fetch lets the caller point the program at internal hosts and services it can reach.",
+      "remediation": "Build the URL from a fixed origin, encode the argument as a path segment or query value with encodeURIComponent, or parse it with new URL and reject any origin outside an allow-list before fetching.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/javascript/process-input-to-legacy-url-parse.rqlp",
       "id": "bifrost.security.javascript.process-input-to-legacy-url-parse",
       "authored_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
