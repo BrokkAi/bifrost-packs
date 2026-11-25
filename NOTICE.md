@@ -52,6 +52,14 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
   from the engine's published Cargo crate. They are included in this source
   repository/source archive only and must remain separate from runtime bundles.
 - Rust declaration specifications retain MIT OR Apache-2.0 metadata.
+- The authored Rust standard-library transfer summary model
+  (`semantic-packs/rust-codeql-parity/bifrost.rust-std-transfers.json`)
+  translates five CodeQL Rust standard-library model rows
+  (`rust/ql/lib/codeql/rust/frameworks/stdlib/core.model.yml:131`,
+  `rust/ql/lib/codeql/rust/frameworks/stdlib/fs.model.yml:84`, and
+  `rust/ql/lib/ext/generated/modelgenerator/rust.model.yml:4169,4172-4174`) from
+  `github/codeql` at `1be292a1e54696ca543b4ad0f9b4537b9687caa7`, MIT,
+  Copyright (c) GitHub, Inc.; see `licenses/CodeQL-MIT.txt`.
 - The authored .NET BCL declaration and summary model retains the .NET
   Foundation and Contributors MIT terms; see licenses/DotNet-Runtime-MIT.txt
   and semantic-packs/dotnet/bifrost.dotnet.bcl-csharp.json.
@@ -92,4 +100,4 @@ headers, `semantic-packs/**/notices/`, and corpus PROVENANCE.md files.
 The source archive is a mixed-license source distribution, not an Apache-only
 relicensing and not an installable native semantic-pack release bundle.
 
-Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19. Public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0. No CodeQL query implementation or third-party library source is copied. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.
+Rust CodeQL parity content records upstream CodeQL query paths at commit ae741615f3e178ce61289a651790dc67fcc18e19 (or 1be292a1e54696ca543b4ad0f9b4537b9687caa7 where explicitly noted above, such as the MIT-licensed `bifrost.rust-std-transfers.json`). Other public Rust semantic models in this source snapshot cover standard-library declarations and flows, are authored by Bifrost, and declare Apache-2.0. No CodeQL query implementation or third-party library source is copied. PostgreSQL and rusqlite SQL models, their rule, and their fixtures are private premium content.
