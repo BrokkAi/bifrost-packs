@@ -20,8 +20,8 @@ The policy is opt-in.
 ## Cases
 
 - **Positives** (`main.js`): the argument as the whole URL (line 7), as the
-  host of a URL sent with options (13), and interpolated into a template
-  literal (19). Each is a definite, complete finding.
+  host of a URL sent with options (13), and as the host in a template literal
+  (19). Each is a definite, complete finding.
 - **Near misses** (`main.js`): the argument sent only as the request body to a
   fixed URL, and the argument only choosing which fixed URL is fetched.
 - **Incomplete** (`incomplete/`, its own workspace): `url-object` builds the
@@ -61,5 +61,8 @@ identity `ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`), evaluation date
 - Only `process.argv` is a source.
 - `Request` objects, `new URL(...)`, `http.request`, `https.get`, axios and
   undici are not sinks or have no model.
-- An `encodeURIComponent` segment under a fixed origin is still reported,
+- The rule does not see where in the URL the argument lands. An argument that
+  only fills a path or query under a fixed origin cannot change the host, but
+  unencoded it can rewrite the path on that host (`../admin`), so it is
+  reported too. So is an `encodeURIComponent` segment, a false positive,
   because no sanitizer is modeled.

@@ -1,9 +1,13 @@
 ; Lead: BrokkAi/bifrost-packs#478 (CVE-2025-27152), the global fetch part.
 ; Product source contract: the global fetch(input[, init]) sends a request to
 ; whatever URL its input names (WHATWG Fetch Standard). A process argument that
-; reaches the input chooses the host, port, path and scheme of an outbound
+; reaches the input can choose the host, port and scheme of an outbound
 ; request, so the program can be pointed at internal services (CWE-918) on
-; every Node release. The axios and undici sinks of the lead need third-party
+; every Node release. When the argument only fills a path or query under a
+; fixed origin it cannot change the host, but unencoded it can still rewrite
+; the path on that host (../, ?, #); taint does not see where in the URL the
+; value lands, so both are reported, and so is an encodeURIComponent segment
+; (no sanitizer is modeled). The axios and undici sinks of the lead need third-party
 ; npm models, whose public or premium placement is an owner decision (#393).
 ; Engine contract: the source is a keyed read of the reviewed Node runtime
 ; process.argv model. The sinks bind exactly to the two members of the
@@ -21,7 +25,7 @@
   :name "Process argument reaches the fetch URL"
   :message "a process argument reached the URL of a global fetch call"
   :severity warning
-  :description "Reports process.argv values that reach the input (URL) argument of the global fetch. Whoever controls the URL chooses the host and path of the outbound request, so the program can be made to reach internal services (server-side request forgery)."
+  :description "Reports process.argv values that reach the input (URL) argument of the global fetch. A value that forms the start of the URL or its host chooses where the request goes, so the program can be made to reach internal services (server-side request forgery). A value that only fills a path under a fixed origin is reported too: unencoded, it can rewrite the path on that host."
   :tags ["security" "javascript" "ssrf" "cwe-918" "node"]
   :analysis
     (analysis

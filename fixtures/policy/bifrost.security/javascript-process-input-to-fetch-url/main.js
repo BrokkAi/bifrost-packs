@@ -13,10 +13,10 @@ function lookup() {
   return fetch("http://" + host + "/status", { method: "GET" });
 }
 
-// Positive: the argument is interpolated into the URL.
-function profile() {
-  const user = process.argv[2];
-  return fetch(`https://api.example.test/users/${user}`);
+// Positive: the argument is interpolated as the host of the URL.
+function mirror() {
+  const host = process.argv[2];
+  return fetch(`https://${host}/index.json`);
 }
 
 // Near miss: the argument is only the request body; the URL is fixed.
@@ -31,4 +31,4 @@ function health() {
   return mode === "staging" ? fetch("https://staging.example.test/health") : null;
 }
 
-module.exports = { download, lookup, profile, upload, health };
+module.exports = { download, lookup, mirror, upload, health };
