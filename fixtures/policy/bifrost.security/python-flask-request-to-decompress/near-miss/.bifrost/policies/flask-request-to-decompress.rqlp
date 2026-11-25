@@ -7,8 +7,9 @@
 ; Sources are the exact Werkzeug Request accessor reads of the shipped
 ; flask-request-to-urlopen rule (request.args, form, cookies and headers); the
 ; reviewed get and getlist summaries carry the taint to their results, and the
-; reviewed base64 decoder summaries carry it through b64decode,
-; standard_b64decode and urlsafe_b64decode.
+; reviewed base64 decoder summaries carry it through standard_b64decode and
+; urlsafe_b64decode. base64.b64decode is not summarized (its altchars argument
+; cannot be modeled yet), so a value decoded with it stays inconclusive.
 ;
 ; The sinks are formal 0 of the exact typeshed module functions
 ; zlib.decompress, gzip.decompress and bz2.decompress, closed by complete
@@ -26,7 +27,7 @@
   :name "Flask request value decompressed without an output bound"
   :message "A Flask request value reached a one-shot decompressor that has no output bound"
   :severity warning
-  :description "Reports Flask request query, form, cookie and header values, including their base64-decoded forms, that reach zlib.decompress, gzip.decompress or bz2.decompress. These functions inflate the whole input with no limit on the output size, so a small compressed value can exhaust memory (CWE-409, urllib3 CVE-2025-66471, aiohttp CVE-2025-69223). Source identity is an exact read of a reviewed Werkzeug Request accessor; sink identity is formal 0 of the exact standard-library function."
+  :description "Reports Flask request query, form, cookie and header values, including values decoded with base64.standard_b64decode or urlsafe_b64decode, that reach zlib.decompress, gzip.decompress or bz2.decompress. These functions inflate the whole input with no limit on the output size, so a small compressed value can exhaust memory (CWE-409, urllib3 CVE-2025-66471, aiohttp CVE-2025-69223). Source identity is an exact read of a reviewed Werkzeug Request accessor; sink identity is formal 0 of the exact standard-library function."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
   :tags ["security" "python" "flask" "denial-of-service" "cwe-409"]
   :analysis

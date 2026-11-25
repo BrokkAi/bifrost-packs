@@ -41,9 +41,9 @@ Summaries (all complete, no effects):
 - `zlib.decompress(data, /, wbits, bufsize)` (`zlib.pyi`), `gzip.decompress(data)`
   (`gzip.pyi`) and `bz2.decompress(data)` (`bz2.pyi`): `data` flows to the return
   value. The typeshed pack declares these functions; the summaries close them.
-  None of them takes an output bound.
-- `base64.b64decode(s, altchars, validate)`, `standard_b64decode(s)` and
-  `urlsafe_b64decode(s)` (`base64.pyi`, the `sys.version_info < (3, 15)`
+  None of them takes an output bound. `gzip.decompress` also carries `data` to
+  the exceptional return: `BadGzipFile` quotes the first input bytes.
+- `base64.standard_b64decode(s)` and `urlsafe_b64decode(s)` (`base64.pyi`, the `sys.version_info < (3, 15)`
   branch): `s` flows to the return value. The summary pack activates only on
   CPython 3.13.5, so the 3.15 `padded` and `ignorechars` keywords are out of
   scope.
@@ -56,5 +56,8 @@ Summaries (all complete, no effects):
   not dispatch exactly, so the streaming form is left out rather than declared
   without evidence.
 - `lzma.decompress`: the typeshed pack does not cover `lzma`.
+- `base64.b64decode(s, altchars, validate)`: `altchars` also shapes the result,
+  and on 0.15.4 a transfer from an optional formal the call does not pass makes
+  the summary inapplicable, so a complete summary cannot be written yet.
 - `str.encode`: a receiver read from `headers.get(...)` is `str | None`, and
   the call does not dispatch exactly on 0.15.4.

@@ -2,8 +2,9 @@
 
 Fixture for `bifrost.security.python.predictable-temporary-path` (CWE-377),
 lead BrokkAi/bifrost-packs#443 (requests CVE-2026-25645). The subject is an
-exact `tempfile.gettempdir()` call that is the first of two arguments to a call
-spelled `join` whose second argument is a string literal that
+exact `tempfile.gettempdir()` call that is the first of two arguments to a
+`join` call on a receiver spelled `os.path`, `path`, `posixpath` or `ntpath`,
+whose second argument is a string literal that
 interpolates no name. No workspace models are needed: `tempfile.gettempdir` is
 declared only by the typeshed stdlib pack in the open bundle.
 
@@ -24,7 +25,8 @@ Result: **complete**, 3 definite findings.
   interpolate a `uuid4()` call (line 35) or a random token held in a local
   (line 41), a fixed name under a random subdirectory (three arguments,
   line 51), the bare directory (line 56), `tempfile.mkstemp` (line 61) and a
-  fixed name under a private directory (line 68).
+  fixed name under a private directory (line 68), and an unrelated `join`
+  method that receives the directory (line 81).
 - **Not examined**: an f-string that interpolates a caller-supplied name
   (line 46). The name may be predictable, but the rule cannot tell it apart
   from a random token, so it reports neither.
@@ -40,7 +42,11 @@ bifrost --root . --policy-file .bifrost/policies/predictable-temporary-path.rqlp
 - `pathlib.Path(tempfile.gettempdir()) / "name"` and string concatenation are
   not matched; only a two-argument `join` call is.
 - `join` is matched by spelling: `os.path.join` and `posixpath.join` do not bind
-  to an exact identity on 0.15.4.
+  to an exact identity on 0.15.4. A bare `join` imported with
+  `from os.path import join` is not examined.
+- An absolute literal (`join(gettempdir(), "/var/lib/app/x")`), which discards
+  the temporary directory, is still reported: a literal-value regex that would
+  exclude it leaves f-string literals incomplete on 0.15.4.
 - A name read from a variable, or interpolated into an f-string, is not
   examined, so a constant held in a local or
   module variable is missed. The requests pre-image builds the name from a zip

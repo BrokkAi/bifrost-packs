@@ -9,9 +9,9 @@ memory.
 
 Sources are the exact Werkzeug `Request` accessor reads of
 `flask-request-to-urlopen` (`request.args`, `form`, `cookies`,
-`headers`). Complete summaries for `base64.b64decode`,
-`standard_b64decode` and `urlsafe_b64decode` carry the taint through base64
-decoding. The sinks are formal 0 of the exact typeshed functions
+`headers`). Complete summaries for `base64.standard_b64decode` and
+`urlsafe_b64decode` carry the taint through base64 decoding. The sinks are
+formal 0 of the exact typeshed functions
 `zlib.decompress`, `gzip.decompress` and `bz2.decompress`, closed by the
 summaries in `semantic-packs/python/untrusted-parsing/`.
 
@@ -37,7 +37,7 @@ reported.
 
 | Case | Result |
 | --- | --- |
-| `positive` | 4 definite, complete findings: line 16 (cookie, `urlsafe_b64decode`, `zlib.decompress`), line 22 (form value, `b64decode`, `gzip.decompress`), line 29 (query value, `standard_b64decode`, `bz2.decompress`), line 35 (a header straight into `zlib.decompress` with `wbits=31`) |
+| `positive` | 4 definite, complete findings: line 16 (cookie, `urlsafe_b64decode`, `zlib.decompress`), line 22 (form value, `urlsafe_b64decode`, `gzip.decompress`), line 29 (query value, `standard_b64decode`, `bz2.decompress`), line 35 (a header straight into `zlib.decompress` with `wbits=31`) |
 | `near-miss` | 0 findings: a bundled constant decompressed beside an unused request read (line 16), a decoded request value that is never decompressed (line 22), and a local class method named `decompress` (line 37) |
 
 ## Known limits
@@ -52,5 +52,9 @@ reported.
   value encoded before decompression is not traced.
 - A raw body (`request.get_data()`, `request.files`) is not a source: the
   Werkzeug pack does not declare those members.
+- `base64.b64decode` is not summarized: its `altchars` argument also shapes the
+  result, and on 0.15.4 a transfer from an optional formal the call does not
+  pass makes the summary inapplicable. A value decoded with `b64decode` stays
+  inconclusive.
 - An output-size check after decompression is not a sanitizer: the memory is
   spent by then.

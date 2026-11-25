@@ -19,7 +19,7 @@ def state():
 @app.route("/report", methods=["POST"])
 def report():
     """Inflate a gzip report from a form field."""
-    return gzip.decompress(base64.b64decode(request.form.get("payload")))
+    return gzip.decompress(base64.urlsafe_b64decode(request.form.get("payload")))
 
 
 @app.route("/archive")

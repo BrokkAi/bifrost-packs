@@ -7,11 +7,16 @@
 ; existed, so a local user chose which certificates requests trusted.
 ;
 ; Engine contract: the subject is an exact call to tempfile.gettempdir (typeshed
-; identity) that is the first of exactly two arguments to a call spelled join,
-; whose second argument is a string literal that interpolates no name. An
-; f-string such as f"upload-{token}.bin" or f"{uuid.uuid4()}.pem" is excluded,
-; because the interpolated value may be random. The join call is matched by its spelling, because os.path.join
-; and posixpath.join do not bind to an exact identity on Bifrost 0.15.4.
+; identity) that is the first of exactly two arguments to a join call on a
+; receiver spelled os.path, path, posixpath or ntpath, whose second argument is
+; a string literal that interpolates no name. An f-string such as
+; f"upload-{token}.bin" or f"{uuid.uuid4()}.pem" is excluded, because the
+; interpolated value may be random. An absolute literal, which makes join
+; discard the temporary directory, is still reported: a literal-value regex
+; that would exclude it leaves f-string literals incomplete on 0.15.4. The join
+; call is matched by its spelling because os.path.join and posixpath.join do not bind to an exact
+; identity on Bifrost 0.15.4; a bare join imported with "from os.path import
+; join" is therefore not examined.
 ;
 ; This belongs in insecure-temporary-file (same CWE and remediation). It is a
 ; separate rule for now because that rule's tempfile.mktemp locator resolves to
@@ -35,6 +40,7 @@
           (call-bindings (call-shape (language python
             (inside
               (call :callee (name "join") (arity 2)
+                :receiver (or (field_access :field (name "path")) (identifier :name/regex "^(path|posixpath|ntpath)$"))
                 :args [(call :callee (name "gettempdir")) (string_literal :not-has (identifier))])
               (call :callee (name "gettempdir")))))))))
     (group :name by-call :by (predictable-temporary-path.site_id)

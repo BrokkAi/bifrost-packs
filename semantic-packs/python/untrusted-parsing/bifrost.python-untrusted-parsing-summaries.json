@@ -106,6 +106,16 @@
                 "output": {
                   "kind": "normal_return"
                 }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
               }
             ],
             "effects": []
@@ -120,44 +130,6 @@
               "formals": [
                 {
                   "name": "data"
-                }
-              ]
-            },
-            "completeness": "complete",
-            "covers_overrides": false,
-            "locations": [],
-            "transfers": [
-              {
-                "input": {
-                  "kind": "parameter",
-                  "ordinal": 0
-                },
-                "exit_kind": "normal",
-                "output": {
-                  "kind": "normal_return"
-                }
-              }
-            ],
-            "effects": []
-          },
-          {
-            "id": "summary.python.base64.b64decode",
-            "target": {
-              "path": "base64.pyi",
-              "symbol": "base64.b64decode(s, altchars, validate)",
-              "has_receiver": false,
-              "parameter_count": 3,
-              "formals": [
-                {
-                  "name": "s"
-                },
-                {
-                  "name": "altchars",
-                  "optional": true
-                },
-                {
-                  "name": "validate",
-                  "optional": true
                 }
               ]
             },

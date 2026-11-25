@@ -66,3 +66,16 @@ def secure_file():
 def private_cache():
     """Join a fixed name onto a directory the application owns."""
     return os.path.join(os.path.expanduser("~/.cache/app"), "ca-bundle.pem")
+
+
+class Segments:
+    """A local helper whose join method builds no filesystem path."""
+
+    def join(self, *parts):
+        """Join the parts with a separator."""
+        return ":".join(parts)
+
+
+def unrelated_join():
+    """Pass the temporary directory to an unrelated join method."""
+    return Segments().join(tempfile.gettempdir(), "cache")
