@@ -1,0 +1,53 @@
+; Lead: BrokkAi/bifrost-packs#449 (scipy/scipy@ac5ae74, @0005d0f). x = x or {}
+; and x = x if x is not None else {} keep the caller's dict whenever it is
+; passed (and, for or, non-empty). A later pop, popitem, update, setdefault,
+; clear or subscript store then changes the caller's object, and a second
+; call with the same dict sees altered settings. The finding is the binder of
+; the normalising assignment, where the fix goes: x = dict(x or {}). Each
+; mutation's receiver is joined to that binder through its exact lexical
+; binding (binding-of, then binding-occurrence), so a rebinding such as
+; x = x.copy() before the mutation ends the match. The name must look like a
+; configuration mapping (options, kwargs, config, params, headers, ...), which
+; keeps deliberate accumulators such as visited = visited or set() and
+; memo = memo or {} out. The mutation and store arms use the same name list,
+; so a store into another container whose value reads the dict, such as
+; out[k] = f(**options), is not a mutation of options.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.python-or-default-argument-mutation"
+  :name "Caller's dict mutated after x = x or {}"
+  :message "This keeps the caller's dict, and the function mutates it later; copy it first, for example with dict(x or {})."
+  :severity warning
+  :description "Reports an assignment name = name or {}, name = name or dict(), or name = name if name is not None else {} where the name looks like a configuration mapping, such as options, kwargs, config, params, settings or headers, and the value it binds later receives pop, popitem, update, setdefault, clear or a subscript store. When the caller passes a dict, the function changes the caller's object, so a second call with the same dict sees altered settings. A copy such as dict(options or {}) or {**(options or {})}, a rebinding such as options = options.copy() before the mutation, read-only uses, and names outside the configuration list are not reported. The finding is on the normalising assignment."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "python" "aliasing" "code-smell"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (intersect
+        (occurrences-in :class binding :role binder
+          (language python
+            (union
+              (assignment
+                :left (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)$") (capture "v"))
+                :right (binary_expression
+                         (not-kind [comparison comparison_chain])
+                         (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+or\\s")
+                         (and (has (identifier (capture "v")))
+                              (or (has (collection_literal (arity 0)))
+                                    (has (call :callee (name "dict") (arity 0)))))))
+              (assignment
+                :left (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)$") (capture "v"))
+                :right (if
+                         (and (has (identifier (capture "v")))
+                              (or (has (collection_literal (arity 0)))
+                                    (has (call :callee (name "dict") (arity 0))))))))))
+        (binding-occurrence
+          (binding-of
+            (union
+              (occurrences-in :class reference :role receiver_position
+                (language python
+                  (call :callee (name/regex "^(?:pop|popitem|update|setdefault|clear)$") :receiver (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)$")))))
+              (occurrences-in :class reference :role value_reference
+                (language python
+                  (assignment :left (text/regex "(?is)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)\\s*\\[")))))))))))

@@ -1,0 +1,47 @@
+; Lead: BrokkAi/bifrost-packs#455 (raphaelvallat/pingouin@1ffb923). python -O
+; strips assert statements, so a public function that checks its arguments
+; with assert accepts invalid input in optimised runs and raises
+; AssertionError instead of a documented ValueError or TypeError otherwise.
+; Selects an assert whose test is a comparison (not against None) or a
+; comparison chain, in a public function or method (no leading underscore,
+; plus __init__, __call__ and __new__), outside test modules. An assert that
+; also sits inside a private callable (such as a nested _recurse helper) or an
+; assert*/test* helper is excluded. An identifier in
+; that test whose exact lexical binding is a parameter selects the finding,
+; which is reported at that parameter's binder. Bindings are flow-sensitive, so
+; a parameter rebound before the assert (p = float(p)) is a local and is not
+; reported. isinstance checks and "is not None" narrowing are excluded on
+; purpose: type checkers rely on them. Reporting at the assert itself needs
+; binding-uses, which on Bifrost 0.15.4 marks any scope that references a
+; builtin as incomplete.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.python-assert-argument-validation"
+  :name "Public function validates an argument with assert"
+  :message "This parameter is checked with assert, which python -O removes; raise ValueError or TypeError instead."
+  :severity note
+  :description "Reports a parameter of a public Python function or method (no leading underscore, plus __init__, __call__ and __new__) that is read in the test of an assert statement, when the test is a comparison or comparison chain such as 0 < p < 1, k <= n or method in ['a', 'b']. python -O removes asserts, so invalid input then reaches the numerical code, and without -O the caller gets AssertionError rather than a documented exception. The finding is on the parameter. Comparisons with None, isinstance checks, asserts in private helpers, asserts about locals or self attributes, parameters rebound before the assert, and test modules (test_*.py, *_test.py, tests/, conftest.py) are not reported."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "python" "validation" "code-smell"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (binding-occurrence
+        (filter :where ((kind eq parameter))
+          (binding-of
+            (occurrences-in :class reference :role value_reference
+              (language python
+                (except
+                  (inside (callable (name/regex "^(?:[^_].*|__init__|__call__|__new__)$"))
+                    (assertion
+                      :test (or (comparison (not-has (null_literal)))
+                                (comparison_chain))))
+                  (inside (callable (name/regex "^(?:_.*|assert.*|test.*)$")
+                            (not (name/regex "^__(?:init|call|new)__$")))
+                    (assertion
+                      :test (or (comparison (not-has (null_literal)))
+                                (comparison_chain))))
+                  (where "**/test_*.py" "**/*_test.py" "**/tests/**" "**/conftest.py"
+                    (assertion
+                      :test (or (comparison (not-has (null_literal)))
+                                (comparison_chain)))))))))))))
