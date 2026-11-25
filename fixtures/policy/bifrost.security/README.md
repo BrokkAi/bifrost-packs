@@ -103,3 +103,7 @@ qualify the Python HTTP fix-history leads BrokkAi/bifrost-packs#436
 output bound) on Bifrost 0.15.4. They reuse the Flask request sources above and
 need the source-only packs in `semantic-packs/python/untrusted-parsing/`. See
 each `README.md`.
+
+`python-predictable-temporary-path` qualifies the Python HTTP fix-history lead
+BrokkAi/bifrost-packs#443 (requests CVE-2026-25645) on Bifrost 0.15.4. It needs
+only the typeshed stdlib pack from the open bundle. See its `README.md`.

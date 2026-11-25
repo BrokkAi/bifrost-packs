@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 299 unique rule IDs from 14 manifest packs.
+This catalog lists 300 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -289,6 +289,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python insecure temporary filename](../rules/bifrost.security/policies/python/insecure-temporary-file.rqlp) | `bifrost.security.python.insecure-temporary-file` | python | security | error |
 | [Python overly permissive file mode](../rules/bifrost.security/policies/python/overly-permissive-file.rqlp) | `bifrost.security.python.overly-permissive-file` | python | security | warning |
 | [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
+| [Python predictable path in the shared temporary directory](../rules/bifrost.security/policies/python/predictable-temporary-path.rqlp) | `bifrost.security.python.predictable-temporary-path` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
 | [Process input reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp) | `bifrost.security.python.process-input-to-urlopen` | python | security | warning |
 | [Process input chooses a venv.create directory](../rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp) | `bifrost.security.python.process-input-to-venv-create` | python | security | warning |
