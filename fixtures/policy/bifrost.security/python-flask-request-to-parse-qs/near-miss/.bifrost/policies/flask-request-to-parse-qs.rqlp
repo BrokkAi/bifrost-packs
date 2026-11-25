@@ -1,0 +1,164 @@
+; Lead: BrokkAi/bifrost-packs#436 (aiohttp CVE-2026-128126, CPython bpo-34155).
+; urllib.parse.parse_qs and parse_qsl split the whole input on the separator and
+; build one entry per field. Their max_num_fields argument exists to cap that
+; work; without it a request value with very many fields costs CPU and memory in
+; proportion to the attacker's field count, even under a byte-size cap.
+;
+; Sources are the exact Werkzeug Request accessor reads of the shipped
+; flask-request-to-urlopen rule (request.args, form, cookies and headers); the
+; reviewed get and getlist summaries carry the taint to their results.
+;
+; The sink is formal 0 of the exact reviewed urllib.parse.parse_qs or parse_qsl
+; member in bifrost.python-untrusted-parsing-declarations 0.1.0, closed by its
+; complete summary in bifrost.python-untrusted-parsing-summaries 0.1.0. A call
+; that passes max_num_fields as a keyword with a non-None value, or that passes
+; at least six positional arguments (max_num_fields is the sixth formal), is
+; excluded. A call whose callee is spelled differently, for example an aliased
+; import, is not examined. The constant value of max_num_fields is not checked:
+; any explicit non-None cap counts as a decision by the caller.
+;
+; Both packs are source-only (not in the native recipe yet), so the rule is
+; opt-in until a packs release delivers them.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.flask-request-to-parse-qs"
+  :name "Flask request value parsed by parse_qs without max_num_fields"
+  :message "A Flask request value reached urllib.parse.parse_qs or parse_qsl without a max_num_fields cap"
+  :severity warning
+  :description "Reports Flask request query, form, cookie and header values parsed by urllib.parse.parse_qs or parse_qsl without a max_num_fields argument. Without the cap the parser builds one entry per field the client sends, so a single request with very many fields spends CPU and memory in proportion to the field count and can stall a worker (CWE-770, bpo-34155, aiohttp CVE-2026-128126). Source identity is an exact read of a reviewed Werkzeug Request accessor; sink identity is formal 0 of the exact reviewed urllib.parse member."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "flask" "denial-of-service" "cwe-770"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id request-args
+              :display-name "Flask request.args"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.args"
+                      :proof exact
+                      (field_access :field (name "args")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-form
+              :display-name "Flask request.form"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.form"
+                      :proof exact
+                      (field_access :field (name "form")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-cookies
+              :display-name "Flask request.cookies"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.cookies"
+                      :proof exact
+                      (field_access :field (name "cookies")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-headers
+              :display-name "Flask request.headers"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.headers"
+                      :proof exact
+                      (field_access :field (name "headers")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id parse-qs-qs
+              :display-name "urllib.parse.parse_qs qs without max_num_fields"
+              :categories [parser.query-string resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (except
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qs
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qs"))))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qs
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qs") :kwargs [(max_num_fields (not-kind null_literal))])))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qs
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qs") (arity :min 6)))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id parse-qsl-qs
+              :display-name "urllib.parse.parse_qsl qs without max_num_fields"
+              :categories [parser.query-string resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (except
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qsl
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qsl"))))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qsl
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qsl") :kwargs [(max_num_fields (not-kind null_literal))])))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qsl
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qsl") (arity :min 6)))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "770")))

@@ -96,3 +96,10 @@ They need the source-only packs in `semantic-packs/python/web-request/`, which
 activate from lockfile or pinned-requirement `pkg:pypi` evidence on Bifrost 0.15.4
 or later (bifrost-dev#14581). The stdlib `urlopen` sink also needs the open packs.
 See each `README.md` for the results on the 0.15.4 release.
+
+`python-flask-request-to-parse-qs` and `python-flask-request-to-decompress`
+qualify the Python HTTP fix-history leads BrokkAi/bifrost-packs#436
+(`parse_qs` without `max_num_fields`) and #435 (one-shot decompression with no
+output bound) on Bifrost 0.15.4. They reuse the Flask request sources above and
+need the source-only packs in `semantic-packs/python/untrusted-parsing/`. See
+each `README.md`.

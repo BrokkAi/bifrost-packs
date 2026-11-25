@@ -1,0 +1,152 @@
+; Lead: BrokkAi/bifrost-packs#435 (urllib3 CVE-2025-66471, aiohttp
+; CVE-2025-69223).
+; zlib.decompress, gzip.decompress and bz2.decompress inflate their whole input
+; in one call and have no output bound, so a few kilobytes of compressed request
+; data can expand to gigabytes of memory (a decompression bomb).
+;
+; Sources are the exact Werkzeug Request accessor reads of the shipped
+; flask-request-to-urlopen rule (request.args, form, cookies and headers); the
+; reviewed get and getlist summaries carry the taint to their results, and the
+; reviewed base64 decoder summaries carry it through b64decode,
+; standard_b64decode and urlsafe_b64decode.
+;
+; The sinks are formal 0 of the exact typeshed module functions
+; zlib.decompress, gzip.decompress and bz2.decompress, closed by complete
+; summaries in bifrost.python-untrusted-parsing-summaries 0.1.0. A call whose
+; callee is spelled differently, for example an aliased import, is not examined.
+; Streaming decompressor objects (zlib.decompressobj().decompress(data,
+; max_length)) are not covered: their receiver does not dispatch exactly on
+; Bifrost 0.15.4, so they leave the run inconclusive instead of clean.
+;
+; The summary pack is source-only (not in the native recipe yet), so the rule
+; is opt-in until a packs release delivers it.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.flask-request-to-decompress"
+  :name "Flask request value decompressed without an output bound"
+  :message "A Flask request value reached a one-shot decompressor that has no output bound"
+  :severity warning
+  :description "Reports Flask request query, form, cookie and header values, including their base64-decoded forms, that reach zlib.decompress, gzip.decompress or bz2.decompress. These functions inflate the whole input with no limit on the output size, so a small compressed value can exhaust memory (CWE-409, urllib3 CVE-2025-66471, aiohttp CVE-2025-69223). Source identity is an exact read of a reviewed Werkzeug Request accessor; sink identity is formal 0 of the exact standard-library function."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "flask" "denial-of-service" "cwe-409"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id request-args
+              :display-name "Flask request.args"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.args"
+                      :proof exact
+                      (field_access :field (name "args")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-form
+              :display-name "Flask request.form"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.form"
+                      :proof exact
+                      (field_access :field (name "form")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-cookies
+              :display-name "Flask request.cookies"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.cookies"
+                      :proof exact
+                      (field_access :field (name "cookies")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-headers
+              :display-name "Flask request.headers"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.headers"
+                      :proof exact
+                      (field_access :field (name "headers")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id zlib-decompress
+              :display-name "zlib.decompress data"
+              :categories [decompression resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "zlib.decompress"
+                        :proof exact
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "decompress"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id gzip-decompress
+              :display-name "gzip.decompress data"
+              :categories [decompression resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "gzip.decompress"
+                        :proof exact
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "decompress"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id bz2-decompress
+              :display-name "bz2.decompress data"
+              :categories [decompression resource.consumption]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "bz2.decompress"
+                        :proof exact
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "decompress"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "409")))

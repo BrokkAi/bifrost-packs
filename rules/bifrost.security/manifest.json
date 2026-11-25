@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -819,6 +819,46 @@
       ],
       "severity_rationale": "A URL built from a Flask request query, form, cookie or header value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
       "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it."
+    },
+    {
+      "path": "policies/python/flask-request-to-parse-qs.rqlp",
+      "id": "bifrost.security.python.flask-request-to-parse-qs",
+      "authored_hash": "e02b73fd2e5b5fa3f86a4731862b2c9981028be4ae3cfcb60f2652b623843fde",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Without max_num_fields, parse_qs and parse_qsl build one entry per field in a request value, so one request with very many fields spends CPU and memory in proportion to the field count and can stall a worker or event loop.",
+      "remediation": "Pass max_num_fields with a cap that fits the expected input (for example max_num_fields=100), and reject the request when parsing raises ValueError.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-to-decompress.rqlp",
+      "id": "bifrost.security.python.flask-request-to-decompress",
+      "authored_hash": "33a4971076861f1ea7970654cf77cbdf9aa9ea2024b2a5a64c5770e2cf50f0ec",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "zlib.decompress, gzip.decompress and bz2.decompress inflate the whole input with no output limit, so a few kilobytes of compressed request data can expand to gigabytes and exhaust memory.",
+      "remediation": "Use a streaming decompressor with an output cap, for example zlib.decompressobj().decompress(data, max_length) in a loop that stops once the total exceeds a limit, and reject oversized input.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/python/django-request-to-urlopen.rqlp",

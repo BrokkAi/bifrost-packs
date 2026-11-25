@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "a2ec124af5761842fe5737505d86e440cb84c424d26d3e64c68d1e05cf6a1a34"
+      "sha256": "c8a1d36cebdb84a4d6fabc1efb48249ca2e763a3b46caa8c4038adc6396d702c"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -347,6 +347,20 @@
       "path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
       "source_path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
       "sha256": "ba67413eb5116d884d57d647d0f4f1db3e76716d2eea569dc19738458dac1b92",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/flask-request-to-decompress.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/flask-request-to-decompress.rqlp",
+      "sha256": "4044072c3e73c592fad9694c9dfbfd140b85eab8bb4817a899af4fc318e8566a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/flask-request-to-parse-qs.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/flask-request-to-parse-qs.rqlp",
+      "sha256": "a4f67fc3b5a6212a5d3cb95ae514223ca3d7037c08b8c09ba27f2ee687c10f70",
       "classification": "public",
       "license": "Apache-2.0"
     },

@@ -1,0 +1,353 @@
+{
+  "schema_version": 14,
+  "pack_id": "bifrost.python-untrusted-parsing-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.13.5, <3.13.6"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "Python standard-library reference and pinned Typeshed stubs for decompression, query-string parsing and text-encoding APIs",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed decompression, query-string parsing and encoding summaries"
+  },
+  "license": "PSF-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.python-untrusted-parsing",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "cpython",
+            "version": ">=3.13.5, <3.13.6"
+          },
+          "targets": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.python.zlib.decompress",
+            "target": {
+              "path": "zlib.pyi",
+              "symbol": "zlib.decompress(data, wbits, bufsize)",
+              "has_receiver": false,
+              "parameter_count": 3,
+              "formals": [
+                {
+                  "name": "data",
+                  "passing_mode": "positional_only"
+                },
+                {
+                  "name": "wbits",
+                  "optional": true
+                },
+                {
+                  "name": "bufsize",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.gzip.decompress",
+            "target": {
+              "path": "gzip.pyi",
+              "symbol": "gzip.decompress(data)",
+              "has_receiver": false,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "data"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.bz2.decompress",
+            "target": {
+              "path": "bz2.pyi",
+              "symbol": "bz2.decompress(data)",
+              "has_receiver": false,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "data"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.base64.b64decode",
+            "target": {
+              "path": "base64.pyi",
+              "symbol": "base64.b64decode(s, altchars, validate)",
+              "has_receiver": false,
+              "parameter_count": 3,
+              "formals": [
+                {
+                  "name": "s"
+                },
+                {
+                  "name": "altchars",
+                  "optional": true
+                },
+                {
+                  "name": "validate",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.base64.standard_b64decode",
+            "target": {
+              "path": "base64.pyi",
+              "symbol": "base64.standard_b64decode(s)",
+              "has_receiver": false,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "s"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.base64.urlsafe_b64decode",
+            "target": {
+              "path": "base64.pyi",
+              "symbol": "base64.urlsafe_b64decode(s)",
+              "has_receiver": false,
+              "parameter_count": 1,
+              "formals": [
+                {
+                  "name": "s"
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.urllib.parse.parse_qs",
+            "target": {
+              "path": "urllib/parse.pyi",
+              "symbol": "urllib.parse.parse_qs(qs, keep_blank_values, strict_parsing, encoding, errors, max_num_fields, separator)",
+              "has_receiver": false,
+              "parameter_count": 7,
+              "formals": [
+                {
+                  "name": "qs"
+                },
+                {
+                  "name": "keep_blank_values",
+                  "optional": true
+                },
+                {
+                  "name": "strict_parsing",
+                  "optional": true
+                },
+                {
+                  "name": "encoding",
+                  "optional": true
+                },
+                {
+                  "name": "errors",
+                  "optional": true
+                },
+                {
+                  "name": "max_num_fields",
+                  "optional": true
+                },
+                {
+                  "name": "separator",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.python.urllib.parse.parse_qsl",
+            "target": {
+              "path": "urllib/parse.pyi",
+              "symbol": "urllib.parse.parse_qsl(qs, keep_blank_values, strict_parsing, encoding, errors, max_num_fields, separator)",
+              "has_receiver": false,
+              "parameter_count": 7,
+              "formals": [
+                {
+                  "name": "qs"
+                },
+                {
+                  "name": "keep_blank_values",
+                  "optional": true
+                },
+                {
+                  "name": "strict_parsing",
+                  "optional": true
+                },
+                {
+                  "name": "encoding",
+                  "optional": true
+                },
+                {
+                  "name": "errors",
+                  "optional": true
+                },
+                {
+                  "name": "max_num_fields",
+                  "optional": true
+                },
+                {
+                  "name": "separator",
+                  "optional": true
+                }
+              ]
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}
