@@ -1,7 +1,7 @@
 {
   "schema_version": 16,
   "pack_id": "bifrost.python-stdlib-api-declarations",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -3418,65 +3418,6 @@
               "kind": "artifact",
               "path": "logging/__init__.pyi",
               "symbol": "logging.Logger.__init__(name, level)"
-            }
-          },
-          {
-            "id": "member.python.os.tempnam",
-            "owner": "type.python.os",
-            "name": "tempnam",
-            "member_kind": "function",
-            "visibility": "public",
-            "is_static": true,
-            "signature": {
-              "parameters": [
-                {
-                  "name": "dir",
-                  "type": {
-                    "kind": "named",
-                    "name": "builtins.str"
-                  },
-                  "optional": true
-                },
-                {
-                  "name": "prefix",
-                  "type": {
-                    "kind": "named",
-                    "name": "builtins.str"
-                  },
-                  "optional": true
-                }
-              ],
-              "returns": {
-                "kind": "named",
-                "name": "builtins.str"
-              }
-            },
-            "callable_family_complete": true,
-            "locator": {
-              "kind": "artifact",
-              "path": "os/__init__.pyi",
-              "symbol": "os.tempnam(dir, prefix)"
-            }
-          },
-          {
-            "id": "member.python.os.tmpnam",
-            "owner": "type.python.os",
-            "name": "tmpnam",
-            "member_kind": "function",
-            "visibility": "public",
-            "is_static": true,
-            "signature": {
-              "parameters": [],
-              "returns": {
-                "kind": "named",
-                "name": "builtins.str"
-              }
-            },
-            "callable_family_complete": true,
-            "locator": {
-              "kind": "artifact",
-              "path": "os/__init__.pyi",
-              "symbol": "os.tmpnam()"
             }
           },
           {
