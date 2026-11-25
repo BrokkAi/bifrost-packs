@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-werkzeug-request-summaries",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-werkzeug-request-summaries.json",
+    "sha256": "fadc35be6f8b6cdaa06ccb3a0f72d604bd79a58610ff812ef4d8127ffebf215b",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/b208ba26f90c74652eee6ace2418b5b75250f4d3/semantic-packs/python/web-request/bifrost.python-werkzeug-request-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:pypi/werkzeug",
+        "version": ">=3.1.0, <3.2.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Werkzeug 3.1.0 source (src/werkzeug/wrappers/request.py, datastructures/)",
+    "revision": "pallets/werkzeug 3.1.0"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/python-web-request-models.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:pypi/werkzeug",
+      "version": "=3.1.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "werkzeug.datastructures.structures.ImmutableMultiDict",
+      "name": "get",
+      "has_receiver": true,
+      "parameter_count": 3
+    }
+  ]
+}
