@@ -26,7 +26,9 @@ activation evidence names package pkg:pypi/<name>`.
 
 `native-generation.json` builds all five, so the first packs release cut after
 this change delivers them; `packs/v0.16.0` and earlier do not. The Flask and
-Django request rules stay opt-in. The fixtures qualify the packs on 0.15.4.
+Django request rules run by default from the next rules release (opt-in in
+`rules/v0.17.0`); that release needs an engine carrying bifrost-dev#15470. The
+fixtures qualify the packs on 0.15.4.
 
 ## Reviewed claims
 
