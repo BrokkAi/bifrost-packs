@@ -1281,7 +1281,7 @@
         "scoped-callable-completeness"
       ],
       "severity_rationale": "A process argument that chooses the URL of an outbound fetch lets the caller point the program at internal hosts and services it can reach.",
-      "remediation": "Build the URL from a fixed origin, encode the argument as a path segment or query value with encodeURIComponent, or parse it with new URL and reject any origin outside an allow-list before fetching.",
+      "remediation": "Build the URL from a fixed origin and pass the argument only as a query value (URLSearchParams) or as a path segment checked against an allow-list or pattern; encodeURIComponent alone leaves . and .. segments intact. Or parse the URL with new URL and reject any origin outside an allow-list before fetching.",
       "activation": "opt-in"
     },
     {
