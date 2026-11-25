@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 300 unique rule IDs from 14 manifest packs.
+This catalog lists 301 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -278,6 +278,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Request value reaches a proc_open command](../rules/bifrost.security/policies/php/request-input-to-proc-open-command.rqlp) | `bifrost.security.php.request-input-to-proc-open-command` | php | security | warning |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
 | [Django request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp) | `bifrost.security.python.django-request-to-urlopen` | python | security | error |
+| [Flask request value checked only by assert](../rules/bifrost.security/policies/python/flask-request-in-assert.rqlp) | `bifrost.security.python.flask-request-in-assert` | python | security | warning |
 | [Flask request value decompressed without an output bound](../rules/bifrost.security/policies/python/flask-request-to-decompress.rqlp) | `bifrost.security.python.flask-request-to-decompress` | python | security | warning |
 | [Flask request value parsed by parse_qs without max_num_fields](../rules/bifrost.security/policies/python/flask-request-to-parse-qs.rqlp) | `bifrost.security.python.flask-request-to-parse-qs` | python | security | warning |
 | [Flask request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp) | `bifrost.security.python.flask-request-to-urlopen` | python | security | error |

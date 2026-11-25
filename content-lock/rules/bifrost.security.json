@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "ca8f219e673299ed0e1cf563a7bdab7b7cdab9c297f3f42f4718ad0abd4f129c"
+      "sha256": "e7583ad15c45a819d8c6948f4a0a1f8e6aff6b6fb9ebd5d93a0a086eaea833e7"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -347,6 +347,13 @@
       "path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
       "source_path": "rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp",
       "sha256": "ba67413eb5116d884d57d647d0f4f1db3e76716d2eea569dc19738458dac1b92",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/flask-request-in-assert.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/flask-request-in-assert.rqlp",
+      "sha256": "a2066bb5ac600599414c36f796edf4450a2eac09cdef440e1fe15d15d83fb741",
       "classification": "public",
       "license": "Apache-2.0"
     },

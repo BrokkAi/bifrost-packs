@@ -877,6 +877,25 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/python/flask-request-in-assert.rqlp",
+      "id": "bifrost.security.python.flask-request-in-assert",
+      "authored_hash": "781b9fff9cfe7f11c56171dee29eede1ac9c2ea1aecb19e11a96640584fd0d48",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Python removes assert statements under -O and PYTHONOPTIMIZE, so a request check written as an assert vanishes in optimized deployments and the code continues with input it meant to reject.",
+      "remediation": "Validate request input with an explicit check that cannot be optimized away, for example `if value not in ALLOWED: abort(400)` or `raise ValueError(...)`. Keep assert for internal invariants only."
+    },
+    {
       "path": "policies/python/django-request-to-urlopen.rqlp",
       "id": "bifrost.security.python.django-request-to-urlopen",
       "authored_hash": "ff282ab857ddca3450dba7e9f7a2d4ff4321f7f29ecd4a1676463c19852b6f90",
