@@ -288,6 +288,16 @@
                 "output": {
                   "kind": "normal_return"
                 }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
+                }
               }
             ],
             "effects": []
@@ -341,6 +351,16 @@
                 "exit_kind": "normal",
                 "output": {
                   "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "exceptional",
+                "output": {
+                  "kind": "exceptional_return"
                 }
               }
             ],

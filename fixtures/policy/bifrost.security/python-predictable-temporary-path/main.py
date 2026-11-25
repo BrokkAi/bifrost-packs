@@ -20,9 +20,9 @@ def lock_path():
     return os.path.join(gettempdir(), "app.lock")
 
 
-def cache_path(name):
-    """Return a cache path whose name the caller picks."""
-    return os.path.join(tempfile.gettempdir(), f"cache-{name}.json")
+def pid_file():
+    """Return a fixed pid-file path."""
+    return os.path.join(tempfile.gettempdir(), "worker.pid")
 
 
 def random_name():
@@ -33,6 +33,17 @@ def random_name():
 def random_formatted():
     """Join a name with a random part onto the temporary directory."""
     return os.path.join(tempfile.gettempdir(), f"upload-{uuid.uuid4().hex}.bin")
+
+
+def random_token():
+    """Interpolate a random token held in a local."""
+    token = uuid.uuid4().hex
+    return os.path.join(tempfile.gettempdir(), f"upload-{token}.bin")
+
+
+def caller_name(name):
+    """Interpolate a name the caller picks (not examined)."""
+    return os.path.join(tempfile.gettempdir(), f"cache-{name}.json")
 
 
 def random_subdirectory():

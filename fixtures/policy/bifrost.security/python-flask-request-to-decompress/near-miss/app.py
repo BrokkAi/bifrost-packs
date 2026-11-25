@@ -11,12 +11,14 @@ BUNDLED = zlib.compress(b"default settings")
 
 @app.route("/defaults")
 def defaults():
+    """Inflate a bundled constant."""
     request.args.get("ignored")
     return zlib.decompress(BUNDLED)
 
 
 @app.route("/echo")
 def echo():
+    """Decode a cookie without inflating it."""
     return base64.urlsafe_b64decode(request.cookies.get("state"))
 
 
@@ -30,5 +32,6 @@ class Codec:
 
 @app.route("/local")
 def local():
+    """Pass a request value to the local lookalike."""
     value = request.args.get("blob")
     return Codec().decompress(value)

@@ -35,7 +35,9 @@ Declarations (`urllib/parse.pyi`):
 
 Summaries (all complete, no effects):
 
-- `urllib.parse.parse_qs` and `parse_qsl`: `qs` flows to the return value.
+- `urllib.parse.parse_qs` and `parse_qsl`: `qs` flows to the return value, and
+  to the exceptional return, because with `strict_parsing=True` a malformed
+  field raises a `ValueError` whose message quotes that field.
 - `zlib.decompress(data, /, wbits, bufsize)` (`zlib.pyi`), `gzip.decompress(data)`
   (`gzip.pyi`) and `bz2.decompress(data)` (`bz2.pyi`): `data` flows to the return
   value. The typeshed pack declares these functions; the summaries close them.

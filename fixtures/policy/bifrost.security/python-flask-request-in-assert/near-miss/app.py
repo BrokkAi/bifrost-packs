@@ -8,6 +8,7 @@ ALLOWED_FORMATS = {"csv", "json"}
 
 @app.route("/export")
 def export():
+    """Check the export format with an explicit abort."""
     fmt = request.args.get("format")
     if fmt not in ALLOWED_FORMATS:
         abort(400)
@@ -16,6 +17,7 @@ def export():
 
 @app.route("/internal")
 def internal():
+    """Assert on a local constant."""
     limit = 50
     request.args.get("ignored")
     assert limit > 0

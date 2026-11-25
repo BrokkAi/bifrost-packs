@@ -37,8 +37,8 @@ reported.
 
 | Case | Result |
 | --- | --- |
-| `positive` | 4 definite, complete findings: line 15 (cookie, `urlsafe_b64decode`, `zlib.decompress`), line 20 (form value, `b64decode`, `gzip.decompress`), line 26 (query value, `standard_b64decode`, `bz2.decompress`), line 31 (a header straight into `zlib.decompress` with `wbits=31`) |
-| `near-miss` | 0 findings: a bundled constant decompressed beside an unused request read (line 15), a decoded request value that is never decompressed (line 20), and a local class method named `decompress` (line 34) |
+| `positive` | 4 definite, complete findings: line 16 (cookie, `urlsafe_b64decode`, `zlib.decompress`), line 22 (form value, `b64decode`, `gzip.decompress`), line 29 (query value, `standard_b64decode`, `bz2.decompress`), line 35 (a header straight into `zlib.decompress` with `wbits=31`) |
+| `near-miss` | 0 findings: a bundled constant decompressed beside an unused request read (line 16), a decoded request value that is never decompressed (line 22), and a local class method named `decompress` (line 37) |
 
 ## Known limits
 

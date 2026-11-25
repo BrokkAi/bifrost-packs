@@ -28,8 +28,8 @@ semantics stay unknown; the findings are still reported.
 
 | Case | Result |
 | --- | --- |
-| `positive` | 6 definite, complete findings on 4 asserts. Line 12: a query value tested against an allowlist. Line 19: two findings, one per read of the header local (`size is not None` and `size.isdigit()`). Line 25: two findings, the `request.cookies` read and the `.get(...)` result inside the assert. Line 32: a `getlist` result through `len(...)` |
-| `near-miss` | 0 findings: the allowlist check written as `if ...: abort(400)` (line 12), an assert on a local constant beside an unused request read (line 21), and an internal `isinstance` assert on a parameter (line 27) |
+| `positive` | 6 definite, complete findings on 4 asserts. Line 13: a query value tested against an allowlist. Line 21: two findings, one per read of the header local (`size is not None` and `size.isdigit()`). Line 28: two findings, the `request.cookies` read and the `.get(...)` result inside the assert. Line 36: a `getlist` result through `len(...)` |
+| `near-miss` | 0 findings: the allowlist check written as `if ...: abort(400)` (lines 13-14), an assert on a local constant beside an unused request read (line 23), and an internal `isinstance` assert on a parameter (line 29) |
 
 ## Known limits
 

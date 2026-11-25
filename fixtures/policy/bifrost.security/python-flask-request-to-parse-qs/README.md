@@ -12,7 +12,9 @@ Sources are the exact Werkzeug `Request` accessor reads of
 `headers`). The sink is formal 0 of `member.python.urllib.parse.parse_qs` or
 `parse_qsl`, from the source-only packs in
 `semantic-packs/python/untrusted-parsing/`. A call that passes a non-None
-`max_num_fields` keyword, or six or more positional arguments, is excluded.
+`max_num_fields`, as a keyword or as the sixth positional argument, is
+excluded. The summaries also carry `qs` into the `ValueError` that
+`strict_parsing=True` raises.
 
 Each case directory is its own workspace with the policy, the Flask and
 Werkzeug request packs, both untrusted-parsing packs, and a `pyproject.toml`
@@ -36,8 +38,8 @@ fixtures. The findings are still reported.
 
 | Case | Result |
 | --- | --- |
-| `positive` | 4 definite, complete findings: line 12 (`parse_qs(request.args.get(...))`), line 18 (`urllib.parse.parse_qsl` on a cookie with `keep_blank_values=True`), line 25 (a header through a local, with an explicit `max_num_fields=None`), line 30 (`parse_qsl` on a form value with four positional arguments) |
-| `near-miss` | 0 findings: `max_num_fields=20` (line 13), `max_num_fields` as the sixth positional argument (line 19), a constant query string beside an unused request read (line 25), and a local class method named `parse_qs` (line 39) |
+| `positive` | 5 definite, complete findings: line 13 (`parse_qs(request.args.get(...))`), line 20 (`urllib.parse.parse_qsl` on a cookie with `keep_blank_values=True`), line 28 (a header through a local, with an explicit `max_num_fields=None`), line 34 (`parse_qsl` on a form value with four positional arguments), line 40 (`None` as the sixth positional argument) |
+| `near-miss` | 0 findings: `max_num_fields=20` (line 14), a cap as the sixth positional argument (line 21), a constant query string beside an unused request read (line 28), and a local class method named `parse_qs` (line 43) |
 
 ## Known limits
 

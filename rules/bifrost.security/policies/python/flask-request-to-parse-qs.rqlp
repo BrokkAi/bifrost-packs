@@ -10,12 +10,12 @@
 ;
 ; The sink is formal 0 of the exact reviewed urllib.parse.parse_qs or parse_qsl
 ; member in bifrost.python-untrusted-parsing-declarations 0.1.0, closed by its
-; complete summary in bifrost.python-untrusted-parsing-summaries 0.1.0. A call
-; that passes max_num_fields as a keyword with a non-None value, or that passes
-; at least six positional arguments (max_num_fields is the sixth formal), is
-; excluded. A call whose callee is spelled differently, for example an aliased
-; import, is not examined. The constant value of max_num_fields is not checked:
-; any explicit non-None cap counts as a decision by the caller.
+; complete summary in bifrost.python-untrusted-parsing-summaries 0.1.0, which
+; also carries qs into the ValueError that strict_parsing raises. A call that
+; passes a non-None max_num_fields, as a keyword or as the sixth positional
+; argument, is excluded. A call whose callee is spelled differently, for example
+; an aliased import, is not examined. The value of an explicit cap is not
+; checked: any non-None cap counts as a decision by the caller.
 ;
 ; Both packs are source-only (not in the native recipe yet), so the rule is
 ; opt-in until a packs release delivers them.
@@ -124,7 +124,14 @@
                         :proof declared
                         (call-bindings
                           (call-shape
-                            (call :callee (name "parse_qs") (arity :min 6)))))))))
+                            (call :callee (name "parse_qs") (arity 6) :args [(capture "qs") (capture "blank") (capture "strict") (capture "encoding") (capture "errors") (not-kind null_literal)])))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qs
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qs") (arity 7) :args [(capture "qs") (capture "blank") (capture "strict") (capture "encoding") (capture "errors") (not-kind null_literal) (capture "separator")]))))))))
               :dangerous-operand (argument :index 0)
               :accepts [attacker-controlled])
             (sink
@@ -156,7 +163,14 @@
                         :proof declared
                         (call-bindings
                           (call-shape
-                            (call :callee (name "parse_qsl") (arity :min 6)))))))))
+                            (call :callee (name "parse_qsl") (arity 6) :args [(capture "qs") (capture "blank") (capture "strict") (capture "encoding") (capture "errors") (not-kind null_literal)])))))
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.parse.parse_qsl
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse_qsl") (arity 7) :args [(capture "qs") (capture "blank") (capture "strict") (capture "encoding") (capture "errors") (not-kind null_literal) (capture "separator")]))))))))
               :dangerous-operand (argument :index 0)
               :accepts [attacker-controlled])]))
   :classification
