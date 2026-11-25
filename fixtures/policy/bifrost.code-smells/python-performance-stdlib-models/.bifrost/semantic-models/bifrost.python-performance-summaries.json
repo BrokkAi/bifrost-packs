@@ -1,0 +1,643 @@
+{
+  "schema_version": 14,
+  "pack_id": "bifrost.python-performance-summaries",
+  "version": "1.2.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.10.0, <3.15.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "CPython standard-library reference and pinned Typeshed stubs for exact performance-operation identities",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5"
+  },
+  "license": "PSF-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.python-performance",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "cpython",
+            "version": ">=3.10.0, <3.15.0"
+          },
+          "targets": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.python.builtins.list.sort",
+            "target": {
+              "path": "builtins.pyi",
+              "symbol": "builtins.list.sort",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.sort", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.builtins.sorted",
+            "target": {
+              "path": "builtins.pyi",
+              "symbol": "builtins.sorted",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.sort", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.io.bufferedio.read",
+            "target": {
+              "path": "_io.pyi",
+              "symbol": "_io._BufferedIOBase.read(size)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.file_read", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.sqlite3.cursor.execute",
+            "target": {
+              "path": "sqlite3/__init__.pyi",
+              "symbol": "sqlite3.Cursor.execute",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.database_call", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.subprocess.run",
+            "target": {
+              "path": "subprocess.pyi",
+              "symbol": "subprocess.run",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.subprocess", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.time.sleep",
+            "target": {
+              "path": "time.pyi",
+              "symbol": "time.sleep",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.sleep", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.dumps.obj",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.dumps(obj)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.dumps",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.dumps(obj, protocol, *, fix_imports, buffer_callback)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads.data",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data, *, fix_imports, encoding, errors, buffers)",
+              "has_receiver": false,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.http.client.httpconnection.request",
+            "target": {
+              "path": "http/client.pyi",
+              "symbol": "http.client.HTTPConnection.request",
+              "has_receiver": true,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.network_io", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.s",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.arity-2",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s, *, cls)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.arity-3",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s, *, cls, object_hook)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.arity-4",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s, *, cls, object_hook, parse_float)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.arity-5",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s, *, cls, object_hook, parse_float, parse_int)",
+              "has_receiver": false,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.arity-6",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s, *, cls, object_hook, parse_float, parse_int, parse_constant)",
+              "has_receiver": false,
+              "parameter_count": 6
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.loads.arity-7",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.loads(s, *, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)",
+              "has_receiver": false,
+              "parameter_count": 7
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.obj",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-2",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-3",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-4",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-5",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular, allow_nan)",
+              "has_receiver": false,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-6",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls)",
+              "has_receiver": false,
+              "parameter_count": 6
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-7",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent)",
+              "has_receiver": false,
+              "parameter_count": 7
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-8",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators)",
+              "has_receiver": false,
+              "parameter_count": 8
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-9",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default)",
+              "has_receiver": false,
+              "parameter_count": 9
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.json.dumps.arity-10",
+            "target": {
+              "path": "json/__init__.pyi",
+              "symbol": "json.dumps(obj, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)",
+              "has_receiver": false,
+              "parameter_count": 10
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.re.compile.pattern",
+            "target": {
+              "path": "re.pyi",
+              "symbol": "re.compile(pattern)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.regex_compile", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.re.compile",
+            "target": {
+              "path": "re.pyi",
+              "symbol": "re.compile(pattern, flags)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.regex_compile", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads.arity-2",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data, *, fix_imports)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads.arity-3",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data, *, fix_imports, encoding)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.loads.arity-4",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.loads(data, *, fix_imports, encoding, errors)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.dumps.arity-2",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.dumps(obj, protocol)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          },
+          {
+            "id": "summary.python.pickle.dumps.arity-3",
+            "target": {
+              "path": "pickle.pyi",
+              "symbol": "pickle.dumps(obj, protocol, *, fix_imports)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": [
+              { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
