@@ -23,11 +23,3 @@ def connector_default():
 async def no_redirects(url):
     async with aiohttp.request("GET", url, allow_redirects=False) as response:
         return response.status
-
-
-async def pinned_connector(url, digest):
-    # A request-level ssl=False still checks the connector's Fingerprint.
-    async with aiohttp.request(
-        "GET", url, ssl=False, connector=aiohttp.TCPConnector(ssl=aiohttp.Fingerprint(digest))
-    ) as response:
-        return response.status

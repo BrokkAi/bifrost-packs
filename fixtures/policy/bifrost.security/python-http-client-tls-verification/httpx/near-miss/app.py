@@ -26,9 +26,3 @@ def from_settings(url, settings):
 
 def other_false(url):
     return httpx.get(url, follow_redirects=False)
-
-
-def own_transport(url):
-    # httpx uses the supplied transport as given; verify= only configures the
-    # default transport, so this client still verifies certificates.
-    return httpx.Client(verify=False, transport=httpx.HTTPTransport(verify=True)).get(url)

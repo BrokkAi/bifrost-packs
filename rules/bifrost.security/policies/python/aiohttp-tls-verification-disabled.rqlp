@@ -9,12 +9,10 @@
 ; signatures, so 3.13 is not claimed.
 ; Without activation evidence no identity resolves and the rule is not run,
 ; which is not a clean result.
-; A request-level `ssl=False` still checks a `Fingerprint` set on the
-; connector (TCPConnector._get_fingerprint), so `aiohttp.request(...,
-; connector=TCPConnector(ssl=Fingerprint(...)))` is not reported. A connector
-; held in a variable can't be proven pinned, so that call is reported. A ClientSession method can't see its
-; session's connector: a session whose connector pins a Fingerprint is still
-; reported when a request passes `ssl=False`.
+; Known false positive: a request-level `ssl=False` still checks a
+; `Fingerprint` set on the connector (TCPConnector._get_fingerprint), so a
+; pinned connector stays authenticated. The rule still reports the call: the
+; keyword pattern can't prove the connector's identity or configuration.
 ; Not covered: an `ssl.SSLContext` with verification turned off, and
 ; `ssl_context=`.
 ; The literal is matched structurally on the call's own keyword argument. A
@@ -43,8 +41,7 @@
                   (call :callee (name "request")
                     (or
                         (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
-                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(connector (call :callee (name "TCPConnector") :kwargs [(ssl (call :callee (name "Fingerprint")))]))])))))))
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
           (resolved-call :resolves-to "aiohttp.client.ClientSession.request" :proof exact
             (call-bindings
               (call-shape
