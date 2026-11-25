@@ -20,15 +20,20 @@ The policy is opt-in.
 
 ## Cases
 
-- **Positives** (`main.js`): `gunzipSync` (line 9), `brotliDecompressSync`
-  (15), `inflateSync` with the read inline (20), `inflateRawSync` through a
-  local copy (26) and `unzipSync` (30). Each is a definite, complete finding.
+- **Positives** (`main.js`): `gunzipSync` (line 10), `brotliDecompressSync`
+  (16), `inflateSync` with the read inline (21), `inflateRawSync` through a
+  local copy (27), `unzipSync` (31) and `gunzipSync` on the module loaded as
+  `node:zlib` (36). Each is a definite, complete finding.
 - **Near misses** (`main.js`): `gunzipSync(data, { maxOutputLength })` binds
   to the two-argument member, which is not a sink. A file read as UTF-8 text
   and never decompressed gives no finding either.
 - **Incomplete** (`incomplete/`, its own workspace): `to-string` calls
   `toString` on the decompressed `Buffer`. The finding is reported, but
   `Buffer#toString` has no summary, so the run is inconclusive.
+  `destructured` takes `readFileSync` and `gunzipSync` from destructured
+  `require` bindings, and `local-require` loads `zlib` inside the function.
+  Neither binds to the declared members, so each run alone fails
+  (`endpoint_role_unresolved`) with no finding. It is never clean.
 - **Uncovered** (`uncovered/`): `callback` passes the content to
   `zlib.gunzip(buffer, callback)`, which is not declared and whose result is
   unused. `options` passes options without `maxOutputLength`, a known false
@@ -47,14 +52,15 @@ identity `ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`, the identity pinned in
 `BIFROST_SEMANTIC_PACK_DOWNLOAD=off`, `--no-builtin-policies`,
 `--no-incremental` and a fresh `BIFROST_CACHE_DIR`.
 
-- This directory: `proven_by_summary`, 5 definite, complete findings at
-  `main.js` lines 9, 15, 20, 26 and 30.
+- This directory: `proven_by_summary`, 6 definite, complete findings at
+  `main.js` lines 10, 16, 21, 27, 31 and 36.
 - The same run without the zlib summaries pack: `inconclusive
-  (partial_discovery)`, the same 5 lines as `possible` findings.
+  (partial_discovery)`, the same 6 lines as `possible` findings.
 - The same run without either zlib pack: `failed (endpoint_role_unresolved)`,
   no finding. The sink selectors are incomplete, so the run is never clean.
 - `incomplete/`: `inconclusive (partial_discovery)`, 1 definite finding at
-  `to-string/to-string.js` line 8.
+  `to-string/to-string.js` line 8. `destructured` and `local-require` alone:
+  `failed (endpoint_role_unresolved)`, no finding.
 - `uncovered/`: `complete`, no finding, "bound no sink endpoint".
 
 ## Known limits
@@ -67,3 +73,5 @@ identity `ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`, the identity pinned in
 - Calls with options are never sinks, so options that omit
   `maxOutputLength` are missed.
 - The callback and stream forms are not modeled.
+- Destructured `require` bindings and a `require` inside a function body do
+  not bind, so those programs are never reported (the run fails instead).

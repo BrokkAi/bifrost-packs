@@ -125,7 +125,7 @@ issues were still open. `outcomes.json` records the runs under
   `unzipSync` or `brotliDecompressSync` called without options. Their
   `maxOutputLength` then defaults to `buffer.kMaxLength` on every release. The
   new source-only models are in `semantic-packs/node/zlib/`. The fixture run is
-  `proven_by_summary` with 5 definite, complete findings, and the
+  `proven_by_summary` with 6 definite, complete findings, and the
   `maxOutputLength` near miss stays clean. Options that omit
   `maxOutputLength` are a known false negative, because option shapes don't
   bind. The `fetch` part still needs the runtime gate and promise results

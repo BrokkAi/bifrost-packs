@@ -2,6 +2,7 @@
 // Nothing here runs; the functions only give the analyzer call shapes.
 const fs = require("fs");
 const zlib = require("zlib");
+const nodeZlib = require("node:zlib");
 
 // Positive: a gzip file is expanded with no output limit.
 function unpackGzip(file) {
@@ -30,6 +31,11 @@ function unpackAuto(file) {
   return zlib.unzipSync(fs.readFileSync(file));
 }
 
+// Positive: the node: scheme names the same module.
+function unpackPrefixed(file) {
+  return nodeZlib.gunzipSync(fs.readFileSync(file));
+}
+
 // Near miss: maxOutputLength bounds the output.
 function unpackBounded(file) {
   const data = fs.readFileSync(file);
@@ -42,4 +48,4 @@ function readText(file) {
   return text.length;
 }
 
-module.exports = { unpackGzip, unpackBrotli, unpackDeflate, unpackRaw, unpackAuto, unpackBounded, readText };
+module.exports = { unpackGzip, unpackBrotli, unpackDeflate, unpackRaw, unpackAuto, unpackPrefixed, unpackBounded, readText };

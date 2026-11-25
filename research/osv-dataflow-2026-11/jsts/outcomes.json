@@ -357,11 +357,12 @@
             "sources": ".",
             "completion": "proven_by_summary",
             "reported": [
-              "main.js:9",
-              "main.js:15",
-              "main.js:20",
-              "main.js:26",
-              "main.js:30"
+              "main.js:10",
+              "main.js:16",
+              "main.js:21",
+              "main.js:27",
+              "main.js:31",
+              "main.js:36"
             ],
             "certainty": "all definite, complete"
           },
@@ -370,11 +371,12 @@
             "variant": "without bifrost.node-zlib-javascript-summaries",
             "completion": "inconclusive (partial_discovery)",
             "reported": [
-              "main.js:9",
-              "main.js:15",
-              "main.js:20",
-              "main.js:26",
-              "main.js:30"
+              "main.js:10",
+              "main.js:16",
+              "main.js:21",
+              "main.js:27",
+              "main.js:31",
+              "main.js:36"
             ],
             "certainty": "all possible, partial"
           },
@@ -392,6 +394,14 @@
             ],
             "diagnostics": [
               "call resolution unknown: Buffer#toString has no summary"
+            ]
+          },
+          {
+            "sources": "incomplete/destructured, incomplete/local-require (each alone)",
+            "completion": "failed (endpoint_role_unresolved)",
+            "reported": [],
+            "diagnostics": [
+              "destructured require bindings and a function-local require do not resolve to the declared members"
             ]
           },
           {
