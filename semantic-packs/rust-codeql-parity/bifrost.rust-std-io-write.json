@@ -1,7 +1,7 @@
 {
   "schema_version": 44,
   "pack_id": "bifrost.rust-std-io-write",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "producer": {
     "name": "bifrost-reviewed-rust-codeql-parity-models",
     "version": "0.1.0"
@@ -12,8 +12,8 @@
     "toolchains": []
   },
   "provenance": {
-    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes. Conversion summaries translate pinned CodeQL core.model.yml:87 (Clone value flow),92 (From taint), and alloc.model.yml:53 (ToString),61 (ToOwned), MIT Copyright (c) GitHub, Inc. They retain trait-owner identities and logical receiver/parameter-to-return flow; Clone adds no alias or copy-identity claim. Into element projections are not flattened into whole-value transfers; into_bytes has no row in the pinned stdlib models. Target independence (reviewed): StdoutLock::write, StdoutLock::write_all and StderrLock::write declare callable_family_complete on callables whose owner, name, receiver form and arity family has the same members on every target std is built for. Evidence, rust-lang/rust at fb6531d55 (nightly-2026-08-24): library/std/src/io/stdio.rs:848 impl Write for StdoutLock (write :849, write_all :862) and :1080 impl Write for StderrLock (write :1081), all stable since 1.0.0; none carries a target cfg, and the only target cfg in stdio.rs gates StdinLock::as_mut_buf (a different member).",
-    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19; String::as_str CodeQL source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6; conversion source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6"
+    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes. Conversion summaries translate pinned CodeQL core.model.yml:87 (Clone value flow),92 (From taint), and alloc.model.yml:53 (ToString),61 (ToOwned), MIT Copyright (c) GitHub, Inc. They retain trait-owner identities and logical receiver/parameter-to-return flow; Clone adds no alias or copy-identity claim. Into element projections are not flattened into whole-value transfers; into_bytes has no row in the pinned stdlib models. Target independence (reviewed): StdoutLock::write, StdoutLock::write_all and StderrLock::write declare callable_family_complete on callables whose owner, name, receiver form and arity family has the same members on every target std is built for. Evidence, rust-lang/rust at fb6531d55 (nightly-2026-08-24): library/std/src/io/stdio.rs:848 impl Write for StdoutLock (write :849, write_all :862) and :1080 impl Write for StderrLock (write :1081), all stable since 1.0.0; none carries a target cfg, and the only target cfg in stdio.rs gates StdinLock::as_mut_buf (a different member). str::trim receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/core.model.yml:132 at 1be292a1e54696ca543b4ad0f9b4537b9687caa7 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference, taint. It uses the same logical receiver/normal_return ports as str::as_bytes.",
+    "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19; String::as_str CodeQL source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6; conversion source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6; str::trim CodeQL source revision 1be292a1e54696ca543b4ad0f9b4537b9687caa7"
   },
   "license": "Apache-2.0 AND MIT",
   "completeness": "complete",
@@ -796,6 +796,30 @@
             }
           },
           {
+            "id": "member.rust-codeql.std-primitive-str-trim",
+            "owner": "type.rust-codeql.std-primitive-str",
+            "name": "trim",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "by_ref",
+                "element": {
+                  "kind": "named",
+                  "name": "std.primitive.str"
+                }
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/core/src/str/mod.rs",
+              "symbol": "std.primitive.str.trim"
+            }
+          },
+          {
             "id": "member.rust-codeql.std-string-string-as-bytes",
             "owner": "type.rust-codeql.std-string-string",
             "name": "as_bytes",
@@ -1495,6 +1519,29 @@
             "target": {
               "path": "library/core/src/str/mod.rs",
               "symbol": "std.primitive.str.as_bytes",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.rust-codeql.std-primitive-str-trim",
+            "target": {
+              "path": "library/core/src/str/mod.rs",
+              "symbol": "std.primitive.str.trim",
               "has_receiver": true,
               "parameter_count": 0
             },

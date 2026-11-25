@@ -54,3 +54,9 @@ for the exact MIT model rows, binding limitations and intentional omissions.
 cannot be encoded by the current logical transfer ports and are not replaced
 by broader receiver-to-return transfers. Runtime impl binding must be proven
 by the engine; valid source compilation alone is not qualification.
+
+Source version 0.6.0 is a minor capability addition: `str::trim` receiver-to-return
+taint (CodeQL `core.model.yml:132` at 1be292a1, MIT), beside `str::as_bytes`.
+It is unreleased; 0.5.0 was never published, but #396 carries it, so a new
+version keeps this change distinguishable. `str::parse` is not modelled; see the
+[`str::trim` fixtures](../rust-str-summaries/README.md).
