@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-django-request-declarations",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-django-request-declarations.json",
+    "sha256": "b103db33f0ecef48fac23f8c80287aeb714b3ad78cf841c907fc27cb8fa33b66",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/b208ba26f90c74652eee6ace2418b5b75250f4d3/semantic-packs/python/web-request/bifrost.python-django-request-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:pypi/django",
+        "version": ">=5.2.0, <5.3.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Django 5.2 source (django/http/request.py, django/core/handlers/wsgi.py, django/utils/datastructures.py)",
+    "revision": "django/django stable/5.2.x"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/python-web-request-models.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:pypi/django",
+      "version": "=5.2.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "django.http.HttpRequest",
+      "name": "GET"
+    }
+  ]
+}
