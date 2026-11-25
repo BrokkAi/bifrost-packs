@@ -17,6 +17,9 @@ Machine-readable results, with input hashes, are in
 inputs. They are not registered pack content, and the models in their
 `.bifrost/semantic-models` folders are research copies.
 
+A recheck on Bifrost 0.15.4 (2026-11-25) is in
+[recheck-2026-11-25.md](recheck-2026-11-25.md).
+
 ## Engine and inputs
 
 - Bifrost `v0.15.1`, `bifrost-v0.15.1-aarch64-apple-darwin.tar.gz`. Archive
