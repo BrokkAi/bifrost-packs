@@ -69,7 +69,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.sort", "timing": "immediate", "certainty": "definite" }
@@ -86,7 +88,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.file_read", "timing": "immediate", "certainty": "definite" }
@@ -103,7 +107,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "receiver" }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.database_call", "timing": "immediate", "certainty": "definite" }
@@ -120,7 +126,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.subprocess", "timing": "immediate", "certainty": "definite" }
@@ -154,7 +162,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -171,7 +181,12 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -188,7 +203,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -205,7 +222,13 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -239,7 +262,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -256,7 +281,10 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -273,7 +301,11 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -290,7 +322,12 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -307,7 +344,13 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -324,7 +367,14 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -341,7 +391,15 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 6 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -358,7 +416,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -375,7 +435,10 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -392,7 +455,11 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -409,7 +476,12 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -426,7 +498,13 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -443,7 +521,14 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -460,7 +545,15 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 6 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -477,7 +570,16 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 6 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 7 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -494,7 +596,17 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 6 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 7 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 8 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -511,7 +623,18 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 4 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 5 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 6 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 7 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 8 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 9 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -528,7 +651,9 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.regex_compile", "timing": "immediate", "certainty": "definite" }
@@ -545,7 +670,10 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.regex_compile", "timing": "immediate", "certainty": "definite" }
@@ -562,7 +690,10 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -579,7 +710,11 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -596,7 +731,12 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 3 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.parsing", "timing": "immediate", "certainty": "definite" }
@@ -613,7 +753,10 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }
@@ -630,7 +773,11 @@
             "completeness": "complete",
             "covers_overrides": false,
             "locations": [],
-            "transfers": [],
+            "transfers": [
+              { "input": { "kind": "parameter", "ordinal": 0 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 1 }, "exit_kind": "normal", "output": { "kind": "normal_return" } },
+              { "input": { "kind": "parameter", "ordinal": 2 }, "exit_kind": "normal", "output": { "kind": "normal_return" } }
+            ],
             "effects": [],
             "declared_effects": [
               { "id": "bifrost.performance.serialization", "timing": "immediate", "certainty": "definite" }

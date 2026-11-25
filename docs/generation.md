@@ -123,8 +123,15 @@ beyond those stays unmodeled and open. The identities are unchanged across
 CPython 3.10 to 3.14 in that stub (`json.loads` gains `array_hook` only in
 3.15). On a 3.13.5 workspace the security-sink pack's `re.compile(pattern,
 flags)` summary is active too, and the run stays complete.
+Taint rules read these summaries too. A `complete` summary with no transfers
+claims that nothing reaches the return value, and that cut the flow in
+`urlopen(json.loads(sys.argv[1]))`, reporting it clean. 1.2.0 therefore declares
+input-to-return transfers on every summary whose result carries input data:
+all parameters for `json`, `pickle` and `re.compile`, the iterable for `sorted`,
+`args` for `subprocess.run`, and the receiver for buffered `read` and
+`sqlite3.Cursor.execute`. 1.1.0 already had that gap for `pickle.loads`.
 `fixtures/policy/bifrost.code-smells/python-performance-stdlib-models/` holds
-the positives and near misses. The job, spec and activation range are
+the positives, the near misses and the taint pass-through case. The job, spec and activation range are
 otherwise unchanged; the spec's artifact URL pins the model commit.
 
 ## Previous native packaging repair
