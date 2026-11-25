@@ -14,7 +14,9 @@ The near misses produce no findings:
 
 - `near_miss.py`: `dict(options or {})`, `{**(defaults or {}), **(options or {})}`, read-only use, `visited =
   visited or set()` and `memo = memo or {}` accumulators, a rebinding to `options.copy()` before the mutation,
-  a store into another dict whose value reads `options`, and an `or` inside a comparison chain.
+  a store into another dict whose value reads `options`, `settings["x"] = options["x"]`, an `or` inside a
+  comparison chain, `options.copy() if options is not None else {}`, and `kwargs = kwargs or {}` on a `**kwargs`
+  parameter.
 
 ## Real code
 
@@ -24,8 +26,11 @@ At current heads of pingouin, PyPortfolioOpt, backtesting.py, networkx and bifro
 
 - The variable name must look like a configuration mapping: `options`, `opts`, `kwargs`, `kws`, `config`, `cfg`,
   `conf`, `params`, `parameters`, `settings`, `attrs`, `attributes`, `headers`, `metadata`, `meta`, `extra`,
-  `extras`, `defaults`, `context`, `ctx`, `props` or `properties`, with optional prefixes. Other names are not
+  `extras`, `defaults`, `context`, `ctx`, `props` or `properties`, with optional prefixes, or a prefixed `*_kwargs` /
+  `*_kws`. Bare `kwargs` and `kws` are left out because a `**kwargs` dict is always fresh. Other names are not
   reported.
+- A subscript store whose value mentions any configuration-like name is skipped, since the occurrence may be the
+  read on the right-hand side; `options["a"] = other_options` is therefore not reported.
 - Mutations are `pop`, `popitem`, `update`, `setdefault`, `clear` and subscript stores. `del x[k]` has no
   normalized kind on Bifrost 0.15.4 and is not selected; neither is `if x is None: x = {}`.
 - The finding is on the normalising assignment's binder. Each mutation is joined to it through its exact lexical

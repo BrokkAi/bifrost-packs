@@ -6,7 +6,9 @@
 ; os.path.basename(...) call, so version strings and dotted identifiers stay
 ; out. The parent of the subscript is matched by its role (assignment value,
 ; return, comparison operand, call receiver or argument) and the subscript's
-; parser-backed text; the split call itself is matched structurally.
+; parser-backed text, which must end in <path-like name>.split(".")[N], so
+; the indexed split is the one with the path-like receiver; the split call
+; itself is also matched structurally.
 (policy
   :schema-version 1
   :id "bifrost.correctness.python-split-file-extension"
@@ -22,7 +24,7 @@
       (anchor :capture "split"
         (language python
           (union
-            (assignment :right (text/regex "(?s)\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+            (assignment :right (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
               (has (call
                   :callee (name "split")
                   :arity 1
@@ -31,7 +33,7 @@
                                 (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
                                 (call :callee (name "basename")))
                   :capture "split")))
-            (return (text/regex "(?s)^return\\s.*\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+            (return (text/regex "(?is)^return\\s.*(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
               (has (call
                   :callee (name "split")
                   :arity 1
@@ -40,7 +42,7 @@
                                 (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
                                 (call :callee (name "basename")))
                   :capture "split")))
-            (comparison (not-kind comparison_chain) :left (text/regex "(?s)\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+            (comparison (not-kind comparison_chain) :left (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
               (has (call
                   :callee (name "split")
                   :arity 1
@@ -49,7 +51,7 @@
                                 (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
                                 (call :callee (name "basename")))
                   :capture "split")))
-            (comparison (not-kind comparison_chain) :right (text/regex "(?s)\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+            (comparison (not-kind comparison_chain) :right (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
               (has (call
                   :callee (name "split")
                   :arity 1
@@ -58,7 +60,7 @@
                                 (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
                                 (call :callee (name "basename")))
                   :capture "split")))
-            (call :receiver (text/regex "(?s)\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+            (call :receiver (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
               (has (call
                   :callee (name "split")
                   :arity 1
@@ -67,7 +69,7 @@
                                 (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
                                 (call :callee (name "basename")))
                   :capture "split")))
-            (call :args [(text/regex "(?s)\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")]
+            (call :args [(text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")]
               (has (call
                   :callee (name "split")
                   :arity 1

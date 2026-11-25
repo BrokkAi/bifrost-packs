@@ -11,7 +11,9 @@ Validated with the Bifrost 0.15.4 `aarch64-apple-darwin` release (archive SHA-25
 The near misses produce no findings:
 
 - `near_miss.py`: assigning the result back, whole-frame `inplace=True` calls, `frames[i].dropna(inplace=True)`
-  on a list element, and selections without `inplace`.
+  on a list element, selections without `inplace`, and
+  `frames["train"].dropna(inplace=True)` / `.reset_index(..., inplace=True)` on a dict of DataFrames.
+- `no_pandas.py`: the same shapes in a module that does not import pandas.
 
 ## Real code
 
@@ -23,8 +25,11 @@ On the pre-fix parent of raphaelvallat/pingouin@790ae3f (`3a468ac5`) the rule re
 - The rule is not gated on the pandas version. Under Copy-on-Write (pandas 3.0, or `mode.copy_on_write`) the call
   never changes the frame; before that it changes it only when the selection is a view, and pandas 2.2 warns.
   The finding is a correctness prompt either way.
-- A dict of DataFrames indexed by a string literal, such as `frames["train"].dropna(inplace=True)`, is reported:
-  the receiver type is not resolved.
+- The module must import pandas (`import pandas`, any alias).
+- For a string-literal subscript, only the Series column methods (`fillna`, `replace`, `clip`, `where`, `mask`,
+  `interpolate`, `ffill`, `bfill`, `pad`, `backfill`) are selected. A dict of DataFrames indexed by a string literal
+  and filled in place, `frames["train"].fillna(0, inplace=True)`, is still reported: the receiver type is not
+  resolved.
 - Attribute column access (`df.col.fillna(..., inplace=True)`) and chained subscripts with non-literal keys are
   not selected, because they cannot be told apart from ordinary objects without pandas types.
 

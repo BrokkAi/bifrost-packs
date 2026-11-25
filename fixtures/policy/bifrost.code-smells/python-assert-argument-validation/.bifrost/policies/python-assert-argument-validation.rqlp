@@ -2,13 +2,13 @@
 ; strips assert statements, so a public function that checks its arguments
 ; with assert accepts invalid input in optimised runs and raises
 ; AssertionError instead of a documented ValueError or TypeError otherwise.
-; Selects an assert whose test is a comparison (not against None) or a
-; comparison chain, in a public function or method (no leading underscore,
+; Selects a comparison (not against None; comparison chains are comparisons)
+; inside an assert statement, in a public function or method (no leading underscore,
 ; plus __init__, __call__ and __new__), outside test modules. An assert that
 ; also sits inside a private callable (such as a nested _recurse helper) or an
 ; assert*/test* helper is excluded. An identifier in
-; that test whose exact lexical binding is a parameter selects the finding,
-; which is reported at that parameter's binder. Bindings are flow-sensitive, so
+; that comparison whose exact lexical binding is a parameter selects the
+; finding, so a name used only in the assert message does not; it is reported at that parameter's binder. Bindings are flow-sensitive, so
 ; a parameter rebound before the assert (p = float(p)) is a local and is not
 ; reported. isinstance checks and "is not None" narrowing are excluded on
 ; purpose: type checkers rely on them. Reporting at the assert itself needs
@@ -32,16 +32,13 @@
             (occurrences-in :class reference :role value_reference
               (language python
                 (except
-                  (inside (callable (name/regex "^(?:[^_].*|__init__|__call__|__new__)$"))
-                    (assertion
-                      :test (or (comparison (not-has (null_literal)))
-                                (comparison_chain))))
+                  (intersect
+                    (inside (callable (name/regex "^(?:[^_].*|__init__|__call__|__new__)$"))
+                      (comparison (not-has (null_literal))))
+                    (inside (assertion)
+                      (comparison (not-has (null_literal)))))
                   (inside (callable (name/regex "^(?:_.*|assert.*|test.*)$")
                             (not (name/regex "^__(?:init|call|new)__$")))
-                    (assertion
-                      :test (or (comparison (not-has (null_literal)))
-                                (comparison_chain))))
+                    (comparison (not-has (null_literal))))
                   (where "**/test_*.py" "**/*_test.py" "**/tests/**" "**/conftest.py"
-                    (assertion
-                      :test (or (comparison (not-has (null_literal)))
-                                (comparison_chain)))))))))))))
+                    (comparison (not-has (null_literal)))))))))))))

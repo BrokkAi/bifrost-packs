@@ -36,3 +36,7 @@ def parts(filename):
 
 def in_range(filename, lo, hi):
     return lo < len(filename.split(".")) < hi
+
+
+def label(filename, version):
+    return filename.split(".")[-1] + "_" + version.split(".")[1]

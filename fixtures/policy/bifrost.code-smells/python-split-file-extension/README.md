@@ -14,7 +14,8 @@ The near misses produce no findings:
 
 - `near_miss.py`: `os.path.splitext`, `Path.suffix`, `rsplit(".", 1)[-1]`, `split(".")[-1]`, `split(".")[0]`,
   `version.split(".")[1]`, `dotted_name.split(".")[1]`, an unindexed `split(".")`, and a split inside a
-  comparison chain.
+  comparison chain, and `filename.split(".")[-1] + "_" + version.split(".")[1]`, where the positive index
+  belongs to the version split.
 
 ## Real code
 
@@ -28,8 +29,8 @@ On the pre-fix parent of PyPortfolio/PyPortfolioOpt@e12417a (`d508869f`) the rul
   by an `os.path.basename(...)` call. A path in a variable with another name, such as `path` or `p`, is not
   reported; that keeps version strings and dotted identifiers out.
 - The subscript has no normalized kind on Bifrost 0.15.4. Its parent is matched by role (assignment value,
-  `return`, comparison operand, call receiver or argument) and its parser-backed text, and the `split` call is
-  matched structurally. Other parents, such as a dict key `writers[name.split(".")[1]]`, are not selected.
+  `return`, comparison operand, call receiver or argument) and its parser-backed text, which must end in
+  `<path-like name>.split(".")[N]`; the `split` call is also matched structurally. Other parents, such as a dict key `writers[name.split(".")[1]]`, are not selected.
 - Comparison chains expose no singular left/right roles, so the comparison arms exclude them; a split inside a
   chain is not reported.
 

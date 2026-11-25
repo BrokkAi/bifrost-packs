@@ -18,21 +18,22 @@ The near misses produce no findings:
   `__init__` takes `random_state`.
 - `other_np.py`: `np` bound to another module.
 - `seeded_script.py`: a script that seeds the global stream with `np.random.seed`.
+- `unrelated_module.py`: a module-level draw in a module whose only generator is created inside a function.
 - `tests/test_sample.py`: test modules are excluded.
 
 ## Real code
 
 On the pre-fix parent of scikit-learn/scikit-learn@5f91dca (`692289e4`), scoped to `examples/`, the rule reports
-`examples/manifold/plot_mds.py:35` (the line the fix changed) and three examples with the same shape:
-`applications/plot_tomography_l1_reconstruction.py:115`, `covariance/plot_robust_vs_empirical_covariance.py:95`
-and `neighbors/plot_regression.py:31`. At current heads of pingouin, PyPortfolioOpt, backtesting.py, networkx and bifrost-service the rule is `complete` with no findings.
+`examples/manifold/plot_mds.py:35` (the line the fix changed) and two examples with the same shape:
+`covariance/plot_robust_vs_empirical_covariance.py:95` and `neighbors/plot_regression.py:31`. At current heads of pingouin, PyPortfolioOpt, backtesting.py, networkx and bifrost-service the rule is `complete` with no findings.
 
 ## Known edges
 
 - The `np.random` receiver must be spelled `np` or `numpy`, in a module with `import numpy` (any alias).
   `from numpy import random`, `import numpy.random as npr` and `from numpy.random import rand` are not selected.
 - A generator or seed parameter in an enclosing function also covers a nested function.
-- Module-level draws are reported when the module creates a generator anywhere, including inside a function.
+- Module-level draws are reported only when the module creates a generator at module level and no function in it
+  creates one, so a script that also defines a generator factory is not reported.
 - Arm 2 of the lead (`np.random.seed` inside library functions) is not built: `set_seed` helpers seed the global
   stream on purpose, so the arm would be noisy.
 

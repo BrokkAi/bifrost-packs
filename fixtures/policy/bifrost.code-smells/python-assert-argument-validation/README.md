@@ -14,15 +14,15 @@ The near misses produce no findings:
 
 - `near_miss.py`: an explicit `raise ValueError`; an assert in a `_private` helper, in a nested `_recurse`
   helper and in an `assert_graphs_equal` helper; asserts about a local, about `self` attributes, `is not None`
-  and `isinstance` narrowing; and a parameter rebound before the assert.
+  and `isinstance` narrowing; a parameter rebound before the assert, and a parameter used only in the assert message.
 - `tests/test_api.py`: test modules are excluded.
 
 ## Real code
 
 On the pre-fix parent of raphaelvallat/pingouin@1ffb923 (`be7a55b5`) the rule reports 60 parameters, including
-`bayesfactor_binom` in `src/pingouin/bayesian.py:137`, which the fix converted. At backtesting.py head it reports 8
-(for example `Backtest.__init__` `cash` and `margin`, and `close(portion)`), and at networkx head 2
-(`uniform_int_from_avg`); each is a public-API argument check by assert. pingouin, PyPortfolioOpt and
+`bayesfactor_binom` in `src/pingouin/bayesian.py:137`, which the fix converted. At backtesting.py head it reports 9
+(for example `Backtest.__init__` `cash` and `margin`, and `close(portion)`), and at networkx head 6
+(`uniform_int_from_avg` and `change_color`); each is a public-API argument check by assert. pingouin, PyPortfolioOpt and
 bifrost-service heads report none. The policy is opt-in because projects that use asserts for development checks
 on purpose would see many findings.
 
@@ -33,7 +33,8 @@ on purpose would see many findings.
   read it.
 - Public means a name without a leading underscore, plus `__init__`, `__call__` and `__new__`; `__all__` is not
   consulted.
-- Only comparison and comparison-chain tests are selected; a bare `assert flag` or `assert callable(f)` is not.
+- Comparisons anywhere in the assert, including inside `and`/`or`, are selected; a bare `assert flag` or
+  `assert callable(f)` is not.
 
 ## Reproduce
 

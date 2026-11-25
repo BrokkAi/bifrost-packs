@@ -44,3 +44,9 @@ def outer(graph):
 
 def assert_graphs_equal(g1, g2):
     assert g1 == g2
+
+
+def message_only(values, request_id):
+    result = sum(values)
+    assert result >= 0, request_id
+    return result

@@ -8,7 +8,8 @@
 ; numpy. A function that seeds the global stream itself with np.random.seed
 ; is excluded (deliberate global seeding), as are test modules. Module-level
 ; script code (examples, notebooks exported to .py) is reported when the
-; module creates a local generator anywhere and never calls np.random.seed. Arm 2
+; module creates a generator at module level, no function in it creates one,
+; and it never calls np.random.seed. Arm 2
 ; (np.random.seed inside library functions) is not built: set_seed helpers
 ; seed the global stream on purpose.
 (policy
@@ -17,7 +18,7 @@
   :name "Global numpy RNG used next to a local generator"
   :message "This draws from the global np.random stream although the function has its own generator or random_state; draw from that generator instead."
   :severity warning
-  :description "Reports a call to a module-level numpy.random sampling function (rand, randn, randint, choice, shuffle, permutation, normal, uniform and the other legacy distributions) inside a function or method that also creates a local generator with default_rng, RandomState, Generator or check_random_state, or that takes a random_state, rng, seed, random_seed or random_generator parameter, and module-level draws in a module that creates such a generator and never calls np.random.seed. The draw ignores that generator, so results depend on global state and are not reproducible from the seed. The receiver must be np.random or numpy.random in a module that imports numpy. Functions that call np.random.seed themselves, test modules (test_*.py, *_test.py, tests/, conftest.py), stdlib random calls, and draws from the local generator are not reported."
+  :description "Reports a call to a module-level numpy.random sampling function (rand, randn, randint, choice, shuffle, permutation, normal, uniform and the other legacy distributions) inside a function or method that also creates a local generator with default_rng, RandomState, Generator or check_random_state, or that takes a random_state, rng, seed, random_seed or random_generator parameter, and module-level draws in a script that creates such a generator at module level (and in no function) and never calls np.random.seed. The draw ignores that generator, so results depend on global state and are not reproducible from the seed. The receiver must be np.random or numpy.random in a module that imports numpy. Functions that call np.random.seed themselves, test modules (test_*.py, *_test.py, tests/, conftest.py), stdlib random calls, and draws from the local generator are not reported."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
   :tags ["correctness" "python" "numpy" "reproducibility" "code-smell"]
   :analysis (analysis
@@ -38,6 +39,7 @@
                 (inside (module (has (import :module (name "numpy"))))
                   (call :callee (name/regex "^(?:rand|randn|randint|random_integers|random_sample|random|ranf|sample|choice|bytes|shuffle|permutation|beta|binomial|chisquare|dirichlet|exponential|f|gamma|geometric|gumbel|hypergeometric|laplace|logistic|lognormal|logseries|multinomial|multivariate_normal|negative_binomial|noncentral_chisquare|noncentral_f|normal|pareto|poisson|power|rayleigh|standard_cauchy|standard_exponential|standard_gamma|standard_normal|standard_t|triangular|uniform|vonmises|wald|weibull|zipf)$") :receiver (field_access :object (identifier (name/regex "^(?:np|numpy)$")) :field (name "random"))))
                 (inside (module (and (has (call :callee (name/regex "^(?:default_rng|RandomState|Generator|check_random_state)$")))
+                                 (not-has (callable (has (call :callee (name/regex "^(?:default_rng|RandomState|Generator|check_random_state)$")))))
                                      (not-has (call :callee (name "seed") :receiver (field_access :object (identifier (name/regex "^(?:np|numpy)$")) :field (name "random"))))))
                   (call :callee (name/regex "^(?:rand|randn|randint|random_integers|random_sample|random|ranf|sample|choice|bytes|shuffle|permutation|beta|binomial|chisquare|dirichlet|exponential|f|gamma|geometric|gumbel|hypergeometric|laplace|logistic|lognormal|logseries|multinomial|multivariate_normal|negative_binomial|noncentral_chisquare|noncentral_f|normal|pareto|poisson|power|rayleigh|standard_cauchy|standard_exponential|standard_gamma|standard_normal|standard_t|triangular|uniform|vonmises|wald|weibull|zipf)$") :receiver (field_access :object (identifier (name/regex "^(?:np|numpy)$")) :field (name "random")))))
               (inside (callable)
@@ -56,6 +58,7 @@
                   (inside (module (has (import :module (name "numpy"))))
                     (call :callee (name/regex "^(?:rand|randn|randint|random_integers|random_sample|random|ranf|sample|choice|bytes|shuffle|permutation|beta|binomial|chisquare|dirichlet|exponential|f|gamma|geometric|gumbel|hypergeometric|laplace|logistic|lognormal|logseries|multinomial|multivariate_normal|negative_binomial|noncentral_chisquare|noncentral_f|normal|pareto|poisson|power|rayleigh|standard_cauchy|standard_exponential|standard_gamma|standard_normal|standard_t|triangular|uniform|vonmises|wald|weibull|zipf)$") :receiver (field_access :object (identifier (name/regex "^(?:np|numpy)$")) :field (name "random"))))
                   (inside (module (and (has (call :callee (name/regex "^(?:default_rng|RandomState|Generator|check_random_state)$")))
+                                 (not-has (callable (has (call :callee (name/regex "^(?:default_rng|RandomState|Generator|check_random_state)$")))))
                                        (not-has (call :callee (name "seed") :receiver (field_access :object (identifier (name/regex "^(?:np|numpy)$")) :field (name "random"))))))
                     (call :callee (name/regex "^(?:rand|randn|randint|random_integers|random_sample|random|ranf|sample|choice|bytes|shuffle|permutation|beta|binomial|chisquare|dirichlet|exponential|f|gamma|geometric|gumbel|hypergeometric|laplace|logistic|lognormal|logseries|multinomial|multivariate_normal|negative_binomial|noncentral_chisquare|noncentral_f|normal|pareto|poisson|power|rayleigh|standard_cauchy|standard_exponential|standard_gamma|standard_normal|standard_t|triangular|uniform|vonmises|wald|weibull|zipf)$") :receiver (field_access :object (identifier (name/regex "^(?:np|numpy)$")) :field (name "random")))))
                 (inside (callable)

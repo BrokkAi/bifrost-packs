@@ -53,3 +53,21 @@ def run(**kwargs):
 def bounded(x, options=None, lo=0, hi=1):
     options = options or {}
     return lo < x < hi and options.get("ok")
+
+
+def conditional_copy(c, options=None):
+    options = options.copy() if options is not None else {}
+    options.pop("disp", None)
+    return c
+
+
+def read_into_other(settings, options=None):
+    options = options or {}
+    settings["x"] = options["x"]
+    return settings
+
+
+def fresh_kwargs(c, **kwargs):
+    kwargs = kwargs or {}
+    kwargs.pop("disp", None)
+    return c

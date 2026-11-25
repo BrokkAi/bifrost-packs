@@ -11,7 +11,12 @@
 ; keeps deliberate accumulators such as visited = visited or set() and
 ; memo = memo or {} out. The mutation and store arms use the same name list,
 ; so a store into another container whose value reads the dict, such as
-; out[k] = f(**options), is not a mutation of options.
+; out[k] = f(**options), is not a mutation of options; a store whose value
+; mentions any configuration-like name is skipped for the same reason. Bare
+; kwargs and kws are left out (a **kwargs dict is always fresh); prefixed
+; names such as minimizer_kwargs are kept. The conditional form must keep the
+; bare name in its true branch, so options.copy() if options else {} is a
+; copy and is not reported.
 (policy
   :schema-version 1
   :id "bifrost.correctness.python-or-default-argument-mutation"
@@ -29,7 +34,7 @@
           (language python
             (union
               (assignment
-                :left (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)$") (capture "v"))
+                :left (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$") (capture "v"))
                 :right (binary_expression
                          (not-kind [comparison comparison_chain])
                          (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+or\\s")
@@ -37,8 +42,9 @@
                               (or (has (collection_literal (arity 0)))
                                     (has (call :callee (name "dict") (arity 0)))))))
               (assignment
-                :left (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)$") (capture "v"))
+                :left (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$") (capture "v"))
                 :right (if
+                         (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+if\\s")
                          (and (has (identifier (capture "v")))
                               (or (has (collection_literal (arity 0)))
                                     (has (call :callee (name "dict") (arity 0))))))))))
@@ -47,7 +53,7 @@
             (union
               (occurrences-in :class reference :role receiver_position
                 (language python
-                  (call :callee (name/regex "^(?:pop|popitem|update|setdefault|clear)$") :receiver (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)$")))))
+                  (call :callee (name/regex "^(?:pop|popitem|update|setdefault|clear)$") :receiver (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$")))))
               (occurrences-in :class reference :role value_reference
                 (language python
-                  (assignment :left (text/regex "(?is)^(?:[a-z0-9]+_)*(?:options|opts|kwargs|kws|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)\\s*\\[")))))))))))
+                  (assignment :left (text/regex "(?is)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))\\s*\\[") :right (not (text/regex "(?i)(?:^|[^A-Za-z0-9_])(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties|kwargs|kws)(?:$|[^A-Za-z0-9_])"))))))))))))
