@@ -99,9 +99,10 @@ identity `ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`):
   wait on the open-core placement decision for third-party npm models (#393).
 - `new RegExp(x)` does not bind to a declared `globalThis.RegExp` member
   (`predeclared_symbol_reference`). Only the call form `RegExp(x)` binds.
-- The released `bifrost.web-network-javascript` model declares only
+- The released `bifrost.web-network-javascript` 1.0.0 model declares only
   `fetch(input, init)`, so `fetch(url)` does not bind. Adding a second pack
-  with the one-argument form makes every `fetch` call ambiguous.
+  with the one-argument form makes every `fetch` call ambiguous. Adding the
+  member to the same pack (1.1.0) binds both arities; #486 does that for #478.
 
 | Issue | Feasibility |
 | --- | --- |
@@ -118,11 +119,29 @@ identity `ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`):
 | #475 | partial |
 | #476 | blocked (needs `pkg:npm/path-to-regexp` version evidence for the transitive Express dependency, plus a structural analysis of route-string literals) |
 | #477 | partial: `RegExp(x)` binds, `new RegExp(x)` does not |
-| #478 | partial: axios and undici need third-party models (placement decision pending); global `fetch(url)` does not bind |
+| #478 | global `fetch` part implemented on 0.15.4 in #486: `bifrost.security.javascript.process-input-to-fetch-url`; axios and undici need third-party models (placement decision pending) |
 | #479 | blocked |
 | #480 | partial |
 | #481 | blocked (options-object property constraints on a constructor call are not available: `new WebSocketServer({ maxPayload: 0 })`, an absent `maxFragments` on ws versions with no default, or a missing `maxPayload` on a client `new WebSocket(url)`) |
 | #482 | partial |
 | #483 | partial |
-| #291 | Implemented: `bifrost.security.javascript.file-content-to-unbounded-decompression` |
+| #291 | Implemented in #486: `bifrost.security.javascript.file-content-to-unbounded-decompression` |
 | #484 | partial |
+
+## Third-party sink candidates (owner decision needed)
+
+These rules are expressible on Bifrost 0.15.4 but were not implemented. Each
+needs the first sink-only declarations pack for a third-party npm package.
+Whether such packs go in this public repository or in
+`bifrost-premium-packs` is an open-core placement decision for the owner.
+#393 and the Flask/Django request split, which kept framework sinks in
+premium, both point to premium.
+
+| Issue | Candidate rule | Sinks (exact member, argument) | Source |
+| --- | --- | --- | --- |
+| #466, #467 | `javascript.process-input-to-lodash-property-path` (CWE-1321) | `_.set` (3 args), `_.setWith` (4) and `_.update` (3) argument 1; `_.unset` (2) argument 1; two-argument `_.omit` argument 1; `_.zipObjectDeep` argument 0 | `process.argv` |
+| #465, #470 | `javascript.process-input-to-template-source` (CWE-94) | `_.template` (1 and 2 args), `ejs.compile` and `ejs.render` (1 and 2 args), `Handlebars.compile` and `Handlebars.precompile` argument 0 | `process.argv` or `fs.readFileSync` content |
+| #478 | the axios and undici part of `process-input-to-fetch-url` (CWE-918) | `axios.get`/`delete`/`head`/`options`/`post`/`put`/`patch` and `axios(url)` argument 0; `undici.request` and `undici.fetch` argument 0 | `process.argv` |
+
+Without summaries each finding would be `possible`, and each run that reaches
+one of these calls inconclusive, as with the Node `vm` pack.
