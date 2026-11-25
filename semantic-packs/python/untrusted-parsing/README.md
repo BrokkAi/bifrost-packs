@@ -56,6 +56,12 @@ Summaries (all complete, no effects):
   not dispatch exactly, so the streaming form is left out rather than declared
   without evidence.
 - `lzma.decompress`: the typeshed pack does not cover `lzma`.
+- Flows from the optional `parse_qs`/`parse_qsl` arguments (`separator`,
+  `encoding`, `errors`) into the result. They can shape it, but on 0.15.4 a
+  transfer from an optional formal the call does not pass makes the summary
+  inapplicable (seen with `b64decode`), which would cost every finding. Only
+  `qs` is summarized; a request value passed only as `separator` is not
+  traced.
 - `base64.b64decode(s, altchars, validate)`: `altchars` also shapes the result,
   and on 0.15.4 a transfer from an optional formal the call does not pass makes
   the summary inapplicable, so a complete summary cannot be written yet.
