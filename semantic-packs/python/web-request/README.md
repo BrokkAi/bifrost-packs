@@ -1,6 +1,6 @@
 # Python web-request entry packs
 
-These five source-only packs publish the request-read surface of Flask,
+These five packs publish the request-read surface of Flask,
 Werkzeug and Django for bifrost-dev#14549. They are the public half of a split
 the owner chose on 2026-11-19: the request entry points are public, and the
 deep framework models (response sinks, sanitizers, versioned internals) stay in
@@ -24,8 +24,11 @@ requirements as well as from a declared Python environment with wheel archives
 these members `:proof exact`. Earlier engines report `incompatible: no
 activation evidence names package pkg:pypi/<name>`.
 
-These packs are source-only. No native release recipe includes them yet, so a
-released bundle does not deliver them. The fixtures qualify them on 0.15.4.
+`native-generation.json` builds all five, so the first packs release cut after
+this change delivers them; `packs/v0.16.0` and earlier do not. The Flask and
+Django request rules run by default from the next rules release (opt-in in
+`rules/v0.17.0`); that release needs an engine carrying bifrost-dev#15470. The
+fixtures qualify the packs on 0.15.4.
 
 ## Reviewed claims
 

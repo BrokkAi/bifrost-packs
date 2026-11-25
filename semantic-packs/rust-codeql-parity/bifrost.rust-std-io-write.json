@@ -1465,8 +1465,8 @@
           {
             "id": "summary.rust-codeql.std-io-stdout-lock-write",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1478,8 +1478,8 @@
           {
             "id": "summary.rust-codeql.std-io-stdout-lock-write-all",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write_all",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write_all",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1491,8 +1491,8 @@
           {
             "id": "summary.rust-codeql.std-io-stderr-lock-write",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1504,8 +1504,8 @@
           {
             "id": "summary.rust-codeql.std-io-stderr-lock-write-all",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write_all",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write_all",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1747,7 +1747,7 @@
             "id": "summary.rust-codeql.std-io-stdout-lock-write-fmt",
             "target": {
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StdoutLock.write_fmt",
+              "symbol": "std.io.stdio.StdoutLock.write_fmt",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1760,7 +1760,7 @@
             "id": "summary.rust-codeql.std-io-stderr-lock-write-fmt",
             "target": {
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StderrLock.write_fmt",
+              "symbol": "std.io.stdio.StderrLock.write_fmt",
               "has_receiver": true,
               "parameter_count": 1
             },

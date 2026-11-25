@@ -42,6 +42,21 @@ spec pins the commit that made the change. Pack completeness stays
 identities and provenance are unchanged. The schema-2 errgroup and embed
 declaration models are not jobs and are left as they were.
 
+## Python web-request jobs
+
+Five authored jobs deliver the reviewed Flask, Werkzeug and Django request-read
+models from `semantic-packs/python/web-request/` (all 0.1.0, Apache-2.0). Their
+shards activate on `pkg:pypi/flask`, `pkg:pypi/werkzeug` and `pkg:pypi/django`
+version ranges, so they stay inactive until a workspace pins one of those
+distributions and the engine is Bifrost 0.15.4 or later (bifrost-dev#14581).
+The specs pin commit `b208ba26f90c74652eee6ace2418b5b75250f4d3`. The rules that
+use them, `python.flask-request-to-urlopen` and
+`python.django-request-to-urlopen`, run by default from the first rules release
+after `rules/v0.17.0` (where they are opt-in). That release needs an engine that
+reports a taint rule whose source identities are absent as not run, not failed
+(bifrost-dev#15470), or every Python repository without the framework would
+report the rule as failed.
+
 ## Go gob jobs and net interface summaries
 
 Two authored jobs follow the legacy set: `go-stdlib-encoding-gob-declarations`
@@ -171,8 +186,8 @@ The authoring CLI pin moves to the v0.15.4 release (public commit
 `067bdf199dc1e389f25f35a0a30f8fd24ead29668419df2d2b74c5da5f6ec747`, executable
 SHA-256 `9375d159a40f1e3f36fdfc0b53af079e863692f8c6b438e31fa5d4665efc48a3`).
 The released v0.15.4 CLI reproduced all 294 locked authoring identities
-unchanged. The rules smoke test in `pack-release.yml` stays on v0.15.3 until a
-rules release requires 0.15.4.
+unchanged. The rules smoke test in `pack-release.yml` moves to v0.15.4 with
+`rules/v0.17.0`, the first rules release qualified on it.
 
 The native producer moves to the v0.15.4 release:
 `bifrost-semantic-pack-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
@@ -182,6 +197,14 @@ public commit `6c889183c1b0e81c74aa80f6d362bc547315b99b`. It writes native bundl
 index schema 5, which adds verified `input_slots` to generated productions. The
 release contract now accepts schemas 3, 4 and 5. Engines that read only schemas
 3 and 4 refuse a schema 5 bundle.
+
+That pin was withdrawn before any release used it, and the native producer is
+back on v0.15.3. On released Bifrost 0.15.4, a 0.15.4-produced bundle loaded
+through `BIFROST_OPEN_SEMANTIC_PACK_BUNDLE`, the route open-pack acquisition
+exports, panics during Java analysis (`generated production digest`). The same
+bundle runs after `install-semantic-packs`, and the 0.15.3-produced bundle runs
+through both. Do not move the producer past v0.15.3 until an engine release
+fixes this. The contract keeps accepting schema 5 for that later move.
 
 ## Pinned native candidate
 
