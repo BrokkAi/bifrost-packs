@@ -71,3 +71,15 @@ def fresh_kwargs(c, **kwargs):
     kwargs = kwargs or {}
     kwargs.pop("disp", None)
     return c
+
+
+def fresh_prefixed(c, **solver_kwargs):
+    solver_kwargs = solver_kwargs or {}
+    solver_kwargs.pop("disp", None)
+    return c
+
+
+def key_read(settings, options=None):
+    options = options or {}
+    settings[options["name"]] = 1
+    return settings

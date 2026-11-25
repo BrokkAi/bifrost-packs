@@ -25,3 +25,11 @@ def torch_layers(x):
     drop = nn.Dropout(p=0.1, inplace=True)
     y = F.relu(x, inplace=True)
     return act, drop, y
+
+
+def returned_frame(df):
+    return df.dropna(inplace=True) or df
+
+
+def returned_flag(df):
+    return df.dropna(inplace=True) is None

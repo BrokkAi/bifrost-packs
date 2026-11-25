@@ -14,7 +14,9 @@
 ; out[k] = f(**options), is not a mutation of options; a store whose value
 ; mentions any configuration-like name is skipped for the same reason. Bare
 ; kwargs and kws are left out (a **kwargs dict is always fresh); prefixed
-; names such as minimizer_kwargs are kept. The conditional form must keep the
+; names such as minimizer_kwargs are kept unless the function declares a
+; **..._kwargs or **..._kws parameter. A store whose subscript index mentions a
+; configuration-like name, such as settings[options["name"]] = 1, is skipped. The conditional form must keep the
 ; bare name in its true branch, so options.copy() if options else {} is a
 ; copy and is not reported.
 (policy
@@ -30,24 +32,29 @@
     :type match
     :selector (rql :schema-version 1
       (intersect
-        (occurrences-in :class binding :role binder
-          (language python
-            (union
-              (assignment
-                :left (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$") (capture "v"))
-                :right (binary_expression
-                         (not-kind [comparison comparison_chain])
-                         (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+or\\s")
-                         (and (has (identifier (capture "v")))
-                              (or (has (collection_literal (arity 0)))
-                                    (has (call :callee (name "dict") (arity 0)))))))
-              (assignment
-                :left (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$") (capture "v"))
-                :right (if
-                         (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+if\\s")
-                         (and (has (identifier (capture "v")))
-                              (or (has (collection_literal (arity 0)))
-                                    (has (call :callee (name "dict") (arity 0))))))))))
+        (except
+          (occurrences-in :class binding :role binder
+            (language python
+              (union
+                (assignment
+                  :left (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$") (capture "v"))
+                  :right (binary_expression
+                           (not-kind [comparison comparison_chain])
+                           (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+or\\s")
+                           (and (has (identifier (capture "v")))
+                                (or (has (collection_literal (arity 0)))
+                                      (has (call :callee (name "dict") (arity 0)))))))
+                (assignment
+                  :left (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$") (capture "v"))
+                  :right (if
+                           (text/regex "(?s)^[A-Za-z_][A-Za-z0-9_]*\\s+if\\s")
+                           (and (has (identifier (capture "v")))
+                                (or (has (collection_literal (arity 0)))
+                                      (has (call :callee (name "dict") (arity 0))))))))))
+          (occurrences-in :class binding :role binder
+            (language python
+              (inside (callable (text/regex "(?s)^(?:async\\s+)?def\\s+[A-Za-z_][A-Za-z0-9_]*\\s*\\((?:[^()]|\\((?:[^()]|\\([^()]*\\))*\\))*\\*\\*\\s*[A-Za-z0-9_]*(?:kwargs|kws)\\b"))
+                (assignment :left (identifier (name/regex "(?i)(?:kwargs|kws)$")))))))
         (binding-occurrence
           (binding-of
             (union
@@ -56,4 +63,4 @@
                   (call :callee (name/regex "^(?:pop|popitem|update|setdefault|clear)$") :receiver (identifier (name/regex "(?i)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))$")))))
               (occurrences-in :class reference :role value_reference
                 (language python
-                  (assignment :left (text/regex "(?is)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))\\s*\\[") :right (not (text/regex "(?i)(?:^|[^A-Za-z0-9_])(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties|kwargs|kws)(?:$|[^A-Za-z0-9_])"))))))))))))
+                  (assignment :left (and (text/regex "(?is)^(?:(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties)|(?:[a-z0-9]+_)+(?:kwargs|kws))\\s*\\[") (not (text/regex "(?is)\\[(?:.*[^A-Za-z0-9_])?(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties|kwargs|kws)(?:$|[^A-Za-z0-9_])"))) :right (not (text/regex "(?i)(?:^|[^A-Za-z0-9_])(?:[a-z0-9]+_)*(?:options|opts|config|cfg|conf|params|parameters|settings|attrs|attributes|headers|metadata|meta|extra|extras|defaults|context|ctx|props|properties|kwargs|kws)(?:$|[^A-Za-z0-9_])"))))))))))))

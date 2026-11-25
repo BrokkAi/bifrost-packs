@@ -5,14 +5,16 @@
 ; Index methods that accept inplace; a call with another name, such as
 ; torch.nn.ReLU(inplace=True) or F.relu(x, inplace=True), is not selected.
 ; The receiver type is not resolved: any receiver of a listed method with
-; inplace=True is reported.
+; inplace=True is reported. The return arm requires the returned value to be
+; exactly one call on a dotted receiver, so return df.dropna(inplace=True) or df
+; and return df.dropna(inplace=True) is None are not reported.
 (policy
   :schema-version 1
   :id "bifrost.correctness.python-pandas-inplace-result-used"
   :name "Result of an inplace=True pandas call is used"
   :message "This call has inplace=True and returns None; drop inplace=True or don't use the result."
   :severity warning
-  :description "Reports a call to a pandas method that accepts inplace (dropna, fillna, replace, rename, reset_index, set_index, sort_values, drop_duplicates, set_names and similar) with the literal keyword inplace=True, when the call is the whole value of an assignment, appears in a return statement, or is the receiver of another call. With inplace=True these methods return None, so the bound or returned value is None and a chained call raises AttributeError. Calls with inplace=False or no inplace keyword, and calls of other names, are not reported."
+  :description "Reports a call to a pandas method that accepts inplace (dropna, fillna, replace, rename, reset_index, set_index, sort_values, drop_duplicates, set_names and similar) with the literal keyword inplace=True, when the call is the whole value of an assignment, is the whole value of a return statement, or is the receiver of another call. With inplace=True these methods return None, so the bound or returned value is None and a chained call raises AttributeError. Calls with inplace=False or no inplace keyword, and calls of other names, are not reported."
   :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
   :tags ["correctness" "python" "pandas" "code-smell"]
   :analysis (analysis
@@ -26,6 +28,7 @@
               (has (call :callee (name/regex "^(?:dropna|fillna|replace|rename|rename_axis|reset_index|set_index|sort_values|sort_index|drop|drop_duplicates|interpolate|clip|where|mask|query|eval|ffill|bfill|pad|backfill|set_names|set_levels|set_codes|set_axis)$") :kwargs [(inplace (boolean_literal :boolean-value true))] :capture "call"))))
           (anchor :capture "call"
             (return
+              (text/regex "(?s)^return\\s+[A-Za-z_][A-Za-z0-9_.]*\\s*\\((?:[^()]|\\((?:[^()]|\\([^()]*\\))*\\))*\\)\\s*$")
               (has (call :callee (name/regex "^(?:dropna|fillna|replace|rename|rename_axis|reset_index|set_index|sort_values|sort_index|drop|drop_duplicates|interpolate|clip|where|mask|query|eval|ffill|bfill|pad|backfill|set_names|set_levels|set_codes|set_axis)$") :kwargs [(inplace (boolean_literal :boolean-value true))] :capture "call"))))
           (anchor :capture "call"
             (call

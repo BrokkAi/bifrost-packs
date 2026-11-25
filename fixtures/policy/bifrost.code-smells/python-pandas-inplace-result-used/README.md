@@ -13,7 +13,8 @@ The near misses produce no findings:
 
 - `near_miss.py`: whole-frame `inplace=True` calls used as statements, `dropna()` and `dropna(inplace=False)`
   results, and `torch.nn.ReLU(inplace=True)`, `nn.Dropout(..., inplace=True)` and `F.relu(x, inplace=True)`,
-  whose names are not pandas inplace methods.
+  whose names are not pandas inplace methods; and
+  `return df.dropna(inplace=True) or df` and `return df.dropna(inplace=True) is None`, which do not return None.
 
 ## Real code
 
@@ -26,7 +27,8 @@ At current heads of pingouin, PyPortfolioOpt, backtesting.py, networkx and bifro
   `interpolate`, `clip`, `where`, `mask`, `query`, `eval`, `ffill`, `bfill`, `pad`, `backfill`, `set_names`,
   `set_levels`, `set_codes`, `set_axis`) that takes `inplace=True` and returns a value would be reported.
 - Only a literal `inplace=True` is selected; `inplace=flag` is not.
-- A result passed as an argument, such as `print(df.dropna(inplace=True))`, is not selected.
+- A result passed as an argument, such as `print(df.dropna(inplace=True))`, is not selected. The return arm needs the
+  returned value to be exactly one call on a dotted receiver.
 
 ## Reproduce
 
