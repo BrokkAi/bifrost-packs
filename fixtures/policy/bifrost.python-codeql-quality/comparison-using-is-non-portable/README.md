@@ -4,6 +4,8 @@ Mirrors CodeQL query python/ql/src/Expressions/NonPortableComparisonUsingIs.ql a
 
 Validated with a Bifrost 0.12.0 development build (`bifrost --build-identity` prints a61cdcc7ea892570a3f99c6be1981442f22a6140), evaluation date 2026-10-08. No semantic model is required.
 
+The policy no longer requires `python-declaration-models` (#463): its relation reads only literal and comparison facts. On the released Bifrost 0.15.4 with the native `packs/v0.16.0` bundle, `requires-python = ">=3.12"` gives the same five findings and diagnostics with or without the capability. With `requires-python = ">=3.8"`, below every Python stdlib pack's range, the run was `not_run` (`python-declaration-models`) and now gives those same five findings.
+
 Expected findings: lib.py:11, lib.py:12, lib.py:13, lib.py:14. The campaign-only fixture completed completely before the upstream excerpt was added; the combined gate fixture completion is recorded below.
 
 Near misses: Zero, the empty string, a longer string, integers outside the CPython cache range, and an identity-only class.
