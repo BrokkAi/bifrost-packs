@@ -26,7 +26,7 @@ async def websocket(url):
     return await session.ws_connect(url, verify_ssl=False)
 
 
-async def unknown_connector(url, connector):
+async def unknown_connector(url, conn):
     # A connector in a variable can't be proven to pin a Fingerprint.
-    async with aiohttp.request("GET", url, ssl=False, connector=connector) as response:
+    async with aiohttp.request("GET", url, ssl=False, connector=conn) as response:
         return response.status

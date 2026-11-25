@@ -58,7 +58,7 @@ bifrost --root . --policy-file .bifrost/policies/<library>-tls-verification-disa
 | `httpx/near-miss` | complete; 0 findings. No `verify`, `verify=True`, a CA-bundle path, an `ssl.create_default_context()` context, `verify=settings.VERIFY`, and `follow_redirects=False` |
 | `httpx/known-false-positive` | complete; 1 definite finding at line 8: a client with its own verifying `transport`. It is not insecure, but the rule can't prove what a transport expression evaluates to |
 | `httpx/unpinned` | `not_run` (`qualified-call-locator-zero`) |
-| `aiohttp/positive` | complete; 6 definite findings: lines 6 (`session.post(..., verify_ssl=False)`), 11 (`TCPConnector(ssl=False)`), 15 (`aiohttp.request`), 21 (`session.get`), 26 (`session.ws_connect(..., verify_ssl=False)`) and 31 (`aiohttp.request(..., connector=connector)` with an unknown connector) |
+| `aiohttp/positive` | complete; 6 definite findings: lines 6 (`session.post(..., verify_ssl=False)`), 11 (`TCPConnector(ssl=False)`), 15 (`aiohttp.request`), 21 (`session.get`), 26 (`session.ws_connect(..., verify_ssl=False)`) and 31 (`aiohttp.request(..., connector=conn)` with an unknown connector) |
 | `aiohttp/near-miss` | complete; 0 findings. No `ssl`, an `ssl.create_default_context()` context, `TCPConnector(ssl=True)`, and `allow_redirects=False` |
 | `aiohttp/incomplete-with-target` | inconclusive (`partial_discovery`); 2 definite findings at lines 8 and 14. The `async with aiohttp.ClientSession() as session` target leaves the receiver lookup open |
 | `aiohttp/known-false-positive` | complete; 1 definite finding at line 8: `aiohttp.request(..., ssl=False)` with a connector that pins a `Fingerprint`, which aiohttp still checks. The rule can't prove the connector's identity |
