@@ -1,0 +1,510 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-urllib3-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "urllib3 source (src/urllib3/__init__.py, poolmanager.py, connectionpool.py)",
+    "revision": "urllib3/urllib3 2.0.0 (6446fef0cf432ca035169602a1447a0d8ef53e80), 2.8.0 (b1d30ab61fe0db8f11092805e8c5ac43e091064a)"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-urllib3",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/urllib3",
+            "version": ">=2.0.0, <2.9.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.urllib3",
+            "name": "urllib3",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "urllib3"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/__init__.py",
+              "symbol": "urllib3"
+            }
+          },
+          {
+            "id": "type.python.urllib3.pool-manager",
+            "name": "urllib3.poolmanager.PoolManager",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/poolmanager.py",
+              "symbol": "urllib3.poolmanager.PoolManager"
+            },
+            "aliases": [
+              "urllib3.PoolManager"
+            ]
+          },
+          {
+            "id": "type.python.urllib3.proxy-manager",
+            "name": "urllib3.poolmanager.ProxyManager",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/poolmanager.py",
+              "symbol": "urllib3.poolmanager.ProxyManager"
+            },
+            "aliases": [
+              "urllib3.ProxyManager"
+            ]
+          },
+          {
+            "id": "type.python.urllib3.https-connection-pool",
+            "name": "urllib3.connectionpool.HTTPSConnectionPool",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/connectionpool.py",
+              "symbol": "urllib3.connectionpool.HTTPSConnectionPool"
+            },
+            "aliases": [
+              "urllib3.HTTPSConnectionPool"
+            ]
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.urllib3.urllib3.connection-from-url",
+            "owner": "type.python.urllib3",
+            "name": "connection_from_url",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kw",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/connectionpool.py",
+              "symbol": "urllib3.connection_from_url(url, **kw)"
+            }
+          },
+          {
+            "id": "member.python.urllib3.urllib3.proxy-from-url",
+            "owner": "type.python.urllib3",
+            "name": "proxy_from_url",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kw",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/poolmanager.py",
+              "symbol": "urllib3.proxy_from_url(url, **kw)"
+            }
+          },
+          {
+            "id": "member.python.urllib3.urllib3-poolmanager-pool-manager.init",
+            "owner": "type.python.urllib3.pool-manager",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "num_pools",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "connection_pool_kw",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/poolmanager.py",
+              "symbol": "urllib3.poolmanager.PoolManager.__init__(num_pools=, headers=, **connection_pool_kw)"
+            }
+          },
+          {
+            "id": "member.python.urllib3.urllib3-poolmanager-proxy-manager.init",
+            "owner": "type.python.urllib3.proxy-manager",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "proxy_url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "num_pools",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "proxy_headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "proxy_ssl_context",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "use_forwarding_for_https",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "proxy_assert_hostname",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "proxy_assert_fingerprint",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "connection_pool_kw",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/poolmanager.py",
+              "symbol": "urllib3.poolmanager.ProxyManager.__init__(proxy_url, num_pools=, headers=, proxy_headers=, proxy_ssl_context=, use_forwarding_for_https=, proxy_assert_hostname=, proxy_assert_fingerprint=, **connection_pool_kw)"
+            }
+          },
+          {
+            "id": "member.python.urllib3.urllib3-connectionpool-httpsconnection-pool.init",
+            "owner": "type.python.urllib3.https-connection-pool",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "host",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "port",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "maxsize",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "block",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "retries",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "_proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "_proxy_headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "key_file",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "cert_file",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "cert_reqs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "key_password",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ca_certs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ssl_version",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ssl_minimum_version",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ssl_maximum_version",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "assert_hostname",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "assert_fingerprint",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "ca_cert_dir",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "conn_kw",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib3/connectionpool.py",
+              "symbol": "urllib3.connectionpool.HTTPSConnectionPool.__init__(host, port=, timeout=, maxsize=, block=, headers=, retries=, _proxy=, _proxy_headers=, key_file=, cert_file=, cert_reqs=, key_password=, ca_certs=, ssl_version=, ssl_minimum_version=, ssl_maximum_version=, assert_hostname=, assert_fingerprint=, ca_cert_dir=, **conn_kw)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

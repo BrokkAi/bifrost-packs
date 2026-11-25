@@ -1,0 +1,1659 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-httpx-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "httpx source (httpx/__init__.py, _api.py, _client.py)",
+    "revision": "encode/httpx 0.28.0 (80960fa31918d7663c3f4c3ad61661cf0e80628f), 0.28.1 (26d48e0634e6ee9cdc0533996db289ce4b430177)"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-httpx",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/httpx",
+            "version": ">=0.28.0, <0.29.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.httpx",
+            "name": "httpx",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "httpx"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/__init__.py",
+              "symbol": "httpx"
+            }
+          },
+          {
+            "id": "type.python.httpx.client",
+            "name": "httpx._client.Client",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_client.py",
+              "symbol": "httpx._client.Client"
+            },
+            "aliases": [
+              "httpx.Client"
+            ]
+          },
+          {
+            "id": "type.python.httpx.async-client",
+            "name": "httpx._client.AsyncClient",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_client.py",
+              "symbol": "httpx._client.AsyncClient"
+            },
+            "aliases": [
+              "httpx.AsyncClient"
+            ]
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.httpx.httpx.request",
+            "owner": "type.python.httpx",
+            "name": "request",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "content",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.request(method, url, *, params=, content=, data=, files=, json=, headers=, cookies=, auth=, proxy=, timeout=, follow_redirects=, verify=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.stream",
+            "owner": "type.python.httpx",
+            "name": "stream",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "content",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.stream(method, url, *, params=, content=, data=, files=, json=, headers=, cookies=, auth=, proxy=, timeout=, follow_redirects=, verify=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.get",
+            "owner": "type.python.httpx",
+            "name": "get",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.get(url, *, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, verify=, timeout=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.options",
+            "owner": "type.python.httpx",
+            "name": "options",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.options(url, *, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, verify=, timeout=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.head",
+            "owner": "type.python.httpx",
+            "name": "head",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.head(url, *, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, verify=, timeout=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.post",
+            "owner": "type.python.httpx",
+            "name": "post",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "content",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.post(url, *, content=, data=, files=, json=, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, verify=, timeout=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.put",
+            "owner": "type.python.httpx",
+            "name": "put",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "content",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.put(url, *, content=, data=, files=, json=, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, verify=, timeout=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.patch",
+            "owner": "type.python.httpx",
+            "name": "patch",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "content",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.patch(url, *, content=, data=, files=, json=, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, verify=, timeout=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx.delete",
+            "owner": "type.python.httpx",
+            "name": "delete",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_api.py",
+              "symbol": "httpx.delete(url, *, params=, headers=, cookies=, auth=, proxy=, follow_redirects=, timeout=, verify=, trust_env=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx-client-client.init",
+            "owner": "type.python.httpx.client",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cert",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "http1",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "http2",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "mounts",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "limits",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "max_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "event_hooks",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "base_url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "transport",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "default_encoding",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_client.py",
+              "symbol": "httpx._client.Client.__init__(*, auth=, params=, headers=, cookies=, verify=, cert=, trust_env=, http1=, http2=, proxy=, mounts=, timeout=, follow_redirects=, limits=, max_redirects=, event_hooks=, base_url=, transport=, default_encoding=)"
+            }
+          },
+          {
+            "id": "member.python.httpx.httpx-client-async-client.init",
+            "owner": "type.python.httpx.async-client",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cert",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "http1",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "http2",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "mounts",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "follow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "limits",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "max_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "event_hooks",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "base_url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "transport",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "default_encoding",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "httpx/_client.py",
+              "symbol": "httpx._client.AsyncClient.__init__(*, auth=, params=, headers=, cookies=, verify=, cert=, http1=, http2=, proxy=, mounts=, timeout=, follow_redirects=, limits=, max_redirects=, event_hooks=, base_url=, transport=, trust_env=, default_encoding=)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

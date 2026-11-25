@@ -1,0 +1,1294 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-aiohttp-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "aiohttp source (aiohttp/__init__.py, client.py, connector.py)",
+    "revision": "aio-libs/aiohttp v3.14.0 (edb2724f481ba05ef889accc76bbe0089068e8eb), v3.14.5 (f17c631bddcfd4ec712342db28f1d3381a3fec71)"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-aiohttp",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/aiohttp",
+            "version": ">=3.14.0, <3.15.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.aiohttp",
+            "name": "aiohttp",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "aiohttp"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/__init__.py",
+              "symbol": "aiohttp"
+            }
+          },
+          {
+            "id": "type.python.aiohttp.client-session",
+            "name": "aiohttp.client.ClientSession",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession"
+            },
+            "aliases": [
+              "aiohttp.ClientSession"
+            ]
+          },
+          {
+            "id": "type.python.aiohttp.tcp-connector",
+            "name": "aiohttp.connector.TCPConnector",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/connector.py",
+              "symbol": "aiohttp.connector.TCPConnector"
+            },
+            "aliases": [
+              "aiohttp.TCPConnector"
+            ]
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.aiohttp.aiohttp.request",
+            "owner": "type.python.aiohttp",
+            "name": "request",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "version",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "connector",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "loop",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.request(method, url, *, version=, connector=, loop=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.init",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "base_url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "connector",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "loop",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy_auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "skip_auto_headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json_serialize",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "json_serialize_bytes",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "request_class",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "response_class",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ws_response_class",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "version",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "cookie_jar",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "connector_owner",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "raise_for_status",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "read_timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "conn_timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auto_decompress",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trust_env",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "requote_redirect_url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "trace_configs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "read_bufsize",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "max_line_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "max_field_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "max_headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "fallback_charset_resolver",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "middlewares",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ssl_shutdown_timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.__init__(base_url=, *, connector=, loop=, cookies=, headers=, proxy=, proxy_auth=, skip_auto_headers=, auth=, json_serialize=, json_serialize_bytes=, request_class=, response_class=, ws_response_class=, version=, cookie_jar=, connector_owner=, raise_for_status=, read_timeout=, conn_timeout=, timeout=, auto_decompress=, trust_env=, requote_redirect_url=, trace_configs=, read_bufsize=, max_line_size=, max_field_size=, max_headers=, fallback_charset_resolver=, middlewares=, ssl_shutdown_timeout=)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.aenter",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "__aenter__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "aiohttp.client.ClientSession"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.__aenter__()"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.request",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "request",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.request(method, url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.get",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "allow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.get(url, *, allow_redirects=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.options",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "options",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "allow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.options(url, *, allow_redirects=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.head",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "head",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "allow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.head(url, *, allow_redirects=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.post",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "post",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.post(url, *, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.put",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "put",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.put(url, *, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.patch",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "patch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.patch(url, *, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.delete",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "delete",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.delete(url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-client-client-session.ws-connect",
+            "owner": "type.python.aiohttp.client-session",
+            "name": "ws_connect",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "protocols",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "receive_timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "autoclose",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "autoping",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "heartbeat",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "origin",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy_auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ssl",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "verify_ssl",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "fingerprint",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ssl_context",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "server_hostname",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "proxy_headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "compress",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "max_msg_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "decode_text",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/client.py",
+              "symbol": "aiohttp.client.ClientSession.ws_connect(url, *, method=, protocols=, timeout=, receive_timeout=, autoclose=, autoping=, heartbeat=, auth=, origin=, params=, headers=, proxy=, proxy_auth=, ssl=, verify_ssl=, fingerprint=, ssl_context=, server_hostname=, proxy_headers=, compress=, max_msg_size=, decode_text=)"
+            }
+          },
+          {
+            "id": "member.python.aiohttp.aiohttp-connector-tcpconnector.init",
+            "owner": "type.python.aiohttp.tcp-connector",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "verify_ssl",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "fingerprint",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "use_dns_cache",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ttl_dns_cache",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "dns_cache_max_size",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "family",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ssl_context",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ssl",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "local_addr",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "resolver",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "keepalive_timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "force_close",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "limit_per_host",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "enable_cleanup_closed",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "loop",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "timeout_ceil_threshold",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "happy_eyeballs_delay",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "interleave",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "socket_factory",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                },
+                {
+                  "name": "ssl_shutdown_timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "aiohttp/connector.py",
+              "symbol": "aiohttp.connector.TCPConnector.__init__(*, verify_ssl=, fingerprint=, use_dns_cache=, ttl_dns_cache=, dns_cache_max_size=, family=, ssl_context=, ssl=, local_addr=, resolver=, keepalive_timeout=, force_close=, limit=, limit_per_host=, enable_cleanup_closed=, loop=, timeout_ceil_threshold=, happy_eyeballs_delay=, interleave=, socket_factory=, ssl_shutdown_timeout=)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

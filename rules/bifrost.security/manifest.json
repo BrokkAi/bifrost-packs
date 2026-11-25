@@ -840,6 +840,82 @@
       "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it."
     },
     {
+      "path": "policies/python/requests-tls-verification-disabled.rqlp",
+      "id": "bifrost.security.python.requests-tls-verification-disabled",
+      "authored_hash": "59374b0a6c31526517173e0589b62a41d965b9270ff275c2623d53a623508362",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "structural-match",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "TLS verification is off for this requests call, so a network attacker can present any certificate and read or change the traffic, including credentials or tokens it carries.",
+      "remediation": "Remove verify=False. To trust a private CA, pass verify with the path to its CA bundle instead.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/httpx-tls-verification-disabled.rqlp",
+      "id": "bifrost.security.python.httpx-tls-verification-disabled",
+      "authored_hash": "5bbacee7c88743d0d8506f92bcbf40613e12c932fce13e6d7a6709e54e834845",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "structural-match",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "TLS verification is off for this httpx call or client, so a network attacker can present any certificate and read or change the traffic, including credentials or tokens it carries.",
+      "remediation": "Remove verify=False. To trust a private CA, pass verify an ssl.SSLContext built with ssl.create_default_context(cafile=...) instead.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/aiohttp-tls-verification-disabled.rqlp",
+      "id": "bifrost.security.python.aiohttp-tls-verification-disabled",
+      "authored_hash": "57a3edb65f52b2287d0d71b2fca00395fd0ec34e921a16c60c2e84649fa8f6ab",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "structural-match",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "TLS verification is off for this aiohttp request or connector, so a network attacker can present any certificate and read or change the traffic, including credentials or tokens it carries.",
+      "remediation": "Remove ssl=False and verify_ssl=False. To trust a private CA, pass ssl an ssl.SSLContext built with ssl.create_default_context(cafile=...) instead.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/urllib3-tls-verification-disabled.rqlp",
+      "id": "bifrost.security.python.urllib3-tls-verification-disabled",
+      "authored_hash": "8791cabe1a36f94fff9ecd2b555eef4110fae9ba6be74dfe7b3997253fc10875",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "structural-match",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "Certificate or hostname verification is off for this urllib3 pool, so a network attacker can present any certificate, or one issued for another host, and read or change the traffic.",
+      "remediation": "Use cert_reqs=\"CERT_REQUIRED\" (the default) and leave assert_hostname unset. To trust a private CA, pass ca_certs with its CA bundle instead.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/python/process-input-to-venv-create.rqlp",
       "id": "bifrost.security.python.process-input-to-venv-create",
       "authored_hash": "52a10aaaa0589363950399d328b298299a957bf129e1295772160f8a99c2e251",

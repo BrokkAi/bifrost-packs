@@ -1,0 +1,1021 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-requests-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "requests source (src/requests/__init__.py, api.py, sessions.py)",
+    "revision": "psf/requests v2.32.0 (d6ebc4a2f1f68b7e355fb7e4dd5ffc0845547f9f), v2.33.1 (111d2b77790bf49943c0dfa09b365371c24aec7e), v2.34.0 (0b401c76b6e80a4eecf3c690085b2553f6e261ca), v2.34.2 (6e83187b8feb273ed4c6cdab5efd8d54901dfab3)"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-requests",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/requests",
+            "version": ">=2.32.0, <2.35.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.requests",
+            "name": "requests",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "requests"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/__init__.py",
+              "symbol": "requests"
+            }
+          },
+          {
+            "id": "type.python.requests.sessions.session",
+            "name": "requests.sessions.Session",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session"
+            },
+            "aliases": [
+              "requests.Session"
+            ]
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.requests.requests.request",
+            "owner": "type.python.requests",
+            "name": "request",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.request(method, url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.get",
+            "owner": "type.python.requests",
+            "name": "get",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.get(url, params=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.options",
+            "owner": "type.python.requests",
+            "name": "options",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.options(url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.head",
+            "owner": "type.python.requests",
+            "name": "head",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.head(url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.post",
+            "owner": "type.python.requests",
+            "name": "post",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.post(url, data=, json=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.put",
+            "owner": "type.python.requests",
+            "name": "put",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.put(url, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.patch",
+            "owner": "type.python.requests",
+            "name": "patch",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.patch(url, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.delete",
+            "owner": "type.python.requests",
+            "name": "delete",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/api.py",
+              "symbol": "requests.delete(url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests.session",
+            "owner": "type.python.requests",
+            "name": "session",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "requests.sessions.Session"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.session()"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.init",
+            "owner": "type.python.requests.sessions.session",
+            "name": "__init__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.NoneType"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.__init__()"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.enter",
+            "owner": "type.python.requests.sessions.session",
+            "name": "__enter__",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "requests.sessions.Session"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.__enter__()"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.request",
+            "owner": "type.python.requests.sessions.session",
+            "name": "request",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "method",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "headers",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "cookies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "auth",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "timeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "allow_redirects",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "proxies",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "hooks",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "stream",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "verify",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "cert",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.request(method, url, params=, data=, headers=, cookies=, files=, auth=, timeout=, allow_redirects=, proxies=, hooks=, stream=, verify=, cert=, json=)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.options",
+            "owner": "type.python.requests.sessions.session",
+            "name": "options",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.options(url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.head",
+            "owner": "type.python.requests.sessions.session",
+            "name": "head",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.head(url, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.post",
+            "owner": "type.python.requests.sessions.session",
+            "name": "post",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "json",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.post(url, data=, json=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.put",
+            "owner": "type.python.requests.sessions.session",
+            "name": "put",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.put(url, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.patch",
+            "owner": "type.python.requests.sessions.session",
+            "name": "patch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "data",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.patch(url, data=, **kwargs)"
+            }
+          },
+          {
+            "id": "member.python.requests.requests-sessions-session.delete",
+            "owner": "type.python.requests.sessions.session",
+            "name": "delete",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.delete(url, **kwargs)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "declarations.python-requests.session-get.2-32",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/requests",
+            "version": ">=2.32.0, <2.34.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [],
+        "members": [
+          {
+            "id": "member.python.requests.2-32.requests-sessions-session.get",
+            "owner": "type.python.requests.sessions.session",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.get(url, **kwargs)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "declarations.python-requests.session-get.2-34",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/requests",
+            "version": ">=2.34.0, <2.35.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [],
+        "members": [
+          {
+            "id": "member.python.requests.2-34.requests-sessions-session.get",
+            "owner": "type.python.requests.sessions.session",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "params",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "kwargs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "passing_mode": "named_only",
+                  "variadic": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "requests/sessions.py",
+              "symbol": "requests.sessions.Session.get(url, params=, **kwargs)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}
