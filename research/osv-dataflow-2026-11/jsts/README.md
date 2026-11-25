@@ -2,7 +2,8 @@
 
 Ten Node.js core advisories from OSV, filed as BrokkAi/bifrost-packs#287 to
 #296. Each has a taint or typestate policy in theory. **Two version-independent
-slices ship as rules; the other eight are blocked by the engine.**
+slices ship as rules; the other eight are blocked by the engine.** A recheck on
+Bifrost 0.15.4 (2026-11-25, see the last section) added a third slice for #291.
 `outcomes.json` records each lead's outcome, the probe hashes and the fixture
 runs.
 
@@ -12,7 +13,7 @@ runs.
 | #288 | CVE-2021-22931 (DNS host names) | Blocked: bifrost-dev#9983, #2446 |
 | #289 | CVE-2022-21824 (`console.table`) | Blocked: bifrost-dev#9983 |
 | #290 | CVE-2023-30590 (DiffieHellman keys) | Blocked: bifrost-dev#9983 |
-| #291 | CVE-2024-22025 (`fetch` Brotli) | Blocked: bifrost-dev#9983, #2446 |
+| #291 | CVE-2024-22025 (`fetch` Brotli) | zlib slice implemented on 0.15.4: `bifrost.security.javascript.file-content-to-unbounded-decompression`; `fetch` blocked: bifrost-dev#9983, #2446 |
 | #292 | CVE-2026-21713 (HMAC comparison) | Blocked: bifrost-dev#9983, #4385 |
 | #293 | CVE-2026-105482 (`dns.resolve` NUL) | Blocked: bifrost-dev#9983 |
 | #294 | CVE-2026-21712 (`url.format`) | Implemented: `bifrost.security.javascript.process-input-to-legacy-url-parse` |
@@ -100,3 +101,48 @@ can express the #290 and #296 protocols (see
 `bifrost.correctness.resource-lifecycle`), but neither was run.
 
 The files under `probe/` are research inputs, not registered pack content.
+
+## Requalification on Bifrost 0.15.4 (2026-11-25)
+
+The eight blocked leads were rechecked on the pinned authoring CLI, official
+`v0.15.4` (`bifrost-v0.15.4-aarch64-apple-darwin.tar.gz`, archive SHA-256
+`515dd6e05ece2073f39b52cef2554e22707103453af36e701033b4f60a3f6d26`, which
+matches the release `.sha256`; binary SHA-256
+`d9e6168d51eece5aeeff6eb28187d27aafeae164c217816a80fd09a4581f8be3`; build
+identity `ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`). All five blocking
+issues were still open. `outcomes.json` records the runs under
+`requalification`.
+
+- **Runtime gate:** unchanged. The four `probe/node-runtime-evidence` queries
+  give the same answers as on 0.15.1. `version_ranges` now also accepts
+  rubygems, composer, maven and their toolchains, but still not
+  `npm-toolchain`. So every version-gated part stays blocked by
+  bifrost-dev#9983.
+- **#291, implemented:** the issue's version-independent part is now a rule,
+  `bifrost.security.javascript.file-content-to-unbounded-decompression`. It
+  reports an `fs.readFileSync(path)` `Buffer` (the declaration from PR #407)
+  that reaches `zlib.gunzipSync`, `inflateSync`, `inflateRawSync`,
+  `unzipSync` or `brotliDecompressSync` called without options. Their
+  `maxOutputLength` then defaults to `buffer.kMaxLength` on every release. The
+  new source-only models are in `semantic-packs/node/zlib/`. The fixture run is
+  `proven_by_summary` with 5 definite, complete findings, and the
+  `maxOutputLength` near miss stays clean. Options that omit
+  `maxOutputLength` are a known false negative, because option shapes don't
+  bind. The `fetch` part still needs the runtime gate and promise results
+  (bifrost-dev#2446).
+- **#292, probed:** `(language javascript (comparison))` and
+  `(binary_expression)` are unsupported JavaScript structural kinds
+  (`unsupported_structural_feature`). A taint sink row that is not a call site
+  is refused ("does not identify a semantic call site"). Neither a taint nor a
+  lexical slice of a digest compared with `===` can be written.
+- **#295:** the closest version-independent slice, `process.argv` reaching
+  `child_process.execSync(command)`, already ships as
+  `process-input-to-child-process-command` (#393). `spawn` and `spawnSync` with
+  `shell: true` need option-shape binding, which was not found in the pinned
+  schema and was not probed.
+- **#288, #289, #290, #293, #296:** no version-independent slice exists,
+  because the fixed runtimes remove the unsafe behavior. They stay blocked by
+  bifrost-dev#9983 alone (and #2446 for #288).
+- **bifrost-dev#9986:** `process.argv[2]` passed inline still binds no source.
+  The run now fails with `endpoint_role_unresolved` where 0.15.1 reported
+  `inconclusive (partial_discovery)`. It is still never clean.
