@@ -9,8 +9,9 @@
 ; the selector matches the keyword on the call shape.
 ; Without activation evidence no identity resolves and the rule is not run,
 ; which is not a clean result.
-; A call that also passes `assert_fingerprint=` (not None and not an empty
-; string) is not reported: urllib3 then pins the certificate by fingerprint.
+; A call that also passes `assert_fingerprint=` as a non-empty string literal
+; is not reported: urllib3 then pins the certificate by fingerprint. A variable
+; could hold None or "", which urllib3 skips, so that call is reported.
 ; Not covered: `cert_reqs=ssl.CERT_NONE` (the constant, not the string: the
 ; keyword pattern cannot prove the `ssl` identity), an `ssl_context` with
 ; verification turned off, and pools built through `connection_from_host`.
@@ -41,7 +42,7 @@
                     (or
                         (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
                         (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(assert_fingerprint (not (or (null_literal) (string_literal (value "")))))])))))))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
           (resolved-call :resolves-to "urllib3.proxy_from_url" :proof exact
             (call-bindings
               (call-shape
@@ -50,7 +51,7 @@
                     (or
                         (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
                         (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(assert_fingerprint (not (or (null_literal) (string_literal (value "")))))])))))))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
           (resolved-call :resolves-to "urllib3.poolmanager.PoolManager.__init__" :proof exact
             (call-bindings
               (call-shape
@@ -59,7 +60,7 @@
                     (or
                         (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
                         (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(assert_fingerprint (not (or (null_literal) (string_literal (value "")))))])))))))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
           (resolved-call :resolves-to "urllib3.poolmanager.ProxyManager.__init__" :proof exact
             (call-bindings
               (call-shape
@@ -68,7 +69,7 @@
                     (or
                         (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
                         (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(assert_fingerprint (not (or (null_literal) (string_literal (value "")))))])))))))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
           (resolved-call :resolves-to "urllib3.connectionpool.HTTPSConnectionPool.__init__" :proof exact
             (call-bindings
               (call-shape
@@ -77,7 +78,7 @@
                     (or
                         (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
                         (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(assert_fingerprint (not (or (null_literal) (string_literal (value "")))))]))))))))))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))]))))))))))
     (group :name by-call :by (disabled.site_id)
       (aggregate :name sites :op count))
     (assert :group by-call :value sites :cardinality (exactly 0)))

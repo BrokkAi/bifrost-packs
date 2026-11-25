@@ -30,3 +30,8 @@ def helper(url):
 def empty_fingerprint(url):
     # urllib3 skips an empty fingerprint, so nothing is pinned.
     return urllib3.PoolManager(cert_reqs="CERT_NONE", assert_fingerprint="").request("GET", url)
+
+
+def optional_fingerprint(url, fingerprint=None):
+    # A variable may hold None or "", which urllib3 skips.
+    return urllib3.PoolManager(cert_reqs="CERT_NONE", assert_fingerprint=fingerprint).request("GET", url)

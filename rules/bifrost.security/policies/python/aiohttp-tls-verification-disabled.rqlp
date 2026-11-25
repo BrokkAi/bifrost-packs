@@ -11,7 +11,8 @@
 ; which is not a clean result.
 ; A request-level `ssl=False` still checks a `Fingerprint` set on the
 ; connector (TCPConnector._get_fingerprint), so `aiohttp.request(...,
-; connector=...)` is not reported. A ClientSession method can't see its
+; connector=TCPConnector(ssl=Fingerprint(...)))` is not reported. A connector
+; held in a variable can't be proven pinned, so that call is reported. A ClientSession method can't see its
 ; session's connector: a session whose connector pins a Fingerprint is still
 ; reported when a request passes `ssl=False`.
 ; Not covered: an `ssl.SSLContext` with verification turned off, and
@@ -43,7 +44,7 @@
                     (or
                         (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
                         (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))]))
-                    (not (call :kwargs [(connector (not (or (null_literal) (string_literal (value "")))))])))))))
+                    (not (call :kwargs [(connector (call :callee (name "TCPConnector") :kwargs [(ssl (call :callee (name "Fingerprint")))]))])))))))
           (resolved-call :resolves-to "aiohttp.client.ClientSession.request" :proof exact
             (call-bindings
               (call-shape

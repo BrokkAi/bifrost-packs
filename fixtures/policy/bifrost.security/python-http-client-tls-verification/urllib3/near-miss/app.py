@@ -23,5 +23,7 @@ def from_settings(url, settings):
 
 def fingerprint_pinned(url):
     # assert_fingerprint pins the server certificate even with CERT_NONE.
-    pin = "AA:BB:CC:DD:EE:FF:00:11:22:33:44:55:66:77:88:99:AA:BB:CC:DD:EE:FF:00:11:22:33:44:55:66:77:88:99"
-    return urllib3.PoolManager(cert_reqs="CERT_NONE", assert_fingerprint=pin).request("GET", url)
+    return urllib3.PoolManager(
+        cert_reqs="CERT_NONE",
+        assert_fingerprint="AA:BB:CC:DD:EE:FF:00:11:22:33:44:55:66:77:88:99:AA:BB:CC:DD:EE:FF:00:11:22:33:44:55:66:77:88:99",
+    ).request("GET", url)

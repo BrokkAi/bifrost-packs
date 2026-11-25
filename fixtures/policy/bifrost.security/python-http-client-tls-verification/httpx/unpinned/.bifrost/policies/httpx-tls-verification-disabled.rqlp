@@ -7,8 +7,8 @@
 ; on a Client take no `verify`, so a client is reported where it is constructed.
 ; Without activation evidence no identity resolves and the rule is not run,
 ; which is not a clean result.
-; A client that also passes `transport=` (not None) and no `proxy=` is not
-; reported: httpx uses that transport as given, and `verify` configures only
+; A client that also passes `transport=` as a constructed object (a call
+; expression, so not None) and no `proxy=` is not reported: httpx uses that transport as given, and `verify` configures only
 ; the default one. With `proxy=`, httpx mounts a proxy transport built with the
 ; client's `verify`, so the client is reported. `mounts=` does not exclude a
 ; client: mount patterns are not evaluated, so a catch-all mount of verifying
@@ -84,13 +84,13 @@
               (call-shape
                 (language python
                   (call :callee (name "Client") :kwargs [(verify (boolean_literal (boolean-value false)))]
-                    (not (call :kwargs [(transport (not (or (null_literal) (string_literal (value "")))))] (not (call :kwargs [(proxy (not (or (null_literal) (string_literal (value "")))))])))))))))
+                    (not (call :kwargs [(transport (call))] (not (call :kwargs [(proxy (not (null_literal)))])))))))))
           (resolved-call :resolves-to "httpx._client.AsyncClient.__init__" :proof exact
             (call-bindings
               (call-shape
                 (language python
                   (call :callee (name "AsyncClient") :kwargs [(verify (boolean_literal (boolean-value false)))]
-                    (not (call :kwargs [(transport (not (or (null_literal) (string_literal (value "")))))] (not (call :kwargs [(proxy (not (or (null_literal) (string_literal (value "")))))]))))))))))))
+                    (not (call :kwargs [(transport (call))] (not (call :kwargs [(proxy (not (null_literal)))]))))))))))))
     (group :name by-call :by (disabled.site_id)
       (aggregate :name sites :op count))
     (assert :group by-call :value sites :cardinality (exactly 0)))
