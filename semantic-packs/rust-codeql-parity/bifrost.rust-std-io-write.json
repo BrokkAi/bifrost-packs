@@ -1,7 +1,7 @@
 {
-  "schema_version": 2,
+  "schema_version": 44,
   "pack_id": "bifrost.rust-std-io-write",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "producer": {
     "name": "bifrost-reviewed-rust-codeql-parity-models",
     "version": "0.1.0"
@@ -9,11 +9,10 @@
   "language": "rust",
   "ecosystem": "cargo",
   "compatibility": {
-    "bifrost": ">=0.12.0, <1.0.0",
     "toolchains": []
   },
   "provenance": {
-    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes. Conversion summaries translate pinned CodeQL core.model.yml:87 (Clone value flow),92 (From taint), and alloc.model.yml:53 (ToString),61 (ToOwned), MIT Copyright (c) GitHub, Inc. They retain trait-owner identities and logical receiver/parameter-to-return flow; Clone adds no alias or copy-identity claim. Into element projections are not flattened into whole-value transfers; into_bytes has no row in the pinned stdlib models.",
+    "source": "Rust 1.100 standard-library io::Write declarations and File/Stdout/Stderr implementors. CodeQL 2.27.1 rust-all 0.2.22 codeql/rust/frameworks/log.model.yml:11-16 marks print/eprint and StdoutLock/StderrLock write/write_all arguments as log-injection sinks; File write and the Write::write_fmt API receive declarations only. String::as_str receiver-to-return taint summary translated from github/codeql codeql/rust/frameworks/stdlib/alloc.model.yml:51 at dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6 (MIT, Copyright (c) GitHub, Inc.; see licenses/CodeQL-MIT.txt): Argument[self].Reference -> ReturnValue.Reference. References are represented by the existing logical receiver/normal_return ports, as for String::as_bytes. Conversion summaries translate pinned CodeQL core.model.yml:87 (Clone value flow),92 (From taint), and alloc.model.yml:53 (ToString),61 (ToOwned), MIT Copyright (c) GitHub, Inc. They retain trait-owner identities and logical receiver/parameter-to-return flow; Clone adds no alias or copy-identity claim. Into element projections are not flattened into whole-value transfers; into_bytes has no row in the pinned stdlib models. Target independence (reviewed): StdoutLock::write, StdoutLock::write_all and StderrLock::write declare callable_family_complete on callables whose owner, name, receiver form and arity family has the same members on every target std is built for. Evidence, rust-lang/rust at fb6531d55 (nightly-2026-08-24): library/std/src/io/stdio.rs:848 impl Write for StdoutLock (write :849, write_all :862) and :1080 impl Write for StderrLock (write :1081), all stable since 1.0.0; none carries a target cfg, and the only target cfg in stdio.rs gates StdinLock::as_mut_buf (a different member).",
     "revision": "rust-std-1.100; CodeQL rust-all 0.2.22; CodeQL source revision ae741615f3e178ce61289a651790dc67fcc18e19; String::as_str CodeQL source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6; conversion source revision dd4405c2c2a8cd5ee7d200e7230ab8dd52e13dc6"
   },
   "license": "Apache-2.0 AND MIT",
@@ -102,13 +101,13 @@
           },
           {
             "id": "type.rust-codeql.std-io-stdout-lock",
-            "name": "std.io.StdoutLock",
+            "name": "std.io.stdio.StdoutLock",
             "type_kind": "struct",
             "visibility": "public",
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StdoutLock"
+              "symbol": "std.io.stdio.StdoutLock"
             },
             "hierarchy": [
               {
@@ -120,17 +119,20 @@
                   "nullable": false
                 }
               }
+            ],
+            "aliases": [
+              "std.io.StdoutLock"
             ]
           },
           {
             "id": "type.rust-codeql.std-io-stderr-lock",
-            "name": "std.io.StderrLock",
+            "name": "std.io.stdio.StderrLock",
             "type_kind": "struct",
             "visibility": "public",
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StderrLock"
+              "symbol": "std.io.stdio.StderrLock"
             },
             "hierarchy": [
               {
@@ -142,6 +144,9 @@
                   "nullable": false
                 }
               }
+            ],
+            "aliases": [
+              "std.io.StderrLock"
             ]
           },
           {
@@ -640,6 +645,7 @@
             "visibility": "public",
             "is_static": false,
             "callable_family_complete": true,
+            "target_independent": true,
             "signature": {
               "parameters": [
                 {
@@ -657,9 +663,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write"
+            },
+            "aliases": [
+              "std.io.StdoutLock.write"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stdout-lock-write-all",
@@ -669,6 +678,7 @@
             "visibility": "public",
             "is_static": false,
             "callable_family_complete": true,
+            "target_independent": true,
             "signature": {
               "parameters": [
                 {
@@ -686,9 +696,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write_all"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write_all"
+            },
+            "aliases": [
+              "std.io.StdoutLock.write_all"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stderr-lock-write",
@@ -698,6 +711,7 @@
             "visibility": "public",
             "is_static": false,
             "callable_family_complete": true,
+            "target_independent": true,
             "signature": {
               "parameters": [
                 {
@@ -715,9 +729,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write"
+            },
+            "aliases": [
+              "std.io.StderrLock.write"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stderr-lock-write-all",
@@ -744,9 +761,12 @@
             },
             "locator": {
               "kind": "artifact",
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write_all"
-            }
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write_all"
+            },
+            "aliases": [
+              "std.io.StderrLock.write_all"
+            ]
           },
           {
             "id": "member.rust-codeql.std-primitive-str-as-bytes",
@@ -1119,8 +1139,11 @@
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StdoutLock.write_fmt"
-            }
+              "symbol": "std.io.stdio.StdoutLock.write_fmt"
+            },
+            "aliases": [
+              "std.io.StdoutLock.write_fmt"
+            ]
           },
           {
             "id": "member.rust-codeql.std-io-stderr-lock-write-fmt",
@@ -1148,8 +1171,11 @@
             "locator": {
               "kind": "artifact",
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StderrLock.write_fmt"
-            }
+              "symbol": "std.io.stdio.StderrLock.write_fmt"
+            },
+            "aliases": [
+              "std.io.StderrLock.write_fmt"
+            ]
           },
           {
             "id": "member.rust-codeql.std-clone-clone-clone",
@@ -1415,8 +1441,8 @@
           {
             "id": "summary.rust-codeql.std-io-stdout-lock-write",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1428,8 +1454,8 @@
           {
             "id": "summary.rust-codeql.std-io-stdout-lock-write-all",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StdoutLock.write_all",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StdoutLock.write_all",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1441,8 +1467,8 @@
           {
             "id": "summary.rust-codeql.std-io-stderr-lock-write",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1454,8 +1480,8 @@
           {
             "id": "summary.rust-codeql.std-io-stderr-lock-write-all",
             "target": {
-              "path": "library/std/src/io/mod.rs",
-              "symbol": "std.io.StderrLock.write_all",
+              "path": "library/std/src/io/stdio.rs",
+              "symbol": "std.io.stdio.StderrLock.write_all",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1674,7 +1700,7 @@
             "id": "summary.rust-codeql.std-io-stdout-lock-write-fmt",
             "target": {
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StdoutLock.write_fmt",
+              "symbol": "std.io.stdio.StdoutLock.write_fmt",
               "has_receiver": true,
               "parameter_count": 1
             },
@@ -1687,7 +1713,7 @@
             "id": "summary.rust-codeql.std-io-stderr-lock-write-fmt",
             "target": {
               "path": "library/std/src/io/stdio.rs",
-              "symbol": "std.io.StderrLock.write_fmt",
+              "symbol": "std.io.stdio.StderrLock.write_fmt",
               "has_receiver": true,
               "parameter_count": 1
             },
