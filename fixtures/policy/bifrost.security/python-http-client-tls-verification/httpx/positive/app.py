@@ -27,3 +27,8 @@ async def async_client(url):
 def empty_mounts(url):
     # No mount matches, so the unverified default transport handles the URL.
     return httpx.Client(verify=False, mounts={}).get(url)
+
+
+def proxied_transport(url):
+    # With proxy=, httpx routes through a proxy transport built with verify=False.
+    return httpx.Client(verify=False, transport=httpx.HTTPTransport(verify=True), proxy="http://proxy:8080").get(url)
