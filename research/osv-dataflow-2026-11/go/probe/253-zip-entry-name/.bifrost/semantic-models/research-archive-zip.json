@@ -1,0 +1,63 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.archive-zip",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/archive/zip",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.archive-zip.summaries",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "archive-zip.open-reader",
+            "target": {
+              "path": "src/archive/zip/reader.go",
+              "symbol": "archive/zip.OpenReader(name string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "archive-zip.read-closer.close",
+            "target": {
+              "path": "src/archive/zip/reader.go",
+              "symbol": "archive/zip.ReadCloser.Close()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

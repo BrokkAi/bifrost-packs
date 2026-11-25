@@ -1,0 +1,796 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.ruby-catalog-0151-probe",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs-research",
+    "version": "0.1.0"
+  },
+  "language": "ruby",
+  "ecosystem": "rubygems",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://docs.ruby-lang.org/en/3.4/ URI, REXML::Document, Net::IMAP, JSON; research probe for BrokkAi/bifrost-packs #362-#370, not registered pack content",
+    "revision": "ruby-3.4"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.ruby-osv-dataflow.declarations",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.877d010fc0c1c39d0417a487a15a60a6872bcf36e28df28e7eeede3222a42474",
+            "name": "REXML::Document",
+            "type_kind": "class",
+            "visibility": "public",
+            "hierarchy": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "rexml/document.rb",
+              "symbol": "REXML::Document"
+            }
+          },
+          {
+            "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "Net::IMAP",
+            "type_kind": "class",
+            "visibility": "public",
+            "hierarchy": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP"
+            }
+          },
+          {
+            "id": "type.ffda8072dbb65e2835951b07773542e963396a5f75e27717e69cb0e0cc42a80e",
+            "name": "URI",
+            "type_kind": "module",
+            "visibility": "public",
+            "hierarchy": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "uri/common.rb",
+              "symbol": "URI"
+            }
+          },
+          {
+            "id": "type.c1776e9f94a6d0dfdf28a7e3ece0f99f4c16dc01730d41ada7886806fa9c1e55",
+            "name": "JSON::ResumableParser",
+            "type_kind": "class",
+            "visibility": "public",
+            "hierarchy": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.research.ruby-osv-dataflow.rexml-document.new",
+            "owner": "type.877d010fc0c1c39d0417a487a15a60a6872bcf36e28df28e7eeede3222a42474",
+            "name": "new",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "rexml/document.rb",
+              "symbol": "REXML::Document.new"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "source",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "context",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "declared",
+                "id": "type.877d010fc0c1c39d0417a487a15a60a6872bcf36e28df28e7eeede3222a42474"
+              }
+            }
+          },
+          {
+            "id": "member.research.ruby-osv-dataflow.net-imap.new",
+            "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "new",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.new"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "host",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "declared",
+                "id": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968"
+              }
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.uri.parse",
+            "owner": "type.ffda8072dbb65e2835951b07773542e963396a5f75e27717e69cb0e0cc42a80e",
+            "name": "parse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "uri/common.rb",
+              "symbol": "URI.parse"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "uri",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.net-imap.search",
+            "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "search",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.search"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "keys",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "charset",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.net-imap.uid_search",
+            "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "uid_search",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.uid_search"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "keys",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "charset",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.net-imap.fetch",
+            "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "fetch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.fetch"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "set",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "attr",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "changedsince",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.net-imap.sort",
+            "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "sort",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.sort"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "sort_keys",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "search_keys",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "charset",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.net-imap.authenticate",
+            "owner": "type.1b0f09a6dfbd6420aec326f7dd9038357b03ceb755d8334c5aebaf21f6ba9968",
+            "name": "authenticate",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.authenticate"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "mechanism",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "creds",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.json-resumableparser.new",
+            "owner": "type.c1776e9f94a6d0dfdf28a7e3ece0f99f4c16dc01730d41ada7886806fa9c1e55",
+            "name": "new",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.new"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "opts",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.json-resumableparser.parse",
+            "owner": "type.c1776e9f94a6d0dfdf28a7e3ece0f99f4c16dc01730d41ada7886806fa9c1e55",
+            "name": "parse",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.parse"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "chunk",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.research.ruby-catalog-0151.json-resumableparser.partial_value",
+            "owner": "type.c1776e9f94a6d0dfdf28a7e3ece0f99f4c16dc01730d41ada7886806fa9c1e55",
+            "name": "partial_value",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.partial_value"
+            },
+            "signature": {
+              "parameters": []
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "research.ruby-osv-dataflow.summaries",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.research.ruby-osv-dataflow.rexml-document.new-0",
+            "target": {
+              "path": "rexml/document.rb",
+              "symbol": "REXML::Document.new()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-osv-dataflow.rexml-document.new-1",
+            "target": {
+              "path": "rexml/document.rb",
+              "symbol": "REXML::Document.new(source)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-osv-dataflow.rexml-document.new-2",
+            "target": {
+              "path": "rexml/document.rb",
+              "symbol": "REXML::Document.new(source, context)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-osv-dataflow.net-imap.new-1",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.new(host)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-osv-dataflow.net-imap.new-2",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.new(host, options)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.uri.parse-1",
+            "target": {
+              "path": "uri/common.rb",
+              "symbol": "URI.parse(uri)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.search-1",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.search(keys)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.search-2",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.search(keys, charset)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.uid_search-1",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.uid_search(keys)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.uid_search-2",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.uid_search(keys, charset)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.fetch-1",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.fetch(set)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.fetch-2",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.fetch(set, attr)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.sort-1",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.sort(sort_keys)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.sort-2",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.sort(sort_keys, search_keys)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.sort-3",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.sort(sort_keys, search_keys, charset)",
+              "has_receiver": true,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.authenticate-1",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.authenticate(mechanism)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.authenticate-2",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.authenticate(mechanism, creds)",
+              "has_receiver": true,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.json-resumableparser.new-1",
+            "target": {
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.new(opts)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.json-resumableparser.parse-1",
+            "target": {
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.parse(chunk)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.json-resumableparser.partial_value-0",
+            "target": {
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.partial_value()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.json-resumableparser.new-0",
+            "target": {
+              "path": "json/resumable_parser.rb",
+              "symbol": "JSON::ResumableParser.new()",
+              "has_receiver": true,
+              "parameter_count": 0
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.research.ruby-catalog-0151.net-imap.fetch-3",
+            "target": {
+              "path": "net/imap.rb",
+              "symbol": "Net::IMAP.fetch(set, attr, changedsince)",
+              "has_receiver": true,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

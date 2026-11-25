@@ -1,0 +1,317 @@
+; Lead: BrokkAi/bifrost-packs#263 (CVE-2019-0820), version-independent part.
+; Product source contract: CVE-2019-0820 is a backtracking denial of service in
+; System.Text.RegularExpressions. A pattern the caller writes can still
+; backtrack catastrophically on every version unless a match timeout bounds it
+; (.NET regular-expression best practices), so external input that reaches the
+; pattern operand of a Regex constructor or static Regex method without a
+; matchTimeout argument is reported on every runtime. The CVE's affected-package
+; part needs NuGet evidence bound to the owning project (bifrost-dev#8778) and
+; is not checked here.
+; Engine contract: sources bind exactly to the reviewed bifrost.dotnet.bcl-csharp
+; model. Sinks bind to the reviewed
+; bifrost.dotnet.system-text-regularexpressions-csharp model and are narrowed by
+; model_id to the overloads with no matchTimeout parameter. Regex.Escape
+; removes the untrusted label. Any other call on the path must be modeled, so
+; an unmodeled wrapper leaves the run inconclusive instead of clean. The model
+; declares no instance Regex methods: on Bifrost 0.15.1 an instance overload in
+; the same family makes the static locator ambiguous.
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.regex-pattern-injection"
+  :name "C# external input used as a regular-expression pattern without a timeout"
+  :message "external input is used as a Regex pattern with no match timeout"
+  :severity warning
+  :description "Reports Console.ReadLine and Environment.GetEnvironmentVariable data reaching the pattern operand of the Regex(String) and Regex(String, RegexOptions) constructors, or of the static Regex.IsMatch, Match, Matches, Split and Replace overloads that take no matchTimeout, in the reviewed System.Text.RegularExpressions model, unless Regex.Escape removes the untrusted label. A caller-written pattern can backtrack catastrophically (CVE-2019-0820, CWE-1333) on any runtime unless a match timeout bounds it, so overloads that take a matchTimeout are not reported."
+  :tags ["security" "csharp" "regex" "redos" "cwe-1333" "cwe-730"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id console-read-line
+              :display-name "Console.ReadLine external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Console.ReadLine"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "ReadLine") :arity 0))))))
+              :bind return-value
+              :labels [untrusted])
+            (source
+              :id environment-get-environment-variable
+              :display-name "Environment.GetEnvironmentVariable external input"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id regex-constructor-pattern
+              :display-name "new Regex(String) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Regex"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Regex") :arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id regex-constructor-pattern-options
+              :display-name "new Regex(String, RegexOptions) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Regex"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern-options"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Regex") :arity 2))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])
+            (sink
+              :id regex-is-match-pattern
+              :display-name "Regex.IsMatch(String, String) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.IsMatch"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "IsMatch") :arity 2))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-is-match-pattern-options
+              :display-name "Regex.IsMatch(String, String, RegexOptions) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.IsMatch"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern-options"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "IsMatch") :arity 3))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-match-pattern
+              :display-name "Regex.Match(String, String) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Match"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Match") :arity 2))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-match-pattern-options
+              :display-name "Regex.Match(String, String, RegexOptions) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Match"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern-options"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Match") :arity 3))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-matches-pattern
+              :display-name "Regex.Matches(String, String) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Matches"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Matches") :arity 2))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-matches-pattern-options
+              :display-name "Regex.Matches(String, String, RegexOptions) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Matches"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern-options"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Matches") :arity 3))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-split-pattern
+              :display-name "Regex.Split(String, String) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Split"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Split") :arity 2))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-split-pattern-options
+              :display-name "Regex.Split(String, String, RegexOptions) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Split"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern-options"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Split") :arity 3))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-replace-pattern
+              :display-name "Regex.Replace(String, String, String) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Replace"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Replace") :arity 3))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])
+            (sink
+              :id regex-replace-pattern-options
+              :display-name "Regex.Replace(String, String, String, RegexOptions) pattern"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 1
+                      (resolved-call
+                        :resolves-to "System.Text.RegularExpressions.Regex.Replace"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern-options"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "Replace") :arity 4))))))))
+              :dangerous-operand (argument :index 1)
+              :accepts [untrusted])])
+      :sanitizers
+        (endpoint-set
+          :entries [
+            (sanitizer
+              :id regex-escape
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Text.RegularExpressions.Regex.Escape"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "Escape") :arity 1))))))
+              :input (argument :index 0)
+              :output return-value
+              :removes [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "1333")))

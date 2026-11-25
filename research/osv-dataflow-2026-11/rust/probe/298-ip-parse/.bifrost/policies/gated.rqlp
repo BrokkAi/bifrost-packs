@@ -1,0 +1,22 @@
+(policy
+  :schema-version 1
+  :id "research.rust.ip-parse-gated"
+  :name "probe"
+  :message "untrusted string parsed as an IP address on a toolchain before 1.53.0"
+  :severity warning
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources (endpoint-set :entries [
+        (source :id env-var :display-name "std::env::var" :categories [io.external]
+          :selector (rql :schema-version 1 (language rust (resolved-call :resolves-to "std.env.var" :proof declared (call-bindings (call-shape (call :callee (name "var") :arity 1))))))
+          :bind return-value :labels [untrusted])])
+      :sinks (endpoint-set :entries [
+        (sink :id from-str :display-name "Ipv4Addr::from_str" :categories [parsing]
+          :selector (rql :schema-version 1
+            (join :left (language rust (call-argument :formal-index 0 (resolved-call :resolves-to "std.net.Ipv4Addr.from_str" :proof declared (call-bindings (call-shape (call :callee (name "from_str") :arity 1))))))
+                  :right (dependency-evidence :ecosystem rust-toolchain :version-range "<1.53.0")))
+          :dangerous-operand (argument :index 0)
+          :accepts [untrusted])])))

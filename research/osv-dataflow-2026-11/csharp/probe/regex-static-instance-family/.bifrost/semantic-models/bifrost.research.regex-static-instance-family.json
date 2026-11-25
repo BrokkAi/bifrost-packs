@@ -1,0 +1,1649 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.research.regex-static-instance-family",
+  "version": "0.0.1",
+  "producer": {
+    "name": "bifrost-reviewed-dotnet-models",
+    "version": "0.1.0"
+  },
+  "language": "csharp",
+  "ecosystem": "dotnet",
+  "compatibility": {
+    "bifrost": ">=0.12.0, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Probe model for bifrost-dev#9982: the reviewed Regex members plus the instance Regex.IsMatch(String) overload from the .NET API reference",
+    "revision": "dotnet-9.0"
+  },
+  "license": "MIT",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.dotnet-system-text-regularexpressions-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.research.regex-static-instance-family"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "System.Text.RegularExpressions.Regex",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex"
+            }
+          },
+          {
+            "id": "type.dotnet.system-text-regularexpressions-csharp.regex-options",
+            "name": "System.Text.RegularExpressions.RegexOptions",
+            "type_kind": "enum",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.RegexOptions"
+            }
+          },
+          {
+            "id": "type.dotnet.system-text-regularexpressions-csharp.match",
+            "name": "System.Text.RegularExpressions.Match",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Match"
+            }
+          },
+          {
+            "id": "type.dotnet.system-text-regularexpressions-csharp.match-collection",
+            "name": "System.Text.RegularExpressions.MatchCollection",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": true,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.MatchCollection"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Regex",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Regex(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern-options",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Regex",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Regex(System.String,System.Text.RegularExpressions.RegexOptions)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern-options-timeout",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Regex",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "matchTimeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.TimeSpan",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ]
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Regex(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.escape",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Escape",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "str",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Escape(System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "IsMatch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern-options",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "IsMatch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern-options-timeout",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "IsMatch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "matchTimeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.TimeSpan",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Match",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Text.RegularExpressions.Match",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Match(System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern-options",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Match",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Text.RegularExpressions.Match",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Match(System.String,System.String,System.Text.RegularExpressions.RegexOptions)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern-options-timeout",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Match",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "matchTimeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.TimeSpan",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Text.RegularExpressions.Match",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Match(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Matches",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Text.RegularExpressions.MatchCollection",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Matches(System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern-options",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Matches",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Text.RegularExpressions.MatchCollection",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Matches(System.String,System.String,System.Text.RegularExpressions.RegexOptions)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern-options-timeout",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Matches",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "matchTimeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.TimeSpan",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Text.RegularExpressions.MatchCollection",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Matches(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Split",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String[]",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Split(System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern-options",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Split",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String[]",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Split(System.String,System.String,System.Text.RegularExpressions.RegexOptions)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern-options-timeout",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Split",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "matchTimeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.TimeSpan",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String[]",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Split(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Replace",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "replacement",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Replace(System.String,System.String,System.String)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern-options",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Replace",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "replacement",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Replace(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern-options-timeout",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "Replace",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "pattern",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "replacement",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.Text.RegularExpressions.RegexOptions",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "matchTimeout",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.TimeSpan",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.String",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Replace(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)"
+            }
+          },
+          {
+            "id": "member.dotnet.system-text-regularexpressions-csharp.regex.is-match-instance",
+            "owner": "type.dotnet.system-text-regularexpressions-csharp.regex",
+            "name": "IsMatch",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "kind": "named",
+                    "name": "System.String",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "System.Boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.dotnet-system-text-regularexpressions-csharp",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": [
+            "bifrost.research.regex-static-instance-family"
+          ]
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Regex(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern-options",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Regex(System.String,System.Text.RegularExpressions.RegexOptions)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.constructor-pattern-options-timeout",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Regex(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.escape",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Escape(System.String)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": [
+              {
+                "kind": "sanitize",
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "output": {
+                  "kind": "normal_return"
+                },
+                "removes": [
+                  "untrusted"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern-options",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.is-match-static-pattern-options-timeout",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Match(System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern-options",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Match(System.String,System.String,System.Text.RegularExpressions.RegexOptions)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.match-static-pattern-options-timeout",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Match(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Matches(System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern-options",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Matches(System.String,System.String,System.Text.RegularExpressions.RegexOptions)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.matches-static-pattern-options-timeout",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Matches(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Split(System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern-options",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Split(System.String,System.String,System.Text.RegularExpressions.RegexOptions)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.split-static-pattern-options-timeout",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Split(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Replace(System.String,System.String,System.String)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 2
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern-options",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Replace(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 2
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.replace-static-pattern-options-timeout",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.Replace(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)",
+              "has_receiver": false,
+              "parameter_count": 5
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              },
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 2
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "summary.dotnet.system-text-regularexpressions-csharp.regex.is-match-instance",
+            "target": {
+              "path": "System.Text.RegularExpressions.dll",
+              "symbol": "System.Text.RegularExpressions.Regex.IsMatch(System.String)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": true,
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

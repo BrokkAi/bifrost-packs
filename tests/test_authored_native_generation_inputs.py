@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import re
 from pathlib import Path, PurePosixPath
 import stat
 import sys
@@ -35,7 +36,7 @@ IDENTITY_VALUE_FIELDS = {"name", "version"}
 SHA256_LENGTH = 64
 AUTHORED_KIND = "authored_semantic_model"
 MIN_MODEL_SCHEMA_VERSION = 8
-MAX_MODEL_SCHEMA_VERSION = 17
+MAX_MODEL_SCHEMA_VERSION = 22
 
 
 class SourceInputError(ValueError):
@@ -265,12 +266,43 @@ def _spec_and_model(spec_activation: Any, shard_activations: list[Any], *,
 class AuthoredNativeGenerationInputTests(unittest.TestCase):
     """Bind every configured authored job to its source identity and shards."""
 
+    def test_released_first_party_packs_do_not_require_review(self):
+        """Every first-party pack should activate by default; check released inputs."""
+        rust_exemption = {
+            # bifrost-dev #10045 (an active std pack's partial callable family
+            # weakens authored locators) and bifrost-packs #325 (remodel
+            # std.env.var/args sources as module functions): enabling the Rust
+            # std pack loses findings until both land; remove this entry then.
+            "bifrost.rust-stdlib",
+            # Authored trust contract, intentionally opt-in and paired with
+            # rust-stdlib by the product recipe; never enabled independently.
+            "bifrost.rust-std-deref-summaries",
+        }
+        config = _load_json("native-generation.json")
+        selected = {job["spec"] for job in config["jobs"]}
+        selected.update(job["artifact"] for job in config["jobs"])
+        for recipe in config["recipes"]:
+            script = (ROOT / recipe["script"]).read_text(encoding="utf-8")
+            selected.update(re.findall(r"semantic-packs/[\w./+\-]+\.json", script))
+
+        seen_exemptions = set()
+        for path in sorted(selected):
+            pack = _load_json(path)
+            if not isinstance(pack, dict) or "safety" not in pack:
+                continue
+            pack_id = pack["pack_id"]
+            if pack_id in rust_exemption:
+                seen_exemptions.add(pack_id)
+                continue
+            self.assertIs(pack["safety"]["review_required"], False, path)
+        self.assertEqual(seen_exemptions, rust_exemption)
+
     def test_all_configured_authored_jobs_bind_source_identity_and_each_shard(self):
         config = _load_json("native-generation.json")
         self.assertIsInstance(config, dict)
         jobs = config.get("jobs")
         self.assertIsInstance(jobs, list)
-        self.assertEqual(len(jobs), 54)
+        self.assertEqual(len(jobs), 69)
         shard_count = 0
 
         for job in jobs:
@@ -288,7 +320,7 @@ class AuthoredNativeGenerationInputTests(unittest.TestCase):
                 for field in ("compatibility", "provenance", "license", "safety"):
                     self.assertEqual(spec[field], model[field], f"{job['name']} {field}")
 
-        self.assertEqual(shard_count, 65)
+        self.assertEqual(shard_count, 81)
 
     def test_jdk21_reviewed_obligations_are_selected_for_native_delivery(self):
         jobs = _load_json("native-generation.json")["jobs"]

@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.unused-parameter"
   :name "Python unused parameter"
   :message "Function parameter is never read."
-  :severity warning
+  :severity note
   :description "Reports an unread function parameter, including closure reads in the use set, while excluding self, accepted ignored-name patterns, abstract methods, and overriding or overridden methods."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

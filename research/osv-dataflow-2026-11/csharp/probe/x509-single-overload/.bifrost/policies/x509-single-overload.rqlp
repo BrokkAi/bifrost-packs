@@ -1,0 +1,60 @@
+; Research probe for bifrost-dev#9981 (lead BrokkAi/bifrost-packs#266), not pack
+; content. The model declares only X509Certificate2(byte[]). A String argument
+; still binds to it, and the finding is definite and complete.
+(policy
+  :schema-version 1
+  :id "bifrost.research.csharp.x509-single-overload"
+  :name "Research: X509Certificate2 single-overload binding"
+  :message "environment value reaches the only declared X509Certificate2 constructor"
+  :severity warning
+  :description "Research probe for bifrost-dev#9981."
+  :tags ["security"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id environment-get-environment-variable
+              :display-name "env"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (resolved-call
+                      :resolves-to "System.Environment.GetEnvironmentVariable"
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "GetEnvironmentVariable") :arity 1))))))
+              :bind return-value
+              :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id raw
+              :display-name "X509Certificate2(byte[])"
+              :categories [crypto.certificate]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language csharp
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to "System.Security.Cryptography.X509Certificates.X509Certificate2.X509Certificate2"
+                        :proof declared
+                        (filter :where
+                          ((model_id eq "member.dotnet.x509-probe.x509certificate2.constructor-raw-data"))
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "X509Certificate2") :arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "400")))

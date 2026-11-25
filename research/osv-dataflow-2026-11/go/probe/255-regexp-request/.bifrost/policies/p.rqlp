@@ -1,0 +1,17 @@
+(policy :schema-version 1 :id "x.re" :name "n" :message "m" :severity warning :description "d"
+  :analysis (analysis :type taint :mode may :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id form-value :display-name "Request.FormValue" :categories [io.external]
+        :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net/http.Request.FormValue" :proof declared
+          (call-bindings (call-shape (call :callee (name "FormValue") :arity 1))))))
+        :bind (result :index 0) :labels [untrusted])])
+    :sanitizers (endpoint-set :entries [
+      (sanitizer :id quote-meta
+        :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "regexp.QuoteMeta" :proof declared
+          (call-bindings (call-shape (call :callee (name "QuoteMeta") :arity 1)))))))
+        :input (argument :index 0) :output return-value :removes [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id compile :display-name "regexp.Compile pattern" :categories [regex-injection]
+        :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "regexp.Compile" :proof declared
+          (call-bindings (call-shape (call :callee (name "Compile") :arity 1)))))))
+        :dangerous-operand (argument :index 0) :accepts [untrusted])])))

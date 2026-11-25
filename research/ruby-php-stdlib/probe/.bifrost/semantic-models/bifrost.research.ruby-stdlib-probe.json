@@ -1,0 +1,640 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.ruby-stdlib-probe",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs-research",
+    "version": "0.1.0"
+  },
+  "language": "ruby",
+  "ecosystem": "rubygems",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://docs.ruby-lang.org/en/3.4/ Marshal, Psych, Kernel and File; research probe, not registered pack content",
+    "revision": "ruby-3.4"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.ruby-stdlib-probe.declarations",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.cfdfb982066cc9431c8f6dcda30edf00dc5541ca8ca02c1ce9119337497722a4",
+            "name": "Marshal",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "marshal.c",
+              "symbol": "Marshal"
+            }
+          },
+          {
+            "id": "type.95506105003e9627697edc7cf7e094648e8b1123b2f69b999a2295a269be605f",
+            "name": "Psych",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "psych.rb",
+              "symbol": "Psych"
+            }
+          },
+          {
+            "id": "type.624a19754c2ddbe4536b1fe8cb9a3d2a5b1b9dcfc1541d0e069a62a87049a2ba",
+            "name": "Kernel",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "kernel.rb",
+              "symbol": "Kernel"
+            }
+          },
+          {
+            "id": "type.3b70f549a455a1c8b5121623523a9f1956573e0bbef485038d03471374b1d29d",
+            "name": "File",
+            "type_kind": "class",
+            "visibility": "public",
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "file.c",
+              "symbol": "File"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.ruby-stdlib-research.marshal.load",
+            "owner": "type.cfdfb982066cc9431c8f6dcda30edf00dc5541ca8ca02c1ce9119337497722a4",
+            "name": "load",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "marshal.c",
+              "symbol": "Marshal.load"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "source",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "proc",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.marshal.restore",
+            "owner": "type.cfdfb982066cc9431c8f6dcda30edf00dc5541ca8ca02c1ce9119337497722a4",
+            "name": "restore",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "marshal.c",
+              "symbol": "Marshal.restore"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "source",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "proc",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.psych.unsafe_load",
+            "owner": "type.95506105003e9627697edc7cf7e094648e8b1123b2f69b999a2295a269be605f",
+            "name": "unsafe_load",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "psych.rb",
+              "symbol": "Psych.unsafe_load"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "yaml",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.psych.unsafe_load_file",
+            "owner": "type.95506105003e9627697edc7cf7e094648e8b1123b2f69b999a2295a269be605f",
+            "name": "unsafe_load_file",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "psych.rb",
+              "symbol": "Psych.unsafe_load_file"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "filename",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.psych.safe_load",
+            "owner": "type.95506105003e9627697edc7cf7e094648e8b1123b2f69b999a2295a269be605f",
+            "name": "safe_load",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "psych.rb",
+              "symbol": "Psych.safe_load"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "yaml",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.kernel.open",
+            "owner": "type.624a19754c2ddbe4536b1fe8cb9a3d2a5b1b9dcfc1541d0e069a62a87049a2ba",
+            "name": "open",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "kernel.rb",
+              "symbol": "Kernel.open"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "mode",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "perm",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.kernel.eval",
+            "owner": "type.624a19754c2ddbe4536b1fe8cb9a3d2a5b1b9dcfc1541d0e069a62a87049a2ba",
+            "name": "eval",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "kernel.rb",
+              "symbol": "Kernel.eval"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "string",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "binding",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "filename",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "lineno",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "member.ruby-stdlib-research.file.open",
+            "owner": "type.3b70f549a455a1c8b5121623523a9f1956573e0bbef485038d03471374b1d29d",
+            "name": "open",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "file.c",
+              "symbol": "File.open"
+            },
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                },
+                {
+                  "name": "mode",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "perm",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  },
+                  "optional": true
+                }
+              ]
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "research.ruby-stdlib-probe.summaries",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.ruby-stdlib-research.marshal.load-1",
+            "target": {
+              "path": "marshal.c",
+              "symbol": "Marshal.load(source)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.marshal.load-2",
+            "target": {
+              "path": "marshal.c",
+              "symbol": "Marshal.load(source, proc)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.marshal.restore-1",
+            "target": {
+              "path": "marshal.c",
+              "symbol": "Marshal.restore(source)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.marshal.restore-2",
+            "target": {
+              "path": "marshal.c",
+              "symbol": "Marshal.restore(source, proc)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.psych.unsafe_load-1",
+            "target": {
+              "path": "psych.rb",
+              "symbol": "Psych.unsafe_load(yaml)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.psych.unsafe_load_file-1",
+            "target": {
+              "path": "psych.rb",
+              "symbol": "Psych.unsafe_load_file(filename)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.psych.safe_load-1",
+            "target": {
+              "path": "psych.rb",
+              "symbol": "Psych.safe_load(yaml)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.open-1",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.open(path)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.open-2",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.open(path, mode)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.open-3",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.open(path, mode, perm)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.eval-1",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.eval(string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.eval-2",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.eval(string, binding)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.eval-3",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.eval(string, binding, filename)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.kernel.eval-4",
+            "target": {
+              "path": "kernel.rb",
+              "symbol": "Kernel.eval(string, binding, filename, lineno)",
+              "has_receiver": false,
+              "parameter_count": 4
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.file.open-1",
+            "target": {
+              "path": "file.c",
+              "symbol": "File.open(path)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.file.open-2",
+            "target": {
+              "path": "file.c",
+              "symbol": "File.open(path, mode)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          },
+          {
+            "id": "summary.ruby-stdlib-research.file.open-3",
+            "target": {
+              "path": "file.c",
+              "symbol": "File.open(path, mode, perm)",
+              "has_receiver": false,
+              "parameter_count": 3
+            },
+            "completeness": "complete",
+            "covers_overrides": false,
+            "locations": [],
+            "transfers": [],
+            "effects": [],
+            "declared_effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.should-be-context-manager"
   :name "Python resource class should be a context manager"
   :message "class defines __del__ without the context manager protocol"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL py/should-be-context-manager at ae741615f3e178ce61289a651790dc67fcc18e19. A class with a declared __del__ method is reported when it declares neither __enter__ nor __exit__."
   :tags ["python" "codeql" "quality" "resource-management"]
   :analysis (analysis

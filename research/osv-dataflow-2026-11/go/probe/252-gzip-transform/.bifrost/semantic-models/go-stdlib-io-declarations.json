@@ -1,0 +1,226 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.io-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/io",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.io.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.32225d69ad923faf6d88ca8ae27aee8d5484abb4d9e8b2c92b1fd130848237b2",
+            "name": "io",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "io"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "io/io.go",
+              "symbol": "io"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.7773750856e02cffe3cf31e4d882c14a827ae8add47fa019ad30786316c278cc",
+            "owner": "type.32225d69ad923faf6d88ca8ae27aee8d5484abb4d9e8b2c92b1fd130848237b2",
+            "name": "ReadAll",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "r",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Reader",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "slice",
+                    "element": {
+                      "kind": "named",
+                      "name": "byte",
+                      "arguments": [],
+                      "nullable": false
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "io/io.go",
+              "symbol": "io.ReadAll"
+            }
+          },
+          {
+            "id": "member.10eb9f19532ab435010648183884f52df13a5d2f5fe3fad2884bf43da1bd21ae",
+            "owner": "type.32225d69ad923faf6d88ca8ae27aee8d5484abb4d9e8b2c92b1fd130848237b2",
+            "name": "Copy",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "dst",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Writer",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "src",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Reader",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "tuple",
+                "elements": [
+                  {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  {
+                    "kind": "named",
+                    "name": "error",
+                    "arguments": [],
+                    "nullable": false
+                  }
+                ]
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "io/io.go",
+              "symbol": "io.Copy"
+            }
+          },
+          {
+            "id": "member.18dc718bf634f35ff744b0a72acd4614758f4322fe26feed1a635ef3aa724606",
+            "owner": "type.32225d69ad923faf6d88ca8ae27aee8d5484abb4d9e8b2c92b1fd130848237b2",
+            "name": "LimitReader",
+            "member_kind": "function",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": true,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "r",
+                  "type": {
+                    "kind": "named",
+                    "name": "io.Reader",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "n",
+                  "type": {
+                    "kind": "named",
+                    "name": "int64",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "io.Reader",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "io/io.go",
+              "symbol": "io.LimitReader"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

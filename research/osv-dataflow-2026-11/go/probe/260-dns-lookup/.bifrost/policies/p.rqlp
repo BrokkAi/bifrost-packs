@@ -1,0 +1,27 @@
+(policy
+  :schema-version 1
+  :id "bifrost.security.go.dns-record-command"
+  :name "n" :message "m" :severity warning :description "d"
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source :id lookup-txt :display-name "net.LookupTXT records" :categories [io.external]
+              :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net.LookupTXT" :proof declared
+                (call-bindings (call-shape (call :callee (name "LookupTXT") :arity 1))))))
+              :bind (result :index 0) :labels [untrusted])
+            (source :id lookup-cname :display-name "net.LookupCNAME name" :categories [io.external]
+              :selector (rql :schema-version 1 (language go (resolved-call :resolves-to "net.LookupCNAME" :proof declared
+                (call-bindings (call-shape (call :callee (name "LookupCNAME") :arity 1))))))
+              :bind (result :index 0) :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink :id exec-command-name :display-name "exec.Command program" :categories [command-injection]
+              :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "os/exec.Command" :proof declared
+                (call-bindings (call-shape (call :callee (name "Command"))))))))
+              :dangerous-operand (argument :index 0) :accepts [untrusted])])))

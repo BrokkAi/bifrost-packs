@@ -1,0 +1,98 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.path-filepath",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/path/filepath",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.path-filepath.summaries",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "path-filepath.join",
+            "target": {
+              "path": "src/path/filepath/path.go",
+              "symbol": "path/filepath.Join(elem ...string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "path-filepath.base",
+            "target": {
+              "path": "src/path/filepath/path.go",
+              "symbol": "path/filepath.Base(path string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "path-filepath.is-local",
+            "target": {
+              "path": "src/path/filepath/path.go",
+              "symbol": "path/filepath.IsLocal(path string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

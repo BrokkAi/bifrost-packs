@@ -7,7 +7,7 @@
   :id "bifrost.java-codeql-quality.misnamed-constant"
   :name "Java misnamed constant"
   :message "constant name should use uppercase letters"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL Java query at commit ae741615f3e178ce61289a651790dc67fcc18e19. Select Java constant declaration names containing lowercase letters."
   :tags ["java" "codeql" "quality"]
   :analysis (analysis :type match :selector

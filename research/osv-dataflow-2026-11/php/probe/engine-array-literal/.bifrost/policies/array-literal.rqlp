@@ -1,0 +1,10 @@
+(policy :schema-version 1 :id "research.php-osv.array-literal-repro" :name "array literal repro" :message "m" :severity warning :description "d" :tags ["research"]
+  :analysis (analysis :type taint :mode may :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id get :display-name "src" :categories [input.user-controlled]
+        :selector (rql :schema-version 1 (language php (call-sites-to :proof proven (enclosing-decl (function :name "src")))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id s :display-name "sink" :categories [x]
+        :selector (rql :schema-version 1 (language php (call-sites-to :proof proven (enclosing-decl (function :name "sink")))))
+        :dangerous-operand (argument :index 0) :accepts [untrusted])])))

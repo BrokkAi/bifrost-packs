@@ -1,22 +1,32 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.crypto-x509-declarations",
-  "pack_version": "2.1.0",
+  "pack_version": "3.0.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-crypto-x509-declarations.json",
-    "sha256": "eb63bde2b92a18fb2497195a9d7680b0e78fa1b6f9c4781a44016ce3d33c18e4",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/f9c42f6854fff105e78bb961e7a56c56c63744e3/semantic-packs/models/go-stdlib-crypto-x509-declarations.json",
+    "sha256": "18de5c9210a0aa56437281819a28878b576b34f5402971cbbffc0e7c74425668",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-crypto-x509-declarations.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
     "source": "https://pkg.go.dev/crypto/x509",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.26.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "type",

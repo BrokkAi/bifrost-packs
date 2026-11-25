@@ -25,6 +25,12 @@ python3 -I scripts/upstream/codeql_gate/gate.py run go/duplicate-branches \
 ```
 
 Commands: `expected QUERY`, `prepare QUERY`, `run QUERY POLICY`, `summary`.
+`fixture NAME POLICY --language rust --fixture-root DIR --binary BINARY` copies
+an engine CQ fixture directory with its `app/` and sibling `stubs/`, activates
+the repeated `--model-pack` files in the copied app, and reports completion,
+finding lines and diagnostic families. The policy path is relative to `app/`.
+It does not use a CodeQL oracle; compare its output with the engine test's
+assertions before using the qltest gate.
 `--test-dir` is relative to the checkout and repeatable; omitted directories
 are discovered from matching `.qlref` files. `--query-path` overrides query
 resolution by `@id` in `<language>/ql/src`. Only exact query paths or their
@@ -39,7 +45,13 @@ checkout locations. State defaults to `/tmp/codeql-gate`, overridden by
 and findings from **every** `runs[*]` are unioned for scoring. Policy basenames
 must be distinct. `--models DIR` copies the complete tree into
 `.bifrost/semantic-models` and enables `BIFROST_WORKSPACE_SEMANTIC_MODELS=on`.
-Without it workspace models are explicitly disabled. `--keep` retains the
+For Rust, repeat `--model-pack FILE` to copy an explicit set of reviewed JSON
+packs into that directory. The gate does not discover or download packs.
+The Rust stager writes `qltest_dependencies` from a test directory's
+`options.yml` into its synthetic Cargo manifest without running Cargo or
+creating a lockfile. Test-local `*.ext.yml` files are listed in
+`staged_artifacts` as CodeQL model extensions; they are not Bifrost models.
+Without either model option workspace models are explicitly disabled. `--keep` retains the
 private root and caches; otherwise they are removed even on timeout. Logs,
 exit status, `result.json`, and `result.md` remain in the unique run directory.
 `results.tsv` appends under a file lock. Exit status is 0 only for PASS, 1 for
@@ -582,3 +594,12 @@ it is never labeled EXACT. JSON records `full_suite_verdict`, `full_suite_pass`,
 The Markdown report prints both verdicts together; TSV appends the full-suite
 verdict as its final column. The combined JSON verdict and `summary` recognize
 SCOPED-EXACT as success. All test directories must pass.
+
+### Rust
+
+`--language rust` stages only `.rs` files from each qltest directory, preserving
+relative paths and adding a minimal synthetic `Cargo.toml` that points at an
+existing source. It never invokes Cargo, restores dependencies, or executes
+fixture scripts. A directory without Rust sources is an explicit staging error.
+Rust line comments use the shared inline-expectation parser; `.expected` remains
+the primary oracle and the gate retains its `EXACT`/incomplete scoring.

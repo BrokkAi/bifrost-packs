@@ -1,0 +1,86 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.regexp",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/regexp",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.regexp.summaries",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "regexp.compile",
+            "target": {
+              "path": "src/regexp/regexp.go",
+              "symbol": "regexp.Compile(expr string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 2,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "indexed_normal_return",
+                  "ordinal": 0
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "regexp.quote-meta",
+            "target": {
+              "path": "src/regexp/regexp.go",
+              "symbol": "regexp.QuoteMeta(s string)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

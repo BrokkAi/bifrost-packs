@@ -1,0 +1,57 @@
+(policy
+  :schema-version 1
+  :id "bifrost.research.python.process-input-to-imap-xatom"
+  :name "Process input reaches urllib.request.urlopen"
+  :message "A process input reached the url argument of urllib.request.urlopen"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#273."
+  :tags ["security" "python" "argument-injection" "cwe-77"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global os :container environ
+                      :key-kind static-property :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global sys :container argv
+                      :key-kind static-index :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id imap-xatom-name
+              :display-name "imaplib.IMAP4.xatom command name"
+              :categories [network.request]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call :resolves-to member.python.imaplib.imap4.xatom :proof declared
+                        (call-bindings (call-shape (call :callee (name "xatom"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification :fallback (classification-id :taxonomy "CWE" :id "77")))

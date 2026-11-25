@@ -1,0 +1,167 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.go.stdlib.encoding-gob",
+  "version": "0.2.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/encoding/gob",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "go.stdlib.encoding-gob.summaries",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "encoding-gob.new-decoder",
+            "target": {
+              "path": "src/encoding/gob/decoder.go",
+              "symbol": "encoding/gob.NewDecoder(r io.Reader)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "encoding-gob.new-encoder",
+            "target": {
+              "path": "src/encoding/gob/encoder.go",
+              "symbol": "encoding/gob.NewEncoder(w io.Writer)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "encoding-gob.encoder.encode",
+            "target": {
+              "path": "src/encoding/gob/encoder.go",
+              "symbol": "encoding/gob.Encoder.Encode(e any)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "encoding-gob.encoder.encode-value",
+            "target": {
+              "path": "src/encoding/gob/encoder.go",
+              "symbol": "encoding/gob.Encoder.EncodeValue(value reflect.Value)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "receiver"
+                }
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "encoding-gob.register",
+            "target": {
+              "path": "src/encoding/gob/type.go",
+              "symbol": "encoding/gob.Register(value any)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "transfers": [],
+            "effects": []
+          },
+          {
+            "id": "encoding-gob.register-name",
+            "target": {
+              "path": "src/encoding/gob/type.go",
+              "symbol": "encoding/gob.RegisterName(name string, value any)",
+              "has_receiver": false,
+              "parameter_count": 2
+            },
+            "completeness": "complete",
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.net-http-request",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/net/http",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.net-http-request.summaries",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "net-http.request.form-value",
+            "target": {
+              "path": "src/net/http/request.go",
+              "symbol": "net/http.Request.FormValue(key string)",
+              "has_receiver": true,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "normal_result_count": 1,
+            "transfers": [
+              {
+                "input": {
+                  "kind": "receiver"
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

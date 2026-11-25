@@ -11,7 +11,7 @@
   :id "bifrost.csharp-codeql-quality.too-many-ref-parameters"
   :name "C# too many ref parameters"
   :message "method has more than two 'ref' parameters and might be hard to understand"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL csharp/ql/src/Bad Practices/Declarations/TooManyRefParameters.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports methods that declare more than two ref parameters."
   :tags ["csharp" "codeql" "quality" "maintainability"]
   :analysis (analysis :type match :selector

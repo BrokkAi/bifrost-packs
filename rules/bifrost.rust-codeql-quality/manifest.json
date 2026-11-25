@@ -1,15 +1,45 @@
 {
   "schema_version": 2,
   "id": "bifrost.rust-codeql-quality",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "name": "Bifrost Rust CodeQL quality",
   "description": "Public Rust quality policies aligned with reviewed CodeQL query identities and supported engine facts.",
   "policies": [
     {
+      "path": "policies/rust/access-after-lifetime-ended.rqlp",
+      "id": "bifrost.rust-codeql-quality.access-after-lifetime-ended",
+      "authored_hash": "83f7ead724b39de8f1e6f75f3faca5ce4fafef2e87c8fae6ba61b298e3dcca92",
+      "resolved_semantic_hash": "83f7ead724b39de8f1e6f75f3faca5ce4fafef2e87c8fae6ba61b298e3dcca92",
+      "category": "quality",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Reading or writing through a pointer to a stack place that has gone out of scope is undefined behavior and can expose or corrupt unrelated stack data.",
+      "remediation": "Return an owned value or a reference with a lifetime bound to its owner, or keep the owning local alive until the last access through the pointer."
+    },
+    {
+      "path": "policies/rust/access-invalid-pointer.rqlp",
+      "id": "bifrost.rust-codeql-quality.access-invalid-pointer",
+      "authored_hash": "c717dd6f690189ed0608eed3d5628fcb9ec67cc9751d2d68a55a6bbe60888305",
+      "resolved_semantic_hash": "c717dd6f690189ed0608eed3d5628fcb9ec67cc9751d2d68a55a6bbe60888305",
+      "category": "quality",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Reading or writing through a raw pointer after its allocation was released is undefined behavior and can read freed memory or corrupt the allocator.",
+      "remediation": "Access the allocation only before it is released, or stop using the pointer after the release and re-derive it from a live owner."
+    },
+    {
       "path": "policies/rust/ctor-initialization.rqlp",
       "id": "bifrost.rust-codeql-quality.ctor-initialization",
-      "authored_hash": "424e78aebbb2a5517c4dbd3a64381795b0ecbac3f1bc0f3747bbb53bd6b731be",
-      "resolved_semantic_hash": "424e78aebbb2a5517c4dbd3a64381795b0ecbac3f1bc0f3747bbb53bd6b731be",
+      "authored_hash": "a9cea88477c5727b1f53e3fa1ea05f8679ceedfc186de99fba3302197b2014c0",
+      "resolved_semantic_hash": "a9cea88477c5727b1f53e3fa1ea05f8679ceedfc186de99fba3302197b2014c0",
       "category": "quality",
       "supported_languages": [
         "rust"
@@ -21,6 +51,39 @@
       ],
       "severity_rationale": "A constructor that reaches standard-library behavior can perform surprising work during initialization before normal application startup.",
       "remediation": "Keep constructors limited to simple state setup and move I/O or other standard-library operations into explicit startup code."
+    },
+    {
+      "path": "policies/rust/unused-value.rqlp",
+      "id": "bifrost.rust-codeql-quality.unused-value",
+      "authored_hash": "3f2288fc3ca9f3590c6c98f7214094d103e0ea81b8903a679f7deb02ca5d406e",
+      "resolved_semantic_hash": "3f2288fc3ca9f3590c6c98f7214094d103e0ea81b8903a679f7deb02ca5d406e",
+      "category": "quality",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "prepared-syntax",
+        "assignment-relations",
+        "reaching-definitions"
+      ],
+      "severity_rationale": "A value written to a local that nothing reads may indicate stale code or a missed use of the value.",
+      "remediation": "Use the value as intended, or remove the write after checking that its right-hand side has no side effects the program needs."
+    },
+    {
+      "path": "policies/rust/unused-variable.rqlp",
+      "id": "bifrost.rust-codeql-quality.unused-variable",
+      "authored_hash": "96b542bf9321dada2f84e682356e6d7f9647a5afb2db091aac02a55a83818099",
+      "resolved_semantic_hash": "96b542bf9321dada2f84e682356e6d7f9647a5afb2db091aac02a55a83818099",
+      "category": "quality",
+      "supported_languages": [
+        "rust"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "An unused binding may indicate incomplete code or a typo in a name that should have been used.",
+      "remediation": "Use the binding as intended, or remove it, or prefix its name with an underscore when it is deliberately unused."
     }
   ]
 }

@@ -1,0 +1,53 @@
+; Lead: BrokkAi/bifrost-packs#167 (CVE-2026-96230, GHSA-qjpx-jqm5-h2c4),
+; affected-version part.
+; OSV: NuGet Microsoft.AspNetCore.Components.WebAssembly.Server introduced 8.0.0
+; fixed 8.0.32, introduced 9.0.0 fixed 9.0.21, introduced 10.0.0 fixed 10.0.13,
+; introduced 11.0.0-preview.1 fixed 11.0.0-rc.2.
+; Product source contract: UseWebAssemblyDebugging(this IApplicationBuilder app)
+; maps the /_framework/debug endpoints of the WebAssembly debug proxy. In the
+; affected releases those endpoints reflect exception text without encoding.
+; The advisory affects every call on an affected release, including a call
+; guarded by IsDevelopment(), so this rule does not inspect guards.
+;
+; Engine contract: declarations from
+; semantic-packs/dotnet/bifrost.dotnet.aspnetcore-webassembly-server-csharp.json.
+; Its `affected` and `fixed` shards declare the same extension method. Each
+; activates only from restored NuGet evidence (obj/project.assets.json and the
+; package assembly in an approved package folder) that selects a version in its
+; ranges. A call is reported when its exact binding is to the affected record.
+; bifrost.dotnet.aspnetcore-hosting-csharp supplies the hosting types.
+;
+; Incomplete evidence stays incomplete. Without restore output no shard
+; activates and the call stays unbound, so the run is not clean. Versions before
+; 8.0.0 are outside the advisory record and activate neither shard. A solution
+; whose projects restore both an affected and a fixed version activates both
+; shards (ambiguous identity). On Bifrost 0.15.2 the extension binds on an
+; IApplicationBuilder receiver and in the explicit static form. A WebApplication
+; receiver, including minimal-hosting `var app = builder.Build()`, stays
+; callee_unresolved and leaves the run inconclusive rather than clean.
+; Not covered: an unguarded call on a fixed version (outside the advisory).
+(policy
+  :schema-version 1
+  :id "bifrost.security.csharp.webassembly-debugging-affected-version"
+  :name "WebAssembly debugging middleware on an affected ASP.NET Core release"
+  :message "Microsoft.AspNetCore.Components.WebAssembly.Server before 8.0.32, 9.0.21 or 10.0.13 reflects unencoded exception text from /_framework/debug (CVE-2026-96230); upgrade the package"
+  :severity warning
+  :description "Reports UseWebAssemblyDebugging calls in a project that restores an affected Microsoft.AspNetCore.Components.WebAssembly.Server release (8.0.0 to 8.0.31, 9.0.0 to 9.0.20, 10.0.0 to 10.0.12, or 11.0.0-preview.1 up to 11.0.0-rc.2). In those releases the WebAssembly debug proxy endpoint reflects exception text without encoding (CVE-2026-96230, GHSA-qjpx-jqm5-h2c4). An IsDevelopment() guard does not remove the report: the fix is the package upgrade. Missing NuGet restore evidence leaves the run incomplete rather than clean."
+  :help-uri "https://github.com/dotnet/aspnetcore/security/advisories/GHSA-qjpx-jqm5-h2c4"
+  :tags ["security" "csharp" "aspnetcore" "blazor" "xss" "cve-2026-96230" "cwe-79"]
+  :analysis (analysis
+    :type assertion
+    (bind :name debugging
+      :query (rql :schema-version 1
+        (resolved-call :resolves-to "Microsoft.AspNetCore.Builder.WebAssemblyNetDebugProxyAppBuilderExtensions.UseWebAssemblyDebugging" :proof declared
+          (call-bindings
+            (call-shape
+              (language csharp
+                (call :callee (name "UseWebAssemblyDebugging"))))))))
+    (group :name by-call :by (debugging.site_id)
+      (aggregate :name affected :op count
+        :where ((debugging.model_record_id in (
+          "member.dotnet.aspnetcore-webassembly-server-csharp.affected.usewebassemblydebugging")))))
+    (assert :group by-call :value affected :cardinality (exactly 0)))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "79")))

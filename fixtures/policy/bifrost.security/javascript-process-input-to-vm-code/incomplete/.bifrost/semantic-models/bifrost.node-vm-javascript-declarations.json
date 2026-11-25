@@ -1,0 +1,173 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.node-vm-javascript-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-node-models",
+    "version": "0.1.0"
+  },
+  "language": "javascript",
+  "ecosystem": "npm",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Node.js vm API (doc/api/vm.md)",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.vm-run-in-context",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.node.vm.javascript",
+            "name": "vm",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/vm.js",
+              "symbol": "vm"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.node.vm.javascript.run-in-new-context-1",
+            "owner": "type.node.vm.javascript",
+            "name": "runInNewContext",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "code",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "any"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/vm.js",
+              "symbol": "vm.runInNewContext(code)"
+            }
+          },
+          {
+            "id": "member.node.vm.javascript.run-in-new-context-2",
+            "owner": "type.node.vm.javascript",
+            "name": "runInNewContext",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "code",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "contextObject",
+                  "type": {
+                    "kind": "named",
+                    "name": "Object"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "any"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/vm.js",
+              "symbol": "vm.runInNewContext(code, contextObject)"
+            }
+          },
+          {
+            "id": "member.node.vm.javascript.run-in-this-context-1",
+            "owner": "type.node.vm.javascript",
+            "name": "runInThisContext",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "code",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "any"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/vm.js",
+              "symbol": "vm.runInThisContext(code)"
+            }
+          },
+          {
+            "id": "member.node.vm.javascript.script-1",
+            "owner": "type.node.vm.javascript",
+            "name": "Script",
+            "member_kind": "constructor",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "code",
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "Script"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "node/lib/vm.js",
+              "symbol": "vm.Script(code)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

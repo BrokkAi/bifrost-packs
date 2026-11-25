@@ -1,0 +1,17 @@
+; CVE-2022-36113 probe: an alternate-registry Cargo dependency (declared rows)
+; joined to a toolchain pinned before Rust 1.64.0 in the same package.
+(policy
+  :schema-version 1
+  :id "bifrost.research.rust.alt-registry-declared"
+  :name "Alternate-registry dependency on an affected Cargo (declared rows)"
+  :message "an alternate-registry dependency is extracted by a Cargo before Rust 1.64.0"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#61. Not registered pack content."
+  :analysis (analysis
+    :type assertion
+    (bind :name dependency :query (rql :schema-version 1 (filter :where ((source regex "^registry-name:")) (dependency-evidence :ecosystem cargo))))
+    (bind :name toolchain :query (rql :schema-version 1
+      (dependency-evidence :ecosystem rust-toolchain :version-range "<1.64.0")))
+    (join :left dependency :right toolchain :on ((declared_by declared_by)))
+    (group :name dep :by (dependency.id) (aggregate :name affected :op count))
+    (assert :group dep :value affected :cardinality (exactly 0))))

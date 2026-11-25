@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.local-shadows-global"
   :name "Python local shadows a global"
   :message "Local variable shadows a module global."
-  :severity warning
+  :severity note
   :description "Reports a first function-local definition with a same-name module variable, excluding guarded-only module definitions, deletions, paired import definitions, pytest fixtures, builtins, optimizing parameters, and self assignment."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

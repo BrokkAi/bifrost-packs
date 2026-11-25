@@ -879,6 +879,8 @@ Stop gate: Stop when descriptor shape, process/pipe correlation or child blockin
 
 Ownership: Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.
 
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). `proc_open` has the same partial callable family as `unserialize` in `bifrost.php-builtin` (BrokkAi/bifrost-dev#9337). The by-reference `$pipes` out-parameter and its element reads (BrokkAi/bifrost-dev#9330) and the blocking order were not probed. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
+
 Sources: [PHP proc_open manual; PHP 7.4+ array-command distinction](https://www.php.net/manual/en/function.proc-open.php).
 
 ## php-runtime-deserialization
@@ -907,6 +909,8 @@ Stop gate: Existing research routing: do not open a duplicate qualification tick
 
 Ownership: Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.
 
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). With research declarations marking the builtins `callable_family_complete`, network bytes from `stream_socket_client` reaching `unserialize` give a definite, complete finding (`proven_by_summary`). A `json_decode` near miss and a namespaced `unserialize` lookalike are complete and clean. The production `bifrost.php-builtin` pack sets no `callable_family_complete`, so with it active the sink is refused as `qualified-call-locator-partial` (BrokkAi/bifrost-dev#9337). Superglobal request input is blocked by BrokkAi/bifrost-dev#9330. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
+
 Sources: [PHP unserialize security warning](https://www.php.net/unserialize).
 
 ## ruby-marshal-untrusted-load
@@ -934,6 +938,8 @@ Required proof: Exact runtime module/method identity including aliases; byte/str
 Stop gate: Existing catalog routing: do not open duplicate work. Unknown runtime identity or input trust remains incomplete.
 
 Ownership: Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.
+
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). `Marshal.load` finds its model-declared target but stays `callee_unresolved`, `unproven`, `open` (BrokkAi/bifrost-dev#9336). Any receiver call named `load` also opens dispatch for every workspace call (BrokkAi/bifrost-dev#9334). There is no exact `ENV`/`ARGV` source (BrokkAi/bifrost-dev#9335). The `Net::HTTP.get` to `Marshal.load` probe is `inconclusive (partial_discovery)`. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
 
 Sources: [Ruby 3.4 Marshal security guidance](https://docs.ruby-lang.org/en/3.4/Marshal.html).
 
@@ -1124,6 +1130,8 @@ Stop gate: Stop if configuration writes cannot be associated with the active cli
 
 Ownership: Existing runtime network-effect models do not establish this verification protocol. Keep standard-library Net::HTTP acceptance separate from third-party client verification work, and recheck adjacent verification ownership before creating an issue.
 
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). `Net::HTTP.new` finds the reviewed `bifrost.web-network-ruby` member but stays `unproven` (BrokkAi/bifrost-dev#9336). The `http.verify_mode = …` attribute writer publishes no call row. The runtime and default-gem scope needs BrokkAi/bifrost-dev#9318. Effective-state facts were not probed further. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
+
 Sources: [Net::HTTP Ruby 3.4 API and implementation](https://docs.ruby-lang.org/en/3.4/Net/HTTP.html), [Ruby 3.4 default gem versions](https://docs.ruby-lang.org/en/3.4/NEWS_md.html), [OpenSSL SSLContext verification modes](https://docs.ruby-lang.org/en/3.4/OpenSSL/SSL/SSLContext.html).
 
 ## ruby-open3-popen3-paired-pipe-draining
@@ -1155,6 +1163,8 @@ Stop gate: Defer if static evidence cannot prove the child can exceed the releva
 
 Ownership: No Ruby public policy or semantic model found for this paired-stream protocol. The contract is distinct from the open Ruby lifecycle work; retain it as deferred until child output volume and blocking order can be proved.
 
+Qualification (2026-11-03): **deferred**, not probed on Bifrost 0.15.0. It still needs child output volume, effective pipe capacity and blocking read order, and the returned-pipe identity it starts from is blocked by BrokkAi/bifrost-dev#9336. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
+
 Sources: [Open3 Ruby 3.4 API and pipe deadlock guidance](https://docs.ruby-lang.org/en/3.4/Open3.html), [Process.detach independently reaps children](https://docs.ruby-lang.org/en/3.4/Process.html), [CRuby v3_4_0 Open3 implementation and version-pinned behavior](https://raw.githubusercontent.com/ruby/ruby/v3_4_0/lib/open3.rb), [Ruby v3_4_0 shipped Open3 version](https://github.com/ruby/ruby/blob/v3_4_0/lib/open3/version.rb).
 
 ## ruby-open3-popen3-owned-pipe-closure
@@ -1182,6 +1192,8 @@ Required proof: Prove exact Open3 result tuple and stream identities; model alia
 Stop gate: Route to existing Ruby lifecycle ownership and stop if returned stream identity, exit coverage, or transfer cannot be established. Avoid a new general process/resource leak engine or claims about zombies without direct evidence.
 
 Ownership: Route returned-pipe acquisition and cleanup models to existing Ruby lifecycle qualification. Generic lifecycle discovery does not certify Ruby coverage or this tuple mapping. Process.detach reaps independently; wait thread value retrieves status.
+
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). Not probed past identity: `Open3.popen3` has the model-declared singleton shape that stays `unproven` (BrokkAi/bifrost-dev#9336), and the block form needs block-parameter receivers (BrokkAi/bifrost-dev#9322). The runtime scope needs BrokkAi/bifrost-dev#9318. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
 
 Sources: [Open3 Ruby 3.4 API](https://docs.ruby-lang.org/en/3.4/Open3.html), [CRuby v3_4_0 Open3 implementation: Process.detach, stream close, wait_thread.join](https://raw.githubusercontent.com/ruby/ruby/v3_4_0/lib/open3.rb), [Process.detach independently reaps children](https://docs.ruby-lang.org/en/3.4/Process.html), [Ruby v3_4_0 shipped Open3 version](https://github.com/ruby/ruby/blob/v3_4_0/lib/open3/version.rb).
 
@@ -1211,6 +1223,8 @@ Stop gate: Route to Ruby lifecycle ownership; stop if the analyzer cannot track 
 
 Ownership: Route close/unlink and invocation-form models to existing Ruby lifecycle qualification. This is an API-specific extension, not a separate lifecycle engine or a production-support claim.
 
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). Not probed past identity: `Tempfile.create` has the model-declared singleton shape that stays `unproven` (BrokkAi/bifrost-dev#9336), and the tempfile 0.3.1 scope needs BrokkAi/bifrost-dev#9318. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
+
 Sources: [Tempfile Ruby 3.4 API](https://docs.ruby-lang.org/en/3.4/Tempfile.html), [Ruby 3.4 Tempfile behavior and default gem versions](https://docs.ruby-lang.org/en/3.4/NEWS_md.html).
 
 ## ruby-kernel-open-pipe-command-taint
@@ -1239,6 +1253,8 @@ Stop gate: Route to existing Ruby command-execution ownership and stop if call i
 
 Ownership: Existing Ruby command-execution discovery owns the shell/executable family. Review this deprecated core API mode under that owner rather than opening a duplicate discovery; no content migration is implied.
 
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). `Kernel.open` is `unproven` and implicit-self `open` finds no target (BrokkAi/bifrost-dev#9336). No exact process-input source exists (BrokkAi/bifrost-dev#9335), and the Ruby 3.4-only scope needs runtime evidence (BrokkAi/bifrost-dev#9318). Leading-pipe string facts were not probed. See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
+
 Sources: [Kernel Ruby 3.4 API and deprecation](https://docs.ruby-lang.org/en/3.4/Kernel.html), [Ruby 3.4 command injection guidance](https://docs.ruby-lang.org/en/3.4/command_injection_rdoc.html), [Kernel Ruby 4.0 API](https://docs.ruby-lang.org/ja/4.0/method/Kernel/m/open.html).
 
 ## ruby-psych-unsafe-load-untrusted-yaml
@@ -1266,5 +1282,7 @@ Required proof: Resolve exact Psych method identity and loaded gem version; prov
 Stop gate: Route to the existing Ruby object-deserialization ownership and stop if the Psych version, exact unsafe method, taint boundary, or constructed-result use cannot be proven. Do not extend Ruby Marshal or blanket-flag YAML.load without version-specific behavior evidence.
 
 Ownership: Ruby object-deserialization and YAML/Psych discovery already have catalog ownership. Review the exact unsafe_load methods and version-specific safe defaults under those routes; this is not a new discovery or a content migration.
+
+Qualification (2026-11-03): **incomplete, blocked by engine** on Bifrost 0.15.0 (`09a2503c`). `Psych.unsafe_load` is `unproven` and `YAML.unsafe_load` finds no target (BrokkAi/bifrost-dev#9336). No exact process-input source exists (BrokkAi/bifrost-dev#9335), and the Psych 5.2.2 scope needs Ruby runtime evidence (BrokkAi/bifrost-dev#9318). See [PHP and Ruby stdlib qualification](../ruby-php-stdlib/README.md).
 
 Sources: [Psych Ruby 3.4 API](https://docs.ruby-lang.org/en/3.4/Psych.html), [Ruby 3.1 note on Psych 4 safe-load default](https://docs.ruby-lang.org/en/3.4/NEWS/NEWS-3_1_0_md.html), [Ruby 3.4 Psych default gem version](https://docs.ruby-lang.org/en/3.4/NEWS_md.html).

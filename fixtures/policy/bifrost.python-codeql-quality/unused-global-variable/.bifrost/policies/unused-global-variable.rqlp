@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.unused-global-variable"
   :name "Python unused global variable"
   :message "This module-level binding has no resolved lexical reads."
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL python/ql/src/Variables/UnusedModuleVariable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Subtracts exact lexical uses from module-scope local bindings. Dynamic namespace reads leave the binding-use answer typed incomplete."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.csharp-codeql-quality",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "name": "Bifrost C# CodeQL quality",
   "description": "Public C# structural and quality policies aligned with reviewed CodeQL query identities and engine fact contracts.",
   "policies": [
@@ -41,8 +41,8 @@
     {
       "path": "policies/static-array.rqlp",
       "id": "bifrost.csharp-codeql-quality.static-array",
-      "authored_hash": "da3c9906d7299c3d3c61e68ca43fee27fa2ea3bca213e181f7593e3237feb508",
-      "resolved_semantic_hash": "da3c9906d7299c3d3c61e68ca43fee27fa2ea3bca213e181f7593e3237feb508",
+      "authored_hash": "4aa4722639f6c03bd77c89aeffaf193e71c61a4384fc6ceb59203f50f9038749",
+      "resolved_semantic_hash": "4aa4722639f6c03bd77c89aeffaf193e71c61a4384fc6ceb59203f50f9038749",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "language-rule-facts"],
@@ -52,8 +52,8 @@
     {
       "path": "policies/use-number-constant.rqlp",
       "id": "bifrost.csharp-codeql-quality.use-number-constant",
-      "authored_hash": "2eed7666d942346b6283e2bb8181355df81144852e0840e440ee3bb7877b7a62",
-      "resolved_semantic_hash": "2eed7666d942346b6283e2bb8181355df81144852e0840e440ee3bb7877b7a62",
+      "authored_hash": "51016c0ca38c9a704b5b81d04e61d1fde950f73a9811bf212131da0254fad815",
+      "resolved_semantic_hash": "51016c0ca38c9a704b5b81d04e61d1fde950f73a9811bf212131da0254fad815",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "language-rule-facts", "lexical-environment"],
@@ -63,8 +63,8 @@
     {
       "path": "policies/catch-of-all-exceptions.rqlp",
       "id": "bifrost.csharp-codeql-quality.catch-of-all-exceptions",
-      "authored_hash": "2701152f1fa3b84ddbfaa3e489ff71d786356210da19f982b650c15e256887f4",
-      "resolved_semantic_hash": "2701152f1fa3b84ddbfaa3e489ff71d786356210da19f982b650c15e256887f4",
+      "authored_hash": "d9b9f4338076048def43849caef99cfd430dd67ec8977d365b465680f9e7198b",
+      "resolved_semantic_hash": "d9b9f4338076048def43849caef99cfd430dd67ec8977d365b465680f9e7198b",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "failure-handler-state"],
@@ -129,8 +129,8 @@
     {
       "path": "policies/empty-catch-block.rqlp",
       "id": "bifrost.csharp-codeql-quality.empty-catch-block",
-      "authored_hash": "b23c07e552175a58f63a5aec3ec84041d29147fa5109f44b397634e7bd3dd471",
-      "resolved_semantic_hash": "b23c07e552175a58f63a5aec3ec84041d29147fa5109f44b397634e7bd3dd471",
+      "authored_hash": "e3cf833c018cb909487ed88c50d7044901c9625953be07ddad83b0e73eacc73a",
+      "resolved_semantic_hash": "e3cf833c018cb909487ed88c50d7044901c9625953be07ddad83b0e73eacc73a",
       "category": "correctness",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match"],
@@ -162,8 +162,8 @@
     {
       "path": "policies/recursive-equals-call.rqlp",
       "id": "bifrost.csharp-codeql-quality.recursive-equals-call",
-      "authored_hash": "ed536bed7679872518aace6172d6936d1c49860681383abd97a1dcfac731f03a",
-      "resolved_semantic_hash": "ed536bed7679872518aace6172d6936d1c49860681383abd97a1dcfac731f03a",
+      "authored_hash": "193690ab7df30e680ff278b2f2fb551cdd54f56deec184e286f1cb368fc97a7f",
+      "resolved_semantic_hash": "193690ab7df30e680ff278b2f2fb551cdd54f56deec184e286f1cb368fc97a7f",
       "category": "correctness",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "exact-call-target", "lexical-environment"],
@@ -173,7 +173,7 @@
     {
       "path": "policies/stringbuilder-initialized-with-character.rqlp",
       "id": "bifrost.csharp-codeql-quality.stringbuilder-initialized-with-character",
-      "authored_hash": "f94fc204243ca673f6618a1cd7b278967ea9a40100611fa1554679e9e9cb464e",
+      "authored_hash": "7d7e0b9f8b73a3fe530613ab141fa67fc279b17629c7b669440febc2be196298",
       "resolved_semantic_hash": null,
       "category": "correctness",
       "supported_languages": ["csharp"],
@@ -217,8 +217,8 @@
     {
       "path": "policies/class-implements-icloneable.rqlp",
       "id": "bifrost.csharp-codeql-quality.class-implements-icloneable",
-      "authored_hash": "52efcbd5ac11e08e2557c3072eeb320b02e794eb7d91162bf1a0391dce062c82",
-      "resolved_semantic_hash": "52efcbd5ac11e08e2557c3072eeb320b02e794eb7d91162bf1a0391dce062c82",
+      "authored_hash": "9bc2fc37143ced4f23d243f1c0c560cc3dea75698741d42d5d30c4d34ad11785",
+      "resolved_semantic_hash": "9bc2fc37143ced4f23d243f1c0c560cc3dea75698741d42d5d30c4d34ad11785",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match"],
@@ -228,8 +228,8 @@
     {
       "path": "policies/too-many-ref-parameters.rqlp",
       "id": "bifrost.csharp-codeql-quality.too-many-ref-parameters",
-      "authored_hash": "3f3712338fa273975969be928e3c61732d84571a688e027803777ea13a0fda8c",
-      "resolved_semantic_hash": "3f3712338fa273975969be928e3c61732d84571a688e027803777ea13a0fda8c",
+      "authored_hash": "ed459d1af3b17c6f377dbf6e1a01812e07b54b5f8373bab0588882a87bbcbcf6",
+      "resolved_semantic_hash": "ed459d1af3b17c6f377dbf6e1a01812e07b54b5f8373bab0588882a87bbcbcf6",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match"],
@@ -272,8 +272,8 @@
     {
       "path": "policies/nested-if-statements.rqlp",
       "id": "bifrost.csharp-codeql-quality.nested-if-statements",
-      "authored_hash": "eae437561b05dd7500026f2037d427147687fb75a89f9c211de31b0f909e4b06",
-      "resolved_semantic_hash": "eae437561b05dd7500026f2037d427147687fb75a89f9c211de31b0f909e4b06",
+      "authored_hash": "89fc8a596cc737b543ea4e23e438a62e0a861e9b158a3f8bc86bc05eb3f294bf",
+      "resolved_semantic_hash": "89fc8a596cc737b543ea4e23e438a62e0a861e9b158a3f8bc86bc05eb3f294bf",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "statement-facts"],
@@ -327,8 +327,8 @@
     {
       "path": "policies/self-assignment.rqlp",
       "id": "bifrost.csharp-codeql-quality.self-assignment",
-      "authored_hash": "8ad68ec140babae67701c63527e7ee0213314906fa8180a45759cd6cb7e078ed",
-      "resolved_semantic_hash": "8ad68ec140babae67701c63527e7ee0213314906fa8180a45759cd6cb7e078ed",
+      "authored_hash": "02fd1e5d19974f06be4f85ee77fd7cb5e38fd45f122cfbdc05916c7ce5dc2f5f",
+      "resolved_semantic_hash": "02fd1e5d19974f06be4f85ee77fd7cb5e38fd45f122cfbdc05916c7ce5dc2f5f",
       "category": "correctness",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "lexical-environment"],
@@ -338,8 +338,8 @@
     {
       "path": "policies/calls-unmanaged-code.rqlp",
       "id": "bifrost.csharp-codeql-quality.calls-unmanaged-code",
-      "authored_hash": "a38ffa41d2e363e4d5b3a46a25545d1ec99ebc3a278666c0200cc9dee10c6736",
-      "resolved_semantic_hash": "a38ffa41d2e363e4d5b3a46a25545d1ec99ebc3a278666c0200cc9dee10c6736",
+      "authored_hash": "9515ce2731af35d2975889f7e3942f2b51e9e1087a8916a1f140859dca293c7a",
+      "resolved_semantic_hash": "9515ce2731af35d2975889f7e3942f2b51e9e1087a8916a1f140859dca293c7a",
       "category": "quality",
       "supported_languages": ["csharp"],
       "required_capabilities": ["structural-match", "exact-call-target", "lexical-environment"],

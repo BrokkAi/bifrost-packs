@@ -11,9 +11,9 @@ from scripts.content import read_lock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_COMMIT = "230019e376d5c1198b079482d4334ed2d18217ba"
+SOURCE_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 # The Go declaration models moved here when they gained callable_family_complete (#213).
-GO_DECLARATIONS_COMMIT = "f9c42f6854fff105e78bb961e7a56c56c63744e3"
+GO_DECLARATIONS_COMMIT = "a8f1458142c44fb9a94dcf0cd63771e965238fad"
 BASE_JOBS = {
     "jdk21-result-use",
     "c-libc-result-use",

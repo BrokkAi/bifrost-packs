@@ -10,7 +10,7 @@
   :id "bifrost.csharp-codeql-quality.empty-catch-block"
   :name "C# empty catch block"
   :message "empty catch block silently discards the exception"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL csharp/ql/src/Bad Practices/EmptyCatchBlock.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports catch clauses whose body has no statements and no comment."
   :tags ["csharp" "codeql" "quality" "exceptions"]
   :analysis (analysis :type match :selector

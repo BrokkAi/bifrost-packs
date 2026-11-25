@@ -1,0 +1,64 @@
+(policy
+  :schema-version 1
+  :id "bifrost.research.python.process-input-to-expandvars"
+  :name "Process input reaches urllib.request.urlopen"
+  :message "A process input reached the url argument of urllib.request.urlopen"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#271."
+  :tags ["security" "python" "information-exposure" "cwe-526"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global os :container environ
+                      :key-kind static-property :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global sys :container argv
+                      :key-kind static-index :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id expandvars-path
+              :display-name "os.path.expandvars template"
+              :categories [information.exposure]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (union
+                      (call-argument :formal-index 0
+                        (resolved-call :resolves-to member.python.os.path.expandvars :proof declared
+                          (call-bindings (call-shape (call :callee (name "expandvars"))))))
+                      (call-argument :formal-index 0
+                        (resolved-call :resolves-to member.python.posixpath.expandvars :proof declared
+                          (call-bindings (call-shape (call :callee (name "expandvars"))))))
+                      (call-argument :formal-index 0
+                        (resolved-call :resolves-to member.python.ntpath.expandvars :proof declared
+                          (call-bindings (call-shape (call :callee (name "expandvars")))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification :fallback (classification-id :taxonomy "CWE" :id "526")))

@@ -1,0 +1,64 @@
+(policy
+  :schema-version 1
+  :id "bifrost.research.python.process-input-to-webbrowser-open"
+  :name "Process input reaches urllib.request.urlopen"
+  :message "A process input reached the url argument of urllib.request.urlopen"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#272."
+  :tags ["security" "python" "argument-injection" "cwe-88"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global os :container environ
+                      :key-kind static-property :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (keyed-read-value :runtime python :global sys :container argv
+                      :key-kind static-index :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id webbrowser-url
+              :display-name "webbrowser.open url"
+              :categories [process.external]
+              :selector
+                (rql :schema-version 1
+                  (language python
+                    (union
+                      (call-argument :formal-index 0
+                        (resolved-call :resolves-to member.python.webbrowser.open :proof declared
+                          (call-bindings (call-shape (call :callee (name "open"))))))
+                      (call-argument :formal-index 0
+                        (resolved-call :resolves-to member.python.webbrowser.open_new :proof declared
+                          (call-bindings (call-shape (call :callee (name "open_new"))))))
+                      (call-argument :formal-index 0
+                        (resolved-call :resolves-to member.python.webbrowser.open_new_tab :proof declared
+                          (call-bindings (call-shape (call :callee (name "open_new_tab")))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification :fallback (classification-id :taxonomy "CWE" :id "88")))

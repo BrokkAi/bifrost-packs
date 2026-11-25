@@ -1,0 +1,28 @@
+; Research probe for ruby-marshal-untrusted-load and lit-ruby-07
+; (BrokkAi/bifrost-packs#23). Network bytes from Net::HTTP.get reaching
+; Marshal.load. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.ruby-stdlib.marshal-network"
+  :name "Ruby network bytes reach Marshal.load (research probe)"
+  :message "bytes from Net::HTTP.get reach Marshal.load"
+  :severity warning
+  :description "Research probe. Reports the Net::HTTP.get response body reaching the source operand of Marshal.load."
+  :tags ["research" "ruby" "deserialization" "cwe-502"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id net-http-get :display-name "Net::HTTP.get body" :categories [io.external]
+        :selector (rql :schema-version 1
+          (language ruby (resolved-call :resolves-to "Net::HTTP.get" :proof declared
+            (call-bindings (call-shape (call :callee (name "get")))))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id marshal-load :display-name "Marshal.load source" :categories [deserialization]
+        :selector (rql :schema-version 1
+          (language ruby (call-argument :formal-index 0
+            (resolved-call :resolves-to "Marshal.load" :proof declared
+              (call-bindings (call-shape (call :callee (name "load"))))))))
+        :dangerous-operand (argument :index 0) :accepts [untrusted])])))

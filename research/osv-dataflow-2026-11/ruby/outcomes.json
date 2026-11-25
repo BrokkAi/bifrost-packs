@@ -1,0 +1,575 @@
+{
+ "schema_version": 1,
+ "evaluation_date": "2026-11-05",
+ "bifrost": {
+  "version": "0.15.1",
+  "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+  "archive": "bifrost-v0.15.1-universal-apple-darwin.tar.gz",
+  "archive_sha256": "d7ca6901787455bdabf18ec9c36453032a9be354180e54b5ff183b1e4bf83038",
+  "binary_sha256": "00b279126297d5e9f7805390799493e915eaf4a2d5940dc3e755138a577a6df9",
+  "environment": {
+   "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+   "BIFROST_OPEN_PACKS_DISABLE": "1",
+   "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+   "BIFROST_CACHE_DIR": "fresh per run"
+  },
+  "flags": [
+   "--policy",
+   "--no-builtin-policies",
+   "--no-incremental",
+   "--format",
+   "json",
+   "--evaluation-date",
+   "2026-11-05"
+  ]
+ },
+ "osv_source": "https://osv-vulnerabilities.storage.googleapis.com/RubyGems/all.zip (downloaded 2026-11-05)",
+ "issues": {
+  "filed": [
+   "https://github.com/BrokkAi/bifrost-dev/issues/9979"
+  ],
+  "reused": [
+   "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+   "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+   "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+  ],
+  "rechecked_closed": [
+   {
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9336",
+    "fix": "https://github.com/BrokkAi/bifrost-dev/pull/9425",
+    "observed_on_0151": "still reproduces; the issue's own golden fixture binds-stdlib-singletons is inconclusive (partial_discovery) with 0 findings instead of proven_by_summary"
+   },
+   {
+    "issue": "https://github.com/BrokkAi/bifrost-dev/issues/9334",
+    "fix": "https://github.com/BrokkAi/bifrost-dev/pull/9375",
+    "observed_on_0151": "still reproduces; research/ruby-php-stdlib/probe/ruby-load-dispatch/with-load gives unproven/open, without-load gives resolved/exhaustive"
+   }
+  ]
+ },
+ "version_evidence": [
+  {
+   "query": "research/ruby-php-stdlib/probe/version-evidence/ruby-bundle/dependency-evidence.rql",
+   "observed": "No rows; semantic_analysis_partial: Ruby selected dependency publication unavailable: static dependency evidence is unavailable for this analyzer."
+  }
+ ],
+ "bindings_probe": {
+  "query_dir": "probe/bindings",
+  "calls": [
+   {
+    "call": "Net::HTTP.get(uri)",
+    "model": "bifrost.web-network-ruby 1.0.1 (reviewed public copy)",
+    "targets": 1,
+    "bound": "0/1",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "Time.rfc2822(text)",
+    "targets": 1,
+    "bound": "0/1",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "CGI::Cookie.parse(text)",
+    "targets": 1,
+    "bound": "0/1",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "CGI.escapeElement(text, \"script\")",
+    "targets": 1,
+    "bound": "0/2",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "REXML::Document.new(text)",
+    "targets": 1,
+    "bound": "0/1",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "Net::IMAP.new(text)",
+    "targets": 1,
+    "bound": "0/1",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "Net::IMAP.new(text, port: 993)",
+    "targets": 0,
+    "bound": "0/2",
+    "reason": "callee_unresolved",
+    "dispatch": "unknown, open"
+   },
+   {
+    "call": "RDoc::RDoc.new (receiver of .document)",
+    "targets": 1,
+    "bound": "0/0",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   },
+   {
+    "call": "RDoc::RDoc.new.document(text)",
+    "targets": 1,
+    "bound": "1/1",
+    "reason": null,
+    "dispatch": "unproven, open",
+    "mapping": "exact",
+    "selector_exact": true
+   },
+   {
+    "call": "Gem::Installer.at(text)",
+    "targets": 1,
+    "bound": "0/1",
+    "reason": "callee_unresolved",
+    "dispatch": "unproven, open"
+   }
+  ]
+ },
+ "taint_probe": {
+  "cases": [
+   {
+    "sources": "time-rfc2822/positive",
+    "policy": "probe/.bifrost/policies/time-rfc2822.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.time-rfc2822` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.time-rfc2822` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "time-rfc2822/near-miss",
+    "policy": "probe/.bifrost/policies/time-rfc2822.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.time-rfc2822` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.time-rfc2822` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "time-rfc2822/unknown",
+    "policy": "probe/.bifrost/policies/time-rfc2822.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.time-rfc2822` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.time-rfc2822` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "cgi-cookie-parse/positive",
+    "policy": "probe/.bifrost/policies/cgi-cookie-parse.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.cgi-cookie-parse` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.cgi-cookie-parse` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "cgi-cookie-parse/near-miss",
+    "policy": "probe/.bifrost/policies/cgi-cookie-parse.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.cgi-cookie-parse` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.cgi-cookie-parse` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "cgi-cookie-parse/unknown",
+    "policy": "probe/.bifrost/policies/cgi-cookie-parse.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.cgi-cookie-parse` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.cgi-cookie-parse` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "cgi-escape-element/positive",
+    "policy": "probe/.bifrost/policies/cgi-escape-element.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.cgi-escape-element` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.cgi-escape-element` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "cgi-escape-element/near-miss",
+    "policy": "probe/.bifrost/policies/cgi-escape-element.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.cgi-escape-element` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.cgi-escape-element` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "cgi-escape-element/unknown",
+    "policy": "probe/.bifrost/policies/cgi-escape-element.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.cgi-escape-element` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.cgi-escape-element` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rexml-document-hex-ref/positive",
+    "policy": "probe/.bifrost/policies/rexml-document-hex-ref.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rexml-document-hex-ref` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.rexml-document-hex-ref` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rexml-document-hex-ref/near-miss",
+    "policy": "probe/.bifrost/policies/rexml-document-hex-ref.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rexml-document-hex-ref` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.rexml-document-hex-ref` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rexml-document-hex-ref/unknown",
+    "policy": "probe/.bifrost/policies/rexml-document-hex-ref.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rexml-document-hex-ref` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.rexml-document-hex-ref` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "net-imap-untrusted-server/positive",
+    "policy": "probe/.bifrost/policies/net-imap-untrusted-server.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.net-imap-untrusted-server` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.net-imap-untrusted-server` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "net-imap-untrusted-server/near-miss",
+    "policy": "probe/.bifrost/policies/net-imap-untrusted-server.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.net-imap-untrusted-server` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.net-imap-untrusted-server` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "net-imap-untrusted-server/unknown",
+    "policy": "probe/.bifrost/policies/net-imap-untrusted-server.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unknown, coverage=open, target_count=0, binding coverage=unknown)",
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.net-imap-untrusted-server` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.net-imap-untrusted-server` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rdoc-untrusted-tree/positive",
+    "policy": "probe/.bifrost/policies/rdoc-untrusted-tree.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rdoc-untrusted-tree` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rdoc-untrusted-tree/near-miss",
+    "policy": "probe/.bifrost/policies/rdoc-untrusted-tree.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rdoc-untrusted-tree` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rdoc-untrusted-tree/unknown",
+    "policy": "probe/.bifrost/policies/rdoc-untrusted-tree.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rdoc-untrusted-tree` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rubygems-untrusted-gem-spec/positive",
+    "policy": "probe/.bifrost/policies/rubygems-untrusted-gem-spec.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rubygems-untrusted-gem-spec` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.rubygems-untrusted-gem-spec` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rubygems-untrusted-gem-spec/near-miss",
+    "policy": "probe/.bifrost/policies/rubygems-untrusted-gem-spec.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rubygems-untrusted-gem-spec` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.rubygems-untrusted-gem-spec` bound no source endpoint"
+    ]
+   },
+   {
+    "sources": "rubygems-untrusted-gem-spec/unknown",
+    "policy": "probe/.bifrost/policies/rubygems-untrusted-gem-spec.rqlp",
+    "completion": "inconclusive (partial_discovery)",
+    "exit_code": 0,
+    "findings": 0,
+    "diagnostics": [
+     "call_bindings did not establish complete actual-to-formal coverage (dispatch outcome=unproven, coverage=open, target_count=1, binding coverage=unknown)",
+     "taint policy `research.ruby-osv-dataflow.rubygems-untrusted-gem-spec` bound no sink endpoint",
+     "taint policy `research.ruby-osv-dataflow.rubygems-untrusted-gem-spec` bound no source endpoint"
+    ]
+   }
+  ]
+ },
+ "earlier_ruby_probe_0151": {
+  "policy": "research/ruby-php-stdlib/probe/.bifrost/policies/ruby-marshal-network.rqlp",
+  "variant": "research model summaries rekeyed has_receiver: true, covers_overrides: true as bifrost-dev#9425 asks",
+  "sources": "ruby-marshal/positive",
+  "completion": "inconclusive (partial_discovery)",
+  "findings": 0
+ },
+ "input_sha256": {
+  "probe/.bifrost/policies/cgi-cookie-parse.rqlp": "fde76fcdf9da13fd545b9060d57a20daa7e306ec5a8a70d56691aa9464c416bc",
+  "probe/.bifrost/policies/cgi-escape-element.rqlp": "2e7e971423474dfb717966fe6932e712de5abb6fe41c58532424c982f60f1c30",
+  "probe/.bifrost/policies/net-imap-untrusted-server.rqlp": "fa393eaf022e323b19b7f0de8740b71d1d95dbb60308c083a2f2c65080310099",
+  "probe/.bifrost/policies/rdoc-untrusted-tree.rqlp": "37de951a426a86698420734e082bb5b35acf669ab27a2afcb7fe26829ac54fde",
+  "probe/.bifrost/policies/rexml-document-hex-ref.rqlp": "671575cc0b8833e0558cc1d818c5929684e5a34751377a1c027bfef7a6d456b3",
+  "probe/.bifrost/policies/rubygems-untrusted-gem-spec.rqlp": "4e3859d18451e4fbca1a2212ac6683190c3b59446e75e5a581462d09d6704510",
+  "probe/.bifrost/policies/time-rfc2822.rqlp": "d305dfa568dbfa57f429e5a8448b21b6d838df65fd309c89e6b0a0036259ef42",
+  "probe/.bifrost/semantic-models/bifrost.research.ruby-osv-dataflow-probe.json": "d18b9604657a21b65c0380a907a8d2b0d2b5f62bd33e5245c1a7a57b5d2ff45c",
+  "probe/.bifrost/semantic-models/bifrost.web-network-ruby.json": "ddd6ac82150929aa3f24063301f82a8e8bff4b13d780bd14dbb8f5578385bf86",
+  "probe/bindings/app.rb": "f80166f7b808a67dfc4e25e6117d4dabcbf36c6ae943b8801c62bd38252080c0",
+  "probe/bindings/at.rql": "24c0ebb3673d36d7feb0fbae852c1cd234d012b893261438a48de8d9b1b6b9f0",
+  "probe/bindings/document.rql": "e08c43c188a0409ebc9972795f47d25912200889ecc047b64ca7a98ff32672a5",
+  "probe/bindings/escapeElement.rql": "5cb24292c9bd92f6aa34e978585a55df1eb44fc0983e368fc5e14c180564d291",
+  "probe/bindings/get.rql": "0a76d6b124539fa016ab13eecb149fe8562d71a5625f476b597eaa197b7515b1",
+  "probe/bindings/new.rql": "f63e0af114988d882d27ffc5ab66e12a34760009da794b6cc9336d3131da6808",
+  "probe/bindings/parse.rql": "08f211db0c3e665ea92e1b135fb6b2e92befb571135b20c79f26febee4364d04",
+  "probe/bindings/rfc2822.rql": "cf79003861d2e67508a79c5eff973836d34c7c509e40ea0ccac08c1f6fe38f70",
+  "probe/cgi-cookie-parse/near-miss/app.rb": "578955a0ee2f163496ee4a85e2439c13d4a6d039235ccfbb0e03da4656693546",
+  "probe/cgi-cookie-parse/positive/app.rb": "ca1950d329f25a2330a48a0c2fa79917edcd420c38c8bea9f7cab0153cf0c812",
+  "probe/cgi-cookie-parse/unknown/app.rb": "451e72d4eed6d3da8f789a61de905c0377f772c7e9654ea8f23443cb7aabc01d",
+  "probe/cgi-escape-element/near-miss/app.rb": "b67513510c9cfd2bcc1c05645a9aba9f0d84fedd295cca94311729c33728b38d",
+  "probe/cgi-escape-element/positive/app.rb": "2298cf865d3d1733e96baa46bc7a04ab952e731fec60e91dfae4c5790abbbfe0",
+  "probe/cgi-escape-element/unknown/app.rb": "057e302daaea72b20569bcfd4b3c4c79566d6c702ea997a66bfe1b5f09f6654d",
+  "probe/net-imap-untrusted-server/near-miss/app.rb": "51568cbfae38d7783d056cb59bf5a6684838f9a493f5a6d8d339bde766a963ed",
+  "probe/net-imap-untrusted-server/positive/app.rb": "035e3b6557857614b14bc3055c9aedf444389a8bf686c5053140f8fd34c9c3c9",
+  "probe/net-imap-untrusted-server/unknown/app.rb": "aedfc64932d26793cba7bdcf6d360886ccb303f724bac27cf62ef7e458ccd227",
+  "probe/rdoc-untrusted-tree/near-miss/app.rb": "98b890ad121bf5ef3468dacc38873f6a7f45200850324e3a8c7d8bb1fd100b18",
+  "probe/rdoc-untrusted-tree/positive/app.rb": "ca35272629ff1f7d378cb27694aa3715f5ac0d953315bec0836680e1dcf8fc9c",
+  "probe/rdoc-untrusted-tree/unknown/app.rb": "e7fdb8634b9ef42e4f722f84a475349308338012502417e57afcae036d040c4f",
+  "probe/rexml-document-hex-ref/near-miss/app.rb": "4e62314dcef2d3e8675e0af86d22918b3aa87697f2fb8144daf840c9dc6d5140",
+  "probe/rexml-document-hex-ref/positive/app.rb": "39a5d9ed45741e51a5a3ba1b6a2d07a4039d4583b41ab2dcd68add7d47c87c43",
+  "probe/rexml-document-hex-ref/unknown/app.rb": "af0e6c9ebbaef34f48c10fd553207553b801dc74f499857b7cc44c87e516347d",
+  "probe/rubygems-untrusted-gem-spec/near-miss/app.rb": "b7d902167522381d231825747bb8ce1d6c8c43ff27fd3103528b45694f273574",
+  "probe/rubygems-untrusted-gem-spec/positive/app.rb": "0614b0bf702a1f41a4581f820692f4aaf4eecb972f792bea373e329bb4bc9c61",
+  "probe/rubygems-untrusted-gem-spec/unknown/app.rb": "b83f837784b167acffdb6332bc9aa50a3a9e0ac17ec7abc0dd7c6b61edbfcd4d",
+  "probe/time-rfc2822/near-miss/app.rb": "185a18fbe3c820935b12de0980633d665e1e0b841c529e153a4d26084507ce3e",
+  "probe/time-rfc2822/positive/app.rb": "8bf6f5dd0f9ff696a8a4394153cd88951061a1bd13a709a222c9a888c91703f8",
+  "probe/time-rfc2822/unknown/app.rb": "799e7d311279a45239233076ab8b4190ee57256e5cf8b673885fe1b024d6fe52"
+ },
+ "leads": [
+  {
+   "issue": 280,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2023-28756",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "Time.rfc2822 is callee_unresolved (one target, unbound). The affected-version part also needs time gem or Ruby runtime evidence. No version-independent slice: fixed time gems parse in linear time."
+  },
+  {
+   "issue": 281,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2025-27219",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "CGI::Cookie.parse is callee_unresolved. Version-gated: fixed cgi gems parse in linear time."
+  },
+  {
+   "issue": 282,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2025-27220",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "CGI.escapeElement is callee_unresolved. Version-gated, and only Ruby 3.1 and 3.2 bundles are affected, so runtime evidence is needed too. The include CGI::Util mixin form was not probed."
+  },
+  {
+   "issue": 283,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2024-49761",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "REXML::Document.new is callee_unresolved. The affected configuration is Ruby 3.1 with rexml below 3.3.9, so it needs runtime and gem evidence (bifrost-dev#9318)."
+  },
+  {
+   "issue": 284,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2026-42245",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "Net::IMAP.new(host) is callee_unresolved; with keyword arguments it finds no target at all (recorded on bifrost-dev#9979)."
+  },
+  {
+   "issue": 285,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2024-27281",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "Closest of the batch: RDoc::RDoc.new.document(argv) binds formal 0 exactly, but its dispatch stays unproven and open because the RDoc::RDoc.new receiver is an unbound singleton call. Array-element taint for argv was not probed."
+  },
+  {
+   "issue": 286,
+   "repository": "BrokkAi/bifrost-packs",
+   "language": "ruby",
+   "advisory": "CVE-2017-0903",
+   "outcome": "blocked_by_engine",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9335"
+   ],
+   "note": "Gem::Installer.at is callee_unresolved. The version-independent install slice needs only the singleton binding fix; the parse-only part needs RubyGems runtime evidence."
+  },
+  {
+   "issue": 459,
+   "repository": "BrokkAi/bifrost-premium-packs",
+   "language": "ruby",
+   "advisory": "CVE-2026-53727",
+   "outcome": "premium_not_implemented",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979"
+   ],
+   "note": "Third-party gem contract. Not probed here."
+  },
+  {
+   "issue": 460,
+   "repository": "BrokkAi/bifrost-premium-packs",
+   "language": "ruby",
+   "advisory": "CVE-2022-31163",
+   "outcome": "premium_not_implemented",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979"
+   ],
+   "note": "Third-party gem contract. Not probed here."
+  },
+  {
+   "issue": 461,
+   "repository": "BrokkAi/bifrost-premium-packs",
+   "language": "ruby",
+   "advisory": "CVE-2025-53623",
+   "outcome": "premium_not_implemented",
+   "blocking_issues": [
+    "https://github.com/BrokkAi/bifrost-dev/issues/9319",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9318",
+    "https://github.com/BrokkAi/bifrost-dev/issues/9979"
+   ],
+   "note": "Third-party gem contract. Not probed here."
+  }
+ ]
+}

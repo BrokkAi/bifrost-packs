@@ -1,22 +1,32 @@
 {
   "schema_version": 1,
   "pack_id": "bifrost.go.stdlib.sync-atomic",
-  "pack_version": "2.0.0",
+  "pack_version": "3.0.0",
   "ecosystem": "go-stdlib",
   "kind": {
     "artifact_kind": "authored_semantic_model"
   },
   "artifact": {
     "file_name": "go-stdlib-sync-atomic.json",
-    "sha256": "5ed5bf852c0a33087881451ddf209d43b7537256d51d9502caa1d0c343c7b916",
-    "url": "https://github.com/BrokkAi/bifrost-packs/blob/ad82cdd4e2a21d463d0122ebaf006e5c2ccf87d7/semantic-packs/models/go-stdlib-sync-atomic.json",
+    "sha256": "29c8a7510eea82e9a4fc1b5e2e80a3e6c9e2d3c56064f20cab9d0c3f42c587ed",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-sync-atomic.json",
     "container": null
   },
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "activation": [
-    {}
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
   ],
   "provenance": {
     "source": "https://go.dev/src/sync/atomic/",
@@ -30,7 +40,12 @@
   "notices": [
     "notices/go-1.26.0-BSD-3-Clause.txt"
   ],
-  "measurement_activation": {},
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
   "measurement_queries": [
     {
       "kind": "procedure",

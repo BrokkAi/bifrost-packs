@@ -1,0 +1,79 @@
+(policy
+  :schema-version 1
+  :id "research.python.ftp-constructor-subject-control"
+  :name "BZ2Decompressor reused after a failed decompress"
+  :message "decompress() runs again on a BZ2Decompressor whose previous decompress() raised"
+  :severity warning
+  :description "Control: the same automaton with the shipped ftplib.FTP models."
+  :tags ["research" "python" "typestate"]
+  :analysis
+    (analysis
+      :type typestate
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :subjects
+        (subject-set
+          :entries [
+            (subject
+              :id decompressor
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-call
+                      :resolves-to member.python.ftplib.ftp.init
+                      :proof declared
+                      (call-bindings
+                        (call-shape
+                          (call :callee (name "FTP")))))))
+              :subject return-value)])
+      :uncertainty
+        (uncertainty
+          :escape inconclusive)
+      :automaton
+        (automaton
+          :states [usable failed violated]
+          :initial usable
+          :accepting-states [usable failed]
+          :error-states [violated]
+          :events [
+            (event
+              :id decompress-raised
+              :calls
+                (calls
+                  :selector
+                    (rql
+                      :schema-version 1
+                      (language python
+                        (resolved-call
+                          :resolves-to member.python.ftplib.ftp.login
+                          :proof declared
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "login")))))))
+                  :subject receiver
+                  :phase after-exceptional-return))
+            (event
+              :id decompress-start
+              :calls
+                (calls
+                  :selector
+                    (rql
+                      :schema-version 1
+                      (language python
+                        (resolved-call
+                          :resolves-to member.python.ftplib.ftp.login
+                          :proof declared
+                          (call-bindings
+                            (call-shape
+                              (call :callee (name "login")))))))
+                  :subject receiver
+                  :phase before-call))]
+          :transitions [
+            (transition :from usable :on decompress-start :to usable)
+            (transition :from usable :on decompress-raised :to failed)
+            (transition :from failed :on decompress-start :to violated)]
+          :terminal-expectations []))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "672")))

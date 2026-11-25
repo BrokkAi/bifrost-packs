@@ -1,0 +1,92 @@
+{
+  "schema_version": 22,
+  "pack_id": "bifrost.jdk-object-input-stream-summaries",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-jdk-object-input-stream",
+    "version": "0.1.0"
+  },
+  "language": "java",
+  "ecosystem": "jdk",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "jdk",
+        "requirement": ">=17.0.0, <22.0.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "Java SE 17 and 21 API specification of java.io.ObjectInputStream(InputStream): the constructor returns a new stream that wraps the given input and reads it on later calls; reviewed against Temurin 21.0.8+9 java.base/java/io/ObjectInputStream.java",
+    "revision": "jdk-21.0.8+9"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "summaries.jdk.object-input-stream",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "jdk",
+            "version": ">=17.0.0, <22.0.0"
+          },
+          "targets": [
+            "jvm"
+          ],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "java.io.objectinputstream.-init-java.io.inputstream",
+            "target": {
+              "path": "java.base/java/io/ObjectInputStream.java",
+              "symbol": "java.io.ObjectInputStream.<init>(java.io.InputStream)",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [
+              {
+                "input": {
+                  "kind": "parameter",
+                  "ordinal": 0
+                },
+                "exit_kind": "normal",
+                "output": {
+                  "kind": "normal_return"
+                },
+                "value_transfer": {
+                  "kind": {
+                    "kind": "conversion",
+                    "preservation": "changing"
+                  },
+                  "operation": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ],
+            "effects": [
+              {
+                "kind": "allocation",
+                "event": "java.io.objectinputstream.init.allocation",
+                "output": {
+                  "kind": "normal_return"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

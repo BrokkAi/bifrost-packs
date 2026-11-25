@@ -1,0 +1,398 @@
+; Lead: BrokkAi/bifrost-packs#393 (OpenSSF CVE Benchmark, path traversal).
+; Product source contract: the Node fs members below take a path and read,
+; list, test or remove the file it names (Node v22.11.0 doc/api/fs.md). A
+; caller-chosen path, including one built with path.join, path.normalize or
+; path.resolve, can name any file the process can reach.
+; Engine contract: the source is a keyed read of the reviewed Node runtime
+; `process.argv` model. Path composition binds only through the reviewed
+; bifrost.node-path-javascript summaries, and the sinks bind exactly to the
+; reviewed bifrost.node-fs-javascript members: readFileSync (one and two
+; arguments), readdirSync, existsSync, statSync, lstatSync, accessSync (two
+; arguments), unlinkSync and rmSync (one and two arguments). Any other call on
+; the path must be modeled, so an unmodeled helper or another arity leaves the
+; run inconclusive instead of clean.
+; The callback forms readFile, readdir and unlink and the fs/promises readFile,
+; readdir, unlink and rm members bind as sinks through declarations with no
+; summary: they run callbacks or settle promises that a summary cannot
+; describe, so a finding there is possible and the run inconclusive.
+; Not covered: the other fs members, request sources and the write sinks,
+; which bifrost.security.javascript.process-input-to-fs-write-path covers.
+(policy
+  :schema-version 1
+  :id "bifrost.security.javascript.process-input-to-fs-path"
+  :name "Process argument reaches a Node fs read, list, test or remove path"
+  :message "a process argument reached the path operand of a Node fs read, list, test or remove operation"
+  :severity warning
+  :description "Reports process.argv values that reach the path operand of fs.readFileSync, fs.readdirSync, fs.existsSync, fs.statSync, fs.lstatSync, fs.accessSync, fs.unlinkSync or fs.rmSync (and, as possible findings, the callback readFile, readdir and unlink and the fs/promises readFile, readdir, unlink and rm), directly or through path.join, path.normalize or path.resolve. These path functions resolve `..` and never confine a segment to its base directory, so the caller chooses which file is read, listed, probed or removed."
+  :tags ["security" "javascript" "path-traversal" "cwe-22" "node"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id process-argv-read
+              :display-name "process.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (keyed-read-value
+                      :runtime node
+                      :global process
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id fs-read-file-sync-path
+              :display-name "fs.readFileSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.read-file-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFileSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-read-file-sync-options-path
+              :display-name "fs.readFileSync path (with options)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.read-file-sync-2
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFileSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-readdir-sync-path
+              :display-name "fs.readdirSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.readdir-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readdirSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-exists-sync-path
+              :display-name "fs.existsSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.exists-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "existsSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-stat-sync-path
+              :display-name "fs.statSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.stat-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "statSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-lstat-sync-path
+              :display-name "fs.lstatSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.lstat-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "lstatSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-access-sync-path
+              :display-name "fs.accessSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.access-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "accessSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-unlink-sync-path
+              :display-name "fs.unlinkSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.unlink-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "unlinkSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-rm-sync-path
+              :display-name "fs.rmSync path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.rm-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "rmSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-rm-sync-options-path
+              :display-name "fs.rmSync path (with options)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.rm-sync-2
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "rmSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-read-file-callback-path
+              :display-name "fs.readFile path (callback)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.read-file-2-callback
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFile"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-read-file-options-callback-path
+              :display-name "fs.readFile path (options, callback)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.read-file-3-callback
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFile"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-readdir-callback-path
+              :display-name "fs.readdir path (callback)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.readdir-2-callback
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readdir"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-unlink-callback-path
+              :display-name "fs.unlink path (callback)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.unlink-2-callback
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "unlink"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-promises-read-file-1-path
+              :display-name "fs/promises readFile path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs-promises.javascript.read-file-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFile"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-promises-read-file-2-path
+              :display-name "fs/promises readFile path (with options)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs-promises.javascript.read-file-2
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFile"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-promises-readdir-1-path
+              :display-name "fs/promises readdir path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs-promises.javascript.readdir-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readdir"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-promises-unlink-1-path
+              :display-name "fs/promises unlink path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs-promises.javascript.unlink-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "unlink"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-promises-rm-1-path
+              :display-name "fs/promises rm path"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs-promises.javascript.rm-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "rm"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id fs-promises-rm-2-path
+              :display-name "fs/promises rm path (with options)"
+              :categories [file.path]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs-promises.javascript.rm-2
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "rm"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "22")))

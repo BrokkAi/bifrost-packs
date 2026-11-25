@@ -1,0 +1,21 @@
+; Research probe for openssl-pkcs1-network-ciphertext. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.php-osv.openssl-pkcs1-network-ciphertext"
+  :name "network bytes reach openssl_private_decrypt with PKCS#1 v1.5 padding (research probe)"
+  :message "network bytes reach openssl_private_decrypt with PKCS#1 v1.5 padding"
+  :severity warning
+  :description "Research probe for the PHP OSV data-flow lead openssl-pkcs1-network-ciphertext."
+  :tags ["research" "php"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id socket-client :display-name "stream_socket_client connection" :categories [io.external]
+        :selector (rql :schema-version 1 (language php (resolved-call :resolves-to "_php_global_.stream_socket_client" :proof declared
+          (call-bindings (call-shape (call :callee (name "stream_socket_client")))))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id private-decrypt-default :display-name "private-decrypt-default" :categories [x] :selector (rql :schema-version 1 (language php (call-argument :formal-index 0 (resolved-call :resolves-to "_php_global_.openssl_private_decrypt" :proof declared (call-bindings (call-shape (call :callee (name "openssl_private_decrypt") :arity 3))))))) :dangerous-operand (argument :index 0) :accepts [untrusted])
+      (sink :id private-decrypt-pkcs1 :display-name "private-decrypt-pkcs1" :categories [x] :selector (rql :schema-version 1 (language php (call-argument :formal-index 0 (resolved-call :resolves-to "_php_global_.openssl_private_decrypt" :proof declared (call-bindings (call-shape (call :callee (name "openssl_private_decrypt") :args [(capture "data") (capture "out") (capture "key") (name "OPENSSL_PKCS1_PADDING")]))))))) :dangerous-operand (argument :index 0) :accepts [untrusted])])))

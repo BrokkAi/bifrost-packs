@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.rust-std-deref-summaries",
+  "pack_version": "0.1.0",
+  "ecosystem": "cargo",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.rust-std-deref-summaries.json",
+    "sha256": "c51044e71c4e1cb53e5f9a821a8c664c12d12165368505bba889880bde5f43d7",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/9f096c1e51126a8e14831d8991556101648356e2/semantic-packs/rust/bifrost.rust-std-deref-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "rust",
+        "requirement": "=1.100.0-nightly"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "rust",
+        "version": "=1.100.0-nightly"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Rust stdlib nightly 2026-08-24 String and PathBuf Deref implementations; exact members from bifrost.rust-stdlib rustdoc declarations. Source byte views are borrowed from the receiver storage and perform no writes, escapes or concurrency effects.",
+    "revision": "fb6531d550e0075b9eb9a51464f404805eec87d9"
+  },
+  "license": "MIT OR Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "measurement_activation": {
+    "toolchain": {
+      "name": "rust",
+      "version": "=1.100.0-nightly"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "rust",
+      "owner": "alloc.string.String.deref#member.03659981b112f2f6540f8fee6a96014d286ca2c538c7513316eac7890e3f019c.trait",
+      "name": "ac985e876244e7bb8472f4a4fb5e238c8722da4cbbb82df600d0ebeba0d17573",
+      "has_receiver": true,
+      "parameter_count": 0
+    },
+    {
+      "kind": "procedure",
+      "language": "rust",
+      "owner": "std.path.PathBuf.deref#member.00c10d3f6a56b967a178a91289acfcb2c815b1c664da0352ff712ea324628c07.trait",
+      "name": "49bfe6addd6729ac7567f39fc70981cb7c84f19c9dd3502aa76f546529cdcc1c",
+      "has_receiver": true,
+      "parameter_count": 0
+    }
+  ],
+  "notices": [
+    "notices/rust-stdlib-nightly-2026-08-24.txt"
+  ]
+}

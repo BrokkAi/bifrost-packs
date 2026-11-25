@@ -8,7 +8,7 @@
   :id "bifrost.java-codeql-quality.raw-variable"
   :name "Java raw generic variable"
   :message "generic variable type is raw"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL java/ql/src/Advisory/Types/GenericsVariable.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports raw generic field/local declarators and formal parameters through the java/raw-variable language rule."
   :tags ["java" "codeql" "quality" "generics"]
   :analysis (analysis

@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.nested-loops-with-same-variable"
   :name "Python nested loops reuse a target"
   :message "Nested loop reuses its enclosing loop target."
-  :severity warning
+  :severity note
   :description "Reports a nested for loop targeting the same resolved lexical variable as an enclosing for loop when the variable is read in the outer loop outside the inner loop."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

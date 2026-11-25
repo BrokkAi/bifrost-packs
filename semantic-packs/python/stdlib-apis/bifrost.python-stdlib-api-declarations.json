@@ -1,7 +1,7 @@
 {
   "schema_version": 16,
   "pack_id": "bifrost.python-stdlib-api-declarations",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "producer": {
     "name": "bifrost-reviewed-python-models",
     "version": "0.1.0"
@@ -18,7 +18,7 @@
   },
   "provenance": {
     "source": "Python standard-library reference and typeshed",
-    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket, http.server request-handler declarations, network APIs, constructors, factories, I/O, SSL protocol, and credential APIs"
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed socket, http.server request-handler declarations, network APIs, constructors, factories, webbrowser launch functions, venv creation, I/O, SSL protocol, and credential APIs"
   },
   "license": "Apache-2.0",
   "completeness": "partial",
@@ -678,6 +678,34 @@
                 }
               }
             ]
+          },
+          {
+            "id": "type.python.webbrowser",
+            "name": "webbrowser",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "webbrowser"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser"
+            }
+          },
+          {
+            "id": "type.python.venv",
+            "name": "venv",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "venv"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "venv/__init__.pyi",
+              "symbol": "venv"
+            }
           }
         ],
         "members": [
@@ -3760,6 +3788,195 @@
               }
             },
             "callable_family_complete": true
+          },
+          {
+            "id": "member.python.webbrowser.open",
+            "owner": "type.python.webbrowser",
+            "name": "open",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                },
+                {
+                  "name": "new",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.int"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "autoraise",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bool"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open(url, new, autoraise)"
+            }
+          },
+          {
+            "id": "member.python.webbrowser.open_new",
+            "owner": "type.python.webbrowser",
+            "name": "open_new",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bool"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open_new(url)"
+            }
+          },
+          {
+            "id": "member.python.webbrowser.open_new_tab",
+            "owner": "type.python.webbrowser",
+            "name": "open_new_tab",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "url",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.bool"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "webbrowser.pyi",
+              "symbol": "webbrowser.open_new_tab(url)"
+            }
+          },
+          {
+            "id": "member.python.venv.create",
+            "owner": "type.python.venv",
+            "name": "create",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "env_dir",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "system_site_packages",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "clear",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "symlinks",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "with_pip",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "prompt",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "upgrade_deps",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "scm_ignore_files",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true,
+                  "passing_mode": "named_only"
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.None"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "venv/__init__.pyi",
+              "symbol": "venv.create(env_dir, system_site_packages, clear, symlinks, with_pip, prompt, upgrade_deps, scm_ignore_files)"
+            }
           }
         ],
         "relations": []

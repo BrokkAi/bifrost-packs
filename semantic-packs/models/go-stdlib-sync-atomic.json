@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.sync-atomic",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "producer": {
     "name": "bifrost",
     "version": "0.10.7"
@@ -9,7 +9,12 @@
   "language": "go",
   "ecosystem": "go-stdlib",
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "provenance": {
     "source": "https://go.dev/src/sync/atomic/",
@@ -25,7 +30,12 @@
     {
       "id": "go.stdlib.sync-atomic.concurrency",
       "activation": [
-        {}
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
       ],
       "payload": {
         "kind": "procedure_summaries",

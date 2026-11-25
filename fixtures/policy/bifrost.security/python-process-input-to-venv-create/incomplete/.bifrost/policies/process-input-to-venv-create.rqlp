@@ -1,0 +1,91 @@
+; Lead: BrokkAi/bifrost-packs#355 (CVE-2024-9287), version-independent part.
+; Product source contract: venv.create(env_dir) creates a virtual environment in
+; env_dir: it makes the directory, writes an interpreter, activation scripts and
+; pyvenv.cfg into it, and with clear=True first deletes its contents.
+; CVE-2024-9287 is that affected interpreters write env_dir into the activation
+; scripts without quoting, so a crafted directory name runs shell commands when
+; the environment is activated. On every CPython version a process input that
+; picks env_dir also picks where executables are written and which directory is
+; cleared, so it is reported on any interpreter. The affected-version part needs
+; CPython interpreter evidence the engine does not publish (bifrost-dev#3867).
+; Engine contract: the sources are the reviewed os.environ and sys.argv keyed
+; reads of the shipped process-input-to-os-system rule. The sink is formal 0 of
+; the exact reviewed member.python.venv.create in
+; bifrost.python-stdlib-api-declarations 0.7.0, closed by its complete summary
+; in bifrost.python-security-sink-summaries 0.6.0. venv.EnvBuilder is not
+; modeled, so EnvBuilder(...).create(...) leaves the run inconclusive instead of
+; clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.process-input-to-venv-create"
+  :name "Process input chooses a venv.create directory"
+  :message "A process input reached the env_dir argument of venv.create"
+  :severity warning
+  :description "Reports values read from the CPython process environment (os.environ) or the launch argument vector (sys.argv) that reach the env_dir argument of venv.create. The caller then lets the input choose where an interpreter and activation scripts are written and which directory clear=True empties, and on affected interpreters an unquoted directory name runs shell commands when the environment is activated (CVE-2024-9287). Source identity is the import binder plus the reviewed process-input model; sink identity is the exact reviewed venv member."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "path-injection" "cwe-73"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global os
+                      :container environ
+                      :key-kind static-property
+                      :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global sys
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id venv-env-dir
+              :display-name "venv.create env_dir"
+              :categories [file.path filesystem.write]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.venv.create
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "create"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "73")))

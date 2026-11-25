@@ -3,14 +3,14 @@
   "pack_id": "bifrost.public.rules",
   "repository": "https://github.com/BrokkAi/bifrost-packs",
   "visibility": "public",
-  "release_version": "0.9.1",
+  "release_version": "0.17.0",
   "artifact_role": "source",
-  "notes": "This patch release changes only the exact native dependency, from bifrost.public.packs 0.8.0 to 0.9.0, which adds compiled the last six packs Bifrost's legacy embedded registry provided: bifrost.java.lombok, bifrost.rust.getset, bifrost.scala.case-class, bifrost.python-process-inputs, bifrost.node-runtime-values-javascript and bifrost.node-runtime-values-typescript. Bifrost 0.15.1 no longer falls back to embedded packs, so normal acquisition through the rules stream needs this dependency to supply them (bifrost-dev#4438). Policies, IDs and consumer requirements are unchanged from rules 0.9.0: it requires Bifrost 0.15.0 or later, which is also what packs 0.9.0 needs to read its index schema 4 bundle. This release does not qualify the full policy set or imply complete analysis.",
+  "notes": "This minor release depends exactly on bifrost.public.packs 0.16.0. Its catalog loads on Bifrost 0.15.3 and later, and it was qualified on released Bifrost 0.15.4; the new behavior below needs 0.15.4. New opt-in policies in bifrost.security 3.3.0 (#409): bifrost.security.python.flask-request-to-urlopen and bifrost.security.python.django-request-to-urlopen (CWE-918). Limitation: they need the source-only Flask, Werkzeug and Django request packs, which are not in bifrost.public.packs 0.16.0, so with the released packs alone they do not report these flows and the run is not clean; a project can supply the models under .bifrost/semantic-models. Changed: bifrost.security.java.objectinputstream-read-without-filter uses the new constructor summary, so on Bifrost 0.15.4 with packs 0.16.0 it also reports streams with an unmodeled call or a second stream before the read (7 findings on its fixture instead of 3); every run stays inconclusive and every finding possible (#408). Changed: the Python SSL rules insecure-default-protocol and insecure-protocol are narrowed to calls named wrap_socket or SSLContext (#411). All other policies, IDs and required capabilities are unchanged from rules 0.16.0. This release does not qualify the full policy set or imply complete analysis.",
   "component": "rules",
   "release_dependencies": [
     {
       "pack_id": "bifrost.public.packs",
-      "release_version": "0.9.0",
+      "release_version": "0.16.0",
       "repository": "https://github.com/BrokkAi/bifrost-packs"
     }
   ]

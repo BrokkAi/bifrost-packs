@@ -1,0 +1,10 @@
+(policy :schema-version 1 :id "repro.variadic-empty" :name "n" :message "m" :severity warning :description "d"
+  :analysis (analysis :type taint :mode may :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id input :display-name "input" :categories [io.external] :selector (rql :schema-version 1 (language go (call :callee (name "input"))))
+        :bind (result :index 0) :labels [raw])])
+    :sinks (endpoint-set :entries [
+      (sink :id command :display-name "exec.Command name" :categories [test]
+        :selector (rql :schema-version 1 (language go (call-argument :formal-index 0 (resolved-call :resolves-to "os/exec.Command" :proof declared
+          (call-bindings (call-shape (call :callee (name "Command"))))))))
+        :dangerous-operand (argument :index 0) :accepts [raw])])))

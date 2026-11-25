@@ -6,7 +6,7 @@
   :id "bifrost.java-codeql-quality.raw-constructor-invocation"
   :name "Raw generic constructor invocation"
   :message "generic constructor invocation is raw"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
   :tags ["java" "codeql" "quality"]
   :analysis (analysis

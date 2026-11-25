@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "pack_id": "codeql.rust-stdlib.summaries",
+  "pack_version": "1.0.0",
+  "ecosystem": "cargo",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "codeql.rust-stdlib.summaries.json",
+    "sha256": "d6fda5ae8ca323b60e4ffbece88d9d9da11ea4515a01fe473c4f786771a2a0da",
+    "url": null,
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "rust",
+        "requirement": "=1.100.0-nightly"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "rust",
+        "version": "=1.100.0-nightly"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "https://github.com/github/codeql (MIT); stdlib bifrost.rust-stdlib@1.100.0-nightly source-set c7ef5e3d3c34f267d81d2c06f1d5cacced6abdfd59e51e5b8467529600ef5bce",
+    "revision": "1be292a1e54696ca543b4ad0f9b4537b9687caa7"
+  },
+  "license": "MIT",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": true
+  },
+  "notices": [
+    "notices/CODEQL-MIT.txt",
+    "notices/rust-codeql-mad.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "rust",
+      "version": "=1.100.0-nightly"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "rust",
+      "owner": "alloc.fmt",
+      "name": "format",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

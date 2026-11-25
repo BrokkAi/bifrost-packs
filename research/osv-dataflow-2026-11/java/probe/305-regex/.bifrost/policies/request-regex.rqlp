@@ -1,0 +1,73 @@
+(policy
+  :schema-version 1
+  :id "research.java.servlet-parameter-to-regex-pattern"
+  :name "Servlet parameter compiled as a regular expression"
+  :message "A servlet request parameter reached the regex operand of Pattern.compile or Pattern.matches"
+  :severity warning
+  :description "Research probe for BrokkAi/bifrost-packs#305."
+  :tags ["security" "java" "redos" "cwe-1333"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id servlet-request-parameter
+              :display-name "ServletRequest.getParameter(String)"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language java
+                    (call-argument :formal-name "name"
+                      (resolved-call
+                        :resolves-to member.servletrequest.getparameter
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "getParameter") (arity 1))))))))
+              :bind return-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id pattern-compile
+              :display-name "Pattern.compile(String) regex"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language java
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.d51c0cae17d122475c4ff821ba8e5f1e034f7921de5e97972492cab18108409d
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "compile") (arity 1))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id pattern-matches
+              :display-name "Pattern.matches(String, CharSequence) regex"
+              :categories [regex.pattern]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language java
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.d4ed63bd9a5c201825ae91a0b43b3e3684e1fd805bdbcad780cb8e40f613c198
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "matches") (arity 2))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "1333")))

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.go.stdlib.encoding-gob",
+  "pack_version": "0.2.0",
+  "ecosystem": "go-stdlib",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "go-stdlib-encoding-gob.json",
+    "sha256": "2bba4c2a21a29d499ee385f7411ba7466c36fa7ff0fe73bd16215e87eebbc755",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a8f1458142c44fb9a94dcf0cd63771e965238fad/semantic-packs/models/go-stdlib-encoding-gob.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "go",
+        "version": ">=1.26.0, <2.0.0"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "https://pkg.go.dev/encoding/gob",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/go-1.26.0-BSD-3-Clause.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "go",
+      "version": "=1.26.0"
+    }
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "go",
+      "owner": "encoding/gob",
+      "name": "NewDecoder",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

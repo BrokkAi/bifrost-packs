@@ -1,0 +1,2 @@
+; The file-to-module relation a toolchain gate would need for a Go call site.
+(target-of (file-of (language go (function))))

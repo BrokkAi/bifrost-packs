@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "pack_id": "bifrost.go.stdlib.testing",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "producer": {
     "name": "bifrost",
     "version": "0.11.3"
@@ -9,7 +9,12 @@
   "language": "go",
   "ecosystem": "go-stdlib",
   "compatibility": {
-    "toolchains": []
+    "toolchains": [
+      {
+        "name": "go",
+        "requirement": ">=1.26.0, <2.0.0"
+      }
+    ]
   },
   "provenance": {
     "source": "https://pkg.go.dev/testing",
@@ -24,7 +29,14 @@
   "shards": [
     {
       "id": "go.stdlib.testing.concrete-receivers",
-      "activation": [{}],
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
       "payload": {
         "kind": "declaration_facts",
         "types": [
@@ -33,7 +45,9 @@
             "name": "testing",
             "type_kind": "module",
             "visibility": "public",
-            "aliases": ["testing"],
+            "aliases": [
+              "testing"
+            ],
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -81,8 +95,12 @@
             "name": "FailNow",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -99,12 +117,17 @@
               "parameters": [
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -121,16 +144,24 @@
               "parameters": [
                 {
                   "name": "format",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -147,12 +178,17 @@
               "parameters": [
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -169,16 +205,24 @@
               "parameters": [
                 {
                   "name": "format",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -191,8 +235,12 @@
             "name": "SkipNow",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -209,15 +257,23 @@
               "parameters": [
                 {
                   "name": "name",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "f",
-                  "type": { "kind": "named", "name": "func" }
+                  "type": {
+                    "kind": "named",
+                    "name": "func"
+                  }
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -230,8 +286,12 @@
             "name": "Parallel",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -248,11 +308,16 @@
               "parameters": [
                 {
                   "name": "f",
-                  "type": { "kind": "named", "name": "func" }
+                  "type": {
+                    "kind": "named",
+                    "name": "func"
+                  }
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -265,8 +330,12 @@
             "name": "FailNow",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -283,12 +352,17 @@
               "parameters": [
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -305,16 +379,24 @@
               "parameters": [
                 {
                   "name": "format",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -331,12 +413,17 @@
               "parameters": [
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -353,16 +440,24 @@
               "parameters": [
                 {
                   "name": "format",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -375,8 +470,12 @@
             "name": "SkipNow",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -389,8 +488,12 @@
             "name": "FailNow",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -407,12 +510,17 @@
               "parameters": [
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -429,16 +537,24 @@
               "parameters": [
                 {
                   "name": "format",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -455,12 +571,17 @@
               "parameters": [
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -477,16 +598,24 @@
               "parameters": [
                 {
                   "name": "format",
-                  "type": { "kind": "named", "name": "string" }
+                  "type": {
+                    "kind": "named",
+                    "name": "string"
+                  }
                 },
                 {
                   "name": "args",
-                  "type": { "kind": "named", "name": "any" },
+                  "type": {
+                    "kind": "named",
+                    "name": "any"
+                  },
                   "variadic": true
                 }
               ]
             },
-            "receiver": { "pointer": true },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -499,8 +628,12 @@
             "name": "SkipNow",
             "member_kind": "method",
             "visibility": "public",
-            "signature": { "parameters": [] },
-            "receiver": { "pointer": true },
+            "signature": {
+              "parameters": []
+            },
+            "receiver": {
+              "pointer": true
+            },
             "locator": {
               "kind": "source",
               "path": "src/testing/testing.go",
@@ -513,7 +646,14 @@
     },
     {
       "id": "go.stdlib.testing.normal-continuation",
-      "activation": [{}],
+      "activation": [
+        {
+          "toolchain": {
+            "name": "go",
+            "version": ">=1.26.0, <2.0.0"
+          }
+        }
+      ],
       "payload": {
         "kind": "procedure_summaries",
         "summaries": [

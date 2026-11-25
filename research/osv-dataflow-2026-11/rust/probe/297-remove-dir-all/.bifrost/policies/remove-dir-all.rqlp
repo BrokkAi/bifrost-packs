@@ -1,0 +1,27 @@
+(policy
+  :schema-version 1
+  :id "research.rust.remove-dir-all-external-path"
+  :name "probe"
+  :message "external path reaches remove_dir_all"
+  :severity warning
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source :id env-args :display-name "std::env::args" :categories [io.external]
+              :selector (rql :schema-version 1 (language rust (resolved-call :resolves-to "std.env.args" :proof declared (call-bindings (call-shape (call :callee (name "args") :arity 0))))))
+              :bind return-value :labels [untrusted])
+            (source :id env-var :display-name "std::env::var" :categories [io.external]
+              :selector (rql :schema-version 1 (language rust (resolved-call :resolves-to "std.env.var" :proof declared (call-bindings (call-shape (call :callee (name "var") :arity 1))))))
+              :bind return-value :labels [untrusted])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink :id remove-dir-all :display-name "std::fs::remove_dir_all path" :categories [filesystem]
+              :selector (rql :schema-version 1 (language rust (call-argument :formal-index 0 (resolved-call :resolves-to "std.fs.remove_dir_all" :proof declared (call-bindings (call-shape (call :callee (name "remove_dir_all") :arity 1)))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [untrusted])])))

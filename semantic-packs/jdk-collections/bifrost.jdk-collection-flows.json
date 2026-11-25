@@ -1,0 +1,2187 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.jdk-collection-flows",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs-hand-authored",
+    "version": "0.1.0"
+  },
+  "language": "java",
+  "ecosystem": "jdk",
+  "compatibility": {
+    "bifrost": ">=0.15.1, <1.0.0",
+    "toolchains": [
+      {
+        "name": "jdk",
+        "requirement": ">=17.0.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "hand-authored CSMI collection-flow contracts for java.util.Map and java.util.HashMap (Java SE 17 and 21 API specification)",
+    "revision": "jdk-collection-flows"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "collections.jdk-util-map",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "jdk",
+            "version": ">=17.0.0"
+          },
+          "targets": [
+            "jvm"
+          ],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "jdk.java-util-map",
+            "name": "java.util.Map",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [
+              "K",
+              "V"
+            ],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "java.util.Map"
+            }
+          },
+          {
+            "id": "jdk.java-util-hashmap",
+            "name": "java.util.HashMap",
+            "type_kind": "class",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [
+              "K",
+              "V"
+            ],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "java.util.HashMap"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.map.put-object-object",
+            "owner": "jdk.java-util-map",
+            "name": "put",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "K"
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "V"
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "put(java.lang.Object,java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.map.get-object",
+            "owner": "jdk.java-util-map",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "get(java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.map.getordefault-object-object",
+            "owner": "jdk.java-util-map",
+            "name": "getOrDefault",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "defaultValue",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "V"
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "getOrDefault(java.lang.Object,java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.map.remove-object",
+            "owner": "jdk.java-util-map",
+            "name": "remove",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "remove(java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.map.containskey-object",
+            "owner": "jdk.java-util-map",
+            "name": "containsKey",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": true,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "containsKey(java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.map.putifabsent-object-object",
+            "owner": "jdk.java-util-map",
+            "name": "putIfAbsent",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "K"
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "V"
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/Map.java",
+              "symbol": "putIfAbsent(java.lang.Object,java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.hashmap.put-object-object",
+            "owner": "jdk.java-util-hashmap",
+            "name": "put",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "K"
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "V"
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "put(java.lang.Object,java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.hashmap.get-object",
+            "owner": "jdk.java-util-hashmap",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "get(java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.hashmap.getordefault-object-object",
+            "owner": "jdk.java-util-hashmap",
+            "name": "getOrDefault",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "defaultValue",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "V"
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "getOrDefault(java.lang.Object,java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.hashmap.remove-object",
+            "owner": "jdk.java-util-hashmap",
+            "name": "remove",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "remove(java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.hashmap.containskey-object",
+            "owner": "jdk.java-util-hashmap",
+            "name": "containsKey",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "java.lang.Object",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "boolean",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "containsKey(java.lang.Object)"
+            }
+          },
+          {
+            "id": "member.hashmap.putifabsent-object-object",
+            "owner": "jdk.java-util-hashmap",
+            "name": "putIfAbsent",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": true,
+            "callable_family_complete": true,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "K"
+                  },
+                  "optional": false,
+                  "variadic": false
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "type_parameter",
+                    "name": "V"
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "type_parameter",
+                "name": "V"
+              }
+            },
+            "receiver": {
+              "pointer": false
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "java.base/java/util/HashMap.java",
+              "symbol": "putIfAbsent(java.lang.Object,java.lang.Object)"
+            }
+          }
+        ],
+        "relations": []
+      },
+      "collection_flows": {
+        "flows": [
+          {
+            "callable": "member.map.put-object-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.map.put-object-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-map"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.K"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 1
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 0
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-key"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 1
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.map.get-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.map.get-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-map"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.map.getordefault-object-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.map.getordefault-object-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-map"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 1
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 1
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.map.remove-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.map.remove-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-map"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.map.containskey-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.map.containskey-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-map"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                }
+              ],
+              "transfers": [],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.map.putifabsent-object-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.map.putifabsent-object-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-map"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.K"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 1
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 0
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-key"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 1
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.hashmap.put-object-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.hashmap.put-object-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-hashmap"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.K"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 1
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 0
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-key"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 1
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.hashmap.get-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.hashmap.get-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-hashmap"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.hashmap.getordefault-object-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.hashmap.getordefault-object-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-hashmap"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 1
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 1
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.hashmap.remove-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.hashmap.remove-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-hashmap"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.hashmap.containskey-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.hashmap.containskey-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-hashmap"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                }
+              ],
+              "transfers": [],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          },
+          {
+            "callable": "member.hashmap.putifabsent-object-object",
+            "payload": {
+              "kind": "collection-flow",
+              "callable": "member.hashmap.putifabsent-object-object",
+              "receiverSubstitution": {
+                "kind": "receiver-arguments",
+                "declaration": "jdk.java-util-hashmap"
+              },
+              "roots": [
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.K"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "input",
+                    "role": "parameter",
+                    "position": 1
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "receiver"
+                  },
+                  "shape": {
+                    "kind": "keyed",
+                    "key": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.K"
+                      }
+                    },
+                    "value": {
+                      "kind": "value",
+                      "type": {
+                        "kind": "parameter",
+                        "symbol": "type-parameter.V"
+                      }
+                    },
+                    "entryComponents": [
+                      "key",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "root": {
+                    "phase": "output",
+                    "role": "result",
+                    "position": 0
+                  },
+                  "shape": {
+                    "kind": "value",
+                    "type": {
+                      "kind": "parameter",
+                      "symbol": "type-parameter.V"
+                    }
+                  }
+                }
+              ],
+              "transfers": [
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 0
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-key"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "parameter",
+                      "position": 1
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "source": {
+                    "root": {
+                      "phase": "input",
+                      "role": "receiver"
+                    },
+                    "projection": {
+                      "scheme": "csmi.collection-flow",
+                      "schemeVersion": "0.1.0",
+                      "steps": [
+                        {
+                          "kind": "entry",
+                          "args": {
+                            "key": {
+                              "kind": "parameter",
+                              "position": 0
+                            }
+                          }
+                        },
+                        {
+                          "kind": "entry-value"
+                        }
+                      ]
+                    }
+                  },
+                  "destination": {
+                    "root": {
+                      "phase": "output",
+                      "role": "result",
+                      "position": 0
+                    }
+                  }
+                }
+              ],
+              "invocations": []
+            },
+            "coverage": "complete",
+            "provenance": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+; Lead: BrokkAi/bifrost-packs#294 (CVE-2026-21712), version-independent part.
+; Product source contract: the Node v22.11.0 doc/api/url.md says the legacy
+; url.parse() is prone to host name spoofing, must not be used with untrusted
+; input, and gets no CVEs, and that url.format() passes a string argument to
+; url.parse(). CVE-2026-21712 adds a native crash in url.format() on affected
+; 24.x and 25.x runtimes. That part needs Node runtime evidence the engine does
+; not have (research/osv-dataflow-2026-11/jsts/README.md), so this rule
+; reports the flow on every runtime.
+; Engine contract: the source is a keyed read of the reviewed Node runtime
+; `process.argv` model; the sinks bind exactly to the one-argument url.parse
+; and url.format members of the reviewed bifrost.node-url-javascript models.
+; Any other call on the path must be modeled, so a property read on the parsed
+; result or an unmodeled helper leaves the run inconclusive instead of clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.javascript.process-input-to-legacy-url-parse"
+  :name "Process argument parsed by legacy url.parse"
+  :message "a process argument reached the legacy url.parse or url.format parser"
+  :severity warning
+  :description "Reports process.argv values that reach the argument of the legacy url.parse(urlString) or url.format(urlObject). Node documents url.parse as prone to host name spoofing and not for untrusted input, and url.format parses a string argument with url.parse; affected runtimes also crash on malformed internationalized domain names (CVE-2026-21712). Use the WHATWG URL API instead."
+  :tags ["security" "javascript" "url-parsing" "cwe-20" "node"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id process-argv-read
+              :display-name "process.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (keyed-read-value
+                      :runtime node
+                      :global process
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id url-parse-input
+              :display-name "url.parse input"
+              :categories [url.parse]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.url.javascript.parse-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "parse"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])
+            (sink
+              :id url-format-input
+              :display-name "url.format input"
+              :categories [url.parse]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.url.javascript.format-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "format"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "20")))

@@ -12,7 +12,7 @@
   :id "bifrost.csharp-codeql-quality.self-assignment"
   :name "C# self-assignment"
   :message "this assignment assigns a local or parameter to itself"
-  :severity warning
+  :severity error
   :description "Mirrors CodeQL csharp/ql/src/Likely Bugs/SelfAssignment.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19, narrowed to locals and parameters. Reports a simple assignment whose bare left and right identifiers resolve to the same lexical binding. Fields, properties, indexers, array elements and member-qualified targets are not selected."
   :tags ["csharp" "codeql" "quality" "correctness"]
   :analysis (analysis :type assertion

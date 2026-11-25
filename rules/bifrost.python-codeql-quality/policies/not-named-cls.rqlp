@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.not-named-cls"
   :name "First parameter of a class method is not named cls"
   :message "Class methods should use cls for their first parameter"
-  :severity warning
+  :severity note
   :description "Select a class receiver method when its first parameter is not a recognized class receiver name. Metaclass methods also accept self, and zero-parameter methods are reported."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis

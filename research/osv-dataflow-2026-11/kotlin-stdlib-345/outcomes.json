@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-10",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+    "packs_bundle": "packs/v0.11.0 bifrost.public.packs-0.11.0-native.tar.gz, sha256 055f25dedf45dc44bf3fe49429e3af0cd3d3d779ba75415c08956fe35a7d9695",
+    "host": "Temurin 21.0.8, kotlinc 2.4.10, Maven; kotlin-stdlib 2.2.20 jar and sources jar (sha256 27b9b8672ef33ae9c345b3e57d39b705560e7eca9ca2bf6485f323f612276c26) in ~/.m2",
+    "environment": {
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+      "BIFROST_CACHE_DIR": "fresh per run"
+    }
+  },
+  "leads": [
+    {
+      "issue": 345,
+      "language": "kotlin",
+      "advisory": "CVE-2020-29582",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/8542"
+      ],
+      "related_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/11371",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005"
+      ],
+      "probe": "probe/root",
+      "note": "kotlin.io.createTempDir and createTempFile calls (unqualified and kotlin.io-qualified) are unproven, open, 0 targets, callee_incomplete: the generated bifrost.external.kotlin pack supplies the functions with an incomplete package member inventory. With kotlin-stdlib 1.4.21 (affected) the kotlin.io default-import package has no owner at all. No version gate is needed for the deprecated-helper misuse itself, but the call must bind before any rule can select it."
+    }
+  ]
+}

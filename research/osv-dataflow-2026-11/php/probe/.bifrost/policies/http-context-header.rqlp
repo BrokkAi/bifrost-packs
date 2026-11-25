@@ -1,0 +1,19 @@
+; Research probe for http-context-header. Not registered pack content.
+(policy
+  :schema-version 1
+  :id "research.php-osv.http-context-header"
+  :name "request value reaches an http stream context header (research probe)"
+  :message "request value reaches an http stream context header"
+  :severity warning
+  :description "Research probe for the PHP OSV data-flow lead http-context-header."
+  :tags ["research" "php"]
+  :analysis (analysis
+    :type taint
+    :mode may
+    :call-modeling (call-modeling :unmodeled require-model)
+    :sources (endpoint-set :entries [
+      (source :id request-param :display-name "request parameter" :categories [input.user-controlled]
+        :selector (rql :schema-version 1 (language php (call-sites-to :proof proven (enclosing-decl (function :name "request_param")))))
+        :bind return-value :labels [untrusted])])
+    :sinks (endpoint-set :entries [
+      (sink :id stream-context-options :display-name "stream-context-options" :categories [x] :selector (rql :schema-version 1 (language php (call-argument :formal-index 0 (resolved-call :resolves-to "_php_global_.stream_context_create" :proof declared (call-bindings (call-shape (call :callee (name "stream_context_create")))))))) :dangerous-operand (argument :index 0) :accepts [untrusted])])))

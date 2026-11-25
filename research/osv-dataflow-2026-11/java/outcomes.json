@@ -1,0 +1,634 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-05",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+    "environment": {
+      "BIFROST_OPEN_PACKS_DISABLE": "1",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+      "BIFROST_CACHE_DIR": "fresh per run",
+      "host_jdk": "Temurin 21.0.8 (17.0.16 and 25.0.1 also checked for the shipped rule)"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental"
+    ]
+  },
+  "selection": {
+    "source": "https://osv-vulnerabilities.storage.googleapis.com/Maven/all.zip, downloaded 2026-11-05",
+    "rule": "Data-flow (taint or typestate) leads where app code or config decides reachability; JDK-contract slices placed open, Maven-library contracts premium; deduplicated against every [Java] CVE- title in bifrost-packs and bifrost-premium-packs (50 before this batch)."
+  },
+  "models_sha256": {
+    "bifrost.jdk-framework-decls.json": "87f835777129ada208d47ed4525c4e12014de42fc02d1b3a5d74157adbee0655",
+    "bifrost.jdk-framework-summaries.json": "b73aafdd2e8135c40a793050a613921e9a46debe06ea4a07f9a30a2cc88862b9",
+    "bifrost.javax.servlet-api-framework-decls.json": "51c6ed1c5f8b8e8be111790cf671e75ac1c5f387ce663bf7cf00b9c116df7bcd",
+    "bifrost.javax.servlet-api-summaries.json": "365dce05221bdb76763ce7751f1f84d2edda73b401ed1570fe34aa279f049132"
+  },
+  "dispatch": [
+    {
+      "line": 15,
+      "call": "server.accept()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 16,
+      "call": "s.getInputStream()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 17,
+      "call": "new ObjectInputStream(in)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 18,
+      "call": "ObjectInputFilter.Config.createFilter(\"java.base/*;!*\")",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 18,
+      "call": "ois.setObjectInputFilter(ObjectInputFilter.Config.createFilter(\"java.b",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 19,
+      "call": "ois.readObject()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 22,
+      "call": "new URL(address)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 23,
+      "call": "url.openConnection()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 24,
+      "call": "c.getInputStream()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 24,
+      "call": "new ObjectInputStream(c.getInputStream())",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 24,
+      "call": "new ObjectInputStream(c.getInputStream()).readObject()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 27,
+      "call": "new ZipInputStream(in)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 28,
+      "call": "zis.getNextEntry()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 29,
+      "call": "e.getName()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 30,
+      "call": "new File(dir, name)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 0
+    },
+    {
+      "line": 31,
+      "call": "f.getCanonicalPath()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 32,
+      "call": "canon.startsWith(dir.getCanonicalPath())",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 32,
+      "call": "dir.getCanonicalPath()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 33,
+      "call": "root.resolve(name)",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 33,
+      "call": "root.resolve(name).normalize()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 34,
+      "call": "p.startsWith(root)",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 35,
+      "call": "new FileOutputStream(f)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 0
+    },
+    {
+      "line": 36,
+      "call": "Files.copy(zis, p)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 37,
+      "call": "out.close()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 40,
+      "call": "new InitialContext()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 41,
+      "call": "ctx.lookup(name)",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 42,
+      "call": "new Hashtable<String, String>()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 0
+    },
+    {
+      "line": 42,
+      "call": "new InitialDirContext(new Hashtable<String, String>())",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 43,
+      "call": "dctx.search(\"ou=people\", \"(uid=\" + user + \")\", new SearchControls())",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 43,
+      "call": "new SearchControls()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 44,
+      "call": "dctx.search(\"ou=people\", \"(uid={0})\", new Object[] {user}, new SearchC",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 44,
+      "call": "new SearchControls()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 48,
+      "call": "Pattern.compile(re)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 49,
+      "call": "p.matcher(text)",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 49,
+      "call": "p.matcher(text).matches()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 50,
+      "call": "Pattern.matches(re, text)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 50,
+      "call": "text.matches(re)",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 53,
+      "call": "new ProcessBuilder(args)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 0
+    },
+    {
+      "line": 54,
+      "call": "pb.start()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 57,
+      "call": "DocumentBuilderFactory.newInstance()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 58,
+      "call": "f.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", t",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 59,
+      "call": "f.newDocumentBuilder()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 60,
+      "call": "b.parse(in)",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 61,
+      "call": "new XMLDecoder(in)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 0
+    },
+    {
+      "line": 61,
+      "call": "new XMLDecoder(in).readObject()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 64,
+      "call": "System.getProperty(\"x\")",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 64,
+      "call": "System.getenv(\"Y\")",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 67,
+      "call": "ex.getRequestURI()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 68,
+      "call": "u.getQuery()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 69,
+      "call": "ex.getRequestBody()",
+      "outcome": "unproven",
+      "coverage": "open",
+      "targets": 1
+    },
+    {
+      "line": 70,
+      "call": "new ObjectInputStream(body)",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    },
+    {
+      "line": 70,
+      "call": "new ObjectInputStream(body).readObject()",
+      "outcome": "resolved",
+      "coverage": "exhaustive",
+      "targets": 1
+    }
+  ],
+  "policy_probes": {
+    "300-ldap": {
+      "policy_hash": "e48597e7ee77fcb46ec1de8a9b1161a469d4763bb6079607f8c2b5ebc5b3392b",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "findings": [],
+      "diagnostics": [
+        "selector `/analysis/sinks/entries/dircontext-search-raw-filter/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial, CallBindingSelectorRejected] }; only individually usable rows were retained: [\"semantic_analysis_partial: Co",
+        "selector `/analysis/sources/entries/servlet-request-parameter/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDiagnostic { code: Sema",
+        "taint policy `research.java.servlet-parameter-to-jndi-raw-filter` bound no sink endpoint: its sink selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists",
+        "taint policy `research.java.servlet-parameter-to-jndi-raw-filter` bound no source endpoint: its source selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exis"
+      ]
+    },
+    "305-regex": {
+      "policy_hash": "a9aaf42c9e558d3408c54648380e70513742f40e76d2b698d83754577d36697e",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "findings": [],
+      "diagnostics": [
+        "selector `/analysis/sources/entries/servlet-request-parameter/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDiagnostic { code: Sema",
+        "taint policy `research.java.servlet-parameter-to-regex-pattern` bound no source endpoint: its source selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+      ]
+    },
+    "servlet-jdbc-baseline": {
+      "policy_hash": "d6de25c3fb96ae45fd6e787eca7302380df8e141a78a43d72f36a4da0b85d920",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "findings": [],
+      "diagnostics": [
+        "selector `/analysis/external_models/entries/jakarta-servlet-request-parameter-call/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDi",
+        "selector `/analysis/external_models/entries/javax-generated-servlet-request-parameter-call/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: Cod",
+        "selector `/analysis/external_models/entries/servlet-request-parameter-call/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDiagnostic",
+        "selector `/analysis/sources/entries/jakarta-servlet-request-parameter/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDiagnostic { co",
+        "selector `/analysis/sources/entries/javax-generated-servlet-request-parameter/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDiagnos",
+        "selector `/analysis/sources/entries/servlet-request-parameter/selector` discovery is Incomplete { codes: [SemanticAnalysisPartial] }; only individually usable rows were retained: [\"semantic_analysis_partial: CodeQueryDiagnostic { code: Sema",
+        "taint policy `bifrost.security.java.servlet-parameter-to-jdbc` bound no source endpoint: its source selectors matched no location in the scanned workspace, so this run reports zero findings vacuously rather than proving that no flow exists"
+      ]
+    }
+  },
+  "objectinputstream_fixture": {
+    "main": {
+      "policy_hash": "2ce2f8532a6a169802337732c4295fc354860a6f2c35620a744ab35dc856e297",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "findings": [
+        "src/ois/Channels.java:13 possible unproven partial",
+        "src/ois/Channels.java:18 possible unproven partial",
+        "src/ois/Channels.java:25 possible unproven partial"
+      ],
+      "diagnostics": []
+    },
+    "incomplete": {
+      "policy_hash": "2ce2f8532a6a169802337732c4295fc354860a6f2c35620a744ab35dc856e297",
+      "completion": "inconclusive",
+      "reasons": [
+        "partial_discovery"
+      ],
+      "findings": [],
+      "diagnostics": []
+    }
+  },
+  "version_evidence": {
+    "query": "(dependency-evidence :ecosystem maven) and :ecosystem jvm on probe/305-regex",
+    "observed": "No rows; dependency evidence Missing: Java selected dependency publication unavailable: static dependency evidence is unavailable for this analyzer."
+  },
+  "rejected_experiments": [
+    {
+      "experiment": "Hand-authored javax.naming.directory DirContext/InitialDirContext search declarations added to bifrost.jdk-framework-decls",
+      "observed": "The calls keep binding to the generated bifrost.external.java member with IncompleteHierarchy. An array parameter type carrying a nullable key silently turned every JDK binding to unknown (bifrost-dev#10002). Not shipped."
+    },
+    {
+      "experiment": "Reviewed summaries for ObjectInputStream(InputStream), setObjectInputFilter and readObject added to bifrost.jdk-framework-summaries",
+      "observed": "Identical fixture output with and without them, so they were not shipped."
+    }
+  ],
+  "input_sha256": {
+    "probe/.bifrost/packs.json": "aecc8b68ed4724ed7364d65ad1ae668156b12fecd36c166685223bc80f3ef73f",
+    "probe/300-ldap/.bifrost/packs.json": "63cb3a8ea771c9b0355e355aa4e1198c0ab8f53859fd6b840bd72dcd3fba96e8",
+    "probe/300-ldap/.bifrost/policies/ldap-raw-filter.rqlp": "db3a416c6511144612afc5a97cb43327c507c3cc5b55b9b5b916969c7d312671",
+    "probe/300-ldap/pom.xml": "de4e7ccc0e51533d4a6363726601d9a0c9b191bcc1771be01b848354632c9fa7",
+    "probe/300-ldap/src/LdapLogin.java": "5c3a33d5f40141cc51d48f3d980bb42ae31abb078c727c961dafc6bacbb89b49",
+    "probe/305-regex/.bifrost/packs.json": "63cb3a8ea771c9b0355e355aa4e1198c0ab8f53859fd6b840bd72dcd3fba96e8",
+    "probe/305-regex/.bifrost/policies/request-regex.rqlp": "f3107d3174925095067c0f4e9bbeafcc1a1368e608c36f52634775037bf7e1c3",
+    "probe/305-regex/pom.xml": "832b50db7cf327bc812fee469f88aeaef6260dfeccb098980620779c7b046f99",
+    "probe/305-regex/src/regex/Search.java": "25b9e509cba9cb2fc1a019d7bbdd728858835a1e02be79e7d8be1e70950a434b",
+    "probe/bind/Calls.java": "9de8b470ae7980cda103cd1399ad55428e54cd04e70f0e732008eec5d1af2341",
+    "probe/run.py": "a95fc307288c87e723992f591dbf5ef7432d007a2cd51cb9fa4435c94a7378dc",
+    "probe/servlet-jdbc-baseline/.bifrost/packs.json": "63cb3a8ea771c9b0355e355aa4e1198c0ab8f53859fd6b840bd72dcd3fba96e8",
+    "probe/servlet-jdbc-baseline/pom.xml": "b22c0738c4bf6febd3d414683fc007637165e88138b5380a0605ad92b4272489",
+    "probe/servlet-jdbc-baseline/src/app/Dao.java": "c713b397bcaa928929c44a7784728fb93ae16dfb79ad71b03726d7ccd94eb054",
+    "rules/bifrost.security/policies/jvm/objectinputstream-read-without-filter.rqlp": "30ea22de724a0b38932f3c44667e32823e6e129f4a4cd652c5c05df07744e8e8",
+    "fixtures/policy/bifrost.security/java-objectinputstream-read-without-filter/.bifrost/policies/objectinputstream-read-without-filter.rqlp": "30ea22de724a0b38932f3c44667e32823e6e129f4a4cd652c5c05df07744e8e8",
+    "fixtures/policy/bifrost.security/java-objectinputstream-read-without-filter/.bifrostignore": "b1ba9a37db431c038b437d8998516ad87b77c342b5272ee650c045264413df6e",
+    "fixtures/policy/bifrost.security/java-objectinputstream-read-without-filter/README.md": "43f4edf9d59e5aa6e8d382a412ac403696c17e64d27aa41c4e278bb04a3823d0",
+    "fixtures/policy/bifrost.security/java-objectinputstream-read-without-filter/incomplete/.bifrost/policies/objectinputstream-read-without-filter.rqlp": "30ea22de724a0b38932f3c44667e32823e6e129f4a4cd652c5c05df07744e8e8",
+    "fixtures/policy/bifrost.security/java-objectinputstream-read-without-filter/incomplete/src/oisunknown/Escapes.java": "bf6d81cb341408e1ab4410a54908cdc52fbec3bfea3ea7557ea91a6ce838c75a",
+    "fixtures/policy/bifrost.security/java-objectinputstream-read-without-filter/src/ois/Channels.java": "43cd90a558fd765878d0271e1d6d8c6860537f387a94588f86543e668eebe247"
+  },
+  "leads": [
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/300",
+      "advisory": "CVE-2022-46337",
+      "osv": "GHSA-rcjc-c4pj-xxrp",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10002"
+      ],
+      "note": "Sink DirContext.search(String, String, SearchControls) is unproven/open and its generated signature conversion is IncompleteHierarchy (the #3811 symptom). A hand-authored javax.naming.directory declaration doesn't take over the generated target. Servlet getParameter source binds nothing. The staged JDK summaries already cover both search overloads.",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/301",
+      "advisory": "CVE-2026-41586",
+      "osv": "GHSA-prf8-cf2x-rhx7",
+      "placement": "open",
+      "outcome": "implemented",
+      "rule": "bifrost.security.java.objectinputstream-read-without-filter",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10001",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9431",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10000"
+      ],
+      "note": "Typestate ships opt-in: ObjectInputStream(InputStream), setObjectInputFilter and readObject bind exactly (resolved, exhaustive, 1) to generated JDK members with the same IDs on Temurin 17.0.16 and 21.0.8. Three positives reported, both near misses clean. Every finding is possible (typestate-external-call) and every run inconclusive with no diagnostic (#10001, #9431); reviewed summaries change nothing, so none ship. Temurin 25.0.1 gives the constructor 0 targets (#10000).",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/302",
+      "advisory": "CVE-2026-40859",
+      "osv": "GHSA-6qw3-4796-5984",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998"
+      ],
+      "note": "The ObjectInputStream constructor sink binds, but URL.openConnection and URLConnection.getInputStream (the response-body source) are unproven/open, and java.net.http has no reviewed model.",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/303",
+      "advisory": "CVE-2025-70952",
+      "osv": "GHSA-5458-7hh9-v7p4",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10000"
+      ],
+      "note": "ZipInputStream.getNextEntry, ZipEntry.getName, Path.resolve/normalize/startsWith and File.getCanonicalPath are unproven/open; new File(File, String) and new FileOutputStream(File) resolve exhaustive with 0 targets. Neither the source, the path transfer nor the containment guard can be selected.",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/304",
+      "advisory": "CVE-2026-50632",
+      "osv": "GHSA-93g8-qqv3-mrx8",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998"
+      ],
+      "note": "new InitialContext() binds, but Context.lookup(String) is unproven/open and the servlet request source binds nothing.",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/305",
+      "advisory": "CVE-2026-45367",
+      "osv": "GHSA-3653-68v6-rq57",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998"
+      ],
+      "note": "Static Pattern.compile(String) and Pattern.matches(String, CharSequence) sinks bind (no sink diagnostic). The servlet getParameter source binds nothing, and String.matches and Pattern.matcher stay unproven/open although String and Pattern are final classes.",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/306",
+      "advisory": "CVE-2026-54082",
+      "osv": "GHSA-cg9x-g3gm-h5h6",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9431"
+      ],
+      "note": "DocumentBuilderFactory.newInstance binds; setFeature, newDocumentBuilder and DocumentBuilder.parse are unproven/open. The policy also needs a factory-to-builder typestate hand-off and a literal feature-name guard, neither of which was probed. The JDK typestate route itself gives only possible findings (#9431).",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-packs/issues/307",
+      "advisory": "CVE-2026-40047",
+      "osv": "GHSA-rpv3-6645-2vqc",
+      "placement": "open",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9998",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10000"
+      ],
+      "note": "new ProcessBuilder(List) resolves exhaustive with 0 targets, even though bifrost.jdk-framework-decls declares member.processbuilder.ctor-list; ProcessBuilder.start is unproven/open; the request source binds nothing.",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-premium-packs/issues/469",
+      "advisory": "CVE-2026-21452",
+      "osv": "GHSA-cw39-r4h6-8j3x",
+      "placement": "premium",
+      "outcome": "premium_not_implemented_here",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9325"
+      ],
+      "note": "msgpack-core library contract. Not implemented here. The version gate needs Maven dependency evidence, which v0.15.1 still doesn't publish (bifrost-dev#9325 is closed; reproduction commented there).",
+      "language": "java"
+    },
+    {
+      "issue": "https://github.com/BrokkAi/bifrost-premium-packs/issues/470",
+      "advisory": "CVE-2026-28208",
+      "osv": "GHSA-j273-m5qq-6825",
+      "placement": "premium",
+      "outcome": "premium_not_implemented_here",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9325"
+      ],
+      "note": "junrar library contract. Not implemented here. Same Maven version-evidence gap as #469.",
+      "language": "java"
+    }
+  ]
+}

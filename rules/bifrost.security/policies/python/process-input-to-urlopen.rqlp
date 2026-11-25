@@ -1,0 +1,87 @@
+; Lead: BrokkAi/bifrost-packs#270 (CVE-2025-15282), version-independent part.
+; Product source contract: urllib.request.urlopen opens a URL with the default
+; opener, which dispatches on the URL scheme (file:, ftp:, data:, http:, https:).
+; A process input that reaches the url argument chooses a local file, an internal
+; host or a data: URL on every CPython version (CWE-918). CVE-2025-15282 adds
+; header injection through the data: media type on affected interpreters; that
+; part needs CPython interpreter evidence the engine does not publish
+; (bifrost-dev#3867, research/osv-dataflow-2026-11/python/README.md).
+; Engine contract: the sources are the reviewed os.environ and sys.argv keyed
+; reads of the shipped process-input-to-os-system rule. The sink is the exact
+; reviewed urllib.request.urlopen member, closed by its complete summary. Any
+; other call on the path must be modeled, so an unmodeled wrapper or a read of
+; the response leaves the run inconclusive instead of clean.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.process-input-to-urlopen"
+  :name "Process input reaches urllib.request.urlopen"
+  :message "A process input reached the url argument of urllib.request.urlopen"
+  :severity warning
+  :description "Reports values read from the CPython process environment (os.environ) or the launch argument vector (sys.argv) that reach the url argument of urllib.request.urlopen. The default opener dispatches on the URL scheme, so whoever controls the URL can read local files through file:, reach internal hosts, or supply a data: URL (CVE-2025-15282) on any interpreter. Source identity is the import binder plus the reviewed process-input model; sink identity is the exact reviewed urlopen member."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "ssrf" "cwe-918"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id os-environ-read
+              :display-name "os.environ keyed read"
+              :categories [input.environment io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global os
+                      :container environ
+                      :key-kind static-property
+                      :source-origin pristine_input
+                      (field_access :field (name "environ")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id sys-argv-read
+              :display-name "sys.argv indexed read"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (keyed-read-value
+                      :runtime python
+                      :global sys
+                      :container argv
+                      :key-kind static-index
+                      :source-origin pristine_input
+                      (field_access :field (name "argv")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id urlopen-url
+              :display-name "urllib.request.urlopen url"
+              :categories [network.request]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.python.urllib.request.urlopen
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "urlopen"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "918")))

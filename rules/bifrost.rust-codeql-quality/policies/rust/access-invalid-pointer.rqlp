@@ -1,0 +1,18 @@
+; CodeQL: rust/ql/src/queries/security/CWE-825/AccessInvalidPointer.ql
+; CodeQL commit: ae741615f3e178ce61289a651790dc67fcc18e19
+; Contract: Report a raw-pointer access after the allocation it points into was
+; released, with the cause and proof strength carried by the engine row.
+(policy
+  :schema-version 1
+  :id "bifrost.rust-codeql-quality.access-invalid-pointer"
+  :name "Rust access through invalid pointer"
+  :message "A raw pointer is accessed after its allocation was released"
+  :severity error
+  :description "Reports a read or write through a raw pointer after its allocation was deallocated, its owner dropped, ownership transferred, or the allocation possibly reallocated. The engine's pointer-provenance solver produces each row and records the cause and whether the access must or may be invalid."
+  :tags ["rust" "codeql" "quality" "memory-safety" "cwe-825"]
+  :analysis (analysis :type match :selector (rql :schema-version 1
+    (filter :where ((relation eq access_invalid_pointer))
+      (rust-pointer-findings
+        (procedure-of (language rust (function)))))))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "825")))

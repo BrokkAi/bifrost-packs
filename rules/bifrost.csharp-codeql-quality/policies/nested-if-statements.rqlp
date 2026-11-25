@@ -3,7 +3,7 @@
  :id "bifrost.csharp-codeql-quality.nested-if-statements"
  :name "C# nested-if-statements"
  :message "Inspect nested-if-statements"
- :severity warning
+ :severity note
  :description "Source-local CodeQL statement fact."
  :tags ["csharp" "codeql" "quality"]
  :analysis (analysis :type match :selector

@@ -4,22 +4,26 @@
   :name "Non-HTTPS URL literal"
   :message "an HTTP URL literal points outside the private and loopback address ranges"
   :severity warning
-  :description "CodeQL's non-HTTPS URL rule selects decoded Rust string literal values beginning with http:// and excludes localhost, loopback, private IPv4, IPv6 loopback, and fc00::/7 authorities. The exclusion is a structural negation over the same literal value."
+  :description "CodeQL's non-HTTPS URL rule selects decoded Rust string literal values beginning with http:// and excludes localhost, loopback, private IPv4, IPv6 loopback, and fc00::/7 authorities. The exclusion is a structural negation over the same literal value. A literal inside a standard formatting macro call (format!, format_args!, print!, println!, eprint!, eprintln!, write!, writeln!, panic!) whose authority begins with an unescaped format placeholder is not selected: its host is supplied at run time, so the literal names no external authority. This rule does not follow the formatted argument to its host."
   :tags ["security" "rust" "request-forgery" "cwe-918"]
   :analysis (analysis
     :type match
     :selector (rql :schema-version 1
       (language rust
-        (string_literal
-          (value/regex "^http://")
-          (not (or
-            (value/regex "^http://localhost(?::|/|$)")
-            (value/regex "^http://127\\.")
-            (value/regex "^http://10\\.")
-            (value/regex "^http://192\\.168\\.")
-            (value/regex "^http://172\\.(?:1[6-9]|2[0-9]|3[0-1])\\.")
-            (value/regex "^http://\\[::1\\](?::|/|$)")
-            (value/regex "^http://\\[0:0:0:0:0:0:0:1\\](?::|/|$)")
-            (value/regex "^http://\\[[fF][cCdD][0-9A-Fa-f:]*\\](?::|/|$)")))))))
+        (except
+          (string_literal
+            (value/regex "^http://")
+            (not (or
+              (value/regex "^http://localhost(?::|/|$)")
+              (value/regex "^http://127\\.")
+              (value/regex "^http://10\\.")
+              (value/regex "^http://192\\.168\\.")
+              (value/regex "^http://172\\.(?:1[6-9]|2[0-9]|3[0-1])\\.")
+              (value/regex "^http://\\[::1\\](?::|/|$)")
+              (value/regex "^http://\\[0:0:0:0:0:0:0:1\\](?::|/|$)")
+              (value/regex "^http://\\[[fF][cCdD][0-9A-Fa-f:]*\\](?::|/|$)"))))
+          (inside
+            (call :callee (name/regex "^(?:format|format_args|print|println|eprint|eprintln|write|writeln|panic)$"))
+            (string_literal (value/regex "^http://\\{[^{]")))))))
   :classification (classification
     :fallback (classification-id :taxonomy "CWE" :id "918")))

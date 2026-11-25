@@ -6,7 +6,7 @@
   :id "bifrost.python-codeql-quality.regex-backspace-escape"
   :name "Backspace escape in Python regex character class"
   :message "Use a word-boundary assertion outside a character class, or an explicit backspace value."
-  :severity warning
+  :severity note
   :description "Selects the Python regex risk fact used by the CodeQL-compatible regex-backspace-escape rule."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis

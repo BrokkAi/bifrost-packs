@@ -7,7 +7,7 @@
   :id "bifrost.java-codeql-quality.undocumented-return-value"
   :name "Java undocumented return value"
   :message "Return value lacks Javadoc"
-  :severity warning
+  :severity note
   :description "Mirrors the reviewed CodeQL Java query named in the provenance comments at commit ae741615f3e178ce61289a651790dc67fcc18e19."
   :tags ["java" "codeql" "quality"]
   :analysis (analysis :type match :selector

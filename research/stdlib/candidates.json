@@ -982,7 +982,7 @@
     ],
     "overlap": "Reviewed against current authoring and issue inventories; distinct stdlib API contract, unless explicitly routed below. Shared risk families remain separate by exact API and runtime.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). `proc_open` has the same partial callable family as `unserialize` in `bifrost.php-builtin` (BrokkAi/bifrost-dev#9337). The by-reference `$pipes` out-parameter and its element reads (BrokkAi/bifrost-dev#9330) and the blocking order were not probed. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "candidate",
     "analysis_kind": "typestate"
@@ -1009,7 +1009,7 @@
     ],
     "overlap": "Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). With research declarations marking the builtins `callable_family_complete`, network bytes from `stream_socket_client` reaching `unserialize` give a definite, complete finding (`proven_by_summary`). A `json_decode` near miss and a namespaced `unserialize` lookalike are complete and clean. The production `bifrost.php-builtin` pack sets no `callable_family_complete`, so with it active the sink is refused as `qualified-call-locator-partial` (BrokkAi/bifrost-dev#9337). Superglobal request input is blocked by BrokkAi/bifrost-dev#9330. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "existing-catalog-routing",
     "analysis_kind": "taint"
@@ -1037,7 +1037,7 @@
     ],
     "overlap": "Already cataloged runtime lead; ownership review before any new issue. No duplicate discovery or content migration claimed.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). `Marshal.load` finds its model-declared target but stays `callee_unresolved`, `unproven`, `open` (BrokkAi/bifrost-dev#9336). Any receiver call named `load` also opens dispatch for every workspace call (BrokkAi/bifrost-dev#9334). There is no exact `ENV`/`ARGV` source (BrokkAi/bifrost-dev#9335). The `Net::HTTP.get` to `Marshal.load` probe is `inconclusive (partial_discovery)`. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "existing-catalog-routing",
     "analysis_kind": "taint"
@@ -1232,7 +1232,7 @@
     ],
     "overlap": "Existing runtime network-effect models do not establish this verification protocol. Keep standard-library Net::HTTP acceptance separate from third-party client verification work, and recheck adjacent verification ownership before creating an issue.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). `Net::HTTP.new` finds the reviewed `bifrost.web-network-ruby` member but stays `unproven` (BrokkAi/bifrost-dev#9336). The `http.verify_mode = \u2026` attribute writer publishes no call row. The runtime and default-gem scope needs BrokkAi/bifrost-dev#9318. Effective-state facts were not probed further. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "candidate",
     "analysis_kind": "typestate"
@@ -1273,7 +1273,7 @@
     ],
     "overlap": "No Ruby public policy or semantic model found for this paired-stream protocol. The contract is distinct from the open Ruby lifecycle work; retain it as deferred until child output volume and blocking order can be proved.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): deferred, not probed on Bifrost 0.15.0. It still needs child output volume, effective pipe capacity and blocking read order, and the returned-pipe identity it starts from is blocked by BrokkAi/bifrost-dev#9336. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "deferred-proof-heavy",
     "analysis_kind": "typestate"
@@ -1315,7 +1315,7 @@
     ],
     "overlap": "Route returned-pipe acquisition and cleanup models to existing Ruby lifecycle qualification. Generic lifecycle discovery does not certify Ruby coverage or this tuple mapping. Process.detach reaps independently; wait thread value retrieves status.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). Not probed past identity: `Open3.popen3` has the model-declared singleton shape that stays `unproven` (BrokkAi/bifrost-dev#9336), and the block form needs block-parameter receivers (BrokkAi/bifrost-dev#9322). The runtime scope needs BrokkAi/bifrost-dev#9318. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "existing-owner",
     "analysis_kind": "typestate"
@@ -1350,7 +1350,7 @@
     ],
     "overlap": "Route close/unlink and invocation-form models to existing Ruby lifecycle qualification. This is an API-specific extension, not a separate lifecycle engine or a production-support claim.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). Not probed past identity: `Tempfile.create` has the model-declared singleton shape that stays `unproven` (BrokkAi/bifrost-dev#9336), and the tempfile 0.3.1 scope needs BrokkAi/bifrost-dev#9318. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "existing-owner",
     "analysis_kind": "typestate"
@@ -1387,7 +1387,7 @@
     ],
     "overlap": "Existing Ruby command-execution discovery owns the shell/executable family. Review this deprecated core API mode under that owner rather than opening a duplicate discovery; no content migration is implied.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). `Kernel.open` is `unproven` and implicit-self `open` finds no target (BrokkAi/bifrost-dev#9336). No exact process-input source exists (BrokkAi/bifrost-dev#9335), and the Ruby 3.4-only scope needs runtime evidence (BrokkAi/bifrost-dev#9318). Leading-pipe string facts were not probed. See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "existing-owner",
     "analysis_kind": "taint"
@@ -1426,7 +1426,7 @@
     ],
     "overlap": "Ruby object-deserialization and YAML/Psych discovery already have catalog ownership. Review the exact unsafe_load methods and version-specific safe defaults under those routes; this is not a new discovery or a content migration.",
     "status": "research-only",
-    "qualification": "unqualified; no analyzer or runtime fixture evaluation",
+    "qualification": "Qualification (2026-11-03): incomplete, blocked by engine on Bifrost 0.15.0 (`09a2503c`). `Psych.unsafe_load` is `unproven` and `YAML.unsafe_load` finds no target (BrokkAi/bifrost-dev#9336). No exact process-input source exists (BrokkAi/bifrost-dev#9335), and the Psych 5.2.2 scope needs Ruby runtime evidence (BrokkAi/bifrost-dev#9318). See research/ruby-php-stdlib/README.md.",
     "retrieved_at": "2026-10-01",
     "disposition": "existing-catalog-routing",
     "analysis_kind": "taint"

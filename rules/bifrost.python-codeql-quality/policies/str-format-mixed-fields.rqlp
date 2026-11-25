@@ -1,7 +1,7 @@
 ; CodeQL: python/ql/src/Expressions/Formatting/MixedExplicitImplicitIn3101Format.ql
 ; Source commit: ae741615f3e178ce61289a651790dc67fcc18e19
 ; Contract: Do not mix automatic and explicit field numbering in str.format strings.
-(policy :schema-version 1 :id "bifrost.python-codeql-quality.str-format-mixed-fields" :name "Mixed string format fields" :message "Use either automatic or manual field numbering in this format string." :severity warning
+(policy :schema-version 1 :id "bifrost.python-codeql-quality.str-format-mixed-fields" :name "Mixed string format fields" :message "Use either automatic or manual field numbering in this format string." :severity error
   :description "Mirrors CodeQL python/ql/src/Expressions/Formatting/MixedExplicitImplicitIn3101Format.ql at ae741615f3e178ce61289a651790dc67fcc18e19. Do not mix automatic and explicit field numbering in str.format strings."
   :tags ["python" "codeql" "quality"]
   :analysis (analysis :type match :selector (rql :schema-version 1

@@ -42,6 +42,65 @@ spec pins the commit that made the change. Pack completeness stays
 identities and provenance are unchanged. The schema-2 errgroup and embed
 declaration models are not jobs and are left as they were.
 
+## Python web-request jobs
+
+Five authored jobs deliver the reviewed Flask, Werkzeug and Django request-read
+models from `semantic-packs/python/web-request/` (all 0.1.0, Apache-2.0). Their
+shards activate on `pkg:pypi/flask`, `pkg:pypi/werkzeug` and `pkg:pypi/django`
+version ranges, so they stay inactive until a workspace pins one of those
+distributions and the engine is Bifrost 0.15.4 or later (bifrost-dev#14581).
+The specs pin commit `b208ba26f90c74652eee6ace2418b5b75250f4d3`. The rules that
+use them, `python.flask-request-to-urlopen` and
+`python.django-request-to-urlopen`, run by default from the first rules release
+after `rules/v0.17.0` (where they are opt-in). That release needs an engine that
+reports a taint rule whose source identities are absent as not run, not failed
+(bifrost-dev#15470), or every Python repository without the framework would
+report the rule as failed.
+
+## Go gob jobs and net interface summaries
+
+Two authored jobs follow the legacy set: `go-stdlib-encoding-gob-declarations`
+and `go-stdlib-encoding-gob` (`bifrost.go.stdlib.encoding-gob-declarations` and
+`bifrost.go.stdlib.encoding-gob`, both 0.1.0, BSD-3-Clause, go1.26.0
+provenance). They declare `NewDecoder`, `NewEncoder`, `Register`,
+`RegisterName` and the pointer-receiver `Decoder` and `Encoder` methods, each a
+complete callable family. The summaries cover the same calls except
+`Decoder.Decode` and `Decoder.DecodeValue`.
+`bifrost.go.stdlib.net` moves to 2.1.0. It adds complete summaries for the
+`net.Conn` and `net.Listener` members other than `Read` and `Write`, and those
+summaries claim `covers_overrides`. On Bifrost 0.15.1 a call through a
+model-declared interface closes only through such a summary (bifrost-dev#9053).
+The specs pin commit `3745e66f03f8599337aa2d72b58c43611414d37e`, except the
+gob summaries spec, which pins `9849718fe0945d4c77011b28616b8f3ad375ba05`.
+`tests/test_go_gob_native_jobs.py` pins the jobs. The policy
+`bifrost.security.go.gob-decode-network-input` depends on all four Go net and
+gob packs.
+
+The semantic-model schema has no transfer output for a write through a pointer
+argument. A complete `Decode` summary with no transfers would claim that
+decoding writes nothing into its argument, so `Decode` and `DecodeValue` stay
+unmodeled. A `require-model` policy that sees a decode is therefore
+inconclusive. A summary pack's `complete` envelope covers the summaries it
+contains: Bifrost rejects complete summaries in a partial envelope
+(`summary.completeness_exceeds_pack`).
+
+## Go gzip and io jobs
+
+Four authored jobs follow the gob jobs: `go-stdlib-compress-gzip`,
+`go-stdlib-compress-gzip-declarations`, `go-stdlib-io` and
+`go-stdlib-io-declarations` (`bifrost.go.stdlib.compress-gzip`,
+`bifrost.go.stdlib.compress-gzip-declarations`, `bifrost.go.stdlib.io` and
+`bifrost.go.stdlib.io-declarations`, all 0.1.0, BSD-3-Clause, go1.26.0
+provenance). They declare `gzip.NewReader`, `Reader.Close`,
+`Reader.Multistream`, `io.ReadAll`, `io.Copy` and `io.LimitReader`, each a
+complete callable family. The summaries cover the same calls except `io.Copy`,
+whose write into `dst` the schema cannot express, as with gob `Decode`. The
+specs pin commit `65b68f55b537ab77b7ecd8569b0c838aac9be0ea`.
+`tests/test_go_read_all_native_jobs.py` pins the jobs. The policy
+`bifrost.security.go.network-read-all-unbounded` depends on the Go net, gzip
+and io packs. The io declarations pack does not yet declare the `io.Reader`
+family of interfaces that #209 asks for.
+
 ## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
@@ -74,6 +133,78 @@ index schema its bundle actually has. Engines that read only schema 3 skip a
 schema-4 release during selection. The released v0.15.0 CLI reproduced all 254
 locked authoring identities unchanged. The published 0.8.0 releases stay
 immutable and keep the 0.14.0 generator they were built with.
+
+After `packs/v0.9.0`, both pins move to the v0.15.1 release (public commit
+`04fdd17d2606d13a7a5f13b012bfbe3ad9729d1e`). The producer is
+`bifrost-semantic-pack-v0.15.1-x86_64-unknown-linux-gnu.tar.gz` (archive
+SHA-256 `8989298644bda041997308823122f904291a22010d93359ed3580053aa052f8e`,
+executable SHA-256
+`7322cdbd653830aaba349c9a278eceb97573965739b2845412a3074080b6acc2`). The
+authoring CLI reports build identity `90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69`.
+The released v0.15.1 CLI reproduced all 264 locked authoring identities
+unchanged. Its pack-engine profile advertises the same capability names as
+0.15.0. The published `packs/v0.9.0` keeps the 0.15.0 producer it was built
+with.
+
+After `packs/v0.12.0`, the authoring CLI pin and the rules smoke test move to
+the v0.15.2 release (public commit `75e40e74aae46ba90cc675dd95ee46f57ffab727`):
+`bifrost-v0.15.2-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`cd659db91ac5c42cbba94ba9fa52a54f5c2fe56b6e7368368fd4ef99c1bd09d7`, executable
+SHA-256 `3fd1cc9c81543103f290449549b51f08c803814ecd4aeb9998cde7394d87a6fe`,
+build identity `340cbbdcea3fc565f6ea8066084ed24962c369d3`). The released
+v0.15.2 CLI reproduced all 278 locked authoring identities unchanged, and its
+pack-engine profile advertises the same capability names as 0.15.1. The native
+producer stays at 0.15.1 until a packs release needs the 0.15.2 producer.
+
+The authoring CLI pin then moves to the v0.15.3 release (public commit
+`f7e104a77b4f869f342dd73af0cc622c4a1a0584`):
+`bifrost-v0.15.3-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`d170344aa72a9fdc12d070ecc4e2435bb3e2fad911fe6ddb298976c994928df4`, executable
+SHA-256 `cec64c7da4980684ac1cb68f005b50a51f3ac4a2ff563cb8638723a26ef0b050`,
+build identity `cc7ebd1676e002b657e10304cfd977bc289e25ed`). The released
+v0.15.3 CLI reproduced all 288 locked authoring identities unchanged. v0.15.3
+is the first release whose `python-documentation` rows carry `test_scope` and
+`entry_point` (bifrost-dev#11705). The rules smoke test in `pack-release.yml`
+moves to v0.15.3 with `rules/v0.16.0`, the first rules release that needs it.
+
+The native producer moves to the v0.15.3 release as well (#311):
+`bifrost-semantic-pack-v0.15.3-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`62a133b303783b51072433a933235172c4cbdb5baa6180c14a4dcdae91fd0379`, executable
+SHA-256 `31fd713a01021de631c95841c61327f1cb066ecb1e123992af39dc7b4205710f`),
+public commit `f7e104a77b4f869f342dd73af0cc622c4a1a0584`. The 0.15.2 and later
+producers contain bifrost-dev#9337, so `bifrost.php-builtin` gets
+`callable_family_complete` certification: the pinned phpstorm-stubs slice
+regenerates as shard
+`4d5075c28ba2aafa4b56205874648b8e33a15f04c6094fa680ddff832194a803`, and with it
+a `proc_open` sink binds as complete. With the 0.15.1 shard `e8e6ad9c…`, which
+has no certified records, it can never complete.
+
+The authoring CLI pin moves to the v0.15.4 release (public commit
+`6c889183c1b0e81c74aa80f6d362bc547315b99b`, build identity
+`ea8da845e8d702206a9acc0c6f28d8bd18fa71c0`):
+`bifrost-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`067bdf199dc1e389f25f35a0a30f8fd24ead29668419df2d2b74c5da5f6ec747`, executable
+SHA-256 `9375d159a40f1e3f36fdfc0b53af079e863692f8c6b438e31fa5d4665efc48a3`).
+The released v0.15.4 CLI reproduced all 294 locked authoring identities
+unchanged. The rules smoke test in `pack-release.yml` moves to v0.15.4 with
+`rules/v0.17.0`, the first rules release qualified on it.
+
+The native producer moves to the v0.15.4 release:
+`bifrost-semantic-pack-v0.15.4-x86_64-unknown-linux-gnu.tar.gz` (archive SHA-256
+`49926bc351762fcf77a8bbe320d6c50dc1af557b4289c15c38bd754da868fe13`, executable
+SHA-256 `b715444f05b70f155f692a4ee5d8139766ecb84b3cfb961125569f3148ba830a`),
+public commit `6c889183c1b0e81c74aa80f6d362bc547315b99b`. It writes native bundle
+index schema 5, which adds verified `input_slots` to generated productions. The
+release contract now accepts schemas 3, 4 and 5. Engines that read only schemas
+3 and 4 refuse a schema 5 bundle.
+
+That pin was withdrawn before any release used it, and the native producer is
+back on v0.15.3. On released Bifrost 0.15.4, a 0.15.4-produced bundle loaded
+through `BIFROST_OPEN_SEMANTIC_PACK_BUNDLE`, the route open-pack acquisition
+exports, panics during Java analysis (`generated production digest`). The same
+bundle runs after `install-semantic-packs`, and the 0.15.3-produced bundle runs
+through both. Do not move the producer past v0.15.3 until an engine release
+fixes this. The contract keeps accepting schema 5 for that later move.
 
 ## Pinned native candidate
 

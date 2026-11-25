@@ -1,0 +1,122 @@
+{
+  "schema_version": 2,
+  "pack_id": "bifrost.research.rust-std-fs-remove",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-research-rust-fs-remove-probe",
+    "version": "0.1.0"
+  },
+  "language": "rust",
+  "ecosystem": "cargo",
+  "compatibility": {
+    "bifrost": ">=0.15.1, <1.0.0",
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Rust 1.100 standard-library std::fs::remove_dir_all (library/std/src/fs.rs), reviewed for the BrokkAi/bifrost-packs CVE-2022-21658 lead. The function is generic over P: AsRef<Path>, takes one parameter and returns io::Result<()>. The declaration claims a complete callable family so a resolved-call locator binds exactly. The summary has no transfers: the Ok value is the unit value, and the std io::Error it returns does not carry the path argument.",
+    "revision": "rust-std-1.100"
+  },
+  "license": "Apache-2.0",
+  "completeness": "complete",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.rust-fs-remove.std",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.rust-sql.std",
+            "name": "std",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/lib.rs",
+              "symbol": "std"
+            }
+          },
+          {
+            "id": "type.rust-fs-remove.std-fs",
+            "name": "std.fs",
+            "type_kind": "module",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.rust-fs-remove.std-fs.remove-dir-all",
+            "owner": "type.rust-fs-remove.std-fs",
+            "name": "remove_dir_all",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "named",
+                    "name": "untyped"
+                  }
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "std.result.Result"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs.remove_dir_all"
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "id": "summaries.rust-fs-remove.std",
+      "activation": [
+        {
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "procedure_summaries",
+        "summaries": [
+          {
+            "id": "summary.rust-fs-remove.std-fs.remove-dir-all",
+            "target": {
+              "path": "library/std/src/fs.rs",
+              "symbol": "std.fs.remove_dir_all",
+              "has_receiver": false,
+              "parameter_count": 1
+            },
+            "completeness": "complete",
+            "locations": [],
+            "transfers": [],
+            "effects": []
+          }
+        ]
+      }
+    }
+  ]
+}

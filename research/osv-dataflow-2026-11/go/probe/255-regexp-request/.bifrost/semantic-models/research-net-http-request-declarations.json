@@ -1,0 +1,144 @@
+{
+  "schema_version": 8,
+  "pack_id": "bifrost.research.net-http-request-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-packs",
+    "version": "0.1.0"
+  },
+  "language": "go",
+  "ecosystem": "go-stdlib",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "https://pkg.go.dev/net/http",
+    "revision": "go1.26.0"
+  },
+  "license": "BSD-3-Clause",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "research.net-http-request.declarations",
+      "activation": [
+        {}
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.578f2e9b9039ae2a3d05683710a192322b39b707d16b044e2c08f264eb8c6742",
+            "name": "net/http",
+            "type_kind": "module",
+            "visibility": "package",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [
+              "http"
+            ],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/http/request.go",
+              "symbol": "net/http"
+            }
+          },
+          {
+            "id": "type.8ea9a727b63a019f2a1d43304b85439f4ce130cc9d60923312e0e88b2dd8810c",
+            "name": "net/http.Request",
+            "type_kind": "struct",
+            "visibility": "public",
+            "is_abstract": false,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/http/request.go",
+              "symbol": "net/http.Request"
+            }
+          },
+          {
+            "id": "type.5bf24f3260fefd45498c246abaab55c9ffe160c730bced77d61167fc4e8754bb",
+            "name": "net/http.ResponseWriter",
+            "type_kind": "interface",
+            "visibility": "public",
+            "is_abstract": true,
+            "is_sealed": false,
+            "has_explicit_type_terms": false,
+            "type_parameters": [],
+            "type_parameter_constraints": [],
+            "embedded_types": [],
+            "hierarchy": [],
+            "aliases": [],
+            "extension_surfaces": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/http/server.go",
+              "symbol": "net/http.ResponseWriter"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.d76d678f5b0c6a2c804936550b350b809c0511491f122e198544d97ab4bd82a2",
+            "owner": "type.8ea9a727b63a019f2a1d43304b85439f4ce130cc9d60923312e0e88b2dd8810c",
+            "name": "FormValue",
+            "member_kind": "method",
+            "visibility": "public",
+            "callable_family_complete": true,
+            "is_static": false,
+            "is_abstract": false,
+            "is_virtual": false,
+            "signature": {
+              "type_parameters": [],
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "string",
+                    "arguments": [],
+                    "nullable": false
+                  },
+                  "optional": false,
+                  "variadic": false
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "string",
+                "arguments": [],
+                "nullable": false
+              }
+            },
+            "receiver": {
+              "pointer": true
+            },
+            "aliases": [],
+            "locator": {
+              "kind": "artifact",
+              "path": "net/http/request.go",
+              "symbol": "net/http.Request.FormValue"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

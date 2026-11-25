@@ -2,11 +2,11 @@
   "schema_version": 1,
   "generator": {
     "repository": "https://github.com/BrokkAi/bifrost",
-    "commit": "fc4a2da2b78c938e811c496b3c21e5b02f415048",
-    "version": "0.15.0",
-    "asset": "bifrost-semantic-pack-v0.15.0-x86_64-unknown-linux-gnu.tar.gz",
-    "asset_sha256": "825294fb3ddda0c97c44c222b544b451818f04dd11817dcd79069d1c856bac79",
-    "binary_sha256": "d6c19acdcbf37d495e4c0b3f7490746e6235da3522aba5deba4c78f904312031"
+    "commit": "f7e104a77b4f869f342dd73af0cc622c4a1a0584",
+    "version": "0.15.3",
+    "asset": "bifrost-semantic-pack-v0.15.3-x86_64-unknown-linux-gnu.tar.gz",
+    "asset_sha256": "62a133b303783b51072433a933235172c4cbdb5baa6180c14a4dcdae91fd0379",
+    "binary_sha256": "31fd713a01021de631c95841c61327f1cb066ecb1e123992af39dc7b4205710f"
   },
   "jobs": [
     {
@@ -175,6 +175,11 @@
       "artifact": "semantic-packs/models/go-stdlib-net-http-declarations.json"
     },
     {
+      "name": "go-stdlib-database-sql-declarations",
+      "spec": "semantic-packs/go/go-stdlib-database-sql-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-database-sql-declarations.json"
+    },
+    {
       "name": "go-stdlib-bytes-declarations",
       "spec": "semantic-packs/go/go-stdlib-bytes-declarations.spec.json",
       "artifact": "semantic-packs/models/go-stdlib-bytes-declarations.json"
@@ -278,6 +283,76 @@
       "name": "node-runtime-values-typescript",
       "spec": "semantic-packs/node/runtime-values/node-runtime-values-typescript.spec.json",
       "artifact": "semantic-packs/node/runtime-values/typescript/bifrost.node-runtime-values.json"
+    },
+    {
+      "name": "go-stdlib-encoding-gob",
+      "spec": "semantic-packs/go/go-stdlib-encoding-gob.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-encoding-gob.json"
+    },
+    {
+      "name": "go-stdlib-encoding-gob-declarations",
+      "spec": "semantic-packs/go/go-stdlib-encoding-gob-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-encoding-gob-declarations.json"
+    },
+    {
+      "name": "go-stdlib-compress-gzip",
+      "spec": "semantic-packs/go/go-stdlib-compress-gzip.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-compress-gzip.json"
+    },
+    {
+      "name": "go-stdlib-compress-gzip-declarations",
+      "spec": "semantic-packs/go/go-stdlib-compress-gzip-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-compress-gzip-declarations.json"
+    },
+    {
+      "name": "go-stdlib-io",
+      "spec": "semantic-packs/go/go-stdlib-io.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-io.json"
+    },
+    {
+      "name": "go-stdlib-io-declarations",
+      "spec": "semantic-packs/go/go-stdlib-io-declarations.spec.json",
+      "artifact": "semantic-packs/models/go-stdlib-io-declarations.json"
+    },
+    {
+      "name": "rust-std-deref-summaries",
+      "spec": "semantic-packs/rust/rust-std-deref-summaries.spec.json",
+      "artifact": "semantic-packs/rust/bifrost.rust-std-deref-summaries.json"
+    },
+    {
+      "name": "ruby-core-collections",
+      "spec": "semantic-packs/ruby/ruby-core-collections.spec.json",
+      "artifact": "semantic-packs/ruby/ruby-core-collections.json"
+    },
+    {
+      "name": "jdk-object-input-stream-summaries",
+      "spec": "semantic-packs/jvm/jdk-object-input-stream-summaries.spec.json",
+      "artifact": "semantic-packs/jvm/object-input-stream/bifrost.jdk-object-input-stream-summaries.json"
+    },
+    {
+      "name": "python-flask-request-declarations",
+      "spec": "semantic-packs/python/python-flask-request-declarations.spec.json",
+      "artifact": "semantic-packs/python/web-request/bifrost.python-flask-request-declarations.json"
+    },
+    {
+      "name": "python-werkzeug-request-declarations",
+      "spec": "semantic-packs/python/python-werkzeug-request-declarations.spec.json",
+      "artifact": "semantic-packs/python/web-request/bifrost.python-werkzeug-request-declarations.json"
+    },
+    {
+      "name": "python-werkzeug-request-summaries",
+      "spec": "semantic-packs/python/python-werkzeug-request-summaries.spec.json",
+      "artifact": "semantic-packs/python/web-request/bifrost.python-werkzeug-request-summaries.json"
+    },
+    {
+      "name": "python-django-request-declarations",
+      "spec": "semantic-packs/python/python-django-request-declarations.spec.json",
+      "artifact": "semantic-packs/python/web-request/bifrost.python-django-request-declarations.json"
+    },
+    {
+      "name": "python-django-request-summaries",
+      "spec": "semantic-packs/python/python-django-request-summaries.spec.json",
+      "artifact": "semantic-packs/python/web-request/bifrost.python-django-request-summaries.json"
     }
   ],
   "recipes": [

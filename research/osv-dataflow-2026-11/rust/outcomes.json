@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "evaluation_date": "2026-11-05",
+  "bifrost": {
+    "version": "0.15.1",
+    "build_identity": "90d820b9ee3b1bcca9e3dd2a049b1b51dc854b69",
+    "archive": "bifrost-v0.15.1-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "4dd3c31a47477581610f35ca1a588d7cce50d500ed9fcf5967f1240766483a8c",
+    "binary_sha256": "78a4c1754a4c8468c082edb9cf56ae370f9c61be47c54b302e5ded30e4fe3b33",
+    "semantic_pack_bundle": {
+      "release": "packs/v0.10.0",
+      "archive": "bifrost.public.packs-0.10.0-native.tar.gz",
+      "archive_sha256": "3f39f9f5ec2d028e293a238ff796260101915e50963a44a93c812d9d02860945"
+    },
+    "environment": {
+      "BIFROST_OPEN_SEMANTIC_PACK_BUNDLE": "<extract>/bifrost-semantic-packs",
+      "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+      "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+      "BIFROST_CACHE_DIR": "fresh per run"
+    },
+    "flags": [
+      "--policy",
+      "--no-builtin-policies",
+      "--no-incremental"
+    ]
+  },
+  "source": {
+    "osv_archive": "https://osv-vulnerabilities.storage.googleapis.com/crates.io/all.zip",
+    "toolchain_advisories": "https://api.osv.dev/v1/vulns/<CVE> and https://github.com/rust-lang/rust/security/advisories",
+    "downloaded": "2026-11-05"
+  },
+  "remove_dir_all_probe": {
+    "policy": "probe/297-remove-dir-all/.bifrost/policies/remove-dir-all.rqlp",
+    "policy_hash": "aedd21a8029132aae8f84e0f41e0d7260d8ef9860bd2ee30035af8bbb09f8826",
+    "cases": [
+      {
+        "sources": "src/a_var.rs",
+        "completion": "proven_by_summary",
+        "reported": [
+          "a_var.rs:3 possible, partial (proof_partial)"
+        ]
+      },
+      {
+        "sources": "src/f_var_borrow.rs",
+        "completion": "proven_by_summary",
+        "reported": [
+          "f_var_borrow.rs:3 possible, partial (proof_partial)"
+        ]
+      },
+      {
+        "sources": "src/b_args_nth.rs",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [
+          "possible, partial"
+        ],
+        "diagnostics": [
+          "procedure semantics for b_args_nth.rs.run is unknown"
+        ]
+      },
+      {
+        "sources": "src/c_args_binding.rs",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [
+          "possible, partial"
+        ],
+        "diagnostics": [
+          "procedure semantics for c_args_binding.rs.run is unknown"
+        ]
+      },
+      {
+        "sources": "src/d_stdin_trim.rs",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [],
+        "diagnostics": [
+          "call unwrap has snapshot input status unknown"
+        ]
+      },
+      {
+        "sources": "src/e_constant.rs",
+        "completion": "proven_by_summary",
+        "reported": []
+      },
+      {
+        "sources": "src/g_iflet.rs",
+        "completion": "inconclusive (capability_incomplete)",
+        "reported": [],
+        "diagnostics": [
+          "procedure semantics is unsupported (values)"
+        ]
+      },
+      {
+        "sources": "src/h_no_sink_unwrap.rs",
+        "completion": "inconclusive (partial_discovery)",
+        "reported": [
+          "possible, partial"
+        ],
+        "diagnostics": [
+          "procedure semantics is unknown"
+        ]
+      },
+      {
+        "sources": "src/a_var.rs",
+        "variant": "bifrost.rust-stdlib enabled (with-rust-stdlib-packs.json), unpinned or pinned-rust-toolchain.toml",
+        "completion": "not_run",
+        "diagnostics": [
+          "qualified-call-locator-partial: std.fs.remove_dir_all"
+        ]
+      }
+    ]
+  },
+  "leads": [
+    {
+      "issue": 297,
+      "repository": "BrokkAi/bifrost-packs",
+      "language": "rust",
+      "advisory": "CVE-2022-21658",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10004",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9920",
+        "https://github.com/BrokkAi/bifrost-dev/issues/6542",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005"
+      ],
+      "note": "Version-independent slice probed: env::var/env::args reaching std::fs::remove_dir_all. env::var positives run proven_by_summary but every finding is possible with partial evidence (the summarized remove_dir_all call keeps 'whole-program Rust dispatch refinement', bifrost-dev#10004); args().nth().unwrap() and stdin cases are inconclusive (bifrost-dev#9920); the constant near miss is clean. With bifrost.rust-stdlib enabled the policy is not_run (bifrost-dev#6542). The affected-toolchain part needs bifrost-dev#10005.",
+      "probe": "probe/297-remove-dir-all"
+    },
+    {
+      "issue": 298,
+      "repository": "BrokkAi/bifrost-packs",
+      "language": "rust",
+      "advisory": "CVE-2021-29922",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/6542"
+      ],
+      "note": "Toolchain evidence works (1.52.1 locked row, target-of joins on declared_by). str::parse::<Ipv4Addr> has no target (bifrost-dev#6542); a taint sink selector rejects a join with dependency evidence (bifrost-dev#10005). No version-independent slice: fixed toolchains reject leading zeros.",
+      "probe": "probe/298-ip-parse"
+    },
+    {
+      "issue": 299,
+      "repository": "BrokkAi/bifrost-packs",
+      "language": "rust",
+      "advisory": "CVE-2025-11233",
+      "outcome": "blocked_by_engine",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/9902",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/4307",
+        "https://github.com/BrokkAi/bifrost-dev/issues/4319",
+        "https://github.com/BrokkAi/bifrost-dev/issues/10004"
+      ],
+      "note": "build-configuration-of reports os cygwin from .cargo/config.toml build.target and the 1.88.0 toolchain row is locked, but the same Cargo config makes the version predicate incomplete (bifrost-dev#9902). Taint can't be gated on toolchain evidence (bifrost-dev#10005); the Path guard-to-use relation needs bifrost-dev#4307 and #4319.",
+      "probe": "probe/299-cygwin"
+    },
+    {
+      "issue": 462,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2025-58160",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (tracing-subscriber): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    },
+    {
+      "issue": 463,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2024-21530",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (cocoon): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    },
+    {
+      "issue": 464,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2025-27498",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (ascon-aead): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    },
+    {
+      "issue": 465,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2025-25194",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (activitypub_federation): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    },
+    {
+      "issue": 466,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2022-45299",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (webbrowser): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    },
+    {
+      "issue": 467,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2021-45712",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (rust-embed): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    },
+    {
+      "issue": 468,
+      "repository": "BrokkAi/bifrost-premium-packs",
+      "language": "rust",
+      "advisory": "CVE-2024-23644",
+      "outcome": "premium_not_implemented",
+      "blocking_issues": [
+        "https://github.com/BrokkAi/bifrost-dev/issues/10005",
+        "https://github.com/BrokkAi/bifrost-dev/issues/9919"
+      ],
+      "note": "Third-party crate (trillium-http, trillium-client): premium placement, not implemented here. The affected-version gate needs bifrost-dev#10005 and #9919."
+    }
+  ],
+  "input_sha256": {
+    "probe/297-remove-dir-all/.bifrost/policies/remove-dir-all.rqlp": "29666000f6fae421c0f08c5a1659be0619ad1854d4d3e1377bba831277d0af31",
+    "probe/297-remove-dir-all/.bifrost/semantic-models/bifrost.research.rust-std-fs-remove.json": "8386cb3db5624fa4be2b063bcc5f941c53d599a78a7f422578953803b756f343",
+    "probe/297-remove-dir-all/.bifrost/semantic-models/bifrost.rust-std-sql-taint.json": "7a5dcfdc5c6d251faffb03d3d78248585ccc45e70c0f0f2fcf21bd19c3b5ac01",
+    "probe/297-remove-dir-all/Cargo.toml": "d3a327113562d4f383cbefafec47468f6f310e45fe6bfbfb255d2d31d452912a",
+    "probe/297-remove-dir-all/pinned-rust-toolchain.toml": "9fdf6a644a249a8bb0417289da8894eecb0de8cdcae1a8267327ea24fa75a276",
+    "probe/297-remove-dir-all/src/a_var.rs": "4d4d77cd7f1680d56fb4845f9009d1ec1a12c48fafef800df4ec59b56eed03f2",
+    "probe/297-remove-dir-all/src/b_args_nth.rs": "85013b7d10bfb694c13b770204e11c34c84d18027174da1e83fc0b5806c07c93",
+    "probe/297-remove-dir-all/src/c_args_binding.rs": "162bce816739c2889ef97e39ef39aac969a2aba80460e043228a51e664e4fff4",
+    "probe/297-remove-dir-all/src/d_stdin_trim.rs": "331a9a64177d32e03c6bd218fdb9269ec7dbc5497d69442c1367212aacbb08d2",
+    "probe/297-remove-dir-all/src/e_constant.rs": "8d0bb71eb1f7659ae3a9aadf5b1adb7416f39de621927ea6815ad77d3a313abd",
+    "probe/297-remove-dir-all/src/f_var_borrow.rs": "ebff091bd12158a99110c1ed5ff8059db79831ce3c50ff13c89f925e2851ddc8",
+    "probe/297-remove-dir-all/src/g_iflet.rs": "52fe5ae16cc57fbcd7b83fd381a3abd6746a5e59aa49536217984d24d894ab8e",
+    "probe/297-remove-dir-all/src/h_no_sink_unwrap.rs": "cc10071a5aee33ff454a5e1cfbef1db578aa659ae39e4b61f78a7a32e5fb3672",
+    "probe/297-remove-dir-all/src/main.rs": "8ec5abb46b7da9a6ec3defc876be4bad49e41808b9b961feb03e222e4d5fc6ed",
+    "probe/297-remove-dir-all/with-rust-stdlib-packs.json": "2f4a84823b36d4e68af58c3f3543ba1ced466682b9873b535c591c97b45d0a9a",
+    "probe/298-ip-parse/.bifrost/policies/gated.rqlp": "9bfa946a4e74213d12a220259e448553abd6c7f3c67a501fd3789bc4716b4a82",
+    "probe/298-ip-parse/.bifrost/semantic-models/bifrost.rust-std-sql-taint.json": "7a5dcfdc5c6d251faffb03d3d78248585ccc45e70c0f0f2fcf21bd19c3b5ac01",
+    "probe/298-ip-parse/Cargo.toml": "a600779effaa1f59d77d4f79e188c4dcf7a139b7023695146ced76ea2f39556d",
+    "probe/298-ip-parse/bindings.rql": "2eac3f93378b809ff45f91777678854544c80bb453f515ecd0136a27113ea6a3",
+    "probe/298-ip-parse/bindings2.rql": "3752d6b7e1422a3b089440126a1069f6a7e7c482a1e68394cd1c7287d7e3e151",
+    "probe/298-ip-parse/rust-toolchain.toml": "be09dda56f267b51a00ba4fd00f95b4ed5da9a0c295c6fa2f19766206bc78a6e",
+    "probe/298-ip-parse/src/main.rs": "5f1db251f6222d4424d11fc7f5290b1ea1e94f02f3633e72c23532c38f0258d2",
+    "probe/298-ip-parse/target.rql": "f5ee4f5e79a0e9613423d34aa8dd9bfcc77da72418dcaf138d9adf1e17b99bf2",
+    "probe/298-ip-parse/toolchain.rql": "4af44cf35440e764ab6355450d3544b18f592721e0575f548cf2811aee5cd1f2",
+    "probe/299-cygwin/.cargo/config.toml": "2ad13cb1189fb08819b11d8d2c24f5c13ec3ea236a7cdb7980ee4a353389dbcd",
+    "probe/299-cygwin/Cargo.toml": "f703d5fe21def9e05ac9f7750bc92087887b536d18fbb672d16805953a59512a",
+    "probe/299-cygwin/build-configuration.rql": "af876b5a5b114fea1ed01cc0a19a23bc5e0395a77ade848a787941823cdb19dc",
+    "probe/299-cygwin/rust-toolchain.toml": "fdaf5c39586fd9584852826851a351483d1392a08014fb0925fb1b23da758cd6",
+    "probe/299-cygwin/src/main.rs": "712f4d0763faf4f313973cd1a25d773c8683947335d53c1214a9ca049bc6e64a",
+    "probe/299-cygwin/toolchain.rql": "9b12226d869be49a762d23935a030897f5b3a9982a85f82dd9fad5b58f57e265"
+  }
+}

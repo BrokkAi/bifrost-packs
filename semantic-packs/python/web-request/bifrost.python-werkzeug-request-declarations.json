@@ -1,0 +1,405 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-werkzeug-request-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": []
+  },
+  "provenance": {
+    "source": "Werkzeug 3.1.0 source (src/werkzeug/wrappers/request.py, sansio/request.py, datastructures/)",
+    "revision": "pallets/werkzeug 3.1.0"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-werkzeug-request",
+      "activation": [
+        {
+          "package": {
+            "name": "pkg:pypi/werkzeug",
+            "version": ">=3.1.0, <3.2.0"
+          },
+          "targets": [],
+          "configurations": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.werkzeug.local.local-proxy",
+            "name": "werkzeug.local.LocalProxy",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/local.py",
+              "symbol": "werkzeug.local.LocalProxy"
+            }
+          },
+          {
+            "id": "type.python.werkzeug.wrappers.request",
+            "name": "werkzeug.wrappers.Request",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/wrappers/request.py",
+              "symbol": "werkzeug.wrappers.Request"
+            }
+          },
+          {
+            "id": "type.python.werkzeug.datastructures.immutable-multi-dict",
+            "name": "werkzeug.datastructures.structures.ImmutableMultiDict",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/datastructures/structures.py",
+              "symbol": "werkzeug.datastructures.structures.ImmutableMultiDict"
+            }
+          },
+          {
+            "id": "type.python.werkzeug.datastructures.environ-headers",
+            "name": "werkzeug.datastructures.headers.EnvironHeaders",
+            "type_kind": "class",
+            "visibility": "public",
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/datastructures/headers.py",
+              "symbol": "werkzeug.datastructures.headers.EnvironHeaders"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.werkzeug.request.args",
+            "owner": "type.python.werkzeug.wrappers.request",
+            "name": "args",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "werkzeug.datastructures.structures.ImmutableMultiDict"
+              }
+            ],
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "werkzeug.datastructures.structures.ImmutableMultiDict"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/sansio/request.py",
+              "symbol": "werkzeug.wrappers.Request.args"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.request.form",
+            "owner": "type.python.werkzeug.wrappers.request",
+            "name": "form",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "werkzeug.datastructures.structures.ImmutableMultiDict"
+              }
+            ],
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "werkzeug.datastructures.structures.ImmutableMultiDict"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/wrappers/request.py",
+              "symbol": "werkzeug.wrappers.Request.form"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.request.cookies",
+            "owner": "type.python.werkzeug.wrappers.request",
+            "name": "cookies",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "werkzeug.datastructures.structures.ImmutableMultiDict"
+              }
+            ],
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "werkzeug.datastructures.structures.ImmutableMultiDict"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/sansio/request.py",
+              "symbol": "werkzeug.wrappers.Request.cookies"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.request.headers",
+            "owner": "type.python.werkzeug.wrappers.request",
+            "name": "headers",
+            "member_kind": "property",
+            "visibility": "public",
+            "is_static": false,
+            "exact_return_classes": [
+              {
+                "kind": "named",
+                "name": "werkzeug.datastructures.headers.EnvironHeaders"
+              }
+            ],
+            "signature": {
+              "parameters": [],
+              "returns": {
+                "kind": "named",
+                "name": "werkzeug.datastructures.headers.EnvironHeaders"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/sansio/request.py",
+              "symbol": "werkzeug.wrappers.Request.headers"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.request.get-json",
+            "owner": "type.python.werkzeug.wrappers.request",
+            "name": "get_json",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "force",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "silent",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "cache",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/wrappers/request.py",
+              "symbol": "werkzeug.wrappers.Request.get_json(force, silent, cache)"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.immutable-multi-dict.get",
+            "owner": "type.python.werkzeug.datastructures.immutable-multi-dict",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "default",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/datastructures/structures.py",
+              "symbol": "werkzeug.datastructures.structures.ImmutableMultiDict.get(key, default, type)"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.immutable-multi-dict.getlist",
+            "owner": "type.python.werkzeug.datastructures.immutable-multi-dict",
+            "name": "getlist",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.list"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/datastructures/structures.py",
+              "symbol": "werkzeug.datastructures.structures.ImmutableMultiDict.getlist(key, type)"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.environ-headers.get",
+            "owner": "type.python.werkzeug.datastructures.environ-headers",
+            "name": "get",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                },
+                {
+                  "name": "default",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.object"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/datastructures/headers.py",
+              "symbol": "werkzeug.datastructures.headers.EnvironHeaders.get(key, default, type)"
+            }
+          },
+          {
+            "id": "member.python.werkzeug.environ-headers.getlist",
+            "owner": "type.python.werkzeug.datastructures.environ-headers",
+            "name": "getlist",
+            "member_kind": "method",
+            "visibility": "public",
+            "is_static": false,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  }
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.list"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "werkzeug/datastructures/headers.py",
+              "symbol": "werkzeug.datastructures.headers.EnvironHeaders.getlist(key, type)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

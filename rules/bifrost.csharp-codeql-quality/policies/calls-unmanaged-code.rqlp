@@ -7,7 +7,7 @@
   :id "bifrost.csharp-codeql-quality.calls-unmanaged-code"
   :name "C# call to unmanaged code"
   :message "call to an extern method; replace it with a call to managed code if possible"
-  :severity warning
+  :severity note
   :description "Mirrors CodeQL csharp/ql/src/Bad Practices/CallsUnmanagedCode.ql at commit ae741615f3e178ce61289a651790dc67fcc18e19. Reports proven calls to source methods declared extern in a class, such as DllImport platform-invoke declarations."
   :tags ["csharp" "codeql" "quality" "interop"]
   :analysis (analysis :type match :selector
