@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "ecb8aa7f78a2190aaa05ba91e60cc2bfd08a7e0a1465d3e280238918231e685e"
+      "sha256": "f2093f5132fa1478b47e61c8ff68ad3eeea8ee2ed9b242ec04479ba0a80df415"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -274,9 +274,23 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/javascript/file-content-to-unbounded-decompression.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/file-content-to-unbounded-decompression.rqlp",
+      "sha256": "d4b1ac63cd2c0ab6e8185e6a12e7d065270d54d7dfeb05b5225b5e412f37bf10",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/javascript/process-input-to-child-process-command.rqlp",
       "source_path": "rules/bifrost.security/policies/javascript/process-input-to-child-process-command.rqlp",
       "sha256": "601934e443f9493dcb739e411645a42c1becc9518b0571d9cde4b4ef36b3549c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/javascript/process-input-to-fetch-url.rqlp",
+      "source_path": "rules/bifrost.security/policies/javascript/process-input-to-fetch-url.rqlp",
+      "sha256": "a67bd6ae07d6b1e9f6a1fffa91e16382919ab207f87cf800d4dc409900a27c82",
       "classification": "public",
       "license": "Apache-2.0"
     },
