@@ -79,7 +79,7 @@ Languages are explicit manifest declarations; a rule may appear in multiple rows
 | scala | 17 |
 | typescript | 38 |
 
-Activation labels: opt-in 78, unspecified 236. Omitted labels remain unspecified.
+Activation labels: opt-in 80, unspecified 234. Omitted labels remain unspecified.
 Metadata is an inventory, not evidence of enablement or behavior qualification.
 [Full rule catalog](docs/rule-catalog.md).
 <!-- rule-stats:end -->
@@ -88,13 +88,13 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.15.0` and `rules/v0.16.0`. `packs/v0.16.0`
-and `rules/v0.17.0` are prepared next. Both load on Bifrost **0.15.3** or later
-and are qualified on 0.15.4. `packs/v0.16.0` stays on the 0.15.3 producer and
-adds the reviewed `ObjectInputStream` constructor summary. `rules/v0.17.0`
-depends on it, adds opt-in Flask and Django request-to-`urlopen` policies whose
-request packs are still source-only, and narrows the Python SSL rules. See
-[release streams](docs/release-streams.md).
+The latest releases are `packs/v0.16.0` and `rules/v0.17.0`. `packs/v0.17.0`
+and `rules/v0.18.0` are prepared next. Both load on Bifrost **0.15.3** or later
+and are qualified on 0.15.4. `packs/v0.17.0` stays on the 0.15.3 producer, adds
+the Flask, Werkzeug and Django request packs and extends the Python performance
+summaries. `rules/v0.18.0` depends on it and adds seven default and eleven
+opt-in policies; the Flask and Django request-to-`urlopen` rules stay opt-in.
+See [release streams](docs/release-streams.md).
 
 ## Source verification
 

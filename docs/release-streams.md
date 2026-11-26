@@ -17,33 +17,58 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-23, the latest published streams are `packs/v0.15.0` and
-`rules/v0.16.0`. `packs/v0.16.0` and `rules/v0.17.0` are prepared next; tag
-`packs/v0.16.0` first, because `rules/v0.17.0` depends on it exactly. Both load
+As of 2026-11-26, the latest published streams are `packs/v0.16.0` and
+`rules/v0.17.0`. `packs/v0.17.0` and `rules/v0.18.0` are prepared next; tag
+`packs/v0.17.0` first, because `rules/v0.18.0` depends on it exactly. Both load
 on Bifrost **0.15.3** or later and are qualified on 0.15.4.
 
-`packs/v0.16.0` is a minor release that adds the reviewed, authored
-`bifrost.jdk-object-input-stream-summaries` 0.1.0 (#408). The other 71 packs
-keep their IDs, versions and manifests, and the index stays schema 4. It stays
-on the 0.15.3 producer because a 0.15.4-produced bundle panics Java analysis on
-released 0.15.4 when loaded through `BIFROST_OPEN_SEMANTIC_PACK_BUNDLE` with a
-detected JDK 21.0.8. All 282 open policy fixtures were compared on 0.15.4
-against `packs/v0.15.0`, and 281 are identical. In the other,
-`java-objectinputstream-read-without-filter`, 7 findings become 0, still
-inconclusive, when a workspace also carries its own copy of the new pack;
-removing the copy restores all 7.
+`packs/v0.17.0` is a minor release. It stays on the 0.15.3 producer, because a
+0.15.4-produced bundle panics Java analysis on released 0.15.4
+(bifrost-dev#15349), and the index stays schema 4.
 
-`rules/v0.17.0` is a minor release that depends exactly on `packs/v0.16.0`:
+- Added (#418): the reviewed Flask, Werkzeug and Django request packs
+  (`bifrost.python-flask-request-declarations`,
+  `bifrost.python-werkzeug-request-declarations` and `-summaries`,
+  `bifrost.python-django-request-declarations` and `-summaries`, all 0.1.0).
+  They activate only on pinned `pkg:pypi/flask`, `werkzeug` and `django`
+  versions, and only on Bifrost 0.15.4 or later.
+- Changed: `bifrost.python-performance-summaries` 1.2.0 (#168) models
+  `json.loads`, `json.dumps`, `re.compile` and the missing `pickle` arities, and
+  carries input to the return value so taint is not cut through them.
+  `bifrost.python-stdlib-api-declarations` is regenerated from its updated spec.
+- The other 70 packs keep their IDs, versions and manifests.
 
-- New opt-in `python.flask-request-to-urlopen` and
-  `python.django-request-to-urlopen` (#409, CWE-918). Their Flask, Werkzeug and
-  Django request packs are source-only and not in `packs/v0.16.0`, so with the
-  released packs alone these flows are not reported and the run is not clean.
-- `java.objectinputstream-read-without-filter` uses the new summary. On Bifrost
-  0.15.4 its fixture reports 7 findings instead of 3, and every run stays
-  inconclusive (#408).
-- The Python SSL rules are narrowed to calls named `wrap_socket` or
-  `SSLContext` (#411).
+All 319 open policy fixtures give the same result on released 0.15.4 with
+`packs/v0.16.0` and with this bundle. A parallel first pass under heavy machine
+load varied on the eight Flask and Django request fixtures with both bundles
+(`endpoint_role_unresolved` failures and an engine panic); run one at a time,
+all eight match.
+
+`rules/v0.18.0` is a minor release that depends exactly on `packs/v0.17.0`:
+
+- New default policies: `python.predictable-temporary-path` (#96) and six
+  Python correctness rules in `bifrost.code-smells` 4.1.0 (NumPy global RNG next
+  to a local generator, `or`-default argument mutation, pandas chained and
+  result-used `inplace`, shared class-attribute mutation and `split('.')[1]`
+  file extensions). On 0.15.4 all seven complete on a plain Python project.
+- New opt-in policies: `python-assert-argument-validation`; the requests,
+  httpx, aiohttp and urllib3 TLS-verification rules (#427); Flask
+  request-in-`assert`, request-to-decompress and request-to-`parse_qs`; Node
+  file-content-to-unbounded-decompression and process-input-to-`fetch`-URL;
+  and the candidate `rust.cleartext-logging` (#94). Except for the assert rules,
+  they need source-only packs that are not in `packs/v0.17.0`, so with the
+  released packs alone those runs are not clean.
+- `python.flask-request-to-urlopen` and `python.django-request-to-urlopen` stay
+  opt-in. Their packs now ship, but on 0.15.4 a default run reports them as
+  failed in every repository without the framework (bifrost-dev#15470, fixed by
+  bifrost-dev#15505, not yet in a release).
+- Changed: `python.hardcoded-credentials` no longer has an ambiguous
+  `hmac.new` sink (#417); `python.insecure-temporary-file` drops Python 2
+  `os.tempnam` and `os.tmpnam` (#488); `comparison-using-is-non-portable` drops
+  an unused capability requirement (#487).
+- Known on 0.15.4: `python.insecure-temporary-file`, `overly-permissive-file`,
+  `polynomial-redos` and `xml-bomb` report `not_run` because typeshed and an
+  authored pack both declare the callable (bifrost-dev#14548, fixed after 0.15.4).
 
 The earlier release notes follow.
 
