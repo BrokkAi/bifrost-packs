@@ -1,0 +1,578 @@
+{
+  "files": [
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/README.md",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/README.md",
+      "sha256": "df266f6c921b8e389b1d139ed97463e7d6a4321f287dcf75283248c8b6efcaa4",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "sha256": "256eb563e2497a41578c21fcf6ff4da9629ff326762aee69126768cdaa01fd5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "sha256": "f4129490c1592643305b58879311144a5db09a19a3c7804b773b67b72ae9f820",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/app.py",
+      "sha256": "4860800280aa77add402e7cabc64771c635ac9ee3da29c7fc8dd99b821611d05",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/pyproject.toml",
+      "sha256": "1a10810832409b0dc2fdf941faa020056c78be6c52de5c655aab29f992ae8417",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/incomplete-with-target/requirements.txt",
+      "sha256": "9ff2177e763edd4e9724ffbd5a78794aa24e8492245e2f9e2b3f521fdf956b74",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "sha256": "256eb563e2497a41578c21fcf6ff4da9629ff326762aee69126768cdaa01fd5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "sha256": "f4129490c1592643305b58879311144a5db09a19a3c7804b773b67b72ae9f820",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/app.py",
+      "sha256": "68b6287965bcdf77eb882ff0469593b4399131c7b16567c40233c19feee9b692",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/pyproject.toml",
+      "sha256": "1a10810832409b0dc2fdf941faa020056c78be6c52de5c655aab29f992ae8417",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/known-false-positive/requirements.txt",
+      "sha256": "9ff2177e763edd4e9724ffbd5a78794aa24e8492245e2f9e2b3f521fdf956b74",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "sha256": "256eb563e2497a41578c21fcf6ff4da9629ff326762aee69126768cdaa01fd5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "sha256": "f4129490c1592643305b58879311144a5db09a19a3c7804b773b67b72ae9f820",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/app.py",
+      "sha256": "ae5dea3e0ec6ea87ce793b1537efdf7967e7ead236362d0bb04f5cc8987fe75e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/pyproject.toml",
+      "sha256": "1a10810832409b0dc2fdf941faa020056c78be6c52de5c655aab29f992ae8417",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/near-miss/requirements.txt",
+      "sha256": "9ff2177e763edd4e9724ffbd5a78794aa24e8492245e2f9e2b3f521fdf956b74",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "sha256": "256eb563e2497a41578c21fcf6ff4da9629ff326762aee69126768cdaa01fd5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "sha256": "f4129490c1592643305b58879311144a5db09a19a3c7804b773b67b72ae9f820",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/app.py",
+      "sha256": "9f99e67647e0df4fbb05a6bd5cbfaff166748a4cc93766d1c13c3e4bd6faaa30",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/pyproject.toml",
+      "sha256": "1a10810832409b0dc2fdf941faa020056c78be6c52de5c655aab29f992ae8417",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/positive/requirements.txt",
+      "sha256": "9ff2177e763edd4e9724ffbd5a78794aa24e8492245e2f9e2b3f521fdf956b74",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/.bifrost/policies/aiohttp-tls-verification-disabled.rqlp",
+      "sha256": "256eb563e2497a41578c21fcf6ff4da9629ff326762aee69126768cdaa01fd5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/.bifrost/semantic-models/bifrost.python-aiohttp-declarations.json",
+      "sha256": "f4129490c1592643305b58879311144a5db09a19a3c7804b773b67b72ae9f820",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/app.py",
+      "sha256": "9f99e67647e0df4fbb05a6bd5cbfaff166748a4cc93766d1c13c3e4bd6faaa30",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/aiohttp/unpinned/pyproject.toml",
+      "sha256": "f4ba2665f00c4aaf28ceb3b488d343f7f6ba403a7f586dad545b76f16f693631",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "sha256": "d227edfc86abcbe9ffd12e047290a986298ae7510588e1446ca4a6ecc4f5bb03",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "sha256": "23e7212f3ffea519d134c4a059942ef8a30bdc40f4ffca482da4a9d308e6f8a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/app.py",
+      "sha256": "c026cb55a4328edc207660dbaa9ed9a4ea9e1f79d988658bb46951488b268b7c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/pyproject.toml",
+      "sha256": "8ddb897e3ecc539854540f3063659609202177cf7064d442834ade7dfa72955b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/known-false-positive/requirements.txt",
+      "sha256": "84a869ce0ab453cbdb7dbf81622ea2bc4eaddcc182528fbaacba09365df9446d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "sha256": "d227edfc86abcbe9ffd12e047290a986298ae7510588e1446ca4a6ecc4f5bb03",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "sha256": "23e7212f3ffea519d134c4a059942ef8a30bdc40f4ffca482da4a9d308e6f8a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/app.py",
+      "sha256": "d017f5ca6b9cb9a44019db6290b3ce8e8539673111cd03eb45d3551685368506",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/pyproject.toml",
+      "sha256": "8ddb897e3ecc539854540f3063659609202177cf7064d442834ade7dfa72955b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/near-miss/requirements.txt",
+      "sha256": "84a869ce0ab453cbdb7dbf81622ea2bc4eaddcc182528fbaacba09365df9446d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "sha256": "d227edfc86abcbe9ffd12e047290a986298ae7510588e1446ca4a6ecc4f5bb03",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "sha256": "23e7212f3ffea519d134c4a059942ef8a30bdc40f4ffca482da4a9d308e6f8a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/app.py",
+      "sha256": "086697c54184b9cbb2741aa0e5eed986b09abf032d1b0eccc17c7eaeb6d63465",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/pyproject.toml",
+      "sha256": "8ddb897e3ecc539854540f3063659609202177cf7064d442834ade7dfa72955b",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/positive/requirements.txt",
+      "sha256": "84a869ce0ab453cbdb7dbf81622ea2bc4eaddcc182528fbaacba09365df9446d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/.bifrost/policies/httpx-tls-verification-disabled.rqlp",
+      "sha256": "d227edfc86abcbe9ffd12e047290a986298ae7510588e1446ca4a6ecc4f5bb03",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/.bifrost/semantic-models/bifrost.python-httpx-declarations.json",
+      "sha256": "23e7212f3ffea519d134c4a059942ef8a30bdc40f4ffca482da4a9d308e6f8a9",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/app.py",
+      "sha256": "086697c54184b9cbb2741aa0e5eed986b09abf032d1b0eccc17c7eaeb6d63465",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/httpx/unpinned/pyproject.toml",
+      "sha256": "f4ba2665f00c4aaf28ceb3b488d343f7f6ba403a7f586dad545b76f16f693631",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "sha256": "e7839224b3e13f02cdfa9c784aeac68a0c8907d5c9f34f7d9c332f9a0e2a908e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "sha256": "d2776b6a69a3ec484c1c6c852513d0a50e3b927e797a1a20b382e6382039d792",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/app.py",
+      "sha256": "214d45b74b8522d6d5ce3c52878da509b0ea9430b6d977b7eb3b0a85c898318d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/pyproject.toml",
+      "sha256": "1e5a24635312915aefb78f41edce616eb6f11d98e87e8c9e76c8a711332d3c59",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-session-factory/requirements.txt",
+      "sha256": "0d0d2938e5443f318fc97363f42cffe3309df1b718cc2bf713263a68cb7bbee5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "sha256": "e7839224b3e13f02cdfa9c784aeac68a0c8907d5c9f34f7d9c332f9a0e2a908e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "sha256": "d2776b6a69a3ec484c1c6c852513d0a50e3b927e797a1a20b382e6382039d792",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/app.py",
+      "sha256": "f257339dbc1e7d9c784487d99c09a7e476637bf47e8be1b2765d0c5ec4537ced",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/pyproject.toml",
+      "sha256": "1e5a24635312915aefb78f41edce616eb6f11d98e87e8c9e76c8a711332d3c59",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/incomplete-with-target/requirements.txt",
+      "sha256": "0d0d2938e5443f318fc97363f42cffe3309df1b718cc2bf713263a68cb7bbee5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "sha256": "e7839224b3e13f02cdfa9c784aeac68a0c8907d5c9f34f7d9c332f9a0e2a908e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "sha256": "d2776b6a69a3ec484c1c6c852513d0a50e3b927e797a1a20b382e6382039d792",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/app.py",
+      "sha256": "a98556df77368a0bf4673014e6cfd4d613ffa44d1eae61d362db3f48ed3d1a1e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/pyproject.toml",
+      "sha256": "1e5a24635312915aefb78f41edce616eb6f11d98e87e8c9e76c8a711332d3c59",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/near-miss/requirements.txt",
+      "sha256": "0d0d2938e5443f318fc97363f42cffe3309df1b718cc2bf713263a68cb7bbee5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "sha256": "e7839224b3e13f02cdfa9c784aeac68a0c8907d5c9f34f7d9c332f9a0e2a908e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "sha256": "d2776b6a69a3ec484c1c6c852513d0a50e3b927e797a1a20b382e6382039d792",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/app.py",
+      "sha256": "863b6190a80ae58c3f4a40fb5ce00928db6abe9c1e0aa94c12d5ff52f0bb9741",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/pyproject.toml",
+      "sha256": "1e5a24635312915aefb78f41edce616eb6f11d98e87e8c9e76c8a711332d3c59",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/positive/requirements.txt",
+      "sha256": "0d0d2938e5443f318fc97363f42cffe3309df1b718cc2bf713263a68cb7bbee5",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/.bifrost/policies/requests-tls-verification-disabled.rqlp",
+      "sha256": "e7839224b3e13f02cdfa9c784aeac68a0c8907d5c9f34f7d9c332f9a0e2a908e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/.bifrost/semantic-models/bifrost.python-requests-declarations.json",
+      "sha256": "d2776b6a69a3ec484c1c6c852513d0a50e3b927e797a1a20b382e6382039d792",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/app.py",
+      "sha256": "863b6190a80ae58c3f4a40fb5ce00928db6abe9c1e0aa94c12d5ff52f0bb9741",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/requests/unpinned/pyproject.toml",
+      "sha256": "f4ba2665f00c4aaf28ceb3b488d343f7f6ba403a7f586dad545b76f16f693631",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/.bifrost/policies/urllib3-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/.bifrost/policies/urllib3-tls-verification-disabled.rqlp",
+      "sha256": "cd08ec18bb2b95883e1d4c44cc969ad9781f0176fa21319bd74038d11fbc0934",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/.bifrost/semantic-models/bifrost.python-urllib3-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/.bifrost/semantic-models/bifrost.python-urllib3-declarations.json",
+      "sha256": "ccc2dacf31d512edb05e144179653595633b2f46c2807267fddc1454a8e58de2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/app.py",
+      "sha256": "f88d59ed906728294a4a4bc5f91092d9dc545c09f23699334584eca859dc8506",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/pyproject.toml",
+      "sha256": "e3eb583cba57d3e55c40d393cd1ca1464982c905b6e9ae0dca36c2958761c29c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/near-miss/requirements.txt",
+      "sha256": "4742b8bf8f12b7a544389b4ebdcacf43e682d8c55768c158489ff94d73947f33",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/.bifrost/policies/urllib3-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/.bifrost/policies/urllib3-tls-verification-disabled.rqlp",
+      "sha256": "cd08ec18bb2b95883e1d4c44cc969ad9781f0176fa21319bd74038d11fbc0934",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/.bifrost/semantic-models/bifrost.python-urllib3-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/.bifrost/semantic-models/bifrost.python-urllib3-declarations.json",
+      "sha256": "ccc2dacf31d512edb05e144179653595633b2f46c2807267fddc1454a8e58de2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/app.py",
+      "sha256": "786ea2fc7f93897f0c639997503f51d9c9063978f5cda73f506e85ce3341d457",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/pyproject.toml",
+      "sha256": "e3eb583cba57d3e55c40d393cd1ca1464982c905b6e9ae0dca36c2958761c29c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/requirements.txt",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/positive/requirements.txt",
+      "sha256": "4742b8bf8f12b7a544389b4ebdcacf43e682d8c55768c158489ff94d73947f33",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/.bifrost/policies/urllib3-tls-verification-disabled.rqlp",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/.bifrost/policies/urllib3-tls-verification-disabled.rqlp",
+      "sha256": "cd08ec18bb2b95883e1d4c44cc969ad9781f0176fa21319bd74038d11fbc0934",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/.bifrost/semantic-models/bifrost.python-urllib3-declarations.json",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/.bifrost/semantic-models/bifrost.python-urllib3-declarations.json",
+      "sha256": "ccc2dacf31d512edb05e144179653595633b2f46c2807267fddc1454a8e58de2",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/app.py",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/app.py",
+      "sha256": "786ea2fc7f93897f0c639997503f51d9c9063978f5cda73f506e85ce3341d457",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/pyproject.toml",
+      "source_path": "fixtures/policy/bifrost.security/python-http-client-tls-verification/urllib3/unpinned/pyproject.toml",
+      "sha256": "f4ba2665f00c4aaf28ceb3b488d343f7f6ba403a7f586dad545b76f16f693631",
+      "classification": "public",
+      "license": "Apache-2.0"
+    }
+  ]
+}

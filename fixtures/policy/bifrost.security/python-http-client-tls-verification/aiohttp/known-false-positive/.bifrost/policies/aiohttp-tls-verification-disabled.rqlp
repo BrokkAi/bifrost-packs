@@ -1,0 +1,130 @@
+; Lead: BrokkAi/bifrost-packs#427 (CWE-295), aiohttp part. Version-independent:
+; `ssl=False`, and the deprecated `verify_ssl=False`, skip certificate and
+; hostname checks on every aiohttp 3 release, so the rule is not version-gated.
+; Engine contract: each entry binds with :proof exact to a member of
+; bifrost.python-aiohttp-declarations (semantic-packs/python/http-client), which
+; activates on `pkg:pypi/aiohttp` evidence for 3.14.x. Session methods bind
+; through `aiohttp.ClientSession()` and `async with aiohttp.ClientSession() as
+; s`. aiohttp 3.13 patch releases changed the ClientSession and TCPConnector
+; signatures, so 3.13 is not claimed.
+; Without activation evidence no identity resolves and the rule is not run,
+; which is not a clean result.
+; Known false positive: a request-level `ssl=False` still checks a
+; `Fingerprint` set on the connector (TCPConnector._get_fingerprint), so a
+; pinned connector stays authenticated. The rule still reports the call: the
+; keyword pattern can't prove the connector's identity or configuration.
+; Not covered: an `ssl.SSLContext` with verification turned off, and
+; `ssl_context=`.
+; The literal is matched structurally on the call's own keyword argument. A
+; value that only reaches the keyword through a variable, a settings object or a
+; `**options` spread is not reported, so a clean run is not evidence that
+; verification stays on. Calls whose callee is spelled differently (an alias
+; such as `fetch = requests.get`) are not examined.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.aiohttp-tls-verification-disabled"
+  :name "aiohttp request or connector with TLS certificate verification disabled"
+  :message "This aiohttp call passes ssl=False or verify_ssl=False, so the server's TLS certificate and hostname are not checked"
+  :severity warning
+  :description "Reports aiohttp.request, aiohttp.ClientSession request methods and ws_connect, and aiohttp.TCPConnector constructors called with a literal ssl=False or verify_ssl=False. aiohttp then accepts any certificate for any host, so a network attacker can read and change the traffic (CWE-295). Identity is the exact reviewed aiohttp member; the literal is the call's own keyword argument."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "aiohttp" "tls" "cwe-295"]
+  :analysis (analysis
+    :type assertion
+    (bind :name disabled :query
+      (rql :schema-version 1
+        (union
+          (resolved-call :resolves-to "aiohttp.request" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "request")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.request" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "request")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.get" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "get")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.options" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "options")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.head" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "head")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.post" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "post")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.put" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "put")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.patch" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "patch")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.delete" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "delete")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.client.ClientSession.ws_connect" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "ws_connect")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))])))))))
+          (resolved-call :resolves-to "aiohttp.connector.TCPConnector.__init__" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "TCPConnector")
+                    (or
+                        (call :kwargs [(ssl (boolean_literal (boolean-value false)))])
+                        (call :kwargs [(verify_ssl (boolean_literal (boolean-value false)))]))))))))))
+    (group :name by-call :by (disabled.site_id)
+      (aggregate :name sites :op count))
+    (assert :group by-call :value sites :cardinality (exactly 0)))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "295")))

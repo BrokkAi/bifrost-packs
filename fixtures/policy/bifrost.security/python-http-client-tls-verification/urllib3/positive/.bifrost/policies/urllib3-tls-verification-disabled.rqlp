@@ -1,0 +1,87 @@
+; Lead: BrokkAi/bifrost-packs#427 (CWE-295), urllib3 part. Version-independent:
+; `cert_reqs="CERT_NONE"` (or "NONE") turns certificate checks off and
+; `assert_hostname=False` turns hostname checks off on every urllib3 2 release,
+; so the rule is not version-gated.
+; Engine contract: each entry binds with :proof exact to a member of
+; bifrost.python-urllib3-declarations (semantic-packs/python/http-client), which
+; activates on `pkg:pypi/urllib3` evidence for 2.0.0 up to 2.9.0. PoolManager,
+; ProxyManager and the module helpers take these settings through `**kw`, so
+; the selector matches the keyword on the call shape.
+; Without activation evidence no identity resolves and the rule is not run,
+; which is not a clean result.
+; A call that also passes `assert_fingerprint=` as a non-empty string literal
+; is not reported: urllib3 then pins the certificate by fingerprint. A variable
+; could hold None or "", which urllib3 skips, so that call is reported.
+; Not covered: `cert_reqs=ssl.CERT_NONE` (the constant, not the string: the
+; keyword pattern cannot prove the `ssl` identity), an `ssl_context` with
+; verification turned off, and pools built through `connection_from_host`.
+; The literal is matched structurally on the call's own keyword argument. A
+; value that only reaches the keyword through a variable, a settings object or a
+; `**options` spread is not reported, so a clean run is not evidence that
+; verification stays on. Calls whose callee is spelled differently (an alias
+; such as `fetch = requests.get`) are not examined.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.urllib3-tls-verification-disabled"
+  :name "urllib3 pool with TLS certificate or hostname verification disabled"
+  :message "This urllib3 pool passes cert_reqs CERT_NONE or assert_hostname=False, so the server's TLS certificate or hostname is not checked"
+  :severity warning
+  :description "Reports urllib3.PoolManager, ProxyManager and HTTPSConnectionPool constructors and the connection_from_url and proxy_from_url helpers called with a literal cert_reqs of \"CERT_NONE\" or \"NONE\", or with assert_hostname=False. The pool then accepts any certificate, or a certificate for any host, so a network attacker can read and change the traffic (CWE-295). Identity is the exact reviewed urllib3 member; the literal is the call's own keyword argument."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "urllib3" "tls" "cwe-295"]
+  :analysis (analysis
+    :type assertion
+    (bind :name disabled :query
+      (rql :schema-version 1
+        (union
+          (resolved-call :resolves-to "urllib3.connection_from_url" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "connection_from_url")
+                    (or
+                        (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
+                        (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
+          (resolved-call :resolves-to "urllib3.proxy_from_url" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "proxy_from_url")
+                    (or
+                        (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
+                        (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
+          (resolved-call :resolves-to "urllib3.poolmanager.PoolManager.__init__" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "PoolManager")
+                    (or
+                        (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
+                        (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
+          (resolved-call :resolves-to "urllib3.poolmanager.ProxyManager.__init__" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "ProxyManager")
+                    (or
+                        (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
+                        (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))])))))))
+          (resolved-call :resolves-to "urllib3.connectionpool.HTTPSConnectionPool.__init__" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "HTTPSConnectionPool")
+                    (or
+                        (call :kwargs [(cert_reqs (string_literal (or (value "CERT_NONE") (value "NONE"))))])
+                        (call :kwargs [(assert_hostname (boolean_literal (boolean-value false)))]))
+                    (not (call :kwargs [(assert_fingerprint (string_literal (not (value ""))))]))))))))))
+    (group :name by-call :by (disabled.site_id)
+      (aggregate :name sites :op count))
+    (assert :group by-call :value sites :cardinality (exactly 0)))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "295")))

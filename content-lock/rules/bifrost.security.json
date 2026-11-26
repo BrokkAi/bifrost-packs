@@ -5,7 +5,7 @@
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.security/manifest.json",
       "classification": "public",
       "license": "Apache-2.0",
-      "sha256": "f2093f5132fa1478b47e61c8ff68ad3eeea8ee2ed9b242ec04479ba0a80df415"
+      "sha256": "b85813d486aff9ac2471194eccd12c913bf7d7e3b0bddaa46d8d83fc48dd4d55"
     },
     {
       "path": "rules/bifrost.security/policies/csharp/assembly-path-injection.rqlp",
@@ -351,6 +351,13 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.security/policies/python/aiohttp-tls-verification-disabled.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/aiohttp-tls-verification-disabled.rqlp",
+      "sha256": "256eb563e2497a41578c21fcf6ff4da9629ff326762aee69126768cdaa01fd5d",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
       "source_path": "rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp",
       "sha256": "28905c34786ef3547b340cf5289a8661cf4115a5316ecba3d1554e53b3114560",
@@ -375,6 +382,13 @@
       "path": "rules/bifrost.security/policies/python/hardcoded-credentials.rqlp",
       "source_path": "rules/bifrost.security/policies/python/hardcoded-credentials.rqlp",
       "sha256": "e7871698df542bfbec7cc68b3d11202c47f38c0ab256f641cdb08cabfec82250",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/httpx-tls-verification-disabled.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/httpx-tls-verification-disabled.rqlp",
+      "sha256": "d227edfc86abcbe9ffd12e047290a986298ae7510588e1446ca4a6ecc4f5bb03",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -452,6 +466,20 @@
       "path": "rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp",
       "source_path": "rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp",
       "sha256": "dd14c4c590adad77ab5f18a25281439b54b3ef7c73503d7394a2e4600b78f7a8",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/requests-tls-verification-disabled.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/requests-tls-verification-disabled.rqlp",
+      "sha256": "e7839224b3e13f02cdfa9c784aeac68a0c8907d5c9f34f7d9c332f9a0e2a908e",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.security/policies/python/urllib3-tls-verification-disabled.rqlp",
+      "source_path": "rules/bifrost.security/policies/python/urllib3-tls-verification-disabled.rqlp",
+      "sha256": "cd08ec18bb2b95883e1d4c44cc969ad9781f0176fa21319bd74038d11fbc0934",
       "classification": "public",
       "license": "Apache-2.0"
     },

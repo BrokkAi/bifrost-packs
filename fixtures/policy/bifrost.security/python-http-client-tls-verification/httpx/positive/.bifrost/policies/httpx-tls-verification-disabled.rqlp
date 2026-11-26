@@ -1,0 +1,96 @@
+; Lead: BrokkAi/bifrost-packs#427 (CWE-295), httpx part. Version-independent:
+; `verify=False` builds an SSL context with CERT_NONE and check_hostname=False
+; (httpx/_config.py), so the rule is not version-gated.
+; Engine contract: each entry binds with :proof exact to a member of
+; bifrost.python-httpx-declarations (semantic-packs/python/http-client), which
+; activates on `pkg:pypi/httpx` evidence for 0.28.x. httpx 0.28 request methods
+; on a Client take no `verify`, so a client is reported where it is constructed.
+; Without activation evidence no identity resolves and the rule is not run,
+; which is not a clean result.
+; Known false positive: a client whose own `transport=` verifies, with no
+; `proxy=`, ignores its `verify=False`; so does one whose mounts cover every
+; URL with verifying transports. The rule still reports it: the keyword
+; pattern can't prove what a transport expression evaluates to (a factory may
+; return None, and then httpx builds the unverified default).
+; Not covered: an `ssl.SSLContext` with verification turned off passed as
+; `verify=`, and `httpx.HTTPTransport(verify=False)` or other transports.
+; The literal is matched structurally on the call's own keyword argument. A
+; value that only reaches the keyword through a variable, a settings object or a
+; `**options` spread is not reported, so a clean run is not evidence that
+; verification stays on. Calls whose callee is spelled differently (an alias
+; such as `fetch = requests.get`) are not examined.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.httpx-tls-verification-disabled"
+  :name "httpx call or client with TLS certificate verification disabled"
+  :message "This httpx call or client passes verify=False, so the server's TLS certificate and hostname are not checked"
+  :severity warning
+  :description "Reports httpx top-level request functions and httpx.Client or httpx.AsyncClient constructors called with a literal verify=False. httpx then accepts any certificate for any host, so a network attacker can read and change the traffic (CWE-295). Identity is the exact reviewed httpx member; the literal is the call's own keyword argument."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "httpx" "tls" "cwe-295"]
+  :analysis (analysis
+    :type assertion
+    (bind :name disabled :query
+      (rql :schema-version 1
+        (union
+          (resolved-call :resolves-to "httpx.request" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "request") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.stream" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "stream") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.get" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "get") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.options" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "options") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.head" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "head") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.post" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "post") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.put" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "put") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.patch" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "patch") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx.delete" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "delete") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx._client.Client.__init__" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "Client") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "httpx._client.AsyncClient.__init__" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "AsyncClient") :kwargs [(verify (boolean_literal (boolean-value false)))]))))))))
+    (group :name by-call :by (disabled.site_id)
+      (aggregate :name sites :op count))
+    (assert :group by-call :value sites :cardinality (exactly 0)))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "295")))
