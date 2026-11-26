@@ -1,0 +1,57 @@
+; A Java, JavaScript, TypeScript, C#, PHP, C++, Kotlin, Scala or Ruby catch
+; body, a Python except body, a Rust-native Result::Err failure branch, or a
+; Go error/nil or recover failure branch is structurally empty, including
+; comment-only bodies, Python pass/ellipsis and Scala unit literals. Recovered
+; or unavailable syntax remains unknown. This does not claim that the handler
+; is reachable or that its exception or failure can occur.
+;
+; Catch-clause seeds that state their intent are left out before the handler
+; state is classified (see research/default-rule-precision-2026-11):
+; - a comment inside the clause;
+; - a caught-exception binding spelled `_`, `ignore`, `ignored`, `expected`
+;   or `tolerated`;
+; - a Python clause that names ImportError or ModuleNotFoundError, the
+;   optional-dependency fallback idiom, unless it also names Exception or
+;   BaseException.
+; A TODO, FIXME or XXX comment in the clause marks the handling as unfinished
+; and keeps it reported whatever else the clause says.
+; Rust and Go handlers are seeded from callables, so these exclusions do not
+; apply to them. The exclusions are per-node pattern negations, not a set
+; difference: an `except` over the catch set is withheld as a whole whenever
+; parser recovery leaves any selected catch without a structural fact, which
+; silenced every finding on a large repository with one recovered region.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.empty-failure-handler"
+  :name "Empty failure handler"
+  :message "this failure handler contains no failure-handling statements"
+  :severity warning
+  :description "An exact Java, JavaScript, TypeScript, C#, PHP, C++, Kotlin or Scala catch clause, Python except clause, Ruby rescue clause, Rust-native Result::Err failure branch, or Go error/nil or recover failure branch has no body statements other than comments, empty statements, Python pass and ellipsis, or a Scala unit literal. Rust match Err arms and if-let Err consequences, plus empty else arms of if-let Ok, and Go error/nil and recover branches are selected from callable seeds only when the language adapter proves the standard failure representation; unresolved, shadowed, or user-defined types and builtins remain open or outside the result. A C# exception filter selects an exception but does not handle it. Catch clauses that state an intent to ignore the failure are not reported: a comment inside the clause, a caught-exception binding named _, ignore, ignored, expected or tolerated, or a Python clause naming ImportError or ModuleNotFoundError (but not Exception or BaseException). A TODO, FIXME or XXX comment marks the handling as unfinished and keeps the clause reported. These intent exclusions apply only to catch-clause languages, not to Rust or Go failure branches. Promise rejection callbacks, the Ruby rescue modifier, Scala catch expressions outside case blocks, Rust Option arms, and macro token trees are not covered. This is a structural review finding: it does not establish that the handler is reachable or that its exception or failure can occur. Recovered or unavailable syntax is inconclusive. Review whether the failure needs handling or propagation, or state why it is ignored. No automatic fix is supplied."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "exceptions"]
+  :analysis (analysis
+    :type assertion
+    (bind :name handler
+      :query (rql :schema-version 1
+        (filter :where ((verdict eq empty)
+                        (proof eq exact)
+                        (coverage eq exhaustive))
+          (failure-handler-state
+            (union
+              (language java javascript typescript csharp php cpp kotlin scala ruby
+                (catch
+                  (or (has (comment (text/regex "(?i)\\b(?:TODO|FIXME|XXX)\\b")))
+                      (and (not (has (comment)))
+                           (not (has (identifier
+                             :name/regex "^(?:_+|ignored?|expected|tolerated)$")))))))
+              (language python
+                (catch
+                  (or (has (comment (text/regex "(?i)\\b(?:TODO|FIXME|XXX)\\b")))
+                      (and (not (has (comment)))
+                           (not (has (identifier :name/regex "^(?:_+|ignored?|expected|tolerated)$")))
+                           (or (not (has (identifier :name/regex "^(?:ImportError|ModuleNotFoundError)$")))
+                               (has (identifier :name/regex "^(?:Exception|BaseException)$")))))))
+              (language rust go (callable)))))))
+    (group :name by-handler :by (handler.id)
+      (aggregate :name empty-handlers :op count))
+    (assert :group by-handler :value empty-handlers :cardinality (exactly 0))))

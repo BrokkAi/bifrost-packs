@@ -1,0 +1,134 @@
+rule,id,repo,commit,path,line,arms,label,shape,note
+identical-conditional-branches,,caddy,679806f92d49,caddyconfig/httpcaddyfile/httptype.go,1213,0:2,FP,non-adjacent,arm 1 (https) sits between two checkAndSetHTTP arms
+identical-conditional-branches,,caddy,679806f92d49,listen_reuseUnixSocket_windows.go,82,0:1,TP,mergeable,"err == nil || errors.Is(err, fs.ErrNotExist)"
+identical-conditional-branches,,caddy,679806f92d49,modules/caddyhttp/encode/encode.go,402,0:1,FP,go-init-chain,second arm's condition runs strconv.Atoi in an init statement
+identical-conditional-branches,,caddy,679806f92d49,modules/caddyhttp/reverseproxy/fastcgi/client.go,170,0:2,FP,non-adjacent,ParseInt error arm sits between; arms differ only in comment
+identical-conditional-branches,,gin,0f09c3a9b462,binding/form_mapping.go,268,0:1,FP,go-init-chain,"try parser, else try custom setter"
+identical-conditional-branches,,gin,0f09c3a9b462,binding/form_mapping.go,293,0:1,FP,go-init-chain,same try chain
+identical-conditional-branches,,gin,0f09c3a9b462,binding/form_mapping.go,316,0:1,FP,go-init-chain,same try chain
+identical-conditional-branches,,gin,0f09c3a9b462,binding/form_mapping.go,327,0:1,FP,go-init-chain,same try chain
+identical-conditional-branches,,gson,d9b5079eaa45,gson/src/main/java/com/google/gson/internal/bind/TypeAdapterRuntimeTypeWrapper.java,72,0:2,FP,non-adjacent,else fallback; arms carry distinct rationale comments
+identical-conditional-branches,,gson,d9b5079eaa45,gson/src/test/java/com/google/gson/functional/JsonAdapterAnnotationOnFieldsTest.java,324,0:1,TP,mergeable,Long and long return the same adapter
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava-testlib/src/com/google/common/collect/testing/BaseComparable.java,49,0:2,FP,non-adjacent,equals(): null guard and else both return false
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava-tests/test/com/google/common/collect/Base.java,47,0:2,FP,non-adjacent,equals(): null guard and else both return false
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava-tests/test/com/google/common/math/StatsAccumulatorTest.java,251,0:1,TP,mergeable,NaN and +inf&-inf arms assert the same thing
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava-tests/test/com/google/common/math/StatsTest.java,138,0:1,TP,mergeable,same
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava-tests/test/com/google/common/math/StatsTest.java,508,0:1,TP,mergeable,same
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava-tests/test/com/google/common/util/concurrent/GeneratedMonitorTest.java,663,0:1,TP,mergeable,null and true both SUCCESS
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava/src/com/google/common/collect/MapMakerInternalMap.java,1730,0:1,FP,comment-only-arms,empty arms kept as TODO placeholders
+identical-conditional-branches,,guava,cdb3863e02e9,android/guava/src/com/google/common/collect/RegularImmutableMap.java,333,0:2,FP,non-adjacent,null guards around a size==1 arm
+identical-conditional-branches,,guava,cdb3863e02e9,guava-testlib/src/com/google/common/collect/testing/BaseComparable.java,49,0:2,FP,non-adjacent,jre copy
+identical-conditional-branches,,guava,cdb3863e02e9,guava-tests/test/com/google/common/collect/Base.java,47,0:2,FP,non-adjacent,jre copy
+identical-conditional-branches,,guava,cdb3863e02e9,guava-tests/test/com/google/common/math/StatsAccumulatorTest.java,251,0:1,TP,mergeable,jre copy
+identical-conditional-branches,,guava,cdb3863e02e9,guava-tests/test/com/google/common/math/StatsTest.java,138,0:1,TP,mergeable,jre copy
+identical-conditional-branches,,guava,cdb3863e02e9,guava-tests/test/com/google/common/math/StatsTest.java,508,0:1,TP,mergeable,jre copy
+identical-conditional-branches,,guava,cdb3863e02e9,guava-tests/test/com/google/common/util/concurrent/GeneratedMonitorTest.java,663,0:1,TP,mergeable,jre copy
+identical-conditional-branches,,guava,cdb3863e02e9,guava/src/com/google/common/collect/MapMakerInternalMap.java,1730,0:1,FP,comment-only-arms,jre copy
+identical-conditional-branches,,hono,9c2f29484984,src/jsx/utils.ts,162,6:8,FP,non-adjacent,return-true guards in a character scanner
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/cli/spinners.py,229,0:1,FP,distinct-comments,each arm documents a separate reason to skip the cursor codes
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/metadata/importlib/_dists.py,239,0:1,TP,mergeable,yield req
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/metadata/importlib/_dists.py,241,0:2,FP,redundant-pair,outer pair of a three-arm run already reported as 0:1 and 1:2
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/metadata/importlib/_dists.py,241,1:2,TP,mergeable,yield req
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/models/format_control.py,68,0:2,FP,non-adjacent,priority ladder; merging reorders past arm 1
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/models/format_control.py,70,1:3,FP,non-adjacent,priority ladder
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/models/release_control.py,88,0:2,FP,non-adjacent,priority ladder
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/models/release_control.py,90,1:3,FP,non-adjacent,priority ladder
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/download.py,96,0:1,TP,mergeable,show_progress = False
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/download.py,100,2:3,TP,mergeable,show_progress = True
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/download.py,102,0:4,FP,non-adjacent,else fallback
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/download.py,102,1:4,FP,non-adjacent,else fallback
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/session.py,107,0:2,FP,non-adjacent,"CPython exact vs Jython ""Complete Guess"""
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/session.py,110,0:3,FP,non-adjacent,same
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/network/session.py,110,2:3,TP,mergeable,"Jython and IronPython arms identical, same comment"
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/operations/install/wheel.py,721,0:2,TP,non-adjacent-disjoint,".exe and .pya both strip 4 chars; conditions disjoint, so reordering is safe"
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/resolution/resolvelib/resolver.py,148,1:2,FP,distinct-comments,each reinstall reason has its own comment
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/resolution/resolvelib/resolver.py,152,1:3,FP,redundant-pair,outer pair of a run
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/resolution/resolvelib/resolver.py,152,2:3,FP,distinct-comments,each reinstall reason has its own comment
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_internal/utils/unpacking.py,75,0:2,FP,non-adjacent,return-False guards
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/packaging/_ranges.py,600,0:2,FP,non-adjacent,yield guards
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/packaging/pylock.py,873,3:5,FP,non-adjacent,sdist fallback in two branches of a ladder
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/pygments/style.py,80,2:3,TP,mergeable,return text
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/pygments/unistring.py,130,0:1,FP,distinct-comments,surrogate hack vs regex metachar escape
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/help.py,53,0:2,FP,non-adjacent,CPython exact vs Jython guess
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/help.py,55,0:3,FP,non-adjacent,same
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/help.py,55,2:3,TP,mergeable,Jython and IronPython
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/models.py,165,0:1,TP,mergeable,return data
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/models.py,181,0:3,FP,non-adjacent,else fallback
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/models.py,181,1:3,FP,non-adjacent,else fallback
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/requests/models.py,244,0:3,FP,non-adjacent,else fallback past a continue arm
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/rich/color.py,498,1:2,TP,mergeable,WINDOWS and STANDARD share a four-line body
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/rich/console.py,522,1:2,FP,distinct-comments,elif/else documented as separate shell kinds
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/rich/live.py,275,1:2,TP,mergeable,with console: print(Control())
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/rich/traceback.py,721,0:1,FP,engine-escaped-literal,"arms yield different ""\n..."" strings"
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/urllib3/contrib/emscripten/fetch.py,545,1:2,TP,mergeable,elif NetworkError and else raise the same error
+identical-conditional-branches,,pip,5b4d45102eb5,src/pip/_vendor/urllib3/response.py,1326,1:4,FP,non-adjacent,else fallback
+identical-conditional-branches,,pip,5b4d45102eb5,tests/functional/test_invalid_versions_and_specifiers.py,141,0:1,FP,engine-escaped-literal,"asserts different ""...\n"" strings"
+identical-conditional-branches,,pip,5b4d45102eb5,tests/lib/__init__.py,598,0:1,FP,distinct-comments,zipapp arm carries its own explanation
+identical-conditional-branches,,pip,5b4d45102eb5,tests/unit/test_utils.py,319,0:1,FP,engine-escaped-literal,little vs big endian byte strings
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/help.py,58,0:2,FP,non-adjacent,CPython exact vs Jython guess
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/help.py,60,0:3,FP,non-adjacent,same
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/help.py,60,2:3,TP,mergeable,Jython and IronPython
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/models.py,164,0:1,TP,mergeable,return data
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/models.py,180,0:3,FP,non-adjacent,else fallback
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/models.py,180,1:3,FP,non-adjacent,else fallback
+identical-conditional-branches,,requests,3c7baaa05ab4,src/requests/models.py,243,0:3,FP,non-adjacent,else fallback past a continue arm
+empty-failure-handler,E00,axios,a35e6f4ee55d,lib/adapters/fetch.js,106,,FP,comment-in-handler,
+empty-failure-handler,E01,axios,a35e6f4ee55d,lib/adapters/http.js,950,,FP,comment-outside-handler,eslint directive sits in the try block
+empty-failure-handler,E02,axios,a35e6f4ee55d,lib/adapters/xhr.js,25,,FP,comment-in-handler,
+empty-failure-handler,E03,axios,a35e6f4ee55d,lib/helpers/cookies.js,67,,FP,comment-in-handler,
+empty-failure-handler,E04,gson,d9b5079eaa45,gson/src/main/java/com/google/gson/JsonPrimitive.java,353,,FP,comment-in-handler,
+empty-failure-handler,E05,gson,d9b5079eaa45,gson/src/main/java/com/google/gson/internal/UnsafeAllocator.java,67,,FP,comment-in-handler,binding also named ignored
+empty-failure-handler,E06,gson,d9b5079eaa45,gson/src/main/java/com/google/gson/internal/UnsafeAllocator.java,113,,FP,comment-in-handler,binding also named ignored
+empty-failure-handler,E07,guava,cdb3863e02e9,android/guava/src/com/google/common/base/internal/Finalizer.java,143,,FP,comment-in-handler,"swallowed InterruptedException in a finalizer loop, deliberate"
+empty-failure-handler,E08,guava,cdb3863e02e9,android/guava/src/com/google/common/hash/LittleEndianByteArray.java,190,,FP,comment-in-handler,
+empty-failure-handler,E09,guava,cdb3863e02e9,android/guava/src/com/google/common/io/ByteSource.java,214,,FP,comment-in-handler,
+empty-failure-handler,E10,guava,cdb3863e02e9,android/guava/src/com/google/common/net/HostSpecifier.java,92,,FP,comment-in-handler,
+empty-failure-handler,E11,guava,cdb3863e02e9,android/guava/src/com/google/common/primitives/Floats.java,785,,FP,comment-in-handler,
+empty-failure-handler,E12,guava,cdb3863e02e9,guava/src/com/google/common/cache/LocalCache.java,2399,,FP,comment-in-handler,
+empty-failure-handler,E13,guava,cdb3863e02e9,guava/src/com/google/common/io/TempFileCreator.java,106,,FP,comment-in-handler,
+empty-failure-handler,E14,guava,cdb3863e02e9,guava/src/com/google/common/io/TempFileCreator.java,178,,FP,comment-in-handler,
+empty-failure-handler,E15,guava,cdb3863e02e9,guava/src/com/google/common/reflect/ClassPath.java,521,,FP,comment-in-handler,trailing comment after the opening brace
+empty-failure-handler,E16,guava,cdb3863e02e9,guava/src/com/google/common/util/concurrent/MoreExecutors.java,281,,FP,comment-in-handler,
+empty-failure-handler,E17,hono,9c2f29484984,adapters/deno/src/serve-static.ts,32,,TP,silent-catch-all,stat failure silently means not a directory
+empty-failure-handler,E18,hono,9c2f29484984,src/adapter/deno/serve-static.ts,35,,TP,silent-catch-all,
+empty-failure-handler,E19,hono,9c2f29484984,src/jsx/context.ts,57,,TP,silent-catch-all,
+empty-failure-handler,E20,hono,9c2f29484984,src/middleware/method-override/index.ts,167,,FP,comment-in-handler,
+empty-failure-handler,E21,hono,9c2f29484984,src/utils/stream.ts,73,,FP,comment-in-handler,
+empty-failure-handler,E22,pip,5b4d45102eb5,src/pip/_internal/cli/base_command.py,148,,TP,silent-narrow,
+empty-failure-handler,E23,pip,5b4d45102eb5,src/pip/_internal/commands/install.py,128,,FP,comment-in-handler,"broad except Exception, explained"
+empty-failure-handler,E24,pip,5b4d45102eb5,src/pip/_internal/exceptions/network.py,71,,TP,silent-narrow,
+empty-failure-handler,E25,pip,5b4d45102eb5,src/pip/_internal/network/auth.py,192,,FP,optional-import,
+empty-failure-handler,E26,pip,5b4d45102eb5,src/pip/_internal/network/auth.py,227,,TP,silent-narrow,
+empty-failure-handler,E27,pip,5b4d45102eb5,src/pip/_internal/network/cache.py,35,,TP,silent-narrow,intent only in the function docstring
+empty-failure-handler,E28,pip,5b4d45102eb5,src/pip/_internal/network/session.py,160,,TP,silent-broad,except Exception: pass
+empty-failure-handler,E29,pip,5b4d45102eb5,src/pip/_internal/operations/build/build_tracker.py,100,,TP,silent-narrow,
+empty-failure-handler,E30,pip,5b4d45102eb5,src/pip/_internal/req/req_uninstall.py,244,,TP,silent-narrow,
+empty-failure-handler,E31,pip,5b4d45102eb5,src/pip/_internal/req/req_uninstall.py,643,,TP,silent-narrow,
+empty-failure-handler,E32,pip,5b4d45102eb5,src/pip/_internal/resolution/legacy/resolver.py,372,,FP,comment-in-handler,
+empty-failure-handler,E33,pip,5b4d45102eb5,src/pip/_internal/utils/filesystem.py,104,,TP,silent-narrow,
+empty-failure-handler,E34,pip,5b4d45102eb5,src/pip/_internal/utils/misc.py,159,,TP,silent-broad,
+empty-failure-handler,E35,pip,5b4d45102eb5,src/pip/_vendor/cachecontrol/caches/file_cache.py,103,,TP,silent-narrow,
+empty-failure-handler,E36,pip,5b4d45102eb5,src/pip/_vendor/cachecontrol/filewrapper.py,57,,TP,silent-narrow,
+empty-failure-handler,E37,pip,5b4d45102eb5,src/pip/_vendor/distlib/compat.py,661,,FP,optional-import,
+empty-failure-handler,E38,pip,5b4d45102eb5,src/pip/_vendor/distlib/resources.py,318,,FP,optional-import,
+empty-failure-handler,E39,pip,5b4d45102eb5,src/pip/_vendor/packaging/metadata.py,613,,TP,silent-narrow,
+empty-failure-handler,E40,pip,5b4d45102eb5,src/pip/_vendor/packaging/tags.py,463,,TP,silent-narrow,"only a ""# noqa: PERF203"" lint directive; excluded by the new rule (lost TP)"
+empty-failure-handler,E41,pip,5b4d45102eb5,src/pip/_vendor/pkg_resources/__init__.py,2352,,TP,silent-narrow,
+empty-failure-handler,E42,pip,5b4d45102eb5,src/pip/_vendor/platformdirs/windows.py,384,,FP,optional-import,
+empty-failure-handler,E43,pip,5b4d45102eb5,src/pip/_vendor/pygments/lexer.py,648,,TP,silent-narrow,
+empty-failure-handler,E44,pip,5b4d45102eb5,src/pip/_vendor/requests/__init__.py,141,,FP,optional-import,
+empty-failure-handler,E45,pip,5b4d45102eb5,src/pip/_vendor/requests/models.py,1106,,FP,comment-in-handler,
+empty-failure-handler,E46,pip,5b4d45102eb5,src/pip/_vendor/requests/utils.py,178,,FP,comment-in-handler,
+empty-failure-handler,E47,pip,5b4d45102eb5,src/pip/_vendor/rich/console.py,1025,,FP,comment-in-handler,trailing comment on the except line
+empty-failure-handler,E48,pip,5b4d45102eb5,src/pip/_vendor/rich/pretty.py,661,,TP,silent-broad,except Exception: pass
+empty-failure-handler,E49,pip,5b4d45102eb5,src/pip/_vendor/rich/progress.py,534,,TP,silent-narrow,
+empty-failure-handler,E50,pip,5b4d45102eb5,src/pip/_vendor/rich/syntax.py,404,,TP,silent-narrow,
+empty-failure-handler,E51,pip,5b4d45102eb5,src/pip/_vendor/rich/syntax.py,413,,TP,silent-narrow,
+empty-failure-handler,E52,pip,5b4d45102eb5,src/pip/_vendor/truststore/_api.py,43,,FP,optional-import,
+empty-failure-handler,E53,pip,5b4d45102eb5,src/pip/_vendor/truststore/_api.py,371,,TP,silent-narrow,
+empty-failure-handler,E54,pip,5b4d45102eb5,src/pip/_vendor/urllib3/connectionpool.py,513,,FP,comment-outside-handler,explanation sits above the except line
+empty-failure-handler,E55,pip,5b4d45102eb5,src/pip/_vendor/urllib3/response.py,820,,TP,silent-broad,
+empty-failure-handler,E56,requests,3c7baaa05ab4,src/requests/__init__.py,146,,FP,optional-import,
+empty-failure-handler,E57,requests,3c7baaa05ab4,src/requests/compat.py,43,,FP,optional-import,
+empty-failure-handler,E58,requests,3c7baaa05ab4,src/requests/models.py,1110,,FP,comment-in-handler,
+empty-failure-handler,E59,requests,3c7baaa05ab4,src/requests/sessions.py,823,,TP,silent-narrow,StopIteration

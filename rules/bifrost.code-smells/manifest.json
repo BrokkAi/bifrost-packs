@@ -285,8 +285,8 @@
     {
       "path": "policies/empty-failure-handler.rqlp",
       "id": "bifrost.correctness.empty-failure-handler",
-      "authored_hash": "a8964bf111ac90cd0e0b49bcc1785d1ed1e71823c302363577e5ec472245b26f",
-      "resolved_semantic_hash": "a8964bf111ac90cd0e0b49bcc1785d1ed1e71823c302363577e5ec472245b26f",
+      "authored_hash": "4a04ab2836e28d9acc2fa68250cf64b1500a041193e2cbb385483a60568d4cf1",
+      "resolved_semantic_hash": "4a04ab2836e28d9acc2fa68250cf64b1500a041193e2cbb385483a60568d4cf1",
       "category": "correctness",
       "supported_languages": [
         "java",
@@ -308,7 +308,7 @@
         "failure-handler-state"
       ],
       "severity_rationale": "An empty catch or except body may silently discard failures when the handler is reached; this rule reports the structural body regardless of reachability.",
-      "remediation": "Review whether to handle or propagate the exception deliberately. No automatic fix is supplied."
+      "remediation": "Review whether to handle or propagate the exception deliberately, or state inside the handler why it is ignored. No automatic fix is supplied."
     },
     {
       "path": "policies/c-self-assignment.rqlp",
