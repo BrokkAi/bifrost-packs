@@ -1,4 +1,6 @@
 [check]
 # Policy fixtures are deliberately minimal inputs (no docstrings, toy
 # classes) that exercise rules; SlopCop's own findings on them are noise.
-exclude = ["fixtures/**"]
+# Research probes are the same kind of input: sources written to trigger or
+# narrowly avoid a rule, kept as evidence rather than production code.
+exclude = ["fixtures/**", "research/**"]

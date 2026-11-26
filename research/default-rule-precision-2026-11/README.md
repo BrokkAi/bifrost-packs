@@ -215,19 +215,23 @@ the prod p95 of 60 s and the 185 runs over the 120 s budget.
 
 ## Engine follow-ups
 
-These are drafted for bifrost-dev and not opened yet:
+Opened in bifrost-dev on 2026-11-26:
 
-1. **P1:** `branch-relations` should expose whether a pair is adjacent, or
+1. [BrokkAi/bifrost-dev#16202](https://github.com/BrokkAi/bifrost-dev/issues/16202)
+   (**P1**): `branch-relations` should expose whether a pair is adjacent, or
    take an `:adjacent-only` option, so identical-conditional-branches can drop
    non-adjacent pairs.
-2. **P1:** Python string literals that contain an escape sequence compare
+2. [BrokkAi/bifrost-dev#16203](https://github.com/BrokkAi/bifrost-dev/issues/16203)
+   (**P1**): Python string literals that contain an escape sequence compare
    equal in `branch-relations` whatever their other characters.
    `out.write("a\n")` and `out.write("b\n")` are reported as identical arms.
    JavaScript, Go and Rust are not affected.
-3. **P2:** a run-wide incompleteness (an unrelated `open` row, or one
+3. [BrokkAi/bifrost-dev#16204](https://github.com/BrokkAi/bifrost-dev/issues/16204)
+   (**P2**): a run-wide incompleteness (an unrelated `open` row, or one
    recovered region) withholds every absence-style assertion and every
    `except` result, even for groups the incomplete rows can't touch.
-4. **P2:** a union of filters over an identical subquery charges each arm
+4. [BrokkAi/bifrost-dev#16205](https://github.com/BrokkAi/bifrost-dev/issues/16205)
+   (**P2**): a union of filters over an identical subquery charges each arm
    against the scanned-bytes budget, although the work appears to be shared.
 
 ## Caveats
