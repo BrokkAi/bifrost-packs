@@ -3,7 +3,7 @@
     {
       "path": "rules/bifrost.code-smells/manifest.json",
       "source_path": "crates/bifrost-policy/policy-packs/bifrost.code-smells/manifest.json",
-      "sha256": "176ea5affbaa2c16d225d41c6a787742492bd919056d13db36ea4be087747a22",
+      "sha256": "c27b696d113eff8e1c88d98c3b24658eef853a90fa1bb69c6c0164329edfc1e6",
       "classification": "public",
       "license": "Apache-2.0"
     },
@@ -183,9 +183,58 @@
       "license": "Apache-2.0"
     },
     {
+      "path": "rules/bifrost.code-smells/policies/python-assert-argument-validation.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-assert-argument-validation.rqlp",
+      "sha256": "f83e83a54d094d57faad752be31236a92a32920e793335716abcdefd200df47c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
       "path": "rules/bifrost.code-smells/policies/python-assert-true.rqlp",
       "source_path": "rules/bifrost.code-smells/policies/python-assert-true.rqlp",
       "sha256": "4d561e8a316568564b5e8b16bd84dd77969a7c67b319daa03240f54393d04d56",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-numpy-global-rng-with-local-generator.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-numpy-global-rng-with-local-generator.rqlp",
+      "sha256": "fe78969089d3110e70c2479079a7456217839106efd53b688ab65168f0598045",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-or-default-argument-mutation.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-or-default-argument-mutation.rqlp",
+      "sha256": "5f6bc901199b3ee4765a149547e752a22e37100979773e28fb353a8cfbd7ad3c",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-pandas-chained-inplace.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-pandas-chained-inplace.rqlp",
+      "sha256": "02fb49dba6c098487b2fcf6803b8ab325a4821aa922a65a7cf2d9a43dd595593",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-pandas-inplace-result-used.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-pandas-inplace-result-used.rqlp",
+      "sha256": "6c5a2108307688cb186fa52d05b9951bee7752f674689cd3bd2fda3d117d433a",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-shared-class-attribute-mutation.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-shared-class-attribute-mutation.rqlp",
+      "sha256": "2476e540edcf096fdb8b9128ffde2bbb58994dfdb46c6edd04e83c42daf3a934",
+      "classification": "public",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "rules/bifrost.code-smells/policies/python-split-file-extension.rqlp",
+      "source_path": "rules/bifrost.code-smells/policies/python-split-file-extension.rqlp",
+      "sha256": "6cd5701bf316fc4ff4b1674e1b462ab9d8867ec3112c38f9c9f89df0ab47bc60",
       "classification": "public",
       "license": "Apache-2.0"
     },

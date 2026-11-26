@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 299 unique rule IDs from 14 manifest packs.
+This catalog lists 306 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -34,7 +34,14 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Parsing inside a loop](../rules/bifrost.code-smells/policies/parsing-in-loop.rqlp) | `bifrost.performance.parsing-in-loop` | java, javascript, python, rust, typescript | performance | note |
 | [Cleanup overrides pending control flow](../rules/bifrost.code-smells/policies/pending-cleanup-flow.rqlp) | `bifrost.correctness.pending-cleanup-flow` | javascript, ruby | correctness | warning |
 | [Python absent member](../rules/bifrost.code-smells/policies/python-absent-member.rqlp) | `bifrost.correctness.python-absent-member` | python | correctness | error |
+| [Public function validates an argument with assert](../rules/bifrost.code-smells/policies/python-assert-argument-validation.rqlp) | `bifrost.correctness.python-assert-argument-validation` | python | correctness | note |
 | [Python assert True](../rules/bifrost.code-smells/policies/python-assert-true.rqlp) | `bifrost.correctness.python-assert-true` | python | correctness | warning |
+| [Global numpy RNG used next to a local generator](../rules/bifrost.code-smells/policies/python-numpy-global-rng-with-local-generator.rqlp) | `bifrost.correctness.python-numpy-global-rng-with-local-generator` | python | correctness | warning |
+| [Caller's dict mutated after x = x or {}](../rules/bifrost.code-smells/policies/python-or-default-argument-mutation.rqlp) | `bifrost.correctness.python-or-default-argument-mutation` | python | correctness | warning |
+| [inplace=True on a pandas selection](../rules/bifrost.code-smells/policies/python-pandas-chained-inplace.rqlp) | `bifrost.correctness.python-pandas-chained-inplace` | python | correctness | warning |
+| [Result of an inplace=True pandas call is used](../rules/bifrost.code-smells/policies/python-pandas-inplace-result-used.rqlp) | `bifrost.correctness.python-pandas-inplace-result-used` | python | correctness | warning |
+| [Mutable class attribute mutated through self](../rules/bifrost.code-smells/policies/python-shared-class-attribute-mutation.rqlp) | `bifrost.correctness.python-shared-class-attribute-mutation` | python | correctness | warning |
+| [File extension taken from split('.')\[1\]](../rules/bifrost.code-smells/policies/python-split-file-extension.rqlp) | `bifrost.correctness.python-split-file-extension` | python | correctness | warning |
 | [Rayon parallelism inside a blocking lazy initializer](../rules/bifrost.code-smells/policies/rayon-in-blocking-lazy-init.rqlp) | `bifrost.correctness.rayon-in-blocking-lazy-init` | rust | correctness | warning |
 | [Redundant Boolean return branches](../rules/bifrost.code-smells/policies/redundant-boolean-branches.rqlp) | `bifrost.correctness.redundant-boolean-branches` | c, cpp, csharp, go, java, javascript, kotlin, php, python, ruby, rust, scala, typescript | correctness | warning |
 | [Regular-expression compilation inside a loop](../rules/bifrost.code-smells/policies/regex-compile-in-loop.rqlp) | `bifrost.performance.regex-compile-in-loop` | java, javascript, python, rust, typescript | performance | note |
