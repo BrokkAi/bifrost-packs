@@ -394,8 +394,9 @@ CPython 3.13.5 signatures. This addition set is:
 - `builtins.open`, with exact return classes `io.TextIOWrapper`,
   `io.BufferedReader`, `io.BufferedWriter`, `io.BufferedRandom`, and
   `io.FileIO`.
-- `tempfile.mktemp`, `os.tempnam`, and `os.tmpnam` identities for the
-  insecure-temporary-file policy.
+- The `tempfile.mktemp` identity for the insecure-temporary-file policy.
+  Versions before 0.8.0 also declared `os.tempnam` and `os.tmpnam`. Those are
+  Python 2 APIs that no CPython 3 stub declares, so 0.8.0 removes them (#96).
 - The separate complete SSL artifact declares `ssl.wrap_socket` and the
   bounded SSL protocol declaration set: `ssl.PROTOCOL_SSLv2`,
   `ssl.PROTOCOL_SSLv3`, `ssl.PROTOCOL_SSLv23`,
