@@ -1244,6 +1244,47 @@
       "activation": "opt-in"
     },
     {
+      "path": "policies/javascript/file-content-to-unbounded-decompression.rqlp",
+      "id": "bifrost.security.javascript.file-content-to-unbounded-decompression",
+      "authored_hash": "9df5b87ddf8352dd44e6525bc4f5ab9dd081b7a3172e538b9df85813e2f61f07",
+      "resolved_semantic_hash": "9df5b87ddf8352dd44e6525bc4f5ab9dd081b7a3172e538b9df85813e2f61f07",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A zlib convenience method called without maxOutputLength buffers its whole output, so a small crafted file can expand until the process runs out of memory.",
+      "remediation": "Pass maxOutputLength with a limit that fits the expected data, or decompress through a stream that counts bytes and stops at a limit.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/javascript/process-input-to-fetch-url.rqlp",
+      "id": "bifrost.security.javascript.process-input-to-fetch-url",
+      "authored_hash": "ec1278db92ef69770e52ae75b91feb5ac8568c0d1e6bfc36f5f76ac999dae2d3",
+      "resolved_semantic_hash": "ec1278db92ef69770e52ae75b91feb5ac8568c0d1e6bfc36f5f76ac999dae2d3",
+      "category": "security",
+      "supported_languages": [
+        "javascript"
+      ],
+      "required_capabilities": [
+        "taint",
+        "runtime-keyed-read",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "A process argument that chooses the URL of an outbound fetch lets the caller point the program at internal hosts and services it can reach.",
+      "remediation": "Build the URL from a fixed origin and pass the argument only as a query value (URLSearchParams) or as a path segment checked against an allow-list or pattern; encodeURIComponent alone leaves . and .. segments intact. Or parse the URL with new URL and reject any origin outside an allow-list before fetching.",
+      "activation": "opt-in"
+    },
+    {
       "path": "policies/javascript/process-input-to-legacy-url-parse.rqlp",
       "id": "bifrost.security.javascript.process-input-to-legacy-url-parse",
       "authored_hash": "2a8d9eb83aaef84e7f39b1960e908d2f909381dec78c1de868f81dcfeebb5fb2",
