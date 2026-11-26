@@ -303,7 +303,16 @@ surfaces. A local or application-defined class with either name, and an
 unresolved spelling, remains an ordinary base.
 
 Typeshed supports Python 3.10 through 3.14, so the pack's compatibility and
-activation name the `cpython` toolchain over that range. Typeshed guards
+activation name the `cpython` toolchain over that range. The range is not
+widened below 3.10 (#463): the pinned revision sets
+`oldest-supported-python = "3.10"`, and typeshed removed its Python 3.9
+branches in `576a71a75e210ad167f36af882260401c775c05d`, so 3.10-only APIs are
+declared without a version guard. Claiming 3.9 would resolve calls that raise
+`AttributeError` there. A project whose `requires-python` lower bound is below
+3.10 (for example httpx's `>=3.9`) therefore activates no Python stdlib pack.
+Supporting it needs a second shard built from the last typeshed revision that
+supported 3.9 (`29a8b8c51a9f7b32c81a2b30cd60ddc0d032f03e`), activating on
+`>=3.9.0, <3.10.0`; that is a recipe change for the pack owner. Typeshed guards
 version-specific and platform-specific declarations with `sys.version_info`
 and `sys.platform` blocks.
 
@@ -350,12 +359,18 @@ contract only: it does not claim that generated dataclass members are modeled.
 
 ## Reviewed security API additions
 
-`stdlib-apis/bifrost.python-object-declarations.json` is a separate complete
+`stdlib-apis/bifrost.python-object-declarations.json` is a separate
 declaration pack scoped to the inherited `builtins.object` member surface. Its
 24 names were checked with both `dir(object)` and `vars(object)` under CPython
 3.12.15 and 3.13.5; the lists matched. The pack activates for CPython 3.12 and
-3.13, the two minor lines checked. This gives the engine complete evidence
-when a dunder such as `__iter__` is absent from `object`. The broader stdlib
+3.13, the two minor lines checked. The member list is exhaustive for
+`builtins.object`, but the pack is marked `partial` (1.0.1, #463): pack
+completeness is read as a claim about the whole Python declaration surface,
+and Bifrost's `python-declaration-models` capability accepts any active
+complete Python declaration shard (BrokkAi/bifrost-dev#15239). A 24-name pack
+must not satisfy that gate. The typeshed pack (`bifrost.python-stdlib`) is the
+complete declaration surface. No policy on `main` uses this pack; the rule it
+was written for, `iter-returns-non-iterator`, was withdrawn. The broader stdlib
 API pack remains partial. This source is directly authored and reviewed; no
 generator exists for this bounded declaration.
 
@@ -411,8 +426,11 @@ CPython 3.13.5 signatures. This addition set is:
   treating syntax-only field matches as remote input.
 
 The HTTP declaration facts are in the partial stdlib API declaration pack;
-they do not label those fields as remote sources. The complete bounded SSL
-set is also in `bifrost.python-ssl-protocol-declarations.json`. The temporary-file
+they do not label those fields as remote sources. The bounded SSL set is
+also in `bifrost.python-ssl-protocol-declarations.json`, which is marked
+`partial` (1.0.1, #463) for the same reason as the object pack: it declares
+two types and eleven members, not a complete surface. Both SSL fixtures give
+the same completion and findings with either marking on Bifrost 0.15.4. The temporary-file
 APIs and the other reviewed API additions are in the partial stdlib API
 declaration pack. The security-sink declaration pack adds
 `socket.socket.__init__` and `socket.socket.recv`. The summary pack adds

@@ -328,8 +328,7 @@
       "required_capabilities": [
         "structural-match",
         "prepared-syntax",
-        "class-set-type-flow",
-        "python-declaration-models"
+        "class-set-type-flow"
       ],
       "severity_rationale": "Identity of small integers and short strings may depend on CPython interning behavior.",
       "remediation": "Compare the values with == or != rather than relying on object interning."
