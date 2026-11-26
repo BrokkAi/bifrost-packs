@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 310 unique rule IDs from 14 manifest packs.
+This catalog lists 314 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -285,6 +285,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Servlet parameter reaches JDBC SQL](../rules/bifrost.security/policies/jvm/servlet-parameter-to-jdbc.rqlp) | `bifrost.security.java.servlet-parameter-to-jdbc` | java | security | error |
 | [Environment variable reaches Runtime.exec](../rules/bifrost.security/policies/jvm/system-getenv-to-runtime-exec.rqlp) | `bifrost.security.java.system-getenv-to-runtime-exec` | java | security | error |
 | [Request value reaches a proc_open command](../rules/bifrost.security/policies/php/request-input-to-proc-open-command.rqlp) | `bifrost.security.php.request-input-to-proc-open-command` | php | security | warning |
+| [aiohttp request or connector with TLS certificate verification disabled](../rules/bifrost.security/policies/python/aiohttp-tls-verification-disabled.rqlp) | `bifrost.security.python.aiohttp-tls-verification-disabled` | python | security | warning |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
 | [Django request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp) | `bifrost.security.python.django-request-to-urlopen` | python | security | error |
 | [Flask request value checked only by assert](../rules/bifrost.security/policies/python/flask-request-in-assert.rqlp) | `bifrost.security.python.flask-request-in-assert` | python | security | warning |
@@ -292,6 +293,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Flask request value parsed by parse_qs without max_num_fields](../rules/bifrost.security/policies/python/flask-request-to-parse-qs.rqlp) | `bifrost.security.python.flask-request-to-parse-qs` | python | security | warning |
 | [Flask request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp) | `bifrost.security.python.flask-request-to-urlopen` | python | security | error |
 | [Python hard-coded standard-library credentials](../rules/bifrost.security/policies/python/hardcoded-credentials.rqlp) | `bifrost.security.python.hardcoded-credentials` | python | security | error |
+| [httpx call or client with TLS certificate verification disabled](../rules/bifrost.security/policies/python/httpx-tls-verification-disabled.rqlp) | `bifrost.security.python.httpx-tls-verification-disabled` | python | security | warning |
 | [Python incomplete hostname regular expression](../rules/bifrost.security/policies/python/incomplete-hostname-regexp.rqlp) | `bifrost.security.python.incomplete-hostname-regexp` | python | security | warning |
 | [Python incomplete URL substring sanitization](../rules/bifrost.security/policies/python/incomplete-url-substring-sanitization.rqlp) | `bifrost.security.python.incomplete-url-substring-sanitization` | python | security | warning |
 | [Python SSL default protocol](../rules/bifrost.security/policies/python/insecure-default-protocol.rqlp) | `bifrost.security.python.insecure-default-protocol` | python | security | warning |
@@ -304,6 +306,8 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Process input reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp) | `bifrost.security.python.process-input-to-urlopen` | python | security | warning |
 | [Process input chooses a venv.create directory](../rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp) | `bifrost.security.python.process-input-to-venv-create` | python | security | warning |
 | [Process input reaches webbrowser.open](../rules/bifrost.security/policies/python/process-input-to-webbrowser-open.rqlp) | `bifrost.security.python.process-input-to-webbrowser-open` | python | security | warning |
+| [requests call with TLS certificate verification disabled](../rules/bifrost.security/policies/python/requests-tls-verification-disabled.rqlp) | `bifrost.security.python.requests-tls-verification-disabled` | python | security | warning |
+| [urllib3 pool with TLS certificate or hostname verification disabled](../rules/bifrost.security/policies/python/urllib3-tls-verification-disabled.rqlp) | `bifrost.security.python.urllib3-tls-verification-disabled` | python | security | warning |
 | [Python XML bomb input](../rules/bifrost.security/policies/python/xml-bomb.rqlp) | `bifrost.security.python.xml-bomb` | python | security | warning |
 | [Network input chooses the gem Gem::Installer installs](../rules/bifrost.security/policies/ruby/network-input-to-gem-installer.rqlp) | `bifrost.security.ruby.network-input-to-gem-installer` | ruby | security | warning |
 | [Network-chosen IMAP server on an affected net-imap release](../rules/bifrost.security/policies/ruby/network-input-to-net-imap-host.rqlp) | `bifrost.security.ruby.network-input-to-net-imap-host` | ruby | security | warning |

@@ -1,0 +1,120 @@
+; Lead: BrokkAi/bifrost-packs#427 (CWE-295), requests part. Version-independent:
+; `verify=False` disables certificate and hostname checks on every requests
+; release, so the rule is not version-gated.
+; Engine contract: each entry binds with :proof exact to a member of
+; bifrost.python-requests-declarations (semantic-packs/python/http-client),
+; which activates on `pkg:pypi/requests` evidence for 2.32.0 up to 2.35.0. The
+; module helpers (`requests.get`, ...) take `verify` through `**kwargs`, so the
+; selector matches the keyword on the call shape rather than a declared formal.
+; Session methods bind through `requests.Session()`, `requests.session()` and
+; `with requests.Session() as s`.
+; Without activation evidence no identity resolves and the rule is not run,
+; which is not a clean result.
+; Not covered: `session.verify = False` (an attribute write, not a call), an
+; HTTPAdapter or urllib3 pool configured directly, and REQUESTS_CA_BUNDLE or
+; CURL_CA_BUNDLE environment settings.
+; The literal is matched structurally on the call's own keyword argument. A
+; value that only reaches the keyword through a variable, a settings object or a
+; `**options` spread is not reported, so a clean run is not evidence that
+; verification stays on. Calls whose callee is spelled differently (an alias
+; such as `fetch = requests.get`) are not examined.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.requests-tls-verification-disabled"
+  :name "requests call with TLS certificate verification disabled"
+  :message "This requests call passes verify=False, so the server's TLS certificate and hostname are not checked"
+  :severity warning
+  :description "Reports requests module helpers and requests.Session request methods called with a literal verify=False. requests then accepts any certificate for any host, so a network attacker can read and change the traffic, including credentials it carries (CWE-295). Identity is the exact reviewed requests member; the literal is the call's own keyword argument."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "requests" "tls" "cwe-295"]
+  :analysis (analysis
+    :type assertion
+    (bind :name disabled :query
+      (rql :schema-version 1
+        (union
+          (resolved-call :resolves-to "requests.request" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "request") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.get" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "get") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.options" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "options") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.head" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "head") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.post" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "post") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.put" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "put") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.patch" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "patch") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.delete" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "delete") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.request" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "request") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.get" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "get") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.options" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "options") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.head" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "head") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.post" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "post") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.put" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "put") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.patch" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "patch") :kwargs [(verify (boolean_literal (boolean-value false)))])))))
+          (resolved-call :resolves-to "requests.sessions.Session.delete" :proof exact
+            (call-bindings
+              (call-shape
+                (language python
+                  (call :callee (name "delete") :kwargs [(verify (boolean_literal (boolean-value false)))]))))))))
+    (group :name by-call :by (disabled.site_id)
+      (aggregate :name sites :op count))
+    (assert :group by-call :value sites :cardinality (exactly 0)))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "295")))
