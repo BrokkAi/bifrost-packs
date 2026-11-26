@@ -15,9 +15,9 @@ exists for them.
 
 They are separate from `bifrost.python-stdlib-api-declarations` and
 `bifrost.python-security-sink-summaries` so that they can ship without a version
-bump of those packs. They are source-only: `native-generation.json` does not
-build them, so no packs release delivers them yet, and both policies stay
-opt-in until one does. The declaration pack repeats the module record
+bump of those packs. `native-generation.json` builds both, and `packs/v0.18.0`
+is the first packs release that delivers them. Both policies stay opt-in. The
+declaration pack repeats the module record
 `type.python.urllib.parse` of the stdlib API pack, because a pack must declare
 the owner of each member it declares. The two records are identical, and the
 fixtures load both packs together.

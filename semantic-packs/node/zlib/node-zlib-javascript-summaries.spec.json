@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.node-zlib-javascript-summaries",
+  "pack_version": "0.1.0",
+  "ecosystem": "npm",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.node-zlib-javascript-summaries.json",
+    "sha256": "0637214ac2be2ccaef704a6d46d2cd53266e9363b80696702ea21d8af1a23e29",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/507dfebabc0baded936250a5466159adf7a05839/semantic-packs/node/zlib/javascript/bifrost.node-zlib-javascript-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "Node.js zlib API (doc/api/zlib.md)",
+    "revision": "v22.11.0"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/node-zlib.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "javascript",
+      "owner": "zlib",
+      "name": "gunzipSync",
+      "has_receiver": true,
+      "parameter_count": 1
+    }
+  ]
+}

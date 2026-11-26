@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-urllib3-declarations",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-urllib3-declarations.json",
+    "sha256": "ccc2dacf31d512edb05e144179653595633b2f46c2807267fddc1454a8e58de2",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/03088bb6a8e0519b55bceab2d35be1ef0445da66/semantic-packs/python/http-client/bifrost.python-urllib3-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:pypi/urllib3",
+        "version": ">=2.0.0, <2.9.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "urllib3 source (src/urllib3/__init__.py, poolmanager.py, connectionpool.py)",
+    "revision": "urllib3/urllib3 2.0.0 (6446fef0cf432ca035169602a1447a0d8ef53e80), 2.8.0 (b1d30ab61fe0db8f11092805e8c5ac43e091064a)"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/python-http-client-models.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:pypi/urllib3",
+      "version": "=2.0.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "type",
+      "name": "urllib3.poolmanager.PoolManager"
+    },
+    {
+      "kind": "member",
+      "owner": "urllib3.poolmanager.PoolManager",
+      "name": "__init__"
+    }
+  ]
+}

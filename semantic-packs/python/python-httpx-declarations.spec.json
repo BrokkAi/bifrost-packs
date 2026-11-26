@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-httpx-declarations",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-httpx-declarations.json",
+    "sha256": "23e7212f3ffea519d134c4a059942ef8a30bdc40f4ffca482da4a9d308e6f8a9",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/03088bb6a8e0519b55bceab2d35be1ef0445da66/semantic-packs/python/http-client/bifrost.python-httpx-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:pypi/httpx",
+        "version": ">=0.28.0, <0.29.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "httpx source (httpx/__init__.py, _api.py, _client.py)",
+    "revision": "encode/httpx 0.28.0 (80960fa31918d7663c3f4c3ad61661cf0e80628f), 0.28.1 (26d48e0634e6ee9cdc0533996db289ce4b430177)"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/python-http-client-models.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:pypi/httpx",
+      "version": "=0.28.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "httpx",
+      "name": "get"
+    },
+    {
+      "kind": "type",
+      "name": "httpx._client.Client"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-untrusted-parsing-declarations",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-untrusted-parsing-declarations.json",
+    "sha256": "c9b0ababe78b8d348b4eb900f65ea1c19f8f61b0363910f8aa752ac0cd454753",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a60010e105d843765019f2e8a088e0531b66aaac/semantic-packs/python/untrusted-parsing/bifrost.python-untrusted-parsing-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.10.0, <3.15.0"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.10.0, <3.15.0"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "Python standard-library reference and typeshed",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed zlib decompressor and urllib.parse query-string declarations"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/typeshed-stdlib-2026.8.31.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.13.5"
+    },
+    "targets": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "urllib.parse",
+      "name": "parse_qs"
+    },
+    {
+      "kind": "member",
+      "owner": "urllib.parse",
+      "name": "parse_qsl"
+    }
+  ]
+}
