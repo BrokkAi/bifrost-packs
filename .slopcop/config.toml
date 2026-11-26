@@ -1,0 +1,4 @@
+[check]
+# Policy fixtures are deliberately minimal inputs (no docstrings, toy
+# classes) that exercise rules; SlopCop's own findings on them are noise.
+exclude = ["fixtures/**"]

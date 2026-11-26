@@ -27,3 +27,26 @@ Kinds: (a) a general Python pattern; (b) a misuse of a numpy, pandas or scikit-l
 - mpmath CVE-2021-29063 (ReDoS in `mpmathify`, fix c811b37c): this is in scope for the existing `polynomial-redos` rule. It needs an analyzer check of the pre-image, not a new lead.
 - numpy CVE-2014-1858/1859 and scipy CVE-2013-4251 (predictable temporary files): the existing `insecure-temporary-file` rule already selects `mktemp`.
 - Most numpy and pandas fixes are in C, or concern internal numerical-algorithm or dtype-dispatch details that no caller-side static rule could express.
+
+## Outcomes on Bifrost 0.15.4 (2026-11-25)
+
+Qualified with the released Bifrost 0.15.4 CLI (build `ea8da845e8d7`, the `policy-authoring.json` pin). Seven
+rules ship in `bifrost.code-smells` 4.1.0; each fixture README records its run, near misses, real-code evidence
+and known edges.
+
+| Issue | Outcome | Rule or blocker |
+| --- | --- | --- |
+| #446 | Not built | Needs numpy, pandas and joblib loader declarations and sink summaries, plus an untrusted-path source; new third-party packs need a native recipe change. Widening the name-matched `unsafe-deserialization` rule to `joblib.load` and `pd.read_pickle` without provenance would be noisy in ML code. The numpy < 1.16.3 arm also needs Python dependency evidence. |
+| #447 | Not built | Version-gated on scikit-learn < 1.5.0, and Python static dependency evidence is unavailable on 0.15.4. Also needs typestate for fitted estimators through `Pipeline`. |
+| #448 | Not built | Needs ndarray, sparse and pandas receiver typing and numpy alias summaries (`np.asarray` may alias). An augmented assignment on a parameter cannot be told apart from a harmless scalar rebinding (`x += 1`). |
+| #449 | Built | `bifrost.correctness.python-or-default-argument-mutation` |
+| #450 | Built | `bifrost.correctness.python-shared-class-attribute-mutation` |
+| #451 | Built (arms 1 and 2) | `bifrost.correctness.python-pandas-chained-inplace`, `bifrost.correctness.python-pandas-inplace-result-used`. Arm 3 (`inplace=True` on a caller's frame) needs pandas receiver typing. |
+| #452 | Not built | The pandas < 3.0 default is the whole hazard, and Python static dependency evidence is unavailable on 0.15.4. Unversioned, it would fire on every `pct_change()` in pandas 3 code. |
+| #453 | Not built | Needs numpy and pandas dtype inference for constructors and stored values. |
+| #454 | Not built | Needs datetime dtype inference for the `astype` receiver, and NumPy < 2 version evidence. |
+| #455 | Built (opt-in) | `bifrost.correctness.python-assert-argument-validation` |
+| #456 | Not built | The container-relation arm needs element provenance, and RQL capture correlation does not backtrack under `has`. |
+| #457 | Built (arm 1) | `bifrost.correctness.python-numpy-global-rng-with-local-generator`. Arm 2 (`np.random.seed` in library code) is not built: `set_seed` helpers do it on purpose. |
+| #458 | Built | `bifrost.correctness.python-split-file-extension` |
+| #459 | Not built | Needs file and compression acquisition families for `resource-lifecycle` and container ownership tracking (#439). |

@@ -1,0 +1,38 @@
+; Lead: BrokkAi/bifrost-packs#451 arm 1 (raphaelvallat/pingouin@790ae3f).
+; df["col"].fillna(v, inplace=True) and df.loc[...].method(..., inplace=True)
+; update the temporary object that the selection returned. Under pandas
+; Copy-on-Write (the default from pandas 3.0) the frame never changes; pandas
+; 2.2 warns, and earlier versions update the frame only when the selection
+; happens to be a view. The module must import pandas. The receiver must be a
+; .loc[...] or .iloc[...] selection, or a subscript with one string-literal
+; key; for the string-key form only the Series column methods (fillna,
+; replace, clip, where, mask, interpolate, ffill, bfill, pad, backfill) are
+; selected, so frames["train"].dropna(inplace=True) on a dict of DataFrames is
+; not reported. A list element such as frames[i].fillna(0, inplace=True) is
+; not reported either. frames["train"].fillna(0, inplace=True) on a dict of
+; DataFrames still is: the receiver type is not resolved.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.python-pandas-chained-inplace"
+  :name "inplace=True on a pandas selection"
+  :message "inplace=True on a column or .loc/.iloc selection updates a temporary copy; assign the result back instead."
+  :severity warning
+  :description "In a module that imports pandas, reports a pandas method that accepts inplace called with the literal keyword inplace=True on a .loc[...] or .iloc[...] selection, or a Series column method (fillna, replace, clip, where, mask, interpolate, ffill, bfill) on a subscript with a single string-literal key, such as df['Time'].fillna('-', inplace=True). The call updates the temporary Series or DataFrame the selection returned. Under Copy-on-Write, the default from pandas 3.0, the original frame never changes; earlier versions update it only when the selection is a view. Assigning the result back, as in df['Time'] = df['Time'].fillna('-'), or a whole-frame call such as df.fillna({'Time': '-'}, inplace=True), is not reported."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "python" "pandas" "code-smell"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (language python
+        (intersect
+          (inside (module (has (import :module (name "pandas"))))
+            (call :kwargs [(inplace (boolean_literal :boolean-value true))]))
+          (union
+            (call
+              :callee (name/regex "^(?:fillna|replace|clip|where|mask|interpolate|ffill|bfill|pad|backfill|dropna|drop_duplicates|sort_values|sort_index|rename|drop|reset_index|set_index)$")
+              :kwargs [(inplace (boolean_literal :boolean-value true))]
+              :receiver (text/regex "(?s)\\.(?:loc|iloc)\\s*\\[.*\\]$"))
+            (call
+              :callee (name/regex "^(?:fillna|replace|clip|where|mask|interpolate|ffill|bfill|pad|backfill)$")
+              :kwargs [(inplace (boolean_literal :boolean-value true))]
+              :receiver (text/regex "(?s)\\[\\s*[rRbBuU]?(?:\"[^\"]*\"|\\x27[^\\x27]*\\x27)\\s*\\]$"))))))))

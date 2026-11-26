@@ -1,0 +1,52 @@
+; Lead: BrokkAi/bifrost-packs#450 (numpy/numpy@f76c61e). A list, dict or set
+; assigned in a class body is one object shared by every instance. A method
+; that mutates it through self (append, extend, add, update, setdefault, ...)
+; changes it for all instances, as NameValidator did for np.genfromtxt. The
+; finding is the class attribute's declaration. The mutation's self.<name>
+; member is resolved with occurrence-target to that declaration, so only an
+; attribute the analyzer binds to the class body is reported. Excluded:
+; attributes that any method assigns through self (instance shadowing, such as
+; self.x = list(self.x)); tuples, frozensets and other immutable values;
+; annotated class attributes (pydantic and similar models copy those per
+; instance); mutation through cls in classmethods; and names that look like
+; deliberate shared state (cache, registry, instances, handlers, hooks,
+; plugins, listeners, callbacks, observers, memo). Subscript stores
+; (self.x[k] = v) and aliases (d = self.x; d.add(...)) are not selected.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.python-shared-class-attribute-mutation"
+  :name "Mutable class attribute mutated through self"
+  :message "This class attribute is one list, dict or set shared by all instances, and a method mutates it through self; create it per instance in __init__ instead."
+  :severity warning
+  :description "Reports an unannotated class-body attribute initialised with a list, dict or set literal or with list(), dict(), set(), defaultdict(), OrderedDict(), Counter() or deque(), when a method calls a mutating method on it through self (append, extend, insert, remove, pop, clear, add, discard, update, setdefault, popitem, sort, reverse and the in-place set updates) and no method assigns the attribute through self. All instances share that object, so the change leaks into every other instance. Tuples, frozensets, annotated attributes, mutation through cls, attributes reassigned on the instance, and names that look like deliberate shared state (cache, registry, instances, handlers, hooks, plugins, listeners, callbacks, observers, memo) are not reported. The finding is on the class attribute."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "python" "aliasing" "code-smell"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (except
+        (intersect
+          (occurrence-target
+            (occurrences-in :class reference :role member_position
+              (language python
+                (call
+                  :callee (name/regex "^(?:append|extend|insert|remove|pop|clear|add|discard|update|setdefault|popitem|sort|reverse|difference_update|intersection_update|symmetric_difference_update)$")
+                  :receiver (field_access :object (identifier (name "self")))))))
+          (enclosing-decl
+            (language python
+              (assignment
+                (text/regex "^[A-Za-z_][A-Za-z0-9_]*\\s*=[^=]")
+                :left (identifier)
+                :right (or (collection_literal (not (text/regex "^\\(")))
+                           (call :callee (name/regex "^(?:list|dict|set|defaultdict|OrderedDict|Counter|deque)$")))))))
+        (occurrence-target
+          (occurrences-in :class reference :role member_position
+            (language python
+              (assignment :left (field_access :object (identifier (name "self")))))))
+        (enclosing-decl
+          (language python
+            (assignment
+              (text/regex "^[A-Za-z_][A-Za-z0-9_]*\\s*=[^=]")
+              :left (identifier (name/regex "(?i)(?:cache|registry|registries|instances|handlers|hooks|plugins|subscribers|listeners|callbacks|observers|memo)"))
+              :right (or (collection_literal (not (text/regex "^\\(")))
+                         (call :callee (name/regex "^(?:list|dict|set|defaultdict|OrderedDict|Counter|deque)$"))))))))))
