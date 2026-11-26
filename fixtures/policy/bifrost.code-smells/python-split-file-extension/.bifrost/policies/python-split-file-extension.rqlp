@@ -1,0 +1,80 @@
+; Lead: BrokkAi/bifrost-packs#458 (PyPortfolio/PyPortfolioOpt@e12417a).
+; A split(".") call whose result is indexed at a positive constant other than
+; 0 picks the wrong segment for "./out/w.v2.json" or "../w.json" and raises
+; IndexError when the name has no dot. The receiver must be named like a file
+; name or path (filename, fname, file_path, upload.filename, ...) or be an
+; os.path.basename(...) call, so version strings and dotted identifiers stay
+; out. The parent of the subscript is matched by its role (assignment value,
+; return, comparison operand, call receiver or argument) and the subscript's
+; parser-backed text, which must end in <path-like name>.split(".")[N], so
+; the indexed split is the one with the path-like receiver; the split call
+; itself is also matched structurally.
+(policy
+  :schema-version 1
+  :id "bifrost.correctness.python-split-file-extension"
+  :name "File extension taken from split('.')[1]"
+  :message "Take the file extension with os.path.splitext or Path.suffix, not split('.')[N]."
+  :severity warning
+  :description "Reports name.split('.')[N] with a constant N of 1 or more, where the receiver is named like a file name or path or is an os.path.basename call. A directory or file name with more than one dot selects the wrong segment, and a name without a dot raises IndexError. split('.')[0], split('.')[-1], rsplit, os.path.splitext and Path.suffix are not reported. A receiver whose name does not look like a path, such as a version string or dotted identifier, is not reported."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-code-smell-pack"
+  :tags ["correctness" "python" "path" "code-smell"]
+  :analysis (analysis
+    :type match
+    :selector (rql :schema-version 1
+      (anchor :capture "split"
+        (language python
+          (union
+            (assignment :right (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+              (has (call
+                  :callee (name "split")
+                  :arity 1
+                  :args [(string_literal (value "."))]
+                  :receiver (or (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (call :callee (name "basename")))
+                  :capture "split")))
+            (return (text/regex "(?is)^return\\s.*(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+              (has (call
+                  :callee (name "split")
+                  :arity 1
+                  :args [(string_literal (value "."))]
+                  :receiver (or (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (call :callee (name "basename")))
+                  :capture "split")))
+            (comparison (not-kind comparison_chain) :left (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+              (has (call
+                  :callee (name "split")
+                  :arity 1
+                  :args [(string_literal (value "."))]
+                  :receiver (or (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (call :callee (name "basename")))
+                  :capture "split")))
+            (comparison (not-kind comparison_chain) :right (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+              (has (call
+                  :callee (name "split")
+                  :arity 1
+                  :args [(string_literal (value "."))]
+                  :receiver (or (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (call :callee (name "basename")))
+                  :capture "split")))
+            (call :receiver (text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")
+              (has (call
+                  :callee (name "split")
+                  :arity 1
+                  :args [(string_literal (value "."))]
+                  :receiver (or (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (call :callee (name "basename")))
+                  :capture "split")))
+            (call :args [(text/regex "(?is)(?:\\b(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)|basename\\([^()]*\\))\\.split\\(\\s*(?:\\x27\\.\\x27|\"\\.\")\\s*\\)\\s*\\[\\s*[1-9][0-9]*\\s*\\]$")]
+              (has (call
+                  :callee (name "split")
+                  :arity 1
+                  :args [(string_literal (value "."))]
+                  :receiver (or (identifier (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (field_access :field (name/regex "(?i)^(?:[a-z0-9]+_)*(?:file_?name|fname|file_?path|fpath|path_?name|base_?name|file)$"))
+                                (call :callee (name "basename")))
+                  :capture "split")))))))))

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.code-smells",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "name": "Bifrost code smells",
   "description": "Curated structured RQLP checks for bug-prone and potentially expensive source patterns.",
   "policies": [
@@ -928,6 +928,115 @@
       "severity_rationale": "A literal True assertion cannot fail and has no runtime checking effect.",
       "remediation": "Remove the assertion or replace it with the intended condition; this policy does not judge assert False or non-literal assertion expressions.",
       "activation": "opt-in"
+    },
+    {
+      "path": "policies/python-split-file-extension.rqlp",
+      "id": "bifrost.correctness.python-split-file-extension",
+      "authored_hash": "b04ff823a6be9ad6a48527d12516895b19b12939b9eee3e926c5b675cc964647",
+      "resolved_semantic_hash": "b04ff823a6be9ad6a48527d12516895b19b12939b9eee3e926c5b675cc964647",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Picking the second dot-separated segment as the extension selects the wrong segment for paths with dotted directories or multi-dot names, and raises IndexError when the name has no dot.",
+      "remediation": "Use os.path.splitext(name)[1] or pathlib.Path(name).suffix, lower-cased if the comparison should ignore case."
+    },
+    {
+      "path": "policies/python-pandas-inplace-result-used.rqlp",
+      "id": "bifrost.correctness.python-pandas-inplace-result-used",
+      "authored_hash": "27640a12458080a7e647004d9baed6689118c1e369af13619513e9ecbb6e5798",
+      "resolved_semantic_hash": "27640a12458080a7e647004d9baed6689118c1e369af13619513e9ecbb6e5798",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "pandas methods called with inplace=True return None, so the bound, returned or chained value is None and later use fails or silently propagates None.",
+      "remediation": "Either keep inplace=True and use the original object, or drop inplace=True and use the returned copy."
+    },
+    {
+      "path": "policies/python-pandas-chained-inplace.rqlp",
+      "id": "bifrost.correctness.python-pandas-chained-inplace",
+      "authored_hash": "162e95ae5b978a1f80ece1e5588b9a936764c54bb7111b341eb92a35fa0de0d6",
+      "resolved_semantic_hash": "162e95ae5b978a1f80ece1e5588b9a936764c54bb7111b341eb92a35fa0de0d6",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "An inplace=True call on a column or .loc/.iloc selection updates a temporary object; under pandas Copy-on-Write the original frame never changes, and earlier versions change it only when the selection is a view.",
+      "remediation": "Assign the result back, as in df['col'] = df['col'].fillna(value), or call the method on the whole frame with a column mapping."
+    },
+    {
+      "path": "policies/python-numpy-global-rng-with-local-generator.rqlp",
+      "id": "bifrost.correctness.python-numpy-global-rng-with-local-generator",
+      "authored_hash": "61cb1ada173590c4ee7555332abd645bc143c3af090f0adac5a9452d835ffe32",
+      "resolved_semantic_hash": "61cb1ada173590c4ee7555332abd645bc143c3af090f0adac5a9452d835ffe32",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match"
+      ],
+      "severity_rationale": "Drawing from the global numpy.random stream next to a local generator or random_state parameter makes results depend on process-global state, so runs are not reproducible from the seed the caller supplied.",
+      "remediation": "Draw every random value from the local generator, for example rng = np.random.default_rng(random_state) and rng.random(...), or pass that generator down."
+    },
+    {
+      "path": "policies/python-or-default-argument-mutation.rqlp",
+      "id": "bifrost.correctness.python-or-default-argument-mutation",
+      "authored_hash": "5544a665c98b41e36d27d57f3d172d2482d510d670057493a4ef7ec585010035",
+      "resolved_semantic_hash": "5544a665c98b41e36d27d57f3d172d2482d510d670057493a4ef7ec585010035",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "name = name or {} keeps the caller's dict when one is passed, so a later pop, update or store changes the caller's object and repeated calls with the same dict see altered settings.",
+      "remediation": "Copy before mutating, for example options = dict(options or {}) or options = {**(options or {})}."
+    },
+    {
+      "path": "policies/python-assert-argument-validation.rqlp",
+      "id": "bifrost.correctness.python-assert-argument-validation",
+      "authored_hash": "b99ccc262ac7b104b0bb6577436337c93561dfb92eaf03a35732667dfc5eec51",
+      "resolved_semantic_hash": "b99ccc262ac7b104b0bb6577436337c93561dfb92eaf03a35732667dfc5eec51",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "python -O removes assert statements, so invalid arguments reach the implementation unchecked in optimised runs, and otherwise the caller gets AssertionError instead of a documented exception.",
+      "remediation": "Replace the assert with an explicit check that raises ValueError or TypeError with a message.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python-shared-class-attribute-mutation.rqlp",
+      "id": "bifrost.correctness.python-shared-class-attribute-mutation",
+      "authored_hash": "d9ac7d2a93c1c05f5bfb49ca39e18b6e28ec3f135e8367a7328e44333511955c",
+      "resolved_semantic_hash": "d9ac7d2a93c1c05f5bfb49ca39e18b6e28ec3f135e8367a7328e44333511955c",
+      "category": "correctness",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "structural-match",
+        "lexical-environment"
+      ],
+      "severity_rationale": "A list, dict or set assigned in a class body is shared by every instance, so mutating it through self leaks state between instances and across calls.",
+      "remediation": "Create the container per instance in __init__, or keep an immutable class default (tuple or frozenset) and copy it before changing it."
     }
   ]
 }
