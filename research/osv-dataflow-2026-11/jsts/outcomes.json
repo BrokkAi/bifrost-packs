@@ -284,5 +284,206 @@
       ],
       "note": "Version-gated. No reviewed node:sqlite model; the protocol also needs tagged-template call binding and iterator aliasing. Not probed further: the runtime gate blocks every positive/near-miss pair first."
     }
-  ]
+  ],
+  "requalification": {
+    "evaluation_date": "2026-11-25",
+    "bifrost": {
+      "version": "0.15.4",
+      "build_identity": "ea8da845e8d702206a9acc0c6f28d8bd18fa71c0",
+      "archive": "bifrost-v0.15.4-aarch64-apple-darwin.tar.gz",
+      "archive_sha256": "515dd6e05ece2073f39b52cef2554e22707103453af36e701033b4f60a3f6d26",
+      "binary_sha256": "d9e6168d51eece5aeeff6eb28187d27aafeae164c217816a80fd09a4581f8be3",
+      "environment": {
+        "BIFROST_OPEN_PACKS_DISABLE": "1",
+        "BIFROST_WORKSPACE_SEMANTIC_MODELS": "on",
+        "BIFROST_SEMANTIC_PACK_DOWNLOAD": "off",
+        "BIFROST_CACHE_DIR": "fresh per run"
+      },
+      "flags": [
+        "--policy",
+        "--no-builtin-policies",
+        "--no-incremental"
+      ]
+    },
+    "blocking_issues_state": {
+      "https://github.com/BrokkAi/bifrost-dev/issues/9983": "open",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9985": "open",
+      "https://github.com/BrokkAi/bifrost-dev/issues/9986": "open",
+      "https://github.com/BrokkAi/bifrost-dev/issues/2446": "open",
+      "https://github.com/BrokkAi/bifrost-dev/issues/4385": "open"
+    },
+    "version_evidence": [
+      {
+        "query": "probe/node-runtime-evidence/runtime-rows.rql",
+        "observed": "Unchanged: one npm-toolchain node 16.13.0 constraint row from package.json engines.node, declared_toolchain=does_not_establish_installed_runtime. No row for .nvmrc."
+      },
+      {
+        "query": "probe/node-runtime-evidence/exact-rows.rql",
+        "observed": "No rows."
+      },
+      {
+        "query": "probe/node-runtime-evidence/runtime-range.rql",
+        "observed": "Rejected. version_ranges now also accepts rubygems, ruby-toolchain, composer, php-toolchain, maven and jvm-toolchain, but still not npm-toolchain."
+      },
+      {
+        "query": "probe/node-runtime-evidence/target-of.rql",
+        "observed": "No rows; topology_derivation_incomplete."
+      }
+    ],
+    "probes": [
+      {
+        "lead": 292,
+        "observed": "A taint sink selector (language javascript (comparison)) or (binary_expression) is refused: the JavaScript structural adapter does not support those kinds (unsupported_structural_feature), and the run fails with endpoint_role_unresolved. A non-call sink row is refused because it does not identify a semantic call site."
+      },
+      {
+        "lead": "bifrost-dev#9986",
+        "observed": "process.argv[2] passed inline as a call argument still binds no source (incomplete/inline of the fs-write-path fixture). The run now fails with endpoint_role_unresolved, where 0.15.1 reported inconclusive (partial_discovery). Still no finding and never clean."
+      }
+    ],
+    "rules": [
+      {
+        "rule": "bifrost.security.javascript.file-content-to-unbounded-decompression",
+        "lead": 291,
+        "authored_hash": "9df5b87ddf8352dd44e6525bc4f5ab9dd081b7a3172e538b9df85813e2f61f07",
+        "fixture": "fixtures/policy/bifrost.security/javascript-file-content-to-unbounded-decompression",
+        "models": [
+          "bifrost.node-fs-javascript-declarations 0.2.1",
+          "bifrost.node-fs-javascript-summaries 0.3.0",
+          "bifrost.node-zlib-javascript-declarations 0.1.0",
+          "bifrost.node-zlib-javascript-summaries 0.1.0"
+        ],
+        "cases": [
+          {
+            "sources": ".",
+            "completion": "proven_by_summary",
+            "reported": [
+              "main.js:10",
+              "main.js:16",
+              "main.js:21",
+              "main.js:27",
+              "main.js:31",
+              "main.js:36"
+            ],
+            "certainty": "all definite, complete"
+          },
+          {
+            "sources": ".",
+            "variant": "without bifrost.node-zlib-javascript-summaries",
+            "completion": "inconclusive (partial_discovery)",
+            "reported": [
+              "main.js:10",
+              "main.js:16",
+              "main.js:21",
+              "main.js:27",
+              "main.js:31",
+              "main.js:36"
+            ],
+            "certainty": "all possible, partial"
+          },
+          {
+            "sources": ".",
+            "variant": "without either bifrost.node-zlib-javascript pack",
+            "completion": "failed (endpoint_role_unresolved)",
+            "reported": []
+          },
+          {
+            "sources": "incomplete",
+            "completion": "inconclusive (partial_discovery)",
+            "reported": [
+              "to-string/to-string.js:8 definite, complete"
+            ],
+            "diagnostics": [
+              "call resolution unknown: Buffer#toString has no summary"
+            ]
+          },
+          {
+            "sources": "incomplete/destructured, incomplete/local-require (each alone)",
+            "completion": "failed (endpoint_role_unresolved)",
+            "reported": [],
+            "diagnostics": [
+              "destructured require bindings and a function-local require do not resolve to the declared members"
+            ]
+          },
+          {
+            "sources": "uncovered",
+            "completion": "complete",
+            "reported": [],
+            "diagnostics": [
+              "bound no sink endpoint: zlib.gunzip(buffer, callback) is undeclared and gunzipSync(buffer, options) is not a sink"
+            ]
+          }
+        ]
+      }
+    ],
+    "leads": [
+      {
+        "issue": 288,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+          "https://github.com/BrokkAi/bifrost-dev/issues/2446"
+        ],
+        "note": "No version-independent slice: fixed runtimes validate returned names. Runtime gate unchanged on 0.15.4."
+      },
+      {
+        "issue": 289,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+        ],
+        "note": "No version-independent slice: fixed runtimes use a null-prototype row object. Runtime gate unchanged on 0.15.4."
+      },
+      {
+        "issue": 290,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+        ],
+        "note": "No version-independent slice: fixed runtimes recompute the public key. Runtime gate unchanged on 0.15.4."
+      },
+      {
+        "issue": 291,
+        "outcome": "implemented",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+          "https://github.com/BrokkAi/bifrost-dev/issues/2446"
+        ],
+        "rule": "bifrost.security.javascript.file-content-to-unbounded-decompression",
+        "note": "The version-independent zlib slice ships: an fs.readFileSync(path) Buffer reaching zlib.gunzipSync, inflateSync, inflateRawSync, unzipSync or brotliDecompressSync called without options (no maxOutputLength; the default is buffer.kMaxLength). New source-only models bifrost.node-zlib-javascript-declarations/-summaries 0.1.0. Options without maxOutputLength are a known false negative (no option-shape binding). The fetch part stays version-gated (bifrost-dev#9983) and needs promise results (bifrost-dev#2446)."
+      },
+      {
+        "issue": 292,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983",
+          "https://github.com/BrokkAi/bifrost-dev/issues/4385"
+        ],
+        "note": "Probed on 0.15.4: comparison and binary_expression are unsupported JavaScript structural kinds and a taint sink must be a semantic call site, so neither a taint nor a lexical slice of an HMAC digest compared with === can be written."
+      },
+      {
+        "issue": 293,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+        ],
+        "note": "No version-independent slice: fixed runtimes reject NUL host names. Runtime gate unchanged on 0.15.4."
+      },
+      {
+        "issue": 295,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+        ],
+        "note": "The batch-file part is version- and Windows-gated. The nearest version-independent slice, process.argv reaching child_process.execSync(command), already ships as bifrost.security.javascript.process-input-to-child-process-command (#393). spawn and spawnSync with shell: true need option-shape binding; not probed."
+      },
+      {
+        "issue": 296,
+        "outcome": "blocked_by_engine",
+        "blocking_issues": [
+          "https://github.com/BrokkAi/bifrost-dev/issues/9983"
+        ],
+        "note": "No version-independent slice. Runtime gate unchanged on 0.15.4."
+      }
+    ]
+  }
 }

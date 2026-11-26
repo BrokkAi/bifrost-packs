@@ -101,6 +101,40 @@ specs pin commit `65b68f55b537ab77b7ecd8569b0c838aac9be0ea`.
 and io packs. The io declarations pack does not yet declare the `io.Reader`
 family of interfaces that #209 asks for.
 
+## Python performance summaries 1.2.0
+
+`bifrost.python-performance-summaries` 1.2.0 (#168) adds declared effects for
+`json.loads` (parsing), `json.dumps` (serialization) and `re.compile` (regex
+compile), and fills the `pickle.loads` and `pickle.dumps` call arities that 1.1.0
+skipped. Before it, a loop that called one of them made `parsing-in-loop`,
+`serialization-in-loop` or `regex-compile-in-loop` inconclusive
+(`CalleeUnmodeled`), because those effects were only in the golden-core and
+3.13.5-only security-sink models, which the native release does not ship to
+other interpreters.
+
+Bifrost binds a Python summary on owner, member and the call site's argument
+count, and a target's path and symbol must be unique. So each supported call
+arity has its own summary, named after the stub's leading parameters, for
+example `json.loads(s, *, cls)` for any one-keyword call. Arities run from the
+leading positional parameters through every named keyword in the pinned
+typeshed stub (`json.loads` 1 to 7, `json.dumps` 1 to 10, `re.compile` 1 and 2,
+`pickle.loads` 1 to 5, `pickle.dumps` 1 to 4). A call with extra `**kwds`
+beyond those stays unmodeled and open. The identities are unchanged across
+CPython 3.10 to 3.14 in that stub (`json.loads` gains `array_hook` only in
+3.15). On a 3.13.5 workspace the security-sink pack's `re.compile(pattern,
+flags)` summary is active too, and the run stays complete.
+Taint rules read these summaries too. A `complete` summary with no transfers
+claims that nothing reaches the return value, and that cut the flow in
+`urlopen(json.loads(sys.argv[1]))`, reporting it clean. 1.2.0 therefore declares
+input-to-return transfers on every summary whose result carries input data:
+all parameters for `json` and `pickle`, the pattern for `re.compile` (as the 3.13.5
+security-sink summary declares, so the two agree), the iterable for `sorted`,
+`args` for `subprocess.run`, and the receiver for buffered `read` and
+`sqlite3.Cursor.execute`. 1.1.0 already had that gap for `pickle.loads`.
+`fixtures/policy/bifrost.code-smells/python-performance-stdlib-models/` holds
+the positives, the near misses and the taint pass-through case. The job, spec and activation range are
+otherwise unchanged; the spec's artifact URL pins the model commit.
+
 ## Previous native packaging repair
 
 The published `packs/v0.7.0` keeps the generator, the twelve direct jobs and the
