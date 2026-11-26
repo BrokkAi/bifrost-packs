@@ -1,0 +1,50 @@
+; Lead: BrokkAi/bifrost-packs#443 (requests CVE-2026-25645).
+; os.path.join(tempfile.gettempdir(), NAME) with a fixed NAME is a path every
+; local user can predict. On a shared /tmp another user can create that file or
+; a symlink first, so code that reuses an existing file at that path trusts
+; content someone else wrote, and code that writes there can be redirected.
+; requests < 2.33.0 wrote its CA bundle to such a path and reused it when it
+; existed, so a local user chose which certificates requests trusted.
+;
+; Engine contract: the subject is an exact call to tempfile.gettempdir (typeshed
+; identity) that is the first of exactly two arguments to a join call on a
+; receiver os.path (or a bare path, posixpath or ntpath), whose second argument is
+; a string literal that interpolates no name. An f-string such as
+; f"upload-{token}.bin" or f"{uuid.uuid4()}.pem" is excluded, because the
+; interpolated value may be random. An absolute literal, which makes join
+; discard the temporary directory, is still reported: a literal-value regex
+; that would exclude it leaves f-string literals incomplete on 0.15.4. The join
+; call is matched by its spelling because os.path.join and posixpath.join do not bind to an exact
+; identity on Bifrost 0.15.4; a bare join imported with "from os.path import
+; join" is therefore not examined.
+;
+; This belongs in insecure-temporary-file (same CWE and remediation). It is a
+; separate rule for now because that rule's tempfile.mktemp locator resolves to
+; two exact identities on Bifrost 0.15.4 with packs/v0.16.0 (the typeshed pack
+; and bifrost.python-stdlib-api-declarations both declare it), which leaves the
+; whole rule not_run. Merge the two once that ambiguity is resolved.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.predictable-temporary-path"
+  :name "Python predictable path in the shared temporary directory"
+  :message "A fixed file name is joined onto tempfile.gettempdir(), so other local users can predict and pre-create the path"
+  :severity warning
+  :description "Reports os.path.join(tempfile.gettempdir(), NAME) where NAME is a constant string literal. The temporary directory is usually shared, so another local user can create the file or a symlink at that path first; code that reuses or writes the file then trusts or overwrites content it does not control (CWE-377, requests CVE-2026-25645). Subject identity is the exact tempfile.gettempdir call."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "filesystem" "temporary-file" "cwe-377"]
+  :analysis (analysis
+    :type assertion
+    (bind :name predictable-temporary-path :query
+      (rql :schema-version 1
+        (resolved-call :resolves-to "tempfile.gettempdir" :proof exact
+          (call-bindings (call-shape (language python
+            (inside
+              (call :callee (name "join") (arity 2)
+                :receiver (or (field_access :object (name "os") :field (name "path")) (identifier :name/regex "^(path|posixpath|ntpath)$"))
+                :args [(call :callee (name "gettempdir")) (string_literal :not-has (identifier))])
+              (call :callee (name "gettempdir")))))))))
+    (group :name by-call :by (predictable-temporary-path.site_id)
+      (aggregate :name predictable-paths :op count))
+    (assert :group by-call :value predictable-paths :cardinality (exactly 0)))
+  :classification (classification
+    :fallback (classification-id :taxonomy "CWE" :id "377")))

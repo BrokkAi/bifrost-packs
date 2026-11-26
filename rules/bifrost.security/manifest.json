@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "bifrost.security",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "name": "Bifrost security",
   "description": "High-precision security policies backed by exact structural identity and value-flow evidence.",
   "policies": [
@@ -703,6 +703,22 @@
       "remediation": "Use tempfile.NamedTemporaryFile or another API that securely creates and opens the file."
     },
     {
+      "path": "policies/python/predictable-temporary-path.rqlp",
+      "id": "bifrost.security.python.predictable-temporary-path",
+      "authored_hash": "9c717bee3c2d8d67b586f1c96e0ff504d655ae628b338bdc4096cf95890c7f7a",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "exact-call-target",
+        "semantic-model-provenance"
+      ],
+      "severity_rationale": "A fixed file name under the shared temporary directory lets another local user create the file or a symlink first, so the program reuses content it did not write or writes where the other user chose.",
+      "remediation": "Create temporary files with tempfile.mkstemp, NamedTemporaryFile or TemporaryDirectory. For a cache that must persist, use a per-user directory created with mode 0o700, such as one from platformdirs.user_cache_dir."
+    },
+    {
       "path": "policies/python/overly-permissive-file.rqlp",
       "id": "bifrost.security.python.overly-permissive-file",
       "authored_hash": "3ba7f91895bc783a4a9349b1659f6e41220f09a2ea75362dcf4639974cbc8683",
@@ -819,6 +835,66 @@
       ],
       "severity_rationale": "A URL built from a Flask request query, form, cookie or header value lets a remote client choose the scheme and host urlopen contacts, so it can read local files or reach internal services.",
       "remediation": "Do not open request-supplied URLs. Map the request value to an allowlisted URL, or parse it and require an allowlisted https host before opening it."
+    },
+    {
+      "path": "policies/python/flask-request-to-parse-qs.rqlp",
+      "id": "bifrost.security.python.flask-request-to-parse-qs",
+      "authored_hash": "71c7688a1bf09539683e6bcc405a0dd8d4eb67f71e545c1eefe314f6a0ce82a6",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Without max_num_fields, parse_qs and parse_qsl build one entry per field in a request value, so one request with very many fields spends CPU and memory in proportion to the field count and can stall a worker or event loop.",
+      "remediation": "Pass max_num_fields with a cap that fits the expected input (for example max_num_fields=100), and reject the request when parsing raises ValueError.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-to-decompress.rqlp",
+      "id": "bifrost.security.python.flask-request-to-decompress",
+      "authored_hash": "9e1368ef7258ca854d61fec073545618c7e8012fb36cf9e0509d05af172fac3a",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "zlib.decompress, gzip.decompress and bz2.decompress inflate the whole input with no output limit, so a few kilobytes of compressed request data can expand to gigabytes and exhaust memory.",
+      "remediation": "Use a streaming decompressor with an output cap, for example zlib.decompressobj().decompress(data, max_length) in a loop that stops once the total exceeds a limit, and reject oversized input.",
+      "activation": "opt-in"
+    },
+    {
+      "path": "policies/python/flask-request-in-assert.rqlp",
+      "id": "bifrost.security.python.flask-request-in-assert",
+      "authored_hash": "781b9fff9cfe7f11c56171dee29eede1ac9c2ea1aecb19e11a96640584fd0d48",
+      "resolved_semantic_hash": null,
+      "category": "security",
+      "supported_languages": [
+        "python"
+      ],
+      "required_capabilities": [
+        "taint",
+        "exact-call-target",
+        "actual-to-formal-binding",
+        "semantic-model-provenance",
+        "scoped-callable-completeness"
+      ],
+      "severity_rationale": "Python removes assert statements under -O and PYTHONOPTIMIZE, so a request check written as an assert vanishes in optimized deployments and the code continues with input it meant to reject.",
+      "remediation": "Validate request input with an explicit check that cannot be optimized away, for example `if value not in ALLOWED: abort(400)` or `raise ValueError(...)`. Keep assert for internal invariants only.",
+      "activation": "opt-in"
     },
     {
       "path": "policies/python/django-request-to-urlopen.rqlp",

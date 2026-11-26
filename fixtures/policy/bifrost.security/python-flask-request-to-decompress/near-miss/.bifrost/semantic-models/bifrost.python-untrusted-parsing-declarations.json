@@ -1,0 +1,219 @@
+{
+  "schema_version": 16,
+  "pack_id": "bifrost.python-untrusted-parsing-declarations",
+  "version": "0.1.0",
+  "producer": {
+    "name": "bifrost-reviewed-python-models",
+    "version": "0.1.0"
+  },
+  "language": "python",
+  "ecosystem": "python",
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.10.0, <3.15.0"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "Python standard-library reference and typeshed",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed zlib decompressor and urllib.parse query-string declarations"
+  },
+  "license": "Apache-2.0",
+  "completeness": "partial",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "shards": [
+    {
+      "id": "declarations.python-untrusted-parsing",
+      "activation": [
+        {
+          "toolchain": {
+            "name": "cpython",
+            "version": ">=3.10.0, <3.15.0"
+          },
+          "targets": []
+        }
+      ],
+      "payload": {
+        "kind": "declaration_facts",
+        "types": [
+          {
+            "id": "type.python.urllib.parse",
+            "name": "urllib.parse",
+            "type_kind": "module",
+            "visibility": "public",
+            "aliases": [
+              "urllib.parse"
+            ],
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib/parse.pyi",
+              "symbol": "urllib.parse"
+            }
+          }
+        ],
+        "members": [
+          {
+            "id": "member.python.urllib.parse.parse_qs",
+            "owner": "type.python.urllib.parse",
+            "name": "parse_qs",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "qs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "keep_blank_values",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "strict_parsing",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "encoding",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "errors",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "max_num_fields",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "separator",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.dict"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib/parse.pyi",
+              "symbol": "urllib.parse.parse_qs(qs, keep_blank_values, strict_parsing, encoding, errors, max_num_fields, separator)"
+            }
+          },
+          {
+            "id": "member.python.urllib.parse.parse_qsl",
+            "owner": "type.python.urllib.parse",
+            "name": "parse_qsl",
+            "member_kind": "function",
+            "visibility": "public",
+            "is_static": true,
+            "callable_family_complete": true,
+            "signature": {
+              "parameters": [
+                {
+                  "name": "qs",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  }
+                },
+                {
+                  "name": "keep_blank_values",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "strict_parsing",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.bool"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "encoding",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "errors",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "max_num_fields",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.object"
+                  },
+                  "optional": true
+                },
+                {
+                  "name": "separator",
+                  "type": {
+                    "kind": "named",
+                    "name": "builtins.str"
+                  },
+                  "optional": true
+                }
+              ],
+              "returns": {
+                "kind": "named",
+                "name": "builtins.list"
+              }
+            },
+            "locator": {
+              "kind": "artifact",
+              "path": "urllib/parse.pyi",
+              "symbol": "urllib.parse.parse_qsl(qs, keep_blank_values, strict_parsing, encoding, errors, max_num_fields, separator)"
+            }
+          }
+        ],
+        "relations": []
+      }
+    }
+  ]
+}

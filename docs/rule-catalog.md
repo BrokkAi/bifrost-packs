@@ -1,6 +1,6 @@
 # Rule catalog
 
-This catalog lists 310 unique rule IDs from 14 manifest packs.
+This catalog lists 314 unique rule IDs from 14 manifest packs.
 Supported languages come only from each rule's manifest declaration. Language counts overlap when one policy declares multiple languages. These declarations do not establish tested, enabled, or qualified behavior.
 
 | Policy | Stable ID | Manifest support / query scopes | Category | Severity |
@@ -288,6 +288,9 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [aiohttp request or connector with TLS certificate verification disabled](../rules/bifrost.security/policies/python/aiohttp-tls-verification-disabled.rqlp) | `bifrost.security.python.aiohttp-tls-verification-disabled` | python | security | warning |
 | [Python socket binds to all network interfaces](../rules/bifrost.security/policies/python/bind-socket-all-network-interfaces.rqlp) | `bifrost.security.python.bind-socket-all-network-interfaces` | python | security | warning |
 | [Django request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/django-request-to-urlopen.rqlp) | `bifrost.security.python.django-request-to-urlopen` | python | security | error |
+| [Flask request value checked only by assert](../rules/bifrost.security/policies/python/flask-request-in-assert.rqlp) | `bifrost.security.python.flask-request-in-assert` | python | security | warning |
+| [Flask request value decompressed without an output bound](../rules/bifrost.security/policies/python/flask-request-to-decompress.rqlp) | `bifrost.security.python.flask-request-to-decompress` | python | security | warning |
+| [Flask request value parsed by parse_qs without max_num_fields](../rules/bifrost.security/policies/python/flask-request-to-parse-qs.rqlp) | `bifrost.security.python.flask-request-to-parse-qs` | python | security | warning |
 | [Flask request value reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/flask-request-to-urlopen.rqlp) | `bifrost.security.python.flask-request-to-urlopen` | python | security | error |
 | [Python hard-coded standard-library credentials](../rules/bifrost.security/policies/python/hardcoded-credentials.rqlp) | `bifrost.security.python.hardcoded-credentials` | python | security | error |
 | [httpx call or client with TLS certificate verification disabled](../rules/bifrost.security/policies/python/httpx-tls-verification-disabled.rqlp) | `bifrost.security.python.httpx-tls-verification-disabled` | python | security | warning |
@@ -298,6 +301,7 @@ Supported languages come only from each rule's manifest declaration. Language co
 | [Python insecure temporary filename](../rules/bifrost.security/policies/python/insecure-temporary-file.rqlp) | `bifrost.security.python.insecure-temporary-file` | python | security | error |
 | [Python overly permissive file mode](../rules/bifrost.security/policies/python/overly-permissive-file.rqlp) | `bifrost.security.python.overly-permissive-file` | python | security | warning |
 | [Python polynomial regular expression backtracking](../rules/bifrost.security/policies/python/polynomial-redos.rqlp) | `bifrost.security.python.polynomial-redos` | python | security | warning |
+| [Python predictable path in the shared temporary directory](../rules/bifrost.security/policies/python/predictable-temporary-path.rqlp) | `bifrost.security.python.predictable-temporary-path` | python | security | warning |
 | [Process input reaches os.system](../rules/bifrost.security/policies/python/process-input-to-os-system.rqlp) | `bifrost.security.python.process-input-to-os-system` | python | security | error |
 | [Process input reaches urllib.request.urlopen](../rules/bifrost.security/policies/python/process-input-to-urlopen.rqlp) | `bifrost.security.python.process-input-to-urlopen` | python | security | warning |
 | [Process input chooses a venv.create directory](../rules/bifrost.security/policies/python/process-input-to-venv-create.rqlp) | `bifrost.security.python.process-input-to-venv-create` | python | security | warning |

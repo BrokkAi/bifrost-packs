@@ -1,0 +1,110 @@
+; Lead: BrokkAi/bifrost-packs#433 (aiohttp CVE-2025-69227).
+; Python removes assert statements when it runs with -O or PYTHONOPTIMIZE, which
+; some production images set. An assert that is the only check on a request
+; value is then no check at all: the code goes on with input it meant to reject.
+; aiohttp checked multipart framing only with assert, so under -O a malformed
+; body kept the parser reading past the end of the stream.
+;
+; Sources are the exact Werkzeug Request accessor reads of the shipped
+; flask-request-to-urlopen rule (request.args, form, cookies and headers); the
+; reviewed get and getlist summaries carry the taint to their results.
+;
+; The sink is a value read inside an assert statement: an identifier, or the
+; result of a call, anywhere in the asserted condition or its message. RQL has
+; no role that separates the condition from the message, so a request value
+; that appears only in the message (assert ready, request.args.get("id")) is
+; reported too, although removing that assert skips no request check. The rule
+; is opt-in for that reason. It does not look for another check of the same
+; value: an assert that repeats an earlier if/raise is still reported.
+(policy
+  :schema-version 1
+  :id "bifrost.security.python.flask-request-in-assert"
+  :name "Flask request value checked only by assert"
+  :message "A Flask request value is checked by an assert statement, which python -O removes"
+  :severity warning
+  :description "Reports Flask request query, form, cookie and header values that reach an assert statement. Python drops assert statements under -O and PYTHONOPTIMIZE, so input validation written as an assert disappears in optimized deployments and the code continues with input it meant to reject (CWE-617, aiohttp CVE-2025-69227). Source identity is an exact read of a reviewed Werkzeug Request accessor; the sink is a value read inside an assert statement."
+  :help-uri "https://bifrost.brokk.ai/static-analysis-policies/#built-in-security-pack"
+  :tags ["security" "python" "flask" "input-validation" "cwe-617"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id request-args
+              :display-name "Flask request.args"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.args"
+                      :proof exact
+                      (field_access :field (name "args")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-form
+              :display-name "Flask request.form"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.form"
+                      :proof exact
+                      (field_access :field (name "form")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-cookies
+              :display-name "Flask request.cookies"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.cookies"
+                      :proof exact
+                      (field_access :field (name "cookies")))))
+              :bind matched-value
+              :labels [attacker-controlled])
+            (source
+              :id request-headers
+              :display-name "Flask request.headers"
+              :categories [input.user-controlled io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (resolved-value
+                      :resolves-to "werkzeug.wrappers.Request.headers"
+                      :proof exact
+                      (field_access :field (name "headers")))))
+              :bind matched-value
+              :labels [attacker-controlled])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id asserted-value
+              :display-name "value read in an assert statement"
+              :categories [validation.assert]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language python
+                    (union
+                      (inside (assertion) (identifier))
+                      (inside (assertion) (call)))))
+              :dangerous-operand matched-value
+              :accepts [attacker-controlled])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "617")))
