@@ -1,0 +1,142 @@
+; Lead: BrokkAi/bifrost-packs#291 (CVE-2024-22025), version-independent part.
+; Product source contract: the zlib convenience methods buffer the whole
+; decompressed output, and their maxOutputLength option defaults to
+; buffer.kMaxLength (Node v22.11.0 doc/api/zlib.md), so on every release a
+; small compressed input can expand until memory runs out. The fetch part of
+; the advisory is version-gated and needs Node runtime evidence
+; (bifrost-dev#9983).
+; Engine contract: the source is the Buffer returned by the reviewed
+; fs.readFileSync(path) member, so the rule treats file content as external
+; input whatever the path. The sinks bind exactly to the one-argument members
+; of the reviewed bifrost.node-zlib-javascript-declarations pack:
+; gunzipSync, inflateSync, inflateRawSync, unzipSync and
+; brotliDecompressSync. A call with an options argument binds to the
+; two-argument member, which is not a sink, so a call that sets
+; maxOutputLength gives no finding. So does one whose options omit it, a
+; known false negative: option-shape binding is not available.
+; Not covered: the callback and stream forms (zlib.gunzip, createGunzip),
+; readFileSync with options, fetch and request bodies.
+(policy
+  :schema-version 1
+  :id "bifrost.security.javascript.file-content-to-unbounded-decompression"
+  :name "File content decompressed without an output limit"
+  :message "file content reached a zlib decompression call that has no maxOutputLength limit"
+  :severity warning
+  :description "Reports a Buffer read with fs.readFileSync that reaches zlib.gunzipSync, inflateSync, inflateRawSync, unzipSync or brotliDecompressSync called without options. Without maxOutputLength the output is limited only by buffer.kMaxLength, so a small crafted file can exhaust memory."
+  :tags ["security" "javascript" "denial-of-service" "cwe-409" "node"]
+  :analysis
+    (analysis
+      :type taint
+      :mode may
+      :call-modeling (call-modeling :unmodeled require-model)
+      :sources
+        (endpoint-set
+          :entries [
+            (source
+              :id fs-read-file-sync-content
+              :display-name "fs.readFileSync(path) content"
+              :categories [io.external]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.fs.javascript.read-file-sync
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "readFileSync"))))))))
+              :bind return-value
+              :labels [external-file-content])])
+      :sinks
+        (endpoint-set
+          :entries [
+            (sink
+              :id zlib-gunzip-sync-input
+              :display-name "zlib.gunzipSync input"
+              :categories [resource.allocation]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.zlib.javascript.gunzip-sync-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "gunzipSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [external-file-content])
+            (sink
+              :id zlib-inflate-sync-input
+              :display-name "zlib.inflateSync input"
+              :categories [resource.allocation]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.zlib.javascript.inflate-sync-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "inflateSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [external-file-content])
+            (sink
+              :id zlib-inflate-raw-sync-input
+              :display-name "zlib.inflateRawSync input"
+              :categories [resource.allocation]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.zlib.javascript.inflate-raw-sync-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "inflateRawSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [external-file-content])
+            (sink
+              :id zlib-unzip-sync-input
+              :display-name "zlib.unzipSync input"
+              :categories [resource.allocation]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.zlib.javascript.unzip-sync-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "unzipSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [external-file-content])
+            (sink
+              :id zlib-brotli-decompress-sync-input
+              :display-name "zlib.brotliDecompressSync input"
+              :categories [resource.allocation]
+              :selector
+                (rql
+                  :schema-version 1
+                  (language javascript
+                    (call-argument :formal-index 0
+                      (resolved-call
+                        :resolves-to member.node.zlib.javascript.brotli-decompress-sync-1
+                        :proof declared
+                        (call-bindings
+                          (call-shape
+                            (call :callee (name "brotliDecompressSync"))))))))
+              :dangerous-operand (argument :index 0)
+              :accepts [external-file-content])]))
+  :classification
+    (classification
+      :fallback (classification-id :taxonomy "CWE" :id "409")))

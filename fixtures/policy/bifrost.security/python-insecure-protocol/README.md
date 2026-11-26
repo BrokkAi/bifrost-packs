@@ -4,7 +4,7 @@ Expected findings: `main.py:5-12`; `upstream/InsecureProtocol.py:7-12`.
 
 Near misses: Modern or compatibility protocols at `main.py:13-22` and `upstream/InsecureProtocol.py:13-14`; local lookalike at `main.py:23`.
 
-Semantic model: `bifrost.python-ssl-protocol-declarations.json`, complete for the nine declared `ssl.PROTOCOL_*` constants and the `ssl.wrap_socket(ssl_version)` / `ssl.SSLContext.__init__(protocol)` signatures.
+Semantic model: `bifrost.python-ssl-protocol-declarations.json`, which declares the nine `ssl.PROTOCOL_*` constants and the `ssl.wrap_socket(ssl_version)` / `ssl.SSLContext.__init__(protocol)` signatures. The pack is marked `partial` from 1.0.1 (#463), because it is not a complete Python declaration surface. On the released Bifrost 0.15.4 with the native `packs/v0.16.0` bundle the run is still **Inconclusive** (`partial_discovery`) with no findings, under either marking.
 
 The policy binds only calls whose callee is spelled `wrap_socket` or `SSLContext` (#410). An API imported under another name is outside its selection.
 

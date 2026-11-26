@@ -9,8 +9,11 @@ Not examined: `imports.py:17` calls `ssl.wrap_socket` through a function importe
 The original CodeQL test calls `ssl.wrap_socket()` without its required `sock` argument. The fixture adds the required argument while preserving the default-protocol case.
 
 Semantic models: `bifrost.python-stdlib-api-declarations.json` and
-`bifrost.python-ssl-protocol-declarations.json` (the complete SSL artifact
-declares the `ssl.wrap_socket` signature).
+`bifrost.python-ssl-protocol-declarations.json` (the bounded SSL artifact
+declares the `ssl.wrap_socket` signature). The SSL artifact is marked `partial`
+from 1.0.1 (#463). On the released Bifrost 0.15.4 with the native
+`packs/v0.16.0` bundle the run is **Complete** with the four expected findings
+under either marking.
 
 Validation: **Complete**, policy hash `0199b6d1d86a0e6b8b00ba26da1742a5bd16698fb1e2cf8fa3b400057e962eac`. Validated with the released Bifrost 0.15.3 (`bifrost --build-identity` prints cc7ebd1676e002b657e10304cfd977bc289e25ed) and the native `packs/v0.15.0` bundle, evaluation date 2026-10-08. On that engine the fixture's own `.bifrost/semantic-models` do not resolve `ssl.wrap_socket` by themselves: with `BIFROST_OPEN_PACKS_DISABLE=1` and no installed bundle the run is `not_run` (`qualified-call-locator-zero`).
 
