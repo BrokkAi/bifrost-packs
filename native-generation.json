@@ -353,6 +353,46 @@
       "name": "python-django-request-summaries",
       "spec": "semantic-packs/python/python-django-request-summaries.spec.json",
       "artifact": "semantic-packs/python/web-request/bifrost.python-django-request-summaries.json"
+    },
+    {
+      "name": "python-httpx-declarations",
+      "spec": "semantic-packs/python/python-httpx-declarations.spec.json",
+      "artifact": "semantic-packs/python/http-client/bifrost.python-httpx-declarations.json"
+    },
+    {
+      "name": "python-aiohttp-declarations",
+      "spec": "semantic-packs/python/python-aiohttp-declarations.spec.json",
+      "artifact": "semantic-packs/python/http-client/bifrost.python-aiohttp-declarations.json"
+    },
+    {
+      "name": "python-urllib3-declarations",
+      "spec": "semantic-packs/python/python-urllib3-declarations.spec.json",
+      "artifact": "semantic-packs/python/http-client/bifrost.python-urllib3-declarations.json"
+    },
+    {
+      "name": "python-untrusted-parsing-declarations",
+      "spec": "semantic-packs/python/python-untrusted-parsing-declarations.spec.json",
+      "artifact": "semantic-packs/python/untrusted-parsing/bifrost.python-untrusted-parsing-declarations.json"
+    },
+    {
+      "name": "python-untrusted-parsing-summaries",
+      "spec": "semantic-packs/python/python-untrusted-parsing-summaries.spec.json",
+      "artifact": "semantic-packs/python/untrusted-parsing/bifrost.python-untrusted-parsing-summaries.json"
+    },
+    {
+      "name": "node-zlib-javascript-declarations",
+      "spec": "semantic-packs/node/zlib/node-zlib-javascript-declarations.spec.json",
+      "artifact": "semantic-packs/node/zlib/javascript/bifrost.node-zlib-javascript-declarations.json"
+    },
+    {
+      "name": "node-zlib-javascript-summaries",
+      "spec": "semantic-packs/node/zlib/node-zlib-javascript-summaries.spec.json",
+      "artifact": "semantic-packs/node/zlib/javascript/bifrost.node-zlib-javascript-summaries.json"
+    },
+    {
+      "name": "web-network-javascript",
+      "spec": "semantic-packs/web-network/web-network-javascript.spec.json",
+      "artifact": "semantic-packs/web-network/javascript/bifrost.web-network-javascript.json"
     }
   ],
   "recipes": [

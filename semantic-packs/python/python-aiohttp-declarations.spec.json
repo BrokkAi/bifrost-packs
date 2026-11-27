@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-aiohttp-declarations",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-aiohttp-declarations.json",
+    "sha256": "f4129490c1592643305b58879311144a5db09a19a3c7804b773b67b72ae9f820",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/03088bb6a8e0519b55bceab2d35be1ef0445da66/semantic-packs/python/http-client/bifrost.python-aiohttp-declarations.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "package": {
+        "name": "pkg:pypi/aiohttp",
+        "version": ">=3.14.0, <3.15.0"
+      },
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "aiohttp source (aiohttp/__init__.py, client.py, connector.py)",
+    "revision": "aio-libs/aiohttp v3.14.0 (edb2724f481ba05ef889accc76bbe0089068e8eb), v3.14.5 (f17c631bddcfd4ec712342db28f1d3381a3fec71)"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/python-http-client-models.txt"
+  ],
+  "measurement_activation": {
+    "package": {
+      "name": "pkg:pypi/aiohttp",
+      "version": "=3.14.0"
+    },
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "aiohttp.client.ClientSession",
+      "name": "request"
+    },
+    {
+      "kind": "type",
+      "name": "aiohttp.connector.TCPConnector"
+    }
+  ]
+}

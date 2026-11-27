@@ -17,10 +17,47 @@ rules and compatibility boundaries.
 
 ## Current release status
 
-As of 2026-11-26, the latest published streams are `packs/v0.16.0` and
-`rules/v0.17.0`. `packs/v0.17.0` and `rules/v0.18.0` are prepared next; tag
-`packs/v0.17.0` first, because `rules/v0.18.0` depends on it exactly. Both load
+As of 2026-11-26, the latest published streams are `packs/v0.17.0` and
+`rules/v0.18.0`. `packs/v0.18.0` and `rules/v0.18.1` are prepared next; tag
+`packs/v0.18.0` first, because `rules/v0.18.1` depends on it exactly. Both load
 on Bifrost **0.15.3** or later and are qualified on 0.15.4.
+
+`packs/v0.18.0` is a minor release. It stays on the 0.15.3 producer
+(bifrost-dev#15349), and the index stays schema 4.
+
+- Added: `bifrost.python-httpx-declarations`, `-aiohttp-declarations` and
+  `-urllib3-declarations`, which activate only on pinned PyPI versions;
+  `bifrost.python-untrusted-parsing-declarations` and `-summaries`;
+  `bifrost.node-zlib-javascript-declarations` and `-summaries`; and
+  `bifrost.web-network-javascript` 1.1.0, now schema 8 without an inner Bifrost
+  gate. See [generation](generation.md).
+- Not delivered: `bifrost.python-requests-declarations` (its shards do not
+  repeat the pack activation), `bifrost.rust-core-logging` and
+  `bifrost.rust-std-io-write` (schema 44, which the 0.15.3 producer rejects),
+  and the review-required `bifrost.node-fs-javascript-*` packs.
+- The other 77 packs keep their IDs, versions and manifests.
+
+All 320 open policy fixtures give the same result on released 0.15.4 with
+`packs/v0.17.0` and with this bundle, including each finding's location,
+certainty and severity. No rule gains `qualified-call-locator-ambiguous` from
+the untrusted-parsing declarations.
+
+`rules/v0.18.1` is a patch release that depends exactly on `packs/v0.18.0`.
+`empty-failure-handler` (`bifrost.code-smells` 4.1.1, #494) no longer reports a
+handler that says why it ignores the failure: a comment inside it, a binding
+named `_`, `ignore`, `ignored`, `expected` or `tolerated`, or a Python clause
+naming only `ImportError` or `ModuleNotFoundError`. A `TODO`, `FIXME` or `XXX`
+comment keeps it reported.
+
+With `packs/v0.18.0` alone, with no workspace models, these opt-in rules now
+report on their fixtures: the httpx, aiohttp and urllib3 TLS-verification rules
+(on pinned package versions), Flask request-to-`parse_qs` and
+request-to-decompress, and Node process-input-to-`fetch`-URL. The requests TLS
+rule and `rust.cleartext-logging` still need packs that are not delivered, and
+Node file-content-to-unbounded-decompression needs the review-required Node fs
+packs. All nine stay opt-in.
+
+The earlier release notes follow.
 
 `packs/v0.17.0` is a minor release. It stays on the 0.15.3 producer, because a
 0.15.4-produced bundle panics Java analysis on released 0.15.4
@@ -69,8 +106,6 @@ all eight match.
 - Known on 0.15.4: `python.insecure-temporary-file`, `overly-permissive-file`,
   `polynomial-redos` and `xml-bomb` report `not_run` because typeshed and an
   authored pack both declare the callable (bifrost-dev#14548, fixed after 0.15.4).
-
-The earlier release notes follow.
 
 `packs/v0.15.0` is a minor release that raises the consumer requirement to
 Bifrost 0.15.3 (#311). It is built by the released, checksum-pinned

@@ -58,6 +58,39 @@ reports a taint rule whose source identities are absent as not run, not failed
 repository without the framework would report the rule as failed. Bifrost 0.15.4
 does not carry that fix.
 
+## Python HTTP-client, untrusted-parsing, Node zlib and fetch jobs
+
+Eight authored jobs deliver packs that `packs/v0.17.0` shipped source-only.
+All of them set `safety.review_required: false`.
+
+| Jobs | Packs | Spec commit |
+| --- | --- | --- |
+| `python-httpx-declarations`, `python-aiohttp-declarations`, `python-urllib3-declarations` | `bifrost.python-{httpx,aiohttp,urllib3}-declarations` 0.1.0 (#493) | `03088bb6a8e0519b55bceab2d35be1ef0445da66` |
+| `python-untrusted-parsing-declarations`, `python-untrusted-parsing-summaries` | `bifrost.python-untrusted-parsing-declarations` and `-summaries` 0.1.0 (#492) | `a60010e105d843765019f2e8a088e0531b66aaac` |
+| `node-zlib-javascript-declarations`, `node-zlib-javascript-summaries` | `bifrost.node-zlib-javascript-declarations` and `-summaries` 0.1.0 (#486) | `507dfebabc0baded936250a5466159adf7a05839` |
+| `web-network-javascript` | `bifrost.web-network-javascript` 1.1.0 | `c74a25cf1f0e53542c02d8bc644bf27a144232f1` |
+
+The HTTP-client shards activate only on pinned `pkg:pypi/httpx`, `aiohttp` and
+`urllib3` versions. The untrusted-parsing shards activate on CPython toolchains,
+the summaries only on 3.13.5. The Node and fetch shards have no package or
+toolchain condition. `bifrost.web-network-javascript` moves from schema 2 to the
+version-independent schema 8 by removing `compatibility.bifrost`, as the legacy
+built-in packs did; its shards, identities and version are unchanged.
+
+Four source-only packs stay out:
+
+- `bifrost.python-requests-declarations`: its two `Session.get` shards activate
+  on narrower requests ranges than its shared shard. The 0.15.3 producer
+  requires every shard of an authored model to repeat the spec's activation
+  exactly, so the pack must be restructured before it can be a job.
+- `bifrost.rust-core-logging` and its companion `bifrost.rust-std-io-write`:
+  both are schema 44 (`target_independent`), which the 0.15.3 producer does not
+  read. The 0.15.4 producer reads it, but it stays withheld (bifrost-dev#15349).
+- `bifrost.node-fs-javascript-declarations` and `-summaries` set
+  `review_required: true`; changing that flag needs an owner decision.
+
+The rules that use these packs stay opt-in.
+
 ## Go gob jobs and net interface summaries
 
 Two authored jobs follow the legacy set: `go-stdlib-encoding-gob-declarations`

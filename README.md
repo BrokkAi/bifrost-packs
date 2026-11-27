@@ -88,12 +88,13 @@ Regenerate with `python3 tools/rule_stats.py --write`. The
 [inventory guide](docs/rule-stats.md) covers JSON export and the optional
 pre-commit hook; CI checks the generated tables for drift.
 
-The latest releases are `packs/v0.16.0` and `rules/v0.17.0`. `packs/v0.17.0`
-and `rules/v0.18.0` are prepared next. Both load on Bifrost **0.15.3** or later
-and are qualified on 0.15.4. `packs/v0.17.0` stays on the 0.15.3 producer, adds
-the Flask, Werkzeug and Django request packs and extends the Python performance
-summaries. `rules/v0.18.0` depends on it and adds seven default and eleven
-opt-in policies; the Flask and Django request-to-`urlopen` rules stay opt-in.
+The latest releases are `packs/v0.17.0` and `rules/v0.18.0`. `packs/v0.18.0`
+and `rules/v0.18.1` are prepared next. Both load on Bifrost **0.15.3** or later
+and are qualified on 0.15.4. `packs/v0.18.0` stays on the 0.15.3 producer and
+delivers eight packs that were source-only: the httpx, aiohttp and urllib3
+declarations, Python untrusted parsing, Node zlib and web-network `fetch`.
+`rules/v0.18.1` depends on it and narrows `empty-failure-handler`; the Flask
+and Django request-to-`urlopen` rules stay opt-in.
 See [release streams](docs/release-streams.md).
 
 ## Source verification

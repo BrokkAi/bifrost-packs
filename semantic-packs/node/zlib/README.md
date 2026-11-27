@@ -1,7 +1,7 @@
 # Node `zlib` packs
 
 `bifrost.node-zlib-javascript-declarations` 0.1.0 and
-`bifrost.node-zlib-javascript-summaries` 0.1.0 are source-only packs for the
+`bifrost.node-zlib-javascript-summaries` 0.1.0 are packs for the
 JavaScript Node core `zlib` convenience methods that decompress a whole buffer
 at once. They back the `file-content-to-unbounded-decompression` security
 policy, the version-independent part of BrokkAi/bifrost-packs#291
@@ -48,6 +48,10 @@ the `options` fields. Because option shapes don't bind, a two-argument call is
 never a sink, even when its options omit `maxOutputLength`.
 
 The packs carry the repository's `Apache-2.0` model license and set
-`safety.review_required: false`. They are source-only: no native release
-recipe includes them yet. The Node distribution notice is retained at
+`safety.review_required: false`. `native-generation.json` builds both, and
+`packs/v0.18.0` is the first packs release that delivers them. The policy also
+needs `bifrost.node-fs-javascript-declarations` and `-summaries` for its
+`fs.readFileSync` source. Those packs set `review_required: true`, so they are
+not jobs, and the policy stays unrunnable from the released bundle alone until
+an owner decides on that flag. The Node distribution notice is retained at
 `semantic-packs/node/runtime-values/notices/node-v22.11.0.txt`.

@@ -44,6 +44,14 @@ AUTHORED_AFTER_LEGACY = {
     "python-werkzeug-request-summaries",
     "python-django-request-declarations",
     "python-django-request-summaries",
+    "python-httpx-declarations",
+    "python-aiohttp-declarations",
+    "python-urllib3-declarations",
+    "python-untrusted-parsing-declarations",
+    "python-untrusted-parsing-summaries",
+    "node-zlib-javascript-declarations",
+    "node-zlib-javascript-summaries",
+    "web-network-javascript",
 }
 
 # Embedded pack IDs delivered by these jobs; Go os and the JDK and Python str

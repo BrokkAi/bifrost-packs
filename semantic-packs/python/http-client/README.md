@@ -34,11 +34,14 @@ it from `uv.lock`, `poetry.lock`, pinned requirements, or a declared Python
 environment (bifrost-dev#14581). Without that evidence no member resolves and
 each rule reports `not_run`, which is not a clean result.
 
-`native-generation.json` does not build these packs, so no packs release
-delivers them yet. Adding them to the release recipe needs an owner decision
-and a pinned spec for each pack. Until then the rules are opt-in, and a
-workspace supplies the packs in `.bifrost/semantic-models`, as the fixtures in
-`fixtures/policy/bifrost.security/python-http-client-tls-verification` do.
+`native-generation.json` builds the httpx, aiohttp and urllib3 packs, and
+`packs/v0.18.0` is the first packs release that delivers them. The requests pack
+is not a job. The pinned 0.15.3 producer requires every shard of an authored
+model to repeat the spec's activation exactly, and this pack's two `Session.get`
+shards activate on narrower ranges than its shared shard. Until the pack is
+restructured, a workspace supplies it in `.bifrost/semantic-models`, as the
+fixtures in `fixtures/policy/bifrost.security/python-http-client-tls-verification`
+do. All four rules stay opt-in.
 
 ## Reviewed claims
 

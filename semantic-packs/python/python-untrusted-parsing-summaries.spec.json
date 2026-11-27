@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.python-untrusted-parsing-summaries",
+  "pack_version": "0.1.0",
+  "ecosystem": "python",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.python-untrusted-parsing-summaries.json",
+    "sha256": "128cd00fc6521e0a905e714bc9eb036071c89eca0fe086b4299bfa71b07e1d9b",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/a60010e105d843765019f2e8a088e0531b66aaac/semantic-packs/python/untrusted-parsing/bifrost.python-untrusted-parsing-summaries.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": [
+      {
+        "name": "cpython",
+        "requirement": ">=3.13.5, <3.13.6"
+      }
+    ]
+  },
+  "activation": [
+    {
+      "toolchain": {
+        "name": "cpython",
+        "version": ">=3.13.5, <3.13.6"
+      },
+      "targets": []
+    }
+  ],
+  "provenance": {
+    "source": "Python standard-library reference and pinned Typeshed stubs for decompression, query-string parsing and text-encoding APIs",
+    "revision": "Typeshed 1620e225476597f34177351ef913dc8390dade30; CPython v3.13.5; reviewed decompression, query-string parsing and encoding summaries"
+  },
+  "license": "PSF-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/cpython-untrusted-parsing-3.13.5.txt"
+  ],
+  "measurement_activation": {
+    "toolchain": {
+      "name": "cpython",
+      "version": "=3.13.5"
+    },
+    "targets": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "zlib",
+      "name": "decompress",
+      "has_receiver": false,
+      "parameter_count": 3
+    },
+    {
+      "kind": "procedure",
+      "language": "python",
+      "owner": "gzip",
+      "name": "decompress",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}

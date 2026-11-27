@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "pack_id": "bifrost.web-network-javascript",
+  "pack_version": "1.1.0",
+  "ecosystem": "npm",
+  "kind": {
+    "artifact_kind": "authored_semantic_model"
+  },
+  "artifact": {
+    "file_name": "bifrost.web-network-javascript.json",
+    "sha256": "8b91c0134aa941211a23c2c5b1f77466b3dafbe2e14c82e8c4cd2a2a69ecbaef",
+    "url": "https://github.com/BrokkAi/bifrost-packs/blob/c74a25cf1f0e53542c02d8bc644bf27a144232f1/semantic-packs/web-network/javascript/bifrost.web-network-javascript.json",
+    "container": null
+  },
+  "compatibility": {
+    "toolchains": []
+  },
+  "activation": [
+    {
+      "targets": [],
+      "configurations": []
+    }
+  ],
+  "provenance": {
+    "source": "WHATWG Fetch Standard, the global fetch() operation",
+    "revision": "living-standard-2026-09-15"
+  },
+  "license": "Apache-2.0",
+  "safety": {
+    "generated_code_only": false,
+    "review_required": false
+  },
+  "notices": [
+    "notices/web-network-javascript.txt"
+  ],
+  "measurement_activation": {
+    "targets": [],
+    "configurations": []
+  },
+  "measurement_queries": [
+    {
+      "kind": "member",
+      "owner": "globalThis",
+      "name": "fetch"
+    },
+    {
+      "kind": "procedure",
+      "language": "javascript",
+      "owner": "globalThis",
+      "name": "fetch",
+      "has_receiver": false,
+      "parameter_count": 1
+    }
+  ]
+}
